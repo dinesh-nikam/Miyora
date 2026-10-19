@@ -10,5 +10,6 @@ name = "agentpet"
 path = "src/main.rs"
 
 [dependencies]
+agentpet-adapters = { path = "../agentpet-adapters" }
 agentpet-core = { path = "../agentpet-core" }
 uuid.workspace = true

@@ -4,6 +4,7 @@ members = [
     "crates/agentpet-core",
     "crates/pet-engine",
     "crates/pet-pack",
+    "crates/agentpet-adapters",
     "crates/agentpet-cli",
     "apps/desktop/src-tauri",
 ]
