@@ -12,6 +12,7 @@ use thiserror::Error;
 pub mod animated;
 pub mod archive;
 pub mod signature;
+pub mod vrm;
 
 pub const MANIFEST_FILE: &str = "pet.json";
 pub const CURRENT_SCHEMA_VERSION: u32 = 1;
@@ -158,6 +159,10 @@ pub enum PetPackError {
     SignatureUntrusted(String),
     #[error("pack signature verification failed")]
     SignatureVerificationFailed,
+    #[error("VRM model contains forbidden external URI: {0}")]
+    VrmExternalResource(String),
+    #[error("VRM model exceeds resource budget: {0}")]
+    VrmBudgetExceeded(String),
     #[error("filesystem error: {0}")]
     Io(#[from] std::io::Error),
     #[error("image is invalid or exceeds decode limits: {0}")]

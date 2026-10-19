@@ -229,6 +229,56 @@ pub struct InstalledPetPackSummary {
     pub license: String,
 }
 
+#[allow(dead_code)]
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+struct TrustedSignerEntry {
+    key_id: String,
+    public_key: String,
+}
+
+/// Persisted record of a native agent hook installation.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct HookInstallRecord {
+    pub adapter_id: String,
+    pub config_path: String,
+    pub backup_path: Option<String>,
+    pub installed_at: String,
+    pub status: String,
+}
+
+/// A normalized agent lifecycle event delivered by a hook adapter or the
+/// universal wrapper. Hook events reuse the same event table and pet state
+/// machine as directly submitted events.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct HookEvent {
+    /// Stable idempotency key supplied by the adapter (UUID string).
+    pub id: String,
+    pub event_type: EventType,
+    pub agent_id: String,
+    pub session_id: Option<String>,
+    pub project_path: Option<String>,
+}
+
+/// Result of ingesting a normalized hook event.
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub enum HookEventOutcome {
+    /// The event was newly persisted and the pet state machine processed it.
+    Accepted,
+    /// The idempotency key was already recorded; nothing changed.
+    Duplicate,
+    /// The event started a new observed agent session.
+    SessionStarted,
+    /// The event completed the observed session and awarded XP in the same
+    /// transaction.
+    SessionCompleted { xp_awarded: bool },
+    /// The event failed the observed session; no XP was awarded.
+    SessionFailed,
+}
+
 #[derive(Debug, Error)]
 pub enum CoreError {
     #[error("database error: {0}")]
@@ -279,7 +329,8 @@ pub struct Core {
     engine: PetEngine,
     /// Local application data directory used for non-database configuration
     /// such as trusted signing keys. `None` for in-memory test databases.
-    data_dir: Option<PathBuf>,
+    #[allow(dead_code)]
+    pub data_dir: Option<PathBuf>,
 }
 
 impl Core {
@@ -791,6 +842,113 @@ impl Core {
         Ok(accepted)
     }
 
+    /// Ingests a normalized hook event from a local agent adapter.
+    ///
+    /// Events are deduplicated by their stable idempotency key. Session
+    /// lifecycle events additionally open or close an observed agent session;
+    /// a completed session awards XP in the same transaction that records the
+    /// completion, exactly like the universal wrapper. Invalid or rejected
+    /// state transitions never corrupt the pet state: the session fact is
+    /// persisted with the state kept unchanged.
+    pub fn record_hook_event(&self, hook_event: &HookEvent) -> Result<HookEventOutcome, CoreError> {
+        if hook_event.id.trim().is_empty() || hook_event.id.len() > 64 {
+            return Err(CoreError::InvalidHookEvent(
+                "id must be a non-empty string of at most 64 characters".into(),
+            ));
+        }
+        if hook_event.agent_id.trim().is_empty() || hook_event.agent_id.len() > 128 {
+            return Err(CoreError::InvalidHookEvent(
+                "agent_id must be a non-empty string of at most 128 characters".into(),
+            ));
+        }
+        let session_id = hook_event
+            .session_id
+            .as_deref()
+            .filter(|value| !value.trim().is_empty());
+        if hook_event.session_id.as_deref().is_some_and(|raw| {
+            let filtered = raw.trim();
+            filtered.is_empty() || raw.len() > 128
+        }) {
+            return Err(CoreError::InvalidHookEvent(
+                "session_id must be a non-empty string of at most 128 characters".into(),
+            ));
+        }
+        if hook_event
+            .project_path
+            .as_deref()
+            .is_some_and(|path| path.len() > 4_096)
+        {
+            return Err(CoreError::InvalidHookEvent(
+                "project_path is too long".into(),
+            ));
+        }
+        let mut connection = self
+            .connection
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
+        let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
+        let outcome =
+            record_hook_event_in_transaction(&transaction, &self.engine, hook_event, session_id)?;
+        transaction.commit()?;
+        Ok(outcome)
+    }
+
+    /// Records the local installation state of a native agent hook.
+    pub fn record_hook_install(&self, record: &HookInstallRecord) -> Result<(), CoreError> {
+        if record.adapter_id.trim().is_empty() || record.adapter_id.len() > 128 {
+            return Err(CoreError::InvalidIdentifier);
+        }
+        if record.config_path.trim().is_empty() || record.config_path.len() > 4_096 {
+            return Err(CoreError::InvalidIdentifier);
+        }
+        if record.status != "installed" && record.status != "removed" {
+            return Err(CoreError::InvalidIdentifier);
+        }
+        let connection = self
+            .connection
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
+        connection.execute(
+            "INSERT INTO agent_hook_installs(adapter_id, config_path, backup_path, installed_at, status)
+             VALUES (?1, ?2, ?3, ?4, ?5)
+             ON CONFLICT(adapter_id) DO UPDATE SET
+                config_path = excluded.config_path,
+                backup_path = excluded.backup_path,
+                installed_at = excluded.installed_at,
+                status = excluded.status",
+            params![
+                record.adapter_id,
+                record.config_path,
+                record.backup_path,
+                record.installed_at,
+                record.status,
+            ],
+        )?;
+        Ok(())
+    }
+
+    /// Reads all persisted hook installation records.
+    pub fn hook_installs(&self) -> Result<Vec<HookInstallRecord>, CoreError> {
+        let connection = self
+            .connection
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
+        let mut statement = connection.prepare(
+            "SELECT adapter_id, config_path, backup_path, installed_at, status
+             FROM agent_hook_installs ORDER BY adapter_id",
+        )?;
+        let rows = statement.query_map([], |row| {
+            Ok(HookInstallRecord {
+                adapter_id: row.get(0)?,
+                config_path: row.get(1)?,
+                backup_path: row.get(2)?,
+                installed_at: row.get(3)?,
+                status: row.get(4)?,
+            })
+        })?;
+        rows.collect::<Result<Vec<_>, _>>().map_err(CoreError::from)
+    }
+
     pub fn start_session(
         &self,
         session_id: &str,
@@ -988,6 +1146,46 @@ impl Core {
         let installed =
             PetPackManifest::create_companion_from_image(image_path, library_root, name)?;
         self.record_installed_pet_pack(installed)
+    }
+
+    /// Reads the local trusted signing keys used to verify PetPack archive
+    /// signatures. Keys come from `<data_dir>/trusted-signers.json`, an array
+    /// of `{ "keyId": string, "publicKey": string }` objects with base64
+    /// Ed25519 public keys. In-memory databases have no data directory and
+    /// return no trusted signers.
+    pub fn trusted_signers(&self) -> Result<Vec<TrustedSigner>, CoreError> {
+        let Some(data_dir) = self.data_dir.as_ref() else {
+            return Ok(Vec::new());
+        };
+        let config_path = data_dir.join("trusted-signers.json");
+        let bytes = match std::fs::read(&config_path) {
+            Ok(bytes) => bytes,
+            Err(error) if error.kind() == std::io::ErrorKind::NotFound => return Ok(Vec::new()),
+            Err(error) => {
+                return Err(CoreError::Database(
+                    rusqlite::Error::ToSqlConversionFailure(Box::new(error)),
+                ))
+            }
+        };
+        if bytes.len() > 64 * 1024 {
+            return Err(CoreError::TrustedSignerConfig(
+                "trusted-signers.json exceeds 64 KiB".into(),
+            ));
+        }
+        let entries: Vec<TrustedSignerEntry> = serde_json::from_slice(&bytes)
+            .map_err(|error| CoreError::TrustedSignerConfig(error.to_string()))?;
+        if entries.len() > 32 {
+            return Err(CoreError::TrustedSignerConfig(
+                "at most 32 trusted signers are supported".into(),
+            ));
+        }
+        entries
+            .into_iter()
+            .map(|entry| {
+                TrustedSigner::from_base64(&entry.key_id, &entry.public_key)
+                    .map_err(|error| CoreError::TrustedSignerConfig(error.to_string()))
+            })
+            .collect()
     }
 
     fn record_installed_pet_pack(
@@ -1381,6 +1579,126 @@ fn rollback_pack_install(directory: &Path, primary: CoreError) -> CoreError {
     }
 }
 
+/// Records a normalized hook event and drives the observed session lifecycle
+/// inside the caller's transaction. Session facts are always persisted; a
+/// rejected pet-state transition keeps the current state rather than failing
+/// the ingest, because the agent activity is real regardless of the pet.
+fn record_hook_event_in_transaction(
+    transaction: &rusqlite::Transaction<'_>,
+    engine: &PetEngine,
+    hook_event: &HookEvent,
+    session_id: Option<&str>,
+) -> Result<HookEventOutcome, CoreError> {
+    let event_id = Uuid::parse_str(&hook_event.id)
+        .map_err(|_| CoreError::InvalidHookEvent("id must be a UUID".into()))?;
+    let mut event = PetEvent::new(hook_event.event_type.clone(), &hook_event.agent_id);
+    event.id = event_id;
+    event.session_id = session_id.map(str::to_owned);
+    event.project_id = hook_event.project_path.clone();
+    let accepted = record_event(
+        transaction,
+        engine,
+        &event,
+        hook_event.event_type.stimulus(),
+        OnRejectedTransition::KeepState,
+    )?;
+    if !accepted {
+        return Ok(HookEventOutcome::Duplicate);
+    }
+    let Some(session_id) = session_id else {
+        return Ok(HookEventOutcome::Accepted);
+    };
+    match hook_event.event_type {
+        EventType::AgentStarted => {
+            let selected_pet: Option<String> = transaction.query_row(
+                "SELECT selected_pet_id FROM pet_state WHERE singleton = 1",
+                [],
+                |row| row.get(0),
+            )?;
+            let pet_id = selected_pet.unwrap_or_else(|| FALLBACK_PET_ID.to_owned());
+            let inserted = transaction.execute(
+                "INSERT INTO agent_sessions(session_id, agent_id, project_path, started_at, status, pet_id)
+                 VALUES (?1, ?2, ?3, ?4, 'running', ?5)
+                 ON CONFLICT(session_id) DO NOTHING",
+                params![
+                    session_id,
+                    hook_event.agent_id,
+                    hook_event.project_path,
+                    Utc::now().to_rfc3339(),
+                    pet_id,
+                ],
+            )?;
+            Ok(if inserted == 1 {
+                HookEventOutcome::SessionStarted
+            } else {
+                HookEventOutcome::Accepted
+            })
+        }
+        EventType::AgentCompleted | EventType::AgentFailed => {
+            let session: Option<(String, String)> = transaction
+                .query_row(
+                    "SELECT agent_id, pet_id FROM agent_sessions WHERE session_id = ?1 AND status = 'running'",
+                    [session_id],
+                    |row| Ok((row.get(0)?, row.get(1)?)),
+                )
+                .optional()?;
+            let Some((_agent_id, pet_id)) = session else {
+                // Already finished or never tracked locally; the lifecycle
+                // event is still recorded above but no state changes.
+                return Ok(if hook_event.event_type == EventType::AgentCompleted {
+                    HookEventOutcome::SessionCompleted { xp_awarded: false }
+                } else {
+                    HookEventOutcome::SessionFailed
+                });
+            };
+            let outcome = if hook_event.event_type == EventType::AgentCompleted {
+                SessionOutcome::Completed
+            } else {
+                SessionOutcome::Failed
+            };
+            let started_at: Option<String> = transaction.query_row(
+                "SELECT started_at FROM agent_sessions WHERE session_id = ?1",
+                [session_id],
+                |row| row.get(0),
+            )?;
+            let duration_ms = started_at
+                .as_deref()
+                .and_then(|value| DateTime::parse_from_rfc3339(value).ok())
+                .map(|started| {
+                    let now = Utc::now();
+                    let started = started.with_timezone(&Utc);
+                    (now - started)
+                        .to_std()
+                        .map(|value| u64::try_from(value.as_millis()).unwrap_or(u64::MAX))
+                })
+                .transpose()
+                .unwrap_or(Some(0))
+                .unwrap_or(0);
+            let duration_ms = i64::try_from(duration_ms).map_err(|_| CoreError::InvalidDuration)?;
+            transaction.execute(
+                "UPDATE agent_sessions
+                 SET ended_at = ?1, duration_ms = ?2, status = ?3, exit_code = ?4
+                 WHERE session_id = ?5 AND status = 'running'",
+                params![
+                    Utc::now().to_rfc3339(),
+                    duration_ms,
+                    outcome.as_str(),
+                    None::<i32>,
+                    session_id
+                ],
+            )?;
+            if outcome == SessionOutcome::Completed {
+                award_session_xp(transaction, session_id, &pet_id)?;
+                award_session_achievements(transaction, session_id, &pet_id)?;
+                Ok(HookEventOutcome::SessionCompleted { xp_awarded: true })
+            } else {
+                Ok(HookEventOutcome::SessionFailed)
+            }
+        }
+        _ => Ok(HookEventOutcome::Accepted),
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1757,6 +2075,7 @@ mod tests {
         let core = Core {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            data_dir: None,
         };
         assert_eq!(
             core.advance_state_timers().expect("stale reaction expires"),

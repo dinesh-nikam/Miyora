@@ -1,0 +1,101 @@
+{
+  "limits": {
+    "max_file_bytes": 52428800,
+    "max_triangles": 100000,
+    "max_texture_dimension": 2048,
+    "max_textures": 16,
+    "target_fps_active": 30,
+    "target_fps_idle": 1,
+    "allow_external_uris": false
+  },
+  "valid_sample": {
+    "filename": "aoi_default.vrm",
+    "metadata": {
+      "title": "Aoi",
+      "author": "AgentPet Core Team",
+      "version": "1.0.0",
+      "license_name": "CC-BY-4.0",
+      "allowed_user": "Everyone",
+      "commercial_usage": true,
+      "style": "anime_cyberpunk_original",
+      "ip_notes": "Clean-room original anime design; no copyrighted character accessories or clothing."
+    },
+    "metrics": {
+      "file_bytes": 18450000,
+      "triangles": 42500,
+      "textures_count": 6,
+      "max_texture_dimension": 2048,
+      "external_uris": []
+    },
+    "expected_result": "Accepted"
+  },
+  "rejection_test_cases": [
+    {
+      "description": "Reject model attempting to load external network assets",
+      "metrics": {
+        "file_bytes": 12000000,
+        "triangles": 35000,
+        "textures_count": 4,
+        "max_texture_dimension": 1024,
+        "external_uris": ["https://remote-assets.dev/mesh.bin"]
+      },
+      "expected_error": "ExternalResourceForbidden: https://remote-assets.dev/mesh.bin"
+    },
+    {
+      "description": "Reject model with relative filesystem path traversal in buffer URI",
+      "metrics": {
+        "file_bytes": 8000000,
+        "triangles": 22000,
+        "textures_count": 2,
+        "max_texture_dimension": 1024,
+        "external_uris": ["../private/keys.bin"]
+      },
+      "expected_error": "ExternalResourceForbidden: ../private/keys.bin"
+    },
+    {
+      "description": "Reject model exceeding polygon budget",
+      "metrics": {
+        "file_bytes": 35000000,
+        "triangles": 145000,
+        "textures_count": 8,
+        "max_texture_dimension": 2048,
+        "external_uris": []
+      },
+      "expected_error": "PolygonCountExceeded: 145000 > 100000"
+    },
+    {
+      "description": "Reject model exceeding maximum texture resolution",
+      "metrics": {
+        "file_bytes": 28000000,
+        "triangles": 48000,
+        "textures_count": 5,
+        "max_texture_dimension": 4096,
+        "external_uris": []
+      },
+      "expected_error": "TextureDimensionExceeded: 4096 > 2048"
+    },
+    {
+      "description": "Reject model exceeding archive file size cap",
+      "metrics": {
+        "file_bytes": 65000000,
+        "triangles": 80000,
+        "textures_count": 10,
+        "max_texture_dimension": 2048,
+        "external_uris": []
+      },
+      "expected_error": "FileTooLarge: 65000000 > 52428800"
+    }
+  ],
+  "speech_bubble_projection": {
+    "viewport": { "width": 400, "height": 400 },
+    "head_world_position": [0.0, 1.45, 0.0],
+    "camera": {
+      "position": [0.0, 1.2, 2.5],
+      "fov_deg": 35.0
+    },
+    "expected_screen_anchor_pixel": {
+      "x": 200,
+      "y": 88
+    }
+  }
+}

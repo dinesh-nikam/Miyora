@@ -27,3 +27,14 @@
   - Drops native Swift 6, AppKit status item, and Sparkle auto-updater in favor of Tauri 2 native tray, window management, and Tauri updater across all three platforms.
   - Eliminates duplicate state machines, UI implementations, and protocol parsing in Swift.
   - Ensures 100% UI feature parity, shared pixel pet rendering, and identical testing harnesses across all targets at substantially lower maintenance overhead.
+
+## ADR-006: 3D Anime Character Support via VRM Standard and WebGL/three-vrm
+- **Context**: Users want an anime-style desktop companion alongside 2D sprites, with the ability to bring their own custom models (e.g., from VRoid Studio). The app must ship with an original, non-infringing anime character (avoiding Nezuko's signature outfit, colors, and props) while sandboxing untrusted user-supplied VRM files.
+- **Decision**: Standardize 3D avatar support on the VRM (glTF 2.0) specification rendered via WebGL (`@pixiv/three-vrm`) in the Tauri web UI.
+  - **Original Character**: The repository ships a single clean-room original anime character with unique hair, attire, and palette, completely detached from any copyrighted IP.
+  - **Bring Your Own Model (BYOM)**: Users can load local `.vrm` files. License and author metadata embedded in the VRM header (`VRMC_vrm` or `VRM` extension) are extracted and displayed in the UI.
+  - **Behavior & State Parity**: 3D models respond to the identical finite state machine (`idle`, `working`, `waiting`, `done`, `level-up`, `evolving`, `hungry`, `sleeping`) via humanoid bone clips and blendshape expressions. Speech bubbles dynamically anchor to the projected 2D coordinates of the model's `head` bone.
+  - **Security & Guardrails**: VRM parsing occurs off-thread in a dedicated worker. Models are rejected if they contain external URIs (`http://`, `https://`, or local path references), exceed 50 MB file size, exceed 100,000 triangles, or exceed 2048x2048 texture dimensions.
+  - **Resource Throttling**: Rendering caps at 30 FPS when active, dropping to 1 FPS or pausing when idle or occluded, satisfying the <1% CPU budget.
+- **Consequences**: Enables rich 3D anime avatars with full state parity while enforcing zero network leakage, robust IP compliance, and strict memory/CPU bounds.
+
