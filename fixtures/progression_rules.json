@@ -1,0 +1,20 @@
+{
+  "initial_level": 1,
+  "initial_xp": 0,
+  "formula": "cumulative_xp = 50 * level * (level + 1)",
+  "thresholds": [
+    { "level": 1, "cumulative_xp": 100, "stage": "Hatchling" },
+    { "level": 2, "cumulative_xp": 300, "stage": "Hatchling" },
+    { "level": 3, "cumulative_xp": 600, "stage": "Hatchling" },
+    { "level": 4, "cumulative_xp": 1000, "stage": "Hatchling" },
+    { "level": 5, "cumulative_xp": 1500, "stage": "Companion" },
+    { "level": 10, "cumulative_xp": 5500, "stage": "Companion" },
+    { "level": 14, "cumulative_xp": 10500, "stage": "Companion" },
+    { "level": 15, "cumulative_xp": 12000, "stage": "Scout" },
+    { "level": 25, "cumulative_xp": 32500, "stage": "Scout" },
+    { "level": 29, "cumulative_xp": 43500, "stage": "Scout" },
+    { "level": 30, "cumulative_xp": 46500, "stage": "Hero" },
+    { "level": 49, "cumulative_xp": 122500, "stage": "Hero" },
+    { "level": 50, "cumulative_xp": 127500, "stage": "Legend" }
+  ]
+}

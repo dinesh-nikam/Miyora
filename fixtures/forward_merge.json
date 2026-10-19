@@ -1,0 +1,37 @@
+{
+  "client_a": {
+    "pet_id": "pet-101",
+    "xp": 850,
+    "level": 3,
+    "tokens": 450000,
+    "sessions": 12,
+    "achievements": [
+      "first_session",
+      "three_day_streak"
+    ]
+  },
+  "client_b": {
+    "pet_id": "pet-101",
+    "xp": 1650,
+    "level": 5,
+    "tokens": 320000,
+    "sessions": 15,
+    "achievements": [
+      "first_session",
+      "ten_sessions"
+    ]
+  },
+  "expected_merged": {
+    "pet_id": "pet-101",
+    "xp": 1650,
+    "level": 5,
+    "tokens": 450000,
+    "sessions": 15,
+    "achievements": [
+      "first_session",
+      "three_day_streak",
+      "ten_sessions"
+    ],
+    "rule_explanation": "Merge computes max(xp), max(tokens), max(sessions), union(achievements), and recomputes level strictly from merged XP (1650 XP -> Level 5, threshold 1500)."
+  }
+}

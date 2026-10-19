@@ -1,0 +1,68 @@
+{
+  "transitions": [
+    {
+      "description": "Session starts",
+      "initial_state": "idle",
+      "event": "session_start",
+      "expected_state": "working"
+    },
+    {
+      "description": "Agent asks for input or permission",
+      "initial_state": "working",
+      "event": "waiting_input",
+      "expected_state": "waiting"
+    },
+    {
+      "description": "User provides input and agent resumes",
+      "initial_state": "waiting",
+      "event": "working",
+      "expected_state": "working"
+    },
+    {
+      "description": "Agent finishes session from working",
+      "initial_state": "working",
+      "event": "done",
+      "expected_state": "done"
+    },
+    {
+      "description": "Agent finishes session from waiting",
+      "initial_state": "waiting",
+      "event": "done",
+      "expected_state": "done"
+    }
+  ],
+  "stale_timeout": {
+    "description": "Working session with no events for 15 minutes transitions to idle (stale)",
+    "initial_state": "working",
+    "elapsed_seconds": 900,
+    "expected_state": "idle"
+  },
+  "aggregate_tray_state": [
+    {
+      "description": "Single waiting session makes aggregate waiting",
+      "sessions": [
+        { "id": "s1", "state": "working" },
+        { "id": "s2", "state": "waiting" },
+        { "id": "s3", "state": "idle" }
+      ],
+      "expected_aggregate": "waiting"
+    },
+    {
+      "description": "No waiting sessions, but at least one working makes aggregate working",
+      "sessions": [
+        { "id": "s1", "state": "working" },
+        { "id": "s2", "state": "done" },
+        { "id": "s3", "state": "idle" }
+      ],
+      "expected_aggregate": "working"
+    },
+    {
+      "description": "All sessions idle or done makes aggregate idle",
+      "sessions": [
+        { "id": "s1", "state": "done" },
+        { "id": "s2", "state": "idle" }
+      ],
+      "expected_aggregate": "idle"
+    }
+  ]
+}

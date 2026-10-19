@@ -1,0 +1,55 @@
+[
+  {
+    "adapter": "claude_code",
+    "raw_payload": {
+      "type": "notification",
+      "sessionId": "sess-claude-01",
+      "cwd": "/Users/dev/project/my-app",
+      "state": "prompt_input",
+      "prompt": "Allow reading file src/index.ts?"
+    },
+    "expected_normalized_event": {
+      "agent_id": "claude_code",
+      "session_id": "sess-claude-01",
+      "project_path": "/Users/dev/project/my-app",
+      "project_name": "my-app",
+      "event_type": "waiting_input",
+      "waiting_reason": "Allow reading file src/index.ts?"
+    }
+  },
+  {
+    "adapter": "codex",
+    "raw_payload": {
+      "id": "sess-codex-02",
+      "path": "C:\\workspace\\backend",
+      "status": "executing",
+      "current_tool": "bash",
+      "model": "codex-5.2"
+    },
+    "expected_normalized_event": {
+      "agent_id": "codex",
+      "session_id": "sess-codex-02",
+      "project_path": "C:\\workspace\\backend",
+      "project_name": "backend",
+      "event_type": "working",
+      "tool_name": "bash",
+      "model_name": "codex-5.2"
+    }
+  },
+  {
+    "adapter": "universal_wrapper",
+    "raw_payload": {
+      "session_id": "sess-uni-03",
+      "command": "git commit -m 'feat: m0'",
+      "cwd": "/home/user/agentpet",
+      "exit_code": 0
+    },
+    "expected_normalized_event": {
+      "agent_id": "universal",
+      "session_id": "sess-uni-03",
+      "project_path": "/home/user/agentpet",
+      "project_name": "agentpet",
+      "event_type": "done"
+    }
+  }
+]

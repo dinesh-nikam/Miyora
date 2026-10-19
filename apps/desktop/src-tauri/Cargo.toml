@@ -1,0 +1,28 @@
+[package]
+name = "agentpet-desktop"
+version = "0.1.0"
+description = "Offline-first AI coding companion desktop app"
+authors = ["AgentPet contributors"]
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[lib]
+name = "agentpet_desktop_lib"
+crate-type = ["rlib"]
+
+[[bin]]
+name = "agentpet-desktop"
+path = "src/main.rs"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+base64.workspace = true
+agentpet-core = { path = "../../../crates/agentpet-core" }
+agentpet-pet-engine = { path = "../../../crates/pet-engine" }
+agentpet-pet-pack = { path = "../../../crates/pet-pack" }
+serde.workspace = true
+tauri = { version = "2", features = [] }
+tauri-plugin-dialog = "2"

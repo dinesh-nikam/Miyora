@@ -1,0 +1,12 @@
+{
+  "state_animations": [
+    { "session_state": "idle", "default_animation": "idle", "fallback": "idle" },
+    { "session_state": "working", "default_animation": "working", "fallback": "idle" },
+    { "session_state": "waiting", "default_animation": "waiting", "fallback": "working" },
+    { "session_state": "done", "default_animation": "celebrate", "fallback": "idle" },
+    { "session_state": "level_up", "default_animation": "level-up", "fallback": "celebrate" },
+    { "session_state": "evolving", "default_animation": "evolving", "fallback": "level-up" },
+    { "session_state": "hungry", "default_animation": "hungry", "fallback": "idle" },
+    { "session_state": "sleeping", "default_animation": "sleeping", "fallback": "idle" }
+  ]
+}

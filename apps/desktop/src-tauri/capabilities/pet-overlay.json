@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "pet-overlay",
+  "description": "Window controls required by the local desktop companion overlay.",
+  "windows": ["pet-overlay"],
+  "permissions": ["core:default", "core:window:allow-hide", "core:window:allow-start-dragging"]
+}
