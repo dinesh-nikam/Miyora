@@ -7,7 +7,9 @@ use std::{
 use agentpet_pet_engine::{
     EngineContext, PetEngine, PetState, SessionReaction, Stimulus, Transition,
 };
-use agentpet_pet_pack::{PetPackError, PetPackManifest, ValidationLimits};
+use agentpet_pet_pack::{
+    signature::TrustedSigner, PetPackError, PetPackManifest, ValidationLimits,
+};
 use chrono::{DateTime, Utc};
 use rusqlite::{params, Connection, OptionalExtension, TransactionBehavior};
 use serde::{Deserialize, Serialize};
@@ -265,12 +267,19 @@ pub enum CoreError {
     Serialization(#[from] serde_json::Error),
     #[error("PetPack install failed ({primary}) and installed files could not be rolled back ({cleanup})")]
     PackInstallRollback { primary: String, cleanup: String },
+    #[error("trusted signer configuration is invalid: {0}")]
+    TrustedSignerConfig(String),
+    #[error("hook event is invalid: {0}")]
+    InvalidHookEvent(String),
 }
 
 #[derive(Clone)]
 pub struct Core {
     connection: Arc<Mutex<Connection>>,
     engine: PetEngine,
+    /// Local application data directory used for non-database configuration
+    /// such as trusted signing keys. `None` for in-memory test databases.
+    data_dir: Option<PathBuf>,
 }
 
 impl Core {
@@ -288,6 +297,7 @@ impl Core {
         Ok(Self {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            data_dir: Some(data_dir.to_path_buf()),
         })
     }
 
@@ -303,6 +313,7 @@ impl Core {
         Ok(Self {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            data_dir: None,
         })
     }
 
@@ -947,6 +958,27 @@ impl Core {
         self.record_installed_pet_pack(installed)
     }
 
+    /// Installs a PetPack from a ZIP or tar.gz archive after validating every
+    /// entry and, when trusted signers are configured or `require_signature`
+    /// is set, verifying the detached `pet.sig` signature.
+    pub fn install_archive_pet_pack(
+        &self,
+        archive_path: &Path,
+        library_root: &Path,
+        trusted_signers: &[TrustedSigner],
+        require_signature: bool,
+    ) -> Result<PetPackManifest, CoreError> {
+        let installed = agentpet_pet_pack::archive::install_archive(
+            archive_path,
+            library_root,
+            ValidationLimits::default(),
+            agentpet_pet_pack::archive::ArchiveLimits::default(),
+            trusted_signers,
+            require_signature,
+        )?;
+        self.record_installed_pet_pack(installed)
+    }
+
     pub fn create_custom_pet_from_image(
         &self,
         image_path: &Path,
@@ -980,8 +1012,9 @@ impl Core {
             transaction.execute(
                 "INSERT INTO installed_pet_packs(
                     pack_id, version, name, creator, license, source,
-                    installed_path, manifest_json, installed_at
-                 ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9)",
+                    installed_path, manifest_json, installed_at,
+                    install_source, content_hash, signature_key_id
+                 ) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, ?12)",
                 params![
                     installed.manifest.id,
                     installed.manifest.version,
@@ -992,6 +1025,9 @@ impl Core {
                     installed_path,
                     manifest_json,
                     Utc::now().to_rfc3339(),
+                    installed.install_source,
+                    installed.content_hash,
+                    installed.signature_key_id,
                 ],
             )?;
             transaction.commit()?;

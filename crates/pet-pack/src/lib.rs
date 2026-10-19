@@ -1098,8 +1098,10 @@ mod tests {
                 ("pet.sig", signature_doc.as_bytes()),
             ],
         );
-        let trusted = vec![signature::TrustedSigner::from_base64("test.registry", &public_key)
-            .expect("trusted signer decodes")];
+        let trusted = vec![
+            signature::TrustedSigner::from_base64("test.registry", &public_key)
+                .expect("trusted signer decodes"),
+        ];
         let installed = archive::install_archive(
             &signed,
             &temporary.path().join("library"),
