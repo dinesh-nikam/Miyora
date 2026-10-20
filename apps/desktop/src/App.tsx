@@ -114,12 +114,12 @@ const SESSION_HISTORY_PAGE_SIZE = 8;
 
 const initialSnapshot: RuntimeSnapshot = {
   petState: "idle",
-  selectedPetId: "nezuko-companion",
+  selectedPetId: "agentpet.starter-aoi@1.0.0",
   lastEventAt: new Date().toISOString(),
 };
 
 const initialProgression: ProgressionSnapshot = {
-  petId: "nezuko-companion",
+  petId: "agentpet.starter-aoi@1.0.0",
   totalXp: 18450,
   level: 4,
   xpIntoLevel: 2450,
@@ -135,6 +135,70 @@ const defaultSpans: SpanTraceItem[] = [
   { id: "span-06", name: "telemetry::token_meter::normalize", category: "Telemetry", startOffsetMs: 340, durationMs: 78, status: "pass" },
 ];
 
+interface CompanionCollection {
+  id: string;
+  label: string;
+  slug: string;
+  description: string;
+  keywords: string[];
+}
+
+const COMPANION_COLLECTIONS: CompanionCollection[] = [
+  {
+    id: "all",
+    label: "ALL COMPANIONS",
+    slug: "all",
+    description: "Complete companion roster and verified PetPacks",
+    keywords: [],
+  },
+  {
+    id: "anime-manga",
+    label: "ANIME & MANGA",
+    slug: "anime-manga",
+    description: "Anime characters, Demon Slayer, and manga familiars",
+    keywords: ["anime", "manga", "nezuko", "kamado", "demon", "slayer", "vrm", "chibi", "otaku"],
+  },
+  {
+    id: "league-of-legends",
+    label: "LEAGUE OF LEGENDS",
+    slug: "league-of-legends",
+    description: "Runeterra champions, Poros, and Rift summons",
+    keywords: ["league", "legends", "lol", "poro", "jinx", "ahri", "teemo", "riot", "runeterra", "champion"],
+  },
+  {
+    id: "pokemon-pals",
+    label: "POKEMON PALS",
+    slug: "pokemon-pals",
+    description: "Pocket monsters, companions, and creature pals",
+    keywords: ["pokemon", "pal", "pals", "pikachu", "eevee", "starter", "monster", "pocket"],
+  },
+  {
+    id: "studio-ghibli",
+    label: "STUDIO GHIBLI",
+    slug: "studio-ghibli",
+    description: "Forest spirits, Totoro, and Ghibli-inspired familiars",
+    keywords: ["ghibli", "totoro", "calcifer", "miyazaki", "spirit", "soot", "kodama", "haku"],
+  },
+  {
+    id: "gaming-icons",
+    label: "GAMING ICONS",
+    slug: "gaming-icons",
+    description: "Retro arcade heroes, platformers, and iconic gaming sprites",
+    keywords: ["gaming", "icons", "arcade", "retro", "pixel", "hero", "platformer", "dalek", "boss"],
+  },
+];
+
+function resolvePackCollection(pack: PetPackSummary): string {
+  const text = `${pack.name} ${pack.id} ${pack.creator} ${pack.license}`.toLowerCase();
+  for (const col of COMPANION_COLLECTIONS) {
+    if (col.id === "all") continue;
+    if (col.keywords.some((kw) => text.includes(kw))) {
+      return col.id;
+    }
+  }
+  return "anime-manga";
+}
+
 function App() {
   const isOverlayWindow = new URLSearchParams(window.location.search).get("overlay") === "1";
   const [snapshot, setSnapshot] = useState<RuntimeSnapshot>(initialSnapshot);
@@ -145,6 +209,16 @@ function App() {
   const [hasMoreSessions, setHasMoreSessions] = useState(false);
   const [loadingMoreSessions, setLoadingMoreSessions] = useState(false);
   const [customPetName, setCustomPetName] = useState("");
+  const [customPetCollection, setCustomPetCollection] = useState<string>("anime-manga");
+  const [selectedCollection, setSelectedCollection] = useState<string>("all");
+  const [customCollectionMap, setCustomCollectionMap] = useState<Record<string, string>>(() => {
+    try {
+      const raw = localStorage.getItem("agentpet_companion_collections");
+      return raw ? JSON.parse(raw) : {};
+    } catch {
+      return {};
+    }
+  });
   const [runtimeError, setRuntimeError] = useState<string | null>(null);
   const [packs, setPacks] = useState<PetPackSummary[]>([]);
   const [selectedAnimation, setSelectedAnimation] = useState<SelectedPetAnimation | null>(null);
@@ -158,16 +232,46 @@ function App() {
   const [activeSessionId, setActiveSessionId] = useState<string>("sess_0x8f4c2");
   const [activeSpanId, setActiveSpanId] = useState<string>("span-04");
 
+  const getPackCollection = useCallback(
+    (pack: PetPackSummary): string => {
+      return customCollectionMap[pack.selectionId] || customCollectionMap[pack.id] || resolvePackCollection(pack);
+    },
+    [customCollectionMap]
+  );
+
+  const setPackCollection = useCallback((packKey: string, collectionId: string) => {
+    setCustomCollectionMap((prev) => {
+      const next = { ...prev, [packKey]: collectionId };
+      try {
+        localStorage.setItem("agentpet_companion_collections", JSON.stringify(next));
+      } catch {
+        // Storage access gracefully handled
+      }
+      return next;
+    });
+  }, []);
+
+  const collectionCounts = useMemo(() => {
+    const counts: Record<string, number> = { all: packs.length };
+    for (const col of COMPANION_COLLECTIONS) {
+      if (col.id === "all") continue;
+      counts[col.id] = packs.filter((p) => getPackCollection(p) === col.id).length;
+    }
+    return counts;
+  }, [getPackCollection, packs]);
+
   const filteredPacks = useMemo(() => {
     const searchTerm = petSearch.trim().toLocaleLowerCase();
     return packs.filter((pack) => {
       if (selectedPetsOnly && pack.selectionId !== snapshot.selectedPetId) return false;
+      const packCol = getPackCollection(pack);
+      if (selectedCollection !== "all" && packCol !== selectedCollection) return false;
       if (!searchTerm) return true;
-      return [pack.name, pack.creator, pack.license, pack.id, pack.version].some((value) =>
+      return [pack.name, pack.creator, pack.license, pack.id, pack.version, packCol].some((value) =>
         value.toLocaleLowerCase().includes(searchTerm)
       );
     });
-  }, [packs, petSearch, selectedPetsOnly, snapshot.selectedPetId]);
+  }, [getPackCollection, packs, petSearch, selectedCollection, selectedPetsOnly, snapshot.selectedPetId]);
 
   const refresh = useCallback(async () => {
     try {
@@ -310,6 +414,8 @@ function App() {
         imagePath: selection,
         name: customPetName.trim(),
       });
+      setPackCollection(created.selectionId, customPetCollection);
+      setPackCollection(created.id, customPetCollection);
       await invoke("select_pet", { packId: created.selectionId });
       setCustomPetName("");
       await refresh();
@@ -376,7 +482,7 @@ function App() {
           )}
         </div>
         <span className="overlay-state">
-          {selectedAnimation?.petName ?? "NEZUKO"} · {snapshot.petState.toUpperCase().replaceAll("_", " ")}
+          {selectedAnimation?.petName ?? "AOI"} · {snapshot.petState.toUpperCase().replaceAll("_", " ")}
         </span>
         {runtimeError && (
           <span className="overlay-error" role="alert">
@@ -596,23 +702,62 @@ function App() {
             </div>
           </div>
 
-          <div className="library-input-group">
-            <label htmlFor="custom-companion-name">Companion Designation</label>
-            <input
-              id="custom-companion-name"
-              className="input-tech"
-              value={customPetName}
-              maxLength={120}
-              onChange={(e) => setCustomPetName(e.currentTarget.value)}
-              placeholder="e.g. Nezuko Kamado, Dalek Sentinel"
-            />
+          <div className="library-input-row">
+            <div className="library-input-group library-name-group">
+              <label htmlFor="custom-companion-name">Companion Designation</label>
+              <input
+                id="custom-companion-name"
+                className="input-tech"
+                value={customPetName}
+                maxLength={120}
+                onChange={(e) => setCustomPetName(e.currentTarget.value)}
+                placeholder="e.g. Nezuko Kamado, Ahri, Pikachu, Totoro"
+              />
+            </div>
+            <div className="library-input-group library-collection-group">
+              <label htmlFor="custom-companion-collection">Target Collection</label>
+              <select
+                id="custom-companion-collection"
+                className="input-tech select-tech"
+                value={customPetCollection}
+                onChange={(e) => setCustomPetCollection(e.currentTarget.value)}
+              >
+                {COMPANION_COLLECTIONS.filter((c) => c.id !== "all").map((col) => (
+                  <option key={col.id} value={col.id}>
+                    {col.label}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {/* Collection Filter Tabs */}
+          <div className="collection-tabs-bar" role="tablist" aria-label="Companion Collections">
+            {COMPANION_COLLECTIONS.map((col) => {
+              const isActive = selectedCollection === col.id;
+              const count = collectionCounts[col.id] ?? 0;
+              return (
+                <button
+                  key={col.id}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  className={`collection-tab-btn ${isActive ? "active" : ""}`}
+                  onClick={() => setSelectedCollection(col.id)}
+                >
+                  <span className="collection-tab-label">{col.label}</span>
+                  <span className={`collection-tab-count ${count > 0 ? "has-items" : ""}`}>
+                    {count}
+                  </span>
+                </button>
+              );
+            })}
           </div>
 
           <div className="library-filter-strip">
             <input
               type="search"
-              className="input-tech"
-              style={{ width: "320px" }}
+              className="input-tech library-search-input"
               value={petSearch}
               onChange={(e) => setPetSearch(e.currentTarget.value)}
               placeholder="Search id, name, creator, license…"
@@ -634,25 +779,42 @@ function App() {
           </div>
 
           {filteredPacks.length === 0 ? (
-            <div
-              style={{
-                border: "1px dashed rgba(255, 255, 255, 0.145)",
-                background: "#0a0a0a",
-                padding: "48px 24px",
-                textAlign: "center",
-              }}
-            >
-              <p style={{ fontFamily: "var(--font-mono)", color: "#999999", marginBottom: "16px" }}>
-                NO COMPANIONS FOUND IN LOCAL REGISTRY
+            <div className="collection-empty-box">
+              <div className="v-chip status-warn" style={{ marginBottom: "12px" }}>
+                <span className="v-chip-dot" />
+                <span>EMPTY REGISTRY</span>
+              </div>
+              <h3>
+                {selectedCollection === "all"
+                  ? "NO COMPANIONS FOUND IN LOCAL REGISTRY"
+                  : `NO COMPANIONS IN ${COMPANION_COLLECTIONS.find((c) => c.id === selectedCollection)?.label}`}
+              </h3>
+              <p>
+                {selectedCollection === "all"
+                  ? "Import an atomic PetPack directory or normalize a character sprite to populate your desktop companion library."
+                  : `Assign or create a companion for ${COMPANION_COLLECTIONS.find((c) => c.id === selectedCollection)?.label} to activate here.`}
               </p>
-              <button type="button" className="btn-square" onClick={importPetPack} disabled={busy}>
-                SELECT PETPACK DIRECTORY
-              </button>
+              <div style={{ display: "flex", gap: "10px", justifyContent: "center", marginTop: "16px" }}>
+                <button type="button" className="btn-square" onClick={importPetPack} disabled={busy}>
+                  IMPORT PETPACK FOLDER
+                </button>
+                {selectedCollection !== "all" && (
+                  <button
+                    type="button"
+                    className="btn-square btn-square-secondary"
+                    onClick={() => setSelectedCollection("all")}
+                  >
+                    SHOW ALL COLLECTIONS
+                  </button>
+                )}
+              </div>
             </div>
           ) : (
             <div className="pet-cards-grid">
               {filteredPacks.map((pack) => {
                 const isSelected = snapshot.selectedPetId === pack.selectionId;
+                const packColId = getPackCollection(pack);
+                const packCol = COMPANION_COLLECTIONS.find((c) => c.id === packColId);
                 return (
                   <article key={pack.selectionId} className={`pet-tech-card ${isSelected ? "selected" : ""}`}>
                     <div className="pet-tech-art">
@@ -667,7 +829,12 @@ function App() {
                     <div className="pet-tech-meta">
                       <div>
                         <h3>{pack.name}</h3>
-                        <p className="pet-tech-creator">BY {pack.creator.toUpperCase()}</p>
+                        <div style={{ display: "flex", alignItems: "center", gap: "8px", marginTop: "4px" }}>
+                          <span className="pet-collection-badge">
+                            {packCol?.label ?? "UNASSIGNED"}
+                          </span>
+                          <span className="pet-tech-creator">BY {pack.creator.toUpperCase()}</span>
+                        </div>
                       </div>
                       <span className="v-chip status-pass">{pack.license.toUpperCase()}</span>
                     </div>
@@ -1101,7 +1268,7 @@ function App() {
                   </div>
                   <div className="diff-line">  [sqlite:wal] checkpoint committed @ tx_9918a</div>
                   <div className="diff-line diff-line-modified">
-                    ~ [companion:nezuko] frame_rate locked @ 12fps loop=true
+                    ~ [companion:aoi] frame_rate locked @ 12fps loop=true
                   </div>
                 </div>
               </article>
@@ -1118,39 +1285,22 @@ function App() {
                 </div>
               </div>
 
-              <div
-                style={{
-                  background: "#0a0a0a",
-                  border: "1px solid rgba(255, 255, 255, 0.145)",
-                  padding: "20px 24px",
-                }}
-              >
-                <div style={{ display: "grid", gap: "12px" }}>
+              <div className="xp-ledger-card">
+                <div className="xp-ledger-list">
                   {xpHistory.slice(0, 5).map((entry) => (
-                    <div
-                      key={entry.transactionId}
-                      style={{
-                        display: "flex",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        paddingBottom: "12px",
-                        borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-                        fontFamily: "var(--font-mono)",
-                        fontSize: "12px",
-                      }}
-                    >
-                      <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                    <div key={entry.transactionId} className="xp-ledger-row">
+                      <div className="xp-ledger-meta">
                         <div className="v-chip status-pass">
                           <span className="v-chip-dot" />
                           <span>+{entry.amount} XP</span>
                         </div>
-                        <span style={{ color: "#ffffff" }}>
+                        <span className="xp-ledger-source">
                           {entry.source === "session_completed"
                             ? "Agent session completed"
                             : entry.source.replaceAll("_", " ")}
                         </span>
                       </div>
-                      <span style={{ color: "#999999" }}>
+                      <span className="xp-ledger-timestamp">
                         {new Date(entry.createdAt).toLocaleDateString()} {new Date(entry.createdAt).toLocaleTimeString()}
                       </span>
                     </div>
@@ -1170,23 +1320,12 @@ function App() {
                 </div>
               </div>
 
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(260px, 1fr))", gap: "16px" }}>
+              <div className="achievements-grid">
                 {achievements.map((ach) => (
-                  <div
-                    key={ach.id}
-                    style={{
-                      background: "#0a0a0a",
-                      border: "1px solid rgba(255, 255, 255, 0.145)",
-                      padding: "20px",
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "space-between",
-                      minHeight: "140px",
-                    }}
-                  >
+                  <div key={ach.id} className="achievement-card">
                     <div>
-                      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "8px" }}>
-                        <span style={{ fontFamily: "var(--font-headline)", fontWeight: 500, fontSize: "15px", color: "#ffffff" }}>
+                      <div className="achievement-card-header">
+                        <span className="achievement-title">
                           {ach.title}
                         </span>
                         <span className={`v-chip ${ach.unlockedAt ? "status-pass" : "status-warn"}`}>
@@ -1194,11 +1333,11 @@ function App() {
                           <span>{ach.unlockedAt ? "UNLOCKED" : `${ach.progress}/${ach.threshold}`}</span>
                         </span>
                       </div>
-                      <p style={{ fontFamily: "var(--font-mono)", fontSize: "11px", color: "#999999", lineHeight: 1.5 }}>
+                      <p className="achievement-description">
                         {ach.description}
                       </p>
                     </div>
-                    <div style={{ marginTop: "12px", fontFamily: "var(--font-mono)", fontSize: "11px", color: "#52a8ff" }}>
+                    <div className="achievement-reward">
                       REWARD: +{ach.rewardXp} XP
                     </div>
                   </div>

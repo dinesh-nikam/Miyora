@@ -7,7 +7,8 @@ use std::{
     time::Instant,
 };
 
-use agentpet_core::{default_data_directory, Core, SessionOutcome};
+use agentpet_adapters::{adapter_by_id, ADAPTERS};
+use agentpet_core::{default_data_directory, Core, HookInstallRecord, SessionOutcome};
 use uuid::Uuid;
 
 const STATUS_SESSION_LIMIT: usize = 20;
@@ -22,6 +23,7 @@ fn run() -> i32 {
     match args.next().as_deref() {
         Some(command) if command == OsStr::new("run") => run_wrapped_command(args),
         Some(command) if command == OsStr::new("agents") => run_agents_command(args),
+        Some(command) if command == OsStr::new("hook") => run_hook_command(args),
         Some(command) if command == OsStr::new("pets") => run_pets_command(args),
         Some(command) if command == OsStr::new("status") => run_status(args),
         Some(command) if command == OsStr::new("doctor") => run_doctor(args),
@@ -245,47 +247,12 @@ fn child_exit_code(status: &std::process::ExitStatus) -> i32 {
     }
 }
 
-#[derive(Clone, Copy)]
-struct AgentCli {
-    id: &'static str,
-    label: &'static str,
-    executable: &'static str,
-}
-
-const AGENT_CLIS: &[AgentCli] = &[
-    AgentCli {
-        id: "claude_code",
-        label: "Claude Code",
-        executable: "claude",
-    },
-    AgentCli {
-        id: "codex",
-        label: "OpenAI Codex CLI",
-        executable: "codex",
-    },
-    AgentCli {
-        id: "gemini_cli",
-        label: "Gemini CLI",
-        executable: "gemini",
-    },
-    AgentCli {
-        id: "aider",
-        label: "Aider",
-        executable: "aider",
-    },
-    AgentCli {
-        id: "opencode",
-        label: "OpenCode",
-        executable: "opencode",
-    },
-];
-
 fn detect_agent_id(program: &OsStr) -> Option<&'static str> {
     let executable = Path::new(program)
         .file_stem()?
         .to_str()?
         .to_ascii_lowercase();
-    AGENT_CLIS
+    ADAPTERS
         .iter()
         .find(|agent| agent.executable == executable)
         .map(|agent| agent.id)
@@ -334,22 +301,274 @@ fn is_executable_file(path: &Path) -> bool {
 }
 
 fn run_agents_command(mut args: impl Iterator<Item = OsString>) -> i32 {
-    if args.next().as_deref() != Some(OsStr::new("list")) || args.next().is_some() {
+    let Some(subcommand) = args.next() else {
+        eprintln!("agentpet: usage: agentpet agents list | agentpet agents install <id> | agentpet agents remove <id> | agentpet agents status [<id>]");
+        return 2;
+    };
+    match subcommand.to_str() {
+        Some("list") => run_agents_list(args),
+        Some("install") => run_agents_install(args),
+        Some("remove") => run_agents_remove(args),
+        Some("status") => run_agents_status(args),
+        _ => {
+            eprintln!("agentpet: usage: agentpet agents list | agentpet agents install <id> | agentpet agents remove <id> | agentpet agents status [<id>]");
+            2
+        }
+    }
+}
+
+fn run_agents_list(mut args: impl Iterator<Item = OsString>) -> i32 {
+    if args.next().is_some() {
         eprintln!("agentpet: usage: agentpet agents list");
         return 2;
     }
-    println!("PATH discovery only; this does not install or configure native agent hooks.");
-    for agent in AGENT_CLIS {
+    println!("PATH discovery is informational only; native hook state comes from the local database.");
+    for agent in ADAPTERS {
         match find_on_path(agent.executable) {
             Some(path) => println!(
                 "Found {} PATH entry at {} (launch compatibility is not verified)",
-                agent.label,
+                agent.display_name,
                 path.display()
             ),
-            None => println!("Not found: {} ({})", agent.label, agent.executable),
+            None => println!("Not found: {} ({})", agent.display_name, agent.executable),
         }
     }
+    let Ok(core) = Core::open_default() else {
+        println!("Hook state: local database unavailable");
+        return 0;
+    };
+    match core.hook_installs() {
+        Ok(records) if !records.is_empty() => {
+            for record in records {
+                println!(
+                    "Hook {} at {}: {}",
+                    record.adapter_id, record.config_path, record.status
+                );
+            }
+        }
+        Ok(_) => println!("Hook state: no native hooks recorded"),
+        Err(error) => println!("Hook state: unavailable ({error})"),
+    }
     0
+}
+
+
+fn hook_command() -> &'static str {
+    "agentpet hook --adapter claude_code"
+}
+
+fn run_agents_install(mut args: impl Iterator<Item = OsString>) -> i32 {
+    let Some(adapter_id) = args.next().and_then(|v| v.into_string().ok()) else {
+        eprintln!("agentpet: usage: agentpet agents install <id>");
+        return 2;
+    };
+    if args.next().is_some() {
+        eprintln!("agentpet: usage: agentpet agents install <id>");
+        return 2;
+    }
+    let Some(adapter) = adapter_by_id(&adapter_id) else {
+        eprintln!("agentpet: unknown agent id `{adapter_id}`");
+        return 2;
+    };
+    if !adapter.native_hook {
+        eprintln!("agentpet: {} has no native hook; use `agentpet run`", adapter.display_name);
+        return 2;
+    }
+    let core = match open_local_core() {
+        Ok(core) => core,
+        Err(code) => return code,
+    };
+    install_claude_hook(&core, adapter.display_name)
+}
+
+fn install_claude_hook(core: &Core, display_name: &str) -> i32 {
+    use agentpet_adapters::claude_code;
+    let Some(settings) = claude_code::default_settings_path() else {
+        eprintln!("agentpet: HOME is unavailable; cannot locate Claude Code settings");
+        return 1;
+    };
+    match claude_code::install_hook(&settings, hook_command()) {
+        Ok(report) => {
+            let backup = report.backup_path.map(|p| p.display().to_string());
+            let record = HookInstallRecord {
+                adapter_id: claude_code::ADAPTER_ID.to_owned(),
+                config_path: report.config_path.display().to_string(),
+                backup_path: backup.clone(),
+                installed_at: chrono::Utc::now().to_rfc3339(),
+                status: "installed".to_owned(),
+            };
+            if let Err(error) = core.record_hook_install(&record) {
+                eprintln!("agentpet: hook updated but state was not recorded: {error}");
+                return 1;
+            }
+            match backup {
+                Some(path) => println!("{display_name} hook installed (backup at {path})"),
+                None => println!("{display_name} hook installed"),
+            }
+            0
+        }
+        Err(error) => {
+            eprintln!("agentpet: hook install failed: {error}");
+            1
+        }
+    }
+}
+
+fn run_agents_remove(mut args: impl Iterator<Item = OsString>) -> i32 {
+    let Some(adapter_id) = args.next().and_then(|v| v.into_string().ok()) else {
+        eprintln!("agentpet: usage: agentpet agents remove <id>");
+        return 2;
+    };
+    if args.next().is_some() {
+        eprintln!("agentpet: usage: agentpet agents remove <id>");
+        return 2;
+    }
+    let Some(adapter) = adapter_by_id(&adapter_id) else {
+        eprintln!("agentpet: unknown agent id `{adapter_id}`");
+        return 2;
+    };
+    let core = match open_local_core() {
+        Ok(core) => core,
+        Err(code) => return code,
+    };
+    remove_claude_hook(&core, adapter.display_name)
+}
+
+fn remove_claude_hook(core: &Core, display_name: &str) -> i32 {
+    use agentpet_adapters::claude_code;
+    let Some(settings) = claude_code::default_settings_path() else {
+        eprintln!("agentpet: HOME is unavailable; cannot locate Claude Code settings");
+        return 1;
+    };
+    match claude_code::uninstall_hook(&settings, hook_command()) {
+        Ok(true) => println!("{display_name} hook removed; unrelated settings preserved"),
+        Ok(false) => println!("{display_name} hook was not installed; nothing changed"),
+        Err(error) => {
+            eprintln!("agentpet: hook removal failed: {error}");
+            return 1;
+        }
+    }
+    let record = HookInstallRecord {
+        adapter_id: claude_code::ADAPTER_ID.to_owned(),
+        config_path: settings.display().to_string(),
+        backup_path: None,
+        installed_at: chrono::Utc::now().to_rfc3339(),
+        status: "removed".to_owned(),
+    };
+    if let Err(error) = core.record_hook_install(&record) {
+        eprintln!("agentpet: hook state could not be recorded: {error}");
+        return 1;
+    }
+    0
+}
+
+fn run_agents_status(mut args: impl Iterator<Item = OsString>) -> i32 {
+    let requested = args.next().and_then(|v| v.into_string().ok());
+    if args.next().is_some() {
+        eprintln!("agentpet: usage: agentpet agents status [<id>]");
+        return 2;
+    }
+    if requested.as_deref().is_some_and(|id| adapter_by_id(id).is_none()) {
+        eprintln!("agentpet: unknown agent id");
+        return 2;
+    }
+    let core = match open_local_core() {
+        Ok(core) => core,
+        Err(code) => return code,
+    };
+    let installs = match core.hook_installs() {
+        Ok(installs) => installs,
+        Err(error) => {
+            eprintln!("agentpet: hook state is unavailable: {error}");
+            return 1;
+        }
+    };
+    for agent in ADAPTERS {
+        if requested.as_deref().is_some_and(|id| id != agent.id) {
+            continue;
+        }
+        let recorded = installs
+            .iter()
+            .find(|entry| entry.adapter_id == agent.id)
+            .map(|entry| entry.status.as_str())
+            .unwrap_or("never-installed");
+        let live = claude_live_state(agent.id);
+        println!("{} ({}): record `{recorded}`, settings `{live}`", agent.display_name, agent.id);
+    }
+    0
+}
+
+fn claude_live_state(adapter_id: &str) -> &'static str {
+    use agentpet_adapters::claude_code;
+    if adapter_id != claude_code::ADAPTER_ID {
+        return "n/a";
+    }
+    let Some(settings) = claude_code::default_settings_path() else {
+        return "unknown";
+    };
+    match claude_code::is_installed(&settings, hook_command()) {
+        Ok(true) => "present",
+        Ok(false) => "absent",
+        Err(_) => "unreadable",
+    }
+}
+
+fn run_hook_command(mut args: impl Iterator<Item = OsString>) -> i32 {
+    let mut adapter_id: Option<String> = None;
+    while let Some(arg) = args.next() {
+        if arg == OsStr::new("--adapter") {
+            let Some(value) = args.next().and_then(|v| v.into_string().ok()) else {
+                eprintln!("agentpet: usage: agentpet hook --adapter claude_code < payload.json");
+                return 2;
+            };
+            adapter_id = Some(value);
+        } else {
+            eprintln!("agentpet: usage: agentpet hook --adapter claude_code < payload.json");
+            return 2;
+        }
+    }
+    if adapter_id.as_deref() != Some(agentpet_adapters::claude_code::ADAPTER_ID) {
+        eprintln!("agentpet: usage: agentpet hook --adapter claude_code < payload.json");
+        return 2;
+    }
+    use std::io::Read;
+    let mut input = Vec::new();
+    if let Err(error) = std::io::stdin().lock().take(1_048_576).read_to_end(&mut input) {
+        eprintln!("agentpet: hook payload could not be read: {error}");
+        return 1;
+    }
+    let event = match agentpet_adapters::claude_code::parse_hook_payload(&input) {
+        Ok(event) => event,
+        Err(error) => {
+            eprintln!("agentpet: hook payload rejected: {error}");
+            return 1;
+        }
+    };
+    let core = match open_local_core() {
+        Ok(core) => core,
+        Err(code) => return code,
+    };
+    let hook_event = agentpet_adapters::ipc::to_hook_event(&event);
+    match core.record_hook_event(&hook_event) {
+        Ok(outcome) => {
+            println!("hook event {:?} recorded", outcome_label(&outcome));
+            0
+        }
+        Err(error) => {
+            eprintln!("agentpet: hook event could not be persisted: {error}");
+            1
+        }
+    }
+}
+
+fn outcome_label(outcome: &agentpet_core::HookEventOutcome) -> &'static str {
+    match outcome {
+        agentpet_core::HookEventOutcome::Accepted => "accepted",
+        agentpet_core::HookEventOutcome::Duplicate => "duplicate",
+        agentpet_core::HookEventOutcome::SessionStarted => "session_started",
+        agentpet_core::HookEventOutcome::SessionCompleted { .. } => "session_completed",
+        agentpet_core::HookEventOutcome::SessionFailed => "session_failed",
+    }
 }
 
 fn open_local_core() -> Result<Core, i32> {
@@ -477,17 +696,31 @@ fn run_doctor(mut args: impl Iterator<Item = OsString>) -> i32 {
             failed = true;
         }
     }
-    for agent in AGENT_CLIS {
+    for agent in ADAPTERS {
         match find_on_path(agent.executable) {
             Some(path) => println!(
                 "[OK] Agent CLI PATH entry found: {} ({})",
-                agent.label,
+                agent.display_name,
                 path.display()
             ),
-            None => println!("[WARN] Optional agent CLI not found: {}", agent.label),
+            None => println!("[WARN] Optional agent CLI not found: {}", agent.display_name),
         }
     }
-    println!("[WARN] Native hooks, cloud sync, and credential-store checks are not implemented.");
+    match Core::open_default() {
+        Ok(core) => match core.hook_installs() {
+            Ok(records) => {
+                for record in records.iter().filter(|r| r.status == "installed") {
+                    println!("[OK] Native hook installed: {} ({})", record.adapter_id, record.config_path);
+                }
+                if !records.iter().any(|r| r.status == "installed") {
+                    println!("[WARN] No native hooks installed");
+                }
+            }
+            Err(error) => println!("[WARN] Hook state unavailable: {error}"),
+        },
+        Err(_) => println!("[WARN] Hook state unavailable: local database could not be opened"),
+    }
+    println!("[WARN] Cloud sync and credential-store checks are not implemented.");
     if failed {
         1
     } else {
@@ -496,7 +729,7 @@ fn run_doctor(mut args: impl Iterator<Item = OsString>) -> i32 {
 }
 
 fn print_help() {
-    println!("AgentPet local CLI\n\nUSAGE:\n  agentpet run -- <command> [args...]\n  agentpet status\n  agentpet pets list\n  agentpet agents list\n  agentpet doctor\n");
+    println!("AgentPet local CLI\n\nUSAGE:\n  agentpet run -- <command> [args...]\n  agentpet status\n  agentpet pets list\n  agentpet agents list\n  agentpet agents install <id>\n  agentpet agents remove <id>\n  agentpet agents status [<id>]\n  agentpet hook --adapter claude_code < payload.json\n  agentpet doctor\n");
 }
 
 #[cfg(test)]

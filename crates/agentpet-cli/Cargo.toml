@@ -12,4 +12,5 @@ path = "src/main.rs"
 [dependencies]
 agentpet-adapters = { path = "../agentpet-adapters" }
 agentpet-core = { path = "../agentpet-core" }
+chrono.workspace = true
 uuid.workspace = true

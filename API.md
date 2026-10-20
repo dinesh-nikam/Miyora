@@ -55,6 +55,16 @@ Use a versioned JSON envelope over a same-user Unix domain socket (macOS/Linux) 
 
 The receiver authenticates the local peer, limits frame size and rate, validates timestamps/schema, deduplicates event IDs, and returns a structured acknowledgement. Never accept arbitrary filesystem paths or shell commands in event payloads. Protocol compatibility is explicit; unsupported versions return `PROTOCOL_VERSION_UNSUPPORTED`.
 
+### Transport and handshake (implemented)
+
+The transport lives in the `agentpet-ipc` crate and is shared by every platform.
+
+- Endpoint: Windows named pipe `\\.\pipe\dev.agentpet.desktop` with remote clients rejected; a Unix domain socket `agentpet.sock` inside the application data directory, created with owner-only mode `0600` and removed on shutdown.
+- Framing: a 4-byte big-endian length header followed by the payload. The declared length is validated against a 1 MiB limit before any allocation, so an oversized or truncated frame never causes unbounded buffering.
+- Authentication: both peers prove knowledge of a per-install shared secret with HMAC-SHA256 before any protocol message is exchanged. The server sends a challenge nonce, the client answers with an HMAC over the challenge nonce and a client nonce, and the server closes with an HMAC over both nonces. A rejected client answer still receives the server proof so both peers reach the same verdict. A mismatched protocol version returns `PROTOCOL_VERSION_UNSUPPORTED`.
+
+The shared secret is generated on first use and stored in a restricted local file; the secret value is never logged, and `Debug` output is redacted.
+
 ## Cloud REST API
 
 All endpoints are under `/api/v1`. Planned resource groups include:
