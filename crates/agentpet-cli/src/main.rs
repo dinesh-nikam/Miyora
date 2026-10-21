@@ -27,6 +27,9 @@ fn run() -> i32 {
         Some(command) if command == OsStr::new("pets") => run_pets_command(args),
         Some(command) if command == OsStr::new("status") => run_status(args),
         Some(command) if command == OsStr::new("doctor") => run_doctor(args),
+        Some(command) if command == OsStr::new("verify-ledger") => run_verify_ledger(args),
+        Some(command) if command == OsStr::new("statusline") => run_statusline(args),
+        Some(command) if command == OsStr::new("pack") => run_pack_command(args),
         Some(command) if command == OsStr::new("--help") || command == OsStr::new("help") => {
             print_help();
             0
@@ -322,7 +325,9 @@ fn run_agents_list(mut args: impl Iterator<Item = OsString>) -> i32 {
         eprintln!("agentpet: usage: agentpet agents list");
         return 2;
     }
-    println!("PATH discovery is informational only; native hook state comes from the local database.");
+    println!(
+        "PATH discovery is informational only; native hook state comes from the local database."
+    );
     for agent in ADAPTERS {
         match find_on_path(agent.executable) {
             Some(path) => println!(
@@ -352,7 +357,6 @@ fn run_agents_list(mut args: impl Iterator<Item = OsString>) -> i32 {
     0
 }
 
-
 fn hook_command() -> &'static str {
     "agentpet hook --adapter claude_code"
 }
@@ -371,7 +375,10 @@ fn run_agents_install(mut args: impl Iterator<Item = OsString>) -> i32 {
         return 2;
     };
     if !adapter.native_hook {
-        eprintln!("agentpet: {} has no native hook; use `agentpet run`", adapter.display_name);
+        eprintln!(
+            "agentpet: {} has no native hook; use `agentpet run`",
+            adapter.display_name
+        );
         return 2;
     }
     let core = match open_local_core() {
@@ -384,7 +391,9 @@ fn run_agents_install(mut args: impl Iterator<Item = OsString>) -> i32 {
 fn install_claude_hook(core: &Core, display_name: &str) -> i32 {
     use agentpet_adapters::claude_code;
     let Some(settings) = claude_code::default_settings_path() else {
-        eprintln!("agentpet: HOME is unavailable; cannot locate Claude Code settings");
+        eprintln!(
+            "agentpet: user home directory is unavailable; cannot locate Claude Code settings"
+        );
         return 1;
     };
     match claude_code::install_hook(&settings, hook_command()) {
@@ -437,7 +446,9 @@ fn run_agents_remove(mut args: impl Iterator<Item = OsString>) -> i32 {
 fn remove_claude_hook(core: &Core, display_name: &str) -> i32 {
     use agentpet_adapters::claude_code;
     let Some(settings) = claude_code::default_settings_path() else {
-        eprintln!("agentpet: HOME is unavailable; cannot locate Claude Code settings");
+        eprintln!(
+            "agentpet: user home directory is unavailable; cannot locate Claude Code settings"
+        );
         return 1;
     };
     match claude_code::uninstall_hook(&settings, hook_command()) {
@@ -468,7 +479,10 @@ fn run_agents_status(mut args: impl Iterator<Item = OsString>) -> i32 {
         eprintln!("agentpet: usage: agentpet agents status [<id>]");
         return 2;
     }
-    if requested.as_deref().is_some_and(|id| adapter_by_id(id).is_none()) {
+    if requested
+        .as_deref()
+        .is_some_and(|id| adapter_by_id(id).is_none())
+    {
         eprintln!("agentpet: unknown agent id");
         return 2;
     }
@@ -493,7 +507,10 @@ fn run_agents_status(mut args: impl Iterator<Item = OsString>) -> i32 {
             .map(|entry| entry.status.as_str())
             .unwrap_or("never-installed");
         let live = claude_live_state(agent.id);
-        println!("{} ({}): record `{recorded}`, settings `{live}`", agent.display_name, agent.id);
+        println!(
+            "{} ({}): record `{recorded}`, settings `{live}`",
+            agent.display_name, agent.id
+        );
     }
     0
 }
@@ -533,7 +550,11 @@ fn run_hook_command(mut args: impl Iterator<Item = OsString>) -> i32 {
     }
     use std::io::Read;
     let mut input = Vec::new();
-    if let Err(error) = std::io::stdin().lock().take(1_048_576).read_to_end(&mut input) {
+    if let Err(error) = std::io::stdin()
+        .lock()
+        .take(1_048_576)
+        .read_to_end(&mut input)
+    {
         eprintln!("agentpet: hook payload could not be read: {error}");
         return 1;
     }
@@ -703,14 +724,20 @@ fn run_doctor(mut args: impl Iterator<Item = OsString>) -> i32 {
                 agent.display_name,
                 path.display()
             ),
-            None => println!("[WARN] Optional agent CLI not found: {}", agent.display_name),
+            None => println!(
+                "[WARN] Optional agent CLI not found: {}",
+                agent.display_name
+            ),
         }
     }
     match Core::open_default() {
         Ok(core) => match core.hook_installs() {
             Ok(records) => {
                 for record in records.iter().filter(|r| r.status == "installed") {
-                    println!("[OK] Native hook installed: {} ({})", record.adapter_id, record.config_path);
+                    println!(
+                        "[OK] Native hook installed: {} ({})",
+                        record.adapter_id, record.config_path
+                    );
                 }
                 if !records.iter().any(|r| r.status == "installed") {
                     println!("[WARN] No native hooks installed");
@@ -728,8 +755,126 @@ fn run_doctor(mut args: impl Iterator<Item = OsString>) -> i32 {
     }
 }
 
+fn run_verify_ledger(mut _args: impl Iterator<Item = OsString>) -> i32 {
+    let core = match open_local_core() {
+        Ok(core) => core,
+        Err(code) => return code,
+    };
+    match core.verify_ledger() {
+        Ok(result) => {
+            if result.is_valid {
+                println!(
+                    "[OK] XP Ledger verified: {} entries in cryptographic chain (head: {})",
+                    result.total_entries, result.head_hash
+                );
+                0
+            } else {
+                eprintln!(
+                    "[FAIL] XP Ledger verification failed! Broken at entry {:?}: {}",
+                    result.broken_at_index,
+                    result.error_message.unwrap_or_default()
+                );
+                1
+            }
+        }
+        Err(error) => {
+            eprintln!("agentpet: ledger verification failed: {error}");
+            1
+        }
+    }
+}
+
+fn run_statusline(mut args: impl Iterator<Item = OsString>) -> i32 {
+    let mut chain_cmd: Option<String> = None;
+    while let Some(arg) = args.next() {
+        if arg == OsStr::new("--chain") {
+            chain_cmd = args.next().and_then(|v| v.into_string().ok());
+        }
+    }
+    use std::io::Read;
+    let mut input = Vec::new();
+    let _ = std::io::stdin()
+        .lock()
+        .take(256 * 1024)
+        .read_to_end(&mut input);
+    if let Ok(data_dir) = default_data_directory() {
+        let _ = std::fs::create_dir_all(&data_dir);
+        let _ = std::fs::write(data_dir.join("claude_statusline.json"), &input);
+    }
+    if let Some(cmd_str) = chain_cmd {
+        #[cfg(windows)]
+        let status = Command::new("cmd")
+            .args(["/c", &cmd_str])
+            .stdin(Stdio::piped())
+            .stdout(Stdio::inherit())
+            .stderr(Stdio::inherit())
+            .spawn()
+            .and_then(|mut child| {
+                if let Some(mut stdin) = child.stdin.take() {
+                    let _ = stdin.write_all(&input);
+                }
+                child.wait()
+            });
+        #[cfg(not(windows))]
+        let status = Command::new("sh")
+            .args(["-c", &cmd_str])
+            .stdin(Stdio::piped())
+            .stdout(Stdio::inherit())
+            .stderr(Stdio::inherit())
+            .spawn()
+            .and_then(|mut child| {
+                if let Some(mut stdin) = child.stdin.take() {
+                    let _ = stdin.write_all(&input);
+                }
+                child.wait()
+            });
+        if let Ok(s) = status {
+            return s.code().unwrap_or(0);
+        }
+    }
+    0
+}
+
+fn run_pack_command(mut args: impl Iterator<Item = OsString>) -> i32 {
+    let Some(sub) = args.next() else {
+        eprintln!("agentpet: usage: agentpet pack validate <path>");
+        return 2;
+    };
+    if sub == OsStr::new("validate") {
+        let Some(path_arg) = args.next() else {
+            eprintln!("agentpet: usage: agentpet pack validate <path>");
+            return 2;
+        };
+        let pack_path = Path::new(&path_arg);
+        match agentpet_pet_pack::PetPackManifest::load_and_validate(
+            pack_path,
+            agentpet_pet_pack::ValidationLimits::default(),
+        ) {
+            Ok(manifest) => {
+                println!(
+                    "[OK] Valid PetPack: {} ({}) by {}",
+                    manifest.name, manifest.id, manifest.creator
+                );
+                println!("  Version: {}", manifest.version);
+                println!("  License: {}", manifest.license);
+                println!("  Assets declared: {}", manifest.assets.len());
+                println!("  Animations declared: {}", manifest.animations.len());
+                println!("  State mappings: {}", manifest.state_mappings.len());
+                0
+            }
+            Err(error) => {
+                eprintln!("[FAIL] PetPack validation failed: {error}");
+                1
+            }
+        }
+    } else {
+        eprintln!("agentpet: unknown pack subcommand");
+        2
+    }
+}
+
 fn print_help() {
-    println!("AgentPet local CLI\n\nUSAGE:\n  agentpet run -- <command> [args...]\n  agentpet status\n  agentpet pets list\n  agentpet agents list\n  agentpet agents install <id>\n  agentpet agents remove <id>\n  agentpet agents status [<id>]\n  agentpet hook --adapter claude_code < payload.json\n  agentpet doctor\n");
+    println!("AgentPet local CLI\n\nUSAGE:\n  agentpet run -- <command> [args...]\n  agentpet status\n  agentpet pets list\n  agentpet agents list\n  agentpet agents install <id>\n  agentpet agents remove <id>\n  agentpet agents status [<id>]\n  agentpet hook --adapter claude_code < payload.json\n  agentpet verify-ledger\n  agentpet statusline [--chain \"<cmd>\"] < status.json\n  agentpet pack validate <path>\n  agentpet doctor\n");
 }
 
 #[cfg(test)]

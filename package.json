@@ -1,0 +1,13 @@
+{
+  "name": "agentpet",
+  "version": "0.1.0",
+  "private": true,
+  "description": "AgentPet (Miyora) - AI Agent Desktop Companion Platform",
+  "scripts": {
+    "dev": "npm --prefix apps/desktop run dev",
+    "build": "npm --prefix apps/desktop run build",
+    "tauri": "npm --prefix apps/desktop run tauri --",
+    "tauri:dev": "npm --prefix apps/desktop run tauri dev",
+    "tauri:build": "npm --prefix apps/desktop run tauri build"
+  }
+}

@@ -17,7 +17,8 @@ use thiserror::Error;
 use uuid::Uuid;
 
 const DATABASE_FILE: &str = "agentpet.sqlite3";
-const SCHEMA_VERSION: i64 = 7;
+pub const SIMULATED_DATABASE_FILE: &str = "agentpet_simulated.sqlite3";
+const SCHEMA_VERSION: i64 = 8;
 const SQLITE_BUSY_TIMEOUT: Duration = Duration::from_secs(5);
 const DEFAULT_SESSION_XP: i64 = 10;
 const DEFAULT_LEVEL_XP: i64 = 100;
@@ -227,6 +228,46 @@ pub struct InstalledPetPackSummary {
     pub name: String,
     pub creator: String,
     pub license: String,
+}
+
+pub const GENESIS_HASH: &str = "0000000000000000000000000000000000000000000000000000000000000000";
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct LedgerVerificationResult {
+    pub is_valid: bool,
+    pub total_entries: u64,
+    pub head_hash: String,
+    pub broken_at_index: Option<u64>,
+    pub error_message: Option<String>,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase")]
+pub struct StoredAgentEvent {
+    pub id: String,
+    pub event_type: String,
+    pub occurred_at: String,
+    pub source: String,
+    pub provider: String,
+    pub session_id: Option<String>,
+    pub project_id: Option<String>,
+    pub payload_json: Option<String>,
+    pub latency_ms: Option<u64>,
+}
+
+pub fn compute_ledger_hash(
+    prev_hash: &str,
+    idempotency_key: &str,
+    amount: i64,
+    pet_id: &str,
+    created_at: &str,
+) -> String {
+    use sha2::{Digest, Sha256};
+    let mut hasher = Sha256::new();
+    hasher
+        .update(format!("{prev_hash}:{idempotency_key}:{amount}:{pet_id}:{created_at}").as_bytes());
+    format!("{:x}", hasher.finalize())
 }
 
 #[allow(dead_code)]
@@ -580,6 +621,38 @@ impl Core {
             )?;
             transaction.commit()?;
         }
+        if current < 8 && target >= 8 {
+            let transaction = connection.unchecked_transaction()?;
+            transaction.execute_batch(
+                "CREATE TABLE IF NOT EXISTS xp_ledger (
+                    index_id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    entry_id TEXT UNIQUE NOT NULL,
+                    prev_hash TEXT NOT NULL,
+                    hash TEXT NOT NULL,
+                    provider TEXT NOT NULL,
+                    session_id TEXT NOT NULL,
+                    event_id TEXT NOT NULL,
+                    idempotency_key TEXT UNIQUE NOT NULL,
+                    pet_id TEXT NOT NULL,
+                    amount INTEGER NOT NULL CHECK(amount > 0),
+                    created_at TEXT NOT NULL,
+                    metadata_json TEXT NOT NULL
+                 );
+                 CREATE INDEX IF NOT EXISTS xp_ledger_pet_time_idx ON xp_ledger(pet_id, created_at);
+                 CREATE TRIGGER IF NOT EXISTS xp_ledger_no_update
+                    BEFORE UPDATE ON xp_ledger BEGIN SELECT RAISE(ABORT, 'XP ledger is immutable'); END;
+                 CREATE TRIGGER IF NOT EXISTS xp_ledger_no_delete
+                    BEFORE DELETE ON xp_ledger BEGIN SELECT RAISE(ABORT, 'XP ledger is immutable'); END;
+                 ALTER TABLE agent_events ADD COLUMN payload_json TEXT;
+                 ALTER TABLE agent_events ADD COLUMN provider TEXT NOT NULL DEFAULT 'universal';
+                 ALTER TABLE agent_events ADD COLUMN monotonic_ms INTEGER DEFAULT 0;",
+            )?;
+            transaction.execute(
+                "INSERT INTO schema_versions(version, applied_at) VALUES (?1, ?2)",
+                params![8, Utc::now().to_rfc3339()],
+            )?;
+            transaction.commit()?;
+        }
         Ok(())
     }
 
@@ -713,6 +786,147 @@ impl Core {
 
     pub fn recent_xp_transactions(&self) -> Result<Vec<XpTransaction>, CoreError> {
         self.xp_history(DEFAULT_XP_HISTORY_PAGE_SIZE, 0)
+    }
+
+    /// Opens the isolated database for simulate mode (`agentpet_simulated.sqlite3`).
+    pub fn open_simulated(data_dir: &Path) -> Result<Self, CoreError> {
+        std::fs::create_dir_all(data_dir).map_err(|error| {
+            CoreError::Database(rusqlite::Error::ToSqlConversionFailure(Box::new(error)))
+        })?;
+        let path = data_dir.join(SIMULATED_DATABASE_FILE);
+        let path = path.to_str().ok_or(CoreError::InvalidDatabasePath)?;
+        let connection = Connection::open(path)?;
+        connection.busy_timeout(SQLITE_BUSY_TIMEOUT)?;
+        connection.pragma_update(None, "foreign_keys", "ON")?;
+        connection.pragma_update(None, "journal_mode", "WAL")?;
+        Self::migrate(&connection)?;
+        Ok(Self {
+            connection: Arc::new(Mutex::new(connection)),
+            engine: PetEngine::default(),
+            data_dir: Some(data_dir.to_path_buf()),
+        })
+    }
+
+    /// Verifies the cryptographic integrity of the append-only XP ledger hash chain.
+    pub fn verify_ledger(&self) -> Result<LedgerVerificationResult, CoreError> {
+        let connection = self
+            .connection
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
+        let mut statement = connection.prepare(
+            "SELECT index_id, entry_id, prev_hash, hash, idempotency_key, pet_id, amount, created_at
+             FROM xp_ledger ORDER BY index_id ASC",
+        )?;
+        struct LedgerRow {
+            index_id: u64,
+            prev_hash: String,
+            hash: String,
+            idempotency_key: String,
+            pet_id: String,
+            amount: i64,
+            created_at: String,
+        }
+        let rows = statement.query_map([], |row| {
+            Ok(LedgerRow {
+                index_id: row.get(0)?,
+                prev_hash: row.get(2)?,
+                hash: row.get(3)?,
+                idempotency_key: row.get(4)?,
+                pet_id: row.get(5)?,
+                amount: row.get(6)?,
+                created_at: row.get(7)?,
+            })
+        })?;
+
+        let mut expected_prev = GENESIS_HASH.to_string();
+        let mut count = 0_u64;
+        let mut head = expected_prev.clone();
+
+        for row in rows {
+            let row = row?;
+            count += 1;
+            if row.prev_hash != expected_prev {
+                return Ok(LedgerVerificationResult {
+                    is_valid: false,
+                    total_entries: count,
+                    head_hash: row.hash,
+                    broken_at_index: Some(row.index_id),
+                    error_message: Some(format!(
+                        "Chain link broken at entry {}: expected prev_hash {}, found {}",
+                        row.index_id, expected_prev, row.prev_hash
+                    )),
+                });
+            }
+            let computed = compute_ledger_hash(
+                &row.prev_hash,
+                &row.idempotency_key,
+                row.amount,
+                &row.pet_id,
+                &row.created_at,
+            );
+            if computed != row.hash {
+                return Ok(LedgerVerificationResult {
+                    is_valid: false,
+                    total_entries: count,
+                    head_hash: row.hash.clone(),
+                    broken_at_index: Some(row.index_id),
+                    error_message: Some(format!(
+                        "Cryptographic hash invalid at entry {}: computed {}, found {}",
+                        row.index_id, computed, row.hash
+                    )),
+                });
+            }
+            expected_prev = row.hash.clone();
+            head = row.hash;
+        }
+
+        Ok(LedgerVerificationResult {
+            is_valid: true,
+            total_entries: count,
+            head_hash: head,
+            broken_at_index: None,
+            error_message: None,
+        })
+    }
+
+    /// Queries recent normalized agent events with measured event-to-render latency.
+    pub fn recent_events(&self, limit: usize) -> Result<Vec<StoredAgentEvent>, CoreError> {
+        let connection = self
+            .connection
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
+        let limit = limit.clamp(1, 100);
+        let mut statement = connection.prepare(
+            "SELECT id, event_type, occurred_at, source, COALESCE(provider, 'universal'),
+                    session_id, project_id, payload_json, accepted_at
+             FROM agent_events ORDER BY occurred_at DESC, id DESC LIMIT ?1",
+        )?;
+        let rows = statement.query_map([limit as i64], |row| {
+            let occurred_at: String = row.get(2)?;
+            let accepted_at: String = row.get(8)?;
+            let latency_ms = match (
+                DateTime::parse_from_rfc3339(&occurred_at),
+                DateTime::parse_from_rfc3339(&accepted_at),
+            ) {
+                (Ok(occ), Ok(acc)) => {
+                    let diff = acc.signed_duration_since(occ).num_milliseconds();
+                    Some(diff.max(0) as u64)
+                }
+                _ => None,
+            };
+            Ok(StoredAgentEvent {
+                id: row.get(0)?,
+                event_type: row.get(1)?,
+                occurred_at,
+                source: row.get(3)?,
+                provider: row.get(4)?,
+                session_id: row.get(5)?,
+                project_id: row.get(6)?,
+                payload_json: row.get(7)?,
+                latency_ms,
+            })
+        })?;
+        rows.collect::<Result<Vec<_>, _>>().map_err(CoreError::from)
     }
 
     pub fn session_history(
@@ -1426,6 +1640,36 @@ fn award_xp_transaction(
         params![Uuid::new_v4().to_string(), pet_id, source, source_id, amount, Utc::now().to_rfc3339(), metadata_json],
     )?;
     if inserted == 1 {
+        let last_hash: Option<String> = transaction
+            .query_row(
+                "SELECT hash FROM xp_ledger ORDER BY index_id DESC LIMIT 1",
+                [],
+                |row| row.get(0),
+            )
+            .optional()?;
+        let prev_hash = last_hash.unwrap_or_else(|| GENESIS_HASH.to_string());
+        let idempotency_key = format!("{source}:{source_id}");
+        let now_str = Utc::now().to_rfc3339();
+        let hash = compute_ledger_hash(&prev_hash, &idempotency_key, amount, pet_id, &now_str);
+        let entry_id = Uuid::new_v4().to_string();
+        let _ = transaction.execute(
+            "INSERT INTO xp_ledger(entry_id, prev_hash, hash, provider, session_id, event_id, idempotency_key, pet_id, amount, created_at, metadata_json)
+             VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)
+             ON CONFLICT(idempotency_key) DO NOTHING",
+            params![
+                entry_id,
+                prev_hash,
+                hash,
+                source,
+                source_id,
+                entry_id,
+                idempotency_key,
+                pet_id,
+                amount,
+                now_str,
+                metadata_json
+            ],
+        );
         let previous_level: i64 = transaction.query_row(
             "SELECT COALESCE((SELECT level FROM pet_progression WHERE pet_id = ?1), 1)",
             [pet_id],
@@ -2229,5 +2473,48 @@ mod tests {
         assert!(connection
             .execute("DELETE FROM xp_transactions", [])
             .is_err());
+    }
+
+    #[test]
+    fn ledger_chain_is_cryptographically_verified_and_flags_tampering() {
+        let core = Core::in_memory().expect("database initializes");
+        core.start_session("s1", "universal", None)
+            .expect("start s1");
+        core.finish_session("s1", SessionOutcome::Completed, Some(0), 100)
+            .expect("finish s1");
+        core.start_session("s2", "universal", None)
+            .expect("start s2");
+        core.finish_session("s2", SessionOutcome::Completed, Some(0), 100)
+            .expect("finish s2");
+
+        let initial_check = core.verify_ledger().expect("ledger verifies");
+        assert!(initial_check.is_valid);
+        assert_eq!(initial_check.total_entries, 3);
+        assert_eq!(initial_check.broken_at_index, None);
+
+        // Triggers protect against UPDATE and DELETE
+        {
+            let conn = core.connection.lock().expect("lock");
+            assert!(conn
+                .execute("UPDATE xp_ledger SET amount = 999 WHERE index_id = 1", [])
+                .is_err());
+            assert!(conn
+                .execute("DELETE FROM xp_ledger WHERE index_id = 1", [])
+                .is_err());
+        }
+
+        // When a row is modified out-of-band, verification flags it
+        {
+            let conn = core.connection.lock().expect("lock");
+            conn.execute("DROP TRIGGER xp_ledger_no_update", [])
+                .expect("drop trigger for test");
+            conn.execute("UPDATE xp_ledger SET amount = 999 WHERE index_id = 2", [])
+                .expect("tamper row");
+        }
+
+        let tampered_check = core.verify_ledger().expect("ledger check completes");
+        assert!(!tampered_check.is_valid);
+        assert_eq!(tampered_check.broken_at_index, Some(2));
+        assert!(tampered_check.error_message.unwrap().contains("invalid"));
     }
 }

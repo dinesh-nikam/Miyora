@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "id": "agentpet.sun-wukong",
+  "name": "Sun Wukong",
+  "version": "1.0.0",
+  "description": "The Monkey King, Great Sage Equal to Heaven (Qitian Dasheng). Wields the As-You-Will Gold-Banded Cudgel (Ruyi Jingu Bang) and rides the Somersault Cloud (Jindou Yun). Blazing golden eyes (Huoyan Jinjing) track real agent activity. Vibrant crimson (#e63946) and radiant gold (#ffb703).",
+  "creator": "AgentPet",
+  "license": "CC-BY-4.0",
+  "source": "https://github.com/agentpet/pet-packs/tree/main/sun-wukong",
+  "attribution": "Original mythological character adaptation and artwork by AgentPet. CC-BY-4.0 — free to use, share, and adapt with attribution.",
+  "commercialUse": true,
+  "redistribution": true,
+  "derivativeWorks": true,
+  "assets": {
+    "idle": "assets/idle.png",
+    "working": "assets/working.png",
+    "thinking": "assets/thinking.png",
+    "waiting": "assets/waiting.png",
+    "success": "assets/success.png",
+    "error": "assets/error.png",
+    "level_up": "assets/level_up.png",
+    "sleeping": "assets/sleeping.png",
+    "thumbnail": "assets/thumbnail.png"
+  },
+  "animations": {
+    "idle": {
+      "asset": "idle",
+      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "fps": 1,
+      "loop": true,
+      "anchor": { "x": 0.5, "y": 1.0 }
+    },
+    "working": {
+      "asset": "working",
+      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "fps": 1,
+      "loop": true,
+      "anchor": { "x": 0.5, "y": 1.0 }
+    },
+    "thinking": {
+      "asset": "thinking",
+      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "fps": 1,
+      "loop": true,
+      "anchor": { "x": 0.5, "y": 1.0 }
+    },
+    "waiting": {
+      "asset": "waiting",
+      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "fps": 1,
+      "loop": true,
+      "anchor": { "x": 0.5, "y": 1.0 }
+    },
+    "success": {
+      "asset": "success",
+      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "fps": 1,
+      "loop": true,
+      "anchor": { "x": 0.5, "y": 1.0 }
+    },
+    "celebrating": {
+      "asset": "success",
+      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "fps": 1,
+      "loop": true,
+      "anchor": { "x": 0.5, "y": 1.0 }
+    },
+    "error": {
+      "asset": "error",
+      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "fps": 1,
+      "loop": true,
+      "anchor": { "x": 0.5, "y": 1.0 }
+    },
+    "level_up": {
+      "asset": "level_up",
+      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "fps": 1,
+      "loop": true,
+      "anchor": { "x": 0.5, "y": 1.0 }
+    },
+    "achievement": {
+      "asset": "level_up",
+      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "fps": 1,
+      "loop": true,
+      "anchor": { "x": 0.5, "y": 1.0 }
+    },
+    "sleeping": {
+      "asset": "sleeping",
+      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "fps": 1,
+      "loop": true,
+      "anchor": { "x": 0.5, "y": 1.0 }
+    }
+  },
+  "stateMappings": {
+    "idle": "idle",
+    "working": "working",
+    "thinking": "thinking",
+    "waiting": "waiting",
+    "success": "success",
+    "celebrating": "celebrating",
+    "error": "error",
+    "level_up": "level_up",
+    "achievement": "achievement",
+    "sleeping": "sleeping",
+    "offline": "sleeping",
+    "attention_required": "waiting"
+  },
+  "tags": ["starter", "mythology", "journey-to-the-west", "sun-wukong", "monkey-king", "clean-room"]
+}

@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1080" width="1440" height="1080">
+  <rect width="1440" height="1080" fill="#000000"/>
+  <rect width="1440" height="1080" fill="#101010" opacity="0.5"/>
+
+  <text x="40" y="66" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="40" font-weight="800" fill="#ffffff">Pet state machine</text>
+  <text x="1300" y="92" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" fill="#999999">pet-engine enforces an explicit transition allow-list; unlisted transitions are rejected.</text>
+
+  <rect x="40" y="120" width="700" height="930" rx="18" fill="#0a0a0a" stroke="#52a8ff" stroke-width="2"/>
+  <rect x="40" y="120" width="700" height="44" rx="18" fill="#1a1a1a" stroke="none"/>
+  <rect x="40" y="164" width="700" height="8" rx="4" fill="#52a8ff"/>
+  <text x="110" y="142" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="24" font-weight="800" fill="#52a8ff">Reactive runtime</text>
+
+  <rect x="70" y="200" width="150" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="145" y="236" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Idle</text>
+  <rect x="70" y="292" width="150" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="145" y="328" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Working</text>
+  <rect x="70" y="384" width="150" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="145" y="420" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Thinking</text>
+  <rect x="70" y="476" width="150" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="145" y="512" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Waiting</text>
+  <rect x="70" y="568" width="170" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="155" y="604" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">AttentionRequired</text>
+  <rect x="70" y="660" width="150" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="145" y="696" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Success</text>
+  <rect x="70" y="752" width="150" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="145" y="788" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Error</text>
+  <rect x="70" y="844" width="170" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="155" y="880" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Celebrating</text>
+  <rect x="70" y="936" width="170" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="155" y="972" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">LevelUp</text>
+  <rect x="70" y="1028" width="170" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="155" y="1064" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Achievement</text>
+  <g stroke="#52a8ff" stroke-width="2" fill="none">
+    <line x1="145" y1="233" x2="220" y2="233"/>
+    <line x1="145" y1="324" x2="225" y2="324"/>
+    <line x1="145" y1="415" x2="225" y2="415"/>
+    <line x1="145" y1="506" x2="240" y2="506"/>
+  </g>
+  <polygon points="212,227 232,233 212,239" fill="#52a8ff"/>
+  <polygon points="217,318 237,324 217,330" fill="#52a8ff"/>
+  <polygon points="217,409 237,415 217,421" fill="#52a8ff"/>
+  <polygon points="222,500 248,506 222,512" fill="#52a8ff"/>
+  <line x1="122" y1="233" x2="70" y2="233" stroke="#52a8ff" stroke-width="2"/><polygon points="82,227 62,233 82,239" fill="#52a8ff"/>
+  <line x1="116" y1="324" x2="70" y2="324" stroke="#52a8ff" stroke-width="2"/><polygon points="94,318 74,324 94,330" fill="#52a8ff"/>
+  <line x1="116" y1="415" x2="70" y2="415" stroke="#52a8ff" stroke-width="2"/><polygon points="98,409 78,415 98,421" fill="#52a8ff"/>
+  <line x1="128" y1="506" x2="70" y2="506" stroke="#52a8ff" stroke-width="2"/><polygon points="112,498 92,506 112,514" fill="#52a8ff"/>
+  <rect x="760" y="120" width="640" height="700" rx="18" fill="#0a0a0a" stroke="#62c073" stroke-width="2"/>
+  <rect x="760" y="120" width="640" height="44" rx="18" fill="#1a1a1a" stroke="none"/>
+  <rect x="760" y="164" width="640" height="8" rx="4" fill="#62c073"/>
+  <text x="830" y="142" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="24" font-weight="800" fill="#62c073">Ambient &amp; system</text>
+  <rect x="790" y="200" width="140" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="860" y="236" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Sleeping</text>
+  <rect x="790" y="292" width="140" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="860" y="328" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Hungry</text>
+  <rect x="790" y="384" width="140" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="860" y="420" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Eating</text>
+  <rect x="790" y="476" width="140" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="860" y="512" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Offline</text>
+  <rect x="790" y="568" width="140" height="66" rx="12" fill="#161616" stroke="#333333"/>
+  <text x="860" y="604" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" font-weight="700" fill="#ffffff" text-anchor="middle">Paused</text>
+
+  <line x1="145" y1="270" x2="145" y2="266" stroke="#52a8ff" stroke-width="2"/>
+  <polygon points="145,266 131,256 131,276" fill="#52a8ff"/>
+
+  <line x1="860" y1="170" x2="860" y2="176" stroke="#62c073" stroke-width="2"/>
+  <polygon points="860,170 874,176 860,182" fill="#62c073"/>
+  <line x1="860" y1="230" x2="860" y2="236" stroke="#62c073" stroke-width="2"/>
+  <polygon points="860,230 874,236 860,242" fill="#62c073"/>
+  <line x1="860" y1="290" x2="860" y2="296" stroke="#62c073" stroke-width="2"/>
+  <polygon points="860,290 874,296 860,302" fill="#62c073"/>
+  <line x1="860" y1="350" x2="860" y2="356" stroke="#62c073" stroke-width="2"/>
+  <polygon points="860,350 874,356 860,362" fill="#62c073"/>
+  <line x1="860" y1="400" x2="860" y2="406" stroke="#62c073" stroke-width="2"/>
+  <polygon points="860,400 874,406 860,412" fill="#62c073"/>
+  <line x1="150" y1="604" x2="200" y2="568" stroke="#62c073" stroke-width="2"/>
+  <polygon points="194,570 214,560 224,570" fill="#62c073"/>
+  <line x1="200" y1="568" x2="200" y2="568" stroke="#62c073" stroke-width="2"/>
+  <polygon points="200,568 186,558 206,558" fill="#62c073"/>
+</svg>

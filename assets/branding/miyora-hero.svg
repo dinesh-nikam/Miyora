@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 660" width="1440" height="660">
+  <rect width="1440" height="660" fill="#000000"/>
+  <defs>
+    <radialGradient id="bgGlow" cx="0.5" cy="0.34" r="0.74">
+      <stop offset="0%" stop-color="#15335e"/>
+      <stop offset="45%" stop-color="#0a1426"/>
+      <stop offset="100%" stop-color="#000000"/>
+    </radialGradient>
+  </defs>
+  <rect width="1440" height="660" fill="url(#bgGlow)"/>
+  <rect x="0" y="0" width="18" height="660" fill="#52a8ff"/>
+  <rect x="18" y="0" width="3" height="660" fill="#2f6fd0"/>
+
+  <!-- Eyebrow -->
+  <text x="40" y="86" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="14" font-weight="700" letter-spacing="2.5" fill="#52a8ff">Miyora · local agent companion</text>
+
+  <!-- Title -->
+  <text x="40" y="158" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="66" font-weight="800" fill="#ffffff">Agent behavior, made visible.</text>
+
+  <!-- Subtitle -->
+  <text x="40" y="244" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="23" fill="#999999">An offline-first desktop companion for coding-agent activity, local pet progression, and session evidence.</text>
+
+  <!-- Feature chips -->
+  <rect x="40" y="330" width="400" height="118" rx="32" fill="#161616" stroke="#333333"/>
+  <rect x="40" y="330" width="400" height="118" rx="32" fill="#1c1c1c" stroke="none"/>
+  <circle cx="68" cy="370" r="16" fill="#52a8ff"/>
+  <text x="40" y="395" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff">Universal wrapper</text>
+  <text x="40" y="430" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="14" fill="#999999">Runs a real child process, streams stdout/stderr, preserves exit codes.</text>
+
+  <rect x="450" y="330" width="400" height="118" rx="32" fill="#161616" stroke="#333333"/>
+  <rect x="450" y="330" width="400" height="118" rx="32" fill="#1c1c1c" stroke="none"/>
+  <circle cx="478" cy="370" r="16" fill="#62c073"/>
+  <text x="450" y="395" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff">Native agent hooks</text>
+  <text x="450" y="430" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="14" fill="#999999">Reversible Claude Code hook with backup; deterministic, idempotent events.</text>
+
+  <rect x="860" y="330" width="400" height="118" rx="32" fill="#161616" stroke="#333333"/>
+  <rect x="860" y="330" width="400" height="118" rx="32" fill="#1c1c1c" stroke="none"/>
+  <circle cx="888" cy="370" r="16" fill="#52a8ff"/>
+  <text x="860" y="395" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff">Local progression</text>
+  <text x="860" y="430" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="14" fill="#999999">10 XP per completed session, level growth, 3 achievements — always local.</text>
+
+  <!-- Divider -->
+  <line x1="40" y1="486" x2="1400" y2="486" stroke="#222222" stroke-width="1"/>
+
+  <!-- Footer -->
+  <text x="40" y="572" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="17" fill="#999999">Rust domain crates · SQLite (Rust-only access) · Tauri 2 desktop · React + TypeScript UI · optional NestJS cloud (never required)</text>
+  <text x="40" y="608" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="13" fill="#666666">GitHub: Miyora · public branding distinct from internal `agentpet-*` and `nezuko` identifiers</text>
+</svg>

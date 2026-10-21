@@ -13,7 +13,8 @@ Core local entities:
 | Table | Key data and constraints |
 |---|---|
 | `projects` | ID, display label, normalized local path hash, created/updated time; raw path remains local |
-| `installed_pet_packs` | Pack ID/version/name/creator/license/source, local install path, serialized validated manifest, install time; unique `(pack_id, version)` |
+| `installed_pet_packs` | Pack ID/version/name/creator/license/source, local install path, serialized validated manifest, install time, install source ('folder', 'archive'), nullable content hash and signature key ID; unique `(pack_id, version)` |
+| `agent_hook_installs` | Adapter ID primary key, target configuration path, optional backup path, installation timestamp, and status ('installed', 'removed') |
 | `pet_assets` | Pack FK, relative path, media type, decoded dimensions, content hash |
 | `pet_instances` | Instance ID, pack FK, nickname, appearance/configuration, active state |
 | `project_pet_assignments` | Project FK, pet instance FK, unique project assignment |
@@ -35,7 +36,7 @@ Create foreign keys with deliberate delete behavior. Session retention may remov
 
 ## Migration and recovery
 
-The current local schema version is 6. Opening a database recorded with a newer version fails with `UnsupportedDatabaseSchema` instead of running against an unknown schema. Each migration is ordered, immutable after release, checksummed, and tested from the prior supported schema. Before destructive or complex migrations, create a recoverable backup. On migration failure, preserve the original database and provide an actionable diagnostic. Do not silently recreate a damaged database or lose user progress.
+The current local schema version is 7. Opening a database recorded with a newer version fails with `UnsupportedDatabaseSchema` instead of running against an unknown schema. Each migration is ordered, immutable after release, checksummed, and tested from the prior supported schema. Version 7 adds the `agent_hook_installs` tracking table and records archive installation metadata (content hash, signature key ID, and install source) onto `installed_pet_packs`. Before destructive or complex migrations, create a recoverable backup. On migration failure, preserve the original database and provide an actionable diagnostic. Do not silently recreate a damaged database or lose user progress.
 
 ## Cloud PostgreSQL boundary
 

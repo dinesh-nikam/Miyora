@@ -19,6 +19,7 @@ The cloud REST and daemon contracts below remain planned. The current desktop sh
 | `create_pet_from_image` | Decode, normalize, validate, and install a static local companion image | Main window |
 | `select_pet` | Select an installed PetPack | Main window |
 | `show_pet_overlay` | Reveal the configured companion window | Main window |
+| `toggle_pet_pause` | Toggle pause state on the companion runtime | Main window |
 
 ## Local Tauri commands
 

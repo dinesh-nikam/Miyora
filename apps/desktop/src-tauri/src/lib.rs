@@ -1,6 +1,6 @@
 use std::{
     fs,
-    path::Path,
+    path::{Path, PathBuf},
     sync::mpsc::{self, Receiver},
     time::Duration,
 };
@@ -18,13 +18,26 @@ const POSITION_WRITE_DEBOUNCE: Duration = Duration::from_millis(400);
 
 struct AppRuntime {
     core: Core,
+    simulated_core: Core,
+    is_simulated: std::sync::atomic::AtomicBool,
     pet_library: std::path::PathBuf,
+    app_data_dir: std::path::PathBuf,
+}
+
+impl AppRuntime {
+    fn active_core(&self) -> &Core {
+        if self.is_simulated.load(std::sync::atomic::Ordering::Relaxed) {
+            &self.simulated_core
+        } else {
+            &self.core
+        }
+    }
 }
 
 #[tauri::command]
 fn get_runtime_snapshot(runtime: State<'_, AppRuntime>) -> Result<RuntimeSnapshot, String> {
     runtime
-        .core
+        .active_core()
         .snapshot()
         .map_err(|error| format!("RUNTIME_READ_FAILED: {error}"))
 }
@@ -36,7 +49,7 @@ fn get_progression(
 ) -> Result<ProgressionSnapshot, String> {
     require_main_window(&window)?;
     runtime
-        .core
+        .active_core()
         .progression()
         .map_err(|error| format!("PROGRESSION_READ_FAILED: {error}"))
 }
@@ -48,7 +61,7 @@ fn get_xp_history(
 ) -> Result<Vec<XpTransaction>, String> {
     require_main_window(&window)?;
     runtime
-        .core
+        .active_core()
         .recent_xp_transactions()
         .map_err(|error| format!("XP_HISTORY_READ_FAILED: {error}"))
 }
@@ -60,7 +73,7 @@ fn get_achievements(
 ) -> Result<Vec<AchievementSummary>, String> {
     require_main_window(&window)?;
     runtime
-        .core
+        .active_core()
         .achievements()
         .map_err(|error| format!("ACHIEVEMENTS_READ_FAILED: {error}"))
 }
@@ -74,7 +87,7 @@ fn get_session_history(
 ) -> Result<Vec<AgentSessionSummary>, String> {
     require_main_window(&window)?;
     runtime
-        .core
+        .active_core()
         .session_history(limit, offset)
         .map_err(|error| format!("SESSION_HISTORY_READ_FAILED: {error}"))
 }
@@ -104,8 +117,8 @@ fn toggle_pet_pause(
     window: tauri::WebviewWindow,
 ) -> Result<RuntimeSnapshot, String> {
     require_overlay_window(&window)?;
-    let snapshot = runtime
-        .core
+    let core = runtime.active_core();
+    let snapshot = core
         .snapshot()
         .map_err(|error| format!("RUNTIME_READ_FAILED: {error}"))?;
     let event_type = if snapshot.pet_state == PetState::Paused {
@@ -113,13 +126,9 @@ fn toggle_pet_pause(
     } else {
         EventType::UserPaused
     };
-    runtime
-        .core
-        .accept_event(&PetEvent::new(event_type, "desktop_overlay"))
+    core.accept_event(&PetEvent::new(event_type, "desktop_overlay"))
         .map_err(|error| format!("PET_INTERACTION_FAILED: {error}"))?;
-    runtime
-        .core
-        .snapshot()
+    core.snapshot()
         .map_err(|error| format!("RUNTIME_READ_FAILED: {error}"))
 }
 
@@ -168,14 +177,14 @@ fn get_selected_pet_animation(
     runtime: State<'_, AppRuntime>,
 ) -> Result<Option<SelectedPetAnimation>, String> {
     let snapshot = runtime
-        .core
+        .active_core()
         .snapshot()
         .map_err(|error| format!("RUNTIME_READ_FAILED: {error}"))?;
     let Some(selection_id) = snapshot.selected_pet_id else {
         return Ok(None);
     };
     let packs = runtime
-        .core
+        .active_core()
         .list_installed_packs()
         .map_err(|error| format!("PET_LIBRARY_READ_FAILED: {error}"))?;
     let Some(pack) = packs
@@ -289,12 +298,22 @@ fn install_pet_pack(
 ) -> Result<InstalledPetPackSummary, String> {
     require_main_window(&window)?;
     if source_path.trim().is_empty() {
-        return Err("PET_PACK_SOURCE_REQUIRED: Select an extracted PetPack folder.".into());
+        return Err(
+            "PET_PACK_SOURCE_REQUIRED: Select an extracted PetPack folder or archive.".into(),
+        );
     }
-    let manifest = runtime
-        .core
-        .install_extracted_pet_pack(Path::new(&source_path), &runtime.pet_library)
-        .map_err(|error| format!("PET_PACK_INSTALL_FAILED: {error}"))?;
+    let path = Path::new(&source_path);
+    let manifest = if path.is_file() {
+        runtime
+            .core
+            .install_archive_pet_pack(path, &runtime.pet_library, &[], false)
+            .map_err(|error| format!("PET_PACK_INSTALL_FAILED: {error}"))?
+    } else {
+        runtime
+            .core
+            .install_extracted_pet_pack(path, &runtime.pet_library)
+            .map_err(|error| format!("PET_PACK_INSTALL_FAILED: {error}"))?
+    };
     Ok(pack_summary(manifest))
 }
 
@@ -337,7 +356,7 @@ fn select_pet(
 ) -> Result<(), String> {
     require_main_window(&window)?;
     runtime
-        .core
+        .active_core()
         .set_selected_pet(pack_id.as_deref())
         .map_err(|error| format!("PET_SELECTION_FAILED: {error}"))
 }
@@ -351,6 +370,278 @@ fn show_pet_overlay(app: tauri::AppHandle, window: tauri::WebviewWindow) -> Resu
     window
         .show()
         .map_err(|error| format!("PET_OVERLAY_SHOW_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn verify_ledger(
+    runtime: State<'_, AppRuntime>,
+) -> Result<agentpet_core::LedgerVerificationResult, String> {
+    runtime
+        .core
+        .verify_ledger()
+        .map_err(|error| format!("LEDGER_VERIFICATION_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn get_real_events(
+    runtime: State<'_, AppRuntime>,
+    limit: Option<usize>,
+) -> Result<Vec<agentpet_core::StoredAgentEvent>, String> {
+    runtime
+        .active_core()
+        .recent_events(limit.unwrap_or(30))
+        .map_err(|error| format!("EVENTS_READ_FAILED: {error}"))
+}
+
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+struct ProviderStatusReport {
+    provider_id: String,
+    display_name: String,
+    detected: bool,
+    hook_status: String,
+    quota_status: Option<agentpet_adapters::claude_code::ClaudeQuotaReport>,
+    quota_provenance: String,
+    quota_updated_seconds_ago: Option<u64>,
+    cost_usd: Option<f64>,
+    cost_provenance: String,
+    input_tokens: Option<i64>,
+    output_tokens: Option<i64>,
+    tokens_provenance: String,
+    config_path: Option<String>,
+}
+
+#[tauri::command]
+fn get_providers_status(
+    runtime: State<'_, AppRuntime>,
+) -> Result<Vec<ProviderStatusReport>, String> {
+    let home = std::env::var_os("HOME")
+        .or_else(|| std::env::var_os("USERPROFILE"))
+        .map(PathBuf::from);
+
+    let mut reports = Vec::new();
+
+    // 1. Claude Code
+    let claude_dir = home.as_ref().map(|h| h.join(".claude"));
+    let claude_detected = claude_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
+    let settings_path = claude_dir.as_ref().map(|d| d.join("settings.json"));
+    let claude_hook_installed = settings_path
+        .as_ref()
+        .and_then(|p| fs::read_to_string(p).ok())
+        .map(|s| s.contains("agentpet hook"))
+        .unwrap_or(false);
+
+    let statusline_file = runtime.app_data_dir.join("claude_statusline.json");
+    let (quota_report, quota_updated_secs) = if let Ok(bytes) = fs::read(&statusline_file) {
+        let meta = fs::metadata(&statusline_file).ok();
+        let secs = meta
+            .and_then(|m| m.modified().ok())
+            .and_then(|m| std::time::SystemTime::now().duration_since(m).ok())
+            .map(|d| d.as_secs());
+        (
+            agentpet_adapters::claude_code::parse_statusline_payload(&bytes).ok(),
+            secs,
+        )
+    } else {
+        (None, None)
+    };
+
+    let (claude_cost, claude_in_tokens, claude_out_tokens) = claude_dir
+        .as_ref()
+        .map(|d| d.join("metrics").join("costs.jsonl"))
+        .filter(|p| p.is_file())
+        .and_then(|p| fs::read_to_string(p).ok())
+        .map(|content| {
+            let mut cost_sum = 0.0f64;
+            let mut in_sum = 0i64;
+            let mut out_sum = 0i64;
+            for line in content.lines() {
+                if let Ok(val) = serde_json::from_str::<serde_json::Value>(line) {
+                    if let Some(c) = val.get("estimated_cost_usd").and_then(|v| v.as_f64()) {
+                        cost_sum += c;
+                    }
+                    if let Some(i) = val.get("input_tokens").and_then(|v| v.as_i64()) {
+                        in_sum += i;
+                    }
+                    if let Some(o) = val.get("output_tokens").and_then(|v| v.as_i64()) {
+                        out_sum += o;
+                    }
+                }
+            }
+            (Some(cost_sum), Some(in_sum), Some(out_sum))
+        })
+        .unwrap_or((None, None, None));
+
+    let claude_cost_prov = if claude_cost.is_some() {
+        "LOCAL".to_string()
+    } else {
+        "N/A".to_string()
+    };
+    let claude_tokens_prov = if claude_in_tokens.is_some() {
+        "LOCAL".to_string()
+    } else {
+        "N/A".to_string()
+    };
+    let claude_quota_prov = if quota_report.is_some() {
+        "LIVE".to_string()
+    } else {
+        "N/A".to_string()
+    };
+
+    reports.push(ProviderStatusReport {
+        provider_id: "claude_code".into(),
+        display_name: "Claude Code".into(),
+        detected: claude_detected,
+        hook_status: if claude_hook_installed {
+            "installed".into()
+        } else {
+            "not_installed".into()
+        },
+        quota_status: quota_report,
+        quota_provenance: claude_quota_prov,
+        quota_updated_seconds_ago: quota_updated_secs,
+        cost_usd: claude_cost,
+        cost_provenance: claude_cost_prov,
+        input_tokens: claude_in_tokens,
+        output_tokens: claude_out_tokens,
+        tokens_provenance: claude_tokens_prov,
+        config_path: settings_path.map(|p| p.to_string_lossy().to_string()),
+    });
+
+    // 2. OpenAI Codex CLI
+    let codex_dir = home.as_ref().map(|h| h.join(".codex"));
+    let codex_detected = codex_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
+    reports.push(ProviderStatusReport {
+        provider_id: "codex".into(),
+        display_name: "OpenAI Codex CLI".into(),
+        detected: codex_detected,
+        hook_status: if codex_detected {
+            "supported".into()
+        } else {
+            "missing".into()
+        },
+        quota_status: None,
+        quota_provenance: "N/A".into(),
+        quota_updated_seconds_ago: None,
+        cost_usd: None,
+        cost_provenance: "N/A".into(),
+        input_tokens: None,
+        output_tokens: None,
+        tokens_provenance: "N/A".into(),
+        config_path: codex_dir.map(|p| p.join("hooks.json").to_string_lossy().to_string()),
+    });
+
+    // 3. GitHub Copilot CLI
+    let copilot_dir = home.as_ref().map(|h| h.join(".copilot"));
+    let copilot_detected = copilot_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
+    reports.push(ProviderStatusReport {
+        provider_id: "copilot".into(),
+        display_name: "GitHub Copilot CLI".into(),
+        detected: copilot_detected,
+        hook_status: if copilot_detected {
+            "active".into()
+        } else {
+            "missing".into()
+        },
+        quota_status: None,
+        quota_provenance: "N/A".into(),
+        quota_updated_seconds_ago: None,
+        cost_usd: None,
+        cost_provenance: "N/A".into(),
+        input_tokens: None,
+        output_tokens: None,
+        tokens_provenance: "N/A".into(),
+        config_path: copilot_dir.map(|p| p.to_string_lossy().to_string()),
+    });
+
+    // 4. Google Antigravity
+    let ag_dir = home.as_ref().map(|h| h.join(".gemini").join("antigravity"));
+    let ag_detected = ag_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
+    reports.push(ProviderStatusReport {
+        provider_id: "antigravity".into(),
+        display_name: "Google Antigravity".into(),
+        detected: ag_detected,
+        hook_status: if ag_detected {
+            "active".into()
+        } else {
+            "missing".into()
+        },
+        quota_status: None,
+        quota_provenance: "N/A".into(),
+        quota_updated_seconds_ago: None,
+        cost_usd: None,
+        cost_provenance: "N/A".into(),
+        input_tokens: None,
+        output_tokens: None,
+        tokens_provenance: "N/A".into(),
+        config_path: ag_dir.map(|p| p.to_string_lossy().to_string()),
+    });
+
+    // 5. Cursor IDE
+    let cursor_dir = home.as_ref().map(|h| h.join(".cursor"));
+    let cursor_detected = cursor_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
+    reports.push(ProviderStatusReport {
+        provider_id: "cursor".into(),
+        display_name: "Cursor IDE".into(),
+        detected: cursor_detected,
+        hook_status: if cursor_detected {
+            "active".into()
+        } else {
+            "not_installed".into()
+        },
+        quota_status: None,
+        quota_provenance: "N/A".into(),
+        quota_updated_seconds_ago: None,
+        cost_usd: None,
+        cost_provenance: "N/A".into(),
+        input_tokens: None,
+        output_tokens: None,
+        tokens_provenance: "N/A".into(),
+        config_path: cursor_dir.map(|p| p.to_string_lossy().to_string()),
+    });
+
+    Ok(reports)
+}
+
+#[tauri::command]
+fn toggle_demo_mode(runtime: State<'_, AppRuntime>) -> Result<bool, String> {
+    let current = runtime
+        .is_simulated
+        .load(std::sync::atomic::Ordering::Relaxed);
+    let next = !current;
+    runtime
+        .is_simulated
+        .store(next, std::sync::atomic::Ordering::Relaxed);
+    Ok(next)
+}
+
+#[tauri::command]
+fn simulate_agent_event(
+    runtime: State<'_, AppRuntime>,
+    event_type: String,
+) -> Result<RuntimeSnapshot, String> {
+    let parsed_type = match event_type.as_str() {
+        "started" => EventType::AgentStarted,
+        "working" => EventType::AgentWorking,
+        "thinking" => EventType::AgentThinking,
+        "waiting" => EventType::AgentWaiting,
+        "needs_input" => EventType::AgentInputRequired,
+        "completed" => EventType::AgentCompleted,
+        "failed" => EventType::AgentFailed,
+        _ => EventType::AgentWorking,
+    };
+    let event = PetEvent::new(parsed_type, "demo_simulator");
+    runtime
+        .is_simulated
+        .store(true, std::sync::atomic::Ordering::Relaxed);
+    runtime
+        .simulated_core
+        .accept_event(&event)
+        .map_err(|error| format!("SIMULATION_FAILED: {error}"))?;
+    runtime
+        .simulated_core
+        .snapshot()
+        .map_err(|error| format!("SNAPSHOT_FAILED: {error}"))
 }
 
 fn restore_visible_position(
@@ -447,6 +738,57 @@ fn run_state_timer(core: Core) -> std::io::Result<()> {
     Ok(())
 }
 
+fn seed_starter_packs(core: &Core, pet_library: &Path) {
+    let Ok(installed) = core.list_installed_packs() else {
+        return;
+    };
+    let search_roots = [
+        PathBuf::from("pet-packs"),
+        PathBuf::from("../../pet-packs"),
+        PathBuf::from("../../../pet-packs"),
+    ];
+
+    for candidate_root in &search_roots {
+        if candidate_root.is_dir() {
+            let Ok(entries) = fs::read_dir(candidate_root) else {
+                continue;
+            };
+            for entry in entries.flatten() {
+                let path = entry.path();
+                if path.is_dir() && path.join("pet.json").is_file() {
+                    if let Ok(pre_manifest) = PetPackManifest::load_and_validate(
+                        &path,
+                        agentpet_pet_pack::ValidationLimits::default(),
+                    ) {
+                        if installed
+                            .iter()
+                            .any(|p| p.id == pre_manifest.id && p.version == pre_manifest.version)
+                        {
+                            continue;
+                        }
+                    }
+                    let _ = core.install_extracted_pet_pack(&path, pet_library);
+                }
+            }
+            break;
+        }
+    }
+
+    if let Ok(snapshot) = core.snapshot() {
+        if snapshot.selected_pet_id.is_none()
+            || snapshot.selected_pet_id.as_deref() == Some("agentpet.starter-aoi@1.0.0")
+        {
+            if let Ok(packs) = core.list_installed_packs() {
+                if packs.iter().any(|p| p.id == "agentpet.starter-nezuko") {
+                    let _ = core.set_selected_pet(Some("agentpet.starter-nezuko@1.0.0"));
+                } else if let Some(first) = packs.first() {
+                    let _ = core.set_selected_pet(Some(&format!("{}@{}", first.id, first.version)));
+                }
+            }
+        }
+    }
+}
+
 pub fn run() {
     let (position_sender, position_receiver) = mpsc::channel();
     tauri::Builder::default()
@@ -454,6 +796,9 @@ pub fn run() {
         .setup(|app| {
             let data_dir = app.path().app_data_dir()?;
             let core = Core::open(&data_dir)?;
+            let simulated_core = Core::open_simulated(&data_dir)?;
+            let pet_library = data_dir.join("pet-library");
+            seed_starter_packs(&core, &pet_library);
             let overlay_window = app
                 .get_webview_window("pet-overlay")
                 .ok_or("pet-overlay window is missing")?;
@@ -463,7 +808,10 @@ pub fn run() {
             run_state_timer(core.clone())?;
             app.manage(AppRuntime {
                 core,
-                pet_library: data_dir.join("pet-library"),
+                simulated_core,
+                is_simulated: std::sync::atomic::AtomicBool::new(false),
+                pet_library,
+                app_data_dir: data_dir,
             });
             Ok(())
         })
@@ -489,7 +837,12 @@ pub fn run() {
             create_pet_from_image,
             select_pet,
             show_pet_overlay,
-            toggle_pet_pause
+            toggle_pet_pause,
+            verify_ledger,
+            get_real_events,
+            get_providers_status,
+            toggle_demo_mode,
+            simulate_agent_event
         ])
         .run(tauri::generate_context!())
         .expect("failed to run AgentPet desktop application");

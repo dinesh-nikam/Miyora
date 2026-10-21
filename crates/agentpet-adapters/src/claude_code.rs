@@ -24,6 +24,7 @@ pub const HOOK_EVENTS: &[&str] = &[
     "PostToolUse",
     "Notification",
     "Stop",
+    "SubagentStop",
 ];
 
 /// Fixed namespace for deterministic adapter event UUIDs (v5).
@@ -67,7 +68,7 @@ pub fn parse_hook_payload(input: &[u8]) -> Result<NormalizedEvent, AdapterError>
         "SessionStart" => HookEventKind::AgentStarted,
         "UserPromptSubmit" | "PreToolUse" | "PostToolUse" => HookEventKind::AgentWorking,
         "Notification" => HookEventKind::AgentInputRequired,
-        "Stop" => HookEventKind::AgentCompleted,
+        "Stop" | "SubagentStop" => HookEventKind::AgentCompleted,
         other => return Err(AdapterError::UnsupportedHookEvent(other.to_owned())),
     };
     let session_id = payload.session_id.filter(|id| !id.trim().is_empty());
@@ -111,6 +112,7 @@ fn deterministic_event_id(
 /// Default user settings path (`~/.claude/settings.json`).
 pub fn default_settings_path() -> Option<PathBuf> {
     std::env::var_os("HOME")
+        .or_else(|| std::env::var_os("USERPROFILE"))
         .map(PathBuf::from)
         .map(|home| home.join(".claude").join(SETTINGS_FILE))
 }
@@ -193,6 +195,124 @@ pub fn is_installed(settings_path: &Path, command: &str) -> Result<bool, Adapter
             .iter()
             .any(|e| entry_invokes(e, command))
     }))
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ClaudeQuotaWindow {
+    pub used_percentage: f64,
+    pub resets_at: Option<String>,
+}
+
+#[derive(Debug, Clone, serde::Serialize, serde::Deserialize, PartialEq)]
+#[serde(rename_all = "camelCase")]
+pub struct ClaudeQuotaReport {
+    pub five_hour: Option<ClaudeQuotaWindow>,
+    pub seven_day: Option<ClaudeQuotaWindow>,
+    pub context_window_used_percentage: Option<f64>,
+    pub updated_at: String,
+    pub provenance: String,
+}
+
+pub fn parse_statusline_payload(input: &[u8]) -> Result<ClaudeQuotaReport, AdapterError> {
+    let root: serde_json::Value = serde_json::from_slice(input)?;
+    let rate_limits = root.get("rate_limits");
+    let context_window = root.get("context_window");
+    let five_hour = rate_limits.and_then(|r| r.get("five_hour")).and_then(|v| {
+        let used = v.get("used_percentage")?.as_f64()?;
+        let resets = v
+            .get("resets_at")
+            .and_then(|s| s.as_str())
+            .map(str::to_owned);
+        Some(ClaudeQuotaWindow {
+            used_percentage: used,
+            resets_at: resets,
+        })
+    });
+    let seven_day = rate_limits.and_then(|r| r.get("seven_day")).and_then(|v| {
+        let used = v.get("used_percentage")?.as_f64()?;
+        let resets = v
+            .get("resets_at")
+            .and_then(|s| s.as_str())
+            .map(str::to_owned);
+        Some(ClaudeQuotaWindow {
+            used_percentage: used,
+            resets_at: resets,
+        })
+    });
+    let context_window_used = context_window
+        .and_then(|c| c.get("used_percentage"))
+        .and_then(|v| v.as_f64());
+    let provenance = if five_hour.is_some() || seven_day.is_some() {
+        "LIVE".to_string()
+    } else {
+        "N/A".to_string()
+    };
+    Ok(ClaudeQuotaReport {
+        five_hour,
+        seven_day,
+        context_window_used_percentage: context_window_used,
+        updated_at: chrono::Utc::now().to_rfc3339(),
+        provenance,
+    })
+}
+
+pub fn install_statusline_shim(
+    settings_path: &Path,
+    shim_command: &str,
+) -> Result<Option<String>, AdapterError> {
+    let previous = read_previous(settings_path)?;
+    let mut document = parse_settings(previous.as_deref().unwrap_or(b""))?;
+    let mut original_command: Option<String> = None;
+    if let Some(status_obj) = document.get("statusLine") {
+        if let Some(cmd) = status_obj.get("command").and_then(|c| c.as_str()) {
+            if !cmd.contains("agentpet statusline") {
+                original_command = Some(cmd.to_string());
+            }
+        }
+    }
+    let command_to_set = match &original_command {
+        Some(orig) => format!("{shim_command} --chain \"{orig}\""),
+        None => shim_command.to_string(),
+    };
+    document["statusLine"] = serde_json::json!({
+        "type": "command",
+        "command": command_to_set,
+    });
+    write_verified(settings_path, &document, previous.as_deref())?;
+    Ok(original_command)
+}
+
+pub fn uninstall_statusline_shim(settings_path: &Path) -> Result<bool, AdapterError> {
+    let previous = read_previous(settings_path)?;
+    let Some(bytes) = previous else {
+        return Ok(false);
+    };
+    let mut document = parse_settings(&bytes)?;
+    let mut removed = false;
+    if let Some(status_obj) = document.get_mut("statusLine") {
+        if let Some(cmd) = status_obj.get("command").and_then(|c| c.as_str()) {
+            if cmd.contains("agentpet statusline") {
+                if let Some(chained) = cmd
+                    .split("--chain \"")
+                    .nth(1)
+                    .and_then(|s| s.strip_suffix('"'))
+                {
+                    *status_obj = serde_json::json!({
+                        "type": "command",
+                        "command": chained,
+                    });
+                } else {
+                    document.as_object_mut().map(|m| m.remove("statusLine"));
+                }
+                removed = true;
+            }
+        }
+    }
+    if removed {
+        write_verified(settings_path, &document, Some(&bytes))?;
+    }
+    Ok(removed)
 }
 
 fn read_previous(settings_path: &Path) -> Result<Option<Vec<u8>>, AdapterError> {
@@ -389,5 +509,19 @@ mod tests {
         assert!(hook_entries(&doc, "SessionStart")
             .iter()
             .any(|e| entry_invokes(e, "user-cmd")));
+    }
+
+    #[test]
+    fn resolves_settings_path_on_current_platform() {
+        let path = default_settings_path();
+        assert!(
+            path.is_some(),
+            "default_settings_path must resolve on this platform"
+        );
+        let path = path.unwrap();
+        assert!(
+            path.ends_with(format!(".claude{}", std::path::MAIN_SEPARATOR).as_str())
+                || path.ends_with(SETTINGS_FILE)
+        );
     }
 }

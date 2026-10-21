@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 560 240" width="560" height="240">
+  <rect width="560" height="240" fill="#000000"/>
+  <rect width="560" height="240" fill="#1a1a1a" opacity="0.5"/>
+
+  <!-- Mark: companion badge -->
+  <rect x="20" y="20" width="170" height="170" rx="34" fill="#0a0a0a" stroke="#52a8ff" stroke-width="3"/>
+  <circle cx="95" cy="105" r="52" fill="#161616"/>
+  <circle cx="95" cy="50" r="5" fill="#62c073"/>
+  <polygon points="66,44 40,26 64,62" fill="#52a8ff"/>
+  <polygon points="124,44 160,26 126,62" fill="#52a8ff"/>
+  <circle cx="75" cy="105" r="7" fill="#ffffff"/>
+  <circle cx="115" cy="105" r="7" fill="#ffffff"/>
+  <circle cx="76.5" cy="105" r="3.2" fill="#121212"/>
+  <circle cx="113.5" cy="105" r="3.2" fill="#121212"/>
+  <path d="M73,122 C86,136 104,136 117,122" stroke="#62c073" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <circle cx="86" cy="98" r="4" fill="#3a3a3a"/>
+
+  <!-- Wordmark -->
+  <text x="240" y="98" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="72" font-weight="800" fill="#ffffff">Miyora</text>
+  <text x="240" y="140" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="19" fill="#999999">Agent companion for local development</text>
+  <text x="240" y="176" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="14" fill="#62c073">Behavior that shows what your agents are doing</text>
+  <text x="240" y="222" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="12" fill="#666666">Offline-first · No telemetry · Open core</text>
+</svg>

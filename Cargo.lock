@@ -27,6 +27,7 @@ version = "0.1.0"
 dependencies = [
  "agentpet-adapters",
  "agentpet-core",
+ "agentpet-pet-pack",
  "chrono",
  "uuid",
 ]
@@ -42,6 +43,7 @@ dependencies = [
  "rusqlite",
  "serde",
  "serde_json",
+ "sha2",
  "tempfile",
  "thiserror 2.0.21",
  "uuid",
@@ -51,11 +53,13 @@ dependencies = [
 name = "agentpet-desktop"
 version = "0.1.0"
 dependencies = [
+ "agentpet-adapters",
  "agentpet-core",
  "agentpet-pet-engine",
  "agentpet-pet-pack",
  "base64 0.22.1",
  "serde",
+ "serde_json",
  "tauri",
  "tauri-build",
  "tauri-plugin-dialog",

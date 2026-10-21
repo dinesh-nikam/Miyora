@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "agentpet.starter-nezuko",
+  "name": "Nezuko",
+  "version": "1.0.0",
+  "description": "Nezuko companion inspired by Demon Slayer. A loyal, silent anime companion ready to watch over your builds and code sessions.",
+  "creator": "AgentPet Community",
+  "license": "CC-BY-NC-4.0",
+  "source": "https://github.com/agentpet/pet-packs/tree/main/starter-nezuko",
+  "attribution": "Anime companion artwork adaptation. Free for personal and non-commercial desktop companion use.",
+  "commercialUse": false,
+  "redistribution": true,
+  "derivativeWorks": true,
+  "assets": {
+    "character": "assets/character.jpg"
+  },
+  "animations": {
+    "idle": {
+      "asset": "character",
+      "frames": [{ "x": 0, "y": 0, "width": 474, "height": 632 }],
+      "fps": 1,
+      "loop": true,
+      "anchor": { "x": 0.5, "y": 1.0 }
+    }
+  },
+  "stateMappings": {
+    "idle": "idle",
+    "working": "idle",
+    "thinking": "idle",
+    "waiting": "idle",
+    "success": "idle",
+    "celebrating": "idle",
+    "error": "idle",
+    "level_up": "idle",
+    "achievement": "idle",
+    "sleeping": "idle",
+    "offline": "idle",
+    "attention_required": "idle"
+  },
+  "tags": ["starter", "anime", "demon-slayer", "nezuko", "manga", "3d-ready"]
+}

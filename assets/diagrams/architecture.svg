@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 1080" width="1440" height="1080">
+  <rect width="1440" height="1080" fill="#000000"/>
+  <rect width="1440" height="1080" fill="#101010" opacity="0.5"/>
+
+  <text x="40" y="66" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="40" font-weight="800" fill="#ffffff">Architecture</text>
+
+  <rect x="60" y="90" width="1320" height="64" rx="14" fill="#0e0e0e" stroke="#333333"/>
+  <rect x="60" y="90" width="1320" height="64" rx="14" fill="none" stroke="#52a8ff" stroke-dasharray="6 5" stroke-width="1.5"/>
+  <circle cx="96" cy="122" r="8" fill="#52a8ff"/>
+  <text x="128" y="124" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="18" font-weight="700" fill="#ffffff">Optional cloud</text>
+  <text x="128" y="154" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="15" fill="#999999">NestJS monolith + PostgreSQL. Never gates local startup or core runtime.</text>
+
+  <rect x="80" y="178" width="1280" height="146" rx="18" fill="#111111" stroke="#4a4a4a"/>
+  <rect x="80" y="178" width="1280" height="146" rx="18" fill="#1a1a1a" stroke="none"/>
+  <rect x="80" y="178" width="620" height="146" rx="18" fill="#121212" stroke="none"/>
+  <rect x="726" y="178" width="634" height="146" rx="18" fill="#121212" stroke="none"/>
+  <text x="110" y="212" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="20" font-weight="800" fill="#52a8ff">Tauri 2 desktop shell</text>
+  <text x="112" y="244" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="16" fill="#ffffff">React + strict TypeScript</text>
+  <text x="112" y="270" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="14" fill="#999999">main window · transparent always-on-top pet overlay · persistent overlay position</text>
+
+  <rect x="360" y="344" width="720" height="108" rx="16" fill="#0e0e0e" stroke="#4a4a4a"/>
+  <text x="410" y="380" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="17" font-weight="700" fill="#ffffff">Tauri IPC boundary</text>
+  <rect x="388" y="408" width="330" height="40" rx="10" fill="#121212" stroke="none"/>
+  <text x="410" y="433" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="14" fill="#ffffff">Capability-scoped commands</text>
+  <rect x="728" y="408" width="330" height="40" rx="10" fill="#121212" stroke="none"/>
+  <text x="750" y="433" font-family="'Segoe UI', 'Noto Sans', system-ui, sans-serif" font-size="14" fill="#ffffff">local hook IPC: v1 envelope, named pipe / Unix socket, 256 KiB cap, shared-secret handshake</text>
+</svg>
