@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 
 export interface ProviderReport {
   providerId: string;
@@ -36,6 +36,116 @@ export interface CommandDeckProps {
   latencyMs?: number | null;
 }
 
+/** Quota share at which a meter switches to the warning colour. */
+const QUOTA_WARNING_PERCENT = 80;
+
+const PROVENANCE_LABELS: Record<string, string> = {
+  LIVE: "live",
+  LOCAL: "from local logs",
+};
+
+function provenanceLabel(provenance: string): string | null {
+  return PROVENANCE_LABELS[provenance] ?? null;
+}
+
+function formatResetTime(resetsAt: string | undefined): string | null {
+  if (!resetsAt) return null;
+  const date = new Date(resetsAt);
+  if (Number.isNaN(date.getTime())) return null;
+  return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
+}
+
+function formatAge(seconds: number): string {
+  if (seconds < 60) return `${seconds}s ago`;
+  const minutes = Math.floor(seconds / 60);
+  if (minutes < 60) return `${minutes}m ago`;
+  return `${Math.floor(minutes / 60)}h ago`;
+}
+
+function hookLabel(p: ProviderReport): string {
+  return p.hookStatus === "installed" ? "Hook on" : "Detected";
+}
+
+function QuotaMeter({ label, used, resetsAt }: { label: string; used: number; resetsAt?: string }) {
+  const clamped = Math.min(100, Math.max(0, used));
+  const reset = formatResetTime(resetsAt);
+  return (
+    <div className="deck-meter">
+      <div className="deck-meter-text">
+        <span className="deck-meter-value">{clamped.toFixed(0)}%</span>
+        <span>of {label} used</span>
+        {reset && <span className="deck-quiet">resets {reset}</span>}
+      </div>
+      <div
+        className="deck-meter-track"
+        role="meter"
+        aria-label={`${label} quota used`}
+        aria-valuemin={0}
+        aria-valuemax={100}
+        aria-valuenow={Math.round(clamped)}
+      >
+        <div
+          className={clamped >= QUOTA_WARNING_PERCENT ? "deck-meter-fill is-high" : "deck-meter-fill"}
+          style={{ width: `${clamped}%` }}
+        />
+      </div>
+    </div>
+  );
+}
+
+function AgentRow({ p }: { p: ProviderReport }) {
+  const fiveHour = p.quotaStatus?.fiveHour;
+  const sevenDay = p.quotaStatus?.sevenDay;
+  const quotaSource = provenanceLabel(p.quotaProvenance);
+  const costSource = provenanceLabel(p.costProvenance);
+  const hasTokens = p.inputTokens !== undefined && p.inputTokens !== null;
+  const hasCost = p.costUsd !== undefined && p.costUsd !== null;
+
+  return (
+    <li className="deck-agent">
+      <div className="deck-agent-head">
+        <span className="deck-agent-name">{p.displayName}</span>
+        <span className="deck-agent-status">{hookLabel(p)}</span>
+      </div>
+
+      {fiveHour ? (
+        <QuotaMeter label="5-hour limit" used={fiveHour.usedPercentage} resetsAt={fiveHour.resetsAt} />
+      ) : (
+        <p className="deck-quiet">No quota reading yet.</p>
+      )}
+
+      {(sevenDay || hasCost || hasTokens) && (
+      <div className="deck-agent-facts">
+        {sevenDay && (
+          <span>
+            <strong>{sevenDay.usedPercentage.toFixed(0)}%</strong> of weekly limit
+          </span>
+        )}
+        {hasCost && (
+          <span>
+            <strong>${p.costUsd?.toFixed(2)}</strong> estimated cost
+          </span>
+        )}
+        {hasTokens && (
+          <span>
+            <strong>{(p.inputTokens ?? 0).toLocaleString()}</strong> in,{" "}
+            <strong>{(p.outputTokens ?? 0).toLocaleString()}</strong> out
+          </span>
+        )}
+      </div>
+      )}
+
+      {(quotaSource || costSource || p.quotaUpdatedSecondsAgo != null) && (
+        <p className="deck-quiet deck-agent-source">
+          {quotaSource && <span>Quota {quotaSource}</span>}
+          {costSource && <span>Cost {costSource}</span>}
+          {p.quotaUpdatedSecondsAgo != null && <span>Updated {formatAge(p.quotaUpdatedSecondsAgo)}</span>}
+        </p>
+      )}
+    </li>
+  );
+}
+
 export function CommandDeck({
   isOpen,
   onClose,
@@ -49,6 +159,8 @@ export function CommandDeck({
   onVerifyLedger,
   latencyMs,
 }: CommandDeckProps) {
+  const closeRef = useRef<HTMLButtonElement>(null);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape" && isOpen) {
@@ -59,294 +171,96 @@ export function CommandDeck({
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [isOpen, onClose]);
 
+  useEffect(() => {
+    if (isOpen) closeRef.current?.focus();
+  }, [isOpen]);
+
   if (!isOpen) return null;
+
+  const detected = providers.filter((p) => p.detected);
+  const missing = providers.filter((p) => !p.detected);
 
   return (
     <div
       className="command-deck-overlay"
-      style={{
-        position: "fixed",
-        inset: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.75)",
-        backdropFilter: "blur(10px)",
-        zIndex: 9999,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        animation: "commandDeckFadeIn 0.12s cubic-bezier(0, 0, 0.2, 1)",
-      }}
       onClick={(e) => {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div
-        className="command-deck-dialog"
-        style={{
-          width: "90%",
-          maxWidth: "780px",
-          maxHeight: "88vh",
-          backgroundColor: "#0d131f",
-          border: "1px solid rgba(82, 168, 255, 0.3)",
-          borderRadius: "12px",
-          boxShadow: "0 16px 40px rgba(0, 0, 0, 0.8), 0 0 20px rgba(82, 168, 255, 0.15)",
-          color: "#e2e8f0",
-          display: "flex",
-          flexDirection: "column",
-          overflow: "hidden",
-        }}
-      >
-        {/* Header */}
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "14px 20px",
-            borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-            background: "linear-gradient(90deg, #101a2e 0%, #0d131f 100%)",
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <span style={{ fontSize: "16px" }}>⚡</span>
-            <div>
-              <div style={{ fontWeight: 700, fontSize: "14px", letterSpacing: "0.5px" }}>
-                AGENTPET COMMAND DECK
-              </div>
-              <div style={{ fontSize: "10px", color: "#64748b" }}>
-                Low-latency HUD · Active Companion:{" "}
-                <span style={{ color: "#38bdf8", fontWeight: 600 }}>{activePetName}</span> (
-                {activeState})
-              </div>
-            </div>
+      <section className="command-deck-dialog" role="dialog" aria-modal="true" aria-labelledby="deck-title">
+        {isSimulated && (
+          <div className="deck-simulated" role="status">
+            [SIMULATED - DEV ONLY] Activity below is not from a real agent.
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-            {isSimulated && (
-              <span
-                style={{
-                  background: "#f59e0b",
-                  color: "#000",
-                  fontWeight: 800,
-                  fontSize: "10px",
-                  padding: "2px 8px",
-                  borderRadius: "4px",
-                  letterSpacing: "1px",
-                }}
-              >
-                SIMULATED
-              </span>
+        )}
+
+        <header className="deck-header">
+          <div>
+            <h1 id="deck-title" className="deck-title">
+              {activePetName} is {activeState}.
+            </h1>
+            <p className="deck-subtitle">
+              Watching {detected.length} of {providers.length} coding agents
+            </p>
+          </div>
+          <button ref={closeRef} className="deck-close" onClick={onClose} aria-label="Close command deck">
+            Close <kbd>Esc</kbd>
+          </button>
+        </header>
+
+        <div className="deck-body">
+          <section aria-labelledby="deck-agents">
+            <h2 id="deck-agents" className="deck-heading">Agents</h2>
+            {detected.length > 0 ? (
+              <ul className="deck-agent-list">
+                {detected.map((p) => (
+                  <AgentRow key={p.providerId} p={p} />
+                ))}
+              </ul>
+            ) : (
+              <p className="deck-empty">
+                No coding agents found on this machine. Install Claude Code, Codex CLI or Copilot CLI, then reopen this deck.
+              </p>
             )}
-            <button
-              onClick={onClose}
-              style={{
-                background: "rgba(255, 255, 255, 0.06)",
-                border: "1px solid rgba(255, 255, 255, 0.1)",
-                color: "#94a3b8",
-                borderRadius: "6px",
-                padding: "4px 10px",
-                cursor: "pointer",
-                fontSize: "13px",
-              }}
-            >
-              ✕ Esc
-            </button>
-          </div>
+            {missing.length > 0 && (
+              <p className="deck-quiet deck-missing">Not installed: {missing.map((p) => p.displayName).join(", ")}</p>
+            )}
+          </section>
+
+          {installedPacks.length > 0 && (
+            <section aria-labelledby="deck-companion">
+              <h2 id="deck-companion" className="deck-heading">Companion</h2>
+              <div className="deck-pets" role="group" aria-labelledby="deck-companion">
+                {installedPacks.map((pack) => {
+                  const isSelected = activePetName.toLowerCase().includes(pack.name.toLowerCase());
+                  return (
+                    <button
+                      key={pack.selectionId}
+                      className="deck-pet"
+                      aria-pressed={isSelected}
+                      onClick={() => onSelectPet(pack.selectionId)}
+                    >
+                      {pack.name}
+                    </button>
+                  );
+                })}
+              </div>
+            </section>
+          )}
         </div>
 
-        {/* Content Body */}
-        <div style={{ padding: "18px 20px", overflowY: "auto", display: "flex", flexDirection: "column", gap: "16px" }}>
-          {/* Provider Telemetry Matrix */}
-          <div>
-            <div style={{ fontSize: "11px", fontWeight: 600, color: "#94a3b8", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "1px" }}>
-              AI Provider Telemetry
-            </div>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: "10px" }}>
-              {providers.map((p) => {
-                const fiveHourUsed = p.quotaStatus?.fiveHour?.usedPercentage;
-                const sevenDayUsed = p.quotaStatus?.sevenDay?.usedPercentage;
-                return (
-                  <div
-                    key={p.providerId}
-                    style={{
-                      background: "rgba(15, 23, 42, 0.6)",
-                      border: p.detected ? "1px solid rgba(56, 189, 248, 0.25)" : "1px solid rgba(255, 255, 255, 0.05)",
-                      borderRadius: "8px",
-                      padding: "12px",
-                      display: "flex",
-                      flexDirection: "column",
-                      gap: "8px",
-                    }}
-                  >
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                      <span style={{ fontWeight: 600, fontSize: "12px", color: p.detected ? "#f8fafc" : "#64748b" }}>
-                        {p.displayName}
-                      </span>
-                      <span
-                        style={{
-                          fontSize: "9px",
-                          fontWeight: 700,
-                          padding: "1px 5px",
-                          borderRadius: "3px",
-                          background: p.detected ? "rgba(34, 197, 94, 0.15)" : "rgba(148, 163, 184, 0.1)",
-                          color: p.detected ? "#4ade80" : "#64748b",
-                          border: `1px solid ${p.detected ? "rgba(34, 197, 94, 0.3)" : "rgba(148, 163, 184, 0.2)"}`,
-                        }}
-                      >
-                        {p.detected ? (p.hookStatus === "installed" ? "HOOK ACTIVE" : "DETECTED") : "NOT FOUND"}
-                      </span>
-                    </div>
-
-                    {/* Rate limit gauges */}
-                    <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
-                      <div>
-                        <div style={{ fontSize: "9px", color: "#64748b" }}>5h Quota:</div>
-                        <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                          <span style={{ fontSize: "13px", fontWeight: 700, color: fiveHourUsed !== undefined ? "#38bdf8" : "#94a3b8" }}>
-                            {fiveHourUsed !== undefined ? `${fiveHourUsed.toFixed(1)}%` : "N/A"}
-                          </span>
-                          <span
-                            style={{
-                              fontSize: "8px",
-                              padding: "1px 4px",
-                              borderRadius: "2px",
-                              background: p.quotaProvenance === "LIVE" ? "#0284c7" : "#334155",
-                              color: "#fff",
-                            }}
-                          >
-                            {p.quotaProvenance}
-                          </span>
-                        </div>
-                      </div>
-
-                      {sevenDayUsed !== undefined && (
-                        <div>
-                          <div style={{ fontSize: "9px", color: "#64748b" }}>7d Quota:</div>
-                          <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                            <span style={{ fontSize: "13px", fontWeight: 700, color: "#a855f7" }}>
-                              {sevenDayUsed.toFixed(1)}%
-                            </span>
-                          </div>
-                        </div>
-                      )}
-
-                      {p.costUsd !== undefined && p.costUsd !== null && (
-                        <div>
-                          <div style={{ fontSize: "9px", color: "#64748b" }}>Cost USD:</div>
-                          <div style={{ display: "flex", alignItems: "center", gap: "4px" }}>
-                            <span style={{ fontSize: "13px", fontWeight: 700, color: "#4ade80" }}>
-                              ${p.costUsd.toFixed(2)}
-                            </span>
-                            <span style={{ fontSize: "8px", padding: "1px 4px", borderRadius: "2px", background: "#15803d", color: "#fff" }}>
-                              {p.costProvenance}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Token usage */}
-                    {p.inputTokens !== undefined && p.inputTokens !== null && (
-                      <div style={{ fontSize: "10px", color: "#94a3b8", display: "flex", gap: "8px" }}>
-                        <span>In: {(p.inputTokens || 0).toLocaleString()}</span>
-                        <span>Out: {(p.outputTokens || 0).toLocaleString()}</span>
-                      </div>
-                    )}
-
-                    {p.quotaUpdatedSecondsAgo !== undefined && p.quotaUpdatedSecondsAgo !== null && (
-                      <div style={{ fontSize: "9px", color: "#64748b" }}>
-                        Updated {p.quotaUpdatedSecondsAgo}s ago
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Quick Companion Switcher */}
-          <div>
-            <div style={{ fontSize: "11px", fontWeight: 600, color: "#94a3b8", marginBottom: "8px", textTransform: "uppercase", letterSpacing: "1px" }}>
-              Companion Switcher
-            </div>
-            <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-              {installedPacks.map((pack) => {
-                const isSelected = activePetName.toLowerCase().includes(pack.name.toLowerCase());
-                return (
-                  <button
-                    key={pack.selectionId}
-                    onClick={() => onSelectPet(pack.selectionId)}
-                    style={{
-                      padding: "8px 14px",
-                      background: isSelected ? "rgba(56, 189, 248, 0.2)" : "rgba(30, 41, 59, 0.6)",
-                      border: isSelected ? "1px solid #38bdf8" : "1px solid rgba(255, 255, 255, 0.1)",
-                      borderRadius: "6px",
-                      color: isSelected ? "#38bdf8" : "#cbd5e1",
-                      cursor: "pointer",
-                      fontSize: "12px",
-                      fontWeight: isSelected ? 700 : 500,
-                      display: "flex",
-                      alignItems: "center",
-                      gap: "6px",
-                    }}
-                  >
-                    <span>{pack.name.includes("Arjuna") ? "🏹" : pack.name.includes("Wukong") ? "👑" : pack.name.includes("Ninja") ? "🐱" : "⚡"}</span>
-                    <span>{pack.name}</span>
-                    {isSelected && <span style={{ fontSize: "9px", background: "#38bdf8", color: "#000", padding: "1px 4px", borderRadius: "2px" }}>ACTIVE</span>}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-
-          {/* Quick Commands & Tamper-Evident Verification */}
-          <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center", marginTop: "4px" }}>
-            <button
-              onClick={onVerifyLedger}
-              style={{
-                padding: "8px 14px",
-                background: "rgba(16, 185, 129, 0.15)",
-                border: "1px solid rgba(16, 185, 129, 0.4)",
-                color: "#34d399",
-                borderRadius: "6px",
-                cursor: "pointer",
-                fontSize: "11px",
-                fontWeight: 600,
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-              }}
-            >
-              <span>🔒</span>
-              <span>Verify Tamper-Evident Ledger</span>
-            </button>
-
-            <button
-              onClick={onToggleSimulated}
-              style={{
-                padding: "8px 14px",
-                background: isSimulated ? "rgba(245, 158, 11, 0.2)" : "rgba(51, 65, 85, 0.5)",
-                border: isSimulated ? "1px solid #f59e0b" : "1px solid rgba(255, 255, 255, 0.1)",
-                color: isSimulated ? "#f59e0b" : "#94a3b8",
-                borderRadius: "6px",
-                cursor: "pointer",
-                fontSize: "11px",
-                fontWeight: 600,
-                display: "flex",
-                alignItems: "center",
-                gap: "6px",
-              }}
-            >
-              <span>🧪</span>
-              <span>{isSimulated ? "Exit Simulated Mode (Return to Live)" : "Toggle Simulated Demo Mode"}</span>
-            </button>
-
-            {latencyMs !== undefined && latencyMs !== null && (
-              <span style={{ fontSize: "10px", color: "#64748b", marginLeft: "auto", fontFamily: "monospace" }}>
-                Render Latency: {latencyMs}ms
-              </span>
-            )}
-          </div>
-        </div>
-      </div>
+        <footer className="deck-footer">
+          <button className="deck-action" onClick={onVerifyLedger}>
+            Verify XP ledger
+          </button>
+          <button className="deck-action is-quiet" onClick={onToggleSimulated}>
+            {isSimulated ? "Return to live data" : "Start simulated demo"}
+          </button>
+          {latencyMs !== undefined && latencyMs !== null && (
+            <span className="deck-quiet deck-latency">Rendered in {latencyMs} ms</span>
+          )}
+        </footer>
+      </section>
     </div>
   );
 }

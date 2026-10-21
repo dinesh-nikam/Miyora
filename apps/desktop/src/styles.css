@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,700&family=Geist+Mono:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap");
 
 :root {
   --bg-deep: #000000;
@@ -1763,5 +1763,318 @@ a {
   }
   .character-card:hover {
     transform: none;
+  }
+}
+
+/* ==========================================================================
+   Command Deck: the pet's view of the coding agents it watches
+   ========================================================================== */
+
+.command-deck-overlay {
+  --deck-ground: #1c1828;
+  --deck-raised: #262036;
+  --deck-line: rgba(236, 230, 247, 0.12);
+  --deck-ink: #ece6f7;
+  --deck-muted: #a097b8;
+  --deck-used: #f2b544;
+  --deck-live: #86d9b9;
+  --deck-high: #f27d6b;
+  --deck-font: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  background: rgba(16, 13, 24, 0.72);
+  backdrop-filter: blur(8px);
+  animation: commandDeckFadeIn 140ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+@keyframes commandDeckFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.command-deck-dialog {
+  width: 100%;
+  max-width: 640px;
+  max-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--deck-ground);
+  color: var(--deck-ink);
+  border-radius: 20px;
+  box-shadow: 0 24px 60px rgba(8, 6, 14, 0.6);
+  font-family: var(--deck-font);
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+.command-deck-dialog button:focus-visible {
+  outline: 2px solid var(--deck-used);
+  outline-offset: 2px;
+}
+
+.deck-simulated {
+  padding: 8px 24px;
+  background: var(--deck-used);
+  color: #1c1828;
+  font-weight: 700;
+  font-size: 13px;
+}
+
+.deck-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 28px 28px 20px;
+}
+
+.deck-title {
+  font-size: clamp(28px, 6vw, 40px);
+  font-weight: 700;
+  font-variation-settings: "opsz" 96;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  overflow-wrap: anywhere;
+}
+
+.deck-subtitle {
+  margin-top: 6px;
+  color: var(--deck-muted);
+  font-size: 15px;
+}
+
+.deck-close {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 6px 6px 12px;
+  border-radius: 999px;
+  color: var(--deck-muted);
+  font-size: 13px;
+}
+
+.deck-close:hover {
+  color: var(--deck-ink);
+  background: var(--deck-raised);
+}
+
+.deck-close kbd {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--deck-raised);
+  font-family: inherit;
+  font-size: 12px;
+}
+
+.deck-body {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 0 28px 24px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--deck-raised) transparent;
+}
+
+.deck-heading {
+  margin-bottom: 4px;
+  color: var(--deck-muted);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.deck-agent-list {
+  list-style: none;
+}
+
+.deck-agent {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 16px 0;
+  border-top: 1px solid var(--deck-line);
+}
+
+.deck-agent-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.deck-agent-name {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.deck-agent-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--deck-live);
+  font-size: 13px;
+}
+
+.deck-agent-status::before {
+  content: "";
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.deck-meter-text {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 8px;
+  margin-bottom: 6px;
+}
+
+.deck-meter-value {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.deck-meter-text .deck-quiet {
+  margin-left: auto;
+}
+
+.deck-meter-track {
+  height: 10px;
+  border-radius: 999px;
+  background: var(--deck-raised);
+  overflow: hidden;
+}
+
+.deck-meter-fill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--deck-used);
+  transition: width 400ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+.deck-meter-fill.is-high {
+  background: var(--deck-high);
+}
+
+.deck-agent-facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+  color: var(--deck-muted);
+}
+
+.deck-agent-facts strong {
+  color: var(--deck-ink);
+  font-weight: 500;
+}
+
+.deck-quiet {
+  color: var(--deck-muted);
+  font-size: 12.5px;
+}
+
+.deck-agent-source {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2px 16px;
+}
+
+.deck-missing {
+  padding-top: 12px;
+  border-top: 1px solid var(--deck-line);
+}
+
+.deck-empty {
+  padding: 16px 0;
+  border-top: 1px solid var(--deck-line);
+  max-width: 52ch;
+}
+
+.deck-pets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  padding: 4px;
+  border-radius: 14px;
+  background: var(--deck-raised);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.deck-pet {
+  padding: 8px 14px;
+  border-radius: 10px;
+  color: var(--deck-muted);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.deck-pet:hover {
+  color: var(--deck-ink);
+}
+
+.deck-pet[aria-pressed="true"] {
+  background: var(--deck-ink);
+  color: var(--deck-ground);
+}
+
+.deck-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 28px;
+  background: var(--deck-raised);
+}
+
+.deck-action {
+  padding: 9px 16px;
+  border-radius: 999px;
+  background: var(--deck-ink);
+  color: var(--deck-ground);
+  font-size: 13px;
+  font-weight: 500;
+}
+
+.deck-action.is-quiet {
+  background: transparent;
+  color: var(--deck-ink);
+  box-shadow: inset 0 0 0 1px var(--deck-line);
+}
+
+.deck-action.is-quiet:hover {
+  box-shadow: inset 0 0 0 1px var(--deck-muted);
+}
+
+.deck-latency {
+  margin-left: auto;
+}
+
+@media (max-width: 480px) {
+  .deck-header,
+  .deck-body,
+  .deck-footer {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .command-deck-overlay {
+    animation: none;
+  }
+  .deck-meter-fill {
+    transition: none;
   }
 }
