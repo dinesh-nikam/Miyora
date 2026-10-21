@@ -11,6 +11,8 @@ use agentpet_adapters::{adapter_by_id, ADAPTERS};
 use agentpet_core::{default_data_directory, Core, HookInstallRecord, SessionOutcome};
 use uuid::Uuid;
 
+mod diagnostics;
+
 const STATUS_SESSION_LIMIT: usize = 20;
 
 fn main() {
@@ -535,18 +537,18 @@ fn run_hook_command(mut args: impl Iterator<Item = OsString>) -> i32 {
     while let Some(arg) = args.next() {
         if arg == OsStr::new("--adapter") {
             let Some(value) = args.next().and_then(|v| v.into_string().ok()) else {
-                eprintln!("agentpet: usage: agentpet hook --adapter claude_code < payload.json");
-                return 2;
+                diagnostics::append_diagnostic_error("hook:args", &"missing adapter value");
+                return 0;
             };
             adapter_id = Some(value);
         } else {
-            eprintln!("agentpet: usage: agentpet hook --adapter claude_code < payload.json");
-            return 2;
+            diagnostics::append_diagnostic_error("hook:args", &"unknown hook argument");
+            return 0;
         }
     }
     if adapter_id.as_deref() != Some(agentpet_adapters::claude_code::ADAPTER_ID) {
-        eprintln!("agentpet: usage: agentpet hook --adapter claude_code < payload.json");
-        return 2;
+        diagnostics::append_diagnostic_error("hook:adapter", &"unknown or missing adapter id");
+        return 0;
     }
     use std::io::Read;
     let mut input = Vec::new();
@@ -555,33 +557,32 @@ fn run_hook_command(mut args: impl Iterator<Item = OsString>) -> i32 {
         .take(1_048_576)
         .read_to_end(&mut input)
     {
-        eprintln!("agentpet: hook payload could not be read: {error}");
-        return 1;
+        diagnostics::append_diagnostic_error("hook:read_stdin", &error);
+        return 0;
     }
     let event = match agentpet_adapters::claude_code::parse_hook_payload(&input) {
         Ok(event) => event,
         Err(error) => {
-            eprintln!("agentpet: hook payload rejected: {error}");
-            return 1;
+            diagnostics::append_diagnostic_error("hook:parse_payload", &error);
+            return 0;
         }
     };
-    let core = match open_local_core() {
+    let core = match Core::open_default() {
         Ok(core) => core,
-        Err(code) => return code,
+        Err(error) => {
+            diagnostics::append_diagnostic_error("hook:open_core", &error);
+            return 0;
+        }
     };
     let hook_event = agentpet_adapters::ipc::to_hook_event(&event);
-    match core.record_hook_event(&hook_event) {
-        Ok(outcome) => {
-            println!("hook event {:?} recorded", outcome_label(&outcome));
-            0
-        }
-        Err(error) => {
-            eprintln!("agentpet: hook event could not be persisted: {error}");
-            1
-        }
+    if let Err(error) = core.record_hook_event(&hook_event) {
+        diagnostics::append_diagnostic_error("hook:record_event", &error);
+        return 0;
     }
+    0
 }
 
+#[allow(dead_code)]
 fn outcome_label(outcome: &agentpet_core::HookEventOutcome) -> &'static str {
     match outcome {
         agentpet_core::HookEventOutcome::Accepted => "accepted",
@@ -747,6 +748,15 @@ fn run_doctor(mut args: impl Iterator<Item = OsString>) -> i32 {
         },
         Err(_) => println!("[WARN] Hook state unavailable: local database could not be opened"),
     }
+    let recent_errors = diagnostics::read_recent_errors(5);
+    if recent_errors.is_empty() {
+        println!("[OK] Diagnostics log: no recent errors reported");
+    } else {
+        println!("[WARN] Diagnostics log has {} recent error(s):", recent_errors.len());
+        for err in recent_errors {
+            println!("       {err}");
+        }
+    }
     println!("[WARN] Cloud sync and credential-store checks are not implemented.");
     if failed {
         1
@@ -793,46 +803,103 @@ fn run_statusline(mut args: impl Iterator<Item = OsString>) -> i32 {
     }
     use std::io::Read;
     let mut input = Vec::new();
-    let _ = std::io::stdin()
+    if let Err(error) = std::io::stdin()
         .lock()
         .take(256 * 1024)
-        .read_to_end(&mut input);
-    if let Ok(data_dir) = default_data_directory() {
-        let _ = std::fs::create_dir_all(&data_dir);
-        let _ = std::fs::write(data_dir.join("claude_statusline.json"), &input);
+        .read_to_end(&mut input)
+    {
+        diagnostics::append_diagnostic_error("statusline:stdin", &error);
     }
-    if let Some(cmd_str) = chain_cmd {
-        #[cfg(windows)]
-        let status = Command::new("cmd")
-            .args(["/c", &cmd_str])
-            .stdin(Stdio::piped())
-            .stdout(Stdio::inherit())
-            .stderr(Stdio::inherit())
-            .spawn()
-            .and_then(|mut child| {
-                if let Some(mut stdin) = child.stdin.take() {
-                    let _ = stdin.write_all(&input);
-                }
-                child.wait()
-            });
-        #[cfg(not(windows))]
-        let status = Command::new("sh")
-            .args(["-c", &cmd_str])
-            .stdin(Stdio::piped())
-            .stdout(Stdio::inherit())
-            .stderr(Stdio::inherit())
-            .spawn()
-            .and_then(|mut child| {
-                if let Some(mut stdin) = child.stdin.take() {
-                    let _ = stdin.write_all(&input);
-                }
-                child.wait()
-            });
-        if let Ok(s) = status {
-            return s.code().unwrap_or(0);
+    if let Ok(data_dir) = default_data_directory() {
+        if let Err(error) = std::fs::create_dir_all(&data_dir) {
+            diagnostics::append_diagnostic_error("statusline:mkdir", &error);
+        } else if let Err(error) = std::fs::write(data_dir.join("claude_statusline.json"), &input) {
+            diagnostics::append_diagnostic_error("statusline:write", &error);
         }
     }
+    if chain_cmd.is_none() {
+        if let Some(settings_path) = agentpet_adapters::claude_code::default_settings_path() {
+            let chain_path = agentpet_adapters::claude_code::default_chain_file_path(&settings_path);
+            if let Some(record) = agentpet_adapters::claude_code::read_chain_record(&chain_path) {
+                chain_cmd = record.original_command;
+            }
+        }
+    }
+    if let Some(cmd_str) = chain_cmd {
+        run_chained_command(&cmd_str, &input);
+    }
     0
+}
+
+fn run_chained_command(cmd_str: &str, input: &[u8]) {
+    use std::time::Duration;
+    let start = std::time::Instant::now();
+    let timeout = Duration::from_secs(2);
+
+    #[cfg(windows)]
+    let mut child = match Command::new("cmd")
+        .args(["/c", cmd_str])
+        .stdin(Stdio::piped())
+        .stdout(Stdio::inherit())
+        .stderr(Stdio::inherit())
+        .spawn()
+    {
+        Ok(c) => c,
+        Err(e) => {
+            diagnostics::append_diagnostic_error("statusline:spawn", &e);
+            return;
+        }
+    };
+
+    #[cfg(not(windows))]
+    let mut child = match Command::new("sh")
+        .args(["-c", cmd_str])
+        .stdin(Stdio::piped())
+        .stdout(Stdio::inherit())
+        .stderr(Stdio::inherit())
+        .spawn()
+    {
+        Ok(c) => c,
+        Err(e) => {
+            diagnostics::append_diagnostic_error("statusline:spawn", &e);
+            return;
+        }
+    };
+
+    if let Some(mut stdin) = child.stdin.take() {
+        if let Err(e) = stdin.write_all(input) {
+            diagnostics::append_diagnostic_error("statusline:pipe_stdin", &e);
+        }
+    }
+
+    loop {
+        match child.try_wait() {
+            Ok(Some(status)) => {
+                if !status.success() {
+                    diagnostics::append_diagnostic_error(
+                        "statusline:child_exit",
+                        &format!("exit code {:?}", status.code()),
+                    );
+                }
+                break;
+            }
+            Ok(None) => {
+                if start.elapsed() > timeout {
+                    diagnostics::append_diagnostic_error(
+                        "statusline:timeout",
+                        &"chained command exceeded 2s timeout; killed",
+                    );
+                    let _ = child.kill();
+                    break;
+                }
+                std::thread::sleep(Duration::from_millis(50));
+            }
+            Err(e) => {
+                diagnostics::append_diagnostic_error("statusline:wait", &e);
+                break;
+            }
+        }
+    }
 }
 
 fn run_pack_command(mut args: impl Iterator<Item = OsString>) -> i32 {

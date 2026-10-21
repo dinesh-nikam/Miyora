@@ -11,6 +11,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
+use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
 use crate::{AdapterError, HookEventKind, NormalizedEvent};
@@ -257,6 +258,31 @@ pub fn parse_statusline_payload(input: &[u8]) -> Result<ClaudeQuotaReport, Adapt
     })
 }
 
+pub const CHAIN_FILE: &str = "agentpet_chain.json";
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+pub struct StatuslineChainRecord {
+    pub original_command: Option<String>,
+    pub installed_at: String,
+}
+
+pub fn default_chain_file_path(settings_path: &Path) -> PathBuf {
+    settings_path
+        .parent()
+        .unwrap_or_else(|| Path::new("."))
+        .join(CHAIN_FILE)
+}
+
+pub fn read_chain_record(chain_path: &Path) -> Option<StatuslineChainRecord> {
+    let bytes = fs::read(chain_path).ok()?;
+    serde_json::from_slice(&bytes).ok()
+}
+
+pub fn write_chain_record(chain_path: &Path, record: &StatuslineChainRecord) -> Result<(), AdapterError> {
+    let data = serde_json::to_vec_pretty(record).map_err(|e| AdapterError::ConfigWrite(e.to_string()))?;
+    atomic_write(chain_path, &data)
+}
+
 pub fn install_statusline_shim(
     settings_path: &Path,
     shim_command: &str,
@@ -271,13 +297,18 @@ pub fn install_statusline_shim(
             }
         }
     }
-    let command_to_set = match &original_command {
-        Some(orig) => format!("{shim_command} --chain \"{orig}\""),
-        None => shim_command.to_string(),
+    // Store original command in chain.json
+    let chain_path = default_chain_file_path(settings_path);
+    let chain_record = StatuslineChainRecord {
+        original_command: original_command.clone(),
+        installed_at: chrono::Utc::now().to_rfc3339(),
     };
+    write_chain_record(&chain_path, &chain_record)?;
+
+    // Set command cleanly to shim_command WITHOUT embedding arguments
     document["statusLine"] = serde_json::json!({
         "type": "command",
-        "command": command_to_set,
+        "command": shim_command,
     });
     write_verified(settings_path, &document, previous.as_deref())?;
     Ok(original_command)
@@ -290,10 +321,22 @@ pub fn uninstall_statusline_shim(settings_path: &Path) -> Result<bool, AdapterEr
     };
     let mut document = parse_settings(&bytes)?;
     let mut removed = false;
+    let chain_path = default_chain_file_path(settings_path);
+    let chain_record = read_chain_record(&chain_path);
+
     if let Some(status_obj) = document.get_mut("statusLine") {
         if let Some(cmd) = status_obj.get("command").and_then(|c| c.as_str()) {
             if cmd.contains("agentpet statusline") {
-                if let Some(chained) = cmd
+                if let Some(record) = chain_record {
+                    if let Some(orig) = record.original_command {
+                        *status_obj = serde_json::json!({
+                            "type": "command",
+                            "command": orig,
+                        });
+                    } else {
+                        document.as_object_mut().map(|m| m.remove("statusLine"));
+                    }
+                } else if let Some(chained) = cmd
                     .split("--chain \"")
                     .nth(1)
                     .and_then(|s| s.strip_suffix('"'))
@@ -309,6 +352,7 @@ pub fn uninstall_statusline_shim(settings_path: &Path) -> Result<bool, AdapterEr
             }
         }
     }
+    let _ = fs::remove_file(chain_path);
     if removed {
         write_verified(settings_path, &document, Some(&bytes))?;
     }
@@ -350,19 +394,27 @@ fn backup_settings(
     let Some(previous) = previous else {
         return Ok(None);
     };
+    let timestamp = chrono::Utc::now().format("%Y%m%dT%H%M%SZ");
     let name = format!(
-        "{}{}",
+        "{}.{}.bak",
         settings_path
             .file_name()
             .unwrap_or_default()
             .to_string_lossy(),
-        BACKUP_SUFFIX
+        timestamp
     );
     let backup_path = settings_path.with_file_name(name);
-    if backup_path.exists() {
-        return Ok(Some(backup_path));
-    }
     fs::write(&backup_path, previous).map_err(|e| AdapterError::ConfigWrite(e.to_string()))?;
+
+    // Also write standard .agentpet.bak for backwards compatibility
+    let std_name = format!(
+        "{}{}",
+        settings_path.file_name().unwrap_or_default().to_string_lossy(),
+        BACKUP_SUFFIX
+    );
+    let std_backup = settings_path.with_file_name(std_name);
+    let _ = fs::write(&std_backup, previous);
+
     Ok(Some(backup_path))
 }
 
@@ -412,21 +464,54 @@ fn entry_invokes(entry: &serde_json::Value, command: &str) -> bool {
         .unwrap_or(false)
 }
 
+pub fn atomic_write(target_path: &Path, data: &[u8]) -> Result<(), AdapterError> {
+    let parent = target_path.parent().unwrap_or_else(|| Path::new("."));
+    if !parent.as_os_str().is_empty() {
+        fs::create_dir_all(parent).map_err(|e| AdapterError::ConfigWrite(e.to_string()))?;
+    }
+    let tmp_name = format!(
+        "{}.tmp.{}",
+        target_path.file_name().unwrap_or_default().to_string_lossy(),
+        uuid::Uuid::new_v4().simple()
+    );
+    let tmp_path = parent.join(tmp_name);
+    fs::write(&tmp_path, data).map_err(|e| AdapterError::ConfigWrite(e.to_string()))?;
+
+    #[cfg(windows)]
+    {
+        if target_path.exists() {
+            let old_tmp = parent.join(format!(
+                "{}.old.{}",
+                target_path.file_name().unwrap_or_default().to_string_lossy(),
+                uuid::Uuid::new_v4().simple()
+            ));
+            let _ = fs::rename(target_path, &old_tmp);
+            if let Err(e) = fs::rename(&tmp_path, target_path) {
+                let _ = fs::rename(&old_tmp, target_path);
+                let _ = fs::remove_file(&tmp_path);
+                return Err(AdapterError::ConfigWrite(e.to_string()));
+            }
+            let _ = fs::remove_file(&old_tmp);
+            return Ok(());
+        }
+    }
+    fs::rename(&tmp_path, target_path).map_err(|e| {
+        let _ = fs::remove_file(&tmp_path);
+        AdapterError::ConfigWrite(e.to_string())
+    })?;
+    Ok(())
+}
+
 fn write_verified(
     settings_path: &Path,
     document: &serde_json::Value,
     previous: Option<&[u8]>,
 ) -> Result<(), AdapterError> {
-    if let Some(parent) = settings_path.parent() {
-        if !parent.as_os_str().is_empty() {
-            fs::create_dir_all(parent).map_err(|e| AdapterError::ConfigWrite(e.to_string()))?;
-        }
-    }
     let serialized = serde_json::to_vec_pretty(document)
         .map_err(|e| AdapterError::ConfigWrite(e.to_string()))?;
-    if let Err(e) = fs::write(settings_path, &serialized) {
+    if let Err(e) = atomic_write(settings_path, &serialized) {
         restore_previous(settings_path, previous);
-        return Err(AdapterError::ConfigWrite(e.to_string()));
+        return Err(e);
     }
     if parse_settings(&serialized).is_err() {
         restore_previous(settings_path, previous);
@@ -440,7 +525,7 @@ fn write_verified(
 fn restore_previous(settings_path: &Path, previous: Option<&[u8]>) {
     match previous {
         Some(bytes) => {
-            let _ = fs::write(settings_path, bytes);
+            let _ = atomic_write(settings_path, bytes);
         }
         None => {
             let _ = fs::remove_file(settings_path);
@@ -524,4 +609,124 @@ mod tests {
                 || path.ends_with(SETTINGS_FILE)
         );
     }
+
+    #[test]
+    fn statusline_preserves_spaces_in_paths_and_unicode() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        let path = dir.path().join("Folder With Spaces 🚀").join(SETTINGS_FILE);
+        let orig_cmd = r#"C:\Program Files\My Tools\status.exe --tag "こんにちは世界""#;
+        let seed = serde_json::json!({
+            "statusLine": {
+                "type": "command",
+                "command": orig_cmd
+            },
+            "customUnknownKey": { "nested": "unicode 🎯 value" }
+        });
+        fs::create_dir_all(path.parent().unwrap()).expect("create parent");
+        fs::write(&path, serde_json::to_vec(&seed).unwrap()).expect("write seed");
+
+        let returned_orig = install_statusline_shim(&path, "agentpet statusline").expect("install");
+        assert_eq!(returned_orig.as_deref(), Some(orig_cmd));
+
+        // Read modified settings: customUnknownKey preserved, statusLine is just "agentpet statusline"
+        let modified: serde_json::Value =
+            serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
+        assert_eq!(
+            modified["statusLine"]["command"].as_str().unwrap(),
+            "agentpet statusline"
+        );
+        assert_eq!(
+            modified["customUnknownKey"]["nested"].as_str().unwrap(),
+            "unicode 🎯 value"
+        );
+
+        // Uninstall restores exact original
+        let uninstalled = uninstall_statusline_shim(&path).expect("uninstall");
+        assert!(uninstalled);
+        let restored: serde_json::Value =
+            serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
+        assert_eq!(
+            restored["statusLine"]["command"].as_str().unwrap(),
+            orig_cmd
+        );
+        assert_eq!(
+            restored["customUnknownKey"]["nested"].as_str().unwrap(),
+            "unicode 🎯 value"
+        );
+    }
+
+    #[test]
+    fn statusline_preserves_escaped_quotes_and_flags() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        let path = dir.path().join(SETTINGS_FILE);
+        let orig_cmd = r#"my_tool --format="json" --filter="name=\"test\"""#;
+        let seed = serde_json::json!({
+            "statusLine": {
+                "type": "command",
+                "command": orig_cmd
+            }
+        });
+        fs::write(&path, serde_json::to_vec(&seed).unwrap()).expect("write seed");
+
+        install_statusline_shim(&path, "agentpet statusline").expect("install");
+        let uninstalled = uninstall_statusline_shim(&path).expect("uninstall");
+        assert!(uninstalled);
+
+        let restored: serde_json::Value =
+            serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
+        assert_eq!(
+            restored["statusLine"]["command"].as_str().unwrap(),
+            orig_cmd
+        );
+    }
+
+    #[test]
+    fn statusline_handles_missing_settings_file() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        let path = dir.path().join(SETTINGS_FILE);
+        assert!(!path.exists());
+
+        let orig = install_statusline_shim(&path, "agentpet statusline").expect("install");
+        assert_eq!(orig, None);
+        assert!(path.exists());
+
+        let doc: serde_json::Value = serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
+        assert_eq!(doc["statusLine"]["command"].as_str().unwrap(), "agentpet statusline");
+
+        let uninstalled = uninstall_statusline_shim(&path).expect("uninstall");
+        assert!(uninstalled);
+        let restored: serde_json::Value = serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
+        assert!(restored.get("statusLine").is_none());
+    }
+
+    #[test]
+    fn statusline_refuses_invalid_json() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        let path = dir.path().join(SETTINGS_FILE);
+        fs::write(&path, b"INVALID { JSON").expect("write invalid");
+
+        let result = install_statusline_shim(&path, "agentpet statusline");
+        assert!(result.is_err());
+
+        // File must not be modified
+        let content = fs::read(&path).unwrap();
+        assert_eq!(content, b"INVALID { JSON");
+    }
+
+    #[test]
+    fn statusline_creates_timestamped_backup() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        let path = dir.path().join(SETTINGS_FILE);
+        fs::write(&path, br#"{"existingKey":"value"}"#).expect("write seed");
+
+        install_hook(&path, "agentpet hook").expect("install hook");
+
+        // Verify that a backup file with .bak exists
+        let entries = fs::read_dir(dir.path()).unwrap();
+        let backup_exists = entries.flatten().any(|e| {
+            e.file_name().to_string_lossy().contains(".bak")
+        });
+        assert!(backup_exists, "backup file must be created on modification");
+    }
 }
+
