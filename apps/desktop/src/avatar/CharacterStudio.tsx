@@ -141,6 +141,60 @@ function SpecThumbnail({ spec, size = 84 }: { spec: CharacterSpec; size?: number
   );
 }
 
+const ANIME_TAG = "anime";
+const ANIME_COLLECTION = "collection:anime";
+const BADGE_STYLE: CSSProperties = {
+  fontSize: "9px",
+  fontWeight: 700,
+  letterSpacing: "0.04em",
+  padding: "1px 6px",
+  borderRadius: "999px",
+  textTransform: "uppercase",
+};
+
+interface CharacterCardProps {
+  spec: CharacterSpec;
+  selected: boolean;
+  status: "active" | "customized" | null;
+  onSelect: () => void;
+}
+
+/** A catalog card themed from the character's own palette. */
+function CharacterCard({ spec, selected, status, onSelect }: CharacterCardProps) {
+  const { palette } = spec;
+  const anime = spec.tags.includes(ANIME_TAG);
+  const style = {
+    "--card-accent": palette.accent,
+    "--card-tint": `${palette.primary}40`,
+  } as CSSProperties;
+  return (
+    <button
+      type="button"
+      className={`character-card${selected ? " is-selected" : ""}`}
+      style={style}
+      onClick={onSelect}
+      aria-pressed={selected}
+      aria-label={`${spec.name}, ${spec.title}${status ? `, ${status}` : ""}`}
+      title={spec.description}
+    >
+      <SpecThumbnail spec={spec} />
+      <span className="character-card__name">{spec.name}</span>
+      <span className="character-card__title">{spec.title}</span>
+      <span className="character-card__swatches" aria-hidden="true">
+        {[palette.hair, palette.eyes, palette.primary, palette.accent].map((color, index) => (
+          <span key={index} style={{ background: color }} />
+        ))}
+      </span>
+      <span className="character-card__badges">
+        {anime && <span style={{ ...BADGE_STYLE, background: "rgba(244, 114, 182, 0.18)", color: "#f9a8d4" }}>Anime</span>}
+        <span style={{ ...BADGE_STYLE, background: "rgba(148, 163, 184, 0.14)", color: "#cbd5e1" }}>{humanize(spec.body)}</span>
+        {status === "active" && <span style={{ ...BADGE_STYLE, background: "rgba(56, 189, 248, 0.2)", color: "#7dd3fc" }}>Active</span>}
+        {status === "customized" && <span style={{ ...BADGE_STYLE, background: "rgba(251, 191, 36, 0.18)", color: "#fcd34d" }}>Edited</span>}
+      </span>
+    </button>
+  );
+}
+
 function Field({ title, children }: { title: string; children: ReactNode }) {
   return (
     <label style={label}>
@@ -254,7 +308,11 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
     return catalog.filter(({ spec }) => {
-      if (bodyFilter !== "all" && spec.body !== bodyFilter) return false;
+      if (bodyFilter === ANIME_COLLECTION) {
+        if (!spec.tags.includes(ANIME_TAG)) return false;
+      } else if (bodyFilter !== "all" && spec.body !== bodyFilter) {
+        return false;
+      }
       if (!query) return true;
       return [spec.name, spec.title, spec.description, ...spec.tags].some((text) => text.toLowerCase().includes(query));
     });
@@ -500,7 +558,8 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
               <div style={{ display: "flex", gap: "8px", marginBottom: "12px", flexWrap: "wrap" }}>
                 <input style={{ ...input, flex: 1, minWidth: "160px" }} placeholder="Search name, role, or tag" value={search} onChange={(event) => setSearch(event.target.value)} />
                 <select style={input} value={bodyFilter} onChange={(event) => setBodyFilter(event.target.value)}>
-                  <option value="all">All bodies</option>
+                  <option value="all">All characters</option>
+                  <option value={ANIME_COLLECTION}>Anime archetypes ({catalog.filter(({ spec }) => spec.tags.includes(ANIME_TAG)).length})</option>
                   {BODY_TYPES.map((body) => (
                     <option key={body} value={body}>
                       {humanize(body)}
@@ -513,29 +572,13 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(120px, 1fr))", gap: "10px" }}>
                 {filtered.map(({ spec, customized }) => (
-                  <div
+                  <CharacterCard
                     key={spec.id}
-                    onClick={() => setViewing({ source: "catalog", id: spec.id })}
-                    title={spec.description}
-                    style={{
-                      background: "#0a101d",
-                      border: viewing?.id === spec.id ? "2px solid #38bdf8" : "1px solid rgba(255,255,255,0.08)",
-                      borderRadius: "10px",
-                      padding: "8px",
-                      cursor: "pointer",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      gap: "2px",
-                    }}
-                  >
-                    <SpecThumbnail spec={spec} />
-                    <div style={{ fontSize: "12px", fontWeight: 600, color: "#e2e8f0" }}>{spec.name}</div>
-                    <div style={{ fontSize: "10px", color: "#64748b", textAlign: "center" }}>{spec.title}</div>
-                    <div style={{ fontSize: "9px", color: customized ? "#fbbf24" : "#38bdf8" }}>
-                      {isActive("catalog", spec.id) ? "ACTIVE" : customized ? "CUSTOMIZED" : ""}
-                    </div>
-                  </div>
+                    spec={spec}
+                    selected={viewing?.id === spec.id}
+                    status={isActive("catalog", spec.id) ? "active" : customized ? "customized" : null}
+                    onSelect={() => setViewing({ source: "catalog", id: spec.id })}
+                  />
                 ))}
               </div>
             </div>
