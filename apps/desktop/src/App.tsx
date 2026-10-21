@@ -1314,74 +1314,76 @@ export default function App() {
            ========================================================= */}
         {activeTab === "settings" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-            {/* Simulation Controls */}
-            <div
-              style={{
-                background: "#0c1322",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
-                borderRadius: "12px",
-                padding: "20px",
-                display: "flex",
-                flexDirection: "column",
-                gap: "12px",
-              }}
-            >
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                <div>
-                  <div style={{ fontSize: "14px", fontWeight: 700 }}>Simulation & Test Mode</div>
-                  <div style={{ fontSize: "11px", color: "#64748b", marginTop: "2px" }}>
-                    Runs in an isolated database (<code>agentpet_simulated.sqlite3</code>). Grants 0 XP to the live ledger.
+            {/* Simulation Controls (DEV ONLY) */}
+            {import.meta.env.DEV && (
+              <div
+                style={{
+                  background: "#0c1322",
+                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  borderRadius: "12px",
+                  padding: "20px",
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "12px",
+                }}
+              >
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                  <div>
+                    <div style={{ fontSize: "14px", fontWeight: 700 }}>Simulation & Test Mode (DEV ONLY)</div>
+                    <div style={{ fontSize: "11px", color: "#64748b", marginTop: "2px" }}>
+                      Development only. Runs in an isolated database (<code>agentpet_simulated.sqlite3</code>). Grants 0 XP to the live ledger.
+                    </div>
                   </div>
+                  <button
+                    onClick={handleToggleSimulated}
+                    style={{
+                      padding: "8px 16px",
+                      background: isSimulated ? "#f59e0b" : "rgba(255, 255, 255, 0.08)",
+                      border: isSimulated ? "1px solid #d97706" : "1px solid rgba(255, 255, 255, 0.15)",
+                      color: isSimulated ? "#000" : "#fff",
+                      borderRadius: "6px",
+                      fontWeight: 700,
+                      fontSize: "12px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {isSimulated ? "Simulated Mode Active" : "Enable Simulated Mode"}
+                  </button>
                 </div>
-                <button
-                  onClick={handleToggleSimulated}
-                  style={{
-                    padding: "8px 16px",
-                    background: isSimulated ? "#f59e0b" : "rgba(255, 255, 255, 0.08)",
-                    border: isSimulated ? "1px solid #d97706" : "1px solid rgba(255, 255, 255, 0.15)",
-                    color: isSimulated ? "#000" : "#fff",
-                    borderRadius: "6px",
-                    fontWeight: 700,
-                    fontSize: "12px",
-                    cursor: "pointer",
-                  }}
-                >
-                  {isSimulated ? "Simulated Mode Active" : "Enable Simulated Mode"}
-                </button>
-              </div>
 
-              {/* Event Triggers */}
-              {isSimulated && (
-                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "8px" }}>
-                  {(
-                    [
-                      { id: "started", label: "Agent Started" },
-                      { id: "working", label: "Agent Working (Draw Bow / Staff)" },
-                      { id: "thinking", label: "Agent Thinking" },
-                      { id: "needs_input", label: "Input Needed (Sound Conch)" },
-                      { id: "completed", label: "Agent Completed (Triumph)" },
-                      { id: "failed", label: "Agent Failed (Defend / Error)" },
-                    ] as const
-                  ).map((btn) => (
-                    <button
-                      key={btn.id}
-                      onClick={() => handleSimulateEvent(btn.id)}
-                      style={{
-                        padding: "6px 12px",
-                        background: "rgba(245, 158, 11, 0.15)",
-                        border: "1px solid rgba(245, 158, 11, 0.4)",
-                        color: "#f59e0b",
-                        borderRadius: "4px",
-                        fontSize: "11px",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {btn.label}
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
+                {/* Event Triggers */}
+                {isSimulated && (
+                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "8px" }}>
+                    {(
+                      [
+                        { id: "started", label: "Agent Started" },
+                        { id: "working", label: "Agent Working" },
+                        { id: "thinking", label: "Agent Thinking" },
+                        { id: "needs_input", label: "Input Needed" },
+                        { id: "completed", label: "Agent Completed" },
+                        { id: "failed", label: "Agent Failed" },
+                      ] as const
+                    ).map((btn) => (
+                      <button
+                        key={btn.id}
+                        onClick={() => handleSimulateEvent(btn.id)}
+                        style={{
+                          padding: "6px 12px",
+                          background: "rgba(245, 158, 11, 0.15)",
+                          border: "1px solid rgba(245, 158, 11, 0.4)",
+                          color: "#f59e0b",
+                          borderRadius: "4px",
+                          fontSize: "11px",
+                          cursor: "pointer",
+                        }}
+                      >
+                        {btn.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Provider Hook Manager */}
             <div

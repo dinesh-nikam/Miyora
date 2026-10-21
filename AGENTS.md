@@ -183,7 +183,7 @@ All coding agents must read this section and `ARCHITECTURE.md` before changing p
 - Rust code must be formatted and Clippy-clean. Handle errors at boundaries; do not discard `Result`, promises, or errors silently.
 - Use named configuration for limits, timeouts, priorities, and retention values. Avoid unexplained magic constants.
 - Keep components and services cohesive and small. Reuse business logic through its owning domain module rather than copying it.
-- Do not add stubs, fake providers, simulated agent activity, fake token counts, fabricated session completion, or placeholder success paths.
+- Do not add stubs, fake providers, simulated agent activity, fake token counts, fabricated session completion, or placeholder success paths in release builds. Development exception: an isolated developer simulator may only be compiled under the explicit `dev-simulator` Cargo feature and Vite development flag for UI testing; it must display a permanent `[SIMULATED - DEV ONLY]` banner, run in an isolated test database, and never award live XP.
 - Log structured, privacy-safe diagnostics. Never log credentials, prompts, terminal output, or private file content.
 
 ## Security and privacy

@@ -18,7 +18,9 @@ const POSITION_WRITE_DEBOUNCE: Duration = Duration::from_millis(400);
 
 struct AppRuntime {
     core: Core,
+    #[cfg(feature = "dev-simulator")]
     simulated_core: Core,
+    #[cfg(feature = "dev-simulator")]
     is_simulated: std::sync::atomic::AtomicBool,
     pet_library: std::path::PathBuf,
     app_data_dir: std::path::PathBuf,
@@ -26,11 +28,13 @@ struct AppRuntime {
 
 impl AppRuntime {
     fn active_core(&self) -> &Core {
-        if self.is_simulated.load(std::sync::atomic::Ordering::Relaxed) {
-            &self.simulated_core
-        } else {
-            &self.core
+        #[cfg(feature = "dev-simulator")]
+        {
+            if self.is_simulated.load(std::sync::atomic::Ordering::Relaxed) {
+                return &self.simulated_core;
+            }
         }
+        &self.core
     }
 }
 
@@ -604,44 +608,60 @@ fn get_providers_status(
 }
 
 #[tauri::command]
-fn toggle_demo_mode(runtime: State<'_, AppRuntime>) -> Result<bool, String> {
-    let current = runtime
-        .is_simulated
-        .load(std::sync::atomic::Ordering::Relaxed);
-    let next = !current;
-    runtime
-        .is_simulated
-        .store(next, std::sync::atomic::Ordering::Relaxed);
-    Ok(next)
+fn toggle_demo_mode(
+    #[allow(unused_variables)] runtime: State<'_, AppRuntime>,
+) -> Result<bool, String> {
+    #[cfg(feature = "dev-simulator")]
+    {
+        let current = runtime
+            .is_simulated
+            .load(std::sync::atomic::Ordering::Relaxed);
+        let next = !current;
+        runtime
+            .is_simulated
+            .store(next, std::sync::atomic::Ordering::Relaxed);
+        Ok(next)
+    }
+    #[cfg(not(feature = "dev-simulator"))]
+    {
+        Err("SIMULATION_DISABLED: Development simulator is disabled in release builds".into())
+    }
 }
 
 #[tauri::command]
 fn simulate_agent_event(
-    runtime: State<'_, AppRuntime>,
-    event_type: String,
+    #[allow(unused_variables)] runtime: State<'_, AppRuntime>,
+    #[allow(unused_variables)] event_type: String,
 ) -> Result<RuntimeSnapshot, String> {
-    let parsed_type = match event_type.as_str() {
-        "started" => EventType::AgentStarted,
-        "working" => EventType::AgentWorking,
-        "thinking" => EventType::AgentThinking,
-        "waiting" => EventType::AgentWaiting,
-        "needs_input" => EventType::AgentInputRequired,
-        "completed" => EventType::AgentCompleted,
-        "failed" => EventType::AgentFailed,
-        _ => EventType::AgentWorking,
-    };
-    let event = PetEvent::new(parsed_type, "demo_simulator");
-    runtime
-        .is_simulated
-        .store(true, std::sync::atomic::Ordering::Relaxed);
-    runtime
-        .simulated_core
-        .accept_event(&event)
-        .map_err(|error| format!("SIMULATION_FAILED: {error}"))?;
-    runtime
-        .simulated_core
-        .snapshot()
-        .map_err(|error| format!("SNAPSHOT_FAILED: {error}"))
+    #[cfg(feature = "dev-simulator")]
+    {
+        let parsed_type = match event_type.as_str() {
+            "started" => EventType::AgentStarted,
+            "working" => EventType::AgentWorking,
+            "thinking" => EventType::AgentThinking,
+            "waiting" => EventType::AgentWaiting,
+            "needs_input" => EventType::AgentInputRequired,
+            "completed" => EventType::AgentCompleted,
+            "failed" => EventType::AgentFailed,
+            _ => EventType::AgentWorking,
+        };
+        let event = PetEvent::new(parsed_type, "demo_simulator");
+        runtime
+            .is_simulated
+            .store(true, std::sync::atomic::Ordering::Relaxed);
+        runtime
+            .simulated_core
+            .accept_event(&event)
+            .map_err(|error| format!("SIMULATION_FAILED: {error}"))?;
+        runtime
+            .simulated_core
+            .snapshot()
+            .map_err(|error| format!("SNAPSHOT_FAILED: {error}"))
+    }
+    #[cfg(not(feature = "dev-simulator"))]
+    {
+        Err("SIMULATION_DISABLED: Development simulator is disabled in release builds".into())
+    }
 }
 
 fn restore_visible_position(
@@ -796,6 +816,7 @@ pub fn run() {
         .setup(|app| {
             let data_dir = app.path().app_data_dir()?;
             let core = Core::open(&data_dir)?;
+            #[cfg(feature = "dev-simulator")]
             let simulated_core = Core::open_simulated(&data_dir)?;
             let pet_library = data_dir.join("pet-library");
             seed_starter_packs(&core, &pet_library);
@@ -808,7 +829,9 @@ pub fn run() {
             run_state_timer(core.clone())?;
             app.manage(AppRuntime {
                 core,
+                #[cfg(feature = "dev-simulator")]
                 simulated_core,
+                #[cfg(feature = "dev-simulator")]
                 is_simulated: std::sync::atomic::AtomicBool::new(false),
                 pet_library,
                 app_data_dir: data_dir,

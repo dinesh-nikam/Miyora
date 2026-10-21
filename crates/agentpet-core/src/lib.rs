@@ -17,6 +17,7 @@ use thiserror::Error;
 use uuid::Uuid;
 
 const DATABASE_FILE: &str = "agentpet.sqlite3";
+#[cfg(feature = "dev-simulator")]
 pub const SIMULATED_DATABASE_FILE: &str = "agentpet_simulated.sqlite3";
 const SCHEMA_VERSION: i64 = 8;
 const SQLITE_BUSY_TIMEOUT: Duration = Duration::from_secs(5);
@@ -789,6 +790,7 @@ impl Core {
     }
 
     /// Opens the isolated database for simulate mode (`agentpet_simulated.sqlite3`).
+    #[cfg(feature = "dev-simulator")]
     pub fn open_simulated(data_dir: &Path) -> Result<Self, CoreError> {
         std::fs::create_dir_all(data_dir).map_err(|error| {
             CoreError::Database(rusqlite::Error::ToSqlConversionFailure(Box::new(error)))
