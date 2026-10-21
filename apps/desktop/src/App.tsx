@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
+import { invokeSafe } from "./utils/ipc";
 import { getCurrentWindow } from "@tauri-apps/api/window";
 import { open } from "@tauri-apps/plugin-dialog";
 import { CompanionRenderer, PetState, SelectedPetAnimation } from "./components/CompanionRenderer";
@@ -120,30 +121,45 @@ export default function App() {
 
   // UI state
   const [runtimeError, setRuntimeError] = useState<string | null>(null);
+  const [panelErrors, setPanelErrors] = useState<Record<string, string | null>>({});
   const [busy, setBusy] = useState(false);
   const [ledgerVerifying, setLedgerVerifying] = useState(false);
 
   // Poll runtime data
   const refreshCoreData = useCallback(async () => {
     try {
-      const snap = await invoke<RuntimeSnapshot>("get_runtime_snapshot");
-      setSnapshot(snap);
+      const snapRes = await invokeSafe<RuntimeSnapshot>("get_runtime_snapshot");
+      if (snapRes.ok) {
+        setSnapshot(snapRes.data);
+        setPanelErrors((prev) => ({ ...prev, den: null }));
+      } else {
+        setPanelErrors((prev) => ({ ...prev, den: `Failed to load runtime snapshot: ${snapRes.error}` }));
+      }
 
-      const anim = await invoke<SelectedPetAnimation | null>("get_selected_pet_animation");
-      setSelectedAnimation(anim);
+      const animRes = await invokeSafe<SelectedPetAnimation | null>("get_selected_pet_animation");
+      if (animRes.ok) {
+        setSelectedAnimation(animRes.data);
+      }
 
       // Only query heavy items in main window
       if (!isOverlayWindow) {
-        const [prog, packs, events, provs] = await Promise.all([
-          invoke<ProgressionSnapshot>("get_progression").catch(() => null),
-          invoke<PetPackSummary[]>("list_pet_pack_cards").catch(() => []),
-          invoke<StoredAgentEvent[]>("get_real_events", { limit: 25 }).catch(() => []),
-          invoke<ProviderReport[]>("get_providers_status").catch(() => []),
+        const [progRes, packsRes, eventsRes, provsRes] = await Promise.all([
+          invokeSafe<ProgressionSnapshot>("get_progression"),
+          invokeSafe<PetPackSummary[]>("list_pet_pack_cards"),
+          invokeSafe<StoredAgentEvent[]>("get_real_events", { limit: 25 }),
+          invokeSafe<ProviderReport[]>("get_providers_status"),
         ]);
-        if (prog) setProgression(prog);
-        setInstalledPacks(packs);
-        setRealEvents(events);
-        setProviders(provs);
+        if (progRes.ok) setProgression(progRes.data);
+        else setPanelErrors((prev) => ({ ...prev, progression: progRes.error }));
+
+        if (packsRes.ok) setInstalledPacks(packsRes.data);
+        else setPanelErrors((prev) => ({ ...prev, companions: packsRes.error }));
+
+        if (eventsRes.ok) setRealEvents(eventsRes.data);
+        else setPanelErrors((prev) => ({ ...prev, events: eventsRes.error }));
+
+        if (provsRes.ok) setProviders(provsRes.data);
+        else setPanelErrors((prev) => ({ ...prev, providers: provsRes.error }));
       }
     } catch (err: unknown) {
       setRuntimeError(String(err));
@@ -157,32 +173,108 @@ export default function App() {
   }, [refreshCoreData]);
 
   // Load tab-specific data
+  const loadSessionsData = useCallback(async () => {
+    const res = await invokeSafe<AgentSessionSummary[]>("get_session_history", { limit: 20, offset: 0 });
+    if (res.ok) {
+      setSessions(res.data);
+      setPanelErrors((prev) => ({ ...prev, sessions: null }));
+    } else {
+      setPanelErrors((prev) => ({ ...prev, sessions: `Failed to load session history: ${res.error}` }));
+    }
+  }, []);
+
+  const loadProgressData = useCallback(async () => {
+    const [xpRes, achRes, verRes] = await Promise.all([
+      invokeSafe<XpTransaction[]>("get_xp_history"),
+      invokeSafe<AchievementSummary[]>("get_achievements"),
+      invokeSafe<LedgerVerificationResult>("verify_ledger"),
+    ]);
+    if (xpRes.ok) {
+      setXpHistory(xpRes.data);
+      setPanelErrors((prev) => ({ ...prev, progress: null }));
+    } else {
+      setPanelErrors((prev) => ({ ...prev, progress: `Failed to load XP history: ${xpRes.error}` }));
+    }
+    if (achRes.ok) {
+      setAchievements(achRes.data);
+    }
+    if (verRes.ok) {
+      setLedgerVerification(verRes.data);
+    }
+  }, []);
+
   useEffect(() => {
     if (activeTab === "sessions") {
-      void invoke<AgentSessionSummary[]>("get_session_history", { limit: 20, offset: 0 })
-        .then(setSessions)
-        .catch(() => {});
+      void loadSessionsData();
     } else if (activeTab === "progress") {
-      void Promise.all([
-        invoke<XpTransaction[]>("get_xp_history").catch(() => []),
-        invoke<AchievementSummary[]>("get_achievements").catch(() => []),
-        invoke<LedgerVerificationResult>("verify_ledger").catch(() => null),
-      ]).then(([xp, ach, ver]) => {
-        setXpHistory(xp);
-        setAchievements(ach);
-        if (ver) setLedgerVerification(ver);
-      });
+      void loadProgressData();
     }
-  }, [activeTab]);
+  }, [activeTab, loadSessionsData, loadProgressData]);
+
+  const retryPanel = useCallback(
+    (panelKey: string) => {
+      setPanelErrors((prev) => ({ ...prev, [panelKey]: null }));
+      if (panelKey === "sessions") {
+        void loadSessionsData();
+      } else if (panelKey === "progress") {
+        void loadProgressData();
+      } else {
+        void refreshCoreData();
+      }
+    },
+    [loadSessionsData, loadProgressData, refreshCoreData]
+  );
+
+  const renderPanelError = (panelKey: string) => {
+    const error = panelErrors[panelKey];
+    if (!error) return null;
+    return (
+      <div
+        style={{
+          background: "rgba(239, 68, 68, 0.12)",
+          border: "1px solid rgba(239, 68, 68, 0.35)",
+          borderRadius: "8px",
+          padding: "10px 16px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          marginBottom: "12px",
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#fca5a5", fontSize: "12px" }}>
+          <span>⚠️</span>
+          <span>{error}</span>
+        </div>
+        <button
+          onClick={() => retryPanel(panelKey)}
+          style={{
+            background: "#ef4444",
+            color: "#ffffff",
+            border: "none",
+            borderRadius: "4px",
+            padding: "4px 10px",
+            fontSize: "11px",
+            fontWeight: 600,
+            cursor: "pointer",
+          }}
+        >
+          Retry
+        </button>
+      </div>
+    );
+  };
 
   // Actions
   const handleVerifyLedger = useCallback(async () => {
     setLedgerVerifying(true);
     try {
-      const result = await invoke<LedgerVerificationResult>("verify_ledger");
-      setLedgerVerification(result);
-    } catch (err: unknown) {
-      setRuntimeError(String(err));
+      const result = await invokeSafe<LedgerVerificationResult>("verify_ledger");
+      if (result.ok) {
+        setLedgerVerification(result.data);
+        setPanelErrors((prev) => ({ ...prev, progress: null }));
+      } else {
+        setPanelErrors((prev) => ({ ...prev, progress: `Ledger verification failed: ${result.error}` }));
+      }
     } finally {
       setLedgerVerifying(false);
     }
@@ -190,9 +282,13 @@ export default function App() {
 
   const handleToggleSimulated = useCallback(async () => {
     try {
-      const next = await invoke<boolean>("toggle_demo_mode");
-      setIsSimulated(next);
-      await refreshCoreData();
+      const next = await invokeSafe<boolean>("toggle_demo_mode");
+      if (next.ok) {
+        setIsSimulated(next.data);
+        await refreshCoreData();
+      } else {
+        setRuntimeError(`Toggle simulation failed: ${next.error}`);
+      }
     } catch (err: unknown) {
       setRuntimeError(String(err));
     }
@@ -201,9 +297,13 @@ export default function App() {
   const handleSimulateEvent = useCallback(
     async (eventType: string) => {
       try {
-        await invoke("simulate_agent_event", { eventType });
-        setIsSimulated(true);
-        await refreshCoreData();
+        const res = await invokeSafe("simulate_agent_event", { eventType });
+        if (res.ok) {
+          setIsSimulated(true);
+          await refreshCoreData();
+        } else {
+          setRuntimeError(`Simulate event failed: ${res.error}`);
+        }
       } catch (err: unknown) {
         setRuntimeError(String(err));
       }
@@ -214,8 +314,12 @@ export default function App() {
   const handleSelectPet = useCallback(
     async (selectionId: string) => {
       try {
-        await invoke("select_pet", { packId: selectionId });
-        await refreshCoreData();
+        const res = await invokeSafe("select_pet", { packId: selectionId });
+        if (res.ok) {
+          await refreshCoreData();
+        } else {
+          setRuntimeError(`Select pet failed: ${res.error}`);
+        }
       } catch (err: unknown) {
         setRuntimeError(String(err));
       }
@@ -226,8 +330,12 @@ export default function App() {
   const handleTogglePause = useCallback(async () => {
     setBusy(true);
     try {
-      const updated = await invoke<RuntimeSnapshot>("toggle_pet_pause");
-      setSnapshot(updated);
+      const updated = await invokeSafe<RuntimeSnapshot>("toggle_pet_pause");
+      if (updated.ok) {
+        setSnapshot(updated.data);
+      } else {
+        setRuntimeError(`Toggle pause failed: ${updated.error}`);
+      }
     } catch (err: unknown) {
       setRuntimeError(String(err));
     } finally {
@@ -243,8 +351,12 @@ export default function App() {
         filters: [{ name: "PetPack Archive", extensions: ["tar.gz", "tgz", "tar"] }],
       });
       if (selected && typeof selected === "string") {
-        await invoke("install_pet_pack", { sourcePath: selected });
-        await refreshCoreData();
+        const res = await invokeSafe("install_pet_pack", { sourcePath: selected });
+        if (res.ok) {
+          await refreshCoreData();
+        } else {
+          setRuntimeError(`Pack install failed: ${res.error}`);
+        }
       }
     } catch (err: unknown) {
       setRuntimeError(String(err));
@@ -623,6 +735,7 @@ export default function App() {
            ========================================================= */}
         {activeTab === "den" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+            {renderPanelError("den")}
             {/* Stage Showcase Card */}
             <div
               style={{
@@ -830,6 +943,7 @@ export default function App() {
            ========================================================= */}
         {activeTab === "sessions" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            {renderPanelError("sessions")}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <div>
                 <h2 style={{ fontSize: "18px", fontWeight: 700, margin: 0 }}>Normalized Agent Events</h2>
@@ -1064,6 +1178,7 @@ export default function App() {
            ========================================================= */}
         {activeTab === "companions" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            {renderPanelError("companions")}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <div>
                 <h2 style={{ fontSize: "18px", fontWeight: 700, margin: 0 }}>Companion Library</h2>
@@ -1194,6 +1309,7 @@ export default function App() {
            ========================================================= */}
         {activeTab === "progress" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+            {renderPanelError("progress")}
             {/* Tamper-Evident Ledger Proof Banner */}
             <div
               style={{
@@ -1314,6 +1430,7 @@ export default function App() {
            ========================================================= */}
         {activeTab === "settings" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+            {renderPanelError("settings")}
             {/* Simulation Controls (DEV ONLY) */}
             {import.meta.env.DEV && (
               <div
