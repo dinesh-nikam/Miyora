@@ -2,12 +2,13 @@
 // contracts. Rust validates every spec; the UI only renders and edits them.
 
 export const BODY_TYPES = ["humanoid", "beast", "robot", "slime", "bird"] as const;
-export const EAR_TYPES = ["none", "human", "elf", "cat", "fox", "bunny", "bear", "floppy", "horns", "antenna", "fin"] as const;
-export const TAIL_TYPES = ["none", "cat", "fox", "bunny", "dragon", "cable", "feather"] as const;
+export const EAR_TYPES = ["none", "human", "elf", "cat", "fox", "bunny", "bear", "floppy", "horns", "antenna", "fin", "leaf"] as const;
+export const TAIL_TYPES = ["none", "cat", "fox", "bunny", "dragon", "cable", "feather", "flame", "leaf", "star"] as const;
 export const WING_TYPES = ["none", "feather", "bat", "fairy", "jet"] as const;
-export const HAIR_STYLES = ["none", "short", "bob", "long", "ponytail", "twintails", "spiky", "bun", "mohawk", "curly"] as const;
+export const HAIR_STYLES = ["none", "short", "bob", "long", "ponytail", "twintails", "spiky", "bun", "mohawk", "curly", "hime", "side_tail"] as const;
 export const EYE_STYLES = ["round", "sharp", "sleepy", "sparkle", "visor", "mono"] as const;
-export const OUTFITS = ["hoodie", "kimono", "armor", "suit", "robe", "jacket", "dress", "overalls", "labcoat", "tunic", "fur", "plating"] as const;
+export const OUTFITS = ["hoodie", "kimono", "armor", "suit", "robe", "jacket", "dress", "overalls", "labcoat", "tunic", "fur", "plating", "hakama", "sailor", "coat"] as const;
+export const PATTERNS = ["none", "dots", "stripes", "waves", "petals", "stars", "diamonds"] as const;
 export const ACCESSORIES = [
   "glasses",
   "headphones",
@@ -23,6 +24,12 @@ export const ACCESSORIES = [
   "flower",
   "goggles",
   "bell",
+  "katana",
+  "wand",
+  "staff",
+  "kitsune_mask",
+  "shell",
+  "gem",
 ] as const;
 export const PALETTE_KEYS = ["skin", "hair", "eyes", "primary", "secondary", "accent"] as const;
 
@@ -34,6 +41,7 @@ export type HairStyle = (typeof HAIR_STYLES)[number];
 export type EyeStyle = (typeof EYE_STYLES)[number];
 export type Outfit = (typeof OUTFITS)[number];
 export type Accessory = (typeof ACCESSORIES)[number];
+export type Pattern = (typeof PATTERNS)[number];
 export type PaletteKey = (typeof PALETTE_KEYS)[number];
 
 /** Limits mirrored from `crates/avatar/src/spec.rs`. */
@@ -70,7 +78,11 @@ export interface CharacterSpec {
   eyes: EyeStyle;
   outfit: Outfit;
   accessories: Accessory[];
+  /** Original fabric pattern; older specs omit it (treated as "none"). */
+  pattern?: Pattern;
   palette: Palette;
+  /** Optional color the hair fades to at the tips. */
+  hairTip?: string;
   proportions: Proportions;
   energy: number;
   tags: string[];

@@ -13,7 +13,7 @@
 
 import * as THREE from "three";
 import { RoundedBoxGeometry } from "three/examples/jsm/geometries/RoundedBoxGeometry.js";
-import type { CharacterSpec } from "./types";
+import type { CharacterSpec, Pattern } from "./types";
 
 export type MouthShape = "smile" | "grin" | "open" | "flat" | "frown";
 export const MOUTH_SHAPES: readonly MouthShape[] = ["smile", "grin", "open", "flat", "frown"];
@@ -58,7 +58,8 @@ export interface CharacterRig {
 // ---------------------------------------------------------------------------
 // Materials
 
-const TOON_STEPS = [80, 165, 255];
+// Four soft cel bands: core shadow, shadow, light, highlight.
+const TOON_STEPS = [96, 158, 214, 255];
 let sharedGradient: THREE.DataTexture | null = null;
 
 function gradientMap(): THREE.DataTexture {
@@ -83,6 +84,8 @@ const NOSE_COLOR = "#2a1d1d";
 const MOUTH_COLOR = "#5b1f2a";
 const BLUSH_COLOR = "#ff7a96";
 const GOLD_COLOR = "#f5c542";
+const FLAME_CORE_COLOR = "#fde68a";
+const STAR_POINTS = 5;
 
 function shade(hex: string, toward: THREE.Color, amount: number): string {
   return `#${new THREE.Color(hex).lerp(toward, amount).getHexString()}`;
@@ -96,6 +99,36 @@ interface ToonOptions {
 
 class Kit {
   private readonly materials = new Map<string, THREE.Material>();
+
+  constructor(
+    private readonly pattern: Pattern = "none",
+    private readonly motif = "#ffffff",
+  ) {}
+
+  /** Toon material whose color comes from vertex colors (hair gradients). */
+  vertexToon(): THREE.MeshToonMaterial {
+    const cached = this.materials.get("vertex-toon");
+    if (cached) return cached as THREE.MeshToonMaterial;
+    const material = new THREE.MeshToonMaterial({ color: 0xffffff, vertexColors: true, gradientMap: gradientMap() });
+    this.materials.set("vertex-toon", material);
+    return material;
+  }
+
+  /** Outfit cloth: patterned when the spec declares a pattern. */
+  cloth(hex: string, options: ToonOptions = {}): THREE.MeshToonMaterial {
+    if (this.pattern === "none") return this.toon(hex, options);
+    const key = `cloth:${hex}:${this.pattern}:${this.motif}:${options.side ?? THREE.FrontSide}`;
+    const cached = this.materials.get(key);
+    if (cached) return cached as THREE.MeshToonMaterial;
+    const material = new THREE.MeshToonMaterial({
+      color: 0xffffff,
+      map: patternTexture(this.pattern, hex, motifColor(hex, this.motif)),
+      gradientMap: gradientMap(),
+      side: options.side ?? THREE.FrontSide,
+    });
+    this.materials.set(key, material);
+    return material;
+  }
 
   toon(hex: string, options: ToonOptions = {}): THREE.MeshToonMaterial {
     const key = `toon:${hex}:${options.emissive ?? 0}:${options.opacity ?? 1}:${options.side ?? THREE.FrontSide}`;
@@ -146,14 +179,14 @@ class Kit {
     material: THREE.Material,
     parent: THREE.Object3D,
     position: [number, number, number] = [0, 0, 0],
-    options: { rotation?: [number, number, number]; scale?: [number, number, number]; outline?: number } = {},
+    options: { rotation?: [number, number, number]; scale?: [number, number, number]; outline?: number; ink?: string } = {},
   ): THREE.Mesh {
     const mesh = new THREE.Mesh(geometry, material);
     mesh.position.set(...position);
     if (options.rotation) mesh.rotation.set(...options.rotation);
     if (options.scale) mesh.scale.set(...options.scale);
     if (options.outline && "color" in material) {
-      const hex = `#${(material as THREE.MeshToonMaterial).color.getHexString()}`;
+      const hex = options.ink ?? `#${(material as THREE.MeshToonMaterial).color.getHexString()}`;
       const ink = new THREE.Mesh(geometry, this.outline(hex));
       ink.scale.setScalar(1 + options.outline);
       ink.renderOrder = -1;
@@ -172,7 +205,9 @@ function joint(parent: THREE.Object3D, name: string, x = 0, y = 0, z = 0): THREE
   return node;
 }
 
-const OUTLINE = 0.045;
+const OUTLINE = 0.032;
+/** Bangs reach from the hairline down to the brows. */
+const BANG_LENGTH_SCALE = 1.5;
 const SEGMENTS = 24;
 
 const sphere = (radius: number) => new THREE.SphereGeometry(radius, SEGMENTS, Math.round(SEGMENTS * 0.75));
@@ -184,6 +219,138 @@ const torus = (radius: number, tube: number, arc = Math.PI * 2) => new THREE.Tor
 const roundedBox = (width: number, height: number, depth: number, radius: number) =>
   new RoundedBoxGeometry(width, height, depth, 3, Math.min(radius, width / 2, height / 2, depth / 2));
 const disc = (radius: number, start = 0, length = Math.PI * 2) => new THREE.CircleGeometry(radius, 28, start, length);
+
+/** Vertex colors fading from `from` to `to` along +Y, kicking in past `start`. */
+function verticalGradient(geometry: THREE.BufferGeometry, from: string, to: string, start = 0.45): THREE.BufferGeometry {
+  geometry.computeBoundingBox();
+  const box = geometry.boundingBox;
+  const position = geometry.getAttribute("position");
+  const colors = new Float32Array(position.count * 3);
+  const a = new THREE.Color(from);
+  const b = new THREE.Color(to);
+  const mixed = new THREE.Color();
+  const span = box ? Math.max(box.max.y - box.min.y, 1e-6) : 1;
+  for (let i = 0; i < position.count; i += 1) {
+    const t = box ? (position.getY(i) - box.min.y) / span : 0;
+    mixed.copy(a).lerp(b, THREE.MathUtils.smoothstep(t, start, 1));
+    colors.set([mixed.r, mixed.g, mixed.b], i * 3);
+  }
+  geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
+  return geometry;
+}
+
+/** Radial folds that deepen toward the hem of a skirt-like cylinder. */
+function pleated(geometry: THREE.BufferGeometry, folds: number, depth: number): THREE.BufferGeometry {
+  geometry.computeBoundingBox();
+  const box = geometry.boundingBox;
+  if (!box) return geometry;
+  const position = geometry.getAttribute("position");
+  const height = Math.max(box.max.y - box.min.y, 1e-6);
+  for (let i = 0; i < position.count; i += 1) {
+    const x = position.getX(i);
+    const z = position.getZ(i);
+    const toHem = (box.max.y - position.getY(i)) / height;
+    const scale = 1 + depth * toHem * Math.sin(Math.atan2(z, x) * folds);
+    position.setXYZ(i, x * scale, position.getY(i), z * scale);
+  }
+  position.needsUpdate = true;
+  geometry.computeVertexNormals();
+  return geometry;
+}
+
+/** Sphere reshaped into an anime face: narrower jaw, softly pointed chin. */
+function animeHead(radius: number): THREE.BufferGeometry {
+  const geometry = new THREE.SphereGeometry(radius, 40, 30);
+  const position = geometry.getAttribute("position");
+  for (let i = 0; i < position.count; i += 1) {
+    const y = position.getY(i);
+    if (y >= 0) continue;
+    const t = -y / radius;
+    const front = Math.max(0, position.getZ(i)) / radius;
+    position.setX(i, position.getX(i) * (1 - 0.24 * Math.pow(t, 1.4)));
+    position.setY(i, y * (1 + 0.06 * front * t));
+    position.setZ(i, position.getZ(i) * (1 - 0.08 * t));
+  }
+  position.needsUpdate = true;
+  geometry.computeVertexNormals();
+  return geometry;
+}
+
+const PATTERN_TEXTURE_SIZE = 96;
+const PATTERN_REPEAT = 2;
+
+function hexBytes(hex: string): [number, number, number] {
+  const value = Number.parseInt(hex.slice(1), 16);
+  return [(value >> 16) & 0xff, (value >> 8) & 0xff, value & 0xff];
+}
+
+/** Picks a motif color with enough contrast against the cloth. */
+function motifColor(base: string, accent: string): string {
+  const [r1, g1, b1] = hexBytes(base);
+  const [r2, g2, b2] = hexBytes(accent);
+  const distance = Math.hypot(r1 - r2, g1 - g2, b1 - b2);
+  if (distance > 90) return accent;
+  const luminance = 0.2126 * r1 + 0.7152 * g1 + 0.0722 * b1;
+  return luminance > 140 ? shade(base, BLACK, 0.35) : shade(base, WHITE, 0.55);
+}
+
+/** True where the motif covers tile-space coordinate (u, v) in [0, 1). */
+function motifAt(pattern: Pattern, u: number, v: number): boolean {
+  const cell = (value: number, cells: number) => (value * cells) % 1;
+  switch (pattern) {
+    case "dots": {
+      const dx = cell(u, 4) - 0.5;
+      const dy = cell(v + (Math.floor(u * 4) % 2) * 0.125, 4) - 0.5;
+      return dx * dx + dy * dy < 0.045;
+    }
+    case "stripes":
+      return cell(u + v, 5) < 0.28;
+    case "waves":
+      return cell(v * 5 + 0.09 * Math.sin(u * Math.PI * 2 * 3), 1) < 0.16;
+    case "petals": {
+      const dx = cell(u, 3) - 0.5;
+      const dy = cell(v + (Math.floor(u * 3) % 2) * 0.17, 3) - 0.5;
+      const radius = Math.hypot(dx, dy);
+      const angle = Math.atan2(dy, dx);
+      return radius > 0.04 && radius < 0.3 * (0.55 + 0.45 * Math.abs(Math.cos(2.5 * angle)));
+    }
+    case "stars": {
+      const dx = Math.abs(cell(u, 4) - 0.5);
+      const dy = Math.abs(cell(v + (Math.floor(u * 4) % 2) * 0.125, 4) - 0.5);
+      return Math.sqrt(dx) + Math.sqrt(dy) < 0.5;
+    }
+    case "diamonds": {
+      const dx = Math.abs(cell(u, 4) - 0.5);
+      const dy = Math.abs(cell(v, 4) - 0.5);
+      const ring = dx + dy;
+      return ring > 0.36 && ring < 0.46;
+    }
+    default:
+      return false;
+  }
+}
+
+/** Builds a tiling cloth texture on the CPU (no canvas needed). */
+function patternTexture(pattern: Pattern, base: string, motif: string): THREE.DataTexture {
+  const size = PATTERN_TEXTURE_SIZE;
+  const data = new Uint8Array(size * size * 4);
+  const baseBytes = hexBytes(base);
+  const motifBytes = hexBytes(motif);
+  for (let y = 0; y < size; y += 1) {
+    for (let x = 0; x < size; x += 1) {
+      const color = motifAt(pattern, (x + 0.5) / size, (y + 0.5) / size) ? motifBytes : baseBytes;
+      data.set([color[0], color[1], color[2], 255], (y * size + x) * 4);
+    }
+  }
+  const texture = new THREE.DataTexture(data, size, size, THREE.RGBAFormat);
+  texture.colorSpace = THREE.SRGBColorSpace;
+  texture.wrapS = THREE.RepeatWrapping;
+  texture.wrapT = THREE.RepeatWrapping;
+  texture.repeat.set(PATTERN_REPEAT, PATTERN_REPEAT);
+  texture.magFilter = THREE.LinearFilter;
+  texture.needsUpdate = true;
+  return texture;
+}
 
 // ---------------------------------------------------------------------------
 // Dimensions
@@ -249,9 +416,9 @@ function dimensions(spec: CharacterSpec): Dimensions {
 // Builder
 
 export function buildCharacter(spec: CharacterSpec): CharacterRig {
-  const kit = new Kit();
-  const d = dimensions(spec);
   const p = spec.palette;
+  const kit = new Kit(spec.pattern ?? "none", p.accent);
+  const d = dimensions(spec);
   const isBeast = spec.body === "beast";
   const isRobot = spec.body === "robot";
   const isSlime = spec.body === "slime";
@@ -294,9 +461,10 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
     kit.mesh(sphere(d.torsoR), kit.toon(p.skin), spine, [0, d.torsoH * 0.42, 0], { scale: [1, 1.15, 0.95], outline: OUTLINE * 0.5 });
     kit.mesh(sphere(d.torsoR * 0.78), kit.toon(p.secondary), spine, [0, d.torsoH * 0.38, d.torsoR * 0.3], { scale: [0.85, 1.05, 0.8] });
   } else {
-    kit.mesh(capsule(d.torsoR, d.torsoH - d.torsoR * 2), kit.toon(torsoColor), spine, [0, d.torsoH / 2, 0], {
+    kit.mesh(capsule(d.torsoR, d.torsoH - d.torsoR * 2), torsoColor === p.skin ? kit.toon(torsoColor) : kit.cloth(torsoColor), spine, [0, d.torsoH / 2, 0], {
       scale: [1, 1, 0.78],
       outline: OUTLINE * 0.5,
+      ink: torsoColor,
     });
     if (furred && spec.outfit === "fur") {
       kit.mesh(sphere(d.torsoR * 0.75), kit.toon(shade(p.skin, WHITE, 0.55)), spine, [0, d.torsoH * 0.42, d.torsoR * 0.42], {
@@ -333,10 +501,21 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
       kit.mesh(sphere(d.armR * 1.35), kit.toon(p.skin), hand, [0, 0.01, 0], { outline: OUTLINE });
       kit.mesh(sphere(d.armR * 1.3), kit.toon(p.skin), arm, [0, 0, 0]);
     } else {
-      const sleeve = kit.toon(sleeveColor);
-      kit.mesh(capsule(d.armR, d.armUpper - d.armR), sleeve, arm, [0, -d.armUpper / 2, 0], { outline: OUTLINE });
-      const forearmColor = sleeveColor === p.skin || spec.outfit === "kimono" || spec.outfit === "robe" || spec.outfit === "labcoat" || spec.outfit === "hoodie" || spec.outfit === "jacket" || spec.outfit === "suit" ? sleeveColor : p.skin;
-      kit.mesh(capsule(d.armR * 0.92, d.armLower - d.armR), kit.toon(forearmColor), elbow, [0, -d.armLower / 2, 0], { outline: OUTLINE });
+      const sleeve = sleeveColor === p.skin ? kit.toon(sleeveColor) : kit.cloth(sleeveColor);
+      kit.mesh(capsule(d.armR, d.armUpper - d.armR), sleeve, arm, [0, -d.armUpper / 2, 0], { outline: OUTLINE, ink: sleeveColor });
+      const longSleeves = ["kimono", "robe", "labcoat", "hoodie", "jacket", "suit", "hakama", "coat"].includes(spec.outfit);
+      const forearmColor = sleeveColor === p.skin || longSleeves ? sleeveColor : p.skin;
+      kit.mesh(capsule(d.armR * 0.92, d.armLower - d.armR), forearmColor === p.skin ? skinMat : kit.cloth(forearmColor), elbow, [0, -d.armLower / 2, 0], {
+        outline: OUTLINE,
+        ink: forearmColor,
+      });
+      if (spec.outfit === "kimono" || spec.outfit === "hakama") {
+        // Wide hanging sleeve.
+        kit.mesh(roundedBox(d.armR * 2.6, d.armLower * 0.9, d.armR * 2.2, d.armR * 0.6), kit.cloth(sleeveColor), elbow, [0, -d.armLower * 0.35, -d.armR * 0.3], {
+          outline: OUTLINE,
+          ink: sleeveColor,
+        });
+      }
       kit.mesh(sphere(d.armR * 1.15), skinMat, hand, [0, 0.01, 0], { scale: [1, 1.05, 0.9], outline: OUTLINE });
       if (spec.outfit === "armor") {
         kit.mesh(sphere(d.armR * 1.75), kit.toon(p.primary), arm, [side * 0.006, -0.004, 0], {
@@ -391,6 +570,8 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
   if (isRobot) {
     kit.mesh(roundedBox(R * 2, R * 1.8, R * 1.7, R * 0.35), kit.toon(p.skin), headCenter, [0, 0, 0], { outline: OUTLINE * 0.6 });
     kit.mesh(roundedBox(R * 1.62, R * 1.1, 0.02, R * 0.2), kit.toon(shade(p.secondary, BLACK, 0.45)), headCenter, [0, -R * 0.05, R * 0.85 + 0.002]);
+  } else if (spec.body === "humanoid") {
+    kit.mesh(animeHead(R), kit.toon(p.skin), headCenter, [0, 0, 0], { scale: [1, 0.94, 0.96], outline: OUTLINE * 0.6 });
   } else if (!isSlime) {
     kit.mesh(sphere(R), kit.toon(p.skin), headCenter, [0, 0, 0], {
       scale: [isBeast ? 1.05 : 1, 0.94, 0.96],
@@ -406,6 +587,10 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
     return R * sz * Math.sqrt(Math.max(1 - nx * nx - ny * ny, 0.05)) + 0.006;
   };
   const eyeY = isSlime ? R * 0.12 : -R * 0.05;
+  if (spec.body === "humanoid") {
+    const noseY = eyeY - R * 0.27;
+    kit.mesh(disc(R * 0.028), kit.flat(shade(p.skin, BLACK, 0.3)), headCenter, [0, noseY, faceZ(0, noseY) + 0.004], { scale: [0.6, 1, 1] });
+  }
 
   if (isBeast) {
     const muzzleScale: Record<string, [number, number, number]> = {
@@ -430,29 +615,57 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
 
   // Eyes
   const eyes: THREE.Object3D[] = [];
-  const eyeSize = R * (spec.eyes === "sparkle" ? 0.23 : 0.2);
+  const anime = spec.body === "humanoid";
+  const eyeSize = R * (spec.eyes === "sparkle" ? 0.24 : anime ? 0.22 : 0.2);
   const irisMat = kit.flat(p.eyes);
   const pupilMat = kit.flat(shade(p.eyes, BLACK, 0.65));
   const shineMat = kit.flat("#ffffff");
   const rimMat = kit.flat(shade(p.eyes, BLACK, 0.8));
+  const lashMat = kit.flat("#1b1220");
+  const scleraMat = kit.flat("#fbfbff");
+  const irisDarkMat = kit.flat(shade(p.eyes, BLACK, 0.5));
+  const irisLightMat = kit.flat(shade(p.eyes, WHITE, 0.4));
   const buildEye = (x: number, size: number, tilt: number) => {
     const group = joint(headCenter, "eye", x, eyeY, faceZ(x, eyeY));
     group.rotation.y = Math.asin(Math.max(-0.9, Math.min(0.9, x / R))) * 0.9;
     group.rotation.z = tilt;
-    const squash = spec.eyes === "sharp" ? 0.68 : 1.18;
-    kit.mesh(disc(size * 1.12), rimMat, group, [0, 0, -0.001], { scale: [0.86, squash, 1] });
-    kit.mesh(disc(size), irisMat, group, [0, 0, 0], { scale: [0.8, squash, 1] });
-    kit.mesh(disc(size * 0.48), pupilMat, group, [0, -size * 0.08, 0.001], { scale: [0.85, squash, 1] });
-    kit.mesh(disc(size * 0.27), shineMat, group, [-size * 0.28, size * 0.36 * squash, 0.002]);
-    kit.mesh(disc(size * 0.12), shineMat, group, [size * 0.25, -size * 0.3 * squash, 0.002]);
-    if (spec.eyes === "sparkle") {
-      kit.mesh(disc(size * 0.16, 0, Math.PI * 2), shineMat, group, [size * 0.32, size * 0.42, 0.003], { scale: [0.4, 1.4, 1] });
-      kit.mesh(disc(size * 0.16, 0, Math.PI * 2), shineMat, group, [size * 0.32, size * 0.42, 0.003], { scale: [1.4, 0.4, 1] });
+    const squash = spec.eyes === "sharp" ? 0.72 : spec.eyes === "sleepy" ? 1.0 : 1.2;
+    if (isRobot) {
+      kit.mesh(disc(size * 1.12), rimMat, group, [0, 0, -0.001], { scale: [0.86, squash, 1] });
+      kit.mesh(disc(size), irisMat, group, [0, 0, 0], { scale: [0.8, squash, 1] });
+      kit.mesh(disc(size * 0.48), pupilMat, group, [0, -size * 0.08, 0.001], { scale: [0.85, squash, 1] });
+      kit.mesh(disc(size * 0.27), shineMat, group, [-size * 0.28, size * 0.36 * squash, 0.002]);
+      eyes.push(group);
+      return;
     }
-    if (spec.eyes === "sharp" || spec.eyes === "sleepy") {
-      kit.mesh(new THREE.PlaneGeometry(size * 2, size * 0.22), rimMat, group, [0, size * squash * 0.95, 0.003], {
-        rotation: [0, 0, spec.eyes === "sharp" ? -tilt * 1.5 : 0],
-      });
+    const side = x === 0 ? 1 : Math.sign(x);
+    // Layered anime eye, back to front.
+    kit.mesh(disc(size * 1.06), scleraMat, group, [0, 0, -0.003], { scale: [1, squash * 0.94, 1] });
+    kit.mesh(disc(size * 0.88), irisDarkMat, group, [0, -size * 0.04, -0.002], { scale: [0.8, squash, 1] });
+    kit.mesh(disc(size * 0.74), irisMat, group, [0, -size * 0.07, -0.001], { scale: [0.8, squash * 0.98, 1] });
+    kit.mesh(disc(size * 0.56, Math.PI, Math.PI), irisLightMat, group, [0, -size * 0.12, 0], { scale: [0.8, squash * 0.95, 1] });
+    kit.mesh(disc(size * 0.34), pupilMat, group, [0, -size * 0.03, 0.001], { scale: [0.6, squash * 1.05, 1] });
+    kit.mesh(disc(size * 0.24), shineMat, group, [-side * size * 0.24, size * 0.3 * squash, 0.002]);
+    kit.mesh(disc(size * 0.1), shineMat, group, [side * size * 0.22, -size * 0.34 * squash, 0.002]);
+    if (spec.eyes === "sparkle") {
+      kit.mesh(disc(size * 0.16), shineMat, group, [side * size * 0.3, size * 0.4, 0.003], { scale: [0.35, 1.5, 1] });
+      kit.mesh(disc(size * 0.16), shineMat, group, [side * size * 0.3, size * 0.4, 0.003], { scale: [1.5, 0.35, 1] });
+    }
+    // Upper lash line with an outer flick, and a short lower lash.
+    kit.mesh(torus(size * 0.98, size * 0.13, Math.PI * 0.86), lashMat, group, [0, 0, 0.003], {
+      rotation: [0, 0, Math.PI * 0.07],
+      scale: [1.05, squash * 0.95, 0.35],
+    });
+    kit.mesh(cone(size * 0.11, size * 0.34, 6), lashMat, group, [side * size * 1.0, size * 0.22 * squash, 0.003], {
+      rotation: [0, 0, -side * 1.15],
+      scale: [1, 1, 0.3],
+    });
+    kit.mesh(torus(size * 0.92, size * 0.035, Math.PI * 0.3), lashMat, group, [0, 0, 0.003], {
+      rotation: [0, 0, side > 0 ? -Math.PI * 0.45 : -Math.PI * 0.85],
+      scale: [1, squash * 0.95, 0.35],
+    });
+    if (spec.eyes === "sleepy") {
+      kit.mesh(disc(size * 1.12, 0, Math.PI), kit.flat(p.skin), group, [0, size * 0.12, 0.004], { scale: [1.02, 0.7, 1] });
     }
     eyes.push(group);
   };
@@ -463,7 +676,7 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
   } else if (spec.eyes === "mono") {
     buildEye(0, eyeSize * 1.55, 0);
   } else {
-    const eyeX = R * (isBird ? 0.42 : 0.36);
+    const eyeX = R * (isBird ? 0.42 : anime ? 0.38 : 0.36);
     const tilt = spec.eyes === "sharp" ? 0.18 : 0;
     buildEye(eyeX, eyeSize, tilt);
     buildEye(-eyeX, eyeSize, -tilt);
@@ -489,7 +702,7 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
   const mouthAnchor = joint(headCenter, "mouth", 0, mouthY, mouthZ);
   const mouthHex = isRobot ? p.eyes : MOUTH_COLOR;
   const mouthMat = isRobot ? kit.toon(mouthHex, { emissive: 1 }) : kit.flat(mouthHex);
-  const mouthWidth = R * (isRobot ? 0.16 : 0.1);
+  const mouthWidth = R * (isRobot ? 0.16 : anime ? 0.085 : 0.1);
   const mouths = {} as Record<MouthShape, THREE.Object3D>;
   for (const shape of MOUTH_SHAPES) {
     const holder = joint(mouthAnchor, `mouth:${shape}`);
@@ -535,7 +748,7 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
   const [earL, earR] = buildEars(kit, spec, headCenter, R, furred || isSlime);
   const tail = buildTail(kit, spec, hips, d);
   const [wingL, wingR] = isBird ? [null, null] : buildWings(kit, spec, chest, d);
-  buildAccessories(kit, spec, { headCenter, chest, neck, spine, R, d, furred });
+  buildAccessories(kit, spec, { headCenter, chest, neck, spine, handR: right.hand, R, d, furred });
 
   const headTopY =
     d.hipY + (isSlime ? 0 : d.torsoH + 0.02) + d.headCenterY + R * (isRobot ? 0.9 : 0.94) + (spec.hair === "spiky" || spec.hair === "mohawk" ? R * 0.35 : 0);
@@ -564,7 +777,7 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
     earR,
     hairSway,
     eyes,
-    eyeBaseOpen: spec.eyes === "sleepy" ? 0.6 : 1,
+    eyeBaseOpen: spec.eyes === "sleepy" && isRobot ? 0.6 : 1,
     mouths,
     brows,
     blush,
@@ -579,6 +792,7 @@ function outfitTorsoColor(spec: CharacterSpec): string {
     case "overalls":
       return spec.palette.secondary;
     case "armor":
+    case "coat":
       return spec.palette.secondary;
     default:
       return spec.palette.primary;
@@ -597,6 +811,7 @@ function legColor(spec: CharacterSpec): string {
       return shade(p.secondary, BLACK, 0.2);
     case "fur":
     case "plating":
+    case "sailor":
       return p.skin;
     default:
       return p.secondary;
@@ -605,6 +820,7 @@ function legColor(spec: CharacterSpec): string {
 
 function lowerLegColor(spec: CharacterSpec): string {
   if (spec.outfit === "dress") return spec.palette.skin;
+  if (spec.outfit === "sailor") return shade(spec.palette.secondary, BLACK, 0.3);
   return legColor(spec);
 }
 
@@ -613,6 +829,44 @@ function dressTorso(kit: Kit, spec: CharacterSpec, spine: THREE.Object3D, d: Dim
   const top = d.torsoH;
   const front = d.torsoR * 0.78;
   switch (spec.outfit) {
+    case "hakama": {
+      for (const side of [1, -1]) {
+        kit.mesh(roundedBox(0.012, top * 0.62, 0.01, 0.004), kit.toon(p.accent), spine, [side * d.torsoR * 0.16, top * 0.66, front], {
+          rotation: [0, 0, side * 0.5],
+        });
+      }
+      const length = d.legUpper + d.legLower + 0.02;
+      const trousers = pleated(new THREE.CylinderGeometry(d.torsoR * 1.0, d.torsoR * 1.75, length, 48, 4), 8, 0.07);
+      kit.mesh(trousers, kit.cloth(p.secondary), spine, [0, top * 0.22 - length / 2, 0], { scale: [1, 1, 0.82], outline: OUTLINE * 0.6, ink: p.secondary });
+      kit.mesh(cylinder(d.torsoR * 1.03, d.torsoR * 1.03, top * 0.12, 24), kit.toon(p.accent), spine, [0, top * 0.24, 0], { scale: [1, 1, 0.8] });
+      break;
+    }
+    case "sailor": {
+      kit.mesh(roundedBox(d.torsoR * 1.7, top * 0.36, 0.012, 0.006), kit.toon(p.secondary), spine, [0, top * 0.8, -d.torsoR * 0.72], {
+        rotation: [0.25, 0, 0],
+      });
+      for (const side of [1, -1]) {
+        kit.mesh(roundedBox(0.02, top * 0.42, 0.01, 0.004), kit.toon(p.secondary), spine, [side * d.torsoR * 0.22, top * 0.74, front], {
+          rotation: [0, 0, side * 0.55],
+        });
+      }
+      kit.mesh(cone(d.torsoR * 0.22, top * 0.3, 4), kit.toon(p.accent), spine, [0, top * 0.56, front + 0.012], { rotation: [0, 0, Math.PI], scale: [1, 1, 0.3] });
+      const skirtLength = d.legUpper * 0.78;
+      const skirt = pleated(new THREE.CylinderGeometry(d.torsoR * 0.98, d.torsoR * 1.55, skirtLength, 64, 3), 14, 0.07);
+      kit.mesh(skirt, kit.cloth(p.secondary), spine, [0, -skirtLength / 2 + 0.02, 0], { scale: [1, 1, 0.85], outline: OUTLINE * 0.6, ink: p.secondary });
+      break;
+    }
+    case "coat": {
+      const length = top * 0.95 + d.legUpper * 1.1;
+      const coat = pleated(new THREE.CylinderGeometry(d.torsoR * 1.07, d.torsoR * 1.5, length, 48, 4, true, 0.38, Math.PI * 2 - 0.76), 6, 0.04);
+      kit.mesh(coat, kit.cloth(p.primary, { side: THREE.DoubleSide }), spine, [0, top - length / 2, 0], { scale: [1, 1, 0.85] });
+      for (const side of [1, -1]) {
+        kit.mesh(roundedBox(0.03, top * 0.4, 0.012, 0.006), kit.toon(shade(p.primary, BLACK, 0.2)), spine, [side * d.torsoR * 0.3, top * 0.78, front + 0.006], {
+          rotation: [0, 0, side * 0.35],
+        });
+      }
+      break;
+    }
     case "hoodie": {
       kit.mesh(torus(d.torsoR * 0.72, d.torsoR * 0.22), kit.toon(p.secondary), spine, [0, top * 0.92, -d.torsoR * 0.12], {
         rotation: [Math.PI / 2 - 0.25, 0, 0],
@@ -644,13 +898,14 @@ function dressTorso(kit: Kit, spec: CharacterSpec, spine: THREE.Object3D, d: Dim
     case "robe":
     case "dress":
     case "labcoat": {
-      const skirtColor = spec.outfit === "labcoat" ? p.primary : p.primary;
+      const skirtColor = p.primary;
       const length = spec.outfit === "dress" ? d.legUpper * 0.95 : spec.outfit === "labcoat" ? d.legUpper * 1.2 : d.legUpper + d.legLower * 0.7;
-      kit.mesh(cylinder(d.torsoR * 0.95, d.torsoR * (spec.outfit === "dress" ? 1.75 : 1.4), length, 24), kit.toon(skirtColor), spine, [
+      const skirt = pleated(new THREE.CylinderGeometry(d.torsoR * 0.95, d.torsoR * (spec.outfit === "dress" ? 1.75 : 1.4), length, 48, 4), spec.outfit === "dress" ? 9 : 7, 0.06);
+      kit.mesh(skirt, kit.cloth(skirtColor), spine, [
         0,
         -length / 2 + 0.02,
         0,
-      ], { scale: [1, 1, 0.85], outline: OUTLINE * 0.6 });
+      ], { scale: [1, 1, 0.85], outline: OUTLINE * 0.6, ink: skirtColor });
       kit.mesh(cylinder(d.torsoR * 1.02, d.torsoR * 1.02, top * 0.16, 24), kit.toon(spec.outfit === "kimono" ? p.secondary : p.accent), spine, [
         0,
         top * 0.22,
@@ -686,9 +941,10 @@ function dressTorso(kit: Kit, spec: CharacterSpec, spine: THREE.Object3D, d: Dim
       break;
     }
     case "tunic": {
-      kit.mesh(cylinder(d.torsoR * 0.98, d.torsoR * 1.2, d.legUpper * 0.6, 24), kit.toon(p.primary), spine, [0, -d.legUpper * 0.22, 0], {
+      kit.mesh(pleated(new THREE.CylinderGeometry(d.torsoR * 0.98, d.torsoR * 1.2, d.legUpper * 0.6, 40, 3), 6, 0.05), kit.cloth(p.primary), spine, [0, -d.legUpper * 0.22, 0], {
         scale: [1, 1, 0.82],
         outline: OUTLINE * 0.6,
+        ink: p.primary,
       });
       kit.mesh(cylinder(d.torsoR * 1.02, d.torsoR * 1.02, top * 0.1, 24), kit.toon(p.secondary), spine, [0, top * 0.2, 0], { scale: [1, 1, 0.8] });
       break;
@@ -701,26 +957,63 @@ function dressTorso(kit: Kit, spec: CharacterSpec, spine: THREE.Object3D, d: Dim
 function buildHair(kit: Kit, spec: CharacterSpec, headCenter: THREE.Object3D, R: number, furred: boolean): THREE.Object3D[] {
   const sway: THREE.Object3D[] = [];
   if (spec.hair === "none" || spec.body === "robot" || spec.body === "slime") return sway;
-  const hairMat = kit.toon(spec.palette.hair);
-  const capOnly = furred; // beasts and birds get a tuft rather than a full scalp
-  const cap = () => {
-    kit.mesh(new THREE.SphereGeometry(R * 1.07, 32, 16, 0, Math.PI * 2, 0, Math.PI * 0.52), hairMat, headCenter, [0, R * 0.02, -R * 0.03], {
-      rotation: [-0.28, 0, 0],
-      scale: [1.02, 0.96, 1],
-      outline: OUTLINE * 0.5,
-    });
-  };
-  const fringe = () => {
-    for (const x of [-0.42, 0, 0.42]) {
-      kit.mesh(sphere(R * 0.3), hairMat, headCenter, [x * R, R * 0.5, R * 0.72], { scale: [1.1, 0.65, 0.5], rotation: [0, 0, -x * 0.6] });
-    }
-  };
+  const hairHex = spec.palette.hair;
+  const tipHex = spec.hairTip ?? null;
+  const hairMat = kit.toon(hairHex);
+  const lockMat = tipHex ? kit.vertexToon() : hairMat;
   const swayJoint = (x: number, y: number, z: number) => {
     const node = joint(headCenter, "hairSway", x, y, z);
     sway.push(node);
     return node;
   };
-  if (capOnly) {
+  /** A tapered, slightly flattened lock hanging from its root along -Y. */
+  const lock = (parent: THREE.Object3D, position: [number, number, number], length: number, width: number, rotation: [number, number, number], flat = 0.5) => {
+    const geometry = new THREE.ConeGeometry(width, length, 8, 3);
+    if (tipHex) verticalGradient(geometry, hairHex, tipHex, 0.35);
+    geometry.rotateX(Math.PI);
+    geometry.translate(0, -length / 2, 0);
+    kit.mesh(geometry, lockMat, parent, position, { rotation, scale: [1, 1, flat], outline: OUTLINE * 0.8, ink: hairHex });
+  };
+  const cap = () => {
+    kit.mesh(new THREE.SphereGeometry(R * 1.07, 36, 18, 0, Math.PI * 2, 0, Math.PI * 0.52), hairMat, headCenter, [0, R * 0.02, -R * 0.03], {
+      rotation: [-0.28, 0, 0],
+      scale: [1.02, 0.96, 1],
+      outline: OUTLINE * 0.5,
+    });
+  };
+  const bangs = (count: number, length: number) => {
+    for (let i = 0; i < count; i += 1) {
+      const t = count === 1 ? 0 : i / (count - 1) - 0.5;
+      const x = t * R * 1.15;
+      // Roots sit on the hair cap; tips angle forward so they clear the face.
+      const rootY = R * (0.62 - Math.abs(t) * 0.12);
+      const rootZ = Math.sqrt(Math.max((R * 1.07) ** 2 - rootY * rootY - x * x, 0)) * 0.97;
+      lock(headCenter, [x, rootY, rootZ], R * length * BANG_LENGTH_SCALE * (1 - Math.abs(t) * 0.3), R * 0.23, [-0.6, 0, -t * 0.8]);
+    }
+  };
+  const sideLocks = (length: number) => {
+    for (const side of [1, -1]) {
+      lock(headCenter, [side * R * 0.99, R * 0.25, R * 0.22], R * length, R * 0.17, [-0.08, 0, side * 0.14]);
+    }
+  };
+  const backFall = (count: number, length: number) => {
+    const fall = swayJoint(0, R * 0.35, -R * 0.2);
+    for (let i = 0; i < count; i += 1) {
+      const angle = (i / (count - 1) - 0.5) * Math.PI * 0.95;
+      lock(fall, [Math.sin(angle) * R * 0.78, 0, -Math.cos(angle) * R * 0.62], R * length * (1 - Math.abs(angle) * 0.12), R * 0.28, [0.18, 0, -angle * 0.18], 0.6);
+    }
+  };
+  const bundle = (parent: THREE.Object3D, length: number) => {
+    for (const [dx, dz, scale] of [
+      [0, 0, 1],
+      [R * 0.07, -R * 0.05, 0.85],
+      [-R * 0.07, -R * 0.04, 0.9],
+    ] as const) {
+      lock(parent, [dx, 0, dz], R * length * scale, R * 0.2, [0.15, 0, 0], 0.7);
+    }
+  };
+
+  if (furred) {
     const tuft = swayJoint(0, R * 0.88, R * 0.1);
     const count = spec.hair === "spiky" ? 5 : spec.hair === "curly" ? 4 : 3;
     for (let i = 0; i < count; i += 1) {
@@ -732,43 +1025,57 @@ function buildHair(kit: Kit, spec: CharacterSpec, headCenter: THREE.Object3D, R:
   switch (spec.hair) {
     case "short":
       cap();
-      fringe();
+      bangs(5, 0.5);
+      sideLocks(0.5);
       break;
     case "bob":
       cap();
-      fringe();
-      for (const side of [1, -1]) {
-        kit.mesh(sphere(R * 0.5), hairMat, headCenter, [side * R * 0.78, -R * 0.2, -R * 0.08], { scale: [0.55, 1.15, 1.2], outline: OUTLINE * 0.5 });
-      }
-      kit.mesh(sphere(R * 0.9), hairMat, headCenter, [0, -R * 0.1, -R * 0.38], { scale: [1.12, 1.0, 0.75], outline: OUTLINE * 0.5 });
+      bangs(5, 0.55);
+      sideLocks(0.95);
+      backFall(7, 0.95);
       break;
-    case "long": {
+    case "long":
       cap();
-      fringe();
-      const fall = swayJoint(0, R * 0.3, -R * 0.55);
-      kit.mesh(capsule(R * 0.72, R * 1.2), hairMat, fall, [0, -R * 0.95, 0], { scale: [1.15, 1, 0.55], outline: OUTLINE * 0.5 });
+      bangs(5, 0.6);
+      sideLocks(1.7);
+      backFall(9, 2.4);
+      break;
+    case "hime": {
+      cap();
+      kit.mesh(roundedBox(R * 1.45, R * 0.42, R * 0.3, R * 0.06), hairMat, headCenter, [0, R * 0.46, R * 0.66], { rotation: [-0.25, 0, 0], outline: OUTLINE * 0.6 });
       for (const side of [1, -1]) {
-        kit.mesh(capsule(R * 0.22, R * 0.9), hairMat, headCenter, [side * R * 0.82, -R * 0.55, R * 0.1], { outline: OUTLINE * 0.5 });
+        kit.mesh(roundedBox(R * 0.3, R * 1.35, R * 0.16, R * 0.05), hairMat, headCenter, [side * R * 0.84, -R * 0.35, R * 0.34], { outline: OUTLINE * 0.6 });
       }
+      backFall(9, 2.5);
       break;
     }
     case "ponytail": {
       cap();
-      fringe();
-      const tail = swayJoint(0, R * 0.55, -R * 0.88);
+      bangs(5, 0.5);
+      sideLocks(0.7);
+      const tail = swayJoint(0, R * 0.62, -R * 0.88);
       kit.mesh(torus(R * 0.14, R * 0.05), kit.toon(spec.palette.accent), tail, [0, 0, 0], { rotation: [0.6, 0, 0] });
-      kit.mesh(capsule(R * 0.24, R * 0.95), hairMat, tail, [0, -R * 0.6, -R * 0.18], { rotation: [-0.35, 0, 0], outline: OUTLINE });
+      bundle(tail, 1.6);
       break;
     }
     case "twintails":
       cap();
-      fringe();
+      bangs(5, 0.5);
       for (const side of [1, -1]) {
-        const tail = swayJoint(side * R * 0.86, R * 0.42, -R * 0.2);
-        kit.mesh(sphere(R * 0.1), kit.toon(spec.palette.accent), tail, [0, 0, 0]);
-        kit.mesh(capsule(R * 0.22, R * 1.0), hairMat, tail, [side * R * 0.12, -R * 0.62, 0], { rotation: [0, 0, side * 0.18], outline: OUTLINE });
+        const tail = swayJoint(side * R * 0.88, R * 0.45, -R * 0.2);
+        kit.mesh(sphere(R * 0.11), kit.toon(spec.palette.accent), tail, [0, 0, 0]);
+        bundle(tail, 1.8);
       }
       break;
+    case "side_tail": {
+      cap();
+      bangs(5, 0.5);
+      sideLocks(0.7);
+      const tail = swayJoint(-R * 0.82, R * 0.6, -R * 0.35);
+      kit.mesh(sphere(R * 0.12), kit.toon(spec.palette.accent), tail, [0, 0, 0]);
+      bundle(tail, 1.7);
+      break;
+    }
     case "spiky":
       cap();
       for (let i = 0; i < 8; i += 1) {
@@ -780,11 +1087,12 @@ function buildHair(kit: Kit, spec: CharacterSpec, headCenter: THREE.Object3D, R:
         spike.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction);
         headCenter.add(spike);
       }
-      fringe();
+      bangs(4, 0.45);
       break;
     case "bun":
       cap();
-      fringe();
+      bangs(5, 0.5);
+      sideLocks(0.8);
       kit.mesh(sphere(R * 0.36), hairMat, headCenter, [0, R * 0.82, -R * 0.42], { outline: OUTLINE });
       break;
     case "mohawk":
@@ -806,6 +1114,7 @@ function buildHair(kit: Kit, spec: CharacterSpec, headCenter: THREE.Object3D, R:
           outline: OUTLINE * 0.6,
         });
       }
+      bangs(3, 0.35);
       break;
     default:
       break;
@@ -888,6 +1197,12 @@ function buildEars(
           outline: OUTLINE,
         });
         break;
+      case "leaf":
+        ear = joint(headCenter, "ear", side * R * 0.6, R * 0.68, -R * 0.05);
+        ear.rotation.z = -side * 0.55;
+        kit.mesh(sphere(R * 0.3), earMat, ear, [0, R * 0.32, 0], { scale: [0.55, 1.35, 0.16], outline: OUTLINE });
+        kit.mesh(cylinder(R * 0.018, R * 0.018, R * 0.62, 6), kit.toon(shade(earColor, BLACK, 0.3)), ear, [0, R * 0.32, R * 0.05]);
+        break;
       default:
         return [null, null];
     }
@@ -934,6 +1249,41 @@ function buildTail(kit: Kit, spec: CharacterSpec, hips: THREE.Object3D, d: Dimen
         kit.mesh(cone(0.012, 0.025, 4), kit.toon(p.accent), node, [0, 0.012, -0.03]);
       });
       break;
+    case "flame":
+      chain.forEach((node, i) => {
+        node.rotation.x = -0.35;
+        kit.mesh(capsule(0.022 - i * 0.004, 0.05), kit.toon(furColor), node, [0, 0.02, -0.025], { rotation: [-1.0, 0, 0], outline: OUTLINE });
+      });
+      kit.mesh(cone(0.03, 0.08, 12), kit.toon(p.accent, { emissive: 1.1, opacity: 0.9 }), t(2), [0, 0.09, -0.05], { outline: OUTLINE * 0.5 });
+      kit.mesh(cone(0.016, 0.05, 10), kit.toon(FLAME_CORE_COLOR, { emissive: 1.4 }), t(2), [0, 0.08, -0.042]);
+      break;
+    case "leaf": {
+      const stem = kit.toon(shade(p.hair, BLACK, 0.2));
+      chain.forEach((node) => {
+        node.rotation.x = -0.4;
+        kit.mesh(cylinder(0.006, 0.006, 0.06, 6), stem, node, [0, 0.02, -0.025], { rotation: [-1.0, 0, 0] });
+      });
+      kit.mesh(sphere(0.05), kit.toon(p.hair), t(2), [0, 0.07, -0.05], { rotation: [-0.5, 0, 0], scale: [0.6, 1.5, 0.15], outline: OUTLINE });
+      break;
+    }
+    case "star": {
+      chain.forEach((node, i) => {
+        node.rotation.x = -0.4;
+        kit.mesh(capsule(0.012 - i * 0.002, 0.05), kit.toon(furColor), node, [0, 0.02, -0.025], { rotation: [-1.0, 0, 0], outline: OUTLINE });
+      });
+      const star = new THREE.Shape();
+      for (let i = 0; i < STAR_POINTS * 2; i += 1) {
+        const angle = (i / (STAR_POINTS * 2)) * Math.PI * 2 + Math.PI / 2;
+        const radius = i % 2 === 0 ? 0.05 : 0.022;
+        if (i === 0) star.moveTo(Math.cos(angle) * radius, Math.sin(angle) * radius);
+        else star.lineTo(Math.cos(angle) * radius, Math.sin(angle) * radius);
+      }
+      star.closePath();
+      kit.mesh(new THREE.ExtrudeGeometry(star, { depth: 0.012, bevelEnabled: false }), kit.toon(p.accent, { emissive: 0.9 }), t(2), [0, 0.08, -0.06], {
+        outline: OUTLINE * 0.5,
+      });
+      break;
+    }
     case "cable":
       chain.forEach((node, i) => {
         node.rotation.x = 0.3;
@@ -1013,6 +1363,7 @@ function buildWings(kit: Kit, spec: CharacterSpec, chest: THREE.Object3D, d: Dim
 
 interface AccessoryAnchors {
   headCenter: THREE.Object3D;
+  handR: THREE.Object3D;
   chest: THREE.Object3D;
   neck: THREE.Object3D;
   spine: THREE.Object3D;
@@ -1023,7 +1374,8 @@ interface AccessoryAnchors {
 
 function buildAccessories(kit: Kit, spec: CharacterSpec, a: AccessoryAnchors): void {
   const p = spec.palette;
-  const { headCenter, chest, neck, spine, R, d } = a;
+  const { headCenter, chest, neck, spine, handR, R, d } = a;
+  const hasHands = spec.body !== "slime" && spec.body !== "bird";
   const isSlime = spec.body === "slime";
   const topY = isSlime ? R * 0.78 : R * 0.9;
   const eyeY = isSlime ? R * 0.12 : -R * 0.05;
@@ -1152,6 +1504,60 @@ function buildAccessories(kit: Kit, spec: CharacterSpec, a: AccessoryAnchors): v
           kit.mesh(torus(d.torsoR * 0.62, 0.01), collar, neck, [0, -0.01, 0], { rotation: [Math.PI / 2, 0, 0] });
           kit.mesh(sphere(0.022), kit.toon(GOLD_COLOR, { emissive: 0.2 }), neck, [0, -0.03, d.torsoR * 0.66], { outline: OUTLINE });
         }
+        break;
+      }
+      case "katana": {
+        if (isSlime) break;
+        const sword = joint(spine, "katana", d.torsoR * 0.95, d.torsoH * 0.16, 0.01);
+        sword.rotation.set(1.1, 0, 0.18);
+        kit.mesh(cylinder(0.013, 0.011, 0.36, 10), kit.toon("#1c1917"), sword, [0, -0.13, 0], { outline: OUTLINE });
+        kit.mesh(cylinder(0.03, 0.03, 0.008, 16), kit.toon(GOLD_COLOR), sword, [0, 0.055, 0]);
+        kit.mesh(cylinder(0.011, 0.011, 0.1, 8), kit.toon(shade(p.accent, BLACK, 0.3)), sword, [0, 0.11, 0], { outline: OUTLINE });
+        break;
+      }
+      case "wand": {
+        if (!hasHands) break;
+        const wand = joint(handR, "wand", 0, -0.005, 0.01);
+        wand.rotation.x = 1.25;
+        kit.mesh(cylinder(0.006, 0.008, 0.16, 8), kit.toon(shade(p.secondary, WHITE, 0.3)), wand, [0, 0.07, 0]);
+        kit.mesh(new THREE.OctahedronGeometry(0.026), kit.toon(p.accent, { emissive: 0.9 }), wand, [0, 0.16, 0], { scale: [1, 1.3, 0.5] });
+        break;
+      }
+      case "staff": {
+        if (!hasHands) break;
+        const staff = joint(handR, "staff", 0, 0, 0.01);
+        const length = d.height * 0.78;
+        kit.mesh(cylinder(0.009, 0.011, length, 10), kit.toon("#7c4a23"), staff, [0, length * 0.18, 0], { outline: OUTLINE });
+        kit.mesh(sphere(0.032), kit.toon(p.accent, { emissive: 0.9 }), staff, [0, length * 0.68 + 0.02, 0], { outline: OUTLINE });
+        kit.mesh(torus(0.036, 0.006), kit.toon(GOLD_COLOR), staff, [0, length * 0.68, 0], { rotation: [Math.PI / 2, 0, 0] });
+        break;
+      }
+      case "kitsune_mask": {
+        const mask = joint(headCenter, "kitsuneMask", -R * 0.74, R * 0.38, R * 0.42);
+        mask.rotation.set(0, -0.95, 0.25);
+        kit.mesh(sphere(R * 0.36), kit.toon("#fafaf9"), mask, [0, 0, 0], { scale: [0.85, 1, 0.42], outline: OUTLINE });
+        kit.mesh(cone(R * 0.12, R * 0.26, 10), kit.toon("#fafaf9"), mask, [0, -R * 0.12, R * 0.16], { rotation: [Math.PI / 2, 0, 0] });
+        for (const side of [1, -1]) {
+          kit.mesh(cone(R * 0.11, R * 0.24, 4), kit.toon("#fafaf9"), mask, [side * R * 0.2, R * 0.34, 0], { rotation: [0, 0, -side * 0.35] });
+          kit.mesh(roundedBox(R * 0.16, R * 0.035, 0.006, 0.003), kit.flat("#dc2626"), mask, [side * R * 0.13, R * 0.05, R * 0.15], {
+            rotation: [0, 0, side * 0.35],
+          });
+        }
+        kit.mesh(disc(R * 0.03), kit.flat("#dc2626"), mask, [0, R * 0.2, R * 0.152]);
+        break;
+      }
+      case "shell": {
+        if (isSlime) break;
+        const shell = joint(chest, "shell", 0, d.torsoH * 0.05, -d.torsoR * 0.75);
+        const dome = new THREE.SphereGeometry(d.torsoR * 1.25, 28, 14, 0, Math.PI * 2, 0, Math.PI * 0.5);
+        kit.mesh(dome, kit.toon(p.secondary), shell, [0, 0, 0], { rotation: [-Math.PI / 2, 0, 0], scale: [1, 1.15, 0.7], outline: OUTLINE });
+        kit.mesh(torus(d.torsoR * 1.22, d.torsoR * 0.1), kit.toon(shade(p.secondary, WHITE, 0.35)), shell, [0, 0, 0], { scale: [1, 1.15, 1] });
+        kit.mesh(sphere(d.torsoR * 0.32), kit.toon(p.accent), shell, [0, 0, -d.torsoR * 0.82], { scale: [1, 1, 0.35] });
+        break;
+      }
+      case "gem": {
+        const gem = joint(headCenter, "gem", 0, isSlime ? R * 0.5 : R * 0.42, faceFront * 0.93);
+        kit.mesh(new THREE.OctahedronGeometry(R * 0.11), kit.toon(p.accent, { emissive: 1.0 }), gem, [0, 0, 0], { scale: [1, 1.2, 0.5], outline: OUTLINE * 0.5 });
         break;
       }
       default:

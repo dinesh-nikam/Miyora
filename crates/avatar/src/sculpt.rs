@@ -29,7 +29,7 @@ use thiserror::Error;
 use crate::{
     glb::{write_textured_glb, GlbError, MeshData},
     spec::{
-        hex_color, BodyType, CharacterSpec, Ears, EyeStyle, HairStyle, Outfit, Palette,
+        hex_color, BodyType, CharacterSpec, Ears, EyeStyle, HairStyle, Outfit, Palette, Pattern,
         Proportions, SpecError, Tail, Wings, SPEC_SCHEMA_VERSION,
     },
 };
@@ -927,6 +927,8 @@ fn derive_spec(
         eyes: EyeStyle::Round,
         outfit: Outfit::Hoodie,
         accessories: Vec::new(),
+        pattern: Pattern::None,
+        hair_tip: None,
         palette: Palette {
             skin: hex_color(skin),
             hair: hex_color(to_rgb8(hair)),

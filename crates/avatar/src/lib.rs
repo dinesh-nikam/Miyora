@@ -19,6 +19,6 @@ pub use sculpt::{
     Segmentation,
 };
 pub use spec::{
-    Accessory, BodyType, CharacterSpec, Ears, EyeStyle, HairStyle, Outfit, Palette, Proportions,
-    SpecError, Tail, Wings, SPEC_SCHEMA_VERSION,
+    Accessory, BodyType, CharacterSpec, Ears, EyeStyle, HairStyle, Outfit, Palette, Pattern,
+    Proportions, SpecError, Tail, Wings, SPEC_SCHEMA_VERSION,
 };

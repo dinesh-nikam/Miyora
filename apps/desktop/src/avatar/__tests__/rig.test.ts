@@ -152,3 +152,103 @@ describe("stage props and subjects", () => {
     expect(subjectFromAvatar(null)).toBeNull();
   });
 });
+
+describe("anime styling", () => {
+  const base = catalog.characters.find((spec) => spec.id === "miyora.aoi") as CharacterSpec;
+
+  const materials = (spec: CharacterSpec) => {
+    const rig = buildCharacter(spec);
+    const found: THREE.Material[] = [];
+    rig.root.traverse((node) => {
+      const mesh = node as THREE.Mesh;
+      if (mesh.isMesh) found.push(...(Array.isArray(mesh.material) ? mesh.material : [mesh.material]));
+    });
+    return { rig, found };
+  };
+
+  it.each(["dots", "stripes", "waves", "petals", "stars", "diamonds"] as const)("applies the %s fabric pattern as a texture", (pattern) => {
+    const { rig, found } = materials({ ...base, pattern });
+    const textured = found.filter((material) => (material as THREE.MeshToonMaterial).map instanceof THREE.DataTexture);
+    expect(textured.length).toBeGreaterThan(0);
+    const texture = (textured[0] as THREE.MeshToonMaterial).map as THREE.DataTexture;
+    const pixels = texture.image.data as Uint8Array;
+    const colors = new Set<number>();
+    for (let i = 0; i < pixels.length; i += 4) colors.add((pixels[i] << 16) | (pixels[i + 1] << 8) | pixels[i + 2]);
+    expect(colors.size).toBe(2);
+    disposeObject(rig.root);
+  });
+
+  it("fades hair to the tip color with vertex colors", () => {
+    const { rig, found } = materials({ ...base, hair: "long", hairTip: "#f97316" });
+    expect(found.some((material) => (material as THREE.MeshToonMaterial).vertexColors)).toBe(true);
+    let gradient = false;
+    rig.root.traverse((node) => {
+      const colors = (node as THREE.Mesh).geometry?.getAttribute?.("color");
+      if (colors && colors.count > 0) gradient = true;
+    });
+    expect(gradient).toBe(true);
+    disposeObject(rig.root);
+    const plain = materials({ ...base, hairTip: undefined });
+    expect(plain.found.some((material) => (material as THREE.MeshToonMaterial).vertexColors)).toBe(false);
+    disposeObject(plain.rig.root);
+  });
+
+  it.each(["hakama", "sailor", "coat"] as const)("builds the %s outfit", (outfit) => {
+    const { rig } = materials({ ...base, outfit });
+    const box = new THREE.Box3().setFromObject(rig.root);
+    expect(box.min.y).toBeGreaterThan(-0.08);
+    expect(allFinite(rig.root)).toBe(true);
+    disposeObject(rig.root);
+  });
+
+  it.each(["katana", "wand", "staff", "kitsune_mask"] as const)("attaches the %s prop", (accessory) => {
+    const { rig } = materials({ ...base, accessories: [accessory] });
+    const name = { katana: "katana", wand: "wand", staff: "staff", kitsune_mask: "kitsuneMask" }[accessory];
+    expect(rig.root.getObjectByName(name)).toBeDefined();
+    disposeObject(rig.root);
+  });
+
+  it.each(["shell", "gem"] as const)("attaches the %s creature part", (accessory) => {
+    for (const body of ["beast", "bird", "robot"] as const) {
+      const { rig } = materials({ ...base, body, accessories: [accessory] });
+      expect(rig.root.getObjectByName(accessory)).toBeDefined();
+      expect(allFinite(rig.root)).toBe(true);
+      disposeObject(rig.root);
+    }
+  });
+
+  it.each(["flame", "leaf", "star"] as const)("builds the %s tail as a swaying chain", (tail) => {
+    const { rig } = materials({ ...base, body: "beast", tail });
+    expect(rig.tail.length).toBe(3);
+    let meshes = 0;
+    rig.tail[2]?.traverse((node) => {
+      if ((node as THREE.Mesh).isMesh) meshes += 1;
+    });
+    expect(meshes).toBeGreaterThan(0);
+    expect(allFinite(rig.root)).toBe(true);
+    disposeObject(rig.root);
+  });
+
+  it("builds leaf ears on both sides", () => {
+    const { rig } = materials({ ...base, body: "beast", ears: "leaf" });
+    let ears = 0;
+    rig.root.traverse((node) => {
+      if (node.name === "ear") ears += 1;
+    });
+    expect(ears).toBe(2);
+    disposeObject(rig.root);
+  });
+
+  it("includes original pocket-creature designs that use the new parts", () => {
+    const pocket = catalog.characters.filter((spec) => spec.tags.includes("pocket-monster"));
+    expect(pocket.length).toBeGreaterThanOrEqual(20);
+    const used = new Set<string>(pocket.flatMap((spec) => [spec.tail, spec.ears, ...spec.accessories]));
+    for (const part of ["flame", "leaf", "star", "shell", "gem"]) expect(used.has(part)).toBe(true);
+  });
+
+  it.each(["hime", "side_tail"] as const)("builds the %s hairstyle with swaying locks", (hair) => {
+    const { rig } = materials({ ...base, hair });
+    expect(rig.hairSway.length).toBeGreaterThan(0);
+    disposeObject(rig.root);
+  });
+});

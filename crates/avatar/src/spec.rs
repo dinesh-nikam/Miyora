@@ -58,6 +58,8 @@ pub enum Ears {
     Horns,
     Antenna,
     Fin,
+    /// Broad leaf-blade ears for plant creatures.
+    Leaf,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Hash)]
@@ -70,6 +72,12 @@ pub enum Tail {
     Dragon,
     Cable,
     Feather,
+    /// Tapered tail whose tip burns with a glowing flame.
+    Flame,
+    /// Slim stem ending in a single leaf blade.
+    Leaf,
+    /// Slim tail ending in a glowing five-point star.
+    Star,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Hash)]
@@ -95,6 +103,10 @@ pub enum HairStyle {
     Bun,
     Mohawk,
     Curly,
+    /// Straight blunt bangs with long face-framing side locks.
+    Hime,
+    /// A single high tail on one side.
+    SideTail,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Hash)]
@@ -123,6 +135,26 @@ pub enum Outfit {
     Tunic,
     Fur,
     Plating,
+    /// Wide pleated trousers worn over a crossed-collar top.
+    Hakama,
+    /// Sailor-collar school uniform with a pleated skirt.
+    Sailor,
+    /// Long open coat over a fitted top.
+    Coat,
+}
+
+/// Original fabric patterns applied to outfit cloth.
+#[derive(Debug, Clone, Copy, Default, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[serde(rename_all = "snake_case")]
+pub enum Pattern {
+    #[default]
+    None,
+    Dots,
+    Stripes,
+    Waves,
+    Petals,
+    Stars,
+    Diamonds,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, PartialOrd, Ord, Hash)]
@@ -142,6 +174,14 @@ pub enum Accessory {
     Flower,
     Goggles,
     Bell,
+    Katana,
+    Wand,
+    Staff,
+    KitsuneMask,
+    /// Domed shell worn on the back.
+    Shell,
+    /// Glowing jewel set in the forehead.
+    Gem,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
@@ -194,7 +234,12 @@ pub struct CharacterSpec {
     pub outfit: Outfit,
     #[serde(default)]
     pub accessories: Vec<Accessory>,
+    #[serde(default)]
+    pub pattern: Pattern,
     pub palette: Palette,
+    /// Optional color the hair fades to at the tips.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub hair_tip: Option<String>,
     #[serde(default)]
     pub proportions: Proportions,
     pub energy: f32,
@@ -228,6 +273,9 @@ impl CharacterSpec {
             ("palette.accent", &palette.accent),
         ] {
             validate_color(field, value)?;
+        }
+        if let Some(tip) = &self.hair_tip {
+            validate_color("hairTip", tip)?;
         }
         let p = &self.proportions;
         validate_range("proportions.height", p.height, HEIGHT_RANGE)?;
@@ -350,6 +398,7 @@ pub(crate) fn sample_spec() -> CharacterSpec {
         eyes: EyeStyle::Round,
         outfit: Outfit::Hoodie,
         accessories: vec![Accessory::Scarf],
+        pattern: Pattern::None,
         palette: Palette {
             skin: "#f2c9a8".into(),
             hair: "#e07a2f".into(),
@@ -358,6 +407,7 @@ pub(crate) fn sample_spec() -> CharacterSpec {
             secondary: "#374151".into(),
             accent: "#f59e0b".into(),
         },
+        hair_tip: None,
         proportions: Proportions::default(),
         energy: 1.0,
         tags: vec!["fox".into()],
@@ -438,6 +488,43 @@ mod tests {
         ] {
             assert!(validate_id(bad).is_err(), "{bad} must be rejected");
         }
+    }
+
+    #[test]
+    fn parses_creature_parts() {
+        let mut value = serde_json::to_value(sample_spec()).expect("value");
+        for (ears, tail) in [("leaf", "flame"), ("leaf", "leaf"), ("fin", "star")] {
+            let object = value.as_object_mut().expect("object");
+            object.insert("ears".into(), ears.into());
+            object.insert("tail".into(), tail.into());
+            object.insert("accessories".into(), serde_json::json!(["shell", "gem"]));
+            let spec = CharacterSpec::parse(value.to_string().as_bytes()).expect("creature parts");
+            assert_eq!(spec.accessories, vec![Accessory::Shell, Accessory::Gem]);
+        }
+        let parsed = CharacterSpec::parse(value.to_string().as_bytes()).expect("last parts");
+        assert_eq!((parsed.ears, parsed.tail), (Ears::Fin, Tail::Star));
+        value
+            .as_object_mut()
+            .expect("object")
+            .insert("tail".into(), "lightning".into());
+        assert!(CharacterSpec::parse(value.to_string().as_bytes()).is_err());
+    }
+
+    #[test]
+    fn accepts_optional_hair_tip_and_pattern() {
+        let mut spec = sample_spec();
+        spec.hair_tip = Some("#f97316".into());
+        spec.pattern = Pattern::Petals;
+        let json = serde_json::to_vec(&spec).expect("serialize");
+        assert_eq!(CharacterSpec::parse(&json).expect("parse"), spec);
+        spec.hair_tip = Some("orange".into());
+        assert!(spec.validate().is_err());
+        // Specs written before these fields existed still parse.
+        let mut legacy = serde_json::to_value(sample_spec()).expect("value");
+        legacy.as_object_mut().expect("object").remove("pattern");
+        let parsed = CharacterSpec::parse(legacy.to_string().as_bytes()).expect("legacy");
+        assert_eq!(parsed.pattern, Pattern::None);
+        assert_eq!(parsed.hair_tip, None);
     }
 
     #[test]

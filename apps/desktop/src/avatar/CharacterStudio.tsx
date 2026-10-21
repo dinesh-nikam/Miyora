@@ -12,6 +12,7 @@ import {
   HAIR_STYLES,
   OUTFITS,
   PALETTE_KEYS,
+  PATTERNS,
   SPEC_LIMITS,
   TAIL_TYPES,
   WING_TYPES,
@@ -555,6 +556,7 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
                 <SelectField title="Hair" value={draft.hair} options={HAIR_STYLES} onChange={(hair) => update({ hair })} />
                 <SelectField title="Eyes" value={draft.eyes} options={EYE_STYLES} onChange={(eyes) => update({ eyes })} />
                 <SelectField title="Outfit" value={draft.outfit} options={OUTFITS} onChange={(outfit) => update({ outfit })} />
+                <SelectField title="Fabric pattern" value={draft.pattern ?? "none"} options={PATTERNS} onChange={(pattern) => update({ pattern })} />
               </div>
               <div>
                 <div style={{ ...label, marginBottom: "6px" }}>
@@ -580,6 +582,23 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
                 </div>
               </div>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(110px, 1fr))", gap: "10px" }}>
+                <Field title="Hair tips">
+                  <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+                    <input
+                      type="checkbox"
+                      aria-label="Fade hair to a tip color"
+                      checked={draft.hairTip !== undefined}
+                      onChange={(event) => update({ hairTip: event.target.checked ? draft.palette.accent : undefined })}
+                    />
+                    <input
+                      type="color"
+                      disabled={draft.hairTip === undefined}
+                      value={draft.hairTip ?? draft.palette.hair}
+                      style={{ ...input, padding: "2px", height: "32px", flex: 1 }}
+                      onChange={(event) => update({ hairTip: event.target.value })}
+                    />
+                  </div>
+                </Field>
                 {PALETTE_KEYS.map((key) => (
                   <Field key={key} title={humanize(key)}>
                     <input

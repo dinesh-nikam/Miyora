@@ -20,6 +20,7 @@
       "accessories": [
         "headphones"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f2c9a8",
         "hair": "#1e293b",
@@ -57,6 +58,7 @@
       "accessories": [
         "glasses"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#e0ac83",
         "hair": "#111827",
@@ -93,6 +95,7 @@
       "accessories": [
         "witch_hat"
       ],
+      "pattern": "stars",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#7c3aed",
@@ -111,7 +114,8 @@
       "tags": [
         "magic",
         "fantasy"
-      ]
+      ],
+      "hairTip": "#f0abfc"
     },
     {
       "schemaVersion": 1,
@@ -129,6 +133,7 @@
       "accessories": [
         "cape"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#c68863",
         "hair": "#7c2d12",
@@ -165,6 +170,7 @@
       "accessories": [
         "goggles"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f2c9a8",
         "hair": "#38bdf8",
@@ -201,6 +207,7 @@
       "accessories": [
         "flower"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#9a3412",
@@ -237,6 +244,7 @@
       "accessories": [
         "glasses"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#a86b4c",
         "hair": "#0f172a",
@@ -273,6 +281,7 @@
       "accessories": [
         "glasses"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#e0ac83",
         "hair": "#1c1917",
@@ -309,6 +318,7 @@
         "beanie",
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#78350f",
@@ -345,6 +355,7 @@
       "accessories": [
         "flower"
       ],
+      "pattern": "petals",
       "palette": {
         "skin": "#fdf2f8",
         "hair": "#e0f2fe",
@@ -363,7 +374,8 @@
       "tags": [
         "spirit",
         "winter"
-      ]
+      ],
+      "hairTip": "#bae6fd"
     },
     {
       "schemaVersion": 1,
@@ -382,6 +394,7 @@
         "headband",
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#8a5a3c",
         "hair": "#1c1917",
@@ -417,6 +430,7 @@
       "accessories": [
         "goggles"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#c68863",
         "hair": "#0d9488",
@@ -453,6 +467,7 @@
         "goggles",
         "backpack"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f2c9a8",
         "hair": "#c2410c",
@@ -490,6 +505,7 @@
         "glasses",
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#a86b4c",
         "hair": "#0f172a",
@@ -524,6 +540,7 @@
       "eyes": "sharp",
       "outfit": "armor",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#f2c9a8",
         "hair": "#ca8a04",
@@ -559,6 +576,7 @@
       "accessories": [
         "headband"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#fde68a",
@@ -595,6 +613,7 @@
       "accessories": [
         "headphones"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#c68863",
         "hair": "#f59e0b",
@@ -632,6 +651,7 @@
         "backpack",
         "glasses"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#8a5a3c",
         "hair": "#1c1917",
@@ -668,6 +688,7 @@
       "accessories": [
         "beanie"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#92400e",
@@ -703,6 +724,7 @@
       "accessories": [
         "goggles"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#a86b4c",
         "hair": "#ec4899",
@@ -740,6 +762,7 @@
         "glasses",
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#e0ac83",
         "hair": "#57534e",
@@ -776,6 +799,7 @@
       "accessories": [
         "headphones"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#a86b4c",
         "hair": "#0c0a09",
@@ -811,6 +835,7 @@
       "accessories": [
         "cape"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#e0ac83",
         "hair": "#facc15",
@@ -846,6 +871,7 @@
       "accessories": [
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#18181b",
@@ -882,6 +908,7 @@
       "accessories": [
         "halo"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#6b4430",
         "hair": "#1c1917",
@@ -917,6 +944,7 @@
       "accessories": [
         "goggles"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#f1f5f9",
@@ -953,6 +981,7 @@
       "accessories": [
         "flower"
       ],
+      "pattern": "waves",
       "palette": {
         "skin": "#f2c9a8",
         "hair": "#3f1d0b",
@@ -988,6 +1017,7 @@
       "accessories": [
         "beanie"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#c68863",
         "hair": "#292524",
@@ -1024,6 +1054,7 @@
       "accessories": [
         "glasses"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#4338ca",
@@ -1058,6 +1089,7 @@
       "eyes": "round",
       "outfit": "overalls",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#e0ac83",
         "hair": "#3f3f46",
@@ -1093,6 +1125,7 @@
       "accessories": [
         "witch_hat"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#7f1d1d",
@@ -1110,7 +1143,8 @@
       "energy": 1.0,
       "tags": [
         "magic"
-      ]
+      ],
+      "hairTip": "#dc2626"
     },
     {
       "schemaVersion": 1,
@@ -1128,6 +1162,7 @@
       "accessories": [
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#6b4430",
         "hair": "#0c0a09",
@@ -1163,6 +1198,7 @@
       "accessories": [
         "headphones"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f2c9a8",
         "hair": "#22c55e",
@@ -1199,6 +1235,7 @@
       "accessories": [
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#e0ac83",
         "hair": "#1e3a8a",
@@ -1235,6 +1272,7 @@
       "accessories": [
         "headband"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fdf2f8",
         "hair": "#fef3c7",
@@ -1271,6 +1309,7 @@
       "accessories": [
         "beanie"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#b45309",
@@ -1306,6 +1345,7 @@
       "accessories": [
         "bow"
       ],
+      "pattern": "dots",
       "palette": {
         "skin": "#f2c9a8",
         "hair": "#0c0a09",
@@ -1342,6 +1382,7 @@
       "accessories": [
         "headphones"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#c68863",
         "hair": "#7c3aed",
@@ -1378,6 +1419,7 @@
         "cape",
         "flower"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#65a30d",
@@ -1415,6 +1457,7 @@
         "beanie",
         "backpack"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#e0ac83",
         "hair": "#44403c",
@@ -1450,6 +1493,7 @@
       "accessories": [
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#c68863",
         "hair": "#7c2d12",
@@ -1486,6 +1530,7 @@
       "accessories": [
         "headband"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#a86b4c",
         "hair": "#0c0a09",
@@ -1522,6 +1567,7 @@
         "bow",
         "goggles"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#f9a8d4",
@@ -1558,6 +1604,7 @@
       "accessories": [
         "cape"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#8a5a3c",
         "hair": "#e5e7eb",
@@ -1592,6 +1639,7 @@
       "eyes": "sharp",
       "outfit": "armor",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#e0ac83",
         "hair": "#7f1d1d",
@@ -1628,6 +1676,7 @@
       "accessories": [
         "flower"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fdf2f8",
         "hair": "#a7f3d0",
@@ -1664,6 +1713,7 @@
       "accessories": [
         "cape"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f6e7e7",
         "hair": "#1c1917",
@@ -1700,6 +1750,7 @@
       "accessories": [
         "halo"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f2c9a8",
         "hair": "#fef3c7",
@@ -1721,6 +1772,1152 @@
     },
     {
       "schemaVersion": 1,
+      "id": "miyora.akane",
+      "name": "Akane",
+      "title": "Crimson Blade Hunter",
+      "description": "Hunts down regressions after dark with a single clean cut.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "ponytail",
+      "eyes": "sharp",
+      "outfit": "hakama",
+      "accessories": [
+        "katana",
+        "headband"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#2b1d1d",
+        "eyes": "#dc2626",
+        "primary": "#f8fafc",
+        "secondary": "#1f2937",
+        "accent": "#b91c1c"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.3,
+      "tags": [
+        "anime",
+        "swordswoman"
+      ],
+      "hairTip": "#b91c1c"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.tsukasa",
+      "name": "Tsukasa",
+      "title": "Wandering Ronin",
+      "description": "Drifts between repositories, fixing what others left behind.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "sharp",
+      "outfit": "hakama",
+      "accessories": [
+        "katana",
+        "scarf"
+      ],
+      "pattern": "waves",
+      "palette": {
+        "skin": "#e0ac83",
+        "hair": "#1c1917",
+        "eyes": "#78716c",
+        "primary": "#334155",
+        "secondary": "#78716c",
+        "accent": "#ca8a04"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.8,
+      "tags": [
+        "anime",
+        "samurai"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.kaede",
+      "name": "Kaede",
+      "title": "Shadow Kunoichi",
+      "description": "Moves through the call stack without leaving a trace.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "ponytail",
+      "eyes": "sharp",
+      "outfit": "tunic",
+      "accessories": [
+        "katana",
+        "scarf"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#18181b",
+        "eyes": "#a855f7",
+        "primary": "#3b0764",
+        "secondary": "#18181b",
+        "accent": "#a855f7"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.5,
+      "tags": [
+        "anime",
+        "ninja"
+      ],
+      "hairTip": "#7c3aed"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.sayuri",
+      "name": "Sayuri",
+      "title": "Shrine Maiden",
+      "description": "Keeps the shrine of stable releases swept and quiet.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "hime",
+      "eyes": "sleepy",
+      "outfit": "hakama",
+      "accessories": [
+        "flower"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f6d7c3",
+        "hair": "#0c0a09",
+        "eyes": "#991b1b",
+        "primary": "#f8fafc",
+        "secondary": "#dc2626",
+        "accent": "#dc2626"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.7,
+      "tags": [
+        "anime",
+        "miko"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.hoshimi",
+      "name": "Hoshimi",
+      "title": "Magical Star Girl",
+      "description": "Transforms failing tests into shooting stars.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "twintails",
+      "eyes": "sparkle",
+      "outfit": "sailor",
+      "accessories": [
+        "wand",
+        "bow"
+      ],
+      "pattern": "stars",
+      "palette": {
+        "skin": "#fbe3d4",
+        "hair": "#f9a8d4",
+        "eyes": "#db2777",
+        "primary": "#f8fafc",
+        "secondary": "#ec4899",
+        "accent": "#fde047"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.5,
+      "tags": [
+        "anime",
+        "magical-girl"
+      ],
+      "hairTip": "#fde047"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.nagi",
+      "name": "Nagi",
+      "title": "Mecha Pilot",
+      "description": "Syncs with the build machine at one hundred percent.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "sharp",
+      "outfit": "jacket",
+      "accessories": [
+        "goggles",
+        "headphones"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f6d7c3",
+        "hair": "#0f172a",
+        "eyes": "#0ea5e9",
+        "primary": "#f8fafc",
+        "secondary": "#1e3a8a",
+        "accent": "#ef4444"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.2,
+      "tags": [
+        "anime",
+        "mecha"
+      ],
+      "hairTip": "#1e3a8a"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.marlo",
+      "name": "Marlo",
+      "title": "Sky Pirate Captain",
+      "description": "Raids stale branches for forgotten treasure.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "sharp",
+      "outfit": "coat",
+      "accessories": [
+        "katana",
+        "headband"
+      ],
+      "pattern": "stripes",
+      "palette": {
+        "skin": "#c68863",
+        "hair": "#7f1d1d",
+        "eyes": "#f59e0b",
+        "primary": "#7f1d1d",
+        "secondary": "#1c1917",
+        "accent": "#fbbf24"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.3,
+      "tags": [
+        "anime",
+        "pirate"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.kiyomi",
+      "name": "Kiyomi",
+      "title": "Idol Singer",
+      "description": "Sings an encore every time a release ships.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "side_tail",
+      "eyes": "sparkle",
+      "outfit": "dress",
+      "accessories": [
+        "headphones",
+        "bow"
+      ],
+      "pattern": "dots",
+      "palette": {
+        "skin": "#fbe3d4",
+        "hair": "#38bdf8",
+        "eyes": "#0ea5e9",
+        "primary": "#f0abfc",
+        "secondary": "#f8fafc",
+        "accent": "#f472b6"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.5,
+      "tags": [
+        "anime",
+        "idol"
+      ],
+      "hairTip": "#f0abfc"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.daichi",
+      "name": "Daichi",
+      "title": "School Delinquent",
+      "description": "Acts tough, then quietly fixes the flaky tests.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sharp",
+      "outfit": "coat",
+      "accessories": [
+        "scarf"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#e0ac83",
+        "hair": "#facc15",
+        "eyes": "#b45309",
+        "primary": "#111827",
+        "secondary": "#1f2937",
+        "accent": "#dc2626"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.3,
+      "tags": [
+        "anime",
+        "delinquent"
+      ],
+      "hairTip": "#f97316"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.sorako",
+      "name": "Sorako",
+      "title": "Nine-Tail Fox Spirit",
+      "description": "An old spirit who guards the shrine of passing builds.",
+      "body": "humanoid",
+      "ears": "fox",
+      "tail": "fox",
+      "wings": "none",
+      "hair": "hime",
+      "eyes": "sharp",
+      "outfit": "kimono",
+      "accessories": [
+        "kitsune_mask"
+      ],
+      "pattern": "petals",
+      "palette": {
+        "skin": "#fdf2f8",
+        "hair": "#f5f5f4",
+        "eyes": "#f59e0b",
+        "primary": "#dc2626",
+        "secondary": "#f8fafc",
+        "accent": "#fbbf24"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.9,
+      "tags": [
+        "anime",
+        "kitsune"
+      ],
+      "hairTip": "#f97316"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.valen",
+      "name": "Valen",
+      "title": "Vampire Noble",
+      "description": "Only works night shifts, and only on elegant code.",
+      "body": "humanoid",
+      "ears": "elf",
+      "tail": "none",
+      "wings": "bat",
+      "hair": "long",
+      "eyes": "sharp",
+      "outfit": "coat",
+      "accessories": [
+        "cape"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f5ece8",
+        "hair": "#e5e7eb",
+        "eyes": "#dc2626",
+        "primary": "#450a0a",
+        "secondary": "#1c1917",
+        "accent": "#dc2626"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.8,
+      "tags": [
+        "anime",
+        "vampire"
+      ],
+      "hairTip": "#94a3b8"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.draga",
+      "name": "Draga",
+      "title": "Dragon Knight",
+      "description": "Sworn protector of the main branch.",
+      "body": "humanoid",
+      "ears": "horns",
+      "tail": "dragon",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "sharp",
+      "outfit": "armor",
+      "accessories": [
+        "katana",
+        "cape"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#e0ac83",
+        "hair": "#14532d",
+        "eyes": "#f59e0b",
+        "primary": "#166534",
+        "secondary": "#1c1917",
+        "accent": "#fbbf24"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.15,
+        "limbLength": 1.0
+      },
+      "energy": 1.0,
+      "tags": [
+        "anime",
+        "knight",
+        "dragon"
+      ],
+      "hairTip": "#22c55e"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.alma",
+      "name": "Alma",
+      "title": "Wandering Alchemist",
+      "description": "Transmutes messy data into tidy tables.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "bob",
+      "eyes": "round",
+      "outfit": "coat",
+      "accessories": [
+        "glasses",
+        "backpack"
+      ],
+      "pattern": "diamonds",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#ca8a04",
+        "eyes": "#15803d",
+        "primary": "#7c2d12",
+        "secondary": "#1f2937",
+        "accent": "#fbbf24"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.0,
+      "tags": [
+        "anime",
+        "alchemist"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.seiji",
+      "name": "Seiji",
+      "title": "Onmyoji Talisman Master",
+      "description": "Seals runaway processes with paper talismans.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "sharp",
+      "outfit": "robe",
+      "accessories": [
+        "staff"
+      ],
+      "pattern": "diamonds",
+      "palette": {
+        "skin": "#f6d7c3",
+        "hair": "#e5e7eb",
+        "eyes": "#7c3aed",
+        "primary": "#f8fafc",
+        "secondary": "#312e81",
+        "accent": "#a855f7"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.8,
+      "tags": [
+        "anime",
+        "onmyoji"
+      ],
+      "hairTip": "#7c3aed"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.masaru",
+      "name": "Masaru",
+      "title": "Iron Samurai",
+      "description": "Never retreats from a failing pipeline.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "sharp",
+      "outfit": "armor",
+      "accessories": [
+        "katana",
+        "headband"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#e0ac83",
+        "hair": "#0c0a09",
+        "eyes": "#92400e",
+        "primary": "#b91c1c",
+        "secondary": "#1c1917",
+        "accent": "#ca8a04"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.2,
+        "limbLength": 1.0
+      },
+      "energy": 1.0,
+      "tags": [
+        "anime",
+        "samurai"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.lyrielle",
+      "name": "Lyrielle",
+      "title": "Battle Sister",
+      "description": "Blesses deployments and smites null pointers.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "round",
+      "outfit": "robe",
+      "accessories": [
+        "staff",
+        "halo"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fdf2f8",
+        "hair": "#fef3c7",
+        "eyes": "#2563eb",
+        "primary": "#1e293b",
+        "secondary": "#f8fafc",
+        "accent": "#fde047"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.9,
+      "tags": [
+        "anime",
+        "cleric"
+      ],
+      "hairTip": "#fde68a"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.pico",
+      "name": "Pico",
+      "title": "Monster Tamer",
+      "description": "Has befriended every bug in the codebase.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "sparkle",
+      "outfit": "jacket",
+      "accessories": [
+        "backpack",
+        "goggles"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#22c55e",
+        "eyes": "#16a34a",
+        "primary": "#ef4444",
+        "secondary": "#f8fafc",
+        "accent": "#facc15"
+      },
+      "proportions": {
+        "height": 0.9,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.5,
+      "tags": [
+        "anime",
+        "tamer"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.hayato",
+      "name": "Hayato",
+      "title": "Rival Swordsman",
+      "description": "Always one benchmark behind you, and determined to win.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sharp",
+      "outfit": "hakama",
+      "accessories": [
+        "katana"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#1e3a8a",
+        "eyes": "#0284c7",
+        "primary": "#1e293b",
+        "secondary": "#64748b",
+        "accent": "#38bdf8"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.4,
+      "tags": [
+        "anime",
+        "rival"
+      ],
+      "hairTip": "#38bdf8"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.velis",
+      "name": "Velis",
+      "title": "Shadow Sorcerer",
+      "description": "Casts spells only in the dark theme.",
+      "body": "humanoid",
+      "ears": "elf",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "sharp",
+      "outfit": "robe",
+      "accessories": [
+        "witch_hat",
+        "wand"
+      ],
+      "pattern": "stars",
+      "palette": {
+        "skin": "#f5ece8",
+        "hair": "#1e1b4b",
+        "eyes": "#a855f7",
+        "primary": "#1e1b4b",
+        "secondary": "#312e81",
+        "accent": "#a855f7"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.9,
+      "tags": [
+        "anime",
+        "sorcerer"
+      ],
+      "hairTip": "#a855f7"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.hanae",
+      "name": "Hanae",
+      "title": "Lantern Ghost Girl",
+      "description": "Drifts through old logs carrying a paper lantern.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "hime",
+      "eyes": "sleepy",
+      "outfit": "kimono",
+      "accessories": [
+        "flower"
+      ],
+      "pattern": "waves",
+      "palette": {
+        "skin": "#fdf2f8",
+        "hair": "#0c0a09",
+        "eyes": "#60a5fa",
+        "primary": "#e0f2fe",
+        "secondary": "#93c5fd",
+        "accent": "#f472b6"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.6,
+      "tags": [
+        "anime",
+        "ghost"
+      ],
+      "hairTip": "#93c5fd"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.benika",
+      "name": "Benika",
+      "title": "Oni Brawler",
+      "description": "Punches through blockers with a grin.",
+      "body": "humanoid",
+      "ears": "horns",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sharp",
+      "outfit": "hakama",
+      "accessories": [
+        "headband"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#7f1d1d",
+        "eyes": "#f59e0b",
+        "primary": "#f8fafc",
+        "secondary": "#dc2626",
+        "accent": "#f97316"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.15,
+        "limbLength": 1.0
+      },
+      "energy": 1.5,
+      "tags": [
+        "anime",
+        "oni"
+      ],
+      "hairTip": "#f97316"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.kazane",
+      "name": "Kazane",
+      "title": "Wind Tengu Guard",
+      "description": "Patrols the mountain pass between staging and production.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "feather",
+      "hair": "short",
+      "eyes": "sharp",
+      "outfit": "hakama",
+      "accessories": [
+        "staff"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#e0ac83",
+        "hair": "#1c1917",
+        "eyes": "#dc2626",
+        "primary": "#f8fafc",
+        "secondary": "#1c1917",
+        "accent": "#dc2626"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.2,
+      "tags": [
+        "anime",
+        "tengu"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.akiho",
+      "name": "Akiho",
+      "title": "Cat-Eared Cafe Server",
+      "description": "Serves fresh builds with a curtsy.",
+      "body": "humanoid",
+      "ears": "cat",
+      "tail": "cat",
+      "wings": "none",
+      "hair": "twintails",
+      "eyes": "sparkle",
+      "outfit": "dress",
+      "accessories": [
+        "bow"
+      ],
+      "pattern": "dots",
+      "palette": {
+        "skin": "#fbe3d4",
+        "hair": "#92400e",
+        "eyes": "#b45309",
+        "primary": "#1f2937",
+        "secondary": "#f8fafc",
+        "accent": "#f472b6"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.3,
+      "tags": [
+        "anime",
+        "cafe"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.kenta",
+      "name": "Kenta",
+      "title": "Soccer Ace",
+      "description": "Scores a goal for every merged pull request.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "round",
+      "outfit": "jacket",
+      "accessories": [
+        "headband"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#e0ac83",
+        "hair": "#f97316",
+        "eyes": "#16a34a",
+        "primary": "#1d4ed8",
+        "secondary": "#f8fafc",
+        "accent": "#facc15"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.6,
+      "tags": [
+        "anime",
+        "sports"
+      ],
+      "hairTip": "#fde047"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.mirei",
+      "name": "Mirei",
+      "title": "Student Council President",
+      "description": "Approves pull requests only after reading every line.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "hime",
+      "eyes": "sharp",
+      "outfit": "sailor",
+      "accessories": [
+        "glasses"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f6d7c3",
+        "hair": "#1e293b",
+        "eyes": "#7c3aed",
+        "primary": "#f8fafc",
+        "secondary": "#1e3a8a",
+        "accent": "#dc2626"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.9,
+      "tags": [
+        "anime",
+        "school"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.haruki",
+      "name": "Haruki",
+      "title": "Transfer Student",
+      "description": "New to the codebase, already fixing the hard bugs.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "round",
+      "outfit": "suit",
+      "accessories": [
+        "backpack"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#78350f",
+        "eyes": "#92400e",
+        "primary": "#111827",
+        "secondary": "#f8fafc",
+        "accent": "#ca8a04"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.0,
+      "tags": [
+        "anime",
+        "school"
+      ],
+      "hairTip": "#b45309"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.lunaria",
+      "name": "Lunaria",
+      "title": "Moon Princess",
+      "description": "Rules the night shift from a silver tower.",
+      "body": "humanoid",
+      "ears": "elf",
+      "tail": "none",
+      "wings": "fairy",
+      "hair": "long",
+      "eyes": "sparkle",
+      "outfit": "dress",
+      "accessories": [
+        "crown",
+        "wand"
+      ],
+      "pattern": "stars",
+      "palette": {
+        "skin": "#fdf2f8",
+        "hair": "#e0e7ff",
+        "eyes": "#818cf8",
+        "primary": "#312e81",
+        "secondary": "#e0e7ff",
+        "accent": "#fde047"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.9,
+      "tags": [
+        "anime",
+        "princess"
+      ],
+      "hairTip": "#818cf8"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.kuroha",
+      "name": "Kuroha",
+      "title": "Exorcist Gunslinger",
+      "description": "Banishes haunted processes with silver rounds.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "sharp",
+      "outfit": "coat",
+      "accessories": [
+        "goggles"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f5ece8",
+        "hair": "#f8fafc",
+        "eyes": "#ef4444",
+        "primary": "#111827",
+        "secondary": "#3f3f46",
+        "accent": "#ef4444"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.2,
+      "tags": [
+        "anime",
+        "exorcist"
+      ],
+      "hairTip": "#94a3b8"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.tetsu",
+      "name": "Tetsu",
+      "title": "Mech Engineer Kid",
+      "description": "Built a giant robot out of spare build agents.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "round",
+      "outfit": "overalls",
+      "accessories": [
+        "goggles"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#e0ac83",
+        "hair": "#0ea5e9",
+        "eyes": "#0369a1",
+        "primary": "#f97316",
+        "secondary": "#1f2937",
+        "accent": "#fde047"
+      },
+      "proportions": {
+        "height": 0.9,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.4,
+      "tags": [
+        "anime",
+        "mecha",
+        "maker"
+      ],
+      "hairTip": "#1e3a8a"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.sumire",
+      "name": "Sumire",
+      "title": "Ink Brush Calligrapher",
+      "description": "Writes commit messages in perfect brushstrokes.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "bun",
+      "eyes": "sleepy",
+      "outfit": "kimono",
+      "accessories": [
+        "flower"
+      ],
+      "pattern": "petals",
+      "palette": {
+        "skin": "#f6d7c3",
+        "hair": "#3f3f46",
+        "eyes": "#6d28d9",
+        "primary": "#6d28d9",
+        "secondary": "#f5f3ff",
+        "accent": "#fbbf24"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.7,
+      "tags": [
+        "anime",
+        "artist"
+      ]
+    },
+    {
+      "schemaVersion": 1,
       "id": "miyora.ember",
       "name": "Ember",
       "title": "Fox Courier",
@@ -1736,6 +2933,7 @@
         "scarf",
         "backpack"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#e07a2f",
         "hair": "#fff7ed",
@@ -1772,6 +2970,7 @@
       "accessories": [
         "bell"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f59e0b",
         "hair": "#92400e",
@@ -1806,6 +3005,7 @@
       "eyes": "sparkle",
       "outfit": "overalls",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#f5f5f4",
         "hair": "#e7e5e4",
@@ -1842,6 +3042,7 @@
       "accessories": [
         "glasses"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#92400e",
         "hair": "#78350f",
@@ -1878,6 +3079,7 @@
       "accessories": [
         "headband"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f8fafc",
         "hair": "#18181b",
@@ -1914,6 +3116,7 @@
       "accessories": [
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#94a3b8",
         "hair": "#e2e8f0",
@@ -1948,6 +3151,7 @@
       "eyes": "round",
       "outfit": "hoodie",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#d6a26b",
         "hair": "#92400e",
@@ -1984,6 +3188,7 @@
       "accessories": [
         "bell"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f8fafc",
         "hair": "#e2e8f0",
@@ -2018,6 +3223,7 @@
       "eyes": "round",
       "outfit": "tunic",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#c2410c",
         "hair": "#fef3c7",
@@ -2054,6 +3260,7 @@
       "accessories": [
         "beanie"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fef3c7",
         "hair": "#fde68a",
@@ -2090,6 +3297,7 @@
       "accessories": [
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#18181b",
         "hair": "#27272a",
@@ -2127,6 +3335,7 @@
         "goggles",
         "backpack"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fde68a",
         "hair": "#fef3c7",
@@ -2163,6 +3372,7 @@
       "accessories": [
         "glasses"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#a16207",
         "hair": "#fef3c7",
@@ -2199,6 +3409,7 @@
       "accessories": [
         "headband"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#92400e",
         "hair": "#78350f",
@@ -2235,6 +3446,7 @@
       "accessories": [
         "cape"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#57534e",
         "hair": "#44403c",
@@ -2271,6 +3483,7 @@
       "accessories": [
         "goggles"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#78350f",
         "hair": "#fef3c7",
@@ -2307,6 +3520,7 @@
       "accessories": [
         "bow"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fbbf24",
         "hair": "#1c1917",
@@ -2343,6 +3557,7 @@
       "accessories": [
         "headband"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#facc15",
         "hair": "#1c1917",
@@ -2379,6 +3594,7 @@
       "accessories": [
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f1f5f9",
         "hair": "#e2e8f0",
@@ -2415,6 +3631,7 @@
       "accessories": [
         "flower"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fafaf9",
         "hair": "#e7e5e4",
@@ -2449,6 +3666,7 @@
       "eyes": "sharp",
       "outfit": "armor",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#f97316",
         "hair": "#1c1917",
@@ -2485,6 +3703,7 @@
       "accessories": [
         "crown"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fbbf24",
         "hair": "#b45309",
@@ -2521,6 +3740,7 @@
       "accessories": [
         "flower"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#b45309",
         "hair": "#fef3c7",
@@ -2557,6 +3777,7 @@
       "accessories": [
         "headphones"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#a8a29e",
         "hair": "#e7e5e4",
@@ -2593,6 +3814,7 @@
       "accessories": [
         "goggles"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#78716c",
         "hair": "#1c1917",
@@ -2629,6 +3851,7 @@
       "accessories": [
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#64748b",
         "hair": "#f8fafc",
@@ -2665,6 +3888,7 @@
       "accessories": [
         "backpack"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fdba74",
         "hair": "#fff7ed",
@@ -2699,6 +3923,7 @@
       "eyes": "round",
       "outfit": "fur",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#16a34a",
         "hair": "#14532d",
@@ -2735,6 +3960,7 @@
       "accessories": [
         "crown"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#dc2626",
         "hair": "#7f1d1d",
@@ -2768,6 +3994,7 @@
       "eyes": "sparkle",
       "outfit": "fur",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#f9a8d4",
         "hair": "#f472b6",
@@ -2804,6 +4031,7 @@
       "accessories": [
         "cape"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#4c1d95",
         "hair": "#2e1065",
@@ -2840,6 +4068,7 @@
       "accessories": [
         "bell"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f5f5f4",
         "hair": "#fafaf9",
@@ -2862,6 +4091,928 @@
     },
     {
       "schemaVersion": 1,
+      "id": "miyora.zippa",
+      "name": "Zippa",
+      "title": "Spark Mouse",
+      "description": "Stores static in her star-tipped tail and zaps stalled builds awake.",
+      "body": "beast",
+      "ears": "bear",
+      "tail": "star",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sparkle",
+      "outfit": "fur",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#c4b5fd",
+        "hair": "#ede9fe",
+        "eyes": "#1e1b4b",
+        "primary": "#c4b5fd",
+        "secondary": "#8b5cf6",
+        "accent": "#fde047"
+      },
+      "proportions": {
+        "height": 0.82,
+        "headScale": 1.3,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.5,
+      "tags": [
+        "pocket-monster",
+        "electric",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.cindle",
+      "name": "Cindle",
+      "title": "Flame-Tail Lizard",
+      "description": "Its violet tail flame burns brighter the longer the session runs.",
+      "body": "beast",
+      "ears": "none",
+      "tail": "flame",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "round",
+      "outfit": "fur",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#5eead4",
+        "hair": "#ccfbf1",
+        "eyes": "#134e4a",
+        "primary": "#5eead4",
+        "secondary": "#0d9488",
+        "accent": "#a855f7"
+      },
+      "proportions": {
+        "height": 0.85,
+        "headScale": 1.28,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.3,
+      "tags": [
+        "pocket-monster",
+        "fire",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.shelloo",
+      "name": "Shelloo",
+      "title": "Tide Shell Turtle",
+      "description": "Tucks into its teal shell whenever a deploy looks scary.",
+      "body": "beast",
+      "ears": "fin",
+      "tail": "none",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "round",
+      "outfit": "fur",
+      "accessories": [
+        "shell"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fda4af",
+        "hair": "#ffe4e6",
+        "eyes": "#1e3a8a",
+        "primary": "#fda4af",
+        "secondary": "#14b8a6",
+        "accent": "#fef08a"
+      },
+      "proportions": {
+        "height": 0.84,
+        "headScale": 1.3,
+        "build": 1.15,
+        "limbLength": 1.0
+      },
+      "energy": 0.9,
+      "tags": [
+        "pocket-monster",
+        "water",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.sprigget",
+      "name": "Sprigget",
+      "title": "Leaf Sprite",
+      "description": "Photosynthesizes on sunny monitors and sprouts a bud when tests pass.",
+      "body": "beast",
+      "ears": "leaf",
+      "tail": "leaf",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sparkle",
+      "outfit": "fur",
+      "accessories": [
+        "flower"
+      ],
+      "pattern": "petals",
+      "palette": {
+        "skin": "#bbf7d0",
+        "hair": "#22c55e",
+        "eyes": "#14532d",
+        "primary": "#bbf7d0",
+        "secondary": "#16a34a",
+        "accent": "#f472b6"
+      },
+      "proportions": {
+        "height": 0.84,
+        "headScale": 1.3,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.1,
+      "tags": [
+        "pocket-monster",
+        "grass",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.vixi",
+      "name": "Vixi",
+      "title": "Fluffy Change Kit",
+      "description": "Could grow into anything; for now it just wants head pats.",
+      "body": "beast",
+      "ears": "fox",
+      "tail": "fox",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sparkle",
+      "outfit": "fur",
+      "accessories": [
+        "scarf"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#cbd5e1",
+        "hair": "#f8fafc",
+        "eyes": "#4c1d95",
+        "primary": "#cbd5e1",
+        "secondary": "#94a3b8",
+        "accent": "#c084fc"
+      },
+      "proportions": {
+        "height": 0.84,
+        "headScale": 1.32,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.3,
+      "tags": [
+        "pocket-monster",
+        "normal",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.emberkit",
+      "name": "Emberkit",
+      "title": "Ember Kit",
+      "description": "The fiery form of Vixi, warm enough to keep a laptop toasty.",
+      "body": "beast",
+      "ears": "fox",
+      "tail": "flame",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "round",
+      "outfit": "fur",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fb923c",
+        "hair": "#fed7aa",
+        "eyes": "#7c2d12",
+        "primary": "#fb923c",
+        "secondary": "#ea580c",
+        "accent": "#fde047"
+      },
+      "proportions": {
+        "height": 0.86,
+        "headScale": 1.28,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.4,
+      "tags": [
+        "pocket-monster",
+        "fire"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.brookit",
+      "name": "Brookit",
+      "title": "Brook Kit",
+      "description": "The water form of Vixi; ripples spread wherever it naps.",
+      "body": "beast",
+      "ears": "fin",
+      "tail": "fox",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "round",
+      "outfit": "fur",
+      "accessories": [
+        "gem"
+      ],
+      "pattern": "waves",
+      "palette": {
+        "skin": "#7dd3fc",
+        "hair": "#e0f2fe",
+        "eyes": "#0c4a6e",
+        "primary": "#7dd3fc",
+        "secondary": "#0284c7",
+        "accent": "#a5f3fc"
+      },
+      "proportions": {
+        "height": 0.86,
+        "headScale": 1.28,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.0,
+      "tags": [
+        "pocket-monster",
+        "water"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.frostkit",
+      "name": "Frostkit",
+      "title": "Frost Kit",
+      "description": "The frosty form of Vixi, cool under any production pressure.",
+      "body": "beast",
+      "ears": "fox",
+      "tail": "fox",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sleepy",
+      "outfit": "fur",
+      "accessories": [
+        "gem",
+        "scarf"
+      ],
+      "pattern": "diamonds",
+      "palette": {
+        "skin": "#e0f2fe",
+        "hair": "#f8fafc",
+        "eyes": "#1d4ed8",
+        "primary": "#e0f2fe",
+        "secondary": "#93c5fd",
+        "accent": "#67e8f9"
+      },
+      "proportions": {
+        "height": 0.86,
+        "headScale": 1.28,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.8,
+      "tags": [
+        "pocket-monster",
+        "ice"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.leafkit",
+      "name": "Leafkit",
+      "title": "Leaf Kit",
+      "description": "The grassy form of Vixi; smells faintly of fresh mint.",
+      "body": "beast",
+      "ears": "leaf",
+      "tail": "leaf",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "round",
+      "outfit": "fur",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#d9f99d",
+        "hair": "#f7fee7",
+        "eyes": "#365314",
+        "primary": "#d9f99d",
+        "secondary": "#65a30d",
+        "accent": "#4ade80"
+      },
+      "proportions": {
+        "height": 0.86,
+        "headScale": 1.28,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.0,
+      "tags": [
+        "pocket-monster",
+        "grass"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.voltkit",
+      "name": "Voltkit",
+      "title": "Volt Kit",
+      "description": "The electric form of Vixi, quick as a cache hit.",
+      "body": "beast",
+      "ears": "fox",
+      "tail": "star",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sharp",
+      "outfit": "fur",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fef08a",
+        "hair": "#fefce8",
+        "eyes": "#1e3a8a",
+        "primary": "#fef08a",
+        "secondary": "#eab308",
+        "accent": "#38bdf8"
+      },
+      "proportions": {
+        "height": 0.86,
+        "headScale": 1.28,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.6,
+      "tags": [
+        "pocket-monster",
+        "electric"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.duskit",
+      "name": "Duskit",
+      "title": "Dusk Kit",
+      "description": "The moonlit form of Vixi; its gem glows on the night shift.",
+      "body": "beast",
+      "ears": "fox",
+      "tail": "fox",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sharp",
+      "outfit": "fur",
+      "accessories": [
+        "gem"
+      ],
+      "pattern": "stars",
+      "palette": {
+        "skin": "#334155",
+        "hair": "#1e293b",
+        "eyes": "#fbbf24",
+        "primary": "#334155",
+        "secondary": "#0f172a",
+        "accent": "#fbbf24"
+      },
+      "proportions": {
+        "height": 0.86,
+        "headScale": 1.28,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.0,
+      "tags": [
+        "pocket-monster",
+        "dark",
+        "night"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.pixkit",
+      "name": "Pixkit",
+      "title": "Pixie Kit",
+      "description": "The fairy form of Vixi, trailing ribbons and good luck.",
+      "body": "beast",
+      "ears": "fox",
+      "tail": "fox",
+      "wings": "fairy",
+      "hair": "none",
+      "eyes": "sparkle",
+      "outfit": "fur",
+      "accessories": [
+        "bow"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fbcfe8",
+        "hair": "#fdf2f8",
+        "eyes": "#831843",
+        "primary": "#fbcfe8",
+        "secondary": "#f472b6",
+        "accent": "#a5b4fc"
+      },
+      "proportions": {
+        "height": 0.86,
+        "headScale": 1.28,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.2,
+      "tags": [
+        "pocket-monster",
+        "fairy"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.lumeow",
+      "name": "Lumeow",
+      "title": "Dream Kitten",
+      "description": "Floats a little when it dreams, which is most of the time.",
+      "body": "beast",
+      "ears": "cat",
+      "tail": "cat",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sparkle",
+      "outfit": "fur",
+      "accessories": [
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#a5f3fc",
+        "hair": "#ecfeff",
+        "eyes": "#6d28d9",
+        "primary": "#a5f3fc",
+        "secondary": "#22d3ee",
+        "accent": "#f0abfc"
+      },
+      "proportions": {
+        "height": 0.84,
+        "headScale": 1.32,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.1,
+      "tags": [
+        "pocket-monster",
+        "psychic",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.dozzle",
+      "name": "Dozzle",
+      "title": "Snoozing Giant",
+      "description": "Blocks the hallway and the build queue until snack time.",
+      "body": "beast",
+      "ears": "bear",
+      "tail": "none",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sleepy",
+      "outfit": "fur",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#5b8a8f",
+        "hair": "#d6e9e4",
+        "eyes": "#1c1917",
+        "primary": "#5b8a8f",
+        "secondary": "#fef3c7",
+        "accent": "#f59e0b"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.2,
+        "build": 1.3,
+        "limbLength": 1.0
+      },
+      "energy": 0.5,
+      "tags": [
+        "pocket-monster",
+        "normal",
+        "sleepy"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.nibbly",
+      "name": "Nibbly",
+      "title": "Cloud Dragonling",
+      "description": "A sky-blue dragonling that hums while it naps on clouds.",
+      "body": "beast",
+      "ears": "horns",
+      "tail": "dragon",
+      "wings": "feather",
+      "hair": "none",
+      "eyes": "sleepy",
+      "outfit": "fur",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#bae6fd",
+        "hair": "#f0f9ff",
+        "eyes": "#1e3a8a",
+        "primary": "#bae6fd",
+        "secondary": "#7dd3fc",
+        "accent": "#f9a8d4"
+      },
+      "proportions": {
+        "height": 0.86,
+        "headScale": 1.3,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.9,
+      "tags": [
+        "pocket-monster",
+        "dragon",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.bubbit",
+      "name": "Bubbit",
+      "title": "Bubble Bunny",
+      "description": "Blows bubbles that pop exactly when the tests finish.",
+      "body": "beast",
+      "ears": "bunny",
+      "tail": "bunny",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "round",
+      "outfit": "fur",
+      "accessories": [
+        "gem"
+      ],
+      "pattern": "dots",
+      "palette": {
+        "skin": "#99f6e4",
+        "hair": "#f0fdfa",
+        "eyes": "#115e59",
+        "primary": "#99f6e4",
+        "secondary": "#2dd4bf",
+        "accent": "#60a5fa"
+      },
+      "proportions": {
+        "height": 0.82,
+        "headScale": 1.3,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.3,
+      "tags": [
+        "pocket-monster",
+        "water",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.pebbluff",
+      "name": "Pebbluff",
+      "title": "Pebble Pup",
+      "description": "Sturdy as bedrock; fetches stones and stack traces.",
+      "body": "beast",
+      "ears": "floppy",
+      "tail": "cat",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sharp",
+      "outfit": "fur",
+      "accessories": [
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#a8a29e",
+        "hair": "#e7e5e4",
+        "eyes": "#292524",
+        "primary": "#a8a29e",
+        "secondary": "#78716c",
+        "accent": "#f97316"
+      },
+      "proportions": {
+        "height": 0.86,
+        "headScale": 1.25,
+        "build": 1.15,
+        "limbLength": 1.0
+      },
+      "energy": 1.1,
+      "tags": [
+        "pocket-monster",
+        "rock"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.petalpup",
+      "name": "Petalpup",
+      "title": "Blossom Puppy",
+      "description": "Wags hard enough to shake petals loose.",
+      "body": "beast",
+      "ears": "floppy",
+      "tail": "fox",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sparkle",
+      "outfit": "fur",
+      "accessories": [
+        "flower",
+        "bow"
+      ],
+      "pattern": "petals",
+      "palette": {
+        "skin": "#fecdd3",
+        "hair": "#fff1f2",
+        "eyes": "#9f1239",
+        "primary": "#fecdd3",
+        "secondary": "#fb7185",
+        "accent": "#86efac"
+      },
+      "proportions": {
+        "height": 0.84,
+        "headScale": 1.3,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.4,
+      "tags": [
+        "pocket-monster",
+        "fairy",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.cindersnout",
+      "name": "Cindersnout",
+      "title": "Ember Piglet",
+      "description": "Snorts tiny embers and roasts marshmallows for the team.",
+      "body": "beast",
+      "ears": "bear",
+      "tail": "flame",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "round",
+      "outfit": "fur",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fca5a5",
+        "hair": "#fee2e2",
+        "eyes": "#450a0a",
+        "primary": "#fca5a5",
+        "secondary": "#1c1917",
+        "accent": "#fb923c"
+      },
+      "proportions": {
+        "height": 0.84,
+        "headScale": 1.26,
+        "build": 1.15,
+        "limbLength": 1.0
+      },
+      "energy": 1.2,
+      "tags": [
+        "pocket-monster",
+        "fire"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.lumibug",
+      "name": "Lumibug",
+      "title": "Lantern Firefly",
+      "description": "Lights the way through long-running sessions.",
+      "body": "bird",
+      "ears": "antenna",
+      "tail": "star",
+      "wings": "fairy",
+      "hair": "none",
+      "eyes": "sparkle",
+      "outfit": "fur",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fde68a",
+        "hair": "#fef9c3",
+        "eyes": "#1c1917",
+        "primary": "#fde68a",
+        "secondary": "#84cc16",
+        "accent": "#bef264"
+      },
+      "proportions": {
+        "height": 0.82,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.3,
+      "tags": [
+        "pocket-monster",
+        "bug"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.frizzle",
+      "name": "Frizzle",
+      "title": "Snowdrift Chick",
+      "description": "A fluffy chick that sneezes snowflakes.",
+      "body": "bird",
+      "ears": "none",
+      "tail": "feather",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "round",
+      "outfit": "fur",
+      "accessories": [
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#e0f2fe",
+        "hair": "#ffffff",
+        "eyes": "#0c4a6e",
+        "primary": "#e0f2fe",
+        "secondary": "#bae6fd",
+        "accent": "#38bdf8"
+      },
+      "proportions": {
+        "height": 0.82,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.1,
+      "tags": [
+        "pocket-monster",
+        "ice",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.puffaloo",
+      "name": "Puffaloo",
+      "title": "Lullaby Puff",
+      "description": "Sings everyone to sleep, then pouts that nobody listened.",
+      "body": "slime",
+      "ears": "cat",
+      "tail": "none",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sparkle",
+      "outfit": "fur",
+      "accessories": [
+        "bow",
+        "headphones"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fed7aa",
+        "hair": "#ffedd5",
+        "eyes": "#0f766e",
+        "primary": "#fed7aa",
+        "secondary": "#fdba74",
+        "accent": "#2dd4bf"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.0,
+      "tags": [
+        "pocket-monster",
+        "normal",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.wispet",
+      "name": "Wispet",
+      "title": "Lantern Wisp",
+      "description": "A friendly ghost that haunts only the idle terminals.",
+      "body": "slime",
+      "ears": "none",
+      "tail": "none",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sleepy",
+      "outfit": "fur",
+      "accessories": [
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#c7d2fe",
+        "hair": "#e0e7ff",
+        "eyes": "#312e81",
+        "primary": "#c7d2fe",
+        "secondary": "#a5b4fc",
+        "accent": "#22d3ee"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.7,
+      "tags": [
+        "pocket-monster",
+        "ghost"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.tadpip",
+      "name": "Tadpip",
+      "title": "Swirl Tadpole",
+      "description": "Spins in circles when a pull request merges.",
+      "body": "slime",
+      "ears": "fin",
+      "tail": "none",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "round",
+      "outfit": "fur",
+      "accessories": [],
+      "pattern": "waves",
+      "palette": {
+        "skin": "#93c5fd",
+        "hair": "#dbeafe",
+        "eyes": "#172554",
+        "primary": "#93c5fd",
+        "secondary": "#3b82f6",
+        "accent": "#f8fafc"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.2,
+      "tags": [
+        "pocket-monster",
+        "water"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.magnebit",
+      "name": "Magnebit",
+      "title": "Magnet Bot",
+      "description": "Clings to warm servers and hums along with the fans.",
+      "body": "robot",
+      "ears": "antenna",
+      "tail": "none",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "mono",
+      "outfit": "plating",
+      "accessories": [
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#d4d4d8",
+        "hair": "#a1a1aa",
+        "eyes": "#2563eb",
+        "primary": "#a1a1aa",
+        "secondary": "#52525b",
+        "accent": "#ef4444"
+      },
+      "proportions": {
+        "height": 0.82,
+        "headScale": 1.3,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 1.1,
+      "tags": [
+        "pocket-monster",
+        "steel",
+        "electric"
+      ]
+    },
+    {
+      "schemaVersion": 1,
       "id": "miyora.bolt",
       "name": "Bolt",
       "title": "Build Bot",
@@ -2874,6 +5025,7 @@
       "eyes": "visor",
       "outfit": "plating",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#cbd5e1",
         "hair": "#64748b",
@@ -2908,6 +5060,7 @@
       "eyes": "mono",
       "outfit": "plating",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#e2e8f0",
         "hair": "#94a3b8",
@@ -2944,6 +5097,7 @@
       "accessories": [
         "backpack"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fbbf24",
         "hair": "#92400e",
@@ -2978,6 +5132,7 @@
       "eyes": "visor",
       "outfit": "plating",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#f8fafc",
         "hair": "#94a3b8",
@@ -3014,6 +5169,7 @@
       "accessories": [
         "headphones"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#a7f3d0",
         "hair": "#34d399",
@@ -3048,6 +5204,7 @@
       "eyes": "visor",
       "outfit": "plating",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#f59e0b",
         "hair": "#1c1917",
@@ -3084,6 +5241,7 @@
       "accessories": [
         "halo"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f1f5f9",
         "hair": "#cbd5e1",
@@ -3120,6 +5278,7 @@
       "accessories": [
         "goggles"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#84cc16",
         "hair": "#3f6212",
@@ -3156,6 +5315,7 @@
       "accessories": [
         "headphones"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#1e293b",
         "hair": "#0f172a",
@@ -3190,6 +5350,7 @@
       "eyes": "mono",
       "outfit": "plating",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#78716c",
         "hair": "#44403c",
@@ -3226,6 +5387,7 @@
       "accessories": [
         "flower"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fbcfe8",
         "hair": "#f472b6",
@@ -3262,6 +5424,7 @@
       "accessories": [
         "bow"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#e5e7eb",
         "hair": "#9ca3af",
@@ -3296,6 +5459,7 @@
       "eyes": "mono",
       "outfit": "plating",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#38bdf8",
         "hair": "#0369a1",
@@ -3330,6 +5494,7 @@
       "eyes": "round",
       "outfit": "fur",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#6ee7b7",
         "hair": "#34d399",
@@ -3366,6 +5531,7 @@
       "accessories": [
         "crown"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#c084fc",
         "hair": "#a855f7",
@@ -3402,6 +5568,7 @@
       "accessories": [
         "goggles"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#38bdf8",
         "hair": "#0ea5e9",
@@ -3438,6 +5605,7 @@
       "accessories": [
         "beanie"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fef3c7",
         "hair": "#fde68a",
@@ -3472,6 +5640,7 @@
       "eyes": "sharp",
       "outfit": "fur",
       "accessories": [],
+      "pattern": "none",
       "palette": {
         "skin": "#f97316",
         "hair": "#dc2626",
@@ -3508,6 +5677,7 @@
       "accessories": [
         "flower"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#a3e635",
         "hair": "#65a30d",
@@ -3544,6 +5714,7 @@
       "accessories": [
         "halo"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#a5f3fc",
         "hair": "#67e8f9",
@@ -3580,6 +5751,7 @@
       "accessories": [
         "witch_hat"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#818cf8",
         "hair": "#6366f1",
@@ -3616,6 +5788,7 @@
       "accessories": [
         "bow"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#bef264",
         "hair": "#84cc16",
@@ -3653,6 +5826,7 @@
       "accessories": [
         "glasses"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#92400e",
         "hair": "#fef3c7",
@@ -3689,6 +5863,7 @@
       "accessories": [
         "scarf"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#1e293b",
         "hair": "#f8fafc",
@@ -3725,6 +5900,7 @@
       "accessories": [
         "headphones"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#16a34a",
         "hair": "#dc2626",
@@ -3761,6 +5937,7 @@
       "accessories": [
         "cape"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#27272a",
         "hair": "#18181b",
@@ -3797,6 +5974,7 @@
       "accessories": [
         "bow"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#fde047",
         "hair": "#facc15",
@@ -3833,6 +6011,7 @@
       "accessories": [
         "beanie"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#1c1917",
         "hair": "#f8fafc",
@@ -3869,6 +6048,7 @@
       "accessories": [
         "crown"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f97316",
         "hair": "#facc15",
@@ -3905,6 +6085,7 @@
       "accessories": [
         "flower"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#f8fafc",
         "hair": "#e2e8f0",
@@ -3941,6 +6122,7 @@
       "accessories": [
         "backpack"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#78350f",
         "hair": "#fef3c7",
@@ -3977,6 +6159,7 @@
       "accessories": [
         "goggles"
       ],
+      "pattern": "none",
       "palette": {
         "skin": "#1c1917",
         "hair": "#fef3c7",
