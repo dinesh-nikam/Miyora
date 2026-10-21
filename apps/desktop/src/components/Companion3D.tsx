@@ -1,10 +1,53 @@
 import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { VRMLoaderPlugin, VRM } from "@pixiv/three-vrm";
+import { VRMLoaderPlugin, VRM, VRMUtils } from "@pixiv/three-vrm";
 import type { PetState } from "./CompanionRenderer";
 
 export type { PetState };
+
+export function disposeMaterial(material: THREE.Material): void {
+  for (const key of Object.keys(material)) {
+    const value = (material as unknown as Record<string, unknown>)[key];
+    if (value && typeof value === "object" && "isTexture" in value && (value as THREE.Texture).isTexture) {
+      (value as THREE.Texture).dispose();
+    }
+  }
+  material.dispose();
+}
+
+export function disposeScene(scene: THREE.Scene, renderer: THREE.WebGLRenderer, vrm: VRM | null = null): void {
+  if (vrm) {
+    try {
+      VRMUtils.deepDispose(vrm.scene);
+    } catch {
+      // ignore
+    }
+  }
+
+  scene.traverse((object) => {
+    if ((object as THREE.Mesh).isMesh || (object as THREE.Points).isPoints) {
+      const mesh = object as THREE.Mesh;
+      if (mesh.geometry) {
+        mesh.geometry.dispose();
+      }
+      if (mesh.material) {
+        if (Array.isArray(mesh.material)) {
+          mesh.material.forEach((mat) => disposeMaterial(mat));
+        } else {
+          disposeMaterial(mesh.material);
+        }
+      }
+    }
+  });
+
+  renderer.dispose();
+  try {
+    renderer.forceContextLoss();
+  } catch {
+    // context may already be lost
+  }
+}
 
 export interface Companion3DProps {
   state: PetState;
@@ -705,7 +748,7 @@ export function Companion3D({
         container.removeEventListener("mousedown", onMouseDown);
         window.removeEventListener("mouseup", onMouseUp);
       }
-      renderer.dispose();
+      disposeScene(scene, renderer, currentVrm);
       container.innerHTML = "";
     };
   }, [interactive, isAoi, isArjuna, isCat, isNezuko, isWukong, onError, size, vrmUrl]);
