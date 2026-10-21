@@ -5,9 +5,11 @@ use std::{
     time::Duration,
 };
 
+use agentpet_avatar::CharacterSpec;
 use agentpet_core::{
-    AchievementSummary, AgentSessionSummary, Core, DesktopPosition, EventType,
-    InstalledPetPackSummary, PetEvent, ProgressionSnapshot, RuntimeSnapshot, XpTransaction,
+    AchievementSummary, AgentSessionSummary, AvatarCatalogEntry, AvatarSource, Core,
+    CustomAvatarSummary, DesktopPosition, EventType, InstalledPetPackSummary, PetEvent,
+    ProgressionSnapshot, ResolvedAvatar, RuntimeSnapshot, XpTransaction,
 };
 use agentpet_pet_engine::PetState;
 use agentpet_pet_pack::PetPackManifest;
@@ -15,6 +17,7 @@ use tauri::{Manager, State};
 
 const STATE_TIMER_INTERVAL: Duration = Duration::from_secs(1);
 const POSITION_WRITE_DEBOUNCE: Duration = Duration::from_millis(400);
+const AVATAR_LIBRARY_DIR: &str = "avatars";
 
 struct AppRuntime {
     core: Core,
@@ -23,6 +26,7 @@ struct AppRuntime {
     #[cfg(feature = "dev-simulator")]
     is_simulated: std::sync::atomic::AtomicBool,
     pet_library: std::path::PathBuf,
+    avatars_root: std::path::PathBuf,
     app_data_dir: std::path::PathBuf,
 }
 
@@ -363,6 +367,199 @@ fn select_pet(
         .active_core()
         .set_selected_pet(pack_id.as_deref())
         .map_err(|error| format!("PET_SELECTION_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn get_avatar(runtime: State<'_, AppRuntime>) -> Result<ResolvedAvatar, String> {
+    runtime
+        .core
+        .resolve_avatar()
+        .map_err(|error| format!("AVATAR_READ_FAILED: {error}"))
+}
+
+/// Progress data the 3D stage visualizes: level and progress toward the next one.
+#[derive(serde::Serialize)]
+#[serde(rename_all = "camelCase")]
+struct AvatarHud {
+    level: u64,
+    total_xp: i64,
+    xp_into_level: i64,
+    xp_to_next_level: i64,
+}
+
+#[tauri::command]
+fn get_avatar_hud(runtime: State<'_, AppRuntime>) -> Result<AvatarHud, String> {
+    let progression = runtime
+        .active_core()
+        .progression()
+        .map_err(|error| format!("PROGRESSION_READ_FAILED: {error}"))?;
+    Ok(AvatarHud {
+        level: progression.level,
+        total_xp: progression.total_xp,
+        xp_into_level: progression.xp_into_level,
+        xp_to_next_level: progression.xp_to_next_level,
+    })
+}
+
+#[tauri::command]
+fn get_avatar_model(
+    avatar_id: String,
+    runtime: State<'_, AppRuntime>,
+) -> Result<tauri::ipc::Response, String> {
+    runtime
+        .core
+        .custom_avatar_model(&avatar_id, &runtime.avatars_root)
+        .map(tauri::ipc::Response::new)
+        .map_err(|error| format!("AVATAR_MODEL_READ_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn list_avatar_catalog(
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<Vec<AvatarCatalogEntry>, String> {
+    require_main_window(&window)?;
+    runtime
+        .core
+        .list_avatar_catalog()
+        .map_err(|error| format!("AVATAR_CATALOG_READ_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn list_custom_avatars(
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<Vec<CustomAvatarSummary>, String> {
+    require_main_window(&window)?;
+    runtime
+        .core
+        .list_custom_avatars()
+        .map_err(|error| format!("AVATAR_LIBRARY_READ_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn get_avatar_preview(
+    avatar_id: String,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<Option<String>, String> {
+    require_main_window(&window)?;
+    let preview = runtime
+        .core
+        .custom_avatar_preview(&avatar_id, &runtime.avatars_root)
+        .map_err(|error| format!("AVATAR_PREVIEW_READ_FAILED: {error}"))?;
+    Ok(preview.map(|bytes| {
+        format!(
+            "data:image/png;base64,{}",
+            base64::Engine::encode(&base64::engine::general_purpose::STANDARD, bytes)
+        )
+    }))
+}
+
+#[tauri::command]
+fn select_avatar(
+    source: String,
+    avatar_id: String,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<ResolvedAvatar, String> {
+    require_main_window(&window)?;
+    let source = AvatarSource::parse(&source)
+        .map_err(|error| format!("AVATAR_SELECTION_FAILED: {error}"))?;
+    runtime
+        .core
+        .select_avatar(source, &avatar_id)
+        .and_then(|()| runtime.core.resolve_avatar())
+        .map_err(|error| format!("AVATAR_SELECTION_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn save_avatar_customization(
+    spec: CharacterSpec,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<(), String> {
+    require_main_window(&window)?;
+    runtime
+        .core
+        .save_avatar_customization(&spec)
+        .map_err(|error| format!("AVATAR_SAVE_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn reset_avatar_customization(
+    catalog_id: String,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<bool, String> {
+    require_main_window(&window)?;
+    runtime
+        .core
+        .reset_avatar_customization(&catalog_id)
+        .map_err(|error| format!("AVATAR_RESET_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn create_custom_character(
+    spec: CharacterSpec,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<CustomAvatarSummary, String> {
+    require_main_window(&window)?;
+    runtime
+        .core
+        .create_custom_character(&spec)
+        .map_err(|error| format!("AVATAR_CREATE_FAILED: {error}"))
+}
+
+#[tauri::command]
+async fn create_avatar_from_image(
+    image_path: String,
+    name: String,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<Vec<CustomAvatarSummary>, String> {
+    require_main_window(&window)?;
+    let core = runtime.core.clone();
+    let avatars_root = runtime.avatars_root.clone();
+    drop(window);
+    tauri::async_runtime::spawn_blocking(move || {
+        core.create_avatars_from_image(Path::new(&image_path), &avatars_root, &name)
+    })
+    .await
+    .map_err(|error| format!("AVATAR_IMAGE_WORKER_FAILED: {error}"))?
+    .map_err(|error| format!("AVATAR_IMAGE_IMPORT_FAILED: {error}"))
+}
+
+#[tauri::command]
+async fn import_vrm_avatar(
+    vrm_path: String,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<CustomAvatarSummary, String> {
+    require_main_window(&window)?;
+    let core = runtime.core.clone();
+    let avatars_root = runtime.avatars_root.clone();
+    drop(window);
+    tauri::async_runtime::spawn_blocking(move || {
+        core.import_vrm_avatar(Path::new(&vrm_path), &avatars_root)
+    })
+    .await
+    .map_err(|error| format!("AVATAR_VRM_WORKER_FAILED: {error}"))?
+    .map_err(|error| format!("AVATAR_VRM_IMPORT_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn delete_custom_avatar(
+    avatar_id: String,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<(), String> {
+    require_main_window(&window)?;
+    runtime
+        .core
+        .delete_custom_avatar(&avatar_id, &runtime.avatars_root)
+        .map_err(|error| format!("AVATAR_DELETE_FAILED: {error}"))
 }
 
 #[tauri::command]
@@ -819,6 +1016,10 @@ pub fn run() {
             #[cfg(feature = "dev-simulator")]
             let simulated_core = Core::open_simulated(&data_dir)?;
             let pet_library = data_dir.join("pet-library");
+            let avatars_root = data_dir.join(AVATAR_LIBRARY_DIR);
+            if let Err(error) = core.sweep_avatar_staging(&avatars_root) {
+                eprintln!("AgentPet could not clean interrupted avatar imports: {error}");
+            }
             seed_starter_packs(&core, &pet_library);
             let overlay_window = app
                 .get_webview_window("pet-overlay")
@@ -834,6 +1035,7 @@ pub fn run() {
                 #[cfg(feature = "dev-simulator")]
                 is_simulated: std::sync::atomic::AtomicBool::new(false),
                 pet_library,
+                avatars_root,
                 app_data_dir: data_dir,
             });
             Ok(())
@@ -865,7 +1067,20 @@ pub fn run() {
             get_real_events,
             get_providers_status,
             toggle_demo_mode,
-            simulate_agent_event
+            simulate_agent_event,
+            get_avatar,
+            get_avatar_hud,
+            get_avatar_model,
+            get_avatar_preview,
+            list_avatar_catalog,
+            list_custom_avatars,
+            select_avatar,
+            save_avatar_customization,
+            reset_avatar_customization,
+            create_custom_character,
+            create_avatar_from_image,
+            import_vrm_avatar,
+            delete_custom_avatar
         ])
         .run(tauri::generate_context!())
         .expect("failed to run AgentPet desktop application");

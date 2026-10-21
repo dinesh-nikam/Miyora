@@ -16,10 +16,17 @@ use serde::{Deserialize, Serialize};
 use thiserror::Error;
 use uuid::Uuid;
 
+mod avatars;
+
+pub use avatars::{
+    AvatarCatalogEntry, AvatarKind, AvatarSelection, AvatarSource, CustomAvatarSummary,
+    ResolvedAvatar,
+};
+
 const DATABASE_FILE: &str = "agentpet.sqlite3";
 #[cfg(feature = "dev-simulator")]
 pub const SIMULATED_DATABASE_FILE: &str = "agentpet_simulated.sqlite3";
-const SCHEMA_VERSION: i64 = 9;
+const SCHEMA_VERSION: i64 = 10;
 const SQLITE_BUSY_TIMEOUT: Duration = Duration::from_secs(5);
 const DEFAULT_SESSION_XP: i64 = 10;
 const DEFAULT_LEVEL_XP: i64 = 100;
@@ -400,6 +407,12 @@ pub enum CoreError {
     TrustedSignerConfig(String),
     #[error("hook event is invalid: {0}")]
     InvalidHookEvent(String),
+    #[error("avatar is invalid: {0}")]
+    InvalidAvatar(String),
+    #[error("avatar {0} was not found")]
+    AvatarNotFound(String),
+    #[error("avatar file operation failed: {0}")]
+    AvatarStorage(String),
 }
 
 #[derive(Clone)]
@@ -705,6 +718,15 @@ impl Core {
             transaction.execute(
                 "INSERT INTO schema_versions(version, applied_at) VALUES (?1, ?2)",
                 params![9, Utc::now().to_rfc3339()],
+            )?;
+            transaction.commit()?;
+        }
+        if current < 10 && target >= 10 {
+            let transaction = connection.unchecked_transaction()?;
+            transaction.execute_batch(avatars::AVATAR_SCHEMA_V10)?;
+            transaction.execute(
+                "INSERT INTO schema_versions(version, applied_at) VALUES (?1, ?2)",
+                params![10, Utc::now().to_rfc3339()],
             )?;
             transaction.commit()?;
         }

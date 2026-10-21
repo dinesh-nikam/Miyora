@@ -5,6 +5,8 @@ import { getCurrentWindow } from "@tauri-apps/api/window";
 import { open } from "@tauri-apps/plugin-dialog";
 import { CompanionRenderer, PetState, SelectedPetAnimation } from "./components/CompanionRenderer";
 import { CommandDeck, ProviderReport } from "./components/CommandDeck";
+import { CharacterStudio } from "./avatar/CharacterStudio";
+import type { AvatarHud, ResolvedAvatar } from "./avatar/types";
 
 interface RuntimeSnapshot {
   petState: PetState;
@@ -114,6 +116,8 @@ export default function App() {
   const [achievements, setAchievements] = useState<AchievementSummary[]>([]);
   const [installedPacks, setInstalledPacks] = useState<PetPackSummary[]>([]);
   const [selectedAnimation, setSelectedAnimation] = useState<SelectedPetAnimation | null>(null);
+  const [avatar, setAvatar] = useState<ResolvedAvatar | null>(null);
+  const [avatarHud, setAvatarHud] = useState<AvatarHud | null>(null);
   const [realEvents, setRealEvents] = useState<StoredAgentEvent[]>([]);
   const [providers, setProviders] = useState<ProviderReport[]>([]);
   const [ledgerVerification, setLedgerVerification] = useState<LedgerVerificationResult | null>(null);
@@ -139,6 +143,20 @@ export default function App() {
       const animRes = await invokeSafe<SelectedPetAnimation | null>("get_selected_pet_animation");
       if (animRes.ok) {
         setSelectedAnimation(animRes.data);
+      }
+
+      const [avatarRes, hudRes] = await Promise.all([
+        invokeSafe<ResolvedAvatar>("get_avatar"),
+        invokeSafe<AvatarHud>("get_avatar_hud"),
+      ]);
+      if (avatarRes.ok) {
+        setAvatar((previous) => (JSON.stringify(previous) === JSON.stringify(avatarRes.data) ? previous : avatarRes.data));
+        setPanelErrors((prev) => ({ ...prev, avatar: null }));
+      } else {
+        setPanelErrors((prev) => ({ ...prev, avatar: `Failed to load the 3D companion: ${avatarRes.error}` }));
+      }
+      if (hudRes.ok) {
+        setAvatarHud((previous) => (JSON.stringify(previous) === JSON.stringify(hudRes.data) ? previous : hudRes.data));
       }
 
       // Only query heavy items in main window
@@ -520,6 +538,8 @@ export default function App() {
         <CompanionRenderer
           state={snapshot.petState}
           animation={selectedAnimation}
+          avatar={avatar}
+          hud={avatarHud}
           quotaWindow={quotaWindow}
           quotaProvenance={quotaProvenance}
           size={180}
@@ -787,6 +807,8 @@ export default function App() {
               <CompanionRenderer
                 state={snapshot.petState}
                 animation={selectedAnimation}
+                avatar={avatar}
+                hud={avatarHud}
                 quotaWindow={quotaWindow}
                 quotaProvenance={quotaProvenance}
                 size={270}
@@ -1178,12 +1200,21 @@ export default function App() {
            ========================================================= */}
         {activeTab === "companions" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+            {renderPanelError("avatar")}
+            <div>
+              <h2 style={{ fontSize: "18px", fontWeight: 700, margin: 0 }}>3D Character Studio</h2>
+              <p style={{ fontSize: "12px", color: "#64748b", margin: "4px 0 12px 0" }}>
+                Pick one of the original 3D characters, customize it, sculpt one from your own image, or import a VRM model. 3D mode shows the
+                character you choose here.
+              </p>
+              <CharacterStudio liveState={snapshot.petState} hud={avatarHud} activeAvatar={avatar} onAvatarChanged={setAvatar} />
+            </div>
             {renderPanelError("companions")}
             <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
               <div>
-                <h2 style={{ fontSize: "18px", fontWeight: 700, margin: 0 }}>Companion Library</h2>
+                <h2 style={{ fontSize: "18px", fontWeight: 700, margin: 0 }}>2D Sprite Packs</h2>
                 <p style={{ fontSize: "12px", color: "#64748b", margin: "4px 0 0 0" }}>
-                  Verified PetPacks with pure data-driven spritesheets and vector rigs. Click to select companion.
+                  Verified PetPacks with pure data-driven spritesheets, shown in 2D mode. Click to select companion.
                 </p>
               </div>
               <button

@@ -2,7 +2,7 @@
 
 ## Status
 
-The schemas below describe the target data model. The Rust core currently implements SQLite migrations for settings, pet runtime state, installed pack records, accepted agent events, local agent sessions with bounded recent-history queries, progression rules, immutable XP and achievement awards, and materialized per-pet XP/level totals; remaining entities are planned and are not claimed as implemented.
+The schemas below describe the target data model. The Rust core currently implements SQLite migrations for settings, pet runtime state, installed pack records, accepted agent events, local agent sessions with bounded recent-history queries, progression rules, immutable XP and achievement awards, materialized per-pet XP/level totals, and 3D avatar selection, customization, and custom avatar records; remaining entities are planned and are not claimed as implemented.
 
 ## Local SQLite ownership
 
@@ -31,12 +31,15 @@ Core local entities:
 | `audit_logs` | Safe action metadata, actor/source and timestamp; excludes secrets and prompts |
 | `sync_queue` | Event ID, entity, revision, operation, retry state, idempotency key |
 | `schema_versions` | Applied migration ID, checksum, timestamp |
+| `avatar_selection` | Singleton selected 3D avatar: source (`catalog`, `custom`), avatar ID, update time (schema v10) |
+| `avatar_customizations` | Validated full `CharacterSpec` JSON per customized catalog character (schema v10) |
+| `custom_avatars` | User avatars: kind (`procedural`, `image_sculpt`, `vrm`), name, spec JSON or relative model file plus SHA-256, triangle count, metadata, link to the source sculpt; CHECK constraints pair kinds with columns (schema v10) |
 
 Create foreign keys with deliberate delete behavior. Session retention may remove old session detail according to user settings, but must not erase immutable progression ledger records. Use transactions to accept events, update sessions, add XP, and unlock achievements atomically where they share an event source. Unique constraints prevent duplicate awards during retries and crash recovery.
 
 ## Migration and recovery
 
-The current local schema version is 7. Opening a database recorded with a newer version fails with `UnsupportedDatabaseSchema` instead of running against an unknown schema. Each migration is ordered, immutable after release, checksummed, and tested from the prior supported schema. Version 7 adds the `agent_hook_installs` tracking table and records archive installation metadata (content hash, signature key ID, and install source) onto `installed_pet_packs`. Before destructive or complex migrations, create a recoverable backup. On migration failure, preserve the original database and provide an actionable diagnostic. Do not silently recreate a damaged database or lose user progress.
+The current local schema version is 10. Opening a database recorded with a newer version fails with `UnsupportedDatabaseSchema` instead of running against an unknown schema. Each migration is ordered, immutable after release, checksummed, and tested from the prior supported schema. Version 7 adds the `agent_hook_installs` tracking table and records archive installation metadata (content hash, signature key ID, and install source) onto `installed_pet_packs`. Version 8 adds the hash-chained immutable `xp_ledger`; version 9 backfills its `ledger_version` column. Version 10 adds `avatar_selection`, `avatar_customizations`, and `custom_avatars`; it creates tables only, so existing data is untouched, and a unit test migrates a version 9 database to version 10. Before destructive or complex migrations, create a recoverable backup. On migration failure, preserve the original database and provide an actionable diagnostic. Do not silently recreate a damaged database or lose user progress.
 
 ## Cloud PostgreSQL boundary
 

@@ -22,6 +22,7 @@ tauri-build = { version = "2", features = [] }
 base64.workspace = true
 agentpet-core = { path = "../../../crates/agentpet-core" }
 agentpet-adapters = { path = "../../../crates/agentpet-adapters" }
+agentpet-avatar = { path = "../../../crates/avatar" }
 agentpet-pet-engine = { path = "../../../crates/pet-engine" }
 agentpet-pet-pack = { path = "../../../crates/pet-pack" }
 serde.workspace = true

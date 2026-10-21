@@ -6,6 +6,7 @@ license.workspace = true
 rust-version.workspace = true
 
 [dependencies]
+agentpet-avatar = { path = "../avatar" }
 agentpet-pet-engine = { path = "../pet-engine" }
 agentpet-pet-pack = { path = "../pet-pack" }
 chrono.workspace = true

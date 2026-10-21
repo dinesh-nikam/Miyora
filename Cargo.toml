@@ -4,6 +4,7 @@ members = [
     "crates/agentpet-core",
     "crates/pet-engine",
     "crates/pet-pack",
+    "crates/avatar",
     "crates/agentpet-adapters",
     "crates/agentpet-ipc",
     "crates/agentpet-cli",

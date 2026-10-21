@@ -1,0 +1,357 @@
+#!/usr/bin/env python3
+"""Generate the bundled 3D character catalog.
+
+Every row below is an original, hand-authored character design for the
+procedural renderer. The script only formats and checks the rows; it does not
+randomize anything, so running it twice produces byte-identical output.
+
+Usage:
+    python scripts/generate_avatar_catalog.py [--output PATH] [--check]
+
+--check exits with status 1 when the committed catalog differs from the
+generated one (useful in CI).
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_OUTPUT = ROOT / "crates" / "avatar" / "catalog" / "characters.json"
+
+BODIES = {"humanoid", "beast", "robot", "slime", "bird"}
+EARS = {"none", "human", "elf", "cat", "fox", "bunny", "bear", "floppy", "horns", "antenna", "fin"}
+TAILS = {"none", "cat", "fox", "bunny", "dragon", "cable", "feather"}
+WINGS = {"none", "feather", "bat", "fairy", "jet"}
+HAIR = {"none", "short", "bob", "long", "ponytail", "twintails", "spiky", "bun", "mohawk", "curly"}
+EYES = {"round", "sharp", "sleepy", "sparkle", "visor", "mono"}
+OUTFITS = {"hoodie", "kimono", "armor", "suit", "robe", "jacket", "dress", "overalls", "labcoat", "tunic", "fur", "plating"}
+ACCESSORIES = {"glasses", "headphones", "scarf", "beanie", "witch_hat", "crown", "halo", "cape", "backpack", "headband", "bow", "flower", "goggles", "bell"}
+PALETTE_KEYS = ("skin", "hair", "eyes", "primary", "secondary", "accent")
+HEX = re.compile(r"^[0-9a-f]{6}$")
+
+
+def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessories, palette, description, tags,
+      energy=1.0, height=1.0, head=1.0, build=1.0, limbs=1.0):
+    colors = palette.split()
+    if len(colors) != len(PALETTE_KEYS) or not all(HEX.match(color) for color in colors):
+        raise ValueError(f"{slug}: palette must contain six lowercase hex colors")
+    for value, allowed, field in (
+        (body, BODIES, "body"), (ears, EARS, "ears"), (tail, TAILS, "tail"), (wings, WINGS, "wings"),
+        (hair, HAIR, "hair"), (eyes, EYES, "eyes"), (outfit, OUTFITS, "outfit"),
+    ):
+        if value not in allowed:
+            raise ValueError(f"{slug}: unknown {field} `{value}`")
+    accessory_list = accessories.split() if accessories else []
+    for accessory in accessory_list:
+        if accessory not in ACCESSORIES:
+            raise ValueError(f"{slug}: unknown accessory `{accessory}`")
+    return {
+        "schemaVersion": 1,
+        "id": f"miyora.{slug}",
+        "name": name,
+        "title": title,
+        "description": description,
+        "body": body,
+        "ears": ears,
+        "tail": tail,
+        "wings": wings,
+        "hair": hair,
+        "eyes": eyes,
+        "outfit": outfit,
+        "accessories": accessory_list,
+        "palette": {key: f"#{color}" for key, color in zip(PALETTE_KEYS, colors)},
+        "proportions": {"height": height, "headScale": head, "build": build, "limbLength": limbs},
+        "energy": energy,
+        "tags": tags.split(),
+    }
+
+
+CHARACTERS = [
+    # ---- Humanoids -------------------------------------------------------
+    c("aoi", "Aoi", "Streetwear Coder", "humanoid", "human", "none", "none", "bob", "round", "hoodie", "headphones",
+      "f2c9a8 1e293b 06b6d4 0f766e 334155 22d3ee", "The default companion: a calm coder in a teal tech hoodie who hums along while your agents work.", "coder cyber default", head=1.1),
+    c("kenji", "Kenji", "Night-Shift Debugger", "humanoid", "human", "none", "none", "short", "sharp", "jacket", "glasses",
+      "e0ac83 111827 6366f1 1f2937 4b5563 818cf8", "Lives for stack traces at 3 a.m. and never loses a breakpoint.", "coder night"),
+    c("mira", "Mira", "Starlight Mage", "humanoid", "human", "none", "none", "long", "sparkle", "robe", "witch_hat",
+      "f6d7c3 7c3aed f0abfc 312e81 4c1d95 fbbf24", "Reads build logs like constellations and casts green checkmarks.", "magic fantasy", energy=0.9),
+    c("rowan", "Rowan", "Forest Ranger", "humanoid", "human", "none", "none", "ponytail", "round", "tunic", "cape",
+      "c68863 7c2d12 15803d 166534 78350f a3e635", "Tracks every branch in the repository forest.", "nature fantasy"),
+    c("sora", "Sora", "Sky Courier", "humanoid", "human", "none", "none", "twintails", "sparkle", "jacket", "goggles",
+      "f2c9a8 38bdf8 0ea5e9 f8fafc 0369a1 f97316", "Delivers pull requests faster than the wind.", "sky speedy", energy=1.4),
+    c("hana", "Hana", "Garden Botanist", "humanoid", "human", "none", "none", "bun", "round", "overalls", "flower",
+      "f6d7c3 9a3412 65a30d 84cc16 365314 f472b6", "Grows tidy modules the way she grows tomatoes: patiently.", "nature calm", energy=0.8),
+    c("ravi", "Ravi", "Systems Architect", "humanoid", "human", "none", "none", "short", "round", "suit", "glasses",
+      "a86b4c 0f172a 92400e 1e3a8a e2e8f0 f59e0b", "Sketches clean boundaries before a single line is written.", "coder office"),
+    c("lina", "Lina", "Lab Researcher", "humanoid", "human", "none", "none", "ponytail", "round", "labcoat", "glasses",
+      "e0ac83 1c1917 0891b2 f1f5f9 0e7490 14b8a6", "Runs every experiment twice and writes down both results.", "science"),
+    c("dmitri", "Dmitri", "Arctic Explorer", "humanoid", "human", "none", "none", "curly", "sleepy", "jacket", "beanie scarf",
+      "f6d7c3 78350f 1d4ed8 b91c1c 1f2937 fef3c7", "Unbothered by frozen pipelines and frozen fingers alike.", "explorer winter", energy=0.8),
+    c("yuki", "Yuki", "Snow Spirit", "humanoid", "elf", "none", "none", "long", "sleepy", "kimono", "flower",
+      "fdf2f8 e0f2fe 7dd3fc e0f2fe 93c5fd f9a8d4", "A quiet spirit who settles over idle terminals like fresh snow.", "spirit winter", energy=0.7),
+    c("tariq", "Tariq", "Desert Navigator", "humanoid", "human", "none", "none", "short", "sharp", "robe", "headband scarf",
+      "8a5a3c 1c1917 b45309 fde68a b45309 0d9488", "Finds the oasis in any dependency desert.", "explorer"),
+    c("isla", "Isla", "Coral Diver", "humanoid", "fin", "none", "none", "bob", "round", "dress", "goggles",
+      "c68863 0d9488 2dd4bf 0e7490 134e4a fb7185", "Dives deep into legacy code and surfaces with pearls.", "ocean"),
+    c("felix", "Felix", "Clockwork Tinkerer", "humanoid", "human", "none", "none", "spiky", "round", "overalls", "goggles backpack",
+      "f2c9a8 c2410c 92400e 92400e 44403c fbbf24", "Cannot leave a gear un-greased or a test un-run.", "maker steampunk", energy=1.2),
+    c("noor", "Noor", "Moonlit Scholar", "humanoid", "human", "none", "none", "long", "sleepy", "robe", "glasses scarf",
+      "a86b4c 0f172a a78bfa 1e1b4b 6d28d9 e9d5ff", "Annotates documentation by lamplight.", "scholar night", energy=0.8),
+    c("bjorn", "Bjorn", "Shield Bearer", "humanoid", "human", "none", "none", "curly", "sharp", "armor", "",
+      "f2c9a8 ca8a04 1e40af 64748b 334155 eab308", "Stands between your main branch and every bad merge.", "knight", build=1.25),
+    c("elara", "Elara", "Elven Archivist", "humanoid", "elf", "none", "none", "long", "round", "tunic", "headband",
+      "f6d7c3 fde68a 059669 065f46 d9f99d fbbf24", "Keeps a thousand years of commit history in perfect order.", "fantasy scholar"),
+    c("kai", "Kai", "Surf Programmer", "humanoid", "human", "none", "none", "spiky", "round", "hoodie", "headphones",
+      "c68863 f59e0b 0284c7 0284c7 fde047 f97316", "Rides every release wave with a grin.", "coder ocean", energy=1.3),
+    c("maya", "Maya", "Data Cartographer", "humanoid", "human", "none", "none", "bob", "round", "jacket", "backpack glasses",
+      "8a5a3c 1c1917 7c3aed 7c3aed 1f2937 34d399", "Maps tangled data flows into clean charts.", "data explorer"),
+    c("theo", "Theo", "Pixel Painter", "humanoid", "human", "none", "none", "curly", "round", "overalls", "beanie",
+      "f6d7c3 92400e 16a34a 2563eb fef3c7 ef4444", "Pushes pixels until the interface sings.", "artist"),
+    c("zara", "Zara", "Neon Racer", "humanoid", "human", "none", "none", "mohawk", "sharp", "jacket", "goggles",
+      "a86b4c ec4899 f43f5e 0f172a 9d174d f472b6", "Treats every benchmark like a street race.", "speedy cyber", energy=1.5),
+    c("oren", "Oren", "Library Keeper", "humanoid", "human", "none", "none", "short", "sleepy", "suit", "glasses scarf",
+      "e0ac83 57534e 78716c 57534e d6d3d1 b91c1c", "Knows exactly which crate holds the answer.", "scholar calm", energy=0.7),
+    c("priya", "Priya", "Rhythm Composer", "humanoid", "human", "none", "none", "ponytail", "sparkle", "dress", "headphones",
+      "a86b4c 0c0a09 db2777 be185d fce7f3 facc15", "Hears the tempo in a well-paced CI pipeline.", "music"),
+    c("leo", "Leo", "Sunrise Paladin", "humanoid", "human", "none", "none", "short", "round", "armor", "cape",
+      "e0ac83 facc15 2563eb e5e7eb 1d4ed8 fbbf24", "Greets every morning standup with unreasonable optimism.", "knight", build=1.15),
+    c("nyx", "Nyx", "Shadow Rogue", "humanoid", "elf", "none", "none", "short", "sharp", "hoodie", "scarf",
+      "f6d7c3 18181b a855f7 18181b 3f3f46 a855f7", "Slips past flaky tests without a sound.", "rogue night"),
+    c("amara", "Amara", "Sunstone Healer", "humanoid", "human", "none", "none", "curly", "round", "robe", "halo",
+      "6b4430 1c1917 f59e0b fef3c7 f59e0b fde047", "Mends broken builds with a warm glow.", "healer", energy=0.9),
+    c("ivo", "Ivo", "Glacier Engineer", "humanoid", "human", "none", "none", "short", "round", "overalls", "goggles",
+      "f6d7c3 f1f5f9 38bdf8 0ea5e9 1e293b fef08a", "Keeps hot paths ice cold.", "maker winter"),
+    c("suki", "Suki", "Tea House Host", "humanoid", "human", "none", "none", "bun", "round", "kimono", "flower",
+      "f2c9a8 3f1d0b 166534 15803d fef3c7 dc2626", "Serves green tea and green test suites.", "calm", energy=0.8),
+    c("marco", "Marco", "Harbor Captain", "humanoid", "human", "none", "none", "curly", "sharp", "jacket", "beanie",
+      "c68863 292524 0369a1 1e3a8a f8fafc dc2626", "Steers releases through any storm.", "ocean leader"),
+    c("lyra", "Lyra", "Comet Astronomer", "humanoid", "human", "none", "none", "long", "sparkle", "robe", "glasses",
+      "f6d7c3 4338ca 60a5fa 1e1b4b 312e81 fde047", "Charts latency like distant comets.", "science space"),
+    c("jun", "Jun", "Cafe Barista", "humanoid", "human", "none", "none", "short", "round", "overalls", "",
+      "e0ac83 3f3f46 78350f 78350f fef3c7 f97316", "Brews strong coffee for long refactors.", "cozy"),
+    c("esme", "Esme", "Velvet Witch", "humanoid", "human", "none", "none", "long", "sharp", "dress", "witch_hat",
+      "f6d7c3 7f1d1d 16a34a 4c0519 1c1917 a3e635", "Hexes regressions before they reach production.", "magic"),
+    c("obi", "Obi", "Market Storyteller", "humanoid", "human", "none", "none", "short", "round", "tunic", "scarf",
+      "6b4430 0c0a09 92400e ea580c 166534 facc15", "Turns commit messages into legends.", "storyteller"),
+    c("rin", "Rin", "Signal Hacker", "humanoid", "human", "none", "none", "twintails", "sharp", "hoodie", "headphones",
+      "f2c9a8 22c55e 4ade80 052e16 14532d 4ade80", "Reads packet captures for fun.", "coder cyber", energy=1.3),
+    c("caspian", "Caspian", "Ocean Cartographer", "humanoid", "human", "none", "none", "ponytail", "round", "jacket", "scarf",
+      "e0ac83 1e3a8a 0e7490 0f766e e2e8f0 38bdf8", "Measures every current twice before setting sail.", "ocean explorer"),
+    c("freya", "Freya", "Aurora Knight", "humanoid", "human", "none", "none", "long", "sharp", "armor", "headband",
+      "fdf2f8 fef3c7 22d3ee 94a3b8 0f766e a78bfa", "Guards the northern servers under shifting lights.", "knight winter"),
+    c("hugo", "Hugo", "Bakery Apprentice", "humanoid", "human", "none", "none", "curly", "round", "overalls", "beanie",
+      "f6d7c3 b45309 78350f fef3c7 d97706 f43f5e", "Proofs dough and pull requests with equal care.", "cozy", energy=1.1),
+    c("sana", "Sana", "Origami Artist", "humanoid", "human", "none", "none", "bob", "sleepy", "kimono", "bow",
+      "f2c9a8 0c0a09 be123c fda4af fff1f2 e11d48", "Folds complex problems into simple shapes.", "artist calm", energy=0.8),
+    c("dex", "Dex", "Arcade Champion", "humanoid", "human", "none", "none", "spiky", "sparkle", "jacket", "headphones",
+      "c68863 7c3aed facc15 facc15 1e1b4b 22d3ee", "Holds the high score on every leaderboard.", "gamer", energy=1.5),
+    c("aria", "Aria", "Wind Bard", "humanoid", "elf", "none", "none", "ponytail", "sparkle", "tunic", "cape flower",
+      "f6d7c3 65a30d 22c55e 15803d fef9c3 f59e0b", "Sings release notes from the treetops.", "music fantasy"),
+    c("tomas", "Tomas", "Mountain Guide", "humanoid", "human", "none", "none", "short", "round", "jacket", "beanie backpack",
+      "e0ac83 44403c 15803d ea580c 365314 fde047", "Knows every switchback on the road to 1.0.", "explorer"),
+    c("ines", "Ines", "Lighthouse Keeper", "humanoid", "human", "none", "none", "bun", "round", "jacket", "scarf",
+      "c68863 7c2d12 0369a1 fef3c7 b91c1c 0ea5e9", "Keeps the status page shining through the night.", "ocean calm", energy=0.9),
+    c("vale", "Vale", "Thunder Monk", "humanoid", "human", "none", "none", "none", "sharp", "robe", "headband",
+      "a86b4c 0c0a09 38bdf8 f59e0b 7c2d12 38bdf8", "Meditates through outages, then strikes like lightning.", "monk"),
+    c("coco", "Coco", "Candy Inventor", "humanoid", "human", "none", "none", "twintails", "sparkle", "dress", "bow goggles",
+      "f6d7c3 f9a8d4 ec4899 f472b6 fdf2f8 22d3ee", "Invents sweet little tools nobody asked for and everybody uses.", "maker cute", energy=1.4),
+    c("orion", "Orion", "Star Navigator", "humanoid", "human", "none", "none", "short", "sharp", "suit", "cape",
+      "8a5a3c e5e7eb 93c5fd 0f172a 1e3a8a fde047", "Plots courses between distant microservices.", "space leader"),
+    c("ignis", "Ignis", "Dragonkin Smith", "humanoid", "horns", "dragon", "none", "short", "sharp", "armor", "",
+      "e0ac83 7f1d1d f97316 431407 7c2d12 f97316", "Forges sturdy binaries in dragonfire.", "dragon maker", build=1.2),
+    c("lumi", "Lumi", "Fairy Messenger", "humanoid", "elf", "none", "fairy", "bob", "sparkle", "dress", "flower",
+      "fdf2f8 a7f3d0 34d399 6ee7b7 ecfdf5 f472b6", "Flutters notifications to exactly the right person.", "fairy cute", energy=1.4, height=0.85),
+    c("vesper", "Vesper", "Midnight Poet", "humanoid", "elf", "none", "bat", "long", "sharp", "suit", "cape",
+      "f6e7e7 1c1917 dc2626 1c1917 7f1d1d dc2626", "Writes commit messages in perfect verse.", "night poet", energy=0.8),
+    c("seraph", "Seraph", "Halo Guardian", "humanoid", "human", "none", "feather", "long", "round", "robe", "halo",
+      "f2c9a8 fef3c7 facc15 f8fafc fde68a fbbf24", "Watches over production with endless patience.", "guardian", energy=0.8),
+    # ---- Beasts ----------------------------------------------------------
+    c("ember", "Ember", "Fox Courier", "beast", "fox", "fox", "none", "short", "round", "jacket", "scarf backpack",
+      "e07a2f fff7ed 1e3a8a 1f2937 374151 f59e0b", "A quick-pawed fox who carries messages between your agents.", "fox speedy", energy=1.3),
+    c("miso", "Miso", "Tabby Debugger", "beast", "cat", "cat", "none", "none", "round", "hoodie", "bell",
+      "f59e0b 92400e 16a34a 0f766e 134e4a facc15", "Pounces on bugs the moment they twitch.", "cat coder"),
+    c("pip", "Pip", "Meadow Messenger", "beast", "bunny", "bunny", "none", "none", "sparkle", "overalls", "",
+      "f5f5f4 e7e5e4 ec4899 60a5fa 1e3a8a f472b6", "Hops between tasks with boundless enthusiasm.", "bunny cute", energy=1.5, height=0.9),
+    c("bruno", "Bruno", "Honey Bear Sysadmin", "beast", "bear", "none", "none", "none", "sleepy", "overalls", "glasses",
+      "92400e 78350f 451a03 1e40af 1e3a8a fbbf24", "Slow, steady, and never forgets a backup.", "bear calm", energy=0.7, build=1.25),
+    c("bao", "Bao", "Bamboo Ops Panda", "beast", "bear", "none", "none", "none", "round", "fur", "headband",
+      "f8fafc 18181b 18181b 18181b f8fafc 22c55e", "Munches bamboo and monitors dashboards with zen focus.", "panda calm", energy=0.8, build=1.2),
+    c("luna", "Luna", "Moon Wolf", "beast", "fox", "fox", "none", "short", "sharp", "fur", "scarf",
+      "94a3b8 e2e8f0 38bdf8 64748b 1e293b a5b4fc", "Howls once when the nightly build goes green.", "wolf night"),
+    c("biscuit", "Biscuit", "Floppy-Eared Tester", "beast", "floppy", "cat", "none", "none", "round", "hoodie", "",
+      "d6a26b 92400e 451a03 dc2626 7f1d1d fde047", "Fetches every edge case and drops it at your feet.", "dog tester", energy=1.4),
+    c("mochi", "Mochi", "Snow Cat Napper", "beast", "cat", "cat", "none", "none", "sleepy", "fur", "bell",
+      "f8fafc e2e8f0 60a5fa f8fafc cbd5e1 f472b6", "Naps on warm laptops between deploys.", "cat cozy", energy=0.6),
+    c("rusty", "Rusty", "Red Panda Ranger", "beast", "bear", "fox", "none", "none", "round", "tunic", "",
+      "c2410c fef3c7 451a03 166534 78350f fde047", "Patrols the treetops of your dependency graph.", "red-panda nature"),
+    c("tofu", "Tofu", "Lop Bunny Baker", "beast", "floppy", "bunny", "none", "none", "round", "overalls", "beanie",
+      "fef3c7 fde68a 92400e fb923c fef3c7 f43f5e", "Bakes carrot cake for every merged feature.", "bunny cozy", energy=0.9),
+    c("shadow", "Shadow", "Midnight Cat", "beast", "cat", "cat", "none", "none", "sharp", "fur", "scarf",
+      "18181b 27272a facc15 18181b 3f3f46 dc2626", "Sees race conditions in the dark.", "cat night"),
+    c("sunny", "Sunny", "Fennec Explorer", "beast", "fox", "fox", "none", "none", "sparkle", "jacket", "goggles backpack",
+      "fde68a fef3c7 92400e d97706 78350f 0ea5e9", "Big ears for hearing every log line.", "fox explorer", energy=1.3),
+    c("hazel", "Hazel", "Acorn Archivist", "beast", "bear", "fox", "none", "none", "round", "tunic", "glasses",
+      "a16207 fef3c7 451a03 15803d 365314 f97316", "Stashes snippets for the long winter.", "squirrel scholar"),
+    c("mako", "Mako", "Cloud-Step Monkey", "beast", "human", "cat", "none", "spiky", "sharp", "armor", "headband",
+      "92400e 78350f f59e0b dc2626 facc15 fbbf24", "Leaps between clouds and cloud regions alike.", "monkey speedy", energy=1.5),
+    c("kuma", "Kuma", "Grizzly Guardian", "beast", "bear", "none", "none", "none", "sharp", "armor", "cape",
+      "57534e 44403c 451a03 78716c 292524 eab308", "Guards the vault of production secrets.", "bear knight", build=1.3),
+    c("nori", "Nori", "River Otter Engineer", "beast", "bear", "cat", "none", "none", "round", "overalls", "goggles",
+      "78350f fef3c7 1c1917 0284c7 0c4a6e fde047", "Builds dams of clean abstractions.", "otter maker"),
+    c("pepper", "Pepper", "Calico Designer", "beast", "cat", "cat", "none", "none", "sparkle", "dress", "bow",
+      "fbbf24 1c1917 16a34a f472b6 fdf2f8 a855f7", "Patches together layouts as lovely as her coat.", "cat artist"),
+    c("dash", "Dash", "Sprint Cat", "beast", "cat", "cat", "none", "none", "sharp", "jacket", "headband",
+      "facc15 1c1917 f97316 dc2626 1c1917 facc15", "Finishes the sprint before planning ends.", "cat speedy", energy=1.6),
+    c("frost", "Frost", "Arctic Fox Scout", "beast", "fox", "fox", "none", "none", "round", "fur", "scarf",
+      "f1f5f9 e2e8f0 38bdf8 f1f5f9 cbd5e1 0ea5e9", "Leaves neat footprints across snowy logs.", "fox winter"),
+    c("clover", "Clover", "Lucky Bunny", "beast", "bunny", "bunny", "none", "none", "sparkle", "tunic", "flower",
+      "fafaf9 e7e5e4 22c55e 4ade80 14532d facc15", "Somehow every test passes on the first try near her.", "bunny lucky"),
+    c("tora", "Tora", "Stripe Sentinel", "beast", "cat", "cat", "none", "none", "sharp", "armor", "",
+      "f97316 1c1917 16a34a 334155 1c1917 facc15", "Prowls the perimeter of your API.", "tiger knight", build=1.2),
+    c("sol", "Sol", "Mane Captain", "beast", "bear", "cat", "none", "curly", "round", "jacket", "crown",
+      "fbbf24 b45309 92400e 7f1d1d fef3c7 fde047", "Leads the team with a roar and a roadmap.", "lion leader", build=1.15),
+    c("fawn", "Fawn", "Woodland Deer", "beast", "horns", "bunny", "none", "none", "sparkle", "tunic", "flower",
+      "b45309 fef3c7 451a03 65a30d fef3c7 f9a8d4", "Treads softly through fragile legacy forests.", "deer nature", energy=0.8),
+    c("gumtree", "Gumtree", "Sleepy Koala", "beast", "bear", "none", "none", "none", "sleepy", "fur", "headphones",
+      "a8a29e e7e5e4 1c1917 78716c d6d3d1 22c55e", "Mostly asleep; wakes for green builds.", "koala cozy", energy=0.5),
+    c("bandit", "Bandit", "Raccoon Hacker", "beast", "bear", "fox", "none", "none", "sharp", "hoodie", "goggles",
+      "78716c 1c1917 facc15 1c1917 44403c 22c55e", "Rummages through dumps for treasure.", "raccoon coder", energy=1.2),
+    c("sled", "Sled", "Husky Hauler", "beast", "fox", "fox", "none", "none", "round", "jacket", "scarf",
+      "64748b f8fafc 0ea5e9 dc2626 1e293b f8fafc", "Hauls heavy migrations through the snow.", "dog winter", build=1.15),
+    c("seed", "Seed", "Pocket Hamster", "beast", "bear", "none", "none", "none", "sparkle", "overalls", "backpack",
+      "fdba74 fff7ed 1c1917 22c55e 14532d f43f5e", "Stores snacks and snippets in equal measure.", "hamster cute", energy=1.4, height=0.85),
+    c("drako", "Drako", "Dragon Pup", "beast", "horns", "dragon", "bat", "none", "round", "fur", "",
+      "16a34a 14532d facc15 16a34a 052e16 fde047", "A tiny dragon who sneezes sparks when tests fail.", "dragon cute", energy=1.3),
+    c("saffi", "Saffi", "Ember Wyrmling", "beast", "horns", "dragon", "bat", "none", "sharp", "fur", "crown",
+      "dc2626 7f1d1d facc15 dc2626 450a0a f97316", "Hoards achievements like gold.", "dragon"),
+    c("lotl", "Lotl", "Axolotl Healer", "beast", "fin", "dragon", "none", "none", "sparkle", "fur", "",
+      "f9a8d4 f472b6 1c1917 f9a8d4 fbcfe8 ec4899", "Regenerates broken modules overnight.", "axolotl cute", energy=0.9),
+    c("vamp", "Vamp", "Night Bat", "beast", "cat", "none", "bat", "none", "sharp", "fur", "cape",
+      "4c1d95 2e1065 f43f5e 4c1d95 1e1b4b f43f5e", "Echolocates memory leaks.", "bat night"),
+    c("woolly", "Woolly", "Cloud Sheep", "beast", "floppy", "none", "none", "curly", "sleepy", "fur", "bell",
+      "f5f5f4 fafaf9 1c1917 e7e5e4 d6d3d1 60a5fa", "Counts builds instead of sheep.", "sheep cozy", energy=0.6),
+    # ---- Robots ----------------------------------------------------------
+    c("bolt", "Bolt", "Build Bot", "robot", "antenna", "none", "none", "none", "visor", "plating", "",
+      "cbd5e1 64748b 22d3ee 64748b 334155 22d3ee", "Compiles, links, and blinks happily.", "robot builder"),
+    c("seven", "Seven", "QA Droid", "robot", "none", "none", "none", "none", "mono", "plating", "",
+      "e2e8f0 94a3b8 ef4444 94a3b8 1e293b ef4444", "Inspects every pixel with one unblinking eye.", "robot tester"),
+    c("cog", "Cog", "Courier Unit", "robot", "antenna", "none", "none", "none", "round", "plating", "backpack",
+      "fbbf24 92400e 1c1917 f59e0b 78350f 38bdf8", "Carries packages and packets.", "robot speedy", energy=1.3),
+    c("vega", "Vega", "Satellite Sentinel", "robot", "none", "none", "jet", "none", "visor", "plating", "",
+      "f8fafc 94a3b8 a855f7 e2e8f0 475569 a855f7", "Orbits your infrastructure and reports in.", "robot space"),
+    c("pixel", "Pixel", "Pocket Assistant", "robot", "antenna", "none", "none", "none", "round", "plating", "headphones",
+      "a7f3d0 34d399 0f172a 6ee7b7 065f46 f472b6", "Small enough to sit on your taskbar, bright enough to light it.", "robot cute", height=0.85, head=1.25),
+    c("atlas", "Atlas", "Heavy Loader", "robot", "none", "none", "none", "none", "visor", "plating", "",
+      "f59e0b 1c1917 f97316 1c1917 44403c facc15", "Lifts monorepos without breaking a sweat.", "robot strong", build=1.3, energy=0.7),
+    c("nova", "Nova", "Helper Android", "robot", "antenna", "none", "none", "none", "round", "plating", "halo",
+      "f1f5f9 cbd5e1 60a5fa e0f2fe 3b82f6 fde047", "Polite, precise, and always on call.", "robot helper"),
+    c("gizmo", "Gizmo", "Fix-It Bot", "robot", "antenna", "none", "none", "none", "mono", "plating", "goggles",
+      "84cc16 3f6212 facc15 65a30d 1a2e05 f97316", "Carries a wrench for every warning.", "robot maker", energy=1.2),
+    c("echo", "Echo", "Listening Unit", "robot", "none", "none", "none", "none", "visor", "plating", "headphones",
+      "1e293b 0f172a 22d3ee 334155 0f172a 22d3ee", "Hears every hook event and nods.", "robot calm", energy=0.8),
+    c("rivet", "Rivet", "Welder Mech", "robot", "none", "cable", "none", "none", "mono", "plating", "",
+      "78716c 44403c f97316 57534e 292524 f97316", "Welds broken pipelines back together.", "robot maker"),
+    c("chroma", "Chroma", "Painter Bot", "robot", "antenna", "none", "none", "none", "round", "plating", "flower",
+      "fbcfe8 f472b6 7c3aed f9a8d4 a855f7 22d3ee", "Paints UI mockups in perfect gradients.", "robot artist"),
+    c("servo", "Servo", "Butler Unit", "robot", "none", "none", "none", "none", "round", "suit", "bow",
+      "e5e7eb 9ca3af 0ea5e9 1f2937 f8fafc dc2626", "Announces every finished session with a bow.", "robot butler", energy=0.7),
+    c("orbit", "Orbit", "Scout Drone", "robot", "antenna", "none", "jet", "none", "mono", "plating", "",
+      "38bdf8 0369a1 facc15 0ea5e9 0c4a6e facc15", "Flies ahead to scout failing tests.", "robot speedy", energy=1.5, height=0.85),
+    # ---- Slimes ----------------------------------------------------------
+    c("gloop", "Gloop", "Mint Slime", "slime", "none", "none", "none", "none", "round", "fur", "",
+      "6ee7b7 34d399 064e3b 6ee7b7 34d399 f0fdf4", "Wobbles with joy at every passing test.", "slime cute", energy=1.2),
+    c("jelly", "Jelly", "Berry Royal", "slime", "none", "none", "none", "none", "sparkle", "fur", "crown",
+      "c084fc a855f7 3b0764 c084fc a855f7 fde047", "Rules the task queue from a gelatinous throne.", "slime royal"),
+    c("blub", "Blub", "Ocean Slime", "slime", "fin", "none", "none", "none", "round", "fur", "goggles",
+      "38bdf8 0ea5e9 082f49 38bdf8 0284c7 f0f9ff", "Splashes into deep dives.", "slime ocean"),
+    c("mallow", "Mallow", "Marshmallow Slime", "slime", "none", "none", "none", "none", "sleepy", "fur", "beanie",
+      "fef3c7 fde68a 78350f fef3c7 fde68a f472b6", "Soft, slow, and impossibly cozy.", "slime cozy", energy=0.6),
+    c("magma", "Magma", "Lava Slime", "slime", "horns", "none", "none", "none", "sharp", "fur", "",
+      "f97316 dc2626 450a0a f97316 dc2626 fde047", "Bubbles hotter as CPU usage climbs.", "slime fire", energy=1.3),
+    c("sprout", "Sprout", "Seedling Slime", "slime", "none", "none", "none", "none", "round", "fur", "flower",
+      "a3e635 65a30d 1a2e05 a3e635 65a30d f472b6", "Grows a little with every completed session.", "slime nature"),
+    c("glimmer", "Glimmer", "Crystal Slime", "slime", "none", "none", "none", "none", "sparkle", "fur", "halo",
+      "a5f3fc 67e8f9 164e63 a5f3fc 22d3ee fde047", "Refracts status lights into rainbows.", "slime magic"),
+    c("wizzle", "Wizzle", "Wizard Slime", "slime", "none", "none", "none", "none", "round", "fur", "witch_hat",
+      "818cf8 6366f1 1e1b4b 818cf8 4f46e5 fbbf24", "Knows exactly one spell: retry.", "slime magic"),
+    c("kiwi", "Kiwi", "Cat-Eared Slime", "slime", "cat", "none", "none", "none", "sparkle", "fur", "bow",
+      "bef264 84cc16 1a2e05 bef264 84cc16 f472b6", "Purrs, somehow.", "slime cat cute", energy=1.3),
+    # ---- Birds -----------------------------------------------------------
+    c("hoot", "Hoot", "Night Owl Reviewer", "bird", "none", "feather", "none", "short", "round", "fur", "glasses",
+      "92400e fef3c7 f59e0b 78350f fef3c7 f59e0b", "Reviews pull requests long after midnight.", "owl night", energy=0.8),
+    c("pengu", "Pengu", "Penguin Operator", "bird", "none", "feather", "none", "none", "round", "fur", "scarf",
+      "1e293b f8fafc 0f172a 1e293b f8fafc f59e0b", "Waddles calmly through incident response.", "penguin winter", energy=0.9),
+    c("polly", "Polly", "Parrot Linguist", "bird", "none", "feather", "none", "spiky", "sparkle", "fur", "headphones",
+      "16a34a dc2626 1c1917 16a34a facc15 2563eb", "Repeats error messages until someone listens.", "parrot talkative", energy=1.4),
+    c("corvi", "Corvi", "Crow Collector", "bird", "none", "feather", "none", "spiky", "sharp", "fur", "cape",
+      "27272a 18181b a855f7 27272a 3f3f46 a855f7", "Collects shiny artifacts from every build.", "crow night"),
+    c("chirp", "Chirp", "Canary Singer", "bird", "none", "feather", "none", "short", "sparkle", "fur", "bow",
+      "fde047 facc15 1c1917 fde047 f59e0b f472b6", "Sings out the moment something is off.", "canary music", energy=1.5, height=0.85),
+    c("puff", "Puff", "Puffin Sailor", "bird", "none", "feather", "none", "none", "round", "fur", "beanie",
+      "1c1917 f8fafc 1c1917 1c1917 f8fafc f97316", "Sails small boats through big data lakes.", "puffin ocean"),
+    c("flare", "Flare", "Phoenix Chick", "bird", "none", "feather", "none", "spiky", "sparkle", "fur", "crown",
+      "f97316 facc15 7f1d1d f97316 dc2626 fde047", "Rises from every failed build stronger.", "phoenix fire", energy=1.4),
+    c("dove", "Dove", "Peace Keeper", "bird", "none", "feather", "none", "none", "sleepy", "fur", "flower",
+      "f8fafc e2e8f0 1e293b f8fafc e2e8f0 f472b6", "Resolves merge conflicts gently.", "dove calm", energy=0.7),
+    c("robin", "Robin", "Trail Scout", "bird", "none", "feather", "none", "short", "round", "fur", "backpack",
+      "78350f fef3c7 1c1917 ea580c 78350f 22c55e", "First to spot a new release on the horizon.", "robin explorer", energy=1.2),
+    c("tuko", "Tuko", "Toucan Navigator", "bird", "none", "feather", "none", "none", "round", "fur", "goggles",
+      "1c1917 fef3c7 0ea5e9 1c1917 fef3c7 f97316", "Navigates jungles of nested callbacks.", "toucan explorer"),
+]
+
+
+def build_catalog() -> dict:
+    ids, names = set(), set()
+    for character in CHARACTERS:
+        if character["id"] in ids:
+            raise ValueError(f"duplicate id {character['id']}")
+        if character["name"] in names:
+            raise ValueError(f"duplicate name {character['name']}")
+        if len(character["accessories"]) > 5 or len(set(character["accessories"])) != len(character["accessories"]):
+            raise ValueError(f"{character['id']}: accessories must be unique and at most five")
+        if len(character["tags"]) > 6:
+            raise ValueError(f"{character['id']}: at most six tags")
+        if len(character["description"]) > 240:
+            raise ValueError(f"{character['id']}: description too long")
+        ids.add(character["id"])
+        names.add(character["name"])
+    if len(CHARACTERS) < 100:
+        raise ValueError(f"catalog has only {len(CHARACTERS)} characters")
+    return {
+        "schemaVersion": 1,
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "Original designs authored in scripts/generate_avatar_catalog.py",
+        "characters": CHARACTERS,
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="catalog JSON path")
+    parser.add_argument("--check", action="store_true", help="fail when the output file is out of date")
+    args = parser.parse_args()
+    try:
+        rendered = json.dumps(build_catalog(), indent=2, ensure_ascii=False) + "\n"
+    except ValueError as error:
+        print(f"catalog error: {error}", file=sys.stderr)
+        return 2
+    if args.check:
+        current = args.output.read_text(encoding="utf-8") if args.output.exists() else ""
+        if current != rendered:
+            print(f"{args.output} is out of date; rerun scripts/generate_avatar_catalog.py", file=sys.stderr)
+            return 1
+        print(f"{args.output} is up to date ({len(CHARACTERS)} characters)")
+        return 0
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(rendered, encoding="utf-8", newline="\n")
+    print(f"wrote {len(CHARACTERS)} characters to {args.output}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())

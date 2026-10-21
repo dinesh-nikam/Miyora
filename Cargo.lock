@@ -22,6 +22,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "agentpet-avatar"
+version = "0.1.0"
+dependencies = [
+ "image",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror 2.0.21",
+]
+
+[[package]]
 name = "agentpet-cli"
 version = "0.1.0"
 dependencies = [
@@ -36,6 +47,7 @@ dependencies = [
 name = "agentpet-core"
 version = "0.1.0"
 dependencies = [
+ "agentpet-avatar",
  "agentpet-pet-engine",
  "agentpet-pet-pack",
  "chrono",
@@ -54,6 +66,7 @@ name = "agentpet-desktop"
 version = "0.1.0"
 dependencies = [
  "agentpet-adapters",
+ "agentpet-avatar",
  "agentpet-core",
  "agentpet-pet-engine",
  "agentpet-pet-pack",

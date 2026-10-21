@@ -1,5 +1,9 @@
 # 3D Anime Character and VRM Avatar Specification
 
+## Implementation status
+
+Implemented: VRM/GLB import with the size, triangle, texture-count, and external-URI guardrails below; metadata extraction and display; rendering with `@pixiv/three-vrm`; pose retargeting from the shared procedural pose; VRM expressions; a 30 FPS cap with 12 FPS for calm states and no rendering while hidden. Not yet enforced: the per-texture 2048 px limit (embedded textures are not decoded during validation) and the 64-bone limit. The default 3D character is the procedural `miyora.aoi` from the catalog described in [avatar_3d.md](avatar_3d.md), not a bundled VRM file.
+
 ## 1. Overview
 AgentPet supports 3D anime-style companions alongside 2D sprite packs. The desktop runtime consumes standard VRM (glTF 2.0 binary) avatars, ships with one clean-room original 3D anime character, and provides a Bring-Your-Own-Model (BYOM) import pipeline with strict security guardrails.
 

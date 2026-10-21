@@ -20,6 +20,21 @@ The cloud REST and daemon contracts below remain planned. The current desktop sh
 | `select_pet` | Select an installed PetPack | Main window |
 | `show_pet_overlay` | Reveal the configured companion window | Main window |
 | `toggle_pet_pause` | Toggle pause state on the companion runtime | Main window |
+| `get_avatar` | Resolve the selected 3D avatar (catalog spec with any customization, or a custom avatar) | Main and overlay windows |
+| `get_avatar_hud` | Read level and XP progress shown on the 3D stage | Main and overlay windows |
+| `get_avatar_model` | Return a custom avatar's GLB/VRM bytes as a binary response after SHA-256 verification | Main and overlay windows |
+| `list_avatar_catalog` | List the 112 bundled characters with customizations applied | Main window |
+| `list_custom_avatars` | List image sculpts, imported VRM models, and custom characters | Main window |
+| `get_avatar_preview` | Read an image sculpt's cut-out preview as a PNG data URL | Main window |
+| `select_avatar` | Select a catalog or custom avatar (`source`, `avatarId`) | Main window |
+| `save_avatar_customization` | Validate and save a full `CharacterSpec` for a catalog or custom procedural character | Main window |
+| `reset_avatar_customization` | Remove a catalog customization | Main window |
+| `create_custom_character` | Save a spec as a new custom character under a fresh `user.custom-*` id | Main window |
+| `create_avatar_from_image` | Sculpt an image into a 3D relief avatar plus a styled character (blocking worker) | Main window |
+| `import_vrm_avatar` | Validate and store a VRM/GLB model (blocking worker) | Main window |
+| `delete_custom_avatar` | Delete a custom avatar and its files; reselects the default when it was active | Main window |
+
+Avatar contracts and limits are specified in [docs/specs/avatar_3d.md](docs/specs/avatar_3d.md).
 
 ## Local Tauri commands
 

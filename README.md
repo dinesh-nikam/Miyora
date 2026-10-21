@@ -20,6 +20,7 @@ This README is written from **confirmed code behavior**, not from stale specific
 - **Real agent observation.** Observe coding agents through a native Claude Code hook or through the universal process wrapper (`agentpet run -- <command>`).
 - **Local progression.** A selected pet is captured when a session starts; XP is awarded only when the child process exits successfully. Session XP and level are committed together.
 - **Data-only pet packs.** Characters are replaceable packs. Bundle a manifest, assets, license metadata, and state/animation mappings; load, validate, install, and preview them locally.
+- **3D characters.** Choose from 112 original 3D characters, customize them, sculpt one from your own image, or import a VRM model. The character's pose, expression, and props follow the real agent state, and its pedestal ring shows real XP progress. See [docs/specs/avatar_3d.md](docs/specs/avatar_3d.md).
 - **Always local.** SQLite is the only persistence layer, reachable only from Rust. No login, telemetry, or cloud reach is required to render a pet or read progress.
 
 ## Project status (verified)
@@ -35,7 +36,12 @@ This README is written from **confirmed code behavior**, not from stale specific
 | PetPack manifest validation, archive install, Ed25519 signature verification | Implemented (library) |
 | 15-state explicit priority-based pet state machine with timed reactions | Implemented |
 | Session XP, level, and immutable idempotent achievements | Implemented |
-| `cargo test --workspace` | 78 passed, 0 failed |
+| 3D characters: 112 original procedural characters (5 body types) with jointed rigs, state-driven poses and expressions | Implemented |
+| Character customization (body, ears, tail, wings, hair, eyes, outfit, 14 accessories, palette, proportions, energy) validated in Rust | Implemented |
+| Image to 3D: local silhouette-inflation sculpt to a closed textured GLB, plus a palette-styled rigged character | Implemented (geometric, not a learned model) |
+| VRM/GLB avatar import with guardrails, metadata display, and pose retargeting | Implemented |
+| `cargo test --workspace` | 110 passed, 0 failed |
+| `npx vitest run` in `apps/desktop` | 147 passed, 0 failed (all 112 catalog characters built; each body type animated through all 15 states) |
 | `cargo clippy --workspace --all-features --all-targets -D warnings` | 0 warnings, 0 errors |
 | `cargo fmt --check --all` | clean |
 | `npm run build` in `apps/desktop` (`tsc -b` + `vite`) | passes |
@@ -123,6 +129,7 @@ The desktop shell is started with `npm run tauri dev` from `apps/desktop`. The b
 - [AGENTS.md](AGENTS.md) — mandatory coding-agent rules.
 - [ARCHITECTURE.md](ARCHITECTURE.md) — selected stack and system design.
 - [PET_PACK_SPEC.md](PET_PACK_SPEC.md) — data-only pack format and validation.
+- [docs/specs/avatar_3d.md](docs/specs/avatar_3d.md) — 3D character spec, catalog, image sculpting, VRM import, and storage.
 - [AGENT_PROVIDER_SPEC.md](AGENT_PROVIDER_SPEC.md) — agent and provider contracts.
 - [DATABASE.md](DATABASE.md) — local/cloud data model and migration rules.
 - [API.md](API.md) — local hook IPC and cloud API contracts.

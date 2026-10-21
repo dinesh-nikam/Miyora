@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { Companion3D } from "./Companion3D";
+import { AvatarStage } from "../avatar/AvatarStage";
+import { subjectFromAvatar, type AvatarHud, type ResolvedAvatar } from "../avatar/types";
 
 export type PetState =
   | "idle"
@@ -42,6 +43,10 @@ export interface QuotaWindow {
 export interface CompanionRendererProps {
   state: PetState;
   animation: SelectedPetAnimation | null;
+  /** 3D avatar resolved by the Rust core; rendered in 3D mode. */
+  avatar?: ResolvedAvatar | null;
+  /** Real progression shown on the 3D stage. */
+  hud?: AvatarHud | null;
   quotaWindow?: QuotaWindow | null;
   quotaProvenance?: string;
   size?: number;
@@ -214,6 +219,8 @@ export function playChime(type: ChimeType) {
 export function CompanionRenderer({
   state,
   animation,
+  avatar = null,
+  hud = null,
   size = 200,
   interactive = true,
   mode,
@@ -899,9 +906,10 @@ export function CompanionRenderer({
               transition: "transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1)",
             }}
           >
-            <Companion3D
+            <AvatarStage
+              subject={subjectFromAvatar(avatar)}
               state={state}
-              petName={petName}
+              hud={hud}
               size={size}
               interactive={interactive}
               onDoubleClick={onDoubleClick}
@@ -986,7 +994,7 @@ export function CompanionRenderer({
         >
           <div style={{ display: "flex", alignItems: "center", gap: "4px", fontWeight: 700 }}>
             <span>{companionInfo.icon}</span>
-            <span style={{ color: companionInfo.themeColor }}>{petName}</span>
+            <span style={{ color: companionInfo.themeColor }}>{renderMode === "3d" && avatar ? avatar.name : petName}</span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
             <button

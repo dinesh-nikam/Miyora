@@ -1,6 +1,6 @@
 import { describe, it, expect, vi } from "vitest";
 import * as THREE from "three";
-import { disposeScene, disposeMaterial } from "../Companion3D";
+import { disposeScene, disposeMaterial } from "../../avatar/dispose";
 import { VRMUtils } from "@pixiv/three-vrm";
 
 vi.mock("@pixiv/three-vrm", () => ({
