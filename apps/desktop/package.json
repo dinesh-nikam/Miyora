@@ -7,7 +7,8 @@
     "dev": "vite --host 127.0.0.1 --port 1420 --strictPort",
     "build": "tsc -b && vite build",
     "preview": "vite preview --host 127.0.0.1 --port 1421 --strictPort",
-    "tauri": "tauri"
+    "tauri": "tauri",
+    "test": "vitest run"
   },
   "dependencies": {
     "@pixiv/three-vrm": "^3.5.5",
@@ -19,11 +20,14 @@
   },
   "devDependencies": {
     "@tauri-apps/cli": "^2.0.0",
+    "@testing-library/react": "^16.3.3",
     "@types/react": "^18.3.0",
     "@types/react-dom": "^18.3.0",
     "@types/three": "^0.186.0",
     "@vitejs/plugin-react": "^4.3.0",
+    "jsdom": "^30.1.3",
     "typescript": "~5.6.2",
-    "vite": "^5.4.0"
+    "vite": "^5.4.0",
+    "vitest": "^2.1.9"
   }
 }

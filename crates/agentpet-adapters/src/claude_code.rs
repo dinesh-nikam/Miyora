@@ -278,8 +278,12 @@ pub fn read_chain_record(chain_path: &Path) -> Option<StatuslineChainRecord> {
     serde_json::from_slice(&bytes).ok()
 }
 
-pub fn write_chain_record(chain_path: &Path, record: &StatuslineChainRecord) -> Result<(), AdapterError> {
-    let data = serde_json::to_vec_pretty(record).map_err(|e| AdapterError::ConfigWrite(e.to_string()))?;
+pub fn write_chain_record(
+    chain_path: &Path,
+    record: &StatuslineChainRecord,
+) -> Result<(), AdapterError> {
+    let data =
+        serde_json::to_vec_pretty(record).map_err(|e| AdapterError::ConfigWrite(e.to_string()))?;
     atomic_write(chain_path, &data)
 }
 
@@ -409,7 +413,10 @@ fn backup_settings(
     // Also write standard .agentpet.bak for backwards compatibility
     let std_name = format!(
         "{}{}",
-        settings_path.file_name().unwrap_or_default().to_string_lossy(),
+        settings_path
+            .file_name()
+            .unwrap_or_default()
+            .to_string_lossy(),
         BACKUP_SUFFIX
     );
     let std_backup = settings_path.with_file_name(std_name);
@@ -471,7 +478,10 @@ pub fn atomic_write(target_path: &Path, data: &[u8]) -> Result<(), AdapterError>
     }
     let tmp_name = format!(
         "{}.tmp.{}",
-        target_path.file_name().unwrap_or_default().to_string_lossy(),
+        target_path
+            .file_name()
+            .unwrap_or_default()
+            .to_string_lossy(),
         uuid::Uuid::new_v4().simple()
     );
     let tmp_path = parent.join(tmp_name);
@@ -482,7 +492,10 @@ pub fn atomic_write(target_path: &Path, data: &[u8]) -> Result<(), AdapterError>
         if target_path.exists() {
             let old_tmp = parent.join(format!(
                 "{}.old.{}",
-                target_path.file_name().unwrap_or_default().to_string_lossy(),
+                target_path
+                    .file_name()
+                    .unwrap_or_default()
+                    .to_string_lossy(),
                 uuid::Uuid::new_v4().simple()
             ));
             let _ = fs::rename(target_path, &old_tmp);
@@ -691,11 +704,15 @@ mod tests {
         assert!(path.exists());
 
         let doc: serde_json::Value = serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
-        assert_eq!(doc["statusLine"]["command"].as_str().unwrap(), "agentpet statusline");
+        assert_eq!(
+            doc["statusLine"]["command"].as_str().unwrap(),
+            "agentpet statusline"
+        );
 
         let uninstalled = uninstall_statusline_shim(&path).expect("uninstall");
         assert!(uninstalled);
-        let restored: serde_json::Value = serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
+        let restored: serde_json::Value =
+            serde_json::from_slice(&fs::read(&path).unwrap()).unwrap();
         assert!(restored.get("statusLine").is_none());
     }
 
@@ -723,10 +740,9 @@ mod tests {
 
         // Verify that a backup file with .bak exists
         let entries = fs::read_dir(dir.path()).unwrap();
-        let backup_exists = entries.flatten().any(|e| {
-            e.file_name().to_string_lossy().contains(".bak")
-        });
+        let backup_exists = entries
+            .flatten()
+            .any(|e| e.file_name().to_string_lossy().contains(".bak"));
         assert!(backup_exists, "backup file must be created on modification");
     }
 }
-

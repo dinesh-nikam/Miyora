@@ -11,11 +11,15 @@ const TRIM_TARGET_BYTES: usize = 128 * 1024; // 128 KB
 pub const DIAGNOSTICS_FILE: &str = "diagnostics.log";
 
 pub fn diagnostics_path() -> Option<PathBuf> {
-    default_data_directory().ok().map(|d| d.join(DIAGNOSTICS_FILE))
+    default_data_directory()
+        .ok()
+        .map(|d| d.join(DIAGNOSTICS_FILE))
 }
 
 pub fn append_diagnostic_error(source: &str, error: &impl std::fmt::Display) {
-    let Some(path) = diagnostics_path() else { return };
+    let Some(path) = diagnostics_path() else {
+        return;
+    };
     if let Some(parent) = path.parent() {
         let _ = fs::create_dir_all(parent);
     }
@@ -49,9 +53,13 @@ fn rotate_or_trim(path: &Path) -> io::Result<()> {
 }
 
 pub fn read_recent_errors(limit: usize) -> Vec<String> {
-    let Some(path) = diagnostics_path() else { return Vec::new() };
-    let Ok(file) = fs::File::open(&path) else { return Vec::new() };
+    let Some(path) = diagnostics_path() else {
+        return Vec::new();
+    };
+    let Ok(file) = fs::File::open(&path) else {
+        return Vec::new();
+    };
     let reader = BufReader::new(file);
-    let lines: Vec<String> = reader.lines().filter_map(|l| l.ok()).collect();
+    let lines: Vec<String> = reader.lines().map_while(Result::ok).collect();
     lines.into_iter().rev().take(limit).collect()
 }

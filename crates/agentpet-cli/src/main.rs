@@ -752,7 +752,10 @@ fn run_doctor(mut args: impl Iterator<Item = OsString>) -> i32 {
     if recent_errors.is_empty() {
         println!("[OK] Diagnostics log: no recent errors reported");
     } else {
-        println!("[WARN] Diagnostics log has {} recent error(s):", recent_errors.len());
+        println!(
+            "[WARN] Diagnostics log has {} recent error(s):",
+            recent_errors.len()
+        );
         for err in recent_errors {
             println!("       {err}");
         }
@@ -819,7 +822,8 @@ fn run_statusline(mut args: impl Iterator<Item = OsString>) -> i32 {
     }
     if chain_cmd.is_none() {
         if let Some(settings_path) = agentpet_adapters::claude_code::default_settings_path() {
-            let chain_path = agentpet_adapters::claude_code::default_chain_file_path(&settings_path);
+            let chain_path =
+                agentpet_adapters::claude_code::default_chain_file_path(&settings_path);
             if let Some(record) = agentpet_adapters::claude_code::read_chain_record(&chain_path) {
                 chain_cmd = record.original_command;
             }

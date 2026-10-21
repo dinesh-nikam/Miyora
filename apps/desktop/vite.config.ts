@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
@@ -15,4 +16,9 @@ export default defineConfig({
     minify: !process.env.TAURI_ENV_DEBUG ? "esbuild" : false,
     sourcemap: Boolean(process.env.TAURI_ENV_DEBUG),
   },
+  test: {
+    environment: "jsdom",
+    globals: true,
+  },
 });
+
