@@ -1,0 +1,11 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "avatar-harness",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["apps/desktop/node_modules/vite/bin/vite.js", "apps/desktop", "--host", "127.0.0.1", "--port", "1430", "--strictPort"],
+      "port": 1430
+    }
+  ]
+}

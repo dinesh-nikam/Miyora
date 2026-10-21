@@ -16,3 +16,4 @@ extracted_*.ts
 claude_statusline.json
 .agentpet/
 *.log
+.claude/worktrees/
