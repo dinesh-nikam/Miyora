@@ -1252,34 +1252,34 @@ function buildTail(kit: Kit, spec: CharacterSpec, hips: THREE.Object3D, d: Dimen
     case "flame":
       chain.forEach((node, i) => {
         node.rotation.x = -0.35;
-        kit.mesh(capsule(0.022 - i * 0.004, 0.05), kit.toon(furColor), node, [0, 0.02, -0.025], { rotation: [-1.0, 0, 0], outline: OUTLINE });
+        kit.mesh(capsule(0.03 - i * 0.005, 0.05), kit.toon(furColor), node, [0, 0.02, -0.025], { rotation: [-1.0, 0, 0], outline: OUTLINE });
       });
-      kit.mesh(cone(0.03, 0.08, 12), kit.toon(p.accent, { emissive: 1.1, opacity: 0.9 }), t(2), [0, 0.09, -0.05], { outline: OUTLINE * 0.5 });
-      kit.mesh(cone(0.016, 0.05, 10), kit.toon(FLAME_CORE_COLOR, { emissive: 1.4 }), t(2), [0, 0.08, -0.042]);
+      kit.mesh(cone(0.06, 0.15, 12), kit.toon(p.accent, { emissive: 1.1, opacity: 0.9 }), t(2), [0, 0.12, -0.06], { outline: OUTLINE * 0.5 });
+      kit.mesh(cone(0.032, 0.09, 10), kit.toon(FLAME_CORE_COLOR, { emissive: 1.4 }), t(2), [0, 0.1, -0.045]);
       break;
     case "leaf": {
       const stem = kit.toon(shade(p.hair, BLACK, 0.2));
       chain.forEach((node) => {
         node.rotation.x = -0.4;
-        kit.mesh(cylinder(0.006, 0.006, 0.06, 6), stem, node, [0, 0.02, -0.025], { rotation: [-1.0, 0, 0] });
+        kit.mesh(cylinder(0.009, 0.009, 0.06, 6), stem, node, [0, 0.02, -0.025], { rotation: [-1.0, 0, 0] });
       });
-      kit.mesh(sphere(0.05), kit.toon(p.hair), t(2), [0, 0.07, -0.05], { rotation: [-0.5, 0, 0], scale: [0.6, 1.5, 0.15], outline: OUTLINE });
+      kit.mesh(sphere(0.09), kit.toon(p.hair), t(2), [0, 0.11, -0.06], { rotation: [-0.5, 0, 0], scale: [0.6, 1.5, 0.15], outline: OUTLINE });
       break;
     }
     case "star": {
       chain.forEach((node, i) => {
         node.rotation.x = -0.4;
-        kit.mesh(capsule(0.012 - i * 0.002, 0.05), kit.toon(furColor), node, [0, 0.02, -0.025], { rotation: [-1.0, 0, 0], outline: OUTLINE });
+        kit.mesh(capsule(0.018 - i * 0.003, 0.05), kit.toon(furColor), node, [0, 0.02, -0.025], { rotation: [-1.0, 0, 0], outline: OUTLINE });
       });
       const star = new THREE.Shape();
       for (let i = 0; i < STAR_POINTS * 2; i += 1) {
         const angle = (i / (STAR_POINTS * 2)) * Math.PI * 2 + Math.PI / 2;
-        const radius = i % 2 === 0 ? 0.05 : 0.022;
+        const radius = i % 2 === 0 ? 0.09 : 0.04;
         if (i === 0) star.moveTo(Math.cos(angle) * radius, Math.sin(angle) * radius);
         else star.lineTo(Math.cos(angle) * radius, Math.sin(angle) * radius);
       }
       star.closePath();
-      kit.mesh(new THREE.ExtrudeGeometry(star, { depth: 0.012, bevelEnabled: false }), kit.toon(p.accent, { emissive: 0.9 }), t(2), [0, 0.08, -0.06], {
+      kit.mesh(new THREE.ExtrudeGeometry(star, { depth: 0.012, bevelEnabled: false }), kit.toon(p.accent, { emissive: 0.9 }), t(2), [0, 0.12, -0.06], {
         outline: OUTLINE * 0.5,
       });
       break;

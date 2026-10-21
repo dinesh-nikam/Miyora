@@ -4,7 +4,7 @@
 
 Implemented and covered by tests:
 
-- `crates/avatar` (`agentpet-avatar`): the `CharacterSpec` contract and validator, the bundled catalog of 142 original characters, the image sculptor, and a minimal binary glTF writer/reader.
+- `crates/avatar` (`agentpet-avatar`): the `CharacterSpec` contract and validator, the bundled catalog of 167 original characters, the image sculptor, and a minimal binary glTF writer/reader.
 - `crates/agentpet-core/src/avatars.rs`: SQLite schema v10, avatar selection, customization, custom avatar storage, image import, and VRM import.
 - Tauri commands listed in [API.md](../../API.md).
 - `apps/desktop/src/avatar/`: the procedural rig builder, state motion, stage props, the `AvatarStage` renderer, shared-context thumbnails, and the Character Studio UI.
@@ -53,15 +53,15 @@ A spec is data only. Rust rejects unknown fields (`deny_unknown_fields`), so a s
 | `id` | Dotted lowercase segments (`a-z`, `0-9`, `-`), 2+ segments, at most 64 bytes. Catalog ids use the `miyora.` namespace; user ids use `user.` |
 | `name` / `title` / `description` | 1-32 / 1-48 / 0-240 characters, no control characters |
 | `body` | `humanoid`, `beast`, `robot`, `slime`, `bird` |
-| `ears` | `none`, `human`, `elf`, `cat`, `fox`, `bunny`, `bear`, `floppy`, `horns`, `antenna`, `fin` |
-| `tail` | `none`, `cat`, `fox`, `bunny`, `dragon`, `cable`, `feather` |
+| `ears` | `none`, `human`, `elf`, `cat`, `fox`, `bunny`, `bear`, `floppy`, `horns`, `antenna`, `fin`, `leaf` |
+| `tail` | `none`, `cat`, `fox`, `bunny`, `dragon`, `cable`, `feather`, `flame` (glowing flame tip), `leaf` (leaf-blade tip), `star` (glowing star tip) |
 | `wings` | `none`, `feather`, `bat`, `fairy`, `jet` |
 | `hair` | `none`, `short`, `bob`, `long`, `ponytail`, `twintails`, `spiky`, `bun`, `mohawk`, `curly`, `hime`, `side_tail` |
 | `hairTip` | Optional `#RRGGBB`; hair locks fade to this color at the tips. Omitted means a solid color |
 | `eyes` | `round`, `sharp`, `sleepy`, `sparkle`, `visor`, `mono` |
 | `outfit` | `hoodie`, `kimono`, `armor`, `suit`, `robe`, `jacket`, `dress`, `overalls`, `labcoat`, `tunic`, `fur`, `plating`, `hakama`, `sailor`, `coat` |
 | `pattern` | Optional, default `none`: `dots`, `stripes`, `waves`, `petals`, `stars`, `diamonds`. Applied to outfit cloth |
-| `accessories` | Up to 5 unique: `glasses`, `headphones`, `scarf`, `beanie`, `witch_hat`, `crown`, `halo`, `cape`, `backpack`, `headband`, `bow`, `flower`, `goggles`, `bell`, `katana`, `wand`, `staff`, `kitsune_mask` |
+| `accessories` | Up to 5 unique: `glasses`, `headphones`, `scarf`, `beanie`, `witch_hat`, `crown`, `halo`, `cape`, `backpack`, `headband`, `bow`, `flower`, `goggles`, `bell`, `katana`, `wand`, `staff`, `kitsune_mask`, `shell` (domed back shell), `gem` (glowing forehead jewel) |
 | `palette.*` | `#RRGGBB` |
 | `proportions` | height 0.8-1.2, headScale 0.85-1.35, build 0.8-1.3, limbLength 0.85-1.15 |
 | `energy` | 0.5-1.6; scales animation tempo |
@@ -71,14 +71,14 @@ Limits are named constants in `crates/avatar/src/spec.rs` and mirrored in `apps/
 
 ## Catalog
 
-`crates/avatar/catalog/characters.json` holds 142 original characters (78 humanoid, 32 beast, 13 robot, 9 slime, 10 bird), including 30 designs in popular anime archetypes (swordswoman, ronin, kunoichi, shrine maiden, magical girl, idol, mecha pilot, fox spirit, vampire noble, onmyoji, and others), license CC0-1.0. It is generated deterministically by `scripts/generate_avatar_catalog.py` from hand-authored rows and embedded into the binary with `include_str!`. Validation runs once on first use: schema version, metadata, every spec, unique ids, the `miyora.` namespace, and the presence of the default character `miyora.aoi`.
+`crates/avatar/catalog/characters.json` holds 167 original characters (78 humanoid, 51 beast, 14 robot, 12 slime, 12 bird), including 30 designs in popular anime archetypes (swordswoman, ronin, kunoichi, shrine maiden, magical girl, idol, mecha pilot, fox spirit, vampire noble, onmyoji, and others) and 25 chibi pocket creatures tagged `pocket-monster` (spark mouse, flame-tail lizard, shell turtle, leaf sprite, a fox kit with seven elemental forms, dream kitten, snoozing giant, lullaby puff, wisp, magnet bot, and others), license CC0-1.0. It is generated deterministically by `scripts/generate_avatar_catalog.py` from hand-authored rows and embedded into the binary with `include_str!`. Validation runs once on first use: schema version, metadata, every spec, unique ids, the `miyora.` namespace, and the presence of the default character `miyora.aoi`.
 
 ```powershell
 python scripts/generate_avatar_catalog.py          # regenerate
 python scripts/generate_avatar_catalog.py --check  # fail when the committed JSON is stale
 ```
 
-No catalog character reproduces a copyrighted design: archetypes are genres, while names, palettes, and signature details are original. `pattern` and `hairTip` were added after v1 shipped; both are optional, so earlier specs and stored customizations still parse unchanged. `docs/specs/vrm_pet.md` lists attributes that must never be shipped.
+No catalog character reproduces a copyrighted design: archetypes are genres, while names, palettes, and signature details are original. The pocket creatures follow the creature-collecting genre only: no franchise names, logos, or signature designs (for example, no yellow mouse with black-tipped ears and a zigzag tail). Licensed franchise characters can only be used as user-provided VRM imports, which stay local and are never bundled. `pattern` and `hairTip` were added after v1 shipped; both are optional, so earlier specs and stored customizations still parse unchanged. `docs/specs/vrm_pet.md` lists attributes that must never be shipped.
 
 ## Image to 3D (sculpt)
 

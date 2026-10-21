@@ -23,7 +23,7 @@ The cloud REST and daemon contracts below remain planned. The current desktop sh
 | `get_avatar` | Resolve the selected 3D avatar (catalog spec with any customization, or a custom avatar) | Main and overlay windows |
 | `get_avatar_hud` | Read level and XP progress shown on the 3D stage | Main and overlay windows |
 | `get_avatar_model` | Return a custom avatar's GLB/VRM bytes as a binary response after SHA-256 verification | Main and overlay windows |
-| `list_avatar_catalog` | List the 142 bundled characters with customizations applied | Main window |
+| `list_avatar_catalog` | List the 167 bundled characters with customizations applied | Main window |
 | `list_custom_avatars` | List image sculpts, imported VRM models, and custom characters | Main window |
 | `get_avatar_preview` | Read an image sculpt's cut-out preview as a PNG data URL | Main window |
 | `select_avatar` | Select a catalog or custom avatar (`source`, `avatarId`) | Main window |
