@@ -297,7 +297,7 @@ export function CommandDeck({
             </div>
           </div>
 
-          {/* Quick Commands & Cryptographic Verification */}
+          {/* Quick Commands & Tamper-Evident Verification */}
           <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", alignItems: "center", marginTop: "4px" }}>
             <button
               onClick={onVerifyLedger}
@@ -316,7 +316,7 @@ export function CommandDeck({
               }}
             >
               <span>🔒</span>
-              <span>Verify SHA-256 XP Ledger</span>
+              <span>Verify Tamper-Evident Ledger</span>
             </button>
 
             <button

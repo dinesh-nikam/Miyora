@@ -19,7 +19,7 @@ use uuid::Uuid;
 const DATABASE_FILE: &str = "agentpet.sqlite3";
 #[cfg(feature = "dev-simulator")]
 pub const SIMULATED_DATABASE_FILE: &str = "agentpet_simulated.sqlite3";
-const SCHEMA_VERSION: i64 = 8;
+const SCHEMA_VERSION: i64 = 9;
 const SQLITE_BUSY_TIMEOUT: Duration = Duration::from_secs(5);
 const DEFAULT_SESSION_XP: i64 = 10;
 const DEFAULT_LEVEL_XP: i64 = 100;
@@ -257,7 +257,27 @@ pub struct StoredAgentEvent {
     pub latency_ms: Option<u64>,
 }
 
-pub fn compute_ledger_hash(
+pub const DOMAIN_TAG_V2: &[u8] = b"agentpet.ledger.v2";
+
+pub fn compute_ledger_hash_v2(
+    prev_hash: &str,
+    idempotency_key: &str,
+    amount: i64,
+    pet_id: &str,
+    created_at: &str,
+) -> String {
+    use sha2::{Digest, Sha256};
+    let mut hasher = Sha256::new();
+    hasher.update(DOMAIN_TAG_V2);
+    feed_length_prefixed(&mut hasher, prev_hash.as_bytes());
+    feed_length_prefixed(&mut hasher, idempotency_key.as_bytes());
+    feed_length_prefixed(&mut hasher, &amount.to_be_bytes());
+    feed_length_prefixed(&mut hasher, pet_id.as_bytes());
+    feed_length_prefixed(&mut hasher, created_at.as_bytes());
+    format!("{:x}", hasher.finalize())
+}
+
+pub fn compute_ledger_hash_v1(
     prev_hash: &str,
     idempotency_key: &str,
     amount: i64,
@@ -269,6 +289,23 @@ pub fn compute_ledger_hash(
     hasher
         .update(format!("{prev_hash}:{idempotency_key}:{amount}:{pet_id}:{created_at}").as_bytes());
     format!("{:x}", hasher.finalize())
+}
+
+pub fn compute_ledger_hash(
+    prev_hash: &str,
+    idempotency_key: &str,
+    amount: i64,
+    pet_id: &str,
+    created_at: &str,
+) -> String {
+    compute_ledger_hash_v2(prev_hash, idempotency_key, amount, pet_id, created_at)
+}
+
+fn feed_length_prefixed(hasher: &mut sha2::Sha256, data: &[u8]) {
+    use sha2::Digest;
+    let len = (data.len() as u32).to_be_bytes();
+    hasher.update(len);
+    hasher.update(data);
 }
 
 #[allow(dead_code)]
@@ -637,7 +674,8 @@ impl Core {
                     pet_id TEXT NOT NULL,
                     amount INTEGER NOT NULL CHECK(amount > 0),
                     created_at TEXT NOT NULL,
-                    metadata_json TEXT NOT NULL
+                    metadata_json TEXT NOT NULL,
+                    ledger_version INTEGER NOT NULL DEFAULT 1
                  );
                  CREATE INDEX IF NOT EXISTS xp_ledger_pet_time_idx ON xp_ledger(pet_id, created_at);
                  CREATE TRIGGER IF NOT EXISTS xp_ledger_no_update
@@ -651,6 +689,22 @@ impl Core {
             transaction.execute(
                 "INSERT INTO schema_versions(version, applied_at) VALUES (?1, ?2)",
                 params![8, Utc::now().to_rfc3339()],
+            )?;
+            transaction.commit()?;
+        }
+        if current < 9 && target >= 9 {
+            let transaction = connection.unchecked_transaction()?;
+            let has_col: bool = transaction
+                .prepare("SELECT ledger_version FROM xp_ledger LIMIT 0")
+                .is_ok();
+            if !has_col {
+                transaction.execute_batch(
+                    "ALTER TABLE xp_ledger ADD COLUMN ledger_version INTEGER NOT NULL DEFAULT 1;",
+                )?;
+            }
+            transaction.execute(
+                "INSERT INTO schema_versions(version, applied_at) VALUES (?1, ?2)",
+                params![9, Utc::now().to_rfc3339()],
             )?;
             transaction.commit()?;
         }
@@ -816,7 +870,7 @@ impl Core {
             .lock()
             .map_err(|_| CoreError::LockPoisoned)?;
         let mut statement = connection.prepare(
-            "SELECT index_id, entry_id, prev_hash, hash, idempotency_key, pet_id, amount, created_at
+            "SELECT index_id, entry_id, prev_hash, hash, idempotency_key, pet_id, amount, created_at, COALESCE(ledger_version, 1)
              FROM xp_ledger ORDER BY index_id ASC",
         )?;
         struct LedgerRow {
@@ -827,6 +881,7 @@ impl Core {
             pet_id: String,
             amount: i64,
             created_at: String,
+            ledger_version: i64,
         }
         let rows = statement.query_map([], |row| {
             Ok(LedgerRow {
@@ -837,6 +892,7 @@ impl Core {
                 pet_id: row.get(5)?,
                 amount: row.get(6)?,
                 created_at: row.get(7)?,
+                ledger_version: row.get(8)?,
             })
         })?;
 
@@ -859,13 +915,23 @@ impl Core {
                     )),
                 });
             }
-            let computed = compute_ledger_hash(
-                &row.prev_hash,
-                &row.idempotency_key,
-                row.amount,
-                &row.pet_id,
-                &row.created_at,
-            );
+            let computed = if row.ledger_version == 1 {
+                compute_ledger_hash_v1(
+                    &row.prev_hash,
+                    &row.idempotency_key,
+                    row.amount,
+                    &row.pet_id,
+                    &row.created_at,
+                )
+            } else {
+                compute_ledger_hash_v2(
+                    &row.prev_hash,
+                    &row.idempotency_key,
+                    row.amount,
+                    &row.pet_id,
+                    &row.created_at,
+                )
+            };
             if computed != row.hash {
                 return Ok(LedgerVerificationResult {
                     is_valid: false,
@@ -1652,11 +1718,11 @@ fn award_xp_transaction(
         let prev_hash = last_hash.unwrap_or_else(|| GENESIS_HASH.to_string());
         let idempotency_key = format!("{source}:{source_id}");
         let now_str = Utc::now().to_rfc3339();
-        let hash = compute_ledger_hash(&prev_hash, &idempotency_key, amount, pet_id, &now_str);
+        let hash = compute_ledger_hash_v2(&prev_hash, &idempotency_key, amount, pet_id, &now_str);
         let entry_id = Uuid::new_v4().to_string();
-        let _ = transaction.execute(
-            "INSERT INTO xp_ledger(entry_id, prev_hash, hash, provider, session_id, event_id, idempotency_key, pet_id, amount, created_at, metadata_json)
-             VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)
+        transaction.execute(
+            "INSERT INTO xp_ledger(entry_id, prev_hash, hash, provider, session_id, event_id, idempotency_key, pet_id, amount, created_at, metadata_json, ledger_version)
+             VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11, 2)
              ON CONFLICT(idempotency_key) DO NOTHING",
             params![
                 entry_id,
@@ -1671,14 +1737,14 @@ fn award_xp_transaction(
                 now_str,
                 metadata_json
             ],
-        );
+        )?;
         let previous_level: i64 = transaction.query_row(
             "SELECT COALESCE((SELECT level FROM pet_progression WHERE pet_id = ?1), 1)",
             [pet_id],
             |row| row.get(0),
         )?;
         let total_xp: i64 = transaction.query_row(
-            "SELECT COALESCE(SUM(amount), 0) FROM xp_transactions WHERE pet_id = ?1",
+            "SELECT COALESCE(SUM(amount), 0) FROM xp_ledger WHERE pet_id = ?1",
             [pet_id],
             |row| row.get(0),
         )?;
@@ -2518,5 +2584,117 @@ mod tests {
         assert!(!tampered_check.is_valid);
         assert_eq!(tampered_check.broken_at_index, Some(2));
         assert!(tampered_check.error_message.unwrap().contains("invalid"));
+    }
+
+    #[test]
+    fn ledger_v2_resists_colon_injection() {
+        let prev = "0000000000000000000000000000000000000000000000000000000000000000";
+        let time = "2026-10-21T00:00:00Z";
+
+        // In v1 naive format: "{prev}:{key}:{amount}:{pet}:{time}"
+        // key1="foo:bar", pet1="baz" -> "prev:foo:bar:100:baz:time"
+        // key2="foo", pet2="bar:100:baz" with amount in middle could create collision scenarios
+        let h1_v1 = compute_ledger_hash_v1(prev, "user:123", 50, "pet:alpha", time);
+        let _h2_v1 = compute_ledger_hash_v1(prev, "user", 50, "123:pet:alpha", time);
+        // If colons line up in v1, concatenation can match:
+        assert_eq!(
+            format!("{prev}:user:123:50:pet:alpha:{time}"),
+            format!("{prev}:user:123:50:pet:alpha:{time}")
+        );
+
+        // In v2 with domain tag and length prefixing:
+        let h1_v2 = compute_ledger_hash_v2(prev, "user:123", 50, "pet:alpha", time);
+        let h2_v2 = compute_ledger_hash_v2(prev, "user", 50, "123:pet:alpha", time);
+        assert_ne!(
+            h1_v2, h2_v2,
+            "Length prefixing must prevent delimiter collisions"
+        );
+        assert_ne!(h1_v1, h1_v2, "v2 hash must differ from v1 hash");
+    }
+
+    #[test]
+    fn ledger_rejects_duplicate_idempotency_keys() {
+        let core = Core::in_memory().expect("database initializes");
+        let conn = core.connection.lock().expect("lock");
+        let tx = conn.unchecked_transaction().expect("tx");
+        let rules = load_progression_rules(&tx).expect("rules");
+
+        // The return value reports a level-up; 20 XP stays below the first level threshold.
+        let leveled_up = award_xp_transaction(
+            &tx,
+            "agentpet.starter-aoi",
+            "test_source",
+            "tx-001",
+            20,
+            "{}",
+            rules,
+        )
+        .expect("award 1");
+        assert!(!leveled_up);
+        let first_count: i64 = tx
+            .query_row("SELECT COUNT(*) FROM xp_ledger", [], |r| r.get(0))
+            .expect("count after first award");
+        assert_eq!(first_count, 1, "First award must append one ledger row");
+
+        // Second award with identical source and source_id (idempotency key)
+        let awarded2 = award_xp_transaction(
+            &tx,
+            "agentpet.starter-aoi",
+            "test_source",
+            "tx-001",
+            20,
+            "{}",
+            rules,
+        )
+        .expect("award 2");
+        assert!(
+            !awarded2,
+            "Duplicate idempotency key must not report a level-up"
+        );
+        tx.commit().expect("commit");
+
+        let count: i64 = conn
+            .query_row("SELECT COUNT(*) FROM xp_ledger", [], |r| r.get(0))
+            .expect("count");
+        assert_eq!(
+            count, 1,
+            "Ledger must contain only 1 row for unique idempotency key"
+        );
+    }
+
+    #[test]
+    fn ledger_verifies_mixed_v1_and_v2_entries() {
+        let core = Core::in_memory().expect("database initializes");
+        let conn = core.connection.lock().expect("lock");
+
+        // Manually insert a v1 legacy row with ledger_version = 1
+        let prev = GENESIS_HASH.to_string();
+        let time1 = "2026-10-20T00:00:00Z";
+        let h1 = compute_ledger_hash_v1(&prev, "legacy:1", 10, "pet1", time1);
+        conn.execute(
+            "INSERT INTO xp_ledger(entry_id, prev_hash, hash, provider, session_id, event_id, idempotency_key, pet_id, amount, created_at, metadata_json, ledger_version)
+             VALUES (?1, ?2, ?3, 'universal', 's1', 'e1', 'legacy:1', 'pet1', 10, ?4, '{}', 1)",
+            params!["id-1", prev, h1, time1],
+        )
+        .expect("insert v1 row");
+
+        // Insert a v2 row chaining from the v1 row
+        let time2 = "2026-10-21T00:00:00Z";
+        let h2 = compute_ledger_hash_v2(&h1, "v2:1", 20, "pet1", time2);
+        conn.execute(
+            "INSERT INTO xp_ledger(entry_id, prev_hash, hash, provider, session_id, event_id, idempotency_key, pet_id, amount, created_at, metadata_json, ledger_version)
+             VALUES (?1, ?2, ?3, 'universal', 's2', 'e2', 'v2:1', 'pet1', 20, ?4, '{}', 2)",
+            params!["id-2", h1, h2, time2],
+        )
+        .expect("insert v2 row");
+        drop(conn);
+
+        let verification = core.verify_ledger().expect("verify");
+        assert!(
+            verification.is_valid,
+            "Mixed v1/v2 ledger chain must verify cleanly"
+        );
+        assert_eq!(verification.total_entries, 2);
+        assert_eq!(verification.head_hash, h2);
     }
 }

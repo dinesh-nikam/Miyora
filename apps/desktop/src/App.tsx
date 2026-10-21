@@ -782,7 +782,7 @@ export default function App() {
                 <div style={{ fontSize: "20px", fontWeight: 800, color: "#a855f7" }}>
                   LVL {progression?.level ?? 1} · {(progression?.totalXp ?? 0).toLocaleString()} XP
                 </div>
-                <div style={{ fontSize: "10px", color: "#64748b" }}>Cryptographically verified append-only ledger</div>
+                <div style={{ fontSize: "10px", color: "#64748b" }}>Tamper-evident append-only ledger</div>
               </div>
 
               {/* 4. 5-Hour Rate Limit Quota */}
@@ -1194,7 +1194,7 @@ export default function App() {
            ========================================================= */}
         {activeTab === "progress" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-            {/* Cryptographic Ledger Proof Banner */}
+            {/* Tamper-Evident Ledger Proof Banner */}
             <div
               style={{
                 background: "linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 78, 59, 0.15) 100%)",
@@ -1210,10 +1210,10 @@ export default function App() {
                 <span style={{ fontSize: "32px" }}>🛡️</span>
                 <div>
                   <div style={{ fontSize: "15px", fontWeight: 700, color: "#34d399" }}>
-                    CRYPTOGRAPHIC APPEND-ONLY LEDGER
+                    TAMPER-EVIDENT APPEND-ONLY LEDGER
                   </div>
                   <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
-                    Every XP transaction is cryptographically linked with SHA-256 hash chaining and protected by SQLite triggers.
+                    Every XP transaction is tamper-evident with SHA-256 hash chaining and protected by SQLite triggers.
                   </div>
                   {ledgerVerification && (
                     <div style={{ fontSize: "10px", color: "#cbd5e1", marginTop: "6px", fontFamily: "monospace" }}>
