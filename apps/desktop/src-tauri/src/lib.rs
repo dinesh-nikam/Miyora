@@ -779,8 +779,8 @@ fn seed_starter_packs(core: &Core, pet_library: &Path) {
             || snapshot.selected_pet_id.as_deref() == Some("agentpet.starter-aoi@1.0.0")
         {
             if let Ok(packs) = core.list_installed_packs() {
-                if packs.iter().any(|p| p.id == "agentpet.starter-nezuko") {
-                    let _ = core.set_selected_pet(Some("agentpet.starter-nezuko@1.0.0"));
+                if packs.iter().any(|p| p.id == "agentpet.starter-aoi") {
+                    let _ = core.set_selected_pet(Some("agentpet.starter-aoi@1.0.0"));
                 } else if let Some(first) = packs.first() {
                     let _ = core.set_selected_pet(Some(&format!("{}@{}", first.id, first.version)));
                 }

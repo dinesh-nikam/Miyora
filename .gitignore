@@ -10,3 +10,9 @@ dist/
 !.env.example
 .omo/
 .codegraph/
+extracted_*.ts
+*.bak
+*.tmp
+claude_statusline.json
+.agentpet/
+*.log

@@ -251,7 +251,7 @@ export default function App() {
     }
   }, [refreshCoreData]);
 
-  const activePetName = selectedAnimation?.petName ?? "Nezuko";
+  const activePetName = selectedAnimation?.petName ?? "Aoi";
   const claudeProvider = providers.find((p) => p.providerId === "claude_code");
   const quotaWindow = claudeProvider?.quotaStatus?.fiveHour;
   const quotaProvenance = claudeProvider?.quotaProvenance ?? "N/A";
