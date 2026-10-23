@@ -827,6 +827,24 @@ mod tests {
         assert!(valid_manifest().validate().is_ok());
     }
 
+    /// Validates the bundled Momiji sprite pack end-to-end: manifest schema,
+    /// asset presence, image dimensions, and total size budget.
+    #[test]
+    fn bundled_momiji_pack_loads_and_validates() {
+        let pack_root = PathBuf::from(env!("CARGO_MANIFEST_DIR"))
+            .join("../../pet-packs/momiji")
+            .canonicalize()
+            .expect("pet-packs/momiji exists beside the crate");
+        let manifest = PetPackManifest::load_and_validate(&pack_root, ValidationLimits::default())
+            .expect("bundled Momiji pack must load and validate");
+        assert_eq!(manifest.id, "agentpet.momiji");
+        assert_eq!(manifest.assets.len(), 9);
+        // celebration and achievement share sprites, so the animation table is
+        // larger than the asset table.
+        assert_eq!(manifest.animations.len(), 10);
+        assert!(manifest.state_mappings.contains_key("offline"));
+    }
+
     #[test]
     fn rejects_path_traversal_and_unknown_animation_assets() {
         let mut manifest = valid_manifest();

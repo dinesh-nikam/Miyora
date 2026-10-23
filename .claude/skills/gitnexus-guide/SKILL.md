@@ -11,11 +11,12 @@ Quick reference for all GitNexus MCP tools, resources, and the knowledge graph s
 
 For any task involving code understanding, debugging, impact analysis, or refactoring:
 
-1. **Read `gitnexus://repo/{name}/context`** — codebase overview + check index freshness
-2. **Match your task to a skill below** and **read that skill file**
-3. **Follow the skill's workflow and checklist**
+1. **Call `list_repos {}`** — identify the indexed repository name
+2. **Read `gitnexus://repo/{name}/context`** — codebase overview + check index freshness
+3. **Match your task to a skill below** and **read that skill file**
+4. **Follow the skill's workflow and checklist**
 
-> If step 1 warns the index is stale, run `node .gitnexus/run.cjs analyze` in the terminal first.
+> If step 2 warns the index is stale, run `node .gitnexus/run.cjs analyze` (or `bun .gitnexus/run.cjs analyze`) in the terminal first.
 
 ## Skills
 

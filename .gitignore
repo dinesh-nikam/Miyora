@@ -1,5 +1,7 @@
 target/
 node_modules/
+
+.claude/
 dist/
 *.sqlite3
 *.sqlite3-shm
@@ -17,3 +19,10 @@ claude_statusline.json
 .agentpet/
 *.log
 .claude/worktrees/
+pet-packs-review/
+__pycache__/
+test_*.jpg
+test_*.png
+@reverse-engineer-anything*
+target*/
+

@@ -1,5 +1,6 @@
 //! Agent adapter contracts: normalized events, adapter registry, the Claude
-//! Code native hook adapter, and the versioned local hook IPC endpoint.
+//! Code and Codex native hook adapters, and the versioned local hook IPC
+//! endpoint.
 //!
 //! Adapters consume documented hook payloads and emit normalized events. They
 //! never fabricate session completion or token usage. The universal wrapper
@@ -7,6 +8,7 @@
 //! authoritative event and session lifecycle.
 
 pub mod claude_code;
+pub mod codex;
 pub mod ipc;
 
 use serde::{Deserialize, Serialize};
@@ -95,7 +97,7 @@ pub const ADAPTERS: &[AgentAdapter] = &[
         id: "codex",
         display_name: "OpenAI Codex CLI",
         executable: "codex",
-        native_hook: false,
+        native_hook: true,
     },
     AgentAdapter {
         id: "gemini_cli",

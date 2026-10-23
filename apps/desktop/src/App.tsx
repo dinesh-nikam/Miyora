@@ -12,6 +12,7 @@ interface RuntimeSnapshot {
   petState: PetState;
   selectedPetId: string | null;
   lastEventAt: string | null;
+  isSimulated?: boolean;
 }
 
 interface ProgressionSnapshot {
@@ -93,7 +94,6 @@ export default function App() {
   // Navigation State
   const [activeTab, setActiveTab] = useState<"den" | "sessions" | "companions" | "progress" | "settings">("den");
   const [isCommandDeckOpen, setIsCommandDeckOpen] = useState(false);
-  const [isSimulated, setIsSimulated] = useState(false);
 
   // Core Data
   const [renderMode, setRenderMode] = useState<"3d" | "2d">(() => {
@@ -110,6 +110,7 @@ export default function App() {
     selectedPetId: null,
     lastEventAt: null,
   });
+  const isSimulated = snapshot?.isSimulated ?? false;
   const [progression, setProgression] = useState<ProgressionSnapshot | null>(null);
   const [xpHistory, setXpHistory] = useState<XpTransaction[]>([]);
   const [sessions, setSessions] = useState<AgentSessionSummary[]>([]);
@@ -142,7 +143,18 @@ export default function App() {
 
       const animRes = await invokeSafe<SelectedPetAnimation | null>("get_selected_pet_animation");
       if (animRes.ok) {
-        setSelectedAnimation(animRes.data);
+        setSelectedAnimation((prev) => {
+          if (!prev && !animRes.data) return null;
+          if (
+            prev &&
+            animRes.data &&
+            prev.petName === animRes.data.petName &&
+            prev.animationId === animRes.data.animationId
+          ) {
+            return prev;
+          }
+          return animRes.data;
+        });
       }
 
       const [avatarRes, hudRes] = await Promise.all([
@@ -161,26 +173,45 @@ export default function App() {
 
       // Only query heavy items in main window
       if (!isOverlayWindow) {
-        const [progRes, packsRes, eventsRes, provsRes] = await Promise.all([
+        const [progRes, eventsRes, provsRes] = await Promise.all([
           invokeSafe<ProgressionSnapshot>("get_progression"),
-          invokeSafe<PetPackSummary[]>("list_pet_pack_cards"),
           invokeSafe<StoredAgentEvent[]>("get_real_events", { limit: 25 }),
           invokeSafe<ProviderReport[]>("get_providers_status"),
         ]);
-        if (progRes.ok) setProgression(progRes.data);
-        else setPanelErrors((prev) => ({ ...prev, progression: progRes.error }));
+        if (progRes.ok) {
+          setProgression(progRes.data);
+          setPanelErrors((prev) => ({ ...prev, progression: null }));
+        } else {
+          setPanelErrors((prev) => ({ ...prev, progression: `Failed to load progression: ${progRes.error}` }));
+        }
 
-        if (packsRes.ok) setInstalledPacks(packsRes.data);
-        else setPanelErrors((prev) => ({ ...prev, companions: packsRes.error }));
+        if (eventsRes.ok) {
+          setRealEvents(eventsRes.data);
+          setPanelErrors((prev) => ({ ...prev, events: null }));
+        } else {
+          setPanelErrors((prev) => ({ ...prev, events: `Failed to load real events: ${eventsRes.error}` }));
+        }
 
-        if (eventsRes.ok) setRealEvents(eventsRes.data);
-        else setPanelErrors((prev) => ({ ...prev, events: eventsRes.error }));
-
-        if (provsRes.ok) setProviders(provsRes.data);
-        else setPanelErrors((prev) => ({ ...prev, providers: provsRes.error }));
+        if (provsRes.ok) {
+          setProviders(provsRes.data);
+          setPanelErrors((prev) => ({ ...prev, providers: null }));
+        } else {
+          setPanelErrors((prev) => ({ ...prev, providers: `Failed to load providers: ${provsRes.error}` }));
+        }
       }
     } catch (err: unknown) {
       setRuntimeError(String(err));
+    }
+  }, [isOverlayWindow]);
+
+  const loadPacksData = useCallback(async () => {
+    if (isOverlayWindow) return;
+    const packsRes = await invokeSafe<PetPackSummary[]>("list_pet_pack_cards");
+    if (packsRes.ok) {
+      setInstalledPacks(packsRes.data);
+      setPanelErrors((prev) => ({ ...prev, companions: null }));
+    } else {
+      setPanelErrors((prev) => ({ ...prev, companions: `Failed to load pet packs: ${packsRes.error}` }));
     }
   }, [isOverlayWindow]);
 
@@ -189,6 +220,12 @@ export default function App() {
     const interval = setInterval(refreshCoreData, SNAPSHOT_POLL_INTERVAL_MS);
     return () => clearInterval(interval);
   }, [refreshCoreData]);
+
+  useEffect(() => {
+    if (!isOverlayWindow) {
+      void loadPacksData();
+    }
+  }, [isOverlayWindow, loadPacksData]);
 
   // Load tab-specific data
   const loadSessionsData = useCallback(async () => {
@@ -218,6 +255,8 @@ export default function App() {
     }
     if (verRes.ok) {
       setLedgerVerification(verRes.data);
+    } else {
+      setPanelErrors((prev) => ({ ...prev, progress: `Ledger verification failed: ${verRes.error}` }));
     }
   }, []);
 
@@ -226,8 +265,10 @@ export default function App() {
       void loadSessionsData();
     } else if (activeTab === "progress") {
       void loadProgressData();
+    } else if (activeTab === "companions") {
+      void loadPacksData();
     }
-  }, [activeTab, loadSessionsData, loadProgressData]);
+  }, [activeTab, loadSessionsData, loadProgressData, loadPacksData]);
 
   const retryPanel = useCallback(
     (panelKey: string) => {
@@ -248,31 +289,35 @@ export default function App() {
     if (!error) return null;
     return (
       <div
+        className="edge shadow-pop-sm"
         style={{
-          background: "rgba(239, 68, 68, 0.12)",
-          border: "1px solid rgba(239, 68, 68, 0.35)",
-          borderRadius: "8px",
-          padding: "10px 16px",
+          background: "#ff2db7",
+          color: "#ffffff",
+          padding: "12px 18px",
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
-          marginBottom: "12px",
+          marginBottom: "16px",
+          fontFamily: "'Space Grotesk', sans-serif",
+          fontWeight: 700,
         }}
       >
-        <div style={{ display: "flex", alignItems: "center", gap: "8px", color: "#fca5a5", fontSize: "12px" }}>
-          <span>⚠️</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "10px", fontSize: "13px" }}>
+          <span style={{ fontSize: "16px" }}>⚠️</span>
           <span>{error}</span>
         </div>
         <button
           onClick={() => retryPanel(panelKey)}
+          className="shadow-pop-sm shadow-pop-hover"
           style={{
-            background: "#ef4444",
+            background: "#0a0a0a",
             color: "#ffffff",
-            border: "none",
-            borderRadius: "4px",
-            padding: "4px 10px",
+            border: "2px solid #0a0a0a",
+            borderRadius: "999px",
+            padding: "4px 14px",
             fontSize: "11px",
-            fontWeight: 600,
+            fontWeight: 800,
+            textTransform: "uppercase",
             cursor: "pointer",
           }}
         >
@@ -292,6 +337,7 @@ export default function App() {
         setPanelErrors((prev) => ({ ...prev, progress: null }));
       } else {
         setPanelErrors((prev) => ({ ...prev, progress: `Ledger verification failed: ${result.error}` }));
+        setRuntimeError(`Ledger verification failed: ${result.error}`);
       }
     } finally {
       setLedgerVerifying(false);
@@ -302,7 +348,6 @@ export default function App() {
     try {
       const next = await invokeSafe<boolean>("toggle_demo_mode");
       if (next.ok) {
-        setIsSimulated(next.data);
         await refreshCoreData();
       } else {
         setRuntimeError(`Toggle simulation failed: ${next.error}`);
@@ -317,7 +362,6 @@ export default function App() {
       try {
         const res = await invokeSafe("simulate_agent_event", { eventType });
         if (res.ok) {
-          setIsSimulated(true);
           await refreshCoreData();
         } else {
           setRuntimeError(`Simulate event failed: ${res.error}`);
@@ -371,7 +415,7 @@ export default function App() {
       if (selected && typeof selected === "string") {
         const res = await invokeSafe("install_pet_pack", { sourcePath: selected });
         if (res.ok) {
-          await refreshCoreData();
+          await Promise.all([refreshCoreData(), loadPacksData()]);
         } else {
           setRuntimeError(`Pack install failed: ${res.error}`);
         }
@@ -379,7 +423,7 @@ export default function App() {
     } catch (err: unknown) {
       setRuntimeError(String(err));
     }
-  }, [refreshCoreData]);
+  }, [refreshCoreData, loadPacksData]);
 
   const activePetName = selectedAnimation?.petName ?? "Aoi";
   const claudeProvider = providers.find((p) => p.providerId === "claude_code");
@@ -419,12 +463,7 @@ export default function App() {
   }, [installedPacks, snapshot.selectedPetId, handleSelectPet]);
 
   const handleWakePet = useCallback(async () => {
-    try {
-      await invoke("simulate_agent_event", { eventType: "working" });
-      await refreshCoreData();
-    } catch {
-      // fallback
-    }
+    await refreshCoreData();
   }, [refreshCoreData]);
 
   // -------------------------------------------------------------
@@ -449,85 +488,98 @@ export default function App() {
       >
         {/* Overlay Draggable Titlebar */}
         <div
+          className="edge shadow-pop-sm"
           style={{
             width: "100%",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            background: "rgba(10, 15, 25, 0.9)",
-            border: "1px solid rgba(82, 168, 255, 0.35)",
-            borderRadius: "8px",
-            padding: "4px 8px",
+            background: "#ffffff",
+            padding: "6px 10px",
             cursor: "grab",
-            fontSize: "10px",
-            color: "#94a3b8",
-            backdropFilter: "blur(8px)",
+            fontSize: "11px",
+            color: "#0a0a0a",
             boxSizing: "border-box",
+            fontFamily: "'Space Grotesk', sans-serif",
           }}
           onMouseDown={() => {
             void getCurrentWindow()
               .startDragging()
-              .catch(() => {});
+              .catch((err) => {
+                setRuntimeError(`Failed to drag window: ${err}`);
+              });
           }}
         >
-          <span style={{ fontWeight: 800, color: "#38bdf8", letterSpacing: "0.5px" }}>
+          <span style={{ fontWeight: 900, color: "#0a0a0a", letterSpacing: "0.5px" }}>
             AGENTPET {isSimulated ? "· SIMULATED" : ""}
           </span>
-          <div style={{ display: "flex", gap: "8px", alignItems: "center" }}>
+          <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
             <button
               onClick={toggleSound}
-              style={{
-                background: "transparent",
-                border: "none",
-                color: soundMuted ? "#64748b" : "#38bdf8",
-                fontSize: "11px",
-                padding: 0,
-                cursor: "pointer",
-              }}
+              aria-label={soundMuted ? "Unmute sounds" : "Mute sounds"}
               title={soundMuted ? "Unmute Sounds" : "Mute Sounds"}
+              style={{
+                background: soundMuted ? "#ffffff" : "#ffd000",
+                border: "2px solid #0a0a0a",
+                borderRadius: "4px",
+                color: "#0a0a0a",
+                fontSize: "11px",
+                padding: "2px 5px",
+                cursor: "pointer",
+                fontWeight: 800,
+              }}
             >
               {soundMuted ? "🔇" : "🔊"}
             </button>
             <button
               onClick={() => setIsCommandDeckOpen(true)}
-              style={{
-                background: "transparent",
-                border: "none",
-                color: "#ffd700",
-                fontSize: "11px",
-                padding: 0,
-                cursor: "pointer",
-              }}
+              aria-label="Open Command Deck"
               title="Open Command Deck"
+              style={{
+                background: "#ffd000",
+                border: "2px solid #0a0a0a",
+                borderRadius: "4px",
+                color: "#0a0a0a",
+                fontSize: "11px",
+                padding: "2px 5px",
+                cursor: "pointer",
+                fontWeight: 900,
+              }}
             >
               ⚡
             </button>
             <button
               onClick={handleTogglePause}
               disabled={busy}
-              style={{
-                background: "transparent",
-                border: "none",
-                color: "#cbd5e1",
-                fontSize: "10px",
-                padding: 0,
-                cursor: "pointer",
-              }}
+              aria-label={snapshot.petState === "paused" ? "Resume companion" : "Pause companion"}
               title={snapshot.petState === "paused" ? "Resume" : "Pause"}
+              style={{
+                background: "#00d4ff",
+                border: "2px solid #0a0a0a",
+                borderRadius: "4px",
+                color: "#0a0a0a",
+                fontSize: "10px",
+                padding: "2px 6px",
+                cursor: "pointer",
+                fontWeight: 900,
+              }}
             >
               {snapshot.petState === "paused" ? "▶" : "Ⅱ"}
             </button>
             <button
               onClick={() => void getCurrentWindow().hide()}
-              style={{
-                background: "transparent",
-                border: "none",
-                color: "#94a3b8",
-                fontSize: "11px",
-                padding: 0,
-                cursor: "pointer",
-              }}
+              aria-label="Hide overlay window"
               title="Hide Overlay"
+              style={{
+                background: "#ff2db7",
+                border: "2px solid #0a0a0a",
+                borderRadius: "4px",
+                color: "#ffffff",
+                fontSize: "11px",
+                padding: "2px 6px",
+                cursor: "pointer",
+                fontWeight: 900,
+              }}
             >
               ×
             </button>
@@ -564,6 +616,8 @@ export default function App() {
           onSelectPet={handleSelectPet}
           installedPacks={installedPacks}
           onVerifyLedger={handleVerifyLedger}
+          selectedPetId={snapshot.selectedPetId}
+          ledgerVerification={ledgerVerification}
         />
       </main>
     );
@@ -574,40 +628,49 @@ export default function App() {
   // -------------------------------------------------------------
   return (
     <div
+      className="grain"
       style={{
-        backgroundColor: "#070b12",
-        color: "#f8fafc",
+        backgroundColor: "#ffffff",
+        color: "#0a0a0a",
         minHeight: "100vh",
         display: "flex",
         flexDirection: "column",
-        fontFamily: "'Inter', sans-serif",
+        fontFamily: "'Archivo', sans-serif",
       }}
     >
       {/* SIMULATED MODE BANNER (Mandatory Ground Rule 1) */}
       {isSimulated && (
         <div
           style={{
-            backgroundColor: "#d97706",
-            color: "#000000",
-            fontWeight: 800,
-            fontSize: "11px",
-            letterSpacing: "1px",
-            padding: "5px 16px",
+            backgroundColor: "#ffd000",
+            color: "#0a0a0a",
+            fontWeight: 900,
+            fontSize: "12px",
+            letterSpacing: "0.08em",
+            padding: "8px 24px",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
+            borderBottom: "4px solid #0a0a0a",
+            fontFamily: "'Space Grotesk', sans-serif",
+            textTransform: "uppercase",
           }}
         >
-          <span>⚠️ SIMULATED DEMO MODE ACTIVE · SEPARATE DB (`agentpet_simulated.sqlite3`) · ZERO REAL XP AWARDED</span>
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <span style={{ fontSize: "16px" }}>⚠️</span>
+            <span>SIMULATED DEMO MODE ACTIVE · DB: agentpet_simulated.sqlite3 · ZERO REAL XP AWARDED</span>
+          </div>
           <button
             onClick={handleToggleSimulated}
+            className="shadow-pop-sm shadow-pop-hover"
             style={{
-              background: "#000000",
+              background: "#0a0a0a",
               color: "#ffffff",
-              padding: "2px 8px",
-              borderRadius: "4px",
-              fontSize: "10px",
-              fontWeight: 700,
+              padding: "4px 14px",
+              border: "2px solid #0a0a0a",
+              borderRadius: "999px",
+              fontSize: "11px",
+              fontWeight: 800,
               cursor: "pointer",
             }}
           >
@@ -620,159 +683,479 @@ export default function App() {
       {runtimeError && (
         <div
           style={{
-            backgroundColor: "rgba(220, 38, 38, 0.9)",
+            backgroundColor: "#ff2db7",
             color: "#ffffff",
-            padding: "6px 16px",
-            fontSize: "11px",
+            padding: "8px 24px",
+            fontSize: "12px",
+            fontWeight: 800,
+            fontFamily: "'Space Grotesk', sans-serif",
             display: "flex",
             justifyContent: "space-between",
             alignItems: "center",
+            borderBottom: "4px solid #0a0a0a",
           }}
         >
-          <span>RUNTIME DIAGNOSTIC: {runtimeError}</span>
-          <button onClick={() => setRuntimeError(null)} style={{ color: "#fff", fontWeight: 700, cursor: "pointer" }}>✕</button>
+          <span>🚨 RUNTIME DIAGNOSTIC: {runtimeError}</span>
+          <button
+            onClick={() => setRuntimeError(null)}
+            style={{
+              background: "#0a0a0a",
+              color: "#ffffff",
+              border: "2px solid #ffffff",
+              padding: "2px 8px",
+              borderRadius: "4px",
+              fontWeight: 900,
+              cursor: "pointer",
+            }}
+          >
+            ✕
+          </button>
         </div>
       )}
 
-      {/* Main Top Header */}
+      {/* Sticky White Nav */}
       <header
         style={{
-          height: "64px",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-          background: "linear-gradient(180deg, #0e1626 0%, #080d17 100%)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "0 28px",
           position: "sticky",
           top: 0,
-          zIndex: 100,
+          zIndex: 50,
+          backgroundColor: "#ffffff",
+          borderBottom: "4px solid #0a0a0a",
         }}
       >
-        {/* Brand */}
-        <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-          <div
-            style={{
-              width: "32px",
-              height: "32px",
-              borderRadius: "8px",
-              background: "linear-gradient(135deg, #0284c7 0%, #06b6d4 100%)",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              boxShadow: "0 0 12px rgba(2, 132, 199, 0.4)",
-            }}
-          >
-            <span style={{ fontSize: "16px" }}>⚡</span>
-          </div>
-          <div>
-            <div style={{ fontWeight: 800, fontSize: "15px", letterSpacing: "1px" }}>AGENTPET</div>
-            <div style={{ fontSize: "9px", color: "#64748b", fontWeight: 600, letterSpacing: "0.5px" }}>
-              ACTIVE COMPANION: <span style={{ color: "#38bdf8" }}>{activePetName.toUpperCase()}</span>
+        <div
+          style={{
+            maxWidth: "1400px",
+            margin: "0 auto",
+            padding: "0 24px",
+            height: "72px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          {/* Brand Left: 3-bar logo glyph + display wordmark */}
+          <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
+            <div style={{ display: "flex", gap: "4px", alignItems: "center" }}>
+              <span
+                style={{
+                  width: "10px",
+                  height: "26px",
+                  backgroundColor: "#ff2db7",
+                  border: "2px solid #0a0a0a",
+                  display: "inline-block",
+                  boxShadow: "2px 2px 0 #0a0a0a",
+                }}
+              />
+              <span
+                style={{
+                  width: "10px",
+                  height: "26px",
+                  backgroundColor: "#00d4ff",
+                  border: "2px solid #0a0a0a",
+                  display: "inline-block",
+                  boxShadow: "2px 2px 0 #0a0a0a",
+                }}
+              />
+              <span
+                style={{
+                  width: "10px",
+                  height: "26px",
+                  backgroundColor: "#ffd000",
+                  border: "2px solid #0a0a0a",
+                  display: "inline-block",
+                  boxShadow: "2px 2px 0 #0a0a0a",
+                }}
+              />
+            </div>
+            <div>
+              <div className="display" style={{ fontSize: "22px", color: "#0a0a0a", lineHeight: 1 }}>
+                AGENTPET
+              </div>
+              <div
+                className="font-grotesk"
+                style={{
+                  fontSize: "10px",
+                  color: "#0a0a0a",
+                  fontWeight: 800,
+                  letterSpacing: "0.15em",
+                  textTransform: "uppercase",
+                  marginTop: "2px",
+                }}
+              >
+                COMPANION · <span style={{ color: "#ff2db7" }}>{activePetName}</span>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Tab Navigation */}
-        <nav style={{ display: "flex", gap: "6px" }}>
-          {(
-            [
-              { id: "den", label: "Den", icon: "🏛️" },
-              { id: "sessions", label: "Sessions", icon: "📊" },
-              { id: "companions", label: "Companions", icon: "✨" },
-              { id: "progress", label: "Progress", icon: "🔒" },
-              { id: "settings", label: "Settings", icon: "⚙️" },
-            ] as const
-          ).map((tab) => (
+          {/* Navigation Center */}
+          <nav style={{ display: "flex", gap: "8px" }}>
+            {(
+              [
+                { id: "den", label: "Den", icon: "🏛️" },
+                { id: "sessions", label: "Sessions", icon: "📊" },
+                { id: "companions", label: "Companions", icon: "✨" },
+                { id: "progress", label: "Progress", icon: "🔒" },
+                { id: "settings", label: "Settings", icon: "⚙️" },
+              ] as const
+            ).map((tab) => {
+              const isActive = activeTab === tab.id;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => setActiveTab(tab.id)}
+                  className="font-grotesk shadow-pop-hover"
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "6px",
+                    padding: "8px 16px",
+                    borderRadius: "999px",
+                    fontSize: "13px",
+                    fontWeight: 800,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.08em",
+                    cursor: "pointer",
+                    backgroundColor: isActive ? "#00d4ff" : "#ffffff",
+                    color: "#0a0a0a",
+                    border: "3px solid #0a0a0a",
+                    boxShadow: isActive ? "4px 4px 0 #0a0a0a" : "none",
+                  }}
+                >
+                  <span>{tab.icon}</span>
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </nav>
+
+          {/* Header Right Actions */}
+          <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
             <button
-              key={tab.id}
-              onClick={() => setActiveTab(tab.id)}
+              onClick={toggleSound}
+              className="font-grotesk shadow-pop-hover"
               style={{
+                width: "40px",
+                height: "40px",
+                borderRadius: "50%",
+                backgroundColor: soundMuted ? "#ffffff" : "#ffd000",
+                border: "3px solid #0a0a0a",
+                boxShadow: "3px 3px 0 #0a0a0a",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                fontSize: "15px",
+                cursor: "pointer",
+              }}
+              title={soundMuted ? "Unmute Audio" : "Mute Audio"}
+            >
+              {soundMuted ? "🔇" : "🔊"}
+            </button>
+
+            <button
+              onClick={() => setIsCommandDeckOpen(true)}
+              className="font-grotesk shadow-pop-hover"
+              style={{
+                padding: "10px 18px",
+                backgroundColor: "#0a0a0a",
+                color: "#ffffff",
+                border: "3px solid #0a0a0a",
+                borderRadius: "999px",
+                boxShadow: "4px 4px 0 #0a0a0a",
+                fontSize: "12px",
+                fontWeight: 900,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 gap: "6px",
-                padding: "8px 16px",
-                borderRadius: "6px",
-                fontSize: "12px",
-                fontWeight: activeTab === tab.id ? 700 : 500,
-                color: activeTab === tab.id ? "#38bdf8" : "#94a3b8",
-                background: activeTab === tab.id ? "rgba(56, 189, 248, 0.12)" : "transparent",
-                border: activeTab === tab.id ? "1px solid rgba(56, 189, 248, 0.3)" : "1px solid transparent",
-                cursor: "pointer",
-                transition: "all 0.15s ease",
               }}
             >
-              <span>{tab.icon}</span>
-              <span>{tab.label}</span>
+              <span style={{ color: "#ffd000" }}>⚡</span>
+              <span>COMMAND DECK</span>
             </button>
-          ))}
-        </nav>
 
-        {/* Header Right Actions */}
-        <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-          <button
-            onClick={() => setIsCommandDeckOpen(true)}
-            style={{
-              padding: "6px 12px",
-              background: "rgba(255, 215, 0, 0.12)",
-              border: "1px solid rgba(255, 215, 0, 0.35)",
-              color: "#ffd700",
-              borderRadius: "6px",
-              fontSize: "11px",
-              fontWeight: 700,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "5px",
-            }}
-          >
-            <span>⚡</span>
-            <span>COMMAND DECK</span>
-          </button>
-
-          <button
-            onClick={() => void invoke("show_pet_overlay")}
-            style={{
-              padding: "6px 12px",
-              background: "rgba(56, 189, 248, 0.15)",
-              border: "1px solid rgba(56, 189, 248, 0.4)",
-              color: "#38bdf8",
-              borderRadius: "6px",
-              fontSize: "11px",
-              fontWeight: 600,
-              cursor: "pointer",
-            }}
-          >
-            DESK OVERLAY
-          </button>
+            <button
+              onClick={() => void invoke("show_pet_overlay").catch((err) => setRuntimeError(`Failed to show companion window: ${err}`))}
+              className="font-grotesk shadow-pop-hover"
+              style={{
+                padding: "10px 16px",
+                backgroundColor: "#ff2db7",
+                color: "#ffffff",
+                border: "3px solid #0a0a0a",
+                borderRadius: "999px",
+                boxShadow: "4px 4px 0 #0a0a0a",
+                fontSize: "12px",
+                fontWeight: 900,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                cursor: "pointer",
+              }}
+            >
+              DESK OVERLAY
+            </button>
+          </div>
         </div>
       </header>
 
+      {/* Slogan Marquee (Forward) */}
+      <div
+        className="marquee-mask"
+        style={{
+          backgroundColor: "#0a0a0a",
+          color: "#ffffff",
+          padding: "12px 0",
+          borderBottom: "4px solid #0a0a0a",
+        }}
+      >
+        <div className="marquee-strip">
+          {[1, 2].map((idx) => (
+            <div
+              key={idx}
+              aria-hidden={idx === 2}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "28px",
+                paddingRight: "28px",
+              }}
+            >
+              <span className="display" style={{ fontSize: "22px" }}>
+                ZERO FABRICATED METRICS
+              </span>
+              <span style={{ color: "#ff2db7", fontSize: "24px", fontWeight: 900 }}>✦</span>
+              <span className="display" style={{ fontSize: "22px", color: "#00d4ff" }}>
+                TAMPER-EVIDENT LEDGER
+              </span>
+              <span style={{ color: "#ffd000", fontSize: "24px", fontWeight: 900 }}>✦</span>
+              <span className="display" style={{ fontSize: "22px" }}>
+                3D PROCEDURAL RIG
+              </span>
+              <span style={{ color: "#ff2db7", fontSize: "24px", fontWeight: 900 }}>✦</span>
+              <span className="display" style={{ fontSize: "22px", color: "#ffd000" }}>
+                TAURI 2 & RUST DOMAIN
+              </span>
+              <span style={{ color: "#00d4ff", fontSize: "24px", fontWeight: 900 }}>✦</span>
+              <span className="display" style={{ fontSize: "22px" }}>
+                LOCAL-FIRST ARCHITECTURE
+              </span>
+              <span style={{ color: "#ff2db7", fontSize: "24px", fontWeight: 900 }}>✦</span>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Secondary Client / Agent Marquee (Reverse) */}
+      <div
+        className="marquee-mask"
+        style={{
+          backgroundColor: "#ffd000",
+          color: "#0a0a0a",
+          padding: "8px 0",
+          borderBottom: "4px solid #0a0a0a",
+        }}
+      >
+        <div className="marquee-rev-strip">
+          {[1, 2].map((idx) => (
+            <div
+              key={idx}
+              aria-hidden={idx === 2}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "24px",
+                paddingRight: "24px",
+              }}
+            >
+              {[
+                "CLAUDE CODE",
+                "•",
+                "COPILOT",
+                "•",
+                "CURSOR",
+                "•",
+                "CODEX",
+                "•",
+                "OPENAI",
+                "•",
+                "AOI",
+                "•",
+                "MIRA",
+                "•",
+                "ROWAN",
+                "•",
+                "HANA",
+                "•",
+                "IVO",
+                "•",
+                "TETSU",
+                "•",
+                "SUMIRE",
+                "•",
+                "MOMIJI",
+              ].map((token, i) => (
+                <span
+                  key={i}
+                  className="font-grotesk"
+                  style={{
+                    fontSize: "14px",
+                    fontWeight: 900,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.15em",
+                    color: token === "•" ? "#ff2db7" : "#0a0a0a",
+                  }}
+                >
+                  {token}
+                </span>
+              ))}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Main Tab Content */}
-      <main style={{ flex: 1, padding: "28px", maxWidth: "1280px", width: "100%", margin: "0 auto", boxSizing: "border-box" }}>
+      <main
+        style={{
+          flex: 1,
+          padding: "36px 24px",
+          maxWidth: "1400px",
+          width: "100%",
+          margin: "0 auto",
+          boxSizing: "border-box",
+        }}
+      >
         {/* =========================================================
             TAB 1: DEN
            ========================================================= */}
         {activeTab === "den" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
             {renderPanelError("den")}
+
+            {/* Top Eyebrow Row */}
+            <div
+              className="font-grotesk"
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "space-between",
+                alignItems: "center",
+                fontSize: "12px",
+                fontWeight: 800,
+                textTransform: "uppercase",
+                letterSpacing: "0.18em",
+                color: "#0a0a0a",
+              }}
+            >
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span
+                  style={{
+                    width: "10px",
+                    height: "10px",
+                    borderRadius: "50%",
+                    backgroundColor: "#ff2db7",
+                    display: "inline-block",
+                    boxShadow: "0 0 8px #ff2db7",
+                  }}
+                />
+                <span>REAL-TIME COMPANION TELEMETRY · LOCAL RUNTIME</span>
+              </div>
+              <div>INDEPENDENT DESKTOP CORE · TAURI 2 & RUST</div>
+            </div>
+
+            {/* Hero Giant Headline */}
+            <div>
+              <h1
+                className="display"
+                style={{
+                  fontSize: "clamp(44px, 7vw, 96px)",
+                  color: "#0a0a0a",
+                  lineHeight: 0.88,
+                  margin: "8px 0 20px 0",
+                }}
+              >
+                COMPANIONS THAT <span style={{ color: "#ff2db7" }}>REFUSE</span> TO BE{" "}
+                <span className="highlight-cyan">IGNORED</span>
+              </h1>
+              <div
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "space-between",
+                  alignItems: "flex-end",
+                  gap: "24px",
+                }}
+              >
+                <p
+                  className="font-grotesk"
+                  style={{
+                    fontSize: "18px",
+                    lineHeight: 1.4,
+                    color: "rgba(10, 10, 10, 0.85)",
+                    maxWidth: "640px",
+                    fontWeight: 600,
+                    margin: 0,
+                  }}
+                >
+                  Local desktop companion for autonomous coding agents. Zero fake data, tamper-evident SHA-256 hash
+                  chaining, real process observation, and a living 3D presence that reacts to your workflow.
+                </p>
+                <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
+                  <button
+                    onClick={() => setIsCommandDeckOpen(true)}
+                    className="font-grotesk shadow-pop shadow-pop-hover"
+                    style={{
+                      backgroundColor: "#ff2db7",
+                      color: "#ffffff",
+                      padding: "14px 28px",
+                      border: "3px solid #0a0a0a",
+                      borderRadius: "999px",
+                      fontSize: "14px",
+                      fontWeight: 900,
+                      cursor: "pointer",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    OPEN COMMAND DECK ⚡
+                  </button>
+                  <button
+                    onClick={() => void invoke("show_pet_overlay").catch((err) => setRuntimeError(`Failed to show companion window: ${err}`))}
+                    className="font-grotesk shadow-pop shadow-pop-hover"
+                    style={{
+                      backgroundColor: "#ffffff",
+                      color: "#0a0a0a",
+                      padding: "14px 24px",
+                      border: "3px solid #0a0a0a",
+                      borderRadius: "999px",
+                      fontSize: "14px",
+                      fontWeight: 900,
+                      cursor: "pointer",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
+                    }}
+                  >
+                    DESK OVERLAY
+                  </button>
+                </div>
+              </div>
+            </div>
+
             {/* Stage Showcase Card */}
             <div
+              className="edge-thick shadow-pop-lg"
               style={{
-                background: "radial-gradient(ellipse at top, #111e38 0%, #090f1d 70%)",
-                border: "1px solid rgba(82, 168, 255, 0.2)",
-                borderRadius: "16px",
-                padding: "36px 24px",
+                backgroundColor: "#ffffff",
+                padding: "40px 24px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
                 position: "relative",
-                boxShadow: "0 20px 50px rgba(0, 0, 0, 0.5)",
               }}
             >
               {/* Top-Right Stage Mode Toggle */}
-              <div style={{ position: "absolute", top: "16px", right: "16px", zIndex: 10 }}>
+              <div style={{ position: "absolute", top: "20px", right: "20px", zIndex: 10 }}>
                 <button
                   type="button"
                   onClick={() => {
@@ -782,24 +1165,24 @@ export default function App() {
                       localStorage.setItem("agentpet_render_mode", next);
                     } catch {}
                   }}
-                  title={`Switch to ${renderMode === "3d" ? "2D Pixel Sprite" : "3D Living Avatar"} mode`}
+                  className="font-grotesk shadow-pop-sm shadow-pop-hover"
                   style={{
-                    background: renderMode === "3d" ? "rgba(56, 189, 248, 0.15)" : "rgba(255, 255, 255, 0.06)",
-                    border: `1px solid ${renderMode === "3d" ? "#38bdf8" : "rgba(255, 255, 255, 0.15)"}`,
-                    color: renderMode === "3d" ? "#38bdf8" : "#94a3b8",
-                    padding: "4px 12px",
-                    borderRadius: "14px",
-                    fontSize: "11px",
-                    fontWeight: 700,
-                    letterSpacing: "0.5px",
+                    backgroundColor: renderMode === "3d" ? "#ffd000" : "#ffffff",
+                    color: "#0a0a0a",
+                    border: "3px solid #0a0a0a",
+                    borderRadius: "999px",
+                    padding: "8px 18px",
+                    fontSize: "12px",
+                    fontWeight: 900,
+                    letterSpacing: "0.05em",
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
-                    gap: "5px",
+                    gap: "8px",
                   }}
                 >
                   <span>{renderMode === "3d" ? "🎮 3D AVATAR ACTIVE" : "🖼️ 2D SPRITE ACTIVE"}</span>
-                  <span style={{ fontSize: "9px", opacity: 0.7 }}>⇄ Toggle</span>
+                  <span style={{ opacity: 0.6 }}>⇄ Toggle</span>
                 </button>
               </div>
 
@@ -811,7 +1194,7 @@ export default function App() {
                 hud={avatarHud}
                 quotaWindow={quotaWindow}
                 quotaProvenance={quotaProvenance}
-                size={270}
+                size={290}
                 mode={renderMode}
                 onModeToggle={setRenderMode}
                 interactive={true}
@@ -820,138 +1203,204 @@ export default function App() {
               />
 
               {/* Status Ribbon */}
-              <div style={{ marginTop: "16px", display: "flex", flexDirection: "column", alignItems: "center", gap: "6px" }}>
-                <div style={{ fontSize: "18px", fontWeight: 800, letterSpacing: "1px", color: "#f8fafc" }}>
+              <div
+                style={{
+                  marginTop: "24px",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: "10px",
+                }}
+              >
+                <div className="display" style={{ fontSize: "36px", color: "#0a0a0a" }}>
                   {activePetName}
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
                   <span
+                    className="font-grotesk shadow-pop-sm"
                     style={{
-                      background: "rgba(56, 189, 248, 0.15)",
-                      color: "#38bdf8",
-                      border: "1px solid rgba(56, 189, 248, 0.3)",
-                      borderRadius: "12px",
-                      padding: "2px 10px",
-                      fontSize: "11px",
-                      fontWeight: 700,
-                      letterSpacing: "0.5px",
+                      backgroundColor: "#00d4ff",
+                      color: "#0a0a0a",
+                      border: "3px solid #0a0a0a",
+                      borderRadius: "999px",
+                      padding: "4px 18px",
+                      fontSize: "13px",
+                      fontWeight: 900,
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
                     }}
                   >
                     STATE: {snapshot.petState.toUpperCase().replaceAll("_", " ")}
                   </span>
-                  <span style={{ fontSize: "11px", color: "#64748b" }}>
-                    Double-click companion to trigger Command Deck
+                  <span className="font-grotesk" style={{ fontSize: "12px", color: "#0a0a0a", fontWeight: 700 }}>
+                    ⚡ Double-click companion to summon Command Deck
                   </span>
                 </div>
               </div>
             </div>
 
-            {/* Today Summary Strip (Mandatory Ground Rule 2 Provenance Chips) */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "14px" }}>
-              {/* 1. Real Tokens Today */}
+            {/* Today Summary 4-Cell Strip */}
+            <div
+              className="edge-thick shadow-pop-lg"
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                backgroundColor: "#0a0a0a",
+                gap: "4px",
+              }}
+            >
+              {/* 1. Real Tokens Today (Magenta) */}
               <div
                 style={{
-                  background: "#0c1322",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  borderRadius: "10px",
-                  padding: "16px",
+                  backgroundColor: "#ff2db7",
+                  color: "#0a0a0a",
+                  padding: "24px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "6px",
+                  justifyContent: "space-between",
+                  minHeight: "150px",
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "11px", color: "#64748b", fontWeight: 600 }}>TOKENS PROCESSED</span>
-                  <span style={{ fontSize: "9px", padding: "1px 5px", background: "#0284c7", color: "#fff", borderRadius: "3px", fontWeight: 700 }}>
+                  <span className="font-grotesk" style={{ fontSize: "12px", fontWeight: 900, letterSpacing: "0.1em" }}>
+                    TOKENS PROCESSED
+                  </span>
+                  <span
+                    className="font-grotesk"
+                    style={{
+                      fontSize: "10px",
+                      padding: "2px 8px",
+                      backgroundColor: "#0a0a0a",
+                      color: "#ffffff",
+                      border: "2px solid #0a0a0a",
+                      fontWeight: 900,
+                    }}
+                  >
                     LOCAL
                   </span>
                 </div>
-                <div style={{ fontSize: "20px", fontWeight: 800, color: totalTokensToday !== null ? "#38bdf8" : "#94a3b8" }}>
+                <div className="display" style={{ fontSize: "38px", color: "#0a0a0a" }}>
                   {totalTokensToday !== null ? totalTokensToday.toLocaleString() : "N/A"}
                 </div>
-                <div style={{ fontSize: "10px", color: "#64748b" }}>Computed from local Claude session logs</div>
+                <div className="font-grotesk" style={{ fontSize: "11px", fontWeight: 700, color: "rgba(10,10,10,0.8)" }}>
+                  Computed from local Claude session logs
+                </div>
               </div>
 
-              {/* 2. Real Cost Today */}
+              {/* 2. Real Cost Today (Cyan) */}
               <div
                 style={{
-                  background: "#0c1322",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  borderRadius: "10px",
-                  padding: "16px",
+                  backgroundColor: "#00d4ff",
+                  color: "#0a0a0a",
+                  padding: "24px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "6px",
+                  justifyContent: "space-between",
+                  minHeight: "150px",
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "11px", color: "#64748b", fontWeight: 600 }}>SESSION COST (USD)</span>
-                  <span style={{ fontSize: "9px", padding: "1px 5px", background: "#15803d", color: "#fff", borderRadius: "3px", fontWeight: 700 }}>
+                  <span className="font-grotesk" style={{ fontSize: "12px", fontWeight: 900, letterSpacing: "0.1em" }}>
+                    ESTIMATED SESSION COST (USD)
+                  </span>
+                  <span
+                    className="font-grotesk"
+                    style={{
+                      fontSize: "10px",
+                      padding: "2px 8px",
+                      backgroundColor: "#0a0a0a",
+                      color: "#ffffff",
+                      border: "2px solid #0a0a0a",
+                      fontWeight: 900,
+                    }}
+                  >
                     LOCAL
                   </span>
                 </div>
-                <div style={{ fontSize: "20px", fontWeight: 800, color: totalCostToday !== null ? "#4ade80" : "#94a3b8" }}>
+                <div className="display" style={{ fontSize: "38px", color: "#0a0a0a" }}>
                   {totalCostToday !== null ? `$${totalCostToday.toFixed(2)}` : "N/A"}
                 </div>
-                <div style={{ fontSize: "10px", color: "#64748b" }}>Exact sum from `.claude/metrics/costs.jsonl`</div>
+                <div className="font-grotesk" style={{ fontSize: "11px", fontWeight: 700, color: "rgba(10,10,10,0.8)" }}>
+                  Estimated ({claudeProvider?.costProvenance ?? "ESTIMATED"}) from .claude/metrics/costs.jsonl
+                </div>
               </div>
 
-              {/* 3. Real Level & Total XP */}
+              {/* 3. Real Level & Total XP (Yellow) */}
               <div
                 style={{
-                  background: "#0c1322",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  borderRadius: "10px",
-                  padding: "16px",
+                  backgroundColor: "#ffd000",
+                  color: "#0a0a0a",
+                  padding: "24px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "6px",
+                  justifyContent: "space-between",
+                  minHeight: "150px",
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "11px", color: "#64748b", fontWeight: 600 }}>PROGRESSION XP</span>
-                  <span style={{ fontSize: "9px", padding: "1px 5px", background: "#7c3aed", color: "#fff", borderRadius: "3px", fontWeight: 700 }}>
+                  <span className="font-grotesk" style={{ fontSize: "12px", fontWeight: 900, letterSpacing: "0.1em" }}>
+                    PROGRESSION XP
+                  </span>
+                  <span
+                    className="font-grotesk"
+                    style={{
+                      fontSize: "10px",
+                      padding: "2px 8px",
+                      backgroundColor: "#0a0a0a",
+                      color: "#ffffff",
+                      border: "2px solid #0a0a0a",
+                      fontWeight: 900,
+                    }}
+                  >
                     LOCAL
                   </span>
                 </div>
-                <div style={{ fontSize: "20px", fontWeight: 800, color: "#a855f7" }}>
+                <div className="display" style={{ fontSize: "34px", color: "#0a0a0a" }}>
                   LVL {progression?.level ?? 1} · {(progression?.totalXp ?? 0).toLocaleString()} XP
                 </div>
-                <div style={{ fontSize: "10px", color: "#64748b" }}>Tamper-evident append-only ledger</div>
+                <div className="font-grotesk" style={{ fontSize: "11px", fontWeight: 700, color: "rgba(10,10,10,0.8)" }}>
+                  Tamper-evident append-only ledger
+                </div>
               </div>
 
-              {/* 4. 5-Hour Rate Limit Quota */}
+              {/* 4. 5-Hour Rate Limit Quota (Ink) */}
               <div
                 style={{
-                  background: "#0c1322",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  borderRadius: "10px",
-                  padding: "16px",
+                  backgroundColor: "#0a0a0a",
+                  color: "#ffffff",
+                  padding: "24px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "6px",
+                  justifyContent: "space-between",
+                  minHeight: "150px",
                 }}
               >
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                  <span style={{ fontSize: "11px", color: "#64748b", fontWeight: 600 }}>5H RATE LIMIT</span>
+                  <span className="font-grotesk" style={{ fontSize: "12px", fontWeight: 900, letterSpacing: "0.1em" }}>
+                    5H RATE LIMIT
+                  </span>
                   <span
+                    className="font-grotesk"
                     style={{
-                      fontSize: "9px",
-                      padding: "1px 5px",
-                      background: quotaProvenance === "LIVE" ? "#0284c7" : "#334155",
-                      color: "#fff",
-                      borderRadius: "3px",
-                      fontWeight: 700,
+                      fontSize: "10px",
+                      padding: "2px 8px",
+                      backgroundColor: "#00d4ff",
+                      color: "#0a0a0a",
+                      border: "2px solid #00d4ff",
+                      fontWeight: 900,
                     }}
                   >
                     {quotaProvenance}
                   </span>
                 </div>
-                <div style={{ fontSize: "20px", fontWeight: 800, color: quotaWindow?.usedPercentage !== undefined ? "#38bdf8" : "#94a3b8" }}>
-                  {quotaWindow?.usedPercentage !== undefined ? `${(100 - quotaWindow.usedPercentage).toFixed(1)}% rem` : "N/A"}
+                <div className="display" style={{ fontSize: "38px", color: "#00d4ff" }}>
+                  {quotaWindow?.usedPercentage !== undefined
+                    ? `${(100 - quotaWindow.usedPercentage).toFixed(1)}% REM`
+                    : "N/A"}
                 </div>
-                <div style={{ fontSize: "10px", color: "#64748b" }}>
-                  {claudeProvider?.quotaUpdatedSecondsAgo !== undefined && claudeProvider?.quotaUpdatedSecondsAgo !== null
+                <div className="font-grotesk" style={{ fontSize: "11px", color: "rgba(255,255,255,0.7)" }}>
+                  {claudeProvider?.quotaUpdatedSecondsAgo !== undefined &&
+                  claudeProvider?.quotaUpdatedSecondsAgo !== null
                     ? `Updated ${claudeProvider.quotaUpdatedSecondsAgo}s ago`
                     : "No statusline hook payload received"}
                 </div>
@@ -964,109 +1413,129 @@ export default function App() {
             TAB 2: SESSIONS & REAL EVENT STREAM
            ========================================================= */}
         {activeTab === "sessions" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
             {renderPanelError("sessions")}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+
+            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
               <div>
-                <h2 style={{ fontSize: "18px", fontWeight: 700, margin: 0 }}>Normalized Agent Events</h2>
-                <p style={{ fontSize: "12px", color: "#64748b", margin: "4px 0 0 0" }}>
+                <h2 className="display" style={{ fontSize: "clamp(32px, 5vw, 64px)", color: "#0a0a0a", margin: 0 }}>
+                  NORMALIZED AGENT <span className="highlight-cyan">EVENTS</span>
+                </h2>
+                <p className="font-grotesk" style={{ fontSize: "15px", color: "#0a0a0a", fontWeight: 600, margin: "8px 0 0 0" }}>
                   Live event stream delivered to AgentPet with measured event-to-render latency. Click any row to inspect raw payload JSON.
                 </p>
               </div>
-              <span style={{ fontSize: "11px", color: "#94a3b8", fontFamily: "monospace" }}>
-                Total Captured: {realEvents.length}
+              <span
+                className="font-grotesk shadow-pop-sm"
+                style={{
+                  fontSize: "13px",
+                  fontWeight: 900,
+                  backgroundColor: "#ffd000",
+                  color: "#0a0a0a",
+                  padding: "6px 16px",
+                  border: "3px solid #0a0a0a",
+                  borderRadius: "999px",
+                }}
+              >
+                TOTAL CAPTURED: {realEvents.length}
               </span>
             </div>
 
             {realEvents.length === 0 ? (
               <div
+                className="edge-thick shadow-pop"
                 style={{
-                  background: "#0c1322",
-                  border: "1px dashed rgba(255, 255, 255, 0.15)",
-                  borderRadius: "12px",
-                  padding: "48px 24px",
+                  backgroundColor: "#ffffff",
+                  padding: "54px 24px",
                   textAlign: "center",
-                  color: "#64748b",
+                  color: "#0a0a0a",
                 }}
               >
-                <div style={{ fontSize: "28px", marginBottom: "8px" }}>📡</div>
-                <div style={{ fontSize: "14px", fontWeight: 600, color: "#94a3b8" }}>No agent events captured yet</div>
-                <p style={{ fontSize: "11px", maxWidth: "420px", margin: "8px auto 0 auto" }}>
+                <div style={{ fontSize: "36px", marginBottom: "12px" }}>📡</div>
+                <div className="display" style={{ fontSize: "24px" }}>
+                  NO AGENT EVENTS CAPTURED YET
+                </div>
+                <p className="font-grotesk" style={{ fontSize: "14px", fontWeight: 600, maxWidth: "460px", margin: "12px auto 0 auto" }}>
                   Attach native hooks in Settings or run your agents via <code>agentpet run -- claude</code> to start streaming real events.
                 </p>
               </div>
             ) : (
-              <div
-                style={{
-                  background: "#0c1322",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  borderRadius: "10px",
-                  overflow: "hidden",
-                }}
-              >
-                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "11px", textAlign: "left" }}>
+              <div className="edge-thick shadow-pop-lg" style={{ backgroundColor: "#ffffff", overflow: "hidden" }}>
+                <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "12px", textAlign: "left" }}>
                   <thead>
-                    <tr style={{ background: "rgba(255, 255, 255, 0.03)", borderBottom: "1px solid rgba(255, 255, 255, 0.08)", color: "#64748b" }}>
-                      <th style={{ padding: "10px 14px" }}>EVENT ID</th>
-                      <th style={{ padding: "10px 14px" }}>TYPE</th>
-                      <th style={{ padding: "10px 14px" }}>PROVIDER</th>
-                      <th style={{ padding: "10px 14px" }}>SOURCE</th>
-                      <th style={{ padding: "10px 14px" }}>TIMESTAMP</th>
-                      <th style={{ padding: "10px 14px" }}>LATENCY</th>
-                      <th style={{ padding: "10px 14px" }}>ACTION</th>
+                    <tr
+                      className="font-grotesk"
+                      style={{
+                        backgroundColor: "#0a0a0a",
+                        color: "#ffffff",
+                        borderBottom: "4px solid #0a0a0a",
+                        fontWeight: 900,
+                        letterSpacing: "0.08em",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      <th style={{ padding: "14px 16px" }}>EVENT ID</th>
+                      <th style={{ padding: "14px 16px" }}>TYPE</th>
+                      <th style={{ padding: "14px 16px" }}>PROVIDER</th>
+                      <th style={{ padding: "14px 16px" }}>SOURCE</th>
+                      <th style={{ padding: "14px 16px" }}>TIMESTAMP</th>
+                      <th style={{ padding: "14px 16px" }}>LATENCY</th>
+                      <th style={{ padding: "14px 16px" }}>ACTION</th>
                     </tr>
                   </thead>
                   <tbody>
                     {realEvents.map((evt) => (
                       <tr
                         key={evt.id}
-                        style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.04)", cursor: "pointer" }}
+                        style={{ borderBottom: "2px solid #0a0a0a", cursor: "pointer", transition: "background 0.1s ease" }}
                         onClick={() => setSelectedEventJson(evt.payloadJson)}
+                        className="hover:bg-[#ffd000]/20"
                       >
-                        <td style={{ padding: "10px 14px", fontFamily: "monospace", color: "#94a3b8" }}>
+                        <td style={{ padding: "12px 16px", fontFamily: "monospace", fontWeight: 700, color: "#0a0a0a" }}>
                           {evt.id.slice(0, 10)}...
                         </td>
-                        <td style={{ padding: "10px 14px" }}>
+                        <td style={{ padding: "12px 16px" }}>
                           <span
+                            className="font-grotesk shadow-pop-sm"
                             style={{
-                              padding: "2px 6px",
+                              padding: "4px 10px",
                               borderRadius: "4px",
-                              fontSize: "10px",
-                              fontWeight: 700,
-                              background:
-                                evt.eventType.includes("completed")
-                                  ? "rgba(34, 197, 94, 0.15)"
-                                  : evt.eventType.includes("failed")
-                                  ? "rgba(239, 68, 68, 0.15)"
-                                  : "rgba(56, 189, 248, 0.15)",
-                              color:
-                                evt.eventType.includes("completed")
-                                  ? "#4ade80"
-                                  : evt.eventType.includes("failed")
-                                  ? "#f87171"
-                                  : "#38bdf8",
+                              fontSize: "11px",
+                              fontWeight: 900,
+                              textTransform: "uppercase",
+                              border: "2px solid #0a0a0a",
+                              backgroundColor: evt.eventType.includes("completed")
+                                ? "#00d4ff"
+                                : evt.eventType.includes("failed")
+                                ? "#ff2db7"
+                                : "#ffd000",
+                              color: evt.eventType.includes("failed") ? "#ffffff" : "#0a0a0a",
                             }}
                           >
                             {evt.eventType.toUpperCase()}
                           </span>
                         </td>
-                        <td style={{ padding: "10px 14px", color: "#e2e8f0" }}>{evt.provider}</td>
-                        <td style={{ padding: "10px 14px", color: "#64748b" }}>{evt.source}</td>
-                        <td style={{ padding: "10px 14px", color: "#94a3b8" }}>
+                        <td style={{ padding: "12px 16px", fontWeight: 700, color: "#0a0a0a" }}>{evt.provider}</td>
+                        <td style={{ padding: "12px 16px", color: "rgba(10,10,10,0.7)", fontWeight: 600 }}>{evt.source}</td>
+                        <td style={{ padding: "12px 16px", fontWeight: 700, color: "#0a0a0a" }}>
                           {new Date(evt.occurredAt).toLocaleTimeString()}
                         </td>
-                        <td style={{ padding: "10px 14px", fontFamily: "monospace", color: "#4ade80" }}>
+                        <td style={{ padding: "12px 16px", fontFamily: "monospace", fontWeight: 800, color: "#0a0a0a" }}>
                           {evt.latencyMs !== null ? `${evt.latencyMs}ms` : "—"}
                         </td>
-                        <td style={{ padding: "10px 14px" }}>
+                        <td style={{ padding: "12px 16px" }}>
                           <button
+                            className="font-grotesk shadow-pop-sm shadow-pop-hover"
                             style={{
-                              background: "rgba(255, 255, 255, 0.06)",
-                              border: "1px solid rgba(255, 255, 255, 0.1)",
-                              color: "#cbd5e1",
-                              padding: "2px 8px",
+                              background: "#0a0a0a",
+                              color: "#ffffff",
+                              border: "2px solid #0a0a0a",
+                              padding: "4px 10px",
                               borderRadius: "4px",
-                              fontSize: "10px",
+                              fontSize: "11px",
+                              fontWeight: 800,
+                              textTransform: "uppercase",
+                              cursor: "pointer",
                             }}
                           >
                             Inspect JSON
@@ -1085,44 +1554,61 @@ export default function App() {
                 style={{
                   position: "fixed",
                   inset: 0,
-                  backgroundColor: "rgba(0, 0, 0, 0.8)",
+                  backgroundColor: "rgba(10, 10, 10, 0.75)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   zIndex: 9999,
+                  backdropFilter: "blur(2px)",
                 }}
                 onClick={() => setSelectedEventJson(null)}
               >
                 <div
+                  className="edge-thick shadow-pop-lg"
                   style={{
-                    background: "#0f172a",
-                    border: "1px solid rgba(255, 255, 255, 0.15)",
-                    borderRadius: "8px",
-                    width: "80%",
-                    maxWidth: "640px",
+                    background: "#ffffff",
+                    width: "85%",
+                    maxWidth: "680px",
                     maxHeight: "80vh",
-                    padding: "20px",
+                    padding: "24px",
                     display: "flex",
                     flexDirection: "column",
-                    gap: "12px",
+                    gap: "16px",
                   }}
                   onClick={(e) => e.stopPropagation()}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                    <strong style={{ fontSize: "13px" }}>Raw Event Payload JSON</strong>
-                    <button onClick={() => setSelectedEventJson(null)} style={{ color: "#94a3b8", cursor: "pointer" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", borderBottom: "3px solid #0a0a0a", paddingBottom: "12px" }}>
+                    <div className="display" style={{ fontSize: "20px", color: "#0a0a0a" }}>
+                      RAW EVENT PAYLOAD JSON
+                    </div>
+                    <button
+                      onClick={() => setSelectedEventJson(null)}
+                      className="shadow-pop-sm shadow-pop-hover"
+                      style={{
+                        background: "#ff2db7",
+                        color: "#ffffff",
+                        border: "2px solid #0a0a0a",
+                        width: "32px",
+                        height: "32px",
+                        borderRadius: "50%",
+                        fontWeight: 900,
+                        cursor: "pointer",
+                      }}
+                    >
                       ✕
                     </button>
                   </div>
                   <pre
                     style={{
-                      background: "#070b12",
-                      padding: "12px",
-                      borderRadius: "6px",
+                      background: "#0a0a0a",
+                      color: "#00d4ff",
+                      padding: "16px",
+                      borderRadius: "0px",
+                      border: "3px solid #0a0a0a",
                       overflow: "auto",
-                      fontSize: "11px",
-                      color: "#38bdf8",
+                      fontSize: "12px",
                       fontFamily: "monospace",
+                      lineHeight: 1.4,
                     }}
                   >
                     {(() => {
@@ -1139,50 +1625,66 @@ export default function App() {
 
             {/* Completed Sessions History */}
             <div style={{ marginTop: "16px" }}>
-              <h3 style={{ fontSize: "14px", fontWeight: 700, marginBottom: "8px" }}>Completed Agent Sessions</h3>
+              <h3 className="display" style={{ fontSize: "28px", color: "#0a0a0a", marginBottom: "12px" }}>
+                COMPLETED AGENT SESSIONS
+              </h3>
               {sessions.length === 0 ? (
-                <div style={{ fontSize: "11px", color: "#64748b" }}>No completed sessions recorded yet.</div>
+                <div className="font-grotesk" style={{ fontSize: "13px", fontWeight: 700, color: "rgba(10,10,10,0.6)" }}>
+                  No completed sessions recorded yet.
+                </div>
               ) : (
-                <div style={{ background: "#0c1322", border: "1px solid rgba(255, 255, 255, 0.08)", borderRadius: "8px", overflow: "hidden" }}>
-                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "11px", textAlign: "left" }}>
+                <div className="edge-thick shadow-pop" style={{ backgroundColor: "#ffffff", overflow: "hidden" }}>
+                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "12px", textAlign: "left" }}>
                     <thead>
-                      <tr style={{ background: "rgba(255, 255, 255, 0.03)", borderBottom: "1px solid rgba(255, 255, 255, 0.08)", color: "#64748b" }}>
-                        <th style={{ padding: "8px 12px" }}>SESSION ID</th>
-                        <th style={{ padding: "8px 12px" }}>AGENT</th>
-                        <th style={{ padding: "8px 12px" }}>STATUS</th>
-                        <th style={{ padding: "8px 12px" }}>DURATION</th>
-                        <th style={{ padding: "8px 12px" }}>TOKENS</th>
-                        <th style={{ padding: "8px 12px" }}>EXIT CODE</th>
+                      <tr
+                        className="font-grotesk"
+                        style={{
+                          backgroundColor: "#ffd000",
+                          color: "#0a0a0a",
+                          borderBottom: "4px solid #0a0a0a",
+                          fontWeight: 900,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.08em",
+                        }}
+                      >
+                        <th style={{ padding: "12px 16px" }}>SESSION ID</th>
+                        <th style={{ padding: "12px 16px" }}>AGENT</th>
+                        <th style={{ padding: "12px 16px" }}>STATUS</th>
+                        <th style={{ padding: "12px 16px" }}>DURATION</th>
+                        <th style={{ padding: "12px 16px" }}>TOKENS</th>
+                        <th style={{ padding: "12px 16px" }}>EXIT CODE</th>
                       </tr>
                     </thead>
                     <tbody>
                       {sessions.map((s) => (
-                        <tr key={s.sessionId} style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.04)" }}>
-                          <td style={{ padding: "8px 12px", fontFamily: "monospace", color: "#94a3b8" }}>
+                        <tr key={s.sessionId} style={{ borderBottom: "2px solid #0a0a0a" }}>
+                          <td style={{ padding: "12px 16px", fontFamily: "monospace", fontWeight: 700, color: "#0a0a0a" }}>
                             {s.sessionId.slice(0, 12)}...
                           </td>
-                          <td style={{ padding: "8px 12px", color: "#e2e8f0" }}>{s.agentId}</td>
-                          <td style={{ padding: "8px 12px" }}>
+                          <td style={{ padding: "12px 16px", fontWeight: 700, color: "#0a0a0a" }}>{s.agentId}</td>
+                          <td style={{ padding: "12px 16px" }}>
                             <span
+                              className="font-grotesk shadow-pop-sm"
                               style={{
-                                padding: "2px 6px",
-                                borderRadius: "3px",
-                                fontSize: "9px",
-                                fontWeight: 700,
-                                background: s.status === "completed" ? "rgba(34, 197, 94, 0.15)" : "rgba(239, 68, 68, 0.15)",
-                                color: s.status === "completed" ? "#4ade80" : "#f87171",
+                                padding: "2px 8px",
+                                borderRadius: "4px",
+                                fontSize: "10px",
+                                fontWeight: 900,
+                                border: "2px solid #0a0a0a",
+                                background: s.status === "completed" ? "#00d4ff" : "#ff2db7",
+                                color: s.status === "completed" ? "#0a0a0a" : "#ffffff",
                               }}
                             >
                               {s.status.toUpperCase()}
                             </span>
                           </td>
-                          <td style={{ padding: "8px 12px", color: "#94a3b8" }}>
+                          <td style={{ padding: "12px 16px", fontWeight: 700, color: "#0a0a0a" }}>
                             {s.durationMs !== null ? `${(s.durationMs / 1000).toFixed(1)}s` : "—"}
                           </td>
-                          <td style={{ padding: "8px 12px", color: "#38bdf8" }}>
+                          <td style={{ padding: "12px 16px", fontWeight: 800, color: "#ff2db7" }}>
                             {((s.inputTokens || 0) + (s.outputTokens || 0)).toLocaleString()}
                           </td>
-                          <td style={{ padding: "8px 12px", fontFamily: "monospace", color: s.exitCode === 0 ? "#4ade80" : "#f87171" }}>
+                          <td style={{ padding: "12px 16px", fontFamily: "monospace", fontWeight: 900, color: s.exitCode === 0 ? "#0a0a0a" : "#ff2db7" }}>
                             {s.exitCode !== null ? s.exitCode : "—"}
                           </td>
                         </tr>
@@ -1199,34 +1701,43 @@ export default function App() {
             TAB 3: COMPANIONS
            ========================================================= */}
         {activeTab === "companions" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
             {renderPanelError("avatar")}
             <div>
-              <h2 style={{ fontSize: "18px", fontWeight: 700, margin: 0 }}>3D Character Studio</h2>
-              <p style={{ fontSize: "12px", color: "#64748b", margin: "4px 0 12px 0" }}>
-                Pick one of the original 3D characters, customize it, sculpt one from your own image, or import a VRM model. 3D mode shows the
-                character you choose here.
+              <h2 className="display" style={{ fontSize: "clamp(32px, 5vw, 64px)", color: "#0a0a0a", margin: "0 0 8px 0" }}>
+                3D CHARACTER <span className="highlight-magenta">STUDIO</span>
+              </h2>
+              <p className="font-grotesk" style={{ fontSize: "15px", color: "#0a0a0a", fontWeight: 600, margin: "0 0 18px 0" }}>
+                Pick one of the original 3D characters, customize it, sculpt one from your own image, or import a VRM model. 3D mode renders the character you choose here.
               </p>
-              <CharacterStudio liveState={snapshot.petState} hud={avatarHud} activeAvatar={avatar} onAvatarChanged={setAvatar} />
+              <div className="edge-thick shadow-pop-lg studio-outer" style={{ backgroundColor: "#070c18", padding: "20px" }}>
+                <CharacterStudio liveState={snapshot.petState} hud={avatarHud} activeAvatar={avatar} onAvatarChanged={setAvatar} />
+              </div>
             </div>
+
             {renderPanelError("companions")}
-            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+            <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", flexWrap: "wrap", gap: "16px" }}>
               <div>
-                <h2 style={{ fontSize: "18px", fontWeight: 700, margin: 0 }}>2D Sprite Packs</h2>
-                <p style={{ fontSize: "12px", color: "#64748b", margin: "4px 0 0 0" }}>
-                  Verified PetPacks with pure data-driven spritesheets, shown in 2D mode. Click to select companion.
+                <h2 className="display" style={{ fontSize: "clamp(28px, 4.5vw, 52px)", color: "#0a0a0a", margin: 0 }}>
+                  2D SPRITE <span className="highlight-yellow">PACKS</span>
+                </h2>
+                <p className="font-grotesk" style={{ fontSize: "14px", color: "#0a0a0a", fontWeight: 600, margin: "6px 0 0 0" }}>
+                  Verified PetPacks with pure data-driven spritesheets, shown in 2D mode. Click to activate companion.
                 </p>
               </div>
               <button
                 onClick={handleImportPack}
+                className="font-grotesk shadow-pop shadow-pop-hover"
                 style={{
-                  background: "rgba(56, 189, 248, 0.15)",
-                  border: "1px solid rgba(56, 189, 248, 0.4)",
-                  color: "#38bdf8",
-                  padding: "6px 14px",
-                  borderRadius: "6px",
-                  fontSize: "12px",
-                  fontWeight: 600,
+                  background: "#ff2db7",
+                  border: "3px solid #0a0a0a",
+                  color: "#ffffff",
+                  padding: "10px 20px",
+                  borderRadius: "999px",
+                  fontSize: "13px",
+                  fontWeight: 900,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
                   cursor: "pointer",
                 }}
               >
@@ -1234,64 +1745,74 @@ export default function App() {
               </button>
             </div>
 
-            {/* Pack Cards Grid */}
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
+            {/* Pack Cards Grid (Selected Work Tile System) */}
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))", gap: "24px" }}>
               {installedPacks.map((pack) => {
-                const isSelected = activePetName.toLowerCase().includes(pack.name.toLowerCase());
+                const isSelected = snapshot.selectedPetId
+                  ? snapshot.selectedPetId === pack.selectionId || snapshot.selectedPetId === pack.id
+                  : false;
                 return (
                   <div
                     key={pack.selectionId}
+                    className="edge-thick shadow-pop shadow-pop-hover"
                     style={{
-                      background: "#0c1322",
-                      border: isSelected ? "2px solid #38bdf8" : "1px solid rgba(255, 255, 255, 0.08)",
-                      borderRadius: "12px",
-                      padding: "16px",
+                      backgroundColor: "#ffffff",
                       display: "flex",
                       flexDirection: "column",
-                      gap: "12px",
-                      position: "relative",
+                      overflow: "hidden",
                     }}
                   >
-                    {isSelected && (
-                      <span
-                        style={{
-                          position: "absolute",
-                          top: "12px",
-                          right: "12px",
-                          background: "#38bdf8",
-                          color: "#000",
-                          fontSize: "9px",
-                          fontWeight: 800,
-                          padding: "2px 8px",
-                          borderRadius: "4px",
-                          letterSpacing: "0.5px",
-                        }}
-                      >
-                        ACTIVE
-                      </span>
-                    )}
-
-                    {/* Preview Thumbnail */}
+                    {/* Abstract Image / Graphic Half */}
                     <div
                       style={{
                         width: "100%",
-                        height: "160px",
-                        borderRadius: "8px",
-                        background: "#080d17",
+                        height: "170px",
+                        backgroundColor: "#0a0a0a",
+                        borderBottom: "4px solid #0a0a0a",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
+                        position: "relative",
                         overflow: "hidden",
                       }}
                     >
+                      {/* Diagonal background accent badge */}
+                      {isSelected && (
+                        <div
+                          className="font-grotesk shadow-pop-sm"
+                          style={{
+                            position: "absolute",
+                            top: "12px",
+                            right: "12px",
+                            backgroundColor: "#00d4ff",
+                            color: "#0a0a0a",
+                            fontSize: "11px",
+                            fontWeight: 900,
+                            padding: "4px 10px",
+                            border: "2px solid #0a0a0a",
+                            letterSpacing: "0.08em",
+                            textTransform: "uppercase",
+                            zIndex: 2,
+                          }}
+                        >
+                          ACTIVE COMPANION
+                        </div>
+                      )}
+
                       {pack.previewDataUrl ? (
                         <img
                           src={pack.previewDataUrl}
                           alt={pack.name}
-                          style={{ maxHeight: "100%", maxWidth: "100%", objectFit: "contain", imageRendering: "pixelated" }}
+                          style={{
+                            maxHeight: "100%",
+                            maxWidth: "100%",
+                            objectFit: "contain",
+                            imageRendering: "pixelated",
+                            filter: "drop-shadow(4px 4px 0 #00d4ff)",
+                          }}
                         />
                       ) : (
-                        <span style={{ fontSize: "42px" }}>
+                        <span style={{ fontSize: "56px", filter: "drop-shadow(4px 4px 0 #ff2db7)" }}>
                           {pack.name.includes("Arjuna")
                             ? "🏹"
                             : pack.name.includes("Wukong")
@@ -1303,31 +1824,63 @@ export default function App() {
                       )}
                     </div>
 
-                    {/* Metadata */}
-                    <div>
-                      <div style={{ fontSize: "15px", fontWeight: 700, color: "#f8fafc" }}>{pack.name}</div>
-                      <div style={{ fontSize: "11px", color: "#64748b", marginTop: "2px" }}>
-                        v{pack.version} · {pack.creator} · {pack.license}
+                    {/* Content Half */}
+                    <div style={{ padding: "20px", display: "flex", flexDirection: "column", gap: "12px", flex: 1, justifyContent: "space-between" }}>
+                      <div>
+                        <div className="font-grotesk" style={{ fontSize: "11px", fontWeight: 800, color: "#ff2db7", textTransform: "uppercase", letterSpacing: "0.15em" }}>
+                          0{installedPacks.indexOf(pack) + 1} / PETPACK
+                        </div>
+                        <div className="display" style={{ fontSize: "24px", color: "#0a0a0a", marginTop: "4px" }}>
+                          {pack.name}
+                        </div>
+                        {/* Structured metadata — version / author / license in a fixed-height grid
+                            so every card reserves identical space and no field is ever truncated */}
+                        <div
+                          className="petpack-meta"
+                          aria-label={`Version ${pack.version}, by ${pack.creator}, license ${pack.license}`}
+                        >
+                          <span className="petpack-meta__label">Version</span>
+                          <span className="petpack-meta__value">v{pack.version}</span>
+                          <span className="petpack-meta__label">Author</span>
+                          <span className="petpack-meta__value" title={pack.creator}>{pack.creator}</span>
+                          <span className="petpack-meta__label">License</span>
+                          <span className="petpack-meta__value">
+                            <span
+                              className={`petpack-meta__license-badge ${
+                                pack.license === "CC0-1.0"
+                                  ? "cc0"
+                                  : pack.license.startsWith("CC-BY")
+                                  ? "cc-by"
+                                  : "restricted"
+                              }`}
+                            >
+                              {pack.license}
+                            </span>
+                          </span>
+                        </div>
                       </div>
-                    </div>
 
-                    {/* Select Button */}
-                    <button
-                      onClick={() => handleSelectPet(pack.selectionId)}
-                      disabled={isSelected}
-                      style={{
-                        padding: "8px 12px",
-                        background: isSelected ? "rgba(56, 189, 248, 0.2)" : "rgba(255, 255, 255, 0.06)",
-                        border: isSelected ? "1px solid #38bdf8" : "1px solid rgba(255, 255, 255, 0.15)",
-                        color: isSelected ? "#38bdf8" : "#f8fafc",
-                        borderRadius: "6px",
-                        fontSize: "12px",
-                        fontWeight: 600,
-                        cursor: isSelected ? "default" : "pointer",
-                      }}
-                    >
-                      {isSelected ? "Currently Active" : "Select Companion"}
-                    </button>
+                      {/* Select Button */}
+                      <button
+                        onClick={() => handleSelectPet(pack.selectionId)}
+                        disabled={isSelected}
+                        className="font-grotesk shadow-pop-sm shadow-pop-hover"
+                        style={{
+                          width: "100%",
+                          padding: "10px",
+                          backgroundColor: isSelected ? "#00d4ff" : "#0a0a0a",
+                          color: isSelected ? "#0a0a0a" : "#ffffff",
+                          border: "3px solid #0a0a0a",
+                          fontSize: "12px",
+                          fontWeight: 900,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.08em",
+                          cursor: isSelected ? "default" : "pointer",
+                        }}
+                      >
+                        {isSelected ? "Currently Active" : "Select Companion ->"}
+                      </button>
+                    </div>
                   </div>
                 );
               })}
@@ -1339,33 +1892,49 @@ export default function App() {
             TAB 4: PROGRESS & LEDGER INTEGRITY
            ========================================================= */}
         {activeTab === "progress" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
             {renderPanelError("progress")}
-            {/* Tamper-Evident Ledger Proof Banner */}
+
+            {/* Tamper-Evident Ledger Proof Banner (Cyan Block) */}
             <div
+              className="edge-thick shadow-pop-lg"
               style={{
-                background: "linear-gradient(135deg, rgba(16, 185, 129, 0.15) 0%, rgba(6, 78, 59, 0.15) 100%)",
-                border: "1px solid rgba(16, 185, 129, 0.4)",
-                borderRadius: "12px",
-                padding: "20px 24px",
+                backgroundColor: ledgerVerification
+                  ? ledgerVerification.isValid
+                    ? "#00d4ff"
+                    : "#ff4444"
+                  : "#00d4ff",
+                color: "#0a0a0a",
+                padding: "28px",
                 display: "flex",
+                flexWrap: "wrap",
                 alignItems: "center",
                 justifyContent: "space-between",
+                gap: "20px",
               }}
             >
-              <div style={{ display: "flex", alignItems: "center", gap: "16px" }}>
-                <span style={{ fontSize: "32px" }}>🛡️</span>
+              <div style={{ display: "flex", alignItems: "center", gap: "18px", maxWidth: "700px" }}>
+                <span style={{ fontSize: "42px", filter: "drop-shadow(3px 3px 0 #0a0a0a)" }}>
+                  {ledgerVerification && !ledgerVerification.isValid ? "⚠️" : "🛡️"}
+                </span>
                 <div>
-                  <div style={{ fontSize: "15px", fontWeight: 700, color: "#34d399" }}>
-                    TAMPER-EVIDENT APPEND-ONLY LEDGER
+                  <div className="display" style={{ fontSize: "26px", color: "#0a0a0a" }}>
+                    {ledgerVerification
+                      ? ledgerVerification.isValid
+                        ? "TAMPER-EVIDENT APPEND-ONLY LEDGER · VERIFIED"
+                        : "LEDGER VERIFICATION FAILED · TAMPERING DETECTED"
+                      : "TAMPER-EVIDENT APPEND-ONLY LEDGER"}
                   </div>
-                  <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
-                    Every XP transaction is tamper-evident with SHA-256 hash chaining and protected by SQLite triggers.
+                  <div className="font-grotesk" style={{ fontSize: "13px", fontWeight: 700, color: "#0a0a0a", marginTop: "4px" }}>
+                    Every XP transaction is cryptographically linked with SHA-256 hash chaining and protected by SQLite triggers.
                   </div>
                   {ledgerVerification && (
-                    <div style={{ fontSize: "10px", color: "#cbd5e1", marginTop: "6px", fontFamily: "monospace" }}>
-                      Total Verified Entries: {ledgerVerification.totalEntries} · Head:{" "}
-                      {ledgerVerification.headHash.slice(0, 16)}...
+                    <div style={{ fontSize: "11px", fontWeight: 800, marginTop: "6px", fontFamily: "monospace", color: "#0a0a0a" }}>
+                      {ledgerVerification.isValid ? (
+                        <>TOTAL ENTRIES: {ledgerVerification.totalEntries} · HEAD: {ledgerVerification.headHash.slice(0, 18)}...</>
+                      ) : (
+                        <>BROKEN AT INDEX: {ledgerVerification.brokenAtIndex ?? "Unknown"} · ERROR: {ledgerVerification.errorMessage ?? "Hash mismatch"}</>
+                      )}
                     </div>
                   )}
                 </div>
@@ -1373,45 +1942,65 @@ export default function App() {
               <button
                 onClick={handleVerifyLedger}
                 disabled={ledgerVerifying}
+                className="font-grotesk shadow-pop shadow-pop-hover"
                 style={{
-                  background: "#10b981",
-                  color: "#000000",
-                  fontWeight: 700,
-                  fontSize: "12px",
-                  padding: "8px 16px",
-                  borderRadius: "6px",
+                  backgroundColor: "#ffd000",
+                  color: "#0a0a0a",
+                  fontWeight: 900,
+                  fontSize: "13px",
+                  textTransform: "uppercase",
+                  letterSpacing: "0.08em",
+                  padding: "12px 24px",
+                  border: "3px solid #0a0a0a",
+                  borderRadius: "999px",
                   cursor: "pointer",
                 }}
               >
-                {ledgerVerifying ? "Verifying Hash Chain..." : "Verify Hash Chain"}
+                {ledgerVerifying ? "Verifying Hash Chain..." : "Verify Hash Chain 🔒"}
               </button>
             </div>
 
             {/* XP Transactions Table */}
             <div>
-              <h3 style={{ fontSize: "14px", fontWeight: 700, marginBottom: "10px" }}>Recent Immutable Transactions</h3>
+              <h3 className="display" style={{ fontSize: "28px", color: "#0a0a0a", marginBottom: "12px" }}>
+                RECENT IMMUTABLE TRANSACTIONS
+              </h3>
               {xpHistory.length === 0 ? (
-                <div style={{ color: "#64748b", fontSize: "12px" }}>No XP transactions recorded yet. Complete sessions to earn XP.</div>
+                <div className="font-grotesk" style={{ color: "rgba(10,10,10,0.6)", fontSize: "13px", fontWeight: 700 }}>
+                  No XP transactions recorded yet. Complete coding sessions to earn XP.
+                </div>
               ) : (
-                <div style={{ background: "#0c1322", border: "1px solid rgba(255, 255, 255, 0.08)", borderRadius: "8px", overflow: "hidden" }}>
-                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "11px", textAlign: "left" }}>
+                <div className="edge-thick shadow-pop" style={{ backgroundColor: "#ffffff", overflow: "hidden" }}>
+                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "12px", textAlign: "left" }}>
                     <thead>
-                      <tr style={{ background: "rgba(255, 255, 255, 0.03)", borderBottom: "1px solid rgba(255, 255, 255, 0.08)", color: "#64748b" }}>
-                        <th style={{ padding: "8px 12px" }}>TRANSACTION ID</th>
-                        <th style={{ padding: "8px 12px" }}>SOURCE</th>
-                        <th style={{ padding: "8px 12px" }}>AMOUNT</th>
-                        <th style={{ padding: "8px 12px" }}>CREATED AT</th>
+                      <tr
+                        className="font-grotesk"
+                        style={{
+                          backgroundColor: "#0a0a0a",
+                          color: "#ffffff",
+                          borderBottom: "4px solid #0a0a0a",
+                          fontWeight: 900,
+                          textTransform: "uppercase",
+                          letterSpacing: "0.08em",
+                        }}
+                      >
+                        <th style={{ padding: "12px 16px" }}>TRANSACTION ID</th>
+                        <th style={{ padding: "12px 16px" }}>SOURCE</th>
+                        <th style={{ padding: "12px 16px" }}>AMOUNT</th>
+                        <th style={{ padding: "12px 16px" }}>CREATED AT</th>
                       </tr>
                     </thead>
                     <tbody>
                       {xpHistory.map((tx) => (
-                        <tr key={tx.transactionId} style={{ borderBottom: "1px solid rgba(255, 255, 255, 0.04)" }}>
-                          <td style={{ padding: "8px 12px", fontFamily: "monospace", color: "#94a3b8" }}>
-                            {tx.transactionId.slice(0, 12)}...
+                        <tr key={tx.transactionId} style={{ borderBottom: "2px solid #0a0a0a" }}>
+                          <td style={{ padding: "12px 16px", fontFamily: "monospace", fontWeight: 700, color: "#0a0a0a" }}>
+                            {tx.transactionId.slice(0, 14)}...
                           </td>
-                          <td style={{ padding: "8px 12px", color: "#e2e8f0" }}>{tx.source}</td>
-                          <td style={{ padding: "8px 12px", color: "#4ade80", fontWeight: 700 }}>+{tx.amount} XP</td>
-                          <td style={{ padding: "8px 12px", color: "#64748b" }}>
+                          <td style={{ padding: "12px 16px", fontWeight: 700, color: "#0a0a0a" }}>{tx.source}</td>
+                          <td style={{ padding: "12px 16px", color: "#ff2db7", fontWeight: 900, fontSize: "13px" }}>
+                            +{tx.amount} XP
+                          </td>
+                          <td style={{ padding: "12px 16px", fontWeight: 700, color: "rgba(10,10,10,0.7)" }}>
                             {new Date(tx.createdAt).toLocaleString()}
                           </td>
                         </tr>
@@ -1424,30 +2013,56 @@ export default function App() {
 
             {/* Achievements */}
             <div>
-              <h3 style={{ fontSize: "14px", fontWeight: 700, marginBottom: "10px" }}>Achievements</h3>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: "12px" }}>
+              <h3 className="display" style={{ fontSize: "28px", color: "#0a0a0a", marginBottom: "12px" }}>
+                ACHIEVEMENTS
+              </h3>
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "16px" }}>
                 {achievements.map((ach) => (
                   <div
                     key={ach.id}
+                    className="edge-thick shadow-pop shadow-pop-hover"
                     style={{
-                      background: "#0c1322",
-                      border: ach.unlockedAt ? "1px solid rgba(255, 215, 0, 0.4)" : "1px solid rgba(255, 255, 255, 0.08)",
-                      borderRadius: "8px",
-                      padding: "12px",
+                      backgroundColor: ach.unlockedAt ? "#ffd000" : "#ffffff",
+                      padding: "18px",
                       display: "flex",
                       flexDirection: "column",
-                      gap: "6px",
+                      justifyContent: "space-between",
+                      gap: "8px",
                     }}
                   >
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                      <span style={{ fontWeight: 700, fontSize: "12px", color: ach.unlockedAt ? "#ffd700" : "#94a3b8" }}>
+                      <span className="display" style={{ fontSize: "16px", color: "#0a0a0a" }}>
                         {ach.title}
                       </span>
-                      <span style={{ fontSize: "10px", color: "#4ade80", fontWeight: 600 }}>+{ach.rewardXp} XP</span>
+                      <span
+                        className="font-grotesk shadow-pop-sm"
+                        style={{
+                          fontSize: "11px",
+                          color: "#ffffff",
+                          backgroundColor: "#0a0a0a",
+                          padding: "2px 8px",
+                          fontWeight: 900,
+                        }}
+                      >
+                        +{ach.rewardXp} XP
+                      </span>
                     </div>
-                    <div style={{ fontSize: "11px", color: "#64748b" }}>{ach.description}</div>
-                    <div style={{ fontSize: "10px", color: ach.unlockedAt ? "#ffd700" : "#64748b", marginTop: "4px" }}>
-                      {ach.unlockedAt ? `Unlocked: ${new Date(ach.unlockedAt).toLocaleDateString()}` : `Progress: ${ach.progress} / ${ach.threshold}`}
+                    <div className="font-grotesk" style={{ fontSize: "12px", fontWeight: 600, color: "rgba(10,10,10,0.8)" }}>
+                      {ach.description}
+                    </div>
+                    <div
+                      className="font-grotesk"
+                      style={{
+                        fontSize: "11px",
+                        fontWeight: 900,
+                        color: "#0a0a0a",
+                        marginTop: "4px",
+                        textTransform: "uppercase",
+                      }}
+                    >
+                      {ach.unlockedAt
+                        ? `★ UNLOCKED: ${new Date(ach.unlockedAt).toLocaleDateString()}`
+                        : `PROGRESS: ${ach.progress} / ${ach.threshold}`}
                     </div>
                   </div>
                 ))}
@@ -1460,38 +2075,44 @@ export default function App() {
             TAB 5: SETTINGS
            ========================================================= */}
         {activeTab === "settings" && (
-          <div style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
             {renderPanelError("settings")}
+
             {/* Simulation Controls (DEV ONLY) */}
             {import.meta.env.DEV && (
               <div
+                className="edge-thick shadow-pop-lg"
                 style={{
-                  background: "#0c1322",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
-                  borderRadius: "12px",
-                  padding: "20px",
+                  backgroundColor: "#ffd000",
+                  color: "#0a0a0a",
+                  padding: "24px",
                   display: "flex",
                   flexDirection: "column",
-                  gap: "12px",
+                  gap: "14px",
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "12px" }}>
                   <div>
-                    <div style={{ fontSize: "14px", fontWeight: 700 }}>Simulation & Test Mode (DEV ONLY)</div>
-                    <div style={{ fontSize: "11px", color: "#64748b", marginTop: "2px" }}>
-                      Development only. Runs in an isolated database (<code>agentpet_simulated.sqlite3</code>). Grants 0 XP to the live ledger.
+                    <div className="display" style={{ fontSize: "22px" }}>
+                      SIMULATION & TEST MODE (DEV ONLY)
+                    </div>
+                    <div className="font-grotesk" style={{ fontSize: "12px", fontWeight: 700, marginTop: "4px" }}>
+                      Isolated testing database (<code>agentpet_simulated.sqlite3</code>). Grants 0 XP to live ledger.
                     </div>
                   </div>
                   <button
                     onClick={handleToggleSimulated}
+                    className="font-grotesk shadow-pop shadow-pop-hover"
                     style={{
-                      padding: "8px 16px",
-                      background: isSimulated ? "#f59e0b" : "rgba(255, 255, 255, 0.08)",
-                      border: isSimulated ? "1px solid #d97706" : "1px solid rgba(255, 255, 255, 0.15)",
-                      color: isSimulated ? "#000" : "#fff",
-                      borderRadius: "6px",
-                      fontWeight: 700,
+                      padding: "10px 20px",
+                      backgroundColor: isSimulated ? "#0a0a0a" : "#ffffff",
+                      color: isSimulated ? "#ffffff" : "#0a0a0a",
+                      border: "3px solid #0a0a0a",
+                      borderRadius: "999px",
+                      fontWeight: 900,
                       fontSize: "12px",
+                      textTransform: "uppercase",
+                      letterSpacing: "0.08em",
                       cursor: "pointer",
                     }}
                   >
@@ -1501,7 +2122,7 @@ export default function App() {
 
                 {/* Event Triggers */}
                 {isSimulated && (
-                  <div style={{ display: "flex", gap: "8px", flexWrap: "wrap", marginTop: "8px" }}>
+                  <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginTop: "8px" }}>
                     {(
                       [
                         { id: "started", label: "Agent Started" },
@@ -1515,13 +2136,16 @@ export default function App() {
                       <button
                         key={btn.id}
                         onClick={() => handleSimulateEvent(btn.id)}
+                        className="font-grotesk shadow-pop-sm shadow-pop-hover"
                         style={{
-                          padding: "6px 12px",
-                          background: "rgba(245, 158, 11, 0.15)",
-                          border: "1px solid rgba(245, 158, 11, 0.4)",
-                          color: "#f59e0b",
+                          padding: "8px 14px",
+                          backgroundColor: "#ffffff",
+                          color: "#0a0a0a",
+                          border: "2px solid #0a0a0a",
                           borderRadius: "4px",
                           fontSize: "11px",
+                          fontWeight: 800,
+                          textTransform: "uppercase",
                           cursor: "pointer",
                         }}
                       >
@@ -1535,50 +2159,56 @@ export default function App() {
 
             {/* Provider Hook Manager */}
             <div
+              className="edge-thick shadow-pop-lg"
               style={{
-                background: "#0c1322",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
-                borderRadius: "12px",
-                padding: "20px",
+                backgroundColor: "#ffffff",
+                padding: "24px",
                 display: "flex",
                 flexDirection: "column",
-                gap: "12px",
+                gap: "14px",
               }}
             >
-              <div style={{ fontSize: "14px", fontWeight: 700 }}>Coding Agent Provider Adapters</div>
-              <div style={{ fontSize: "11px", color: "#64748b" }}>
+              <div className="display" style={{ fontSize: "24px", color: "#0a0a0a" }}>
+                CODING AGENT PROVIDER ADAPTERS
+              </div>
+              <div className="font-grotesk" style={{ fontSize: "13px", fontWeight: 600, color: "rgba(10,10,10,0.7)" }}>
                 Inspect real machine paths and hook configurations. Documented in <code>docs/PROVIDERS.md</code>.
               </div>
 
-              <div style={{ display: "flex", flexDirection: "column", gap: "10px", marginTop: "6px" }}>
+              <div style={{ display: "flex", flexDirection: "column", gap: "12px", marginTop: "8px" }}>
                 {providers.map((p) => (
                   <div
                     key={p.providerId}
+                    className="edge shadow-pop-sm"
                     style={{
-                      background: "rgba(255, 255, 255, 0.02)",
-                      border: "1px solid rgba(255, 255, 255, 0.06)",
-                      borderRadius: "6px",
-                      padding: "10px 14px",
+                      backgroundColor: "#ffffff",
+                      padding: "14px 18px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "space-between",
+                      gap: "12px",
                     }}
                   >
                     <div>
-                      <div style={{ fontWeight: 600, fontSize: "12px", color: "#f8fafc" }}>{p.displayName}</div>
-                      <div style={{ fontSize: "10px", color: "#64748b", marginTop: "2px" }}>
+                      <div className="font-grotesk" style={{ fontWeight: 900, fontSize: "14px", color: "#0a0a0a" }}>
+                        {p.displayName}
+                      </div>
+                      <div className="font-grotesk" style={{ fontSize: "11px", color: "rgba(10,10,10,0.6)", marginTop: "2px", fontWeight: 600 }}>
                         Config: {p.configPath ?? "Default directory"}
                       </div>
                     </div>
                     <span
+                      className="font-grotesk shadow-pop-sm"
                       style={{
-                        fontSize: "9px",
-                        fontWeight: 700,
-                        padding: "2px 6px",
-                        borderRadius: "3px",
-                        background: p.detected ? "rgba(34, 197, 94, 0.15)" : "rgba(148, 163, 184, 0.1)",
-                        color: p.detected ? "#4ade80" : "#64748b",
-                        border: `1px solid ${p.detected ? "rgba(34, 197, 94, 0.3)" : "rgba(148, 163, 184, 0.2)"}`,
+                        fontSize: "11px",
+                        fontWeight: 900,
+                        padding: "4px 12px",
+                        borderRadius: "999px",
+                        backgroundColor: p.detected ? "#00d4ff" : "#ffffff",
+                        color: "#0a0a0a",
+                        border: "2px solid #0a0a0a",
+                        textTransform: "uppercase",
+                        letterSpacing: "0.08em",
                       }}
                     >
                       {p.detected ? "DETECTED & SUPPORTED" : "NOT FOUND"}
@@ -1590,6 +2220,228 @@ export default function App() {
           </div>
         )}
       </main>
+
+      {/* Closing CTA Section (Cyan Closing CTA) */}
+      <section
+        style={{
+          backgroundColor: "#00d4ff",
+          borderTop: "4px solid #0a0a0a",
+          borderBottom: "4px solid #0a0a0a",
+          position: "relative",
+          overflow: "hidden",
+          padding: "72px 24px",
+          textAlign: "center",
+        }}
+      >
+        {/* Decorative Floating Shapes */}
+        <div
+          style={{
+            position: "absolute",
+            top: "-40px",
+            right: "5%",
+            width: "160px",
+            height: "160px",
+            borderRadius: "50%",
+            backgroundColor: "#ff2db7",
+            border: "4px solid #0a0a0a",
+            boxShadow: "8px 8px 0 #0a0a0a",
+            pointerEvents: "none",
+          }}
+        />
+        <div
+          style={{
+            position: "absolute",
+            bottom: "20px",
+            left: "5%",
+            width: "80px",
+            height: "80px",
+            backgroundColor: "#ffd000",
+            border: "4px solid #0a0a0a",
+            transform: "rotate(14deg)",
+            boxShadow: "6px 6px 0 #0a0a0a",
+            pointerEvents: "none",
+          }}
+        />
+
+        <div style={{ maxWidth: "800px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+          <div
+            className="font-grotesk"
+            style={{
+              fontSize: "13px",
+              fontWeight: 900,
+              textTransform: "uppercase",
+              letterSpacing: "0.2em",
+              color: "#0a0a0a",
+              marginBottom: "12px",
+            }}
+          >
+            LOCAL-FIRST · AUTONOMOUS AGENT COMPANION
+          </div>
+          <h2
+            className="display"
+            style={{
+              fontSize: "clamp(36px, 6vw, 76px)",
+              color: "#0a0a0a",
+              lineHeight: 0.9,
+              margin: "0 0 28px 0",
+            }}
+          >
+            GOT AN AGENT THAT NEEDS TO <span className="highlight-magenta">SHIP?</span>
+          </h2>
+          <div style={{ display: "flex", justifyContent: "center", gap: "16px", flexWrap: "wrap" }}>
+            <button
+              onClick={() => setIsCommandDeckOpen(true)}
+              className="font-grotesk shadow-pop shadow-pop-hover"
+              style={{
+                backgroundColor: "#0a0a0a",
+                color: "#ffffff",
+                padding: "16px 36px",
+                borderRadius: "999px",
+                border: "3px solid #0a0a0a",
+                fontSize: "14px",
+                fontWeight: 900,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "8px",
+              }}
+            >
+              <span style={{ color: "#ffd000" }}>⚡</span>
+              <span>LAUNCH COMMAND DECK</span>
+            </button>
+            <button
+              onClick={() => void invoke("show_pet_overlay").catch((err) => setRuntimeError(`Failed to show companion window: ${err}`))}
+              className="font-grotesk shadow-pop shadow-pop-hover"
+              style={{
+                backgroundColor: "#ffffff",
+                color: "#0a0a0a",
+                padding: "16px 32px",
+                borderRadius: "999px",
+                border: "3px solid #0a0a0a",
+                fontSize: "14px",
+                fontWeight: 900,
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+                cursor: "pointer",
+              }}
+            >
+              SPAWN DESK OVERLAY
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Neo-Brutalist 4-Column Footer */}
+      <footer
+        style={{
+          backgroundColor: "#0a0a0a",
+          color: "#ffffff",
+          borderTop: "4px solid #0a0a0a",
+          padding: "54px 24px 32px 24px",
+        }}
+      >
+        <div
+          style={{
+            maxWidth: "1400px",
+            margin: "0 auto",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+            gap: "36px",
+            paddingBottom: "40px",
+            borderBottom: "2px solid rgba(255, 255, 255, 0.15)",
+          }}
+        >
+          {/* Col 1: Brand & Bio */}
+          <div>
+            <div style={{ display: "flex", gap: "4px", alignItems: "center", marginBottom: "12px" }}>
+              <span style={{ width: "8px", height: "20px", backgroundColor: "#ff2db7", border: "1px solid #ffffff", display: "inline-block" }} />
+              <span style={{ width: "8px", height: "20px", backgroundColor: "#00d4ff", border: "1px solid #ffffff", display: "inline-block" }} />
+              <span style={{ width: "8px", height: "20px", backgroundColor: "#ffd000", border: "1px solid #ffffff", display: "inline-block" }} />
+              <span className="display" style={{ fontSize: "20px", color: "#ffffff", marginLeft: "6px" }}>
+                AGENTPET
+              </span>
+            </div>
+            <p className="font-grotesk" style={{ fontSize: "13px", color: "rgba(255, 255, 255, 0.6)", lineHeight: 1.5, margin: 0 }}>
+              Maximalist, local-first companion observing AI coding agents in real-time. Zero fake telemetry, tamper-evident ledger proofs, and living rigs.
+            </p>
+          </div>
+
+          {/* Col 2: Navigation */}
+          <div>
+            <div className="font-grotesk" style={{ fontSize: "12px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.15em", color: "#00d4ff", marginBottom: "14px" }}>
+              WORKSPACE
+            </div>
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              {["Den", "Sessions", "Companions", "Progress", "Settings"].map((item) => (
+                <button
+                  key={item}
+                  onClick={() => setActiveTab(item.toLowerCase() as any)}
+                  className="font-grotesk"
+                  style={{
+                    background: "none",
+                    border: "none",
+                    padding: 0,
+                    textAlign: "left",
+                    color: "rgba(255,255,255,0.7)",
+                    fontSize: "13px",
+                    fontWeight: 700,
+                    cursor: "pointer",
+                  }}
+                >
+                  {item}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Col 3: Engine */}
+          <div>
+            <div className="font-grotesk" style={{ fontSize: "12px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.15em", color: "#ffd000", marginBottom: "14px" }}>
+              ARCHITECTURE
+            </div>
+            <div className="font-grotesk" style={{ display: "flex", flexDirection: "column", gap: "6px", fontSize: "13px", color: "rgba(255, 255, 255, 0.7)", fontWeight: 600 }}>
+              <div>Tauri 2 Desktop Shell</div>
+              <div>Rust Domain Crates</div>
+              <div>Append-Only SQLite Hash Chain</div>
+              <div>Three.js Procedural Rigging</div>
+              <div>Pure Data-Driven PetPacks</div>
+            </div>
+          </div>
+
+          {/* Col 4: Telemetry */}
+          <div>
+            <div className="font-grotesk" style={{ fontSize: "12px", fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.15em", color: "#ff2db7", marginBottom: "14px" }}>
+              TELEMETRY PROOF
+            </div>
+            <div className="font-grotesk" style={{ fontSize: "13px", color: "rgba(255, 255, 255, 0.7)", lineHeight: 1.5 }}>
+              Status: <span style={{ color: "#00d4ff", fontWeight: 900 }}>LOCAL & LIVE</span><br />
+              Active Companion: <span style={{ color: "#ffd000", fontWeight: 900 }}>{activePetName}</span><br />
+              Mode: <span style={{ color: "#ff2db7", fontWeight: 900 }}>{renderMode.toUpperCase()}</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom Legal Row */}
+        <div
+          className="font-grotesk"
+          style={{
+            maxWidth: "1400px",
+            margin: "24px auto 0 auto",
+            display: "flex",
+            flexWrap: "wrap",
+            justifyContent: "space-between",
+            alignItems: "center",
+            fontSize: "12px",
+            fontWeight: 700,
+            color: "rgba(255, 255, 255, 0.4)",
+          }}
+        >
+          <div>© 2026 AgentPet · Autonomous Coding Companion Studio</div>
+          <div>Local-First · Tamper-Evident · Privacy-Preserving</div>
+        </div>
+      </footer>
 
       {/* Command Deck Popover Modal */}
       <CommandDeck
@@ -1603,6 +2455,8 @@ export default function App() {
         onSelectPet={handleSelectPet}
         installedPacks={installedPacks}
         onVerifyLedger={handleVerifyLedger}
+        selectedPetId={snapshot.selectedPetId}
+        ledgerVerification={ledgerVerification}
       />
     </div>
   );

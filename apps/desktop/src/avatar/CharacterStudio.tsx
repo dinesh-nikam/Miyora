@@ -180,9 +180,12 @@ function CharacterCard({ spec, selected, status, onSelect }: CharacterCardProps)
       <SpecThumbnail spec={spec} />
       <span className="character-card__name">{spec.name}</span>
       <span className="character-card__title">{spec.title}</span>
-      <span className="character-card__swatches" aria-hidden="true">
+      <span
+        className="character-card__swatches"
+        aria-label={`Palette — hair: ${palette.hair}, eyes: ${palette.eyes}, primary: ${palette.primary}, accent: ${palette.accent}`}
+      >
         {[palette.hair, palette.eyes, palette.primary, palette.accent].map((color, index) => (
-          <span key={index} style={{ background: color }} />
+          <span key={index} style={{ background: color }} aria-hidden="true" />
         ))}
       </span>
       <span className="character-card__badges">
@@ -428,7 +431,7 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
   };
 
   return (
-    <div style={{ display: "grid", gridTemplateColumns: "minmax(300px, 340px) 1fr", gap: "16px", alignItems: "start" }}>
+    <div style={{ display: "grid", gridTemplateColumns: "minmax(280px, 320px) 1fr", gap: "16px", alignItems: "start", minWidth: 0 }}>
       {/* Preview */}
       <div style={{ ...panel, display: "flex", flexDirection: "column", alignItems: "center", gap: "10px", position: "sticky", top: 0 }}>
         <div style={{ alignSelf: "stretch" }}>
@@ -494,13 +497,45 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
       </div>
 
       {/* Tabs */}
-      <div style={{ display: "flex", flexDirection: "column", gap: "12px", minWidth: 0 }}>
-        <div style={{ display: "flex", gap: "8px" }}>
-          {(["library", "customize", "import"] as StudioTab[]).map((name) => (
-            <button key={name} style={button(tab === name ? "primary" : "ghost")} onClick={() => setTab(name)}>
-              {name === "library" ? `Library (${catalog.length + customs.length})` : humanize(name)}
-            </button>
-          ))}
+      <div style={{ display: "flex", flexDirection: "column", gap: "12px", minWidth: 0, overflow: "hidden" }}>
+        <div
+          role="tablist"
+          aria-label="Character Studio modes"
+          style={{
+            display: "inline-flex",
+            alignSelf: "flex-start",
+            gap: "6px",
+            background: "#0c1322",
+            padding: "4px",
+            borderRadius: "8px",
+            border: "1px solid rgba(255, 255, 255, 0.08)",
+          }}
+        >
+          {(["library", "customize", "import"] as StudioTab[]).map((name) => {
+            const isSelected = tab === name;
+            return (
+              <button
+                key={name}
+                role="tab"
+                aria-selected={isSelected}
+                tabIndex={isSelected ? 0 : -1}
+                style={{
+                  background: isSelected ? "rgba(56, 189, 248, 0.2)" : "transparent",
+                  border: isSelected ? "1px solid rgba(56, 189, 248, 0.55)" : "1px solid transparent",
+                  color: isSelected ? "#7dd3fc" : "#94a3b8",
+                  padding: "6px 14px",
+                  borderRadius: "6px",
+                  fontSize: "12px",
+                  fontWeight: isSelected ? 700 : 600,
+                  cursor: "pointer",
+                  transition: "background 0.15s ease, color 0.15s ease",
+                }}
+                onClick={() => setTab(name)}
+              >
+                {name === "library" ? `Library (${catalog.length + customs.length})` : humanize(name)}
+              </button>
+            );
+          })}
         </div>
 
         {tab === "library" && (
@@ -559,10 +594,10 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
                 <input style={{ ...input, flex: 1, minWidth: "160px" }} placeholder="Search name, role, or tag" value={search} onChange={(event) => setSearch(event.target.value)} />
                 <select style={input} value={bodyFilter} onChange={(event) => setBodyFilter(event.target.value)}>
                   <option value="all">All characters</option>
-                  <option value={ANIME_COLLECTION}>Anime archetypes ({catalog.filter(({ spec }) => spec.tags.includes(ANIME_TAG)).length})</option>
+                  <option value={ANIME_COLLECTION}>Anime style ({catalog.filter(({ spec }) => spec.tags.includes(ANIME_TAG)).length})</option>
                   {BODY_TYPES.map((body) => (
                     <option key={body} value={body}>
-                      {humanize(body)}
+                      {humanize(body)} (species)
                     </option>
                   ))}
                 </select>

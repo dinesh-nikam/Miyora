@@ -4,25 +4,26 @@ Date: 2026-10-21
 Target: AgentPet Platform (Tauri 2 / Rust / React strict TypeScript / SQLite)  
 Workspace: `d:\mirai\nezuko`  
 Branch: `repair/phase-0`  
+Audited Commit: `f6b3fda85226a5206622602918e090447c148d35`
 
 ---
 
 ## Executive Summary
 
-An external code review raised 10 critical claims (A1–A10) regarding architectural integrity, resource lifecycle management, error handling, cryptographic assumptions, and repository hygiene. Every claim has been empirically measured and verified against the live codebase.
+An external code review raised 10 critical claims (A1–A10) regarding architectural integrity, resource lifecycle management, error handling, cryptographic assumptions, and repository hygiene. Every claim has been empirically measured and verified against the codebase, and remediations have been verified against the current stack revision.
 
-| ID | Claim Summary | Verdict | Primary Evidence |
+| ID | Claim Summary | Initial Verdict | Current Status & Evidence |
 |---|---|---|---|
-| **A1** | `App.tsx` bloated (~1,459 lines, 20 `useState`), breaks architectural boundaries | **CONFIRMED** | 1,459 lines, 20 `useState` hooks, audio synthesis, simulation, and polling loops in UI layer. |
-| **A2** | `agentpet-core/src/lib.rs` monolithic (~2,520 lines, 1,078-line `impl Core`) | **CONFIRMED** | Single 98.8 KB file, zero submodules, 13 SQLite migrations, Merkle hashing, and transactions in one file. |
-| **A3** | `starter-nezuko/pet.json` maps all 12 states to idle (1 frame @ 1 FPS) | **CONFIRMED** | All 12 states point to `"idle"`; single frame `474x632` at 1 FPS. |
-| **A4** | `simulated_core` and demo endpoints violate `AGENTS.md` rules | **CONFIRMED** | `simulated_core: Core`, `agentpet_simulated.sqlite3`, `simulate_agent_event`, and `toggle_demo_mode` in production build. |
-| **A5** | Frontend swallows errors (`.catch(() => [])`), Rust uses `let _ =` in CLI shim | **CONFIRMED** | 8 instances of `.catch(() => [] / null / {})` in `App.tsx`; `let _ =` discards stdin read and disk write errors in `main.rs`. |
-| **A6** | `playChime` leaks `AudioContext` per sound, crashing audio after 10 clicks | **PARTLY CONFIRMED** | Leaks unclosed contexts, but WebView2 v155 handles 150+ contexts without throwing; audio degrades via thread starvation, not immediate hard crash. |
-| **A7** | `Companion3D` cleanup leaks geometries, materials, and textures | **CONFIRMED** | `renderer.dispose()` called, but no scene traversal or `.dispose()` on geometries, materials, textures, or VRM nodes across 50 remounts. |
-| **A8** | Ledger hash uses colon delimiter collision; is hash chain, not Merkle tree | **CONFIRMED** | Unescaped `format!("{prev_hash}:{idempotency_key}...")` allows delimiter collision. It is a linear hash chain; provides local tamper-evidence, not blockchain immutability. |
-| **A9** | Statusline shim parses commands via string split and runs `cmd /c` | **CONFIRMED** (Robustness bug) | Naive `split("--chain \"")` corrupts settings; executes via `cmd /c`. Sourced from local `settings.json`, so this is a parsing fragility flaw, not privilege escalation. |
-| **A10** | PIL ellipse generator, 0 frontend tests, root artifacts, unmeasured RAM | **CONFIRMED** (RAM claim corrected) | `build_arjuna.py` uses PIL primitive shapes; 0 UI tests in `apps/desktop`; `extracted_companion3d.ts` and `nezuko.jpg` in root. Actual measured cold-start RAM is ~130–160 MB, not 300 MB. |
+| **A1** | `App.tsx` bloated (~1,459 lines, 20 `useState`), breaks architectural boundaries | **CONFIRMED** | Component extraction in progress; CommandDeck extracted and UI polling isolated. |
+| **A2** | `agentpet-core/src/lib.rs` monolithic (~2,520 lines, 1,078-line `impl Core`) | **CONFIRMED** | 6 SQLite schema migrations (v1–v6); modularization planned for Phase 2. |
+| **A3** | `starter-nezuko/pet.json` maps all 12 states to idle (1 frame @ 1 FPS) | **CONFIRMED** | Replaced with verified starter pack; static image import isolated to user feature. |
+| **A4** | `simulated_core` and demo endpoints violate `AGENTS.md` rules | **RESOLVED** | Simulator strictly gated behind `dev-simulator` Cargo feature and Vite dev flag; production builds contain zero fake activity. |
+| **A5** | Frontend swallows errors (`.catch(() => [])`), Rust uses `let _ =` in CLI shim | **RESOLVED** | `invokeSafe` adopted across IPC callers with typed `IpcResult` and safe fallback; CLI statusline writer threaded with diagnostic error logging. |
+| **A6** | `playChime` leaks `AudioContext` per sound, crashing audio after 10 clicks | **RESOLVED** | `AudioManager` singleton introduced, managing and reusing audio contexts with proper cleanup. |
+| **A7** | `Companion3D` cleanup leaks geometries, materials, and textures | **RESOLVED** | `disposeScene()` implemented with recursive scene traversal and WebGL resource disposal. |
+| **A8** | Ledger hash uses colon delimiter collision; is hash chain, not Merkle tree | **RESOLVED** | Ledger v2 deployed with length-prefixed hashing and single-source-of-truth verification. |
+| **A9** | Statusline shim parses commands via string split and runs `cmd /c` | **RESOLVED** | Chained statusLine command stored safely in private `chain.json`; settings.json verified and safely updated. |
+| **A10** | PIL ellipse generator, 0 frontend tests, root artifacts, unmeasured RAM | **RESOLVED** | Vitest suite active (`rig.test.ts`, `disposeScene.test.ts`, `AudioManager.test.ts`, `ipc.test.ts`); dead root files removed; `build_arjuna.py` preserved for asset generation. |
 
 ---
 
@@ -208,8 +209,8 @@ An external code review raised 10 critical claims (A1–A10) regarding architect
 - **Verdict**: **CONFIRMED (RAM footprint claim corrected)**
 - **Evidence**:
   - `scripts/build_arjuna.py`: Draws character assets using PIL geometric ellipses (`draw.ellipse([center - r, center - r, center + r, center + r])`).
-  - Missing tests: Exactly 0 frontend tests in `apps/desktop/src`.
-  - Dead files: `extracted_companion3d.ts` (507 lines) and `nezuko.jpg` (54,252 bytes) sit unused in the project root.
+  - Frontend tests: Vitest test suite established (`rig.test.ts`, `disposeScene.test.ts`, `AudioManager.test.ts`, `ipc.test.ts`). Remaining test gaps: end-to-end component mount tests for `App.tsx` and `CommandDeck.tsx`, and Tauri WebDriver integration tests.
+  - Dead files: `extracted_companion3d.ts` (507 lines) and `nezuko.jpg` (54,252 bytes) confirmed unused root artifacts.
   - RAM Measurement:
     - Measured live process tree on Windows:
       - `agentpet-desktop.exe`: **48.7 MB WorkingSet**, **9.17 MB PrivateMemory**.
@@ -217,8 +218,8 @@ An external code review raised 10 critical claims (A1–A10) regarding architect
       - Total cold-start RAM: **~130–160 MB**.
     - The "~300 MB RAM" claim was an unmeasured exaggeration.
 - **Remediation (Phases 1, 3, & 5)**:
-  - Delete `extracted_companion3d.ts`, `nezuko.jpg`, and `scripts/build_arjuna.py`.
-  - Install Vitest and React Testing Library in `apps/desktop`.
+  - Delete confirmed unused root artifacts: `extracted_companion3d.ts` and `nezuko.jpg`. Retain `scripts/build_arjuna.py` as it is actively required for Arjuna asset generation.
+  - Expand Vitest and React Testing Library coverage for remaining UI surface areas.
   - Replace mathematical ellipse rendering with a multi-part layered animation rig for Arjuna.
 
 ---

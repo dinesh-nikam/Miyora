@@ -23,9 +23,25 @@ pub const HOOK_EVENTS: &[&str] = &[
     "UserPromptSubmit",
     "PreToolUse",
     "PostToolUse",
+    "PostToolUseFailure",
     "Notification",
     "Stop",
     "SubagentStop",
+    "PreCompact",
+    "PostCompact",
+];
+
+/// Notification type Claude Code sends when a tool call awaits approval.
+const PERMISSION_PROMPT: &str = "permission_prompt";
+
+/// Lifecycle-tracking events required to verify hook installation.
+pub const REQUIRED_HOOK_EVENTS: &[&str] = &[
+    "SessionStart",
+    "UserPromptSubmit",
+    "PreToolUse",
+    "PostToolUse",
+    "Notification",
+    "Stop",
 ];
 
 /// Fixed namespace for deterministic adapter event UUIDs (v5).
@@ -49,6 +65,8 @@ struct ClaudeHookPayload {
     #[serde(default)]
     tool_use_id: Option<String>,
     #[serde(default)]
+    notification_type: Option<String>,
+    #[serde(default)]
     cwd: Option<String>,
 }
 
@@ -65,11 +83,24 @@ pub fn parse_hook_payload(input: &[u8]) -> Result<NormalizedEvent, AdapterError>
         .hook_event_name
         .as_deref()
         .ok_or(AdapterError::MissingField("hook_event_name"))?;
+    let notification_type = payload
+        .notification_type
+        .as_deref()
+        .filter(|value| !value.trim().is_empty());
     let kind = match hook_event {
         "SessionStart" => HookEventKind::AgentStarted,
-        "UserPromptSubmit" | "PreToolUse" | "PostToolUse" => HookEventKind::AgentWorking,
-        "Notification" => HookEventKind::AgentInputRequired,
-        "Stop" | "SubagentStop" => HookEventKind::AgentCompleted,
+        // A failed tool call is routine; the turn continues. AgentFailed
+        // would end the session as failed.
+        "UserPromptSubmit" | "PreToolUse" | "PostToolUse" | "PostToolUseFailure"
+        | "SubagentStop" | "PostCompact" => HookEventKind::AgentWorking,
+        "PreCompact" => HookEventKind::AgentThinking,
+        // Only a permission prompt blocks the agent. Idle reminders and other
+        // notifications mean it is waiting, not that input is required.
+        "Notification" if notification_type == Some(PERMISSION_PROMPT) => {
+            HookEventKind::AgentInputRequired
+        }
+        "Notification" => HookEventKind::AgentWaiting,
+        "Stop" => HookEventKind::AgentCompleted,
         other => return Err(AdapterError::UnsupportedHookEvent(other.to_owned())),
     };
     let session_id = payload.session_id.filter(|id| !id.trim().is_empty());
@@ -86,6 +117,7 @@ pub fn parse_hook_payload(input: &[u8]) -> Result<NormalizedEvent, AdapterError>
             hook_event,
             payload.tool_use_id.as_deref(),
             payload.tool_name.as_deref(),
+            notification_type,
         ),
         kind,
         agent_id: ADAPTER_ID.to_owned(),
@@ -99,14 +131,20 @@ fn deterministic_event_id(
     hook_event: &str,
     tool_use_id: Option<&str>,
     tool_name: Option<&str>,
+    notification_type: Option<&str>,
 ) -> String {
-    let seed = format!(
+    let mut seed = format!(
         "{}|{}|{}|{}",
         session_id.unwrap_or(""),
         hook_event,
         tool_use_id.unwrap_or(""),
         tool_name.unwrap_or("")
     );
+    // Appended only when present so ids of other events stay unchanged.
+    if let Some(notification_type) = notification_type {
+        seed.push('|');
+        seed.push_str(notification_type);
+    }
     Uuid::new_v5(&EVENT_NAMESPACE, seed.as_bytes()).to_string()
 }
 
@@ -128,6 +166,26 @@ pub struct InstallReport {
 
 /// Installs the hook command for every supported Claude Code hook event.
 pub fn install_hook(settings_path: &Path, command: &str) -> Result<InstallReport, AdapterError> {
+    install_hook_events(settings_path, command, HOOK_EVENTS)
+}
+
+/// Removes only AgentPet-owned hook entries invoking `command`.
+pub fn uninstall_hook(settings_path: &Path, command: &str) -> Result<bool, AdapterError> {
+    uninstall_hook_events(settings_path, command, HOOK_EVENTS)
+}
+
+/// Returns true when `command` is registered for required lifecycle events.
+pub fn is_installed(settings_path: &Path, command: &str) -> Result<bool, AdapterError> {
+    is_installed_for_events(settings_path, command, REQUIRED_HOOK_EVENTS)
+}
+
+/// Installs `command` for `events` in a hooks document shaped like Claude
+/// Code settings (`{"hooks": {"<Event>": [{"hooks": [...]}]}}`).
+pub(crate) fn install_hook_events(
+    settings_path: &Path,
+    command: &str,
+    events: &[&str],
+) -> Result<InstallReport, AdapterError> {
     if command.trim().is_empty() || command.len() > 4_096 {
         return Err(AdapterError::InvalidConfig(
             "hook command must be non-empty and at most 4096 chars".into(),
@@ -137,7 +195,7 @@ pub fn install_hook(settings_path: &Path, command: &str) -> Result<InstallReport
     let backup_path = backup_settings(settings_path, previous.as_deref())?;
     let mut document = parse_settings(previous.as_deref().unwrap_or(b""))?;
     let mut changed = false;
-    for event in HOOK_EVENTS {
+    for event in events {
         changed |= ensure_hook_entry(&mut document, event, command)?;
     }
     if changed {
@@ -150,8 +208,12 @@ pub fn install_hook(settings_path: &Path, command: &str) -> Result<InstallReport
     })
 }
 
-/// Removes only AgentPet-owned hook entries invoking `command`.
-pub fn uninstall_hook(settings_path: &Path, command: &str) -> Result<bool, AdapterError> {
+/// Removes only entries invoking `command` from `events`.
+pub(crate) fn uninstall_hook_events(
+    settings_path: &Path,
+    command: &str,
+    events: &[&str],
+) -> Result<bool, AdapterError> {
     let previous = read_previous(settings_path)?;
     let Some(bytes) = previous else {
         return Ok(false);
@@ -162,7 +224,7 @@ pub fn uninstall_hook(settings_path: &Path, command: &str) -> Result<bool, Adapt
         .get_mut("hooks")
         .and_then(serde_json::Value::as_object_mut)
     {
-        for event in HOOK_EVENTS {
+        for event in events {
             if let Some(entries) = hooks.get_mut(*event).and_then(|v| v.as_array_mut()) {
                 let before = entries.len();
                 entries.retain(|entry| !entry_invokes(entry, command));
@@ -184,14 +246,18 @@ pub fn uninstall_hook(settings_path: &Path, command: &str) -> Result<bool, Adapt
     Ok(removed)
 }
 
-/// Returns true when `command` is registered for every supported event.
-pub fn is_installed(settings_path: &Path, command: &str) -> Result<bool, AdapterError> {
+/// Returns true when `command` is registered for every one of `required`.
+pub(crate) fn is_installed_for_events(
+    settings_path: &Path,
+    command: &str,
+    required: &[&str],
+) -> Result<bool, AdapterError> {
     let previous = read_previous(settings_path)?;
     let Some(bytes) = previous else {
         return Ok(false);
     };
     let document = parse_settings(&bytes)?;
-    Ok(HOOK_EVENTS.iter().all(|event| {
+    Ok(required.iter().all(|event| {
         hook_entries(&document, event)
             .iter()
             .any(|e| entry_invokes(e, command))
@@ -215,16 +281,30 @@ pub struct ClaudeQuotaReport {
     pub provenance: String,
 }
 
+fn parse_resets_at(v: &serde_json::Value) -> Option<String> {
+    let val = v.get("resets_at")?;
+    if let Some(epoch_sec) = val.as_i64() {
+        chrono::DateTime::from_timestamp(epoch_sec, 0).map(|dt| dt.to_rfc3339())
+    } else if let Some(epoch_sec_f) = val.as_f64() {
+        chrono::DateTime::from_timestamp(epoch_sec_f as i64, 0).map(|dt| dt.to_rfc3339())
+    } else if let Some(s) = val.as_str() {
+        if let Ok(epoch) = s.parse::<i64>() {
+            chrono::DateTime::from_timestamp(epoch, 0).map(|dt| dt.to_rfc3339())
+        } else {
+            Some(s.to_string())
+        }
+    } else {
+        None
+    }
+}
+
 pub fn parse_statusline_payload(input: &[u8]) -> Result<ClaudeQuotaReport, AdapterError> {
     let root: serde_json::Value = serde_json::from_slice(input)?;
     let rate_limits = root.get("rate_limits");
     let context_window = root.get("context_window");
     let five_hour = rate_limits.and_then(|r| r.get("five_hour")).and_then(|v| {
         let used = v.get("used_percentage")?.as_f64()?;
-        let resets = v
-            .get("resets_at")
-            .and_then(|s| s.as_str())
-            .map(str::to_owned);
+        let resets = parse_resets_at(v);
         Some(ClaudeQuotaWindow {
             used_percentage: used,
             resets_at: resets,
@@ -232,10 +312,7 @@ pub fn parse_statusline_payload(input: &[u8]) -> Result<ClaudeQuotaReport, Adapt
     });
     let seven_day = rate_limits.and_then(|r| r.get("seven_day")).and_then(|v| {
         let used = v.get("used_percentage")?.as_f64()?;
-        let resets = v
-            .get("resets_at")
-            .and_then(|s| s.as_str())
-            .map(str::to_owned);
+        let resets = parse_resets_at(v);
         Some(ClaudeQuotaWindow {
             used_percentage: used,
             resets_at: resets,
@@ -249,11 +326,31 @@ pub fn parse_statusline_payload(input: &[u8]) -> Result<ClaudeQuotaReport, Adapt
     } else {
         "N/A".to_string()
     };
+    let updated_at = root
+        .get("timestamp")
+        .or_else(|| root.get("captured_at"))
+        .or_else(|| root.get("updated_at"))
+        .and_then(|ts| {
+            if let Some(s) = ts.as_str() {
+                if let Ok(epoch) = s.parse::<i64>() {
+                    chrono::DateTime::from_timestamp(epoch, 0).map(|dt| dt.to_rfc3339())
+                } else {
+                    Some(s.to_string())
+                }
+            } else if let Some(sec) = ts.as_i64() {
+                chrono::DateTime::from_timestamp(sec, 0).map(|dt| dt.to_rfc3339())
+            } else if let Some(sec) = ts.as_f64() {
+                chrono::DateTime::from_timestamp(sec as i64, 0).map(|dt| dt.to_rfc3339())
+            } else {
+                None
+            }
+        })
+        .unwrap_or_else(|| chrono::Utc::now().to_rfc3339());
     Ok(ClaudeQuotaReport {
         five_hour,
         seven_day,
         context_window_used_percentage: context_window_used,
-        updated_at: chrono::Utc::now().to_rfc3339(),
+        updated_at,
         provenance,
     })
 }
@@ -292,17 +389,24 @@ pub fn install_statusline_shim(
     shim_command: &str,
 ) -> Result<Option<String>, AdapterError> {
     let previous = read_previous(settings_path)?;
+    let _backup_path = backup_settings(settings_path, previous.as_deref())?;
     let mut document = parse_settings(previous.as_deref().unwrap_or(b""))?;
-    let mut original_command: Option<String> = None;
-    if let Some(status_obj) = document.get("statusLine") {
-        if let Some(cmd) = status_obj.get("command").and_then(|c| c.as_str()) {
-            if !cmd.contains("agentpet statusline") {
-                original_command = Some(cmd.to_string());
-            }
-        }
-    }
-    // Store original command in chain.json
     let chain_path = default_chain_file_path(settings_path);
+    let current_cmd = document
+        .get("statusLine")
+        .and_then(|status_obj| status_obj.get("command"))
+        .and_then(|c| c.as_str());
+
+    let original_command = if let Some(cmd) = current_cmd {
+        if !cmd.contains("agentpet statusline") {
+            Some(cmd.to_string())
+        } else {
+            read_chain_record(&chain_path).and_then(|rec| rec.original_command)
+        }
+    } else {
+        read_chain_record(&chain_path).and_then(|rec| rec.original_command)
+    };
+    // Store original command in chain.json
     let chain_record = StatuslineChainRecord {
         original_command: original_command.clone(),
         installed_at: chrono::Utc::now().to_rfc3339(),
@@ -356,9 +460,9 @@ pub fn uninstall_statusline_shim(settings_path: &Path) -> Result<bool, AdapterEr
             }
         }
     }
-    let _ = fs::remove_file(chain_path);
     if removed {
         write_verified(settings_path, &document, Some(&bytes))?;
+        let _ = fs::remove_file(chain_path);
     }
     Ok(removed)
 }
@@ -573,19 +677,75 @@ mod tests {
         )
         .expect("replay parses");
         assert_eq!(tool.event_id, replay.event_id);
-        let other = parse_hook_payload(
-            br#"{"session_id":"abc","hook_event_name":"PreToolUse","tool_name":"Bash","tool_use_id":"t2"}"#,
-        )
-        .expect("second tool parses");
-        assert_ne!(tool.event_id, other.event_id);
+        let subagent_stop =
+            parse_hook_payload(br#"{"session_id":"abc","hook_event_name":"SubagentStop"}"#)
+                .expect("subagent stop parses");
+        assert_eq!(subagent_stop.kind, HookEventKind::AgentWorking);
     }
 
     #[test]
     fn rejects_malformed_and_unsupported_payloads() {
         assert!(parse_hook_payload(b"not json").is_err());
-        assert!(parse_hook_payload(br#"{"hook_event_name":"SubagentStop"}"#).is_err());
+        assert!(parse_hook_payload(br#"{"hook_event_name":"UnknownEvent"}"#).is_err());
         assert!(parse_hook_payload(br#"{"hook_event_name":"SessionStart"}"#).is_err());
         assert!(parse_hook_payload(&vec![0_u8; MAX + 1]).is_err());
+    }
+
+    #[test]
+    fn tool_failure_and_compaction_keep_the_session_working() {
+        let failure = parse_hook_payload(
+            br#"{"session_id":"abc","hook_event_name":"PostToolUseFailure","tool_name":"Bash","tool_use_id":"t2"}"#,
+        )
+        .expect("tool failure parses");
+        assert_eq!(failure.kind, HookEventKind::AgentWorking);
+        let pre_compact =
+            parse_hook_payload(br#"{"session_id":"abc","hook_event_name":"PreCompact"}"#)
+                .expect("pre compact parses");
+        assert_eq!(pre_compact.kind, HookEventKind::AgentThinking);
+        let post_compact =
+            parse_hook_payload(br#"{"session_id":"abc","hook_event_name":"PostCompact"}"#)
+                .expect("post compact parses");
+        assert_eq!(post_compact.kind, HookEventKind::AgentWorking);
+    }
+
+    #[test]
+    fn only_permission_prompts_require_input() {
+        let permission = parse_hook_payload(
+            br#"{"session_id":"abc","hook_event_name":"Notification","notification_type":"permission_prompt"}"#,
+        )
+        .expect("permission prompt parses");
+        assert_eq!(permission.kind, HookEventKind::AgentInputRequired);
+        let idle = parse_hook_payload(
+            br#"{"session_id":"abc","hook_event_name":"Notification","notification_type":"idle_prompt"}"#,
+        )
+        .expect("idle prompt parses");
+        assert_eq!(idle.kind, HookEventKind::AgentWaiting);
+        assert_ne!(permission.event_id, idle.event_id);
+        let untyped =
+            parse_hook_payload(br#"{"session_id":"abc","hook_event_name":"Notification"}"#)
+                .expect("untyped notification parses");
+        assert_eq!(untyped.kind, HookEventKind::AgentWaiting);
+    }
+
+    #[test]
+    fn install_registers_every_consumed_event() {
+        let dir = tempfile::tempdir().expect("tempdir");
+        let path = dir.path().join(SETTINGS_FILE);
+        install_hook(&path, "agentpet hook").expect("install");
+        let doc: serde_json::Value =
+            serde_json::from_slice(&fs::read(&path).expect("read")).expect("parse");
+        for event in ["PostToolUseFailure", "PreCompact", "PostCompact"] {
+            assert!(
+                hook_entries(&doc, event)
+                    .iter()
+                    .any(|e| entry_invokes(e, "agentpet hook")),
+                "{event} hook is registered"
+            );
+        }
+        assert!(uninstall_hook(&path, "agentpet hook").expect("uninstall"));
+        assert!(!fs::read_to_string(&path)
+            .expect("read")
+            .contains("agentpet hook"));
     }
 
     #[test]

@@ -237,6 +237,8 @@ CHARACTERS = [
       "e0ac83 0ea5e9 0369a1 f97316 1f2937 fde047", "Built a giant robot out of spare build agents.", "anime mecha maker", energy=1.4, height=0.9, tip="1e3a8a"),
     c("sumire", "Sumire", "Ink Brush Calligrapher", "humanoid", "human", "none", "none", "bun", "sleepy", "kimono", "flower",
       "f6d7c3 3f3f46 6d28d9 6d28d9 f5f3ff fbbf24", "Writes commit messages in perfect brushstrokes.", "anime artist", energy=0.7, pattern="petals"),
+    c("momiji", "Momiji", "Petal Kimono Quiet One", "humanoid", "human", "none", "none", "long", "round", "kimono", "flower",
+      "f2c9a8 0c0a09 db2777 be185d 111827 f9a8d4", "Barefoot through the build logs on quiet mornings, dark hair with pink tips swaying as long sessions run to green.", "anime kimono petals calm", energy=0.9, height=0.85, pattern="petals", tip="fb7185"),
     # ---- Beasts ----------------------------------------------------------
     c("ember", "Ember", "Fox Courier", "beast", "fox", "fox", "none", "short", "round", "jacket", "scarf backpack",
       "e07a2f fff7ed 1e3a8a 1f2937 374151 f59e0b", "A quick-pawed fox who carries messages between your agents.", "fox speedy", energy=1.3),

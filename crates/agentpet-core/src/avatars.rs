@@ -772,10 +772,20 @@ impl Core {
         avatars_root: &Path,
     ) -> Result<(), CoreError> {
         validate_avatar_id(avatar_id)?;
-        let has_files = {
-            let mut connection = self.lock_connection()?;
-            let row = load_custom(&connection, avatar_id)?
-                .ok_or_else(|| CoreError::AvatarNotFound(avatar_id.to_owned()))?;
+        let mut connection = self.lock_connection()?;
+        let row = load_custom(&connection, avatar_id)?
+            .ok_or_else(|| CoreError::AvatarNotFound(avatar_id.to_owned()))?;
+        let target_dir = avatars_root.join(avatar_id);
+        let staged_dir = if row.model_file.is_some() && target_dir.exists() {
+            let staging = avatars_root.join(format!("{STAGING_PREFIX}{}", Uuid::new_v4().simple()));
+            fs::rename(&target_dir, &staging)
+                .map_err(|e| storage_error("stage avatar directory for deletion", e))?;
+            Some(staging)
+        } else {
+            None
+        };
+
+        let commit_result = (|| -> Result<(), CoreError> {
             let transaction = connection.transaction()?;
             transaction.execute(
                 "DELETE FROM custom_avatars WHERE avatar_id = ?1",
@@ -787,15 +797,20 @@ impl Core {
                 params![avatar_id, DEFAULT_AVATAR_ID, Utc::now().to_rfc3339()],
             )?;
             transaction.commit()?;
-            row.model_file.is_some()
-        };
-        if has_files {
-            match fs::remove_dir_all(avatars_root.join(avatar_id)) {
-                Ok(()) => {}
-                Err(error) if error.kind() == std::io::ErrorKind::NotFound => {}
-                Err(error) => return Err(storage_error("remove avatar files", error)),
+            Ok(())
+        })();
+
+        if let Err(commit_error) = commit_result {
+            if let Some(ref staging) = staged_dir {
+                let _ = fs::rename(staging, &target_dir);
             }
+            return Err(commit_error);
         }
+
+        if let Some(ref staging) = staged_dir {
+            let _ = fs::remove_dir_all(staging);
+        }
+
         Ok(())
     }
 

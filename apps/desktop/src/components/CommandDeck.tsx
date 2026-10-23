@@ -33,6 +33,13 @@ export interface CommandDeckProps {
   onSelectPet: (id: string) => void;
   installedPacks: { id: string; selectionId: string; name: string }[];
   onVerifyLedger: () => void;
+  selectedPetId?: string | null;
+  ledgerVerification?: {
+    isValid: boolean;
+    totalEntries: number;
+    brokenAtIndex: number | null;
+    errorMessage: string | null;
+  } | null;
   latencyMs?: number | null;
 }
 
@@ -157,6 +164,8 @@ export function CommandDeck({
   onSelectPet,
   installedPacks,
   onVerifyLedger,
+  selectedPetId,
+  ledgerVerification,
   latencyMs,
 }: CommandDeckProps) {
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -232,7 +241,9 @@ export function CommandDeck({
               <h2 id="deck-companion" className="deck-heading">Companion</h2>
               <div className="deck-pets" role="group" aria-labelledby="deck-companion">
                 {installedPacks.map((pack) => {
-                  const isSelected = activePetName.toLowerCase().includes(pack.name.toLowerCase());
+                  const isSelected = selectedPetId
+                    ? selectedPetId === pack.selectionId || selectedPetId === pack.id
+                    : activePetName.toLowerCase().includes(pack.name.toLowerCase());
                   return (
                     <button
                       key={pack.selectionId}
@@ -251,7 +262,15 @@ export function CommandDeck({
 
         <footer className="deck-footer">
           <button className="deck-action" onClick={onVerifyLedger}>
-            Verify XP ledger
+            {ledgerVerification
+              ? ledgerVerification.isValid
+                ? `Ledger Verified (${ledgerVerification.totalEntries})`
+                : ledgerVerification.brokenAtIndex !== null && ledgerVerification.brokenAtIndex !== undefined
+                  ? `Ledger Broken at #${ledgerVerification.brokenAtIndex}`
+                  : ledgerVerification.errorMessage
+                    ? `Ledger check failed: ${ledgerVerification.errorMessage}`
+                    : "Ledger check failed"
+              : "Verify XP ledger"}
           </button>
           <button className="deck-action is-quiet" onClick={onToggleSimulated}>
             {isSimulated ? "Return to live data" : "Start simulated demo"}

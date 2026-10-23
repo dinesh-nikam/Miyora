@@ -2918,6 +2918,46 @@
     },
     {
       "schemaVersion": 1,
+      "id": "miyora.momiji",
+      "name": "Momiji",
+      "title": "Petal Kimono Quiet One",
+      "description": "Barefoot through the build logs on quiet mornings, dark hair with pink tips swaying as long sessions run to green.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "round",
+      "outfit": "kimono",
+      "accessories": [
+        "flower"
+      ],
+      "pattern": "petals",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#0c0a09",
+        "eyes": "#db2777",
+        "primary": "#be185d",
+        "secondary": "#111827",
+        "accent": "#f9a8d4"
+      },
+      "proportions": {
+        "height": 0.85,
+        "headScale": 1.0,
+        "build": 1.0,
+        "limbLength": 1.0
+      },
+      "energy": 0.9,
+      "tags": [
+        "anime",
+        "kimono",
+        "petals",
+        "calm"
+      ],
+      "hairTip": "#fb7185"
+    },
+    {
+      "schemaVersion": 1,
       "id": "miyora.ember",
       "name": "Ember",
       "title": "Fox Courier",

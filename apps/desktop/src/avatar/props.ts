@@ -253,7 +253,7 @@ export class StageProps {
       this.updateRing(0);
       return;
     }
-    const span = hud.xpIntoLevel + hud.xpToNextLevel;
+    const span = hud.xpToNextLevel;
     const fraction = span > 0 ? Math.min(1, Math.max(0, hud.xpIntoLevel / span)) : 0;
     this.updateRing(fraction);
     drawText(this.levelLabel, `LV ${hud.level}  ·  ${hud.xpIntoLevel}/${span} XP`, "#e2e8f0", true);

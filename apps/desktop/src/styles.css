@@ -1700,6 +1700,8 @@ a {
   flex-direction: column;
   align-items: center;
   gap: 3px;
+  /* Fixed minimum height ensures uniform card size across the catalog grid */
+  min-height: 180px;
   padding: 10px 8px 8px;
   border-radius: 12px;
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -1709,6 +1711,9 @@ a {
   font: inherit;
   cursor: pointer;
   transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+  /* Prevent card content from causing horizontal overflow */
+  overflow: hidden;
+  word-break: break-word;
 }
 .character-card:hover {
   transform: translateY(-2px);
@@ -1727,6 +1732,12 @@ a {
   font-size: 12px;
   font-weight: 700;
   color: #f1f5f9;
+  /* Prevent long names from expanding card width */
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .character-card__title {
   font-size: 10px;
@@ -1743,6 +1754,7 @@ a {
   display: flex;
   gap: 3px;
   margin-top: 2px;
+  /* Swatches represent: hair · eyes · primary · accent */
 }
 .character-card__swatches span {
   width: 10px;
@@ -1756,6 +1768,9 @@ a {
   justify-content: center;
   gap: 3px;
   margin-top: 3px;
+  /* Push badges to the bottom of the card, consistent baseline */
+  margin-top: auto;
+  padding-top: 4px;
 }
 @media (prefers-reduced-motion: reduce) {
   .character-card {
@@ -1764,6 +1779,87 @@ a {
   .character-card:hover {
     transform: none;
   }
+}
+
+/* ==========================================================================
+   PetPack Card Structured Metadata
+   ========================================================================== */
+
+/* Structured metadata block: version / author / license in fixed 3-line region.
+   Prevents metadata from clipping at narrow widths. */
+.petpack-meta {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  column-gap: 8px;
+  row-gap: 2px;
+  font-size: 11px;
+  color: rgba(10, 10, 10, 0.7);
+  font-weight: 600;
+  font-family: 'Space Grotesk', sans-serif;
+  /* Reserve a fixed height to guarantee all cards are the same */
+  min-height: 48px;
+  overflow: hidden;
+}
+.petpack-meta__label {
+  color: rgba(10, 10, 10, 0.45);
+  font-size: 9px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.6;
+  white-space: nowrap;
+}
+.petpack-meta__value {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 1.6;
+}
+.petpack-meta__license-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 1px 6px;
+  border-radius: 3px;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.petpack-meta__license-badge.cc0 {
+  background: rgba(16, 185, 129, 0.12);
+  color: #059669;
+  border: 1px solid rgba(16, 185, 129, 0.3);
+}
+.petpack-meta__license-badge.cc-by {
+  background: rgba(56, 189, 248, 0.12);
+  color: #0369a1;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+}
+.petpack-meta__license-badge.restricted {
+  background: rgba(245, 158, 11, 0.12);
+  color: #92400e;
+  border: 1px solid rgba(245, 158, 11, 0.3);
+}
+
+/* ==========================================================================
+   Studio layout — overflow-safe container
+   ========================================================================== */
+
+/* The CharacterStudio grid must never cause the page to scroll horizontally.
+   The sticky preview column is constrained and the catalog panel gets min-width: 0
+   to respect the grid container boundary. */
+.studio-outer {
+  /* Prevent the studio from forcing horizontal overflow at narrow widths */
+  min-width: 0;
+  overflow: hidden;
+  background-color: #070c18;
+  color: #e2e8f0;
+}
+.studio-outer > div {
+  /* Let the grid's auto-fill catalog shrink inside its container */
+  min-width: 0;
 }
 
 /* ==========================================================================
@@ -2077,4 +2173,162 @@ a {
   .deck-meter-fill {
     transition: none;
   }
+  .marquee, .marquee-rev {
+    animation: none !important;
+  }
 }
+
+/* ==========================================================================
+   Maximalist Neo-Brutalist Design Kit
+   Exact Palette: Magenta #ff2db7, Cyan #00d4ff, Yellow #ffd000, Ink #0a0a0a, White #ffffff
+   ========================================================================== */
+
+:root {
+  --nb-magenta: #ff2db7;
+  --nb-cyan: #00d4ff;
+  --nb-yellow: #ffd000;
+  --nb-ink: #0a0a0a;
+  --nb-white: #ffffff;
+}
+
+.font-display,
+.display {
+  font-family: "Archivo Black", "Archivo", sans-serif !important;
+  font-weight: 900 !important;
+  letter-spacing: -0.03em !important;
+  line-height: 0.86 !important;
+  text-transform: uppercase !important;
+}
+
+.font-grotesk {
+  font-family: "Space Grotesk", sans-serif !important;
+}
+
+.font-archivo {
+  font-family: "Archivo", sans-serif !important;
+}
+
+/* Hard black borders */
+.edge {
+  border: 3px solid #0a0a0a !important;
+}
+
+.edge-thick {
+  border: 5px solid #0a0a0a !important;
+}
+
+.edge-4 {
+  border: 4px solid #0a0a0a !important;
+}
+
+/* Hard offset pop-shadows - zero blur */
+.shadow-pop {
+  box-shadow: 8px 8px 0 #0a0a0a !important;
+}
+
+.shadow-pop-lg {
+  box-shadow: 12px 12px 0 #0a0a0a !important;
+}
+
+.shadow-pop-sm {
+  box-shadow: 4px 4px 0 #0a0a0a !important;
+}
+
+.shadow-pop-hover {
+  transition: transform 0.12s cubic-bezier(0.2, 0, 0, 1), box-shadow 0.12s cubic-bezier(0.2, 0, 0, 1) !important;
+}
+
+.shadow-pop-hover:hover:not(:disabled) {
+  transform: translate(-2px, -2px) !important;
+  box-shadow: 10px 10px 0 #0a0a0a !important;
+}
+
+.shadow-pop-hover:active:not(:disabled) {
+  transform: translate(2px, 2px) !important;
+  box-shadow: 4px 4px 0 #0a0a0a !important;
+}
+
+/* Subtle dot grain texture */
+.grain {
+  background-image: radial-gradient(rgba(10, 10, 10, 0.06) 1px, transparent 1px);
+  background-size: 4px 4px;
+}
+
+/* Highlight boxes with slight tilt */
+.highlight-cyan {
+  background-color: var(--nb-cyan);
+  color: #0a0a0a;
+  padding: 2px 12px 4px;
+  display: inline-block;
+  transform: rotate(-1deg);
+  border: 3px solid #0a0a0a;
+  box-shadow: 6px 6px 0 #0a0a0a;
+}
+
+.highlight-magenta {
+  background-color: var(--nb-magenta);
+  color: #ffffff;
+  padding: 2px 12px 4px;
+  display: inline-block;
+  transform: rotate(1deg);
+  border: 3px solid #0a0a0a;
+  box-shadow: 6px 6px 0 #0a0a0a;
+}
+
+.highlight-yellow {
+  background-color: var(--nb-yellow);
+  color: #0a0a0a;
+  padding: 2px 12px 4px;
+  display: inline-block;
+  transform: rotate(-1.5deg);
+  border: 3px solid #0a0a0a;
+  box-shadow: 6px 6px 0 #0a0a0a;
+}
+
+/* Infinite Marquees with edge mask */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-rev {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+.marquee-strip {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: marquee 24s linear infinite;
+  will-change: transform;
+}
+
+.marquee-rev-strip {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: marquee-rev 28s linear infinite;
+  will-change: transform;
+}
+
+.marquee-mask {
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0%, #000 6%, #000 94%, transparent 100%);
+  overflow: hidden;
+}
+
+.marquee-strip:hover,
+.marquee-rev-strip:hover {
+  animation-play-state: paused;
+}
+
+/* Neo-brutalist icon drop shadow */
+.icon-pop {
+  filter: drop-shadow(4px 4px 0 #0a0a0a);
+}
+
+.icon-pop-lg {
+  filter: drop-shadow(6px 6px 0 #0a0a0a);
+}
+

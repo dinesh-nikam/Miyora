@@ -20,9 +20,10 @@ Core local entities:
 | `project_pet_assignments` | Project FK, pet instance FK, unique project assignment |
 | `agents` | Adapter ID, installation state, safe configuration metadata |
 | `agent_sessions` | Agent ID, local project path, pet identity captured at session start, start/end, monotonic duration, status, process exit code, nullable actual usage; wrapper records usage as null |
-| `agent_events` | Unique event ID/idempotency key, session FK, type, timestamps, bounded metadata |
+| `agent_events` | Unique event ID/idempotency key, session FK, type, provider, monotonic_ms, payload_json, timestamps, bounded metadata |
 | `providers` / `provider_models` | Non-secret configuration and opaque credential reference |
 | `xp_transactions` | Immutable transaction ID, pet identity (installed pack selection or reserved `local.default`), source/source ID, amount, timestamp, metadata; unique idempotency key |
+| `xp_ledger` | Immutable append-only audit ledger (schema v8): entry ID, pet identity, delta XP, total XP, source, source ID, session ID, event ID, provider, metadata JSON, SHA-256 prev_hash and chained hash, and SQLite triggers preventing UPDATE and DELETE |
 | `progression_config` | One local rules row: XP for a successful completed session, base XP to reach level 2, and per-level XP increase |
 | `pet_progression` | Materialized XP total and current level; recomputable from immutable XP transactions |
 | `achievement_definitions` / `pet_achievements` | Seeded completed-session milestones, XP reward, and immutable per-pet unlock with source session |

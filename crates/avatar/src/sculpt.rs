@@ -591,7 +591,7 @@ impl Relief {
         }
 
         mesh.normals = vec![[0.0; 3]; mesh.positions.len()];
-        for triangle in mesh.indices.chunks_exact(3) {
+        for triangle in mesh.indices.as_chunks::<3>().0 {
             let [p0, p1, p2] = [0, 1, 2].map(|k| mesh.positions[triangle[k] as usize]);
             let e1 = [p1[0] - p0[0], p1[1] - p0[1], p1[2] - p0[2]];
             let e2 = [p2[0] - p0[0], p2[1] - p0[1], p2[2] - p0[2]];
@@ -1002,7 +1002,7 @@ mod tests {
         // Every edge in a closed shell is shared by exactly two triangles.
         let indices = indices_from(&container);
         let mut edges = std::collections::HashMap::new();
-        for triangle in indices.chunks_exact(3) {
+        for triangle in indices.as_chunks::<3>().0 {
             for (a, b) in [(0, 1), (1, 2), (2, 0)] {
                 let key = (triangle[a].min(triangle[b]), triangle[a].max(triangle[b]));
                 *edges.entry(key).or_insert(0u32) += 1;
@@ -1025,7 +1025,9 @@ mod tests {
         let offset = view["byteOffset"].as_u64().unwrap() as usize;
         let length = view["byteLength"].as_u64().unwrap() as usize;
         container.binary[offset..offset + length]
-            .chunks_exact(4)
+            .as_chunks::<4>()
+            .0
+            .iter()
             .map(|b| u32::from_le_bytes([b[0], b[1], b[2], b[3]]))
             .collect()
     }

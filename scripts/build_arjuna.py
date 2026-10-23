@@ -18,7 +18,8 @@ def create_radial_gradient(size, inner_color, outer_color):
     return img
 
 def ensure_dirs(pack_name):
-    base = os.path.join("pet-packs", pack_name, "assets")
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    base = os.path.join(repo_root, "pet-packs", pack_name, "assets")
     os.makedirs(base, exist_ok=True)
     return base
 
@@ -247,4 +248,5 @@ def generate_arjuna():
         img.save(os.path.join(assets_dir, f"{state}.png"))
     print("Arjuna assets generated successfully.")
 
-generate_arjuna()
+if __name__ == "__main__":
+    generate_arjuna()

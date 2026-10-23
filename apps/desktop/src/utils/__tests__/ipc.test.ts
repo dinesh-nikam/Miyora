@@ -48,6 +48,31 @@ describe("invokeSafe", () => {
     }
   });
 
+  it("returns ok: false with object message field when IPC rejects with object containing message", async () => {
+    vi.mocked(tauriCore.invoke).mockRejectedValueOnce({ message: "Custom object error" });
+
+    const result = await invokeSafe("get_progression");
+
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(result.error).toBe("Custom object error");
+    }
+  });
+
+  it("handles circular rejected values gracefully without throwing", async () => {
+    const circular: Record<string, unknown> = {};
+    circular.self = circular;
+    vi.mocked(tauriCore.invoke).mockRejectedValueOnce(circular);
+
+    const result = await invokeSafe("get_progression");
+
+    expect(result.ok).toBe(false);
+    if (!result.ok) {
+      expect(typeof result.error).toBe("string");
+      expect(result.error).toBe("[object Object]");
+    }
+  });
+
   it("passes arguments correctly to tauri invoke", async () => {
     vi.mocked(tauriCore.invoke).mockResolvedValueOnce(true);
 

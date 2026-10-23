@@ -15,11 +15,16 @@ The cloud REST and daemon contracts below remain planned. The current desktop sh
 | `get_achievements` | Read local achievement definitions, progress, and unlock timestamps for the active pet | Main window |
 | `get_session_history` | Read persisted agent sessions with bounded `limit` and `offset` pagination | Main window |
 | `list_installed_packs` / `list_pet_pack_cards` | Read installed local packs and generated previews | Main window |
-| `install_pet_pack` | Validate and install an extracted local PetPack folder | Main window |
+| `install_pet_pack` | Validate and install an extracted PetPack folder or signed `.petpack` archive | Main window |
 | `create_pet_from_image` | Decode, normalize, validate, and install a static local companion image | Main window |
 | `select_pet` | Select an installed PetPack | Main window |
 | `show_pet_overlay` | Reveal the configured companion window | Main window |
-| `toggle_pet_pause` | Toggle pause state on the companion runtime | Main window |
+| `toggle_pet_pause` | Toggle pause state on the companion runtime | Companion window |
+| `verify_ledger` | Verify the cryptographic SHA-256 hash-chain integrity of the XP ledger | Main window |
+| `get_real_events` | Query raw persisted agent hook events with bounded limit | Main window |
+| `get_providers_status` | Query live health, hook status, and estimated quota/costs for agent adapters | Main window |
+| `toggle_demo_mode` | Toggle between real events core and developer simulator core (debug only) | Main window |
+| `simulate_agent_event` | Dispatch a simulated agent event to the developer simulator core (debug only) | Main window |
 | `get_avatar` | Resolve the selected 3D avatar (catalog spec with any customization, or a custom avatar) | Main and overlay windows |
 | `get_avatar_hud` | Read level and XP progress shown on the 3D stage | Main and overlay windows |
 | `get_avatar_model` | Return a custom avatar's GLB/VRM bytes as a binary response after SHA-256 verification | Main and overlay windows |

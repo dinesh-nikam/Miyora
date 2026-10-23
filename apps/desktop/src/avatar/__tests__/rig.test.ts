@@ -126,7 +126,7 @@ describe("stage props and subjects", () => {
   it("visualizes XP progress without throwing", () => {
     const props = new StageProps("#38bdf8");
     props.setLayout({ headTopY: 0.9, deskY: 0.35 });
-    props.setHud({ level: 3, totalXp: 260, xpIntoLevel: 60, xpToNextLevel: 140 });
+    props.setHud({ level: 3, totalXp: 260, xpIntoLevel: 60, xpToNextLevel: 200 });
     props.update(motionFor("success", 0.5).props, 1 / 30, 0.5);
     props.update(motionFor("working", 0.5).props, 1 / 30, 0.6);
     props.setHud(null);

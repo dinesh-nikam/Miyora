@@ -42,8 +42,8 @@ fn rotate_or_trim(path: &Path) -> io::Result<()> {
         let skip = len.saturating_sub(TRIM_TARGET_BYTES as u64);
         file.seek(SeekFrom::Start(skip))?;
         let mut reader = BufReader::new(file);
-        let mut discard = String::new();
-        reader.read_line(&mut discard)?;
+        let mut discard = Vec::new();
+        reader.read_until(b'\n', &mut discard)?;
         let mut rest = Vec::new();
         reader.read_to_end(&mut rest)?;
         drop(reader);
@@ -60,6 +60,14 @@ pub fn read_recent_errors(limit: usize) -> Vec<String> {
         return Vec::new();
     };
     let reader = BufReader::new(file);
-    let lines: Vec<String> = reader.lines().map_while(Result::ok).collect();
+    let mut lines = Vec::new();
+    for mut bytes in reader.split(b'\n').flatten() {
+        if bytes.ends_with(b"\r") {
+            bytes.pop();
+        }
+        if !bytes.is_empty() {
+            lines.push(String::from_utf8_lossy(&bytes).into_owned());
+        }
+    }
     lines.into_iter().rev().take(limit).collect()
 }

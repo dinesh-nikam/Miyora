@@ -4,7 +4,8 @@ import json
 from PIL import Image, ImageDraw
 
 def ensure_dirs(pack_name):
-    base = os.path.join("pet-packs", pack_name, "assets")
+    repo_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    base = os.path.join(repo_root, "pet-packs", pack_name, "assets")
     os.makedirs(base, exist_ok=True)
     return base
 
@@ -346,5 +347,6 @@ def generate_ninja_cat():
         img.save(os.path.join(assets_dir, f"{state}.png"))
     print("Ninja Cat assets generated successfully.")
 
-generate_sun_wukong()
-generate_ninja_cat()
+if __name__ == "__main__":
+    generate_sun_wukong()
+    generate_ninja_cat()

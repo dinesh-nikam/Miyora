@@ -45,7 +45,10 @@ impl MeshData {
     }
 
     fn validate(&self) -> Result<(), GlbError> {
-        if self.positions.is_empty() || self.indices.is_empty() || self.indices.len() % 3 != 0 {
+        if self.positions.is_empty()
+            || self.indices.is_empty()
+            || !self.indices.len().is_multiple_of(3)
+        {
             return Err(GlbError::EmptyMesh);
         }
         if self.normals.len() != self.positions.len() || self.uvs.len() != self.positions.len() {
@@ -70,7 +73,7 @@ impl MeshData {
 }
 
 fn pad_to_four(buffer: &mut Vec<u8>, fill: u8) {
-    while buffer.len() % 4 != 0 {
+    while !buffer.len().is_multiple_of(4) {
         buffer.push(fill);
     }
 }

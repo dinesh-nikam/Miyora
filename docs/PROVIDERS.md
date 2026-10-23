@@ -10,30 +10,30 @@
 ## 1. Claude Code (`claude_code`)
 
 ### Machine Evidence
-- **Home Directory:** `C:\Users\DineshNikam\.claude` (Verified present)
-- **Configuration File:** `C:\Users\DineshNikam\.claude\settings.json` (Verified present, 5,695 bytes)
+- **Home Directory:** `%USERPROFILE%\.claude` (Verified present)
+- **Configuration File:** `%USERPROFILE%\.claude\settings.json` (Verified present)
   - Existing `hooks` object contains: `SessionStart`, `SessionEnd`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`
   - Existing `statusLine` command:
     ```json
     {
       "type": "command",
-      "command": "powershell -ExecutionPolicy Bypass -File \"C:\\Users\\DineshNikam\\.claude\\plugins\\cache\\caveman\\caveman\\63e797cd753b\\hooks\\caveman-statusline.ps1\""
+      "command": "powershell -ExecutionPolicy Bypass -File \"%USERPROFILE%\\.claude\\plugins\\cache\\caveman\\caveman\\<hash>\\hooks\\caveman-statusline.ps1\""
     }
     ```
-- **Session Logs:** `C:\Users\DineshNikam\.claude\projects\**\*.jsonl` (Verified present, multiple project directories e.g. `D--b-erp`)
+- **Session Logs:** `%USERPROFILE%\.claude\projects\**\*.jsonl` (Verified present, multiple project directories)
 - **Cost & Token Records:** Verified in session JSONL files with line type `cost-state`:
   ```json
   {
     "type": "cost-state",
-    "sessionId": "96005500-0d06-4be0-97ea-5b792d21eb98",
-    "totalCostUSD": 5.0305358,
+    "sessionId": "00000000-0000-0000-0000-000000000000",
+    "totalCostUSD": 1.2345,
     "modelUsage": {
       "claude-opus-5-5": {
-        "inputTokens": 1564,
-        "outputTokens": 19269,
-        "thinkingTokens": 2653,
-        "cacheReadInputTokens": 8704419,
-        "cacheCreationInputTokens": 362252
+        "inputTokens": 100,
+        "outputTokens": 500,
+        "thinkingTokens": 200,
+        "cacheReadInputTokens": 1000,
+        "cacheCreationInputTokens": 500
       }
     }
   }
@@ -41,12 +41,12 @@
 
 ### Activity Detection Strategy
 - **Primary:** Native hooks configured in `~/.claude/settings.json` (`SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `Notification`, `Stop`, `SubagentStop`).
-- **Hook Transport:** Hooks call `agentpet hook --adapter claude_code` which passes event data over local IPC (Windows Named Pipe `\\.\pipe\agentpet-<hash>` or falls back to direct core append). Hook binary fails open with <50ms timeout; never blocks Claude Code.
+- **Hook Transport:** `agentpet hook --adapter claude_code` runs `run_hook_command`, which opens the core database and writes normalized events directly to SQLite in a transaction.
 - **Quota & Rate Limits:**
   - Claude Code passes JSON to `statusLine` via stdin containing `rate_limits.five_hour` (`used_percentage`, `resets_at`), `rate_limits.seven_day`, and `context_window.used_percentage`.
   - Only available for Pro/Team/Enterprise accounts. If `rate_limits` is absent, show `N/A` (never fabricated).
-  - StatusLine shim intercepts stdin, writes `claude_status.json` locally, and chains the existing `caveman-statusline.ps1` command so existing workflows are preserved.
-- **Tokens/Cost:** Scraped from local `~/.claude/projects/**/*.jsonl` files and tagged with provenance chip `LOCAL`.
+  - StatusLine shim intercepts stdin, writes `claude_statusline.json` locally, and chains the existing statusline command so existing workflows are preserved.
+- **Tokens/Cost:** Read from `~/.claude/metrics/costs.jsonl` using the `estimated_cost_usd` field and labeled as estimated with provenance chip `LOCAL`.
 - **Health State:** `CONNECTED` (when installed and active), `DEGRADED` (when hooks are absent or settings unreadable).
 
 ---
@@ -54,9 +54,9 @@
 ## 2. OpenAI Codex CLI (`codex`)
 
 ### Machine Evidence
-- **Home Directory:** `C:\Users\DineshNikam\.codex` (Verified present)
+- **Home Directory:** `%USERPROFILE%\.codex` (Verified present)
 - **Configuration & Hooks:**
-  - `C:\Users\DineshNikam\.codex\hooks.json` exists with structure:
+  - `%USERPROFILE%\.codex\hooks.json` exists with structure:
     ```json
     {
       "hooks": {
@@ -65,13 +65,15 @@
       }
     }
     ```
-  - `C:\Users\DineshNikam\.codex\history.jsonl` exists with 86 real session prompt lines:
-    `{"session_id":"01a153d2-48a1-7f73-ab3c-7c17b90a55a1","ts":1792429566,"text":"continue"}`
-  - `C:\Users\DineshNikam\.codex\sessions` directory exists.
+  - `%USERPROFILE%\.codex\history.jsonl` exists with sample session prompt lines:
+    `{"session_id":"00000000-0000-0000-0000-000000000000","ts":1700000000,"text":"continue"}`
+  - `%USERPROFILE%\.codex\sessions` directory exists.
 
 ### Activity Detection Strategy
-- **Primary:** Hooks merged into `~/.codex/hooks.json` matching `PreToolUse` and `PostToolUse` or log-tail of `history.jsonl`.
-- **Secondary:** Process tracking for `codex.exe`.
+- **Primary (implemented):** `agentpet agents install codex` merges `{"type":"command","command":"agentpet hook --adapter codex"}` into `$CODEX_HOME/hooks.json` (default `~/.codex/hooks.json`) for `SessionStart`, `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `PermissionRequest`, `PreCompact`, `PostCompact`, `SubagentStart`, `SubagentStop`, `Stop`, and `Interrupt`. User hooks and the optional top-level `description` are preserved, a timestamped backup is written first, and `agentpet agents remove codex` removes only entries running that exact command. The adapter lives in `crates/agentpet-adapters/src/codex.rs`.
+- **Trust:** Codex hashes each hook definition and skips new or changed hooks until the user trusts them with `/hooks`. The command string must never change between releases, or every user has to trust it again. Hooks are on by default; `[features] hooks = false` in `config.toml` disables them.
+- **Event mapping:** `SessionStart` → started; `UserPromptSubmit`, `PreToolUse`, `PostToolUse`, `PostCompact`, `SubagentStart`, `SubagentStop` → working; `PreCompact` → thinking; `PermissionRequest` → input required; `Interrupt` → waiting; `Stop` → completed. Event ids include `turn_id`, so each turn's `Stop` is distinct. Only `session_id`, `hook_event_name`, `turn_id`, `tool_name`, `tool_use_id`, and `cwd` are read; prompts, tool input/output, and assistant messages are ignored. The hook always exits 0 with empty stdout, because Codex treats plain-text stdout on `Stop` as a hook failure.
+- **Secondary:** Process tracking for `codex.exe`; log-tail of `history.jsonl` is not implemented.
 - **Quota:** Not exposed locally by Codex CLI. Quota gauge displays `N/A` with provenance chip `N/A`.
 - **Health State:** `CONNECTED` if hooks or active session files detected, otherwise `DEGRADED` / `NOT_INSTALLED`.
 
@@ -80,7 +82,7 @@
 ## 3. Google Antigravity / Gemini CLI (`antigravity` / `gemini_cli`)
 
 ### Machine Evidence
-- **Installation Directory:** `C:\Users\DineshNikam\.gemini` (Verified present)
+- **Installation Directory:** `%USERPROFILE%\.gemini` (Verified present)
 - **Subdirectories:**
   - `antigravity`: contains `cli.log`, `antigravity_state.pbtxt`, `conversation_summaries.db`, `conversations/`
   - `antigravity-ide`: active IDE workspace logs, brain, and knowledge
@@ -98,9 +100,9 @@
 ## 4. GitHub Copilot (`copilot`)
 
 ### Machine Evidence
-- **Home Directory:** `C:\Users\DineshNikam\.copilot` (Verified present)
+- **Home Directory:** `%USERPROFILE%\.copilot` (Verified present)
 - **Subdirectories:** `config.json`, `ide`, `logs`, `session-state`.
-- **VS Code Extension Storage:** `C:\Users\DineshNikam\AppData\Roaming\Code\User\globalStorage` (Verified present).
+- **VS Code Extension Storage:** `%APPDATA%\Code\User\globalStorage` (Verified present).
 
 ### Activity Detection Strategy
 - **Primary:** Process observation (`copilot-agent`, `code` with copilot worker) and log tail of `~/.copilot/logs`.
@@ -112,8 +114,8 @@
 ## 5. Cursor (`cursor`)
 
 ### Machine Evidence
-- `C:\Users\DineshNikam\.cursor`: Absent on this machine.
-- `C:\Users\DineshNikam\AppData\Roaming\Cursor`: Absent on this machine.
+- `%USERPROFILE%\.cursor`: Absent on this machine.
+- `%APPDATA%\Cursor`: Absent on this machine.
 
 ### Activity Detection Strategy
 - **Primary:** Process detection for `Cursor.exe` / window title scanning.
@@ -126,8 +128,8 @@
 
 | Provider | Activity Detection | Quota Exposure | Health on This Machine | Provenance Label |
 |---|---|---|---|---|
-| **Claude Code** | Native hooks (`settings.json`) + project JSONL | `statusLine` hook (5h/7d) | `CONNECTED` (ready to hook) | `LIVE` (statusline), `LOCAL` (tokens) |
-| **Codex CLI** | Hooks (`hooks.json`) + `history.jsonl` | None | `CONNECTED` (config present) | `LOCAL` / `N/A` |
+| **Claude Code** | Native hooks (`settings.json`) + costs.jsonl | `statusLine` hook (5h/7d) | `CONNECTED` (ready to hook) | `LIVE` (statusline), `LOCAL` (tokens) |
+| **Codex CLI** | Native hooks (`hooks.json`) | None | `CONNECTED` (config present) | `LOCAL` / `N/A` |
 | **Antigravity** | Transcripts & Process | In-app `/usage` only | `CONNECTED` (active IDE) | `N/A` (with open button) |
 | **Copilot** | Process & `~/.copilot/logs` | None | `CONNECTED` (dirs present) | `N/A` |
 | **Cursor** | Process detection | None | `NOT_INSTALLED` | `N/A` |

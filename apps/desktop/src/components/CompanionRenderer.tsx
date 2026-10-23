@@ -285,6 +285,18 @@ export function CompanionRenderer({
   });
   const [wellnessAlert, setWellnessAlert] = useState<string | null>(null);
 
+  const awardBondXp = (amount: number) => {
+    setBondXp((prev) => {
+      const next = prev + amount;
+      try {
+        localStorage.setItem("agentpet_companion_bond_xp", String(next));
+      } catch {
+        // ignore
+      }
+      return next;
+    });
+  };
+
   const petName = animation?.petName ?? "Companion";
   const nameLower = petName.toLowerCase();
   const isWukong = nameLower.includes("wukong") || nameLower.includes("monkey");
@@ -557,15 +569,7 @@ export function CompanionRenderer({
     }, 1200);
 
     // Increase Bond XP
-    setBondXp((prev) => {
-      const next = prev + 1;
-      try {
-        localStorage.setItem("agentpet_companion_bond_xp", String(next));
-      } catch {
-        // ignore
-      }
-      return next;
-    });
+    awardBondXp(1);
 
     const response = getSpeechForState(state, "pet");
     setActiveSpeech(response);
@@ -595,15 +599,7 @@ export function CompanionRenderer({
     }, 1200);
 
     // Increase Bond XP
-    setBondXp((prev) => {
-      const next = prev + 2;
-      try {
-        localStorage.setItem("agentpet_companion_bond_xp", String(next));
-      } catch {
-        // ignore
-      }
-      return next;
-    });
+    awardBondXp(2);
 
     const response = getSpeechForState(state, "feed");
     setActiveSpeech(response);
@@ -638,8 +634,11 @@ export function CompanionRenderer({
 
   // Load Image and reset frames
   useEffect(() => {
+    setLoadError(null);
+    setImageLoaded(false);
+    imgRef.current = null;
+
     if (!animation?.imageDataUrl) {
-      setImageLoaded(false);
       return;
     }
     const img = new Image();
@@ -705,32 +704,7 @@ export function CompanionRenderer({
     }
   }, [animation, frameIndex, imageLoaded]);
 
-  if (loadError) {
-    return (
-      <div
-        className="companion-pack-error"
-        style={{
-          width: size,
-          height: size,
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "rgba(30, 10, 15, 0.9)",
-          border: "2px dashed #ff4757",
-          borderRadius: "8px",
-          color: "#ff6b81",
-          padding: "16px",
-          textAlign: "center",
-          boxSizing: "border-box",
-        }}
-      >
-        <span style={{ fontSize: "20px", marginBottom: "6px" }}>⚠️</span>
-        <strong style={{ fontSize: "11px", letterSpacing: "1px" }}>COMPANION LOAD ERROR</strong>
-        <p style={{ fontSize: "10px", margin: "6px 0 0 0", color: "#ccc" }}>{loadError}</p>
-      </div>
-    );
-  }
+
 
   return (
     <div
@@ -805,7 +779,7 @@ export function CompanionRenderer({
           onClick={(e) => {
             e.stopPropagation();
             setWellnessAlert(null);
-            setBondXp((x) => x + 5);
+            awardBondXp(5);
             playChime("pet");
           }}
           title="Click to acknowledge: +5 Bond XP!"
@@ -835,7 +809,10 @@ export function CompanionRenderer({
       {/* 2. Companion Character Stage */}
       <div
         onClick={handlePet}
-        title="Click to pet & bond with companion"
+        aria-label="Companion stage — click to pet and bond"
+        role="button"
+        tabIndex={interactive ? 0 : -1}
+        onKeyDown={(e) => { if (interactive && (e.key === 'Enter' || e.key === ' ')) handlePet(); }}
         style={{
           position: "relative",
           width: size,
@@ -915,6 +892,31 @@ export function CompanionRenderer({
               onDoubleClick={onDoubleClick}
               onError={onError}
             />
+          </div>
+        ) : loadError ? (
+          <div
+            className="companion-pack-error"
+            style={{
+              width: size,
+              height: size,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "rgba(30, 10, 15, 0.9)",
+              border: "2px dashed #ff4757",
+              borderRadius: "8px",
+              color: "#ff6b81",
+              padding: "16px",
+              textAlign: "center",
+              boxSizing: "border-box",
+              position: "relative",
+              zIndex: 2,
+            }}
+          >
+            <span style={{ fontSize: "20px", marginBottom: "6px" }}>⚠️</span>
+            <strong style={{ fontSize: "11px", letterSpacing: "1px" }}>COMPANION LOAD ERROR</strong>
+            <p style={{ fontSize: "10px", margin: "6px 0 0 0", color: "#ccc" }}>{loadError}</p>
           </div>
         ) : animation ? (
           <canvas

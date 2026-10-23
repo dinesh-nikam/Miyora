@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "id": "agentpet.momiji",
+  "name": "Momiji",
+  "version": "1.0.0",
+  "description": "Quiet kimono companion with long dark hair that fades to rose tips, a pink petal-pattern kimono, and bare feet that never make a sound about failing tests. Rose (#be185d) layered over midnight plum (#111827). Drifts petal-wise between tasks: patient through slow builds, precise at merge time.",
+  "creator": "Miyora contributors",
+  "license": "CC0-1.0",
+  "source": "https://github.com/agentpet/pet-packs/tree/main/momiji",
+  "attribution": "Original character design and artwork by Miyora contributors. CC0-1.0 — released to the public domain.",
+  "commercialUse": true,
+  "redistribution": true,
+  "derivativeWorks": true,
+  "assets": {
+    "idle": "assets/idle.png",
+    "working": "assets/working.png",
+    "thinking": "assets/thinking.png",
+    "waiting": "assets/waiting.png",
+    "success": "assets/success.png",
+    "error": "assets/error.png",
+    "level_up": "assets/level_up.png",
+    "sleeping": "assets/sleeping.png",
+    "thumbnail": "assets/thumbnail.png"
+  },
+  "animations": {
+    "idle": {
+      "asset": "idle",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "working": {
+      "asset": "working",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "thinking": {
+      "asset": "thinking",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "waiting": {
+      "asset": "waiting",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "success": {
+      "asset": "success",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "error": {
+      "asset": "error",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "level_up": {
+      "asset": "level_up",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "sleeping": {
+      "asset": "sleeping",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "celebrating": {
+      "asset": "success",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "achievement": {
+      "asset": "level_up",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    }
+  },
+  "stateMappings": {
+    "idle": "idle",
+    "working": "working",
+    "thinking": "thinking",
+    "waiting": "waiting",
+    "success": "success",
+    "celebrating": "celebrating",
+    "error": "error",
+    "level_up": "level_up",
+    "achievement": "achievement",
+    "sleeping": "sleeping",
+    "offline": "sleeping",
+    "attention_required": "waiting"
+  },
+  "tags": [
+    "anime",
+    "kimono",
+    "calm",
+    "petals",
+    "momiji",
+    "clean-room"
+  ]
+}

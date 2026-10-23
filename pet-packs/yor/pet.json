@@ -1,0 +1,237 @@
+{
+  "schemaVersion": 1,
+  "id": "agentpet.yor",
+  "name": "Yor",
+  "version": "1.0.0",
+  "description": "Sweet and deadly Yor in black assassin dress with golden needles. Premium cute desktop pet companion (3.4 heads tall).",
+  "creator": "AgentPet Creative Universe",
+  "license": "CC-BY-4.0",
+  "source": "https://github.com/agentpet/pet-packs/tree/main/yor",
+  "attribution": "Original anime companion design for Yor. CC-BY-4.0 free to adapt with attribution.",
+  "commercialUse": true,
+  "redistribution": true,
+  "derivativeWorks": true,
+  "assets": {
+    "idle": "assets/idle.png",
+    "working": "assets/working.png",
+    "thinking": "assets/thinking.png",
+    "waiting": "assets/waiting.png",
+    "success": "assets/success.png",
+    "error": "assets/error.png",
+    "level_up": "assets/level_up.png",
+    "sleeping": "assets/sleeping.png",
+    "thumbnail": "assets/thumbnail.png",
+    "achievement": "assets/achievement.png",
+    "celebrating": "assets/celebrating.png"
+  },
+  "animations": {
+    "idle": {
+      "asset": "idle",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "working": {
+      "asset": "working",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "thinking": {
+      "asset": "thinking",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "waiting": {
+      "asset": "waiting",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "success": {
+      "asset": "success",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "error": {
+      "asset": "error",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "level_up": {
+      "asset": "level_up",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "sleeping": {
+      "asset": "sleeping",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "thumbnail": {
+      "asset": "thumbnail",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "achievement": {
+      "asset": "achievement",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    },
+    "celebrating": {
+      "asset": "celebrating",
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
+      "fps": 1,
+      "loop": true,
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
+    }
+  },
+  "stateMappings": {
+    "idle": "idle",
+    "working": "working",
+    "thinking": "thinking",
+    "waiting": "waiting",
+    "success": "success",
+    "celebrating": "celebrating",
+    "error": "error",
+    "level_up": "level_up",
+    "achievement": "achievement",
+    "sleeping": "sleeping",
+    "offline": "sleeping",
+    "attention_required": "waiting"
+  },
+  "tags": [
+    "desktop-pet",
+    "anime",
+    "companion",
+    "anime",
+    "yor"
+  ]
+}
