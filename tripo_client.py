@@ -451,6 +451,26 @@ def poll_task_until_complete(
         time.sleep(poll_interval)
 
 
+def check_account_balance() -> Dict[str, Any]:
+    """
+    Query the current API credit balance and usage details from Tripo.
+
+    Returns:
+        Dict with 'balance' and 'frozen' credit amounts.
+    """
+    api_key = get_api_key()
+    url = f"{TRIPO_V3_BASE}/account/balance"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+    }
+
+    resp = _http_request(url, method="GET", headers=headers)
+    if resp.get("code") != 0:
+        raise TripoAPIError(f"Failed to query account balance: {resp.get('message', resp)}")
+
+    return resp.get("data", {})
+
+
 def download_model(task_id: str, output_dir: str = "output/models") -> Dict[str, Any]:
     """
     Download the generated 3D model and preview image for a completed task.
