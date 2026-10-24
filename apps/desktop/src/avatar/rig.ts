@@ -425,6 +425,9 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
   const isBird = spec.body === "bird";
   const furred = isBeast || isBird;
   const bareOutfit = spec.outfit === "fur" || spec.outfit === "plating";
+  const isGenos = spec.id.endsWith("genos");
+  const isPikachu = spec.id.endsWith("pikachu");
+  const isKodama = spec.id.endsWith("kodama-spirit");
 
   const root = new THREE.Group();
   root.name = `avatar:${spec.id}`;
@@ -467,16 +470,27 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
       ink: torsoColor,
     });
     if (furred && spec.outfit === "fur") {
-      kit.mesh(sphere(d.torsoR * 0.75), kit.toon(shade(p.skin, WHITE, 0.55)), spine, [0, d.torsoH * 0.42, d.torsoR * 0.42], {
-        scale: [0.8, 1.05, 0.5],
-      });
-    } else {
+      if (!isPikachu) {
+        kit.mesh(sphere(d.torsoR * 0.75), kit.toon(shade(p.skin, WHITE, 0.55)), spine, [0, d.torsoH * 0.42, d.torsoR * 0.42], {
+          scale: [0.8, 1.05, 0.5],
+        });
+      } else {
+        kit.mesh(roundedBox(d.torsoR * 1.5, 0.018, 0.01, 0.004), kit.toon("#78350f"), spine, [0, d.torsoH * 0.55, -d.torsoR * 0.72], { outline: OUTLINE * 0.4 });
+        kit.mesh(roundedBox(d.torsoR * 1.3, 0.018, 0.01, 0.004), kit.toon("#78350f"), spine, [0, d.torsoH * 0.35, -d.torsoR * 0.72], { outline: OUTLINE * 0.4 });
+      }
+    } else if (!isKodama) {
       dressTorso(kit, spec, spine, d);
     }
   }
 
   // ---- Arms ----------------------------------------------------------------
-  const sleeveColor = bareOutfit || (furred && spec.outfit === "fur") ? p.skin : spec.outfit === "armor" ? p.secondary : outfitTorsoColor(spec);
+  const sleeveColor = isGenos
+    ? p.secondary
+    : bareOutfit || (furred && spec.outfit === "fur")
+      ? p.skin
+      : spec.outfit === "armor"
+        ? p.secondary
+        : outfitTorsoColor(spec);
   const armY = isSlime ? d.headR * 0.45 : d.torsoH * 0.42;
   const makeArm = (side: 1 | -1) => {
     const arm = joint(chest, side === 1 ? "armL" : "armR", side * d.shoulderX, armY, 0);
@@ -516,7 +530,11 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
           ink: sleeveColor,
         });
       }
-      kit.mesh(sphere(d.armR * 1.15), skinMat, hand, [0, 0.01, 0], { scale: [1, 1.05, 0.9], outline: OUTLINE });
+      kit.mesh(sphere(d.armR * 1.15), isGenos ? kit.toon(p.secondary) : skinMat, hand, [0, 0.01, 0], { scale: [1, 1.05, 0.9], outline: OUTLINE });
+      if (isGenos) {
+        kit.mesh(torus(d.armR * 1.1, 0.004), kit.toon("#ffd700"), arm, [0, -d.armUpper * 0.45, 0], { rotation: [Math.PI / 2, 0, 0] });
+        kit.mesh(torus(d.armR * 1.05, 0.004), kit.toon("#ffd700"), elbow, [0, -d.armLower * 0.45, 0], { rotation: [Math.PI / 2, 0, 0] });
+      }
       if (spec.outfit === "armor") {
         kit.mesh(sphere(d.armR * 1.75), kit.toon(p.primary), arm, [side * 0.006, -0.004, 0], {
           scale: [1.1, 0.8, 1.05],
@@ -587,24 +605,36 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
     return R * sz * Math.sqrt(Math.max(1 - nx * nx - ny * ny, 0.05)) + 0.006;
   };
   const eyeY = isSlime ? R * 0.12 : -R * 0.05;
-  if (spec.body === "humanoid") {
+  if (spec.body === "humanoid" && !isKodama) {
     const noseY = eyeY - R * 0.27;
     kit.mesh(disc(R * 0.028), kit.flat(shade(p.skin, BLACK, 0.3)), headCenter, [0, noseY, faceZ(0, noseY) + 0.004], { scale: [0.6, 1, 1] });
   }
 
   if (isBeast) {
-    const muzzleScale: Record<string, [number, number, number]> = {
-      fox: [1.0, 0.75, 1.15],
-      floppy: [1.15, 0.8, 1.05],
-      cat: [0.95, 0.72, 0.8],
-      bear: [1.2, 0.85, 0.85],
-    };
-    const scale = muzzleScale[spec.ears] ?? [1.05, 0.78, 0.85];
-    const muzzleY = eyeY - R * 0.36;
-    kit.mesh(sphere(R * 0.3), kit.toon(shade(p.skin, WHITE, 0.45)), headCenter, [0, muzzleY, R * 0.74], { scale, outline: OUTLINE });
-    kit.mesh(sphere(R * 0.075), kit.toon(NOSE_COLOR), headCenter, [0, muzzleY + R * 0.12, R * 0.74 + R * 0.3 * scale[2]], {
-      scale: [1.3, 0.9, 1],
-    });
+    if (isPikachu) {
+      const noseY = eyeY - R * 0.22;
+      kit.mesh(disc(R * 0.032), kit.flat("#1c1917"), headCenter, [0, noseY, faceZ(0, noseY) + 0.004], { scale: [1, 0.75, 1] });
+      for (const side of [1, -1] as const) {
+        const cheekX = side * R * 0.54;
+        const cheekY = eyeY - R * 0.26;
+        const cheek = joint(headCenter, "cheekPouch", cheekX, cheekY, faceZ(cheekX, cheekY) + 0.005);
+        cheek.rotation.y = Math.asin(cheekX / R) * 0.9;
+        kit.mesh(disc(R * 0.18), kit.flat("#dc2626"), cheek, [0, 0, 0], { scale: [1.05, 0.95, 1] });
+      }
+    } else {
+      const muzzleScale: Record<string, [number, number, number]> = {
+        fox: [1.0, 0.75, 1.15],
+        floppy: [1.15, 0.8, 1.05],
+        cat: [0.95, 0.72, 0.8],
+        bear: [1.2, 0.85, 0.85],
+      };
+      const scale = muzzleScale[spec.ears] ?? [1.05, 0.78, 0.85];
+      const muzzleY = eyeY - R * 0.36;
+      kit.mesh(sphere(R * 0.3), kit.toon(shade(p.skin, WHITE, 0.45)), headCenter, [0, muzzleY, R * 0.74], { scale, outline: OUTLINE });
+      kit.mesh(sphere(R * 0.075), kit.toon(NOSE_COLOR), headCenter, [0, muzzleY + R * 0.12, R * 0.74 + R * 0.3 * scale[2]], {
+        scale: [1.3, 0.9, 1],
+      });
+    }
   }
   if (isBird) {
     kit.mesh(cone(R * 0.17, R * 0.42, 12), kit.toon(p.accent), headCenter, [0, eyeY - R * 0.28, R * 0.98], {
@@ -617,14 +647,16 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
   const eyes: THREE.Object3D[] = [];
   const anime = spec.body === "humanoid";
   const eyeSize = R * (spec.eyes === "sparkle" ? 0.24 : anime ? 0.22 : 0.2);
-  const irisMat = kit.flat(p.eyes);
-  const pupilMat = kit.flat(shade(p.eyes, BLACK, 0.65));
+  const isPower = spec.id.endsWith("power");
+  const isGojo = spec.id.endsWith("gojo");
+  const irisMat = isGenos ? kit.flat("#facc15") : isGojo ? kit.flat("#38bdf8") : kit.flat(p.eyes);
+  const pupilMat = isGenos ? kit.toon("#f97316", { emissive: 1.2 }) : kit.flat(shade(p.eyes, BLACK, 0.65));
   const shineMat = kit.flat("#ffffff");
   const rimMat = kit.flat(shade(p.eyes, BLACK, 0.8));
   const lashMat = kit.flat("#1b1220");
-  const scleraMat = kit.flat("#fbfbff");
-  const irisDarkMat = kit.flat(shade(p.eyes, BLACK, 0.5));
-  const irisLightMat = kit.flat(shade(p.eyes, WHITE, 0.4));
+  const scleraMat = isGenos ? kit.flat("#0f172a") : kit.flat("#fbfbff");
+  const irisDarkMat = isGenos ? kit.flat("#020617") : kit.flat(shade(p.eyes, BLACK, 0.5));
+  const irisLightMat = isGenos ? kit.flat("#fef08a") : kit.flat(shade(p.eyes, WHITE, 0.4));
   const buildEye = (x: number, size: number, tilt: number) => {
     const group = joint(headCenter, "eye", x, eyeY, faceZ(x, eyeY));
     group.rotation.y = Math.asin(Math.max(-0.9, Math.min(0.9, x / R))) * 0.9;
@@ -644,7 +676,13 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
     kit.mesh(disc(size * 0.88), irisDarkMat, group, [0, -size * 0.04, -0.002], { scale: [0.8, squash, 1] });
     kit.mesh(disc(size * 0.74), irisMat, group, [0, -size * 0.07, -0.001], { scale: [0.8, squash * 0.98, 1] });
     kit.mesh(disc(size * 0.56, Math.PI, Math.PI), irisLightMat, group, [0, -size * 0.12, 0], { scale: [0.8, squash * 0.95, 1] });
-    kit.mesh(disc(size * 0.34), pupilMat, group, [0, -size * 0.03, 0.001], { scale: [0.6, squash * 1.05, 1] });
+    if (isPower) {
+      kit.mesh(roundedBox(size * 0.42, size * 0.1, 0.005, 0.002), kit.flat("#ef4444"), group, [0, -size * 0.03, 0.002]);
+      kit.mesh(roundedBox(size * 0.1, size * 0.42, 0.005, 0.002), kit.flat("#ef4444"), group, [0, -size * 0.03, 0.002]);
+      kit.mesh(disc(size * 0.12), kit.flat("#fbbf24"), group, [0, -size * 0.03, 0.0025]);
+    } else {
+      kit.mesh(disc(size * 0.34), pupilMat, group, [0, -size * 0.03, 0.001], { scale: [0.6, squash * 1.05, 1] });
+    }
     kit.mesh(disc(size * 0.24), shineMat, group, [-side * size * 0.24, size * 0.3 * squash, 0.002]);
     kit.mesh(disc(size * 0.1), shineMat, group, [side * size * 0.22, -size * 0.34 * squash, 0.002]);
     if (spec.eyes === "sparkle") {
@@ -675,16 +713,22 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
     eyes.push(visor);
   } else if (spec.eyes === "mono") {
     buildEye(0, eyeSize * 1.55, 0);
-  } else {
+  } else if (!isKodama) {
     const eyeX = R * (isBird ? 0.42 : anime ? 0.38 : 0.36);
     const tilt = spec.eyes === "sharp" ? 0.18 : 0;
     buildEye(eyeX, eyeSize, tilt);
     buildEye(-eyeX, eyeSize, -tilt);
+  } else {
+    for (const side of [-1, 1]) {
+      const eye = joint(headCenter, `eye:${side}`, side * R * 0.28, eyeY, faceZ(side * R * 0.28, eyeY));
+      kit.mesh(disc(R * 0.16), kit.flat("#111827"), eye, [0, 0, 0.007], { scale: [0.9, 1.25, 1] });
+      eyes.push(eye);
+    }
   }
 
   // Brows
   const brows: THREE.Object3D[] = [];
-  if (!isRobot && !isSlime && spec.eyes !== "visor") {
+  if (!isRobot && !isSlime && !isKodama && spec.eyes !== "visor") {
     const browMat = kit.flat(furred ? shade(p.skin, BLACK, 0.45) : shade(p.hair, BLACK, 0.15));
     for (const side of [1, -1]) {
       const x = side * R * 0.36;
@@ -708,7 +752,7 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
     const holder = joint(mouthAnchor, `mouth:${shape}`);
     holder.visible = shape === "smile";
     mouths[shape] = holder;
-    if (isBird) continue;
+    if (isBird || isKodama) continue;
     switch (shape) {
       case "smile":
         kit.mesh(torus(mouthWidth, R * 0.018, Math.PI), mouthMat, holder, [0, mouthWidth * 0.5, 0], { rotation: [0, 0, Math.PI] });
@@ -731,7 +775,7 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
 
   // Blush
   const blush: THREE.MeshBasicMaterial[] = [];
-  if (!isRobot) {
+  if (!isRobot && !isPikachu && !isKodama) {
     const blushMat = new THREE.MeshBasicMaterial({ color: new THREE.Color(BLUSH_COLOR), transparent: true, opacity: 0.32, depthWrite: false });
     blush.push(blushMat);
     for (const side of [1, -1]) {
@@ -748,7 +792,7 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
   const [earL, earR] = buildEars(kit, spec, headCenter, R, furred || isSlime);
   const tail = buildTail(kit, spec, hips, d);
   const [wingL, wingR] = isBird ? [null, null] : buildWings(kit, spec, chest, d);
-  buildAccessories(kit, spec, { headCenter, chest, neck, spine, handR: right.hand, R, d, furred });
+  buildAccessories(kit, spec, { headCenter, chest, neck, spine, handR: right.hand, handL: left.hand, R, d, furred });
 
   const headTopY =
     d.hipY + (isSlime ? 0 : d.torsoH + 0.02) + d.headCenterY + R * (isRobot ? 0.9 : 0.94) + (spec.hair === "spiky" || spec.hair === "mohawk" ? R * 0.35 : 0);
@@ -1159,12 +1203,17 @@ function buildEars(
         kit.mesh(cone(R * 0.18, R * tall * 0.65, 4), innerMat, ear, [0, R * tall * 0.33, R * 0.07], { rotation: [0, Math.PI / 4, 0], scale: [1, 1, 0.3] });
         break;
       }
-      case "bunny":
+      case "bunny": {
         ear = joint(headCenter, "ear", side * R * 0.32, R * 0.8, -R * 0.05);
         ear.rotation.z = -side * 0.14;
         kit.mesh(capsule(R * 0.15, R * 0.85), earMat, ear, [0, R * 0.55, 0], { scale: [1, 1, 0.55], outline: OUTLINE });
-        kit.mesh(capsule(R * 0.08, R * 0.65), innerMat, ear, [0, R * 0.55, R * 0.06], { scale: [1, 1, 0.3] });
+        if (spec.id.endsWith("pikachu")) {
+          kit.mesh(cone(R * 0.155, R * 0.38, 12), kit.toon("#1c1917"), ear, [0, R * 0.84, 0], { scale: [1, 1, 0.55] });
+        } else {
+          kit.mesh(capsule(R * 0.08, R * 0.65), innerMat, ear, [0, R * 0.55, R * 0.06], { scale: [1, 1, 0.3] });
+        }
         break;
+      }
       case "bear":
         ear = joint(headCenter, "ear", side * R * 0.68, R * 0.7, -R * 0.05);
         kit.mesh(sphere(R * 0.26), earMat, ear, [0, 0, 0], { scale: [1, 1, 0.6], outline: OUTLINE });
@@ -1178,11 +1227,30 @@ function buildEars(
           outline: OUTLINE,
         });
         break;
-      case "horns":
-        ear = joint(headCenter, "ear", side * R * 0.48, R * 0.78, R * 0.05);
-        ear.rotation.set(-0.25, 0, -side * 0.42);
-        kit.mesh(cone(R * 0.11, R * 0.55, 10), kit.toon(BONE_COLOR), ear, [0, R * 0.25, 0], { outline: OUTLINE });
+      case "horns": {
+        const isAnya = spec.id.endsWith("anya");
+        const isPower = spec.id.endsWith("power");
+        if (spec.body === "humanoid") {
+          const humanEar = joint(headCenter, "earHuman", side * R * 0.97, -R * 0.06, 0);
+          kit.mesh(sphere(R * 0.17), kit.toon(p.skin), humanEar, [0, 0, 0], { scale: [0.5, 1, 0.7], outline: OUTLINE });
+        }
+        if (isAnya) {
+          ear = joint(headCenter, "ear", side * R * 0.78, R * 0.36, R * 0.22);
+          ear.rotation.set(-0.1, 0, -side * 0.85);
+          kit.mesh(cone(R * 0.22, R * 0.52, 12), kit.toon("#0f172a"), ear, [0, R * 0.24, 0], { outline: OUTLINE });
+          kit.mesh(torus(R * 0.2, R * 0.035), kit.toon("#ca8a04", { emissive: 0.3 }), ear, [0, R * 0.08, 0], { rotation: [Math.PI / 2, 0, 0] });
+        } else if (isPower) {
+          ear = joint(headCenter, "ear", side * R * 0.28, R * 0.88, R * 0.1);
+          ear.rotation.set(-0.2, 0, -side * 0.18);
+          kit.mesh(cone(R * 0.1, R * 0.68, 10), kit.toon(p.accent), ear, [0, R * 0.32, 0], { outline: OUTLINE });
+        } else {
+          ear = joint(headCenter, "ear", side * R * 0.48, R * 0.78, R * 0.05);
+          ear.rotation.set(-0.25, 0, -side * 0.42);
+          const hornColor = p.accent !== p.skin && p.accent !== "#000000" ? p.accent : BONE_COLOR;
+          kit.mesh(cone(R * 0.11, R * 0.55, 10), kit.toon(hornColor), ear, [0, R * 0.25, 0], { outline: OUTLINE });
+        }
         break;
+      }
       case "antenna":
         ear = joint(headCenter, "ear", side * R * 0.42, R * 0.82, 0);
         ear.rotation.z = -side * 0.25;
@@ -1198,6 +1266,7 @@ function buildEars(
         });
         break;
       case "leaf":
+        if (spec.id.endsWith("kodama-spirit")) return [null, null];
         ear = joint(headCenter, "ear", side * R * 0.6, R * 0.68, -R * 0.05);
         ear.rotation.z = -side * 0.55;
         kit.mesh(sphere(R * 0.3), earMat, ear, [0, R * 0.32, 0], { scale: [0.55, 1.35, 0.16], outline: OUTLINE });
@@ -1267,6 +1336,29 @@ function buildTail(kit: Kit, spec: CharacterSpec, hips: THREE.Object3D, d: Dimen
       break;
     }
     case "star": {
+      if (spec.id.endsWith("pikachu")) {
+        chain.forEach((node, i) => {
+          node.rotation.x = -0.3;
+          kit.mesh(roundedBox(0.025 - i * 0.004, 0.06, 0.012, 0.003), kit.toon(i === 0 ? "#78350f" : p.skin), node, [0, 0.02, -0.02], { rotation: [-0.8, 0, 0] });
+        });
+        const lightning = new THREE.Shape();
+        lightning.moveTo(0, 0);
+        lightning.lineTo(0.04, 0.08);
+        lightning.lineTo(0.01, 0.08);
+        lightning.lineTo(0.06, 0.16);
+        lightning.lineTo(0.02, 0.16);
+        lightning.lineTo(0.09, 0.26);
+        lightning.lineTo(0.01, 0.26);
+        lightning.lineTo(-0.04, 0.15);
+        lightning.lineTo(0.0, 0.15);
+        lightning.lineTo(-0.03, 0.07);
+        lightning.closePath();
+        kit.mesh(new THREE.ExtrudeGeometry(lightning, { depth: 0.012, bevelEnabled: false }), kit.toon("#facc15"), t(2), [0, 0.08, -0.06], {
+          outline: OUTLINE * 0.5,
+          scale: [1.2, 1.2, 1.2],
+        });
+        break;
+      }
       chain.forEach((node, i) => {
         node.rotation.x = -0.4;
         kit.mesh(capsule(0.018 - i * 0.003, 0.05), kit.toon(furColor), node, [0, 0.02, -0.025], { rotation: [-1.0, 0, 0], outline: OUTLINE });
@@ -1364,6 +1456,7 @@ function buildWings(kit: Kit, spec: CharacterSpec, chest: THREE.Object3D, d: Dim
 interface AccessoryAnchors {
   headCenter: THREE.Object3D;
   handR: THREE.Object3D;
+  handL?: THREE.Object3D;
   chest: THREE.Object3D;
   neck: THREE.Object3D;
   spine: THREE.Object3D;
@@ -1374,12 +1467,20 @@ interface AccessoryAnchors {
 
 function buildAccessories(kit: Kit, spec: CharacterSpec, a: AccessoryAnchors): void {
   const p = spec.palette;
-  const { headCenter, chest, neck, spine, handR, R, d } = a;
+  const { headCenter, chest, neck, spine, handR, handL, R, d } = a;
   const hasHands = spec.body !== "slime" && spec.body !== "bird";
   const isSlime = spec.body === "slime";
   const topY = isSlime ? R * 0.78 : R * 0.9;
   const eyeY = isSlime ? R * 0.12 : -R * 0.05;
   const faceFront = spec.body === "robot" ? R * 0.87 : R * 0.97;
+  const faceZ = (x: number, y: number): number => {
+    if (spec.body === "robot") return R * 0.85 + 0.012;
+    const sy = isSlime ? 0.8 : 0.94;
+    const sz = 0.96;
+    const nx = x / R;
+    const ny = y / (R * sy);
+    return R * sz * Math.sqrt(Math.max(1 - nx * nx - ny * ny, 0.05)) + 0.006;
+  };
   for (const accessory of spec.accessories) {
     switch (accessory) {
       case "glasses": {
@@ -1562,6 +1663,317 @@ function buildAccessories(kit: Kit, spec: CharacterSpec, a: AccessoryAnchors): v
       }
       default:
         break;
+    }
+  }
+
+  // Character-specific signature details
+  const id = spec.id;
+  const isPikachu = id.endsWith("pikachu");
+  const isKodama = id.endsWith("kodama-spirit");
+  const isBramble = id.endsWith("woodland-guardian");
+  const isYor = id.endsWith("yor");
+  const isFrieren = id.endsWith("frieren");
+  const isDenji = id.endsWith("denji");
+  const isPower = id.endsWith("power");
+  const isAnya = id.endsWith("anya");
+  const isGenos = id.endsWith("genos");
+  const isZoro = id.endsWith("zoro");
+  const isNezuko = id.endsWith("nezuko");
+  const isTanjiro = id.endsWith("tanjiro");
+  const isLuffy = id.endsWith("luffy");
+  const isNaruto = id.endsWith("naruto");
+  const isSunWukong = id.endsWith("sun-wukong");
+  const isKrishna = id.endsWith("krishna");
+  const isGanesha = id.endsWith("ganesha");
+  const isHanuman = id.endsWith("hanuman");
+  const isShiva = id.endsWith("shiva");
+  const isRama = id.endsWith("rama");
+  const isGojo = id.endsWith("gojo");
+  const isNoa = id.endsWith("witch-apprentice");
+  const isRen = id.endsWith("valley-flyer");
+  const isNinjaCat = id.endsWith("ninja-cat");
+
+  // Pikachu: Electric spark held in hand
+  if (isPikachu) {
+    const spark = joint(handR, "electricSpark", 0, 0.02, 0.02);
+    kit.mesh(sphere(0.028), kit.toon("#fde047", { emissive: 1.5, opacity: 0.9 }), spark, [0, 0, 0], { outline: OUTLINE * 0.3 });
+  }
+
+  // Yor: Crimson roses on ears with radiating golden stiletto needle hairpins, choker, dual stiletto weapons
+  if (isYor) {
+    for (const side of [1, -1] as const) {
+      const rose = joint(headCenter, `yorRose${side}`, side * R * 0.88, R * 0.26, R * 0.18);
+      kit.mesh(sphere(R * 0.18), kit.toon("#b91c1c"), rose, [0, 0, 0], { scale: [0.6, 1, 1], outline: OUTLINE * 0.4 });
+      kit.mesh(sphere(R * 0.12), kit.toon("#991b1b"), rose, [side * 0.01, 0, 0], { scale: [0.5, 0.8, 0.8] });
+      kit.mesh(sphere(R * 0.06), kit.toon("#ffd700"), rose, [side * 0.02, 0, 0]);
+      for (let i = 0; i < 4; i++) {
+        const pin = joint(rose, `yorPin${i}`, 0, 0, 0);
+        pin.rotation.z = (i * Math.PI) / 2 + Math.PI / 4;
+        kit.mesh(cone(0.006, 0.28, 6), kit.toon("#ffd700", { emissive: 0.35 }), pin, [0, 0.14, 0], { outline: OUTLINE * 0.3 });
+      }
+    }
+    kit.mesh(torus(d.torsoR * 0.65, 0.012), kit.toon("#0f172a"), neck, [0, 0, 0], { rotation: [Math.PI / 2, 0, 0] });
+    kit.mesh(sphere(0.014), kit.toon("#ffd700"), neck, [0, -0.01, d.torsoR * 0.68]);
+    kit.mesh(roundedBox(d.torsoR * 0.75, d.torsoH * 0.55, 0.01, 0.004), kit.toon("#b91c1c"), chest, [0, -d.torsoH * 0.22, d.torsoR * 0.62], { outline: OUTLINE * 0.4 });
+    const hands = [handR, handL].filter(Boolean) as THREE.Object3D[];
+    for (const h of hands) {
+      const needle = joint(h, "stiletto", 0, 0, 0.01);
+      kit.mesh(cylinder(0.006, 0.003, 0.32, 8), kit.toon("#ffd700", { emissive: 0.35 }), needle, [0, 0.11, 0], { outline: OUTLINE * 0.3 });
+      kit.mesh(torus(0.02, 0.004), kit.toon("#ffd700"), needle, [0, -0.04, 0]);
+    }
+  }
+
+  // Frieren: Elven teardrop ruby earrings, shoulder mantle capelet with ruby brooch, crescent mage staff
+  if (isFrieren) {
+    for (const side of [1, -1] as const) {
+      const fe = joint(headCenter, `frierenEar${side}`, side * R * 0.95, -R * 0.04, -R * 0.05);
+      fe.rotation.set(0.1, side * 0.2, -side * 0.35);
+      kit.mesh(cone(R * 0.15, R * 0.85, 8), kit.toon(p.skin), fe, [side * R * 0.35, 0, 0], { rotation: [0, 0, (-side * Math.PI) / 2], outline: OUTLINE });
+      const earring = joint(fe, "earring", side * R * 0.18, -R * 0.12, 0);
+      kit.mesh(cylinder(0.003, 0.003, 0.05, 6), kit.toon("#ffd700"), earring, [0, 0.02, 0]);
+      kit.mesh(sphere(0.024), kit.toon("#dc2626", { emissive: 0.4 }), earring, [0, -0.02, 0], { scale: [0.75, 1.4, 0.75], outline: OUTLINE * 0.3 });
+    }
+    const mGeom = new THREE.CylinderGeometry(d.torsoR * 0.95, d.torsoR * 1.55, d.torsoH * 0.45, 20, 1, true);
+    kit.mesh(mGeom, kit.toon("#f8fafc", { side: THREE.DoubleSide }), chest, [0, d.torsoH * 0.28, 0], { outline: OUTLINE * 0.4 });
+    kit.mesh(torus(d.torsoR * 1.54, 0.008), kit.toon("#f59e0b"), chest, [0, d.torsoH * 0.06, 0], { rotation: [Math.PI / 2, 0, 0] });
+    kit.mesh(sphere(0.02), kit.toon("#dc2626", { emissive: 0.5 }), chest, [0, d.torsoH * 0.5, d.torsoR * 0.76], { scale: [1, 1.3, 0.6] });
+    const cStaff = joint(handR, "crescentStaff", 0, 0, 0.01);
+    const csLen = d.height * 0.88;
+    kit.mesh(cylinder(0.009, 0.011, csLen, 10), kit.toon("#451a03"), cStaff, [0, csLen * 0.2, 0], { outline: OUTLINE });
+    kit.mesh(torus(0.09, 0.014, Math.PI * 1.5), kit.toon("#ffd700", { emissive: 0.35 }), cStaff, [0, csLen * 0.72, 0], { rotation: [0, 0, Math.PI * 0.25], outline: OUTLINE * 0.4 });
+    kit.mesh(sphere(0.038), kit.toon("#dc2626", { emissive: 1.2 }), cStaff, [0, csLen * 0.72, 0], { outline: OUTLINE * 0.3 });
+  }
+
+  // Suzu: Kodama hollow mouth socket, clover sprout, lotus leaf umbrella
+  if (isKodama) {
+    kit.mesh(disc(R * 0.12), kit.flat("#111827"), headCenter, [0, eyeY - R * 0.32, faceZ(0, eyeY - R * 0.32) + 0.007], { scale: [1.1, 0.85, 1] });
+    const sprout = joint(headCenter, "kodamaSprout", 0, R * 0.9, 0);
+    kit.mesh(cylinder(0.006, 0.008, R * 0.32, 8), kit.toon("#15803d"), sprout, [0, R * 0.15, 0]);
+    for (let i = 0; i < 3; i++) {
+      const ang = (i / 3) * Math.PI * 2;
+      kit.mesh(sphere(R * 0.12), kit.toon("#22c55e"), sprout, [Math.cos(ang) * R * 0.11, R * 0.32, Math.sin(ang) * R * 0.11], { scale: [1, 0.3, 1.2], rotation: [0.25, ang, 0] });
+    }
+    const u = joint(handR, "kodamaUmbrella", 0, 0, 0.01);
+    const uLen = d.height * 0.82;
+    kit.mesh(cylinder(0.008, 0.01, uLen, 10), kit.toon("#3f2b1d"), u, [0, uLen * 0.2, 0], { outline: OUTLINE * 0.4 });
+    const leafGeom = new THREE.SphereGeometry(d.headR * 1.35, 24, 12, 0, Math.PI * 2, 0, Math.PI * 0.46);
+    kit.mesh(leafGeom, kit.toon("#16a34a", { side: THREE.DoubleSide }), u, [0, uLen * 0.72, 0], { rotation: [Math.PI, 0, 0], outline: OUTLINE * 0.5 });
+  }
+
+  // Bramble: Totoro white belly patch with grey chevrons, branching moss antlers, giant leaf umbrella
+  if (isBramble) {
+    kit.mesh(sphere(d.torsoR * 1.25), kit.toon("#f5f5f4"), spine, [0, d.torsoH * 0.4, d.torsoR * 0.45], { scale: [1.05, 1.2, 0.6] });
+    for (const chevron of [-d.torsoR * 0.35, 0, d.torsoR * 0.35]) {
+      kit.mesh(roundedBox(0.024, 0.008, 0.004, 0.002), kit.toon("#78716c"), spine, [chevron, d.torsoH * 0.55, d.torsoR * 0.98 + 0.004], { rotation: [0, 0, 0.5] });
+      kit.mesh(roundedBox(0.024, 0.008, 0.004, 0.002), kit.toon("#78716c"), spine, [chevron + 0.016, d.torsoH * 0.55, d.torsoR * 0.98 + 0.004], { rotation: [0, 0, -0.5] });
+    }
+    for (const side of [1, -1] as const) {
+      const antler = joint(headCenter, `brambleAntler${side}`, side * R * 0.45, R * 0.82, -R * 0.05);
+      antler.rotation.set(-0.2, 0, -side * 0.45);
+      kit.mesh(cylinder(R * 0.08, R * 0.12, R * 0.65, 8), kit.toon("#78350f"), antler, [0, R * 0.3, 0], { outline: OUTLINE * 0.4 });
+      kit.mesh(sphere(R * 0.09), kit.toon("#15803d"), antler, [0, R * 0.62, 0]);
+      kit.mesh(cone(R * 0.06, R * 0.32, 6), kit.toon("#78350f"), antler, [side * R * 0.12, R * 0.28, 0], { rotation: [0, 0, -side * 0.7] });
+      kit.mesh(sphere(R * 0.06), kit.toon("#15803d"), antler, [side * R * 0.22, R * 0.38, 0]);
+    }
+    const bu = joint(handR, "brambleUmbrella", 0, 0, 0.01);
+    const buLen = d.height * 0.85;
+    kit.mesh(cylinder(0.01, 0.012, buLen, 10), kit.toon("#3f2b1d"), bu, [0, buLen * 0.2, 0], { outline: OUTLINE * 0.4 });
+    const bLeafGeom = new THREE.SphereGeometry(d.headR * 1.5, 24, 12, 0, Math.PI * 2, 0, Math.PI * 0.48);
+    kit.mesh(bLeafGeom, kit.toon("#15803d", { side: THREE.DoubleSide }), bu, [0, buLen * 0.72, 0], { rotation: [Math.PI, 0, 0], outline: OUTLINE * 0.5 });
+  }
+
+  // Denji: Chest pull cord + companion Pochita with chainsaw blade
+  if (isDenji) {
+    kit.mesh(torus(0.018, 0.004), kit.toon("#111827"), chest, [0, d.torsoH * 0.48, d.torsoR * 0.8], { rotation: [0.3, 0, 0], outline: OUTLINE * 0.4 });
+    const pochita = joint(chest, "pochita", 0, d.torsoH * 0.18, d.torsoR * 0.95);
+    kit.mesh(sphere(0.065), kit.toon("#f97316"), pochita, [0, 0, 0], { scale: [1, 1.1, 1.25], outline: OUTLINE * 0.4 });
+    kit.mesh(roundedBox(0.012, 0.065, 0.14, 0.004), kit.toon("#94a3b8"), pochita, [0, 0.04, 0.08], { outline: OUTLINE * 0.3 });
+    kit.mesh(torus(0.022, 0.005), kit.toon("#111827"), pochita, [0, 0.05, -0.06], { rotation: [Math.PI / 2, 0, 0] });
+    kit.mesh(sphere(0.016), kit.flat("#111827"), pochita, [-0.035, 0.01, 0.05]);
+    kit.mesh(sphere(0.016), kit.flat("#111827"), pochita, [0.035, 0.01, 0.05]);
+  }
+
+  // Power: Giant blood war hammer
+  if (isPower) {
+    const hammer = joint(handR, "bloodHammer", 0, 0, 0.01);
+    kit.mesh(cylinder(0.012, 0.014, 0.75, 8), kit.toon("#991b1b"), hammer, [0, 0.2, 0], { outline: OUTLINE });
+    kit.mesh(roundedBox(0.14, 0.14, 0.24, 0.025), kit.toon("#dc2626", { emissive: 0.3 }), hammer, [0, 0.52, 0], { outline: OUTLINE * 0.5 });
+  }
+
+  // Anya: Ahoge sprout + green Chimera plushie
+  if (isAnya) {
+    const ahoge = joint(headCenter, "ahoge", 0, R * 0.95, 0);
+    kit.mesh(cylinder(0.005, 0.008, R * 0.28, 6), kit.toon(p.hair), ahoge, [0.02, R * 0.12, 0], { rotation: [0, 0, -0.4] });
+    const chimera = joint(chest, "chimera", 0, d.torsoH * 0.18, d.torsoR * 0.9);
+    kit.mesh(sphere(0.055), kit.toon("#16a34a"), chimera, [0, 0, 0], { scale: [1.1, 1, 1], outline: OUTLINE * 0.4 });
+    kit.mesh(sphere(0.04), kit.toon("#eab308"), chimera, [0, 0.04, 0.02]);
+    kit.mesh(cone(0.015, 0.05, 6), kit.toon("#f97316"), chimera, [-0.03, 0.07, 0.02], { rotation: [0, 0, 0.3] });
+    kit.mesh(cone(0.015, 0.05, 6), kit.toon("#f97316"), chimera, [0.03, 0.07, 0.02], { rotation: [0, 0, -0.3] });
+  }
+
+  // Genos: Incinerator core on chest and palms
+  if (isGenos) {
+    kit.mesh(disc(0.024), kit.toon("#f97316", { emissive: 1.5 }), chest, [0, d.torsoH * 0.52, d.torsoR * 0.8 + 0.004]);
+    kit.mesh(torus(0.028, 0.005), kit.toon("#ffd700"), chest, [0, d.torsoH * 0.52, d.torsoR * 0.8 + 0.002]);
+    const hands = [handR, handL].filter(Boolean) as THREE.Object3D[];
+    for (const h of hands) {
+      kit.mesh(disc(0.016), kit.toon("#f97316", { emissive: 1.5 }), h, [0, 0.01, 0.02], { rotation: [0.5, 0, 0] });
+    }
+  }
+
+  // Zoro: Three katanas, 3 gold hoop earrings, haramaki sash
+  if (isZoro) {
+    for (let i = 0; i < 3; i++) {
+      const kColor = ["#f8fafc", "#991b1b", "#1c1917"][i];
+      const sword = joint(spine, `katana${i}`, d.torsoR * 0.95, d.torsoH * (0.12 + i * 0.08), -0.02 + i * 0.03);
+      sword.rotation.set(1.15, 0, 0.15 + i * 0.06);
+      kit.mesh(cylinder(0.012, 0.01, 0.42, 8), kit.toon(kColor), sword, [0, -0.15, 0], { outline: OUTLINE * 0.4 });
+      kit.mesh(cylinder(0.028, 0.028, 0.007, 12), kit.toon("#ffd700"), sword, [0, 0.06, 0]);
+      kit.mesh(cylinder(0.01, 0.01, 0.11, 8), kit.toon("#111827"), sword, [0, 0.12, 0], { outline: OUTLINE * 0.4 });
+    }
+    for (let i = 0; i < 3; i++) {
+      kit.mesh(torus(0.016, 0.004), kit.toon("#ffd700"), headCenter, [R * 0.97, -R * (0.15 + i * 0.07), 0], { rotation: [Math.PI / 2, 0, 0] });
+    }
+    kit.mesh(cylinder(d.torsoR * 1.05, d.torsoR * 1.05, d.torsoH * 0.45, 18), kit.toon("#15803d"), spine, [0, d.torsoH * 0.26, 0], { outline: OUTLINE * 0.4 });
+  }
+
+  // Nezuko: Green bamboo muzzle with red tie cords
+  if (isNezuko) {
+    kit.mesh(cylinder(R * 0.095, R * 0.095, R * 0.62, 16), kit.toon("#16a34a"), headCenter, [0, eyeY - R * 0.4, faceZ(0, eyeY - R * 0.4) + 0.014], { rotation: [0, 0, Math.PI / 2], outline: OUTLINE * 0.6 });
+    kit.mesh(torus(R * 0.1, R * 0.014), kit.toon("#14532d"), headCenter, [-R * 0.18, eyeY - R * 0.4, faceZ(0, eyeY - R * 0.4) + 0.014], { rotation: [0, Math.PI / 2, 0] });
+    kit.mesh(torus(R * 0.1, R * 0.014), kit.toon("#14532d"), headCenter, [R * 0.18, eyeY - R * 0.4, faceZ(0, eyeY - R * 0.4) + 0.014], { rotation: [0, Math.PI / 2, 0] });
+    kit.mesh(roundedBox(R * 1.35, R * 0.035, 0.008, 0.002), kit.toon("#dc2626"), headCenter, [0, eyeY - R * 0.4, faceZ(0, eyeY - R * 0.4) + 0.006]);
+  }
+
+  // Tanjiro: Hanafuda earrings + forehead scar
+  if (isTanjiro) {
+    for (const side of [1, -1] as const) {
+      kit.mesh(roundedBox(R * 0.08, R * 0.22, 0.004, 0.002), kit.toon("#f8fafc"), headCenter, [side * R * 0.96, -R * 0.22, 0], { outline: OUTLINE * 0.4 });
+      kit.mesh(disc(R * 0.035), kit.flat("#dc2626"), headCenter, [side * R * 0.96, -R * 0.18, side * 0.003]);
+    }
+    kit.mesh(disc(R * 0.09), kit.flat("#991b1b"), headCenter, [R * 0.32, eyeY + R * 0.42, faceZ(R * 0.32, eyeY + R * 0.42) + 0.005], { scale: [1, 0.8, 1] });
+  }
+
+  // Luffy: Straw hat with red ribbon + chest scar
+  if (isLuffy) {
+    kit.mesh(cylinder(R * 1.5, R * 1.5, R * 0.04, 32), kit.toon("#eab308"), headCenter, [0, R * 0.88, -R * 0.05], { rotation: [-0.25, 0, 0], outline: OUTLINE * 0.5 });
+    kit.mesh(sphere(R * 0.65), kit.toon("#eab308"), headCenter, [0, R * 1.08, -R * 0.14], { scale: [1, 0.6, 1], outline: OUTLINE * 0.5 });
+    kit.mesh(torus(R * 0.66, R * 0.06), kit.toon("#dc2626"), headCenter, [0, R * 0.96, -R * 0.12], { rotation: [Math.PI / 2 - 0.25, 0, 0] });
+    kit.mesh(roundedBox(R * 0.08, R * 0.015, 0.002, 0.001), kit.flat("#1c1917"), headCenter, [-R * 0.38, eyeY - R * 0.16, faceZ(-R * 0.38, eyeY - R * 0.16) + 0.004]);
+  }
+
+  // Naruto: Whisker marks + Rasengan in hand
+  if (isNaruto) {
+    for (const side of [1, -1] as const) {
+      for (let i = 0; i < 3; i += 1) {
+        const wy = eyeY - R * (0.2 + i * 0.07);
+        const wx = side * R * 0.42;
+        kit.mesh(roundedBox(R * 0.1, R * 0.016, 0.002, 0.001), kit.flat("#1f2937"), headCenter, [wx, wy, faceZ(wx, wy) + 0.004], {
+          rotation: [0, Math.asin(wx / R) * 0.9, side * (i - 1) * 0.18],
+        });
+      }
+    }
+    const rasengan = joint(handR, "rasengan", 0, 0.1, 0.06);
+    kit.mesh(sphere(0.042), kit.toon("#38bdf8", { emissive: 1.6, opacity: 0.82 }), rasengan, [0, 0, 0]);
+    kit.mesh(sphere(0.02), kit.toon("#ffffff", { emissive: 2.0 }), rasengan, [0, 0, 0]);
+  }
+
+  // Sun Wukong: Golden fillet circlet, cloud pauldrons, Ruyi Jingu Bang
+  if (isSunWukong) {
+    const fillet = joint(headCenter, "fillet", 0, R * 0.35, 0);
+    kit.mesh(torus(R * 1.01, R * 0.06), kit.toon("#ffd700", { emissive: 0.4 }), fillet, [0, 0, 0], { rotation: [Math.PI / 2 - 0.12, 0, 0] });
+    kit.mesh(cone(R * 0.12, R * 0.45, 6), kit.toon("#ffd700", { emissive: 0.5 }), fillet, [-R * 0.28, R * 0.28, R * 0.88], { rotation: [0.3, -0.4, 0.3] });
+    kit.mesh(cone(R * 0.12, R * 0.45, 6), kit.toon("#ffd700", { emissive: 0.5 }), fillet, [R * 0.28, R * 0.28, R * 0.88], { rotation: [0.3, 0.4, -0.3] });
+    const wukongStaff = joint(handR, "ruyiJinguBang", 0, 0, 0.01);
+    const wsLen = d.height * 0.95;
+    kit.mesh(cylinder(0.012, 0.012, wsLen, 10), kit.toon("#991b1b"), wukongStaff, [0, wsLen * 0.18, 0], { outline: OUTLINE });
+    kit.mesh(cylinder(0.016, 0.016, 0.12, 12), kit.toon("#ffd700", { emissive: 0.4 }), wukongStaff, [0, wsLen * 0.62, 0]);
+    kit.mesh(cylinder(0.016, 0.016, 0.12, 12), kit.toon("#ffd700", { emissive: 0.4 }), wukongStaff, [0, -wsLen * 0.26, 0]);
+  }
+
+  // Krishna: Peacock feather in golden crown + golden Bansuri flute
+  if (isKrishna) {
+    const kCrown = joint(headCenter, "krishnaCrown", 0, topY + R * 0.08, 0);
+    kit.mesh(cylinder(R * 0.55, R * 0.48, R * 0.28, 20), kit.toon("#ffd700", { emissive: 0.3 }), kCrown, [0, 0, 0], { outline: OUTLINE * 0.4 });
+    const feather = joint(kCrown, "peacockFeather", R * 0.18, R * 0.22, -R * 0.05);
+    feather.rotation.set(-0.2, 0.3, 0.4);
+    kit.mesh(sphere(R * 0.22), kit.toon("#059669"), feather, [0, R * 0.18, 0], { scale: [0.55, 1.4, 0.2], outline: OUTLINE * 0.3 });
+    kit.mesh(sphere(R * 0.1), kit.toon("#0284c7"), feather, [0, R * 0.24, 0.01], { scale: [0.6, 1.1, 0.2] });
+    const flute = joint(chest, "flute", 0, d.torsoH * 0.48, d.torsoR * 0.85);
+    flute.rotation.set(0.15, 0, 0.35);
+    kit.mesh(cylinder(0.007, 0.007, 0.38, 8), kit.toon("#ffd700", { emissive: 0.4 }), flute, [0, 0, 0], { rotation: [0, 0, Math.PI / 2], outline: OUTLINE * 0.3 });
+  }
+
+  // Ganesha: Elephant trunk + golden modak sweet
+  if (isGanesha) {
+    const trunk = joint(headCenter, "ganeshaTrunk", 0, eyeY - R * 0.25, faceFront);
+    kit.mesh(cylinder(R * 0.14, R * 0.08, R * 0.48, 12), kit.toon(p.skin), trunk, [0, -R * 0.16, R * 0.08], { rotation: [0.4, 0, 0], outline: OUTLINE * 0.4 });
+    kit.mesh(sphere(R * 0.09), kit.toon(p.skin), trunk, [0, -R * 0.32, R * 0.22], { scale: [0.9, 0.8, 1.2] });
+    const modak = joint(handR, "modak", 0, 0.02, 0.01);
+    kit.mesh(cone(0.028, 0.055, 8), kit.toon("#ffd700", { emissive: 0.3 }), modak, [0, 0.02, 0]);
+  }
+
+  // Hanuman: Golden gada mace
+  if (isHanuman) {
+    const hMace = joint(handR, "hanumanGada", 0, 0, 0.01);
+    kit.mesh(cylinder(0.011, 0.013, 0.45, 8), kit.toon("#ffd700"), hMace, [0, 0.12, 0], { outline: OUTLINE });
+    kit.mesh(sphere(0.065), kit.toon("#ffd700", { emissive: 0.3 }), hMace, [0, 0.36, 0], { outline: OUTLINE * 0.4 });
+    kit.mesh(cone(0.028, 0.06, 8), kit.toon("#ffd700"), hMace, [0, 0.44, 0]);
+  }
+
+  // Shiva: Golden Trishula trident
+  if (isShiva) {
+    const sStaff = joint(handR, "trishula", 0, 0, 0.01);
+    const sLen = d.height * 0.95;
+    kit.mesh(cylinder(0.01, 0.01, sLen, 8), kit.toon("#475569"), sStaff, [0, sLen * 0.2, 0], { outline: OUTLINE });
+    kit.mesh(torus(0.055, 0.009, Math.PI), kit.toon("#ffd700", { emissive: 0.3 }), sStaff, [0, sLen * 0.65, 0], { rotation: [0, 0, Math.PI] });
+    kit.mesh(cone(0.012, 0.12, 6), kit.toon("#ffd700", { emissive: 0.3 }), sStaff, [0, sLen * 0.72, 0]);
+    kit.mesh(cone(0.01, 0.09, 6), kit.toon("#ffd700"), sStaff, [-0.055, sLen * 0.68, 0]);
+    kit.mesh(cone(0.01, 0.09, 6), kit.toon("#ffd700"), sStaff, [0.055, sLen * 0.68, 0]);
+  }
+
+  // Rama: Kodanda longbow + quiver
+  if (isRama) {
+    const bow = joint(handR, "kodandaBow", 0, 0, 0.01);
+    kit.mesh(torus(0.24, 0.009, Math.PI * 0.75), kit.toon("#b45309"), bow, [0, 0.08, 0], { rotation: [0, 0, 0.4], outline: OUTLINE * 0.4 });
+    const quiver = joint(spine, "quiver", -d.torsoR * 0.5, d.torsoH * 0.45, -d.torsoR * 0.85);
+    quiver.rotation.set(0.3, 0, -0.4);
+    kit.mesh(cylinder(0.024, 0.02, 0.32, 8), kit.toon("#78350f"), quiver, [0, 0, 0], { outline: OUTLINE * 0.4 });
+    kit.mesh(cone(0.015, 0.08, 6), kit.toon("#ffd700"), quiver, [0, 0.18, 0]);
+  }
+
+  // Gojo: Blue cursed energy orb
+  if (isGojo) {
+    const blueEnergy = joint(handR, "cursedEnergy", 0, 0.12, 0.08);
+    kit.mesh(sphere(0.045), kit.toon("#38bdf8", { emissive: 1.8, opacity: 0.85 }), blueEnergy, [0, 0, 0], { outline: OUTLINE * 0.3 });
+    kit.mesh(sphere(0.025), kit.toon("#ffffff", { emissive: 2.0 }), blueEnergy, [0, 0, 0]);
+  }
+
+  // Ren: Squirrel on left shoulder
+  if (isRen) {
+    const squirrel = joint(chest, "squirrel", d.shoulderX * 0.85, d.torsoH * 0.65, 0);
+    kit.mesh(sphere(0.035), kit.toon("#92400e"), squirrel, [0, 0, 0], { scale: [1, 1.2, 0.9], outline: OUTLINE * 0.3 });
+    kit.mesh(sphere(0.024), kit.toon("#92400e"), squirrel, [0, 0.03, 0.02]);
+    kit.mesh(cone(0.012, 0.05, 6), kit.toon("#78350f"), squirrel, [0, 0.01, -0.03], { rotation: [-1.2, 0, 0] });
+  }
+
+  // Noa: Delivery twig broom + tiny black cat
+  if (isNoa) {
+    const broom = joint(handR, "broom", 0, 0, 0.01);
+    kit.mesh(cylinder(0.008, 0.008, 0.65, 8), kit.toon("#78350f"), broom, [0, 0.15, 0], { outline: OUTLINE * 0.4 });
+    kit.mesh(cone(0.05, 0.22, 10), kit.toon("#ca8a04"), broom, [0, 0.48, 0], { outline: OUTLINE * 0.4 });
+    const cat = joint(chest, "cat", -d.shoulderX * 0.85, d.torsoH * 0.62, 0);
+    kit.mesh(sphere(0.03), kit.toon("#111827"), cat, [0, 0, 0], { outline: OUTLINE * 0.3 });
+    kit.mesh(sphere(0.02), kit.toon("#111827"), cat, [0, 0.025, 0.015]);
+  }
+
+  // Ninja Cat: Crossed dual ninjato swords on back
+  if (isNinjaCat) {
+    for (const side of [1, -1] as const) {
+      const ninjato = joint(spine, `ninjato${side}`, side * 0.03, d.torsoH * 0.4, -d.torsoR * 0.85);
+      ninjato.rotation.set(0.3, 0, side * 0.65);
+      kit.mesh(cylinder(0.008, 0.008, 0.38, 8), kit.toon("#00f0ff", { emissive: 0.8 }), ninjato, [0, -0.1, 0], { outline: OUTLINE * 0.3 });
+      kit.mesh(cylinder(0.01, 0.01, 0.1, 8), kit.toon("#111927"), ninjato, [0, 0.12, 0]);
     }
   }
 }

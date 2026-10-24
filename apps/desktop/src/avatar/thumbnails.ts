@@ -93,9 +93,11 @@ function drain(): void {
   step();
 }
 
+const THUMBNAIL_CACHE_VERSION = "v3_detailed";
+
 /** Renders (or returns the cached) thumbnail for `spec` as a PNG data URL. */
 export function renderThumbnail(spec: CharacterSpec): Promise<string> {
-  const key = JSON.stringify(spec);
+  const key = `${THUMBNAIL_CACHE_VERSION}:${JSON.stringify(spec)}`;
   const cached = cache.get(key);
   if (cached) return Promise.resolve(cached);
   const inFlight = pending.get(key);

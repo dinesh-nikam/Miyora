@@ -6219,6 +6219,1834 @@
         "toucan",
         "explorer"
       ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.krishna",
+      "name": "Krishna",
+      "title": "Divine Flute Avatar",
+      "description": "Sky-blue Krishna with dark curly locks, glowing golden pitambara silk, peacock feather crown, and gentle sparkle eyes.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "curly",
+      "eyes": "sparkle",
+      "outfit": "robe",
+      "accessories": [
+        "crown",
+        "flower",
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#7da4d4",
+        "hair": "#1a2238",
+        "eyes": "#231f20",
+        "primary": "#ffd700",
+        "secondary": "#f59e0b",
+        "accent": "#38bdf8"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.08,
+        "build": 0.95,
+        "limbLength": 1.0
+      },
+      "energy": 1.2,
+      "tags": [
+        "devotional",
+        "avatar",
+        "flute",
+        "divine",
+        "krishna"
+      ],
+      "hairTip": "#38bdf8"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.radha",
+      "name": "Radha",
+      "title": "Graceful Vrindavan Queen",
+      "description": "Graceful Vrindavan beloved in radiant crimson and saffron silks with golden floral tiara and luminous lotus eyes.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "sparkle",
+      "outfit": "dress",
+      "accessories": [
+        "crown",
+        "flower",
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f6d7c3",
+        "hair": "#1e1b18",
+        "eyes": "#451a03",
+        "primary": "#e11d48",
+        "secondary": "#f59e0b",
+        "accent": "#fbcfe8"
+      },
+      "proportions": {
+        "height": 0.98,
+        "headScale": 1.05,
+        "build": 0.92,
+        "limbLength": 1.0
+      },
+      "energy": 1.0,
+      "tags": [
+        "devotional",
+        "avatar",
+        "grace",
+        "radha",
+        "vrindavan"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.rama",
+      "name": "Rama",
+      "title": "Righteous Archer King",
+      "description": "Dignified cloud-blue warrior prince of Ayodhya crowned in gold with saffron silks and steadfast archer focus.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sharp",
+      "outfit": "tunic",
+      "accessories": [
+        "crown",
+        "cape",
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#6ba3b8",
+        "hair": "#111827",
+        "eyes": "#1e293b",
+        "primary": "#f97316",
+        "secondary": "#ffd700",
+        "accent": "#15803d"
+      },
+      "proportions": {
+        "height": 1.08,
+        "headScale": 0.98,
+        "build": 1.1,
+        "limbLength": 1.05
+      },
+      "energy": 1.1,
+      "tags": [
+        "devotional",
+        "avatar",
+        "archer",
+        "king",
+        "rama"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.sita",
+      "name": "Sita",
+      "title": "Mithila Princess of Grace",
+      "description": "Serene princess of Mithila draped in auspicious vermilion and woven gold silk, crowned with lotus grace.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "round",
+      "outfit": "dress",
+      "accessories": [
+        "crown",
+        "flower",
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f8dfd0",
+        "hair": "#1c1917",
+        "eyes": "#292524",
+        "primary": "#dc2626",
+        "secondary": "#ffd700",
+        "accent": "#fef08a"
+      },
+      "proportions": {
+        "height": 0.97,
+        "headScale": 1.05,
+        "build": 0.92,
+        "limbLength": 1.0
+      },
+      "energy": 0.9,
+      "tags": [
+        "devotional",
+        "avatar",
+        "princess",
+        "sita",
+        "grace"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.hanuman",
+      "name": "Hanuman",
+      "title": "Mighty Loyal Hero",
+      "description": "Golden-furred hero of boundless courage with curled tail, radiant mukut crown, and fiery saffron armor.",
+      "body": "humanoid",
+      "ears": "cat",
+      "tail": "cat",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sparkle",
+      "outfit": "armor",
+      "accessories": [
+        "crown",
+        "headband",
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#e0ac83",
+        "hair": "#78350f",
+        "eyes": "#451a03",
+        "primary": "#ea580c",
+        "secondary": "#ffd700",
+        "accent": "#b91c1c"
+      },
+      "proportions": {
+        "height": 0.95,
+        "headScale": 1.15,
+        "build": 1.2,
+        "limbLength": 0.95
+      },
+      "energy": 1.5,
+      "tags": [
+        "devotional",
+        "avatar",
+        "hero",
+        "hanuman",
+        "courage"
+      ],
+      "hairTip": "#ffd700"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.ganesha",
+      "name": "Ganesha",
+      "title": "Lord of Good Fortune",
+      "description": "Beloved remover of obstacles with large friendly ears, jeweled golden crown, and warm sweet energy.",
+      "body": "beast",
+      "ears": "floppy",
+      "tail": "bunny",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sparkle",
+      "outfit": "robe",
+      "accessories": [
+        "crown",
+        "gem",
+        "bell"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f6d7c3",
+        "hair": "#78350f",
+        "eyes": "#312e81",
+        "primary": "#f97316",
+        "secondary": "#ffd700",
+        "accent": "#dc2626"
+      },
+      "proportions": {
+        "height": 0.88,
+        "headScale": 1.28,
+        "build": 1.28,
+        "limbLength": 0.88
+      },
+      "energy": 1.2,
+      "tags": [
+        "devotional",
+        "avatar",
+        "ganesha",
+        "wisdom",
+        "fortune"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.shiva",
+      "name": "Shiva",
+      "title": "Serene Ascetic Lord",
+      "description": "Ascetic blue lord of deep stillness with jatamukuta bun, crescent moon halo, and third-eye sapphire.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "bun",
+      "eyes": "sleepy",
+      "outfit": "robe",
+      "accessories": [
+        "gem",
+        "staff",
+        "halo"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#8ba3be",
+        "hair": "#0f172a",
+        "eyes": "#1e293b",
+        "primary": "#d97706",
+        "secondary": "#475569",
+        "accent": "#38bdf8"
+      },
+      "proportions": {
+        "height": 1.05,
+        "headScale": 0.98,
+        "build": 1.05,
+        "limbLength": 1.05
+      },
+      "energy": 0.7,
+      "tags": [
+        "devotional",
+        "avatar",
+        "shiva",
+        "ascetic",
+        "calm"
+      ],
+      "hairTip": "#38bdf8"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.parvati",
+      "name": "Parvati",
+      "title": "Goddess of Devotion",
+      "description": "Loving mother of mountains draped in rich emerald silk and gold, crowned with floral blossoms.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "round",
+      "outfit": "dress",
+      "accessories": [
+        "crown",
+        "flower",
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f8dfd0",
+        "hair": "#18181b",
+        "eyes": "#3b0764",
+        "primary": "#059669",
+        "secondary": "#ffd700",
+        "accent": "#e11d48"
+      },
+      "proportions": {
+        "height": 0.98,
+        "headScale": 1.05,
+        "build": 0.92,
+        "limbLength": 1.0
+      },
+      "energy": 1.0,
+      "tags": [
+        "devotional",
+        "avatar",
+        "goddess",
+        "parvati",
+        "devotion"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.lakshmi",
+      "name": "Lakshmi",
+      "title": "Goddess of Prosperity",
+      "description": "Radiant goddess of abundance surrounded by blooming pink lotuses, draped in magenta and shower of gold.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "sparkle",
+      "outfit": "dress",
+      "accessories": [
+        "crown",
+        "flower",
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fbe3d4",
+        "hair": "#1c1917",
+        "eyes": "#451a03",
+        "primary": "#be123c",
+        "secondary": "#ffd700",
+        "accent": "#fda4af"
+      },
+      "proportions": {
+        "height": 0.98,
+        "headScale": 1.04,
+        "build": 0.92,
+        "limbLength": 1.0
+      },
+      "energy": 1.1,
+      "tags": [
+        "devotional",
+        "avatar",
+        "goddess",
+        "lakshmi",
+        "prosperity"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.saraswati",
+      "name": "Saraswati",
+      "title": "Goddess of Arts and Wisdom",
+      "description": "Serene embodiment of music and wisdom in pure white silks with carved veena staff and tranquil azure eyes.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "sleepy",
+      "outfit": "dress",
+      "accessories": [
+        "crown",
+        "staff",
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fdf2f8",
+        "hair": "#1e293b",
+        "eyes": "#0284c7",
+        "primary": "#f8fafc",
+        "secondary": "#ca8a04",
+        "accent": "#67e8f9"
+      },
+      "proportions": {
+        "height": 0.98,
+        "headScale": 1.02,
+        "build": 0.9,
+        "limbLength": 1.02
+      },
+      "energy": 0.8,
+      "tags": [
+        "devotional",
+        "avatar",
+        "wisdom",
+        "saraswati",
+        "arts"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.arjuna",
+      "name": "Arjuna",
+      "title": "Peerless Gandiva Archer",
+      "description": "Epic Pandava archer in midnight indigo armor with saffron cape, golden crest, and pinpoint cyan focus.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "ponytail",
+      "eyes": "sharp",
+      "outfit": "armor",
+      "accessories": [
+        "crown",
+        "cape",
+        "gem"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f5d2b9",
+        "hair": "#0a0a20",
+        "eyes": "#00f0ff",
+        "primary": "#191c41",
+        "secondary": "#ff9933",
+        "accent": "#ffd700"
+      },
+      "proportions": {
+        "height": 1.05,
+        "headScale": 0.98,
+        "build": 1.12,
+        "limbLength": 1.05
+      },
+      "energy": 1.3,
+      "tags": [
+        "warrior",
+        "avatar",
+        "archer",
+        "arjuna",
+        "epic"
+      ],
+      "hairTip": "#ff9933"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.gojo",
+      "name": "Gojo",
+      "title": "The Strongest Sorcerer",
+      "description": "The invincible sorcerer with snow-white spiky hair, sleek high-collar dark uniform, and infinite cyan Six Eyes.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sparkle",
+      "outfit": "suit",
+      "accessories": [
+        "glasses"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fce7f3",
+        "hair": "#f8fafc",
+        "eyes": "#38bdf8",
+        "primary": "#0f172a",
+        "secondary": "#1e1b4b",
+        "accent": "#38bdf8"
+      },
+      "proportions": {
+        "height": 1.12,
+        "headScale": 0.95,
+        "build": 1.02,
+        "limbLength": 1.1
+      },
+      "energy": 1.4,
+      "tags": [
+        "anime",
+        "avatar",
+        "sorcerer",
+        "gojo",
+        "strongest"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.yuji",
+      "name": "Yuji",
+      "title": "Tiger Jujutsu Vessel",
+      "description": "High-energy vessel with spiked salmon hair, iconic red hoodie insert, athletic build, and punch-ready stance.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sharp",
+      "outfit": "hoodie",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fcd5be",
+        "hair": "#fb7185",
+        "eyes": "#78350f",
+        "primary": "#0f172a",
+        "secondary": "#dc2626",
+        "accent": "#0284c7"
+      },
+      "proportions": {
+        "height": 1.02,
+        "headScale": 1.0,
+        "build": 1.12,
+        "limbLength": 1.02
+      },
+      "energy": 1.5,
+      "tags": [
+        "anime",
+        "avatar",
+        "sorcerer",
+        "yuji",
+        "brawler"
+      ],
+      "hairTip": "#1f2937"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.tanjiro",
+      "name": "Tanjiro",
+      "title": "Sun Breathing Swordsman",
+      "description": "Kindhearted swordsman with green haori, hanafuda earrings, forehead sun scar, and nichirin blade.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "round",
+      "outfit": "kimono",
+      "accessories": [
+        "katana"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#7f1d1d",
+        "eyes": "#991b1b",
+        "primary": "#166534",
+        "secondary": "#111827",
+        "accent": "#f59e0b"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.05,
+        "build": 1.05,
+        "limbLength": 1.0
+      },
+      "energy": 1.3,
+      "tags": [
+        "anime",
+        "avatar",
+        "swordsman",
+        "tanjiro",
+        "sun"
+      ],
+      "hairTip": "#dc2626"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.nezuko",
+      "name": "Nezuko",
+      "title": "Beloved Kimono Sister",
+      "description": "Beloved companion with flowing black hair fading to fiery orange tips, bamboo muzzle, and pink kimono.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "round",
+      "outfit": "kimono",
+      "accessories": [
+        "bow"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fde2d2",
+        "hair": "#111827",
+        "eyes": "#f43f5e",
+        "primary": "#f472b6",
+        "secondary": "#1c1917",
+        "accent": "#ea580c"
+      },
+      "proportions": {
+        "height": 0.88,
+        "headScale": 1.18,
+        "build": 0.92,
+        "limbLength": 0.92
+      },
+      "energy": 1.1,
+      "tags": [
+        "anime",
+        "avatar",
+        "kimono",
+        "nezuko",
+        "demon"
+      ],
+      "hairTip": "#ea580c"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.luffy",
+      "name": "Luffy",
+      "title": "Straw Hat Captain",
+      "description": "Fearless pirate captain with straw hat, bold red vest, denim shorts, chest scar, and boundless optimism.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "round",
+      "outfit": "jacket",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#e0ac83",
+        "hair": "#0c0a09",
+        "eyes": "#1e293b",
+        "primary": "#dc2626",
+        "secondary": "#0284c7",
+        "accent": "#eab308"
+      },
+      "proportions": {
+        "height": 0.98,
+        "headScale": 1.08,
+        "build": 1.0,
+        "limbLength": 1.05
+      },
+      "energy": 1.6,
+      "tags": [
+        "anime",
+        "avatar",
+        "pirate",
+        "luffy",
+        "captain"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.zoro",
+      "name": "Zoro",
+      "title": "Three-Sword Master",
+      "description": "Stoic three-sword master with cropped moss-green hair, deep green samurai coat, and lethal steel focus.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "sharp",
+      "outfit": "hakama",
+      "accessories": [
+        "katana"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#e0ac83",
+        "hair": "#15803d",
+        "eyes": "#1e293b",
+        "primary": "#14532d",
+        "secondary": "#334155",
+        "accent": "#eab308"
+      },
+      "proportions": {
+        "height": 1.08,
+        "headScale": 0.98,
+        "build": 1.18,
+        "limbLength": 1.05
+      },
+      "energy": 1.1,
+      "tags": [
+        "anime",
+        "avatar",
+        "samurai",
+        "zoro",
+        "swordsman"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.nami",
+      "name": "Nami",
+      "title": "Cat Burglar Navigator",
+      "description": "Genius navigator with flowing tangerine hair, weather-controlling staff, and sharp weather-routing senses.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "sparkle",
+      "outfit": "jacket",
+      "accessories": [
+        "staff"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f6d7c3",
+        "hair": "#ea580c",
+        "eyes": "#7c2d12",
+        "primary": "#0284c7",
+        "secondary": "#f8fafc",
+        "accent": "#facc15"
+      },
+      "proportions": {
+        "height": 1.02,
+        "headScale": 1.0,
+        "build": 0.94,
+        "limbLength": 1.05
+      },
+      "energy": 1.3,
+      "tags": [
+        "anime",
+        "avatar",
+        "navigator",
+        "nami",
+        "ocean"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.sanji",
+      "name": "Sanji",
+      "title": "Black Leg Chef",
+      "description": "Refined ship cook in impeccable black suit with swept blond fringe and fiery diable jambe footwork.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "sharp",
+      "outfit": "suit",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#facc15",
+        "eyes": "#1e293b",
+        "primary": "#0f172a",
+        "secondary": "#1e1b4b",
+        "accent": "#ea580c"
+      },
+      "proportions": {
+        "height": 1.08,
+        "headScale": 0.96,
+        "build": 1.05,
+        "limbLength": 1.12
+      },
+      "energy": 1.2,
+      "tags": [
+        "anime",
+        "avatar",
+        "chef",
+        "sanji",
+        "suit"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.naruto",
+      "name": "Naruto",
+      "title": "Hero of the Hidden Leaf",
+      "description": "Spirited ninja with spiky blond hair, metallic Leaf forehead protector, whisker marks, and rasengan energy.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "round",
+      "outfit": "jacket",
+      "accessories": [
+        "headband"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fcd5be",
+        "hair": "#facc15",
+        "eyes": "#0284c7",
+        "primary": "#ea580c",
+        "secondary": "#1f2937",
+        "accent": "#f8fafc"
+      },
+      "proportions": {
+        "height": 0.98,
+        "headScale": 1.08,
+        "build": 1.02,
+        "limbLength": 1.0
+      },
+      "energy": 1.6,
+      "tags": [
+        "anime",
+        "avatar",
+        "ninja",
+        "naruto",
+        "leaf"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.sasuke",
+      "name": "Sasuke",
+      "title": "Shadow Uchiha Avenger",
+      "description": "Cool Uchiha prodigy in high-collar dark tunic with purple rope sash, kusanagi blade, and chidori sparks.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sharp",
+      "outfit": "tunic",
+      "accessories": [
+        "katana"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fce7f3",
+        "hair": "#0f172a",
+        "eyes": "#1e1b4b",
+        "primary": "#1e293b",
+        "secondary": "#e2e8f0",
+        "accent": "#a855f7"
+      },
+      "proportions": {
+        "height": 1.04,
+        "headScale": 0.98,
+        "build": 1.02,
+        "limbLength": 1.04
+      },
+      "energy": 1.2,
+      "tags": [
+        "anime",
+        "avatar",
+        "ninja",
+        "sasuke",
+        "avenger"
+      ],
+      "hairTip": "#1e3a8a"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.goku",
+      "name": "Goku",
+      "title": "Earth-Raised Saiyan Hero",
+      "description": "Cheerful martial artist with wild black spikes, bright orange gi, navy wristbands, and limitless ki reserves.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "round",
+      "outfit": "tunic",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fcd5be",
+        "hair": "#0c0a09",
+        "eyes": "#1e293b",
+        "primary": "#ea580c",
+        "secondary": "#1d4ed8",
+        "accent": "#ffd700"
+      },
+      "proportions": {
+        "height": 1.04,
+        "headScale": 1.02,
+        "build": 1.22,
+        "limbLength": 1.04
+      },
+      "energy": 1.5,
+      "tags": [
+        "anime",
+        "avatar",
+        "saiyan",
+        "goku",
+        "warrior"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.vegeta",
+      "name": "Vegeta",
+      "title": "Prince of All Saiyans",
+      "description": "Proud prince in white segmented battle armor and royal blue suit, with flame-swept black hair.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sharp",
+      "outfit": "armor",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#0c0a09",
+        "eyes": "#111827",
+        "primary": "#1e3a8a",
+        "secondary": "#f8fafc",
+        "accent": "#eab308"
+      },
+      "proportions": {
+        "height": 0.96,
+        "headScale": 1.04,
+        "build": 1.18,
+        "limbLength": 0.98
+      },
+      "energy": 1.4,
+      "tags": [
+        "anime",
+        "avatar",
+        "saiyan",
+        "vegeta",
+        "prince"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.levi",
+      "name": "Levi",
+      "title": "Humanitys Strongest Captain",
+      "description": "Scout captain with crisp black undercut, white cravat, green cape, dual steel blades, and deadpan discipline.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "feather",
+      "hair": "short",
+      "eyes": "sharp",
+      "outfit": "jacket",
+      "accessories": [
+        "katana",
+        "cape"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f5ece8",
+        "hair": "#111827",
+        "eyes": "#334155",
+        "primary": "#78350f",
+        "secondary": "#15803d",
+        "accent": "#f8fafc"
+      },
+      "proportions": {
+        "height": 0.92,
+        "headScale": 1.04,
+        "build": 1.1,
+        "limbLength": 0.98
+      },
+      "energy": 1.2,
+      "tags": [
+        "anime",
+        "avatar",
+        "scout",
+        "levi",
+        "captain"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.mikasa",
+      "name": "Mikasa",
+      "title": "Devoted Scout Protector",
+      "description": "Deadly elite scout with sleek black bob, iconic dark crimson knit scarf, dual blades, and steadfast poise.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "feather",
+      "hair": "bob",
+      "eyes": "sharp",
+      "outfit": "jacket",
+      "accessories": [
+        "scarf",
+        "katana",
+        "cape"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f6e7e7",
+        "hair": "#111827",
+        "eyes": "#1f2937",
+        "primary": "#78350f",
+        "secondary": "#991b1b",
+        "accent": "#e2e8f0"
+      },
+      "proportions": {
+        "height": 1.04,
+        "headScale": 0.98,
+        "build": 1.08,
+        "limbLength": 1.05
+      },
+      "energy": 1.2,
+      "tags": [
+        "anime",
+        "avatar",
+        "scout",
+        "mikasa",
+        "blade"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.gon",
+      "name": "Gon",
+      "title": "Whale Island Green Hunter",
+      "description": "Whale Island youth with tall green spikes, emerald adventure jacket, fishing rod, and pure hunter resolve.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sparkle",
+      "outfit": "jacket",
+      "accessories": [
+        "staff",
+        "backpack"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#14532d",
+        "eyes": "#78350f",
+        "primary": "#16a34a",
+        "secondary": "#f97316",
+        "accent": "#fde047"
+      },
+      "proportions": {
+        "height": 0.9,
+        "headScale": 1.18,
+        "build": 0.98,
+        "limbLength": 0.95
+      },
+      "energy": 1.5,
+      "tags": [
+        "anime",
+        "avatar",
+        "hunter",
+        "gon",
+        "green"
+      ],
+      "hairTip": "#22c55e"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.killua",
+      "name": "Killua",
+      "title": "Silver Lightning Prodigy",
+      "description": "Lightning assassin with fluffy silver hair, cat-smirk blue eyes, navy skater layers, and electric crackle.",
+      "body": "humanoid",
+      "ears": "cat",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sharp",
+      "outfit": "hoodie",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fce7f3",
+        "hair": "#f8fafc",
+        "eyes": "#1d4ed8",
+        "primary": "#1e3a8a",
+        "secondary": "#93c5fd",
+        "accent": "#38bdf8"
+      },
+      "proportions": {
+        "height": 0.92,
+        "headScale": 1.15,
+        "build": 0.96,
+        "limbLength": 0.98
+      },
+      "energy": 1.4,
+      "tags": [
+        "anime",
+        "avatar",
+        "lightning",
+        "killua",
+        "prodigy"
+      ],
+      "hairTip": "#93c5fd"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.l-lawliet",
+      "name": "L Lawliet",
+      "title": "Eccentric Master Detective",
+      "description": "Crouching world detective in loose white tee with messy bedhead, dark circles, and sugar-fueled logic.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sleepy",
+      "outfit": "tunic",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f5ece8",
+        "hair": "#111827",
+        "eyes": "#1e1b4b",
+        "primary": "#f8fafc",
+        "secondary": "#334155",
+        "accent": "#ef4444"
+      },
+      "proportions": {
+        "height": 0.96,
+        "headScale": 1.12,
+        "build": 0.9,
+        "limbLength": 1.02
+      },
+      "energy": 0.7,
+      "tags": [
+        "anime",
+        "avatar",
+        "detective",
+        "l-lawliet",
+        "mystery"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.light",
+      "name": "Light",
+      "title": "Prodigy Honor Scholar",
+      "description": "Immaculate honor student in caramel blazer and crimson tie, harboring brilliant cold deduction.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "sharp",
+      "outfit": "suit",
+      "accessories": [
+        "backpack"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f6d7c3",
+        "hair": "#78350f",
+        "eyes": "#991b1b",
+        "primary": "#b45309",
+        "secondary": "#111827",
+        "accent": "#dc2626"
+      },
+      "proportions": {
+        "height": 1.08,
+        "headScale": 0.96,
+        "build": 1.02,
+        "limbLength": 1.06
+      },
+      "energy": 1.1,
+      "tags": [
+        "anime",
+        "avatar",
+        "scholar",
+        "light",
+        "genius"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.ichigo",
+      "name": "Ichigo",
+      "title": "Substitute Shinigami",
+      "description": "Orange-haired protector in black soul reaper hakama wielding the black Zangetsu cleaver with fierce resolve.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sharp",
+      "outfit": "hakama",
+      "accessories": [
+        "katana"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#ea580c",
+        "eyes": "#854d0e",
+        "primary": "#0f172a",
+        "secondary": "#f8fafc",
+        "accent": "#dc2626"
+      },
+      "proportions": {
+        "height": 1.08,
+        "headScale": 0.96,
+        "build": 1.14,
+        "limbLength": 1.08
+      },
+      "energy": 1.4,
+      "tags": [
+        "anime",
+        "avatar",
+        "reaper",
+        "ichigo",
+        "shinigami"
+      ],
+      "hairTip": "#f97316"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.rukia",
+      "name": "Rukia",
+      "title": "Snow Dance Soul Reaper",
+      "description": "Graceful reaper in black robes wielding the pure white frost zanpakuto with noble quiet dignity.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "bob",
+      "eyes": "sharp",
+      "outfit": "hakama",
+      "accessories": [
+        "katana"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f6e7e7",
+        "hair": "#0c0a09",
+        "eyes": "#312e81",
+        "primary": "#0f172a",
+        "secondary": "#f8fafc",
+        "accent": "#67e8f9"
+      },
+      "proportions": {
+        "height": 0.92,
+        "headScale": 1.08,
+        "build": 0.92,
+        "limbLength": 0.95
+      },
+      "energy": 1.1,
+      "tags": [
+        "anime",
+        "avatar",
+        "reaper",
+        "rukia",
+        "frost"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.saitama",
+      "name": "Saitama",
+      "title": "One-Punch Hero for Fun",
+      "description": "Deadpan hero in bright yellow suit, heavy red gloves, and white cape who ends every bug in a single punch.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "round",
+      "outfit": "suit",
+      "accessories": [
+        "cape"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fcd5be",
+        "hair": "#fcd5be",
+        "eyes": "#111827",
+        "primary": "#eab308",
+        "secondary": "#dc2626",
+        "accent": "#f8fafc"
+      },
+      "proportions": {
+        "height": 1.04,
+        "headScale": 1.02,
+        "build": 1.15,
+        "limbLength": 1.02
+      },
+      "energy": 0.9,
+      "tags": [
+        "anime",
+        "avatar",
+        "hero",
+        "saitama",
+        "punch"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.genos",
+      "name": "Genos",
+      "title": "Demon Cyborg Disciple",
+      "description": "Devoted cyborg disciple with blond spikes, black sclera golden eyes, gunmetal arms, and glowing core.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "jet",
+      "hair": "spiky",
+      "eyes": "sharp",
+      "outfit": "jacket",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#f2c9a8",
+        "hair": "#fde047",
+        "eyes": "#facc15",
+        "primary": "#0f172a",
+        "secondary": "#334155",
+        "accent": "#f97316"
+      },
+      "proportions": {
+        "height": 1.06,
+        "headScale": 0.98,
+        "build": 1.1,
+        "limbLength": 1.06
+      },
+      "energy": 1.5,
+      "tags": [
+        "anime",
+        "avatar",
+        "cyborg",
+        "genos",
+        "fire"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.denji",
+      "name": "Denji",
+      "title": "Chainsaw Devil Fiend",
+      "description": "Wild-eyed devil hunter with scruffy blond hair, rumpled white shirt, black tie, and chest pull cord.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "sharp",
+      "outfit": "suit",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fcd5be",
+        "hair": "#f59e0b",
+        "eyes": "#b45309",
+        "primary": "#f8fafc",
+        "secondary": "#111827",
+        "accent": "#111827"
+      },
+      "proportions": {
+        "height": 1.0,
+        "headScale": 1.04,
+        "build": 1.05,
+        "limbLength": 1.02
+      },
+      "energy": 1.6,
+      "tags": [
+        "anime",
+        "avatar",
+        "devil",
+        "denji",
+        "chainsaw"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.power",
+      "name": "Power",
+      "title": "Blood Devil Fiend",
+      "description": "Boastful blood devil with sharp red horns, long strawberry-blond locks, cross eyes, and unbridled chaos.",
+      "body": "humanoid",
+      "ears": "horns",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "sharp",
+      "outfit": "jacket",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fde2d2",
+        "hair": "#fed7aa",
+        "eyes": "#dc2626",
+        "primary": "#1e3a8a",
+        "secondary": "#f8fafc",
+        "accent": "#dc2626"
+      },
+      "proportions": {
+        "height": 0.98,
+        "headScale": 1.08,
+        "build": 0.96,
+        "limbLength": 1.02
+      },
+      "energy": 1.6,
+      "tags": [
+        "anime",
+        "avatar",
+        "devil",
+        "power",
+        "horns"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.anya",
+      "name": "Anya",
+      "title": "Telepathic Star Student",
+      "description": "Smug telepathic darling with pink bob, black horn clips, gold-trimmed Eden uniform, and peanut craving.",
+      "body": "humanoid",
+      "ears": "horns",
+      "tail": "none",
+      "wings": "none",
+      "hair": "bob",
+      "eyes": "sparkle",
+      "outfit": "dress",
+      "accessories": [
+        "backpack"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fce7f3",
+        "hair": "#f472b6",
+        "eyes": "#16a34a",
+        "primary": "#0f172a",
+        "secondary": "#ca8a04",
+        "accent": "#ca8a04"
+      },
+      "proportions": {
+        "height": 0.82,
+        "headScale": 1.32,
+        "build": 0.88,
+        "limbLength": 0.86
+      },
+      "energy": 1.4,
+      "tags": [
+        "anime",
+        "avatar",
+        "telepath",
+        "anya",
+        "cute"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.yor",
+      "name": "Yor",
+      "title": "Thorn Princess Assassin",
+      "description": "Graceful Thorn Princess in black cocktail gown with red rose lining, golden stiletto needles, and lethal speed.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "long",
+      "eyes": "sharp",
+      "outfit": "dress",
+      "accessories": [
+        "headband",
+        "katana"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fce7f3",
+        "hair": "#111827",
+        "eyes": "#991b1b",
+        "primary": "#0f172a",
+        "secondary": "#b91c1c",
+        "accent": "#ffd700"
+      },
+      "proportions": {
+        "height": 1.06,
+        "headScale": 0.96,
+        "build": 0.96,
+        "limbLength": 1.08
+      },
+      "energy": 1.2,
+      "tags": [
+        "anime",
+        "avatar",
+        "assassin",
+        "yor",
+        "thorn"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.frieren",
+      "name": "Frieren",
+      "title": "Mage of the Journey",
+      "description": "Ancient elven mage with long pointed ears, white twintails, golden crescent staff, and quiet timeless patience.",
+      "body": "humanoid",
+      "ears": "elf",
+      "tail": "none",
+      "wings": "none",
+      "hair": "twintails",
+      "eyes": "sleepy",
+      "outfit": "coat",
+      "accessories": [
+        "staff",
+        "cape"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fdf2f8",
+        "hair": "#e2e8f0",
+        "eyes": "#10b981",
+        "primary": "#f8fafc",
+        "secondary": "#1e293b",
+        "accent": "#f59e0b"
+      },
+      "proportions": {
+        "height": 0.92,
+        "headScale": 1.1,
+        "build": 0.9,
+        "limbLength": 0.96
+      },
+      "energy": 0.7,
+      "tags": [
+        "anime",
+        "avatar",
+        "elf",
+        "frieren",
+        "mage"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.pikachu",
+      "name": "Pikachu",
+      "title": "Electric Mouse Companion",
+      "description": "Chubby electric companion with tall black-tipped ears, lightning tail, rosy red spark cheeks, and cheerful bounce.",
+      "body": "beast",
+      "ears": "bunny",
+      "tail": "star",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "sparkle",
+      "outfit": "fur",
+      "accessories": [],
+      "pattern": "none",
+      "palette": {
+        "skin": "#facc15",
+        "hair": "#facc15",
+        "eyes": "#1e293b",
+        "primary": "#facc15",
+        "secondary": "#dc2626",
+        "accent": "#78350f"
+      },
+      "proportions": {
+        "height": 0.82,
+        "headScale": 1.34,
+        "build": 1.28,
+        "limbLength": 0.85
+      },
+      "energy": 1.5,
+      "tags": [
+        "anime",
+        "avatar",
+        "electric",
+        "pikachu",
+        "mouse"
+      ],
+      "hairTip": "#1c1917"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.kodama-spirit",
+      "name": "Suzu",
+      "title": "Forest Sprout Spirit",
+      "description": "Gentle porcelain forest spirit with tilted bobblehead, fresh clover sprout, soft celadon glow, and lotus leaf umbrella.",
+      "body": "humanoid",
+      "ears": "none",
+      "tail": "none",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "round",
+      "outfit": "fur",
+      "accessories": [
+        "staff"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fdfbf7",
+        "hair": "#ecfdf5",
+        "eyes": "#1c1917",
+        "primary": "#ecfdf5",
+        "secondary": "#a7f3d0",
+        "accent": "#34d399"
+      },
+      "proportions": {
+        "height": 0.84,
+        "headScale": 1.35,
+        "build": 0.88,
+        "limbLength": 0.88
+      },
+      "energy": 0.8,
+      "tags": [
+        "ghibli",
+        "avatar",
+        "spirit",
+        "kodama",
+        "forest"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.witch-apprentice",
+      "name": "Noa",
+      "title": "Little Broom Delivery Witch",
+      "description": "Earnest young delivery witch in dark navy smock with giant red head bow, courier satchel, and broom staff.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "none",
+      "hair": "bob",
+      "eyes": "sparkle",
+      "outfit": "dress",
+      "accessories": [
+        "bow",
+        "backpack",
+        "staff"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fbe3d4",
+        "hair": "#3f2b1d",
+        "eyes": "#451a03",
+        "primary": "#1e1b4b",
+        "secondary": "#dc2626",
+        "accent": "#fde047"
+      },
+      "proportions": {
+        "height": 0.9,
+        "headScale": 1.18,
+        "build": 0.92,
+        "limbLength": 0.95
+      },
+      "energy": 1.4,
+      "tags": [
+        "ghibli",
+        "avatar",
+        "witch",
+        "delivery",
+        "noa"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.valley-flyer",
+      "name": "Ren",
+      "title": "Wind Valley Glider Explorer",
+      "description": "Brave glider pilot in cyan flight jacket with aviator goggles, trailing wind scarf, and lightweight white wings.",
+      "body": "humanoid",
+      "ears": "human",
+      "tail": "none",
+      "wings": "jet",
+      "hair": "short",
+      "eyes": "round",
+      "outfit": "jacket",
+      "accessories": [
+        "goggles",
+        "scarf",
+        "backpack"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fcd5be",
+        "hair": "#92400e",
+        "eyes": "#0e7490",
+        "primary": "#0891b2",
+        "secondary": "#f8fafc",
+        "accent": "#f97316"
+      },
+      "proportions": {
+        "height": 1.02,
+        "headScale": 1.05,
+        "build": 0.98,
+        "limbLength": 1.04
+      },
+      "energy": 1.3,
+      "tags": [
+        "ghibli",
+        "avatar",
+        "glider",
+        "explorer",
+        "wind"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.woodland-guardian",
+      "name": "Bramble",
+      "title": "Moss Antler Forest Beast",
+      "description": "Plush mossy woodland beast with velvety antlers, soft stone-grey pelt, chevron belly, and giant green leaf umbrella.",
+      "body": "beast",
+      "ears": "horns",
+      "tail": "bunny",
+      "wings": "none",
+      "hair": "none",
+      "eyes": "round",
+      "outfit": "fur",
+      "accessories": [
+        "staff"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#d6d3d1",
+        "hair": "#78716c",
+        "eyes": "#1c1917",
+        "primary": "#15803d",
+        "secondary": "#78350f",
+        "accent": "#facc15"
+      },
+      "proportions": {
+        "height": 0.92,
+        "headScale": 1.3,
+        "build": 1.28,
+        "limbLength": 0.88
+      },
+      "energy": 0.7,
+      "tags": [
+        "ghibli",
+        "avatar",
+        "guardian",
+        "beast",
+        "bramble"
+      ]
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.ninja-cat",
+      "name": "Ninja Cat",
+      "title": "Cyber Shinobi Feline",
+      "description": "Stealth shinobi feline in midnight slate armor with glowing cyan HUD visor, dual ninjato, and scroll.",
+      "body": "beast",
+      "ears": "cat",
+      "tail": "cat",
+      "wings": "none",
+      "hair": "short",
+      "eyes": "visor",
+      "outfit": "plating",
+      "accessories": [
+        "katana",
+        "scarf",
+        "headband"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#111927",
+        "hair": "#1f2937",
+        "eyes": "#00f0ff",
+        "primary": "#111927",
+        "secondary": "#314155",
+        "accent": "#00f0ff"
+      },
+      "proportions": {
+        "height": 0.88,
+        "headScale": 1.24,
+        "build": 0.95,
+        "limbLength": 0.95
+      },
+      "energy": 1.5,
+      "tags": [
+        "cyberpunk",
+        "avatar",
+        "ninja",
+        "cat",
+        "shinobi"
+      ],
+      "hairTip": "#00f0ff"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.sun-wukong",
+      "name": "Sun Wukong",
+      "title": "Great Sage Equal to Heaven",
+      "description": "The Monkey King crowned with the golden fillet, clad in crimson and gold armor, wielding the Ruyi Jingu Bang.",
+      "body": "beast",
+      "ears": "human",
+      "tail": "cat",
+      "wings": "none",
+      "hair": "spiky",
+      "eyes": "sparkle",
+      "outfit": "armor",
+      "accessories": [
+        "headband",
+        "staff",
+        "cape"
+      ],
+      "pattern": "none",
+      "palette": {
+        "skin": "#fad7b9",
+        "hair": "#d7965f",
+        "eyes": "#ffb703",
+        "primary": "#e63946",
+        "secondary": "#ffb703",
+        "accent": "#232832"
+      },
+      "proportions": {
+        "height": 0.98,
+        "headScale": 1.14,
+        "build": 1.1,
+        "limbLength": 1.02
+      },
+      "energy": 1.6,
+      "tags": [
+        "mythology",
+        "avatar",
+        "wukong",
+        "monkey",
+        "sage"
+      ],
+      "hairTip": "#ffb703"
     }
   ]
 }

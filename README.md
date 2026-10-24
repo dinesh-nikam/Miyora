@@ -26,6 +26,7 @@ Session evidence, progression metrics, and XP transactions are committed to an i
 
 - [Key Capabilities](#-key-capabilities)
 - [System Architecture](#-system-architecture)
+- [3D Avatar Generation (Tripo 3D API)](#-3d-avatar-generation-tripo-3d-api)
 - [Event Pipeline & Hook Subsystem](#-event-pipeline--hook-subsystem)
 - [Pet State Machine](#-pet-state-machine)
 - [Companion Universe & PetPacks](#-companion-universe--petpacks)
@@ -73,6 +74,69 @@ miyora (workspace root)
 ├── crates/pet-pack/               # Ed25519 signature checks, manifest parser, image normalization
 └── crates/agentpet-cli/           # Diagnostic CLI (`agentpet`) for headless execution and doctor checks
 ```
+
+---
+
+## 🎨 3D Avatar Generation (Tripo 3D API)
+
+Miyora features an original 3D anime avatar generation pipeline powered by the **Tripo 3D API** and **Blender** post-processing. Rather than fabricating primitive meshes (such as cubes, spheres, or cylinders), the system calls Tripo's state-of-the-art text-to-3D and image-to-3D generation endpoints, polls the asynchronous job, and downloads clean game-ready GLB models.
+
+### Getting a Tripo API Key
+
+1. Visit [platform.tripo3d.ai](https://platform.tripo3d.ai) and sign up for an account.
+2. Navigate to your Developer Settings or API Keys dashboard.
+3. Generate a new API token.
+
+### Setting the Environment Variable
+
+The API key is securely loaded from the `TRIPO_API_KEY` environment variable. Never hard-code your key in source files or commits.
+
+**Windows PowerShell:**
+```powershell
+$env:TRIPO_API_KEY = "your_tripo_api_key_here"
+```
+
+**Linux / macOS (Bash / Zsh):**
+```bash
+export TRIPO_API_KEY="your_tripo_api_key_here"
+```
+
+### Running Text-to-3D Generation
+
+Convert user text requests into fully detailed, original anime 3D models:
+
+```powershell
+python avatar_workflow.py --prompt "anime girl with pink hair"
+```
+
+The system automatically runs `anime_character_prompt.py` to expand short user descriptions into production-grade prompts (e.g. `Original full-body 3D anime-style girl character, long pink hair, large expressive eyes, stylish modern outfit, clean silhouette, appealing stylized proportions, T-pose, symmetrical face, high-quality PBR textures, clean topology, game-ready 3D model`), while guaranteeing that no copyrighted franchise character names (Nezuko, Naruto, Goku, Pikachu, etc.) are requested.
+
+### Running Image-to-3D Generation
+
+Create a 3D avatar from an uploaded local reference image or remote URL:
+
+```powershell
+# Local file
+python avatar_workflow.py --image "assets/reference_character.png"
+
+# Remote URL
+python avatar_workflow.py --image "https://example.com/character.png"
+```
+
+### Where Generated Models Are Saved
+
+All generated assets are saved under `/output/models/`:
+- **3D Model**: `output/models/<task_id>.glb` (standard PBR textured binary glTF)
+- **Rendered Preview**: `output/models/<task_id>_rendered.png` (studio-lit transparent render)
+
+### Post-Processing Architecture
+
+Blender post-processing (`blender_postprocess.py`) is reserved exclusively for presentation adjustments:
+- Importing and inspecting the downloaded mesh
+- Centering the geometry at origin and scaling to standard character height (1.8 units)
+- Positioning three-point studio lighting (Key, Fill, and Anime Rim lights)
+- Framing the camera for a complete full-body T-pose preview render
+- *It strictly does not rebuild the character or generate procedural mesh primitives.*
 
 ---
 
