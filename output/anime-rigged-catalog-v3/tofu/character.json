@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tofu",
+  "name": "Tofu",
+  "title": "Lop Bunny Baker",
+  "description": "Bakes carrot cake for every merged feature.",
+  "body": "beast",
+  "ears": "floppy",
+  "tail": "bunny",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "overalls",
+  "accessories": [
+    "beanie"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fef3c7",
+    "hair": "#fde68a",
+    "eyes": "#92400e",
+    "primary": "#fb923c",
+    "secondary": "#fef3c7",
+    "accent": "#f43f5e"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.9,
+  "tags": [
+    "bunny",
+    "cozy"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

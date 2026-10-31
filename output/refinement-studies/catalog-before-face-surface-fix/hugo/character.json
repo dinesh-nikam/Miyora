@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hugo",
+  "name": "Hugo",
+  "title": "Bakery Apprentice",
+  "description": "Proofs dough and pull requests with equal care.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "round",
+  "outfit": "overalls",
+  "accessories": [
+    "beanie"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#b45309",
+    "eyes": "#78350f",
+    "primary": "#fef3c7",
+    "secondary": "#d97706",
+    "accent": "#f43f5e"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.1,
+  "tags": [
+    "cozy"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}

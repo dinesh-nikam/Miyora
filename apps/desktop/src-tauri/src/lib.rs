@@ -15,6 +15,9 @@ use agentpet_pet_engine::PetState;
 use agentpet_pet_pack::PetPackManifest;
 use tauri::{Manager, State};
 
+mod studio_commands;
+use studio_commands::*;
+
 const STATE_TIMER_INTERVAL: Duration = Duration::from_secs(1);
 const POSITION_WRITE_DEBOUNCE: Duration = Duration::from_millis(400);
 const AVATAR_LIBRARY_DIR: &str = "avatars";
@@ -719,7 +722,7 @@ fn get_providers_status(
         "N/A".to_string()
     };
     let claude_quota_prov = if let Some(ref report) = quota_report {
-        if quota_updated_secs.map_or(false, |secs| secs > QUOTA_FRESHNESS_LIMIT_SECS) {
+        if quota_updated_secs.is_some_and(|secs| secs > QUOTA_FRESHNESS_LIMIT_SECS) {
             "STALE".to_string()
         } else {
             report.provenance.clone()
@@ -1092,10 +1095,12 @@ pub fn run() {
             let is_simulated = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
             let pet_library = data_dir.join("pet-library");
             let avatars_root = data_dir.join(AVATAR_LIBRARY_DIR);
+            // Cleanup must finish before the UI can begin new imports.
             if let Err(error) = core.sweep_avatar_staging(&avatars_root) {
                 eprintln!("AgentPet could not clean interrupted avatar imports: {error}");
             }
-            seed_starter_packs(&core, &pet_library);
+            let startup_core = core.clone();
+            let startup_pet_library = pet_library.clone();
             let overlay_window = app
                 .get_webview_window("pet-overlay")
                 .ok_or("pet-overlay window is missing")?;
@@ -1109,6 +1114,7 @@ pub fn run() {
                 #[cfg(feature = "dev-simulator")]
                 is_simulated.clone(),
             )?;
+            app.manage(open_studio(&data_dir)?);
             app.manage(AppRuntime {
                 core,
                 #[cfg(feature = "dev-simulator")]
@@ -1119,6 +1125,11 @@ pub fn run() {
                 avatars_root,
                 app_data_dir: data_dir,
             });
+            // Pack validation decodes images and must not block the native event loop.
+            // This finite worker is intentionally detached; the UI polls persisted state.
+            let _startup_worker = std::thread::Builder::new()
+                .name("agentpet-startup-worker".into())
+                .spawn(move || seed_starter_packs(&startup_core, &startup_pet_library))?;
             Ok(())
         })
         .on_window_event(move |window, event| {
@@ -1163,7 +1174,27 @@ pub fn run() {
             create_custom_character,
             create_avatar_from_image,
             import_vrm_avatar,
-            delete_custom_avatar
+            delete_custom_avatar,
+            studio_overview,
+            studio_save_api_key,
+            studio_delete_api_key,
+            studio_account_balance,
+            studio_set_default_model,
+            studio_set_poll_policy,
+            studio_build_prompt,
+            studio_list_projects,
+            studio_create_project,
+            studio_list_assets,
+            studio_asset_detail,
+            studio_list_tasks,
+            studio_inspect_image,
+            studio_submit_text,
+            studio_submit_image,
+            studio_regenerate,
+            studio_resume_task,
+            studio_read_output,
+            studio_export_output,
+            studio_retopologize
         ])
         .run(tauri::generate_context!())
         .expect("failed to run AgentPet desktop application");

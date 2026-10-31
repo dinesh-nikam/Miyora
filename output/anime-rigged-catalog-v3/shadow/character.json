@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.shadow",
+  "name": "Shadow",
+  "title": "Midnight Cat",
+  "description": "Sees race conditions in the dark.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#18181b",
+    "hair": "#27272a",
+    "eyes": "#facc15",
+    "primary": "#18181b",
+    "secondary": "#3f3f46",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "cat",
+    "night"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

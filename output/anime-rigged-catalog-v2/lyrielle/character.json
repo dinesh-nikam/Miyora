@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.lyrielle",
+  "name": "Lyrielle",
+  "title": "Battle Sister",
+  "description": "Blesses deployments and smites null pointers.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "robe",
+  "accessories": [
+    "staff",
+    "halo"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#fef3c7",
+    "eyes": "#2563eb",
+    "primary": "#1e293b",
+    "secondary": "#f8fafc",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "anime",
+    "cleric"
+  ],
+  "personality": "mystical",
+  "specialty": "AST Transmutation",
+  "catchphrase": "Casting clean checkmarks into the terminal.",
+  "hairTip": "#fde68a"
+}

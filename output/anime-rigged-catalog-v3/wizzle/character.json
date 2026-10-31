@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.wizzle",
+  "name": "Wizzle",
+  "title": "Wizard Slime",
+  "description": "Knows exactly one spell: retry.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "witch_hat"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#818cf8",
+    "hair": "#6366f1",
+    "eyes": "#1e1b4b",
+    "primary": "#818cf8",
+    "secondary": "#4f46e5",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "slime",
+    "magic"
+  ],
+  "personality": "mystical",
+  "specialty": "AST Transmutation",
+  "catchphrase": "Casting clean checkmarks into the terminal."
+}

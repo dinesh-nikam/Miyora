@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tetsu",
+  "name": "Tetsu",
+  "title": "Mech Engineer Kid",
+  "description": "Built a giant robot out of spare build agents.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "round",
+  "outfit": "overalls",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#0ea5e9",
+    "eyes": "#0369a1",
+    "primary": "#f97316",
+    "secondary": "#1f2937",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 0.9,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.4,
+  "tags": [
+    "anime",
+    "mecha",
+    "maker"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#1e3a8a"
+}

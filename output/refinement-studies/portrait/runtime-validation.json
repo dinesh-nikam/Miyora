@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "engine": "Chrome WebGL + three-vrm",
+  "status": "passed",
+  "checked": 1,
+  "errors": [],
+  "characters": [
+    {
+      "id": "miyora.nezuko",
+      "vrm": true,
+      "bones": 51,
+      "skinned": 27,
+      "triangles": 34280,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "84d00eeb77cc09f6609c9afd00159103e18ca5e9061ff09b1a807bb3c569aed7",
+      "status": "passed"
+    }
+  ]
+}

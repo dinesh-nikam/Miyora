@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.zoro",
+  "name": "Zoro",
+  "title": "Three-Sword Master",
+  "description": "Stoic three-sword master with cropped moss-green hair, deep green samurai coat, and lethal steel focus.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "katana"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#15803d",
+    "eyes": "#1e293b",
+    "primary": "#14532d",
+    "secondary": "#334155",
+    "accent": "#eab308"
+  },
+  "proportions": {
+    "height": 1.08,
+    "headScale": 0.98,
+    "build": 1.18,
+    "limbLength": 1.05
+  },
+  "energy": 1.1,
+  "tags": [
+    "anime",
+    "avatar",
+    "samurai",
+    "zoro",
+    "swordsman"
+  ],
+  "personality": "stoic",
+  "specialty": "Dead-Code Elimination",
+  "catchphrase": "Nothing happened... just three clean commits."
+}

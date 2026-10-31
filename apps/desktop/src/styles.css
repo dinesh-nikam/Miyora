@@ -2332,3 +2332,114 @@ a {
   filter: drop-shadow(6px 6px 0 #0a0a0a);
 }
 
+/* ==========================================================================
+   AgentPet Living Cuteness & Sanctuary Pod Animations
+   ========================================================================== */
+
+@keyframes floatHeart {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, 10px) scale(0.6) rotate(-8deg);
+  }
+  20% {
+    opacity: 1;
+    transform: translate(-50%, -12px) scale(1.2) rotate(6deg);
+  }
+  60% {
+    opacity: 0.95;
+    transform: translate(-50%, -36px) scale(1.05) rotate(-6deg);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -64px) scale(0.8) rotate(12deg);
+  }
+}
+
+@keyframes dropTreat {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -32px) scale(0.6);
+  }
+  35% {
+    opacity: 1;
+    transform: translate(-50%, 0) scale(1.25);
+  }
+  65% {
+    opacity: 1;
+    transform: translate(-50%, 4px) scale(0.95);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, 8px) scale(0.7);
+  }
+}
+
+@keyframes bubbleFloatIn {
+  0% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes companionBreathe {
+  0%, 100% {
+    transform: translateY(0) scale(1, 1);
+  }
+  50% {
+    transform: translateY(-5px) scale(1.025, 0.975);
+  }
+}
+
+@keyframes companionSleep {
+  0%, 100% {
+    transform: translateY(3px) scale(0.985, 0.965);
+  }
+  50% {
+    transform: translateY(6px) scale(1.015, 0.935);
+  }
+}
+
+@keyframes blushPulse {
+  0%, 100% {
+    opacity: 0.65;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.15);
+  }
+}
+
+@keyframes crownFloat {
+  0%, 100% {
+    transform: translateX(-50%) translateY(0) rotate(0deg);
+  }
+  50% {
+    transform: translateX(-50%) translateY(-4px) rotate(3deg);
+  }
+}
+
+@keyframes haloGlow {
+  0%, 100% {
+    transform: translateX(-50%) rotate(-6deg) translateY(0);
+    box-shadow: 0 0 12px #fde047, inset 0 0 6px #fde047;
+  }
+  50% {
+    transform: translateX(-50%) rotate(-4deg) translateY(-3px);
+    box-shadow: 0 0 20px #facc15, inset 0 0 10px #facc15;
+  }
+}
+
+.companion-sanctuary-pod {
+  transition: transform 0.3s cubic-bezier(0.2, 0, 0.1, 1), box-shadow 0.3s ease;
+}
+
+.companion-sanctuary-pod:hover {
+  box-shadow: 0 30px 80px -20px rgba(255, 105, 180, 0.18), 0 0 0 1.5px rgba(255, 255, 255, 0.6);
+}
+
+

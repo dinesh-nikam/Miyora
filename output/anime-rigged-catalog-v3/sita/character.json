@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sita",
+  "name": "Sita",
+  "title": "Mithila Princess of Grace",
+  "description": "Serene princess of Mithila draped in auspicious vermilion and woven gold silk, crowned with lotus grace.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "dress",
+  "accessories": [
+    "crown",
+    "flower",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f8dfd0",
+    "hair": "#1c1917",
+    "eyes": "#292524",
+    "primary": "#dc2626",
+    "secondary": "#ffd700",
+    "accent": "#fef08a"
+  },
+  "proportions": {
+    "height": 0.97,
+    "headScale": 1.05,
+    "build": 0.92,
+    "limbLength": 1
+  },
+  "energy": 0.9,
+  "tags": [
+    "devotional",
+    "avatar",
+    "princess",
+    "sita",
+    "grace"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}

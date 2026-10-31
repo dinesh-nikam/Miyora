@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.oren",
+  "name": "Oren",
+  "title": "Library Keeper",
+  "description": "Knows exactly which crate holds the answer.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sleepy",
+  "outfit": "suit",
+  "accessories": [
+    "glasses",
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#57534e",
+    "eyes": "#78716c",
+    "primary": "#57534e",
+    "secondary": "#d6d3d1",
+    "accent": "#b91c1c"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.7,
+  "tags": [
+    "scholar",
+    "calm"
+  ],
+  "personality": "analytical",
+  "specialty": "Deep Inspection",
+  "catchphrase": "Every stack trace reveals the system's truth."
+}

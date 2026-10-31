@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.dmitri",
+  "name": "Dmitri",
+  "title": "Arctic Explorer",
+  "description": "Unbothered by frozen pipelines and frozen fingers alike.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "sleepy",
+  "outfit": "jacket",
+  "accessories": [
+    "beanie",
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#78350f",
+    "eyes": "#1d4ed8",
+    "primary": "#b91c1c",
+    "secondary": "#1f2937",
+    "accent": "#fef3c7"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.8,
+  "tags": [
+    "explorer",
+    "winter"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

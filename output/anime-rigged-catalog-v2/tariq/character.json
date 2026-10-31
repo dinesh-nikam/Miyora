@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tariq",
+  "name": "Tariq",
+  "title": "Desert Navigator",
+  "description": "Finds the oasis in any dependency desert.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "robe",
+  "accessories": [
+    "headband",
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#8a5a3c",
+    "hair": "#1c1917",
+    "eyes": "#b45309",
+    "primary": "#fde68a",
+    "secondary": "#b45309",
+    "accent": "#0d9488"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "explorer"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

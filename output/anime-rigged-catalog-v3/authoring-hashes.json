@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "revision": "refined-catalog-v3.2",
+  "files": [
+    {
+      "path": "authoring/appearance_refinement.py",
+      "sha256": "05d4a87052a9bfba29e0ee8b19016e9296445d08c6575b9b3d3c2f38da0b3aa0"
+    },
+    {
+      "path": "authoring/author_characters.py",
+      "sha256": "9a665605de7b2d3e59833105ec52e74ad35226ccb74c1bf026475c386eb196e8"
+    },
+    {
+      "path": "authoring/capture-model-back.cjs",
+      "sha256": "6f631d3060e46edf2c9ea2609c0cf064d8f5634f7b9a4c333c4b410102e39e26"
+    },
+    {
+      "path": "authoring/catalog_author.py",
+      "sha256": "05a3bc2a67ef92ba131b68554c1f67d1603a03a59a65ba1aacca2cfdf731d814"
+    },
+    {
+      "path": "authoring/collect_refined.py",
+      "sha256": "aa39f9be4f25679063f9db0c95b98956e1c140afd00a007de3d2d04147c5c111"
+    },
+    {
+      "path": "authoring/make_review_gallery.cjs",
+      "sha256": "61b5887dbf610c905eb798d48991f7f058437ac5d0cf25a3c87915befbbc9ad0"
+    },
+    {
+      "path": "authoring/package_refined.py",
+      "sha256": "3c17ee042b3375df1ec8a3fb790f24381ba7d4f3a5781b50aab9155c72493c97"
+    },
+    {
+      "path": "authoring/package_vrm.py",
+      "sha256": "41888c95dcc258e83e1dac7735dc01bcc5fc2f7462a705cd4f867b0e5fae50e8"
+    },
+    {
+      "path": "authoring/refine_catalog.py",
+      "sha256": "a07fa39cfc0b8651c104492a3a81e610d7ee938aa43281fc163c77a5a35871dc"
+    },
+    {
+      "path": "authoring/verify-refined.cjs",
+      "sha256": "2537f46788d347fa44c668f24def9a793d17d132ad5e12c8db6cdba6cecc635e"
+    }
+  ]
+}

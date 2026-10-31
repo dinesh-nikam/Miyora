@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.parvati",
+  "name": "Parvati",
+  "title": "Goddess of Devotion",
+  "description": "Loving mother of mountains draped in rich emerald silk and gold, crowned with floral blossoms.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "dress",
+  "accessories": [
+    "crown",
+    "flower",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f8dfd0",
+    "hair": "#18181b",
+    "eyes": "#3b0764",
+    "primary": "#059669",
+    "secondary": "#ffd700",
+    "accent": "#e11d48"
+  },
+  "proportions": {
+    "height": 0.98,
+    "headScale": 1.05,
+    "build": 0.92,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "devotional",
+    "avatar",
+    "goddess",
+    "parvati",
+    "devotion"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}

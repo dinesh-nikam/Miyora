@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.flare",
+  "name": "Flare",
+  "title": "Phoenix Chick",
+  "description": "Rises from every failed build stronger.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "crown"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f97316",
+    "hair": "#facc15",
+    "eyes": "#7f1d1d",
+    "primary": "#f97316",
+    "secondary": "#dc2626",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.4,
+  "tags": [
+    "phoenix",
+    "fire"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

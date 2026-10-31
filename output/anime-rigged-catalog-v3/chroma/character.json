@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.chroma",
+  "name": "Chroma",
+  "title": "Painter Bot",
+  "description": "Paints UI mockups in perfect gradients.",
+  "body": "robot",
+  "ears": "antenna",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "plating",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fbcfe8",
+    "hair": "#f472b6",
+    "eyes": "#7c3aed",
+    "primary": "#f9a8d4",
+    "secondary": "#a855f7",
+    "accent": "#22d3ee"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "robot",
+    "artist"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.nagi",
+  "name": "Nagi",
+  "title": "Mecha Pilot",
+  "description": "Syncs with the build machine at one hundred percent.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "jacket",
+  "accessories": [
+    "goggles",
+    "headphones"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#0f172a",
+    "eyes": "#0ea5e9",
+    "primary": "#f8fafc",
+    "secondary": "#1e3a8a",
+    "accent": "#ef4444"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.2,
+  "tags": [
+    "anime",
+    "mecha"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#1e3a8a"
+}

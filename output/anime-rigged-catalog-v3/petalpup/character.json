@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.petalpup",
+  "name": "Petalpup",
+  "title": "Blossom Puppy",
+  "description": "Wags hard enough to shake petals loose.",
+  "body": "beast",
+  "ears": "floppy",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "flower",
+    "bow"
+  ],
+  "pattern": "petals",
+  "palette": {
+    "skin": "#fecdd3",
+    "hair": "#fff1f2",
+    "eyes": "#9f1239",
+    "primary": "#fecdd3",
+    "secondary": "#fb7185",
+    "accent": "#86efac"
+  },
+  "proportions": {
+    "height": 0.84,
+    "headScale": 1.3,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.4,
+  "tags": [
+    "pocket-monster",
+    "fairy",
+    "cute"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

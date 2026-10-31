@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.puff",
+  "name": "Puff",
+  "title": "Puffin Sailor",
+  "description": "Sails small boats through big data lakes.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "beanie"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#1c1917",
+    "hair": "#f8fafc",
+    "eyes": "#1c1917",
+    "primary": "#1c1917",
+    "secondary": "#f8fafc",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "puffin",
+    "ocean"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

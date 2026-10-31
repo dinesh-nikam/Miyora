@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.ines",
+  "name": "Ines",
+  "title": "Lighthouse Keeper",
+  "description": "Keeps the status page shining through the night.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bun",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#c68863",
+    "hair": "#7c2d12",
+    "eyes": "#0369a1",
+    "primary": "#fef3c7",
+    "secondary": "#b91c1c",
+    "accent": "#0ea5e9"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.9,
+  "tags": [
+    "ocean",
+    "calm"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}

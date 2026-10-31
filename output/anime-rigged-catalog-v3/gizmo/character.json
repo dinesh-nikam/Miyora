@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.gizmo",
+  "name": "Gizmo",
+  "title": "Fix-It Bot",
+  "description": "Carries a wrench for every warning.",
+  "body": "robot",
+  "ears": "antenna",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "mono",
+  "outfit": "plating",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#84cc16",
+    "hair": "#3f6212",
+    "eyes": "#facc15",
+    "primary": "#65a30d",
+    "secondary": "#1a2e05",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.2,
+  "tags": [
+    "robot",
+    "maker"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

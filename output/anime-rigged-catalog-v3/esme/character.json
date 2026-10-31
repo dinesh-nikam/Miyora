@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.esme",
+  "name": "Esme",
+  "title": "Velvet Witch",
+  "description": "Hexes regressions before they reach production.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "dress",
+  "accessories": [
+    "witch_hat"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#7f1d1d",
+    "eyes": "#16a34a",
+    "primary": "#4c0519",
+    "secondary": "#1c1917",
+    "accent": "#a3e635"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "magic"
+  ],
+  "personality": "mystical",
+  "specialty": "AST Transmutation",
+  "catchphrase": "Casting clean checkmarks into the terminal.",
+  "hairTip": "#dc2626"
+}

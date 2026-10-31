@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.emberkit",
+  "name": "Emberkit",
+  "title": "Ember Kit",
+  "description": "The fiery form of Vixi, warm enough to keep a laptop toasty.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "flame",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fb923c",
+    "hair": "#fed7aa",
+    "eyes": "#7c2d12",
+    "primary": "#fb923c",
+    "secondary": "#ea580c",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 0.86,
+    "headScale": 1.28,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.4,
+  "tags": [
+    "pocket-monster",
+    "fire"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

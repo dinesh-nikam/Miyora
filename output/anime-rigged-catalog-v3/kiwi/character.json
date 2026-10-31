@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.kiwi",
+  "name": "Kiwi",
+  "title": "Cat-Eared Slime",
+  "description": "Purrs, somehow.",
+  "body": "slime",
+  "ears": "cat",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "bow"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#bef264",
+    "hair": "#84cc16",
+    "eyes": "#1a2e05",
+    "primary": "#bef264",
+    "secondary": "#84cc16",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.3,
+  "tags": [
+    "slime",
+    "cat",
+    "cute"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

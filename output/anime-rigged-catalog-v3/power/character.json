@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.power",
+  "name": "Power",
+  "title": "Blood Devil Fiend",
+  "description": "Boastful blood devil with sharp red horns, long strawberry-blond locks, cross eyes, and unbridled chaos.",
+  "body": "humanoid",
+  "ears": "horns",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "jacket",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fde2d2",
+    "hair": "#fed7aa",
+    "eyes": "#dc2626",
+    "primary": "#1e3a8a",
+    "secondary": "#f8fafc",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 0.98,
+    "headScale": 1.08,
+    "build": 0.96,
+    "limbLength": 1.02
+  },
+  "energy": 1.6,
+  "tags": [
+    "anime",
+    "avatar",
+    "devil",
+    "power",
+    "horns"
+  ],
+  "personality": "boastful",
+  "specialty": "Chaos Engineering",
+  "catchphrase": "Bow before my genius! The bug was terrified of me!"
+}

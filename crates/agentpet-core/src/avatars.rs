@@ -62,8 +62,8 @@ const SCULPT_MODEL_FILE: &str = "model.glb";
 const VRM_MODEL_FILE: &str = "model.vrm";
 const PREVIEW_FILE: &str = "preview.png";
 const STAGING_PREFIX: &str = ".staging-";
-/// Upper bound on stored custom avatars, keeping the library bounded.
-pub const MAX_CUSTOM_AVATARS: i64 = 200;
+/// Room for the complete rigged catalog and personal imports, while remaining bounded.
+pub const MAX_CUSTOM_AVATARS: i64 = 512;
 const MAX_AVATAR_NAME_CHARS: usize = 32;
 const MAX_PREVIEW_BYTES: u64 = 4 * 1024 * 1024;
 const CUSTOM_ID_PREFIX: &str = "user";
@@ -888,6 +888,43 @@ impl Core {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn capacity_accepts_full_catalog_and_keeps_single_and_paired_imports_bounded() {
+        let connection = Connection::open_in_memory().expect("open capacity fixture");
+        connection
+            .execute_batch(AVATAR_SCHEMA_V10)
+            .expect("avatar schema");
+        let spec_json = serde_json::to_string(catalog().expect("catalog").default_character())
+            .expect("serialize fixture");
+        let insert = |index: i64| {
+            connection.execute(
+                "INSERT INTO custom_avatars \
+                 (avatar_id, kind, name, spec_json, created_at, updated_at) \
+                 VALUES (?1, 'procedural', 'Capacity fixture', ?2, '2026-01-01T00:00:00Z', '2026-01-01T00:00:00Z')",
+                params![format!("user.capacity-{index}"), &spec_json],
+            ).expect("insert capacity fixture");
+        };
+        let catalog_size =
+            i64::try_from(catalog().expect("catalog").characters.len()).expect("catalog size");
+        for index in 0..catalog_size {
+            insert(index);
+        }
+        assert!(
+            ensure_capacity(&connection, 1).is_ok(),
+            "the complete model catalog must fit with room for user imports"
+        );
+        for index in catalog_size..MAX_CUSTOM_AVATARS - 1 {
+            insert(index);
+        }
+        assert!(ensure_capacity(&connection, 1).is_ok());
+        assert!(
+            ensure_capacity(&connection, 2).is_err(),
+            "paired image imports must remain bounded"
+        );
+        insert(MAX_CUSTOM_AVATARS - 1);
+        assert!(ensure_capacity(&connection, 1).is_err());
+    }
 
     fn disk_png(directory: &Path) -> PathBuf {
         let path = directory.join("subject.png");

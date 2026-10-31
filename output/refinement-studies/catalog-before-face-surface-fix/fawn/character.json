@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.fawn",
+  "name": "Fawn",
+  "title": "Woodland Deer",
+  "description": "Treads softly through fragile legacy forests.",
+  "body": "beast",
+  "ears": "horns",
+  "tail": "bunny",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "tunic",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#b45309",
+    "hair": "#fef3c7",
+    "eyes": "#451a03",
+    "primary": "#65a30d",
+    "secondary": "#fef3c7",
+    "accent": "#f9a8d4"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.8,
+  "tags": [
+    "deer",
+    "nature"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

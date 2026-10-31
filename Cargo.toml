@@ -8,6 +8,7 @@ members = [
     "crates/agentpet-adapters",
     "crates/agentpet-ipc",
     "crates/agentpet-cli",
+    "crates/studio",
     "apps/desktop/src-tauri",
 ]
 

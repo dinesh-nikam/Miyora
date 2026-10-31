@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.leo",
+  "name": "Leo",
+  "title": "Sunrise Paladin",
+  "description": "Greets every morning standup with unreasonable optimism.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "armor",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#facc15",
+    "eyes": "#2563eb",
+    "primary": "#e5e7eb",
+    "secondary": "#1d4ed8",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.15,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "knight"
+  ],
+  "personality": "stoic",
+  "specialty": "Branch Guarding",
+  "catchphrase": "Stand between main and bad merges."
+}

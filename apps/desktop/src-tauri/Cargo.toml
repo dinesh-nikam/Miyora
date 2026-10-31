@@ -10,6 +10,10 @@ rust-version.workspace = true
 [lib]
 name = "agentpet_desktop_lib"
 crate-type = ["rlib"]
+# shortcut: no unit tests live here (logic is in domain crates). On Windows a test
+# harness linking the dialog plugin needs Tauri's comctl32 v6 manifest, which
+# tauri-build only embeds in the app binary; re-enable when adding tests here.
+test = false
 
 [[bin]]
 name = "agentpet-desktop"
@@ -25,6 +29,7 @@ agentpet-adapters = { path = "../../../crates/agentpet-adapters" }
 agentpet-avatar = { path = "../../../crates/avatar" }
 agentpet-pet-engine = { path = "../../../crates/pet-engine" }
 agentpet-pet-pack = { path = "../../../crates/pet-pack" }
+agentpet-studio = { path = "../../../crates/studio" }
 serde.workspace = true
 serde_json.workspace = true
 tauri = { version = "2", features = [] }

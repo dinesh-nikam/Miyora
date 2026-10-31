@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.pip",
+  "name": "Pip",
+  "title": "Meadow Messenger",
+  "description": "Hops between tasks with boundless enthusiasm.",
+  "body": "beast",
+  "ears": "bunny",
+  "tail": "bunny",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "overalls",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f5f5f4",
+    "hair": "#e7e5e4",
+    "eyes": "#ec4899",
+    "primary": "#60a5fa",
+    "secondary": "#1e3a8a",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 0.9,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.5,
+  "tags": [
+    "bunny",
+    "cute"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

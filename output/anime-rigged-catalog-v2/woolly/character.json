@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.woolly",
+  "name": "Woolly",
+  "title": "Cloud Sheep",
+  "description": "Counts builds instead of sheep.",
+  "body": "beast",
+  "ears": "floppy",
+  "tail": "none",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [
+    "bell"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f5f5f4",
+    "hair": "#fafaf9",
+    "eyes": "#1c1917",
+    "primary": "#e7e5e4",
+    "secondary": "#d6d3d1",
+    "accent": "#60a5fa"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.6,
+  "tags": [
+    "sheep",
+    "cozy"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

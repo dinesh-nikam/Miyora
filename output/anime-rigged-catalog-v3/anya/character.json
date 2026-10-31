@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.anya",
+  "name": "Anya",
+  "title": "Telepathic Star Student",
+  "description": "Smug telepathic darling with pink bob, black horn clips, gold-trimmed Eden uniform, and peanut craving.",
+  "body": "humanoid",
+  "ears": "horns",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bob",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fce7f3",
+    "hair": "#f472b6",
+    "eyes": "#16a34a",
+    "primary": "#0f172a",
+    "secondary": "#ca8a04",
+    "accent": "#ca8a04"
+  },
+  "proportions": {
+    "height": 0.82,
+    "headScale": 1.32,
+    "build": 0.88,
+    "limbLength": 0.86
+  },
+  "energy": 1.4,
+  "tags": [
+    "anime",
+    "avatar",
+    "telepath",
+    "anya",
+    "cute"
+  ],
+  "personality": "cheerful",
+  "specialty": "Telepathic Linting",
+  "catchphrase": "Waku waku! All tests passed!"
+}

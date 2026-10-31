@@ -40,7 +40,10 @@
         "coder",
         "cyber",
         "default"
-      ]
+      ],
+      "personality": "composed",
+      "specialty": "Async Pipelines",
+      "catchphrase": "Calm code, steady commits, zero drama."
     },
     {
       "schemaVersion": 1,
@@ -77,7 +80,10 @@
       "tags": [
         "coder",
         "night"
-      ]
+      ],
+      "personality": "relentless",
+      "specialty": "Root Cause Debugging",
+      "catchphrase": "Stack traces at 3 a.m. are the truest truth."
     },
     {
       "schemaVersion": 1,
@@ -115,6 +121,9 @@
         "magic",
         "fantasy"
       ],
+      "personality": "inquisitive",
+      "specialty": "Type Architecture",
+      "catchphrase": "I read build logs like constellations.",
       "hairTip": "#f0abfc"
     },
     {
@@ -152,7 +161,10 @@
       "tags": [
         "nature",
         "fantasy"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -189,7 +201,10 @@
       "tags": [
         "sky",
         "speedy"
-      ]
+      ],
+      "personality": "energetic",
+      "specialty": "Fast-Path Execution",
+      "catchphrase": "Faster than the next clock cycle."
     },
     {
       "schemaVersion": 1,
@@ -226,7 +241,10 @@
       "tags": [
         "nature",
         "calm"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -263,7 +281,10 @@
       "tags": [
         "coder",
         "office"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -299,7 +320,10 @@
       "energy": 1.0,
       "tags": [
         "science"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -337,7 +361,10 @@
       "tags": [
         "explorer",
         "winter"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -375,6 +402,9 @@
         "spirit",
         "winter"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#bae6fd"
     },
     {
@@ -412,7 +442,10 @@
       "energy": 1.0,
       "tags": [
         "explorer"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -448,7 +481,10 @@
       "energy": 1.0,
       "tags": [
         "ocean"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -486,7 +522,10 @@
       "tags": [
         "maker",
         "steampunk"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -524,7 +563,10 @@
       "tags": [
         "scholar",
         "night"
-      ]
+      ],
+      "personality": "analytical",
+      "specialty": "Deep Inspection",
+      "catchphrase": "Every stack trace reveals the system's truth."
     },
     {
       "schemaVersion": 1,
@@ -558,7 +600,10 @@
       "energy": 1.0,
       "tags": [
         "knight"
-      ]
+      ],
+      "personality": "stoic",
+      "specialty": "Branch Guarding",
+      "catchphrase": "Stand between main and bad merges."
     },
     {
       "schemaVersion": 1,
@@ -595,7 +640,10 @@
       "tags": [
         "fantasy",
         "scholar"
-      ]
+      ],
+      "personality": "analytical",
+      "specialty": "Deep Inspection",
+      "catchphrase": "Every stack trace reveals the system's truth."
     },
     {
       "schemaVersion": 1,
@@ -632,7 +680,10 @@
       "tags": [
         "coder",
         "ocean"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -670,7 +721,10 @@
       "tags": [
         "data",
         "explorer"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -706,7 +760,10 @@
       "energy": 1.0,
       "tags": [
         "artist"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -743,7 +800,10 @@
       "tags": [
         "speedy",
         "cyber"
-      ]
+      ],
+      "personality": "energetic",
+      "specialty": "Fast-Path Execution",
+      "catchphrase": "Faster than the next clock cycle."
     },
     {
       "schemaVersion": 1,
@@ -781,7 +841,10 @@
       "tags": [
         "scholar",
         "calm"
-      ]
+      ],
+      "personality": "analytical",
+      "specialty": "Deep Inspection",
+      "catchphrase": "Every stack trace reveals the system's truth."
     },
     {
       "schemaVersion": 1,
@@ -817,7 +880,10 @@
       "energy": 1.0,
       "tags": [
         "music"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -853,7 +919,10 @@
       "energy": 1.0,
       "tags": [
         "knight"
-      ]
+      ],
+      "personality": "stoic",
+      "specialty": "Branch Guarding",
+      "catchphrase": "Stand between main and bad merges."
     },
     {
       "schemaVersion": 1,
@@ -890,7 +959,10 @@
       "tags": [
         "rogue",
         "night"
-      ]
+      ],
+      "personality": "analytical",
+      "specialty": "Deep Inspection",
+      "catchphrase": "Every stack trace reveals the system's truth."
     },
     {
       "schemaVersion": 1,
@@ -926,7 +998,10 @@
       "energy": 0.9,
       "tags": [
         "healer"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -963,7 +1038,10 @@
       "tags": [
         "maker",
         "winter"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -999,7 +1077,10 @@
       "energy": 0.8,
       "tags": [
         "calm"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -1036,7 +1117,10 @@
       "tags": [
         "ocean",
         "leader"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1073,7 +1157,10 @@
       "tags": [
         "science",
         "space"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1107,7 +1194,10 @@
       "energy": 1.0,
       "tags": [
         "cozy"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -1144,6 +1234,9 @@
       "tags": [
         "magic"
       ],
+      "personality": "mystical",
+      "specialty": "AST Transmutation",
+      "catchphrase": "Casting clean checkmarks into the terminal.",
       "hairTip": "#dc2626"
     },
     {
@@ -1180,7 +1273,10 @@
       "energy": 1.0,
       "tags": [
         "storyteller"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1217,7 +1313,10 @@
       "tags": [
         "coder",
         "cyber"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1254,7 +1353,10 @@
       "tags": [
         "ocean",
         "explorer"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1291,7 +1393,10 @@
       "tags": [
         "knight",
         "winter"
-      ]
+      ],
+      "personality": "stoic",
+      "specialty": "Branch Guarding",
+      "catchphrase": "Stand between main and bad merges."
     },
     {
       "schemaVersion": 1,
@@ -1327,7 +1432,10 @@
       "energy": 1.1,
       "tags": [
         "cozy"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -1364,7 +1472,10 @@
       "tags": [
         "artist",
         "calm"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -1400,7 +1511,10 @@
       "energy": 1.5,
       "tags": [
         "gamer"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1438,7 +1552,10 @@
       "tags": [
         "music",
         "fantasy"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1475,7 +1592,10 @@
       "energy": 1.0,
       "tags": [
         "explorer"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1512,7 +1632,10 @@
       "tags": [
         "ocean",
         "calm"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -1548,7 +1671,10 @@
       "energy": 1.0,
       "tags": [
         "monk"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1586,7 +1712,10 @@
       "tags": [
         "maker",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -1623,7 +1752,10 @@
       "tags": [
         "space",
         "leader"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1658,7 +1790,10 @@
       "tags": [
         "dragon",
         "maker"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1695,7 +1830,10 @@
       "tags": [
         "fairy",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -1732,7 +1870,10 @@
       "tags": [
         "night",
         "poet"
-      ]
+      ],
+      "personality": "analytical",
+      "specialty": "Deep Inspection",
+      "catchphrase": "Every stack trace reveals the system's truth."
     },
     {
       "schemaVersion": 1,
@@ -1768,7 +1909,10 @@
       "energy": 0.8,
       "tags": [
         "guardian"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1807,6 +1951,9 @@
         "anime",
         "swordswoman"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#b91c1c"
     },
     {
@@ -1845,7 +1992,10 @@
       "tags": [
         "anime",
         "samurai"
-      ]
+      ],
+      "personality": "stoic",
+      "specialty": "Branch Guarding",
+      "catchphrase": "Stand between main and bad merges."
     },
     {
       "schemaVersion": 1,
@@ -1884,6 +2034,9 @@
         "anime",
         "ninja"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#7c3aed"
     },
     {
@@ -1921,7 +2074,10 @@
       "tags": [
         "anime",
         "miko"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -1960,6 +2116,9 @@
         "anime",
         "magical-girl"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#fde047"
     },
     {
@@ -1999,6 +2158,9 @@
         "anime",
         "mecha"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#1e3a8a"
     },
     {
@@ -2037,7 +2199,10 @@
       "tags": [
         "anime",
         "pirate"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -2076,6 +2241,9 @@
         "anime",
         "idol"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#f0abfc"
     },
     {
@@ -2114,6 +2282,9 @@
         "anime",
         "delinquent"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#f97316"
     },
     {
@@ -2152,6 +2323,9 @@
         "anime",
         "kitsune"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#f97316"
     },
     {
@@ -2190,6 +2364,9 @@
         "anime",
         "vampire"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#94a3b8"
     },
     {
@@ -2230,6 +2407,9 @@
         "knight",
         "dragon"
       ],
+      "personality": "stoic",
+      "specialty": "Branch Guarding",
+      "catchphrase": "Stand between main and bad merges.",
       "hairTip": "#22c55e"
     },
     {
@@ -2268,7 +2448,10 @@
       "tags": [
         "anime",
         "alchemist"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -2306,6 +2489,9 @@
         "anime",
         "onmyoji"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#7c3aed"
     },
     {
@@ -2344,7 +2530,10 @@
       "tags": [
         "anime",
         "samurai"
-      ]
+      ],
+      "personality": "stoic",
+      "specialty": "Branch Guarding",
+      "catchphrase": "Stand between main and bad merges."
     },
     {
       "schemaVersion": 1,
@@ -2383,6 +2572,9 @@
         "anime",
         "cleric"
       ],
+      "personality": "mystical",
+      "specialty": "AST Transmutation",
+      "catchphrase": "Casting clean checkmarks into the terminal.",
       "hairTip": "#fde68a"
     },
     {
@@ -2421,7 +2613,10 @@
       "tags": [
         "anime",
         "tamer"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -2459,6 +2654,9 @@
         "anime",
         "rival"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#38bdf8"
     },
     {
@@ -2498,6 +2696,9 @@
         "anime",
         "sorcerer"
       ],
+      "personality": "mystical",
+      "specialty": "AST Transmutation",
+      "catchphrase": "Casting clean checkmarks into the terminal.",
       "hairTip": "#a855f7"
     },
     {
@@ -2536,6 +2737,9 @@
         "anime",
         "ghost"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#93c5fd"
     },
     {
@@ -2574,6 +2778,9 @@
         "anime",
         "oni"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#f97316"
     },
     {
@@ -2611,7 +2818,10 @@
       "tags": [
         "anime",
         "tengu"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -2648,7 +2858,10 @@
       "tags": [
         "anime",
         "cafe"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -2686,6 +2899,9 @@
         "anime",
         "sports"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#fde047"
     },
     {
@@ -2723,7 +2939,10 @@
       "tags": [
         "anime",
         "school"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -2761,6 +2980,9 @@
         "anime",
         "school"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#b45309"
     },
     {
@@ -2800,6 +3022,9 @@
         "anime",
         "princess"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#818cf8"
     },
     {
@@ -2838,6 +3063,9 @@
         "anime",
         "exorcist"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#94a3b8"
     },
     {
@@ -2877,6 +3105,9 @@
         "mecha",
         "maker"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#1e3a8a"
     },
     {
@@ -2914,7 +3145,10 @@
       "tags": [
         "anime",
         "artist"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -2954,6 +3188,9 @@
         "petals",
         "calm"
       ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software.",
       "hairTip": "#fb7185"
     },
     {
@@ -2992,7 +3229,10 @@
       "tags": [
         "fox",
         "speedy"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3029,7 +3269,10 @@
       "tags": [
         "cat",
         "coder"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3064,7 +3307,10 @@
       "tags": [
         "bunny",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3101,7 +3347,10 @@
       "tags": [
         "bear",
         "calm"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3138,7 +3387,10 @@
       "tags": [
         "panda",
         "calm"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3175,7 +3427,10 @@
       "tags": [
         "wolf",
         "night"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3210,7 +3465,10 @@
       "tags": [
         "dog",
         "tester"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3247,7 +3505,10 @@
       "tags": [
         "cat",
         "cozy"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3282,7 +3543,10 @@
       "tags": [
         "red-panda",
         "nature"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3319,7 +3583,10 @@
       "tags": [
         "bunny",
         "cozy"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3356,7 +3623,10 @@
       "tags": [
         "cat",
         "night"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3394,7 +3664,10 @@
       "tags": [
         "fox",
         "explorer"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3431,7 +3704,10 @@
       "tags": [
         "squirrel",
         "scholar"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3468,7 +3744,10 @@
       "tags": [
         "monkey",
         "speedy"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3505,7 +3784,10 @@
       "tags": [
         "bear",
         "knight"
-      ]
+      ],
+      "personality": "stoic",
+      "specialty": "Branch Guarding",
+      "catchphrase": "Stand between main and bad merges."
     },
     {
       "schemaVersion": 1,
@@ -3542,7 +3824,10 @@
       "tags": [
         "otter",
         "maker"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3579,7 +3864,10 @@
       "tags": [
         "cat",
         "artist"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3616,7 +3904,10 @@
       "tags": [
         "cat",
         "speedy"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3653,7 +3944,10 @@
       "tags": [
         "fox",
         "winter"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3690,7 +3984,10 @@
       "tags": [
         "bunny",
         "lucky"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3725,7 +4022,10 @@
       "tags": [
         "tiger",
         "knight"
-      ]
+      ],
+      "personality": "stoic",
+      "specialty": "Branch Guarding",
+      "catchphrase": "Stand between main and bad merges."
     },
     {
       "schemaVersion": 1,
@@ -3762,7 +4062,10 @@
       "tags": [
         "lion",
         "leader"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3799,7 +4102,10 @@
       "tags": [
         "deer",
         "nature"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3836,7 +4142,10 @@
       "tags": [
         "koala",
         "cozy"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3873,7 +4182,10 @@
       "tags": [
         "raccoon",
         "coder"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3910,7 +4222,10 @@
       "tags": [
         "dog",
         "winter"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3947,7 +4262,10 @@
       "tags": [
         "hamster",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -3982,7 +4300,10 @@
       "tags": [
         "dragon",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4018,7 +4339,10 @@
       "energy": 1.0,
       "tags": [
         "dragon"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4053,7 +4377,10 @@
       "tags": [
         "axolotl",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4090,7 +4417,10 @@
       "tags": [
         "bat",
         "night"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4127,7 +4457,10 @@
       "tags": [
         "sheep",
         "cozy"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4163,7 +4496,10 @@
         "pocket-monster",
         "electric",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4199,7 +4535,10 @@
         "pocket-monster",
         "fire",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4237,7 +4576,10 @@
         "pocket-monster",
         "water",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4275,7 +4617,10 @@
         "pocket-monster",
         "grass",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4313,7 +4658,10 @@
         "pocket-monster",
         "normal",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4348,7 +4696,10 @@
       "tags": [
         "pocket-monster",
         "fire"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4385,7 +4736,10 @@
       "tags": [
         "pocket-monster",
         "water"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4423,7 +4777,10 @@
       "tags": [
         "pocket-monster",
         "ice"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4458,7 +4815,10 @@
       "tags": [
         "pocket-monster",
         "grass"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4493,7 +4853,10 @@
       "tags": [
         "pocket-monster",
         "electric"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4531,7 +4894,10 @@
         "pocket-monster",
         "dark",
         "night"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4568,7 +4934,10 @@
       "tags": [
         "pocket-monster",
         "fairy"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4606,7 +4975,10 @@
         "pocket-monster",
         "psychic",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4642,7 +5014,10 @@
         "pocket-monster",
         "normal",
         "sleepy"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4678,7 +5053,10 @@
         "pocket-monster",
         "dragon",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4716,7 +5094,10 @@
         "pocket-monster",
         "water",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4753,7 +5134,10 @@
       "tags": [
         "pocket-monster",
         "rock"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4792,7 +5176,10 @@
         "pocket-monster",
         "fairy",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4827,7 +5214,10 @@
       "tags": [
         "pocket-monster",
         "fire"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4862,7 +5252,10 @@
       "tags": [
         "pocket-monster",
         "bug"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4900,7 +5293,10 @@
         "pocket-monster",
         "ice",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4939,7 +5335,10 @@
         "pocket-monster",
         "normal",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -4976,7 +5375,10 @@
       "tags": [
         "pocket-monster",
         "ghost"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -5011,7 +5413,10 @@
       "tags": [
         "pocket-monster",
         "water"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -5049,7 +5454,10 @@
         "pocket-monster",
         "steel",
         "electric"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5084,7 +5492,10 @@
       "tags": [
         "robot",
         "builder"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5119,7 +5530,10 @@
       "tags": [
         "robot",
         "tester"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5156,7 +5570,10 @@
       "tags": [
         "robot",
         "speedy"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5191,7 +5608,10 @@
       "tags": [
         "robot",
         "space"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5228,7 +5648,10 @@
       "tags": [
         "robot",
         "cute"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5263,7 +5686,10 @@
       "tags": [
         "robot",
         "strong"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5300,7 +5726,10 @@
       "tags": [
         "robot",
         "helper"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5337,7 +5766,10 @@
       "tags": [
         "robot",
         "maker"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5374,7 +5806,10 @@
       "tags": [
         "robot",
         "calm"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5409,7 +5844,10 @@
       "tags": [
         "robot",
         "maker"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5446,7 +5884,10 @@
       "tags": [
         "robot",
         "artist"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5483,7 +5924,10 @@
       "tags": [
         "robot",
         "butler"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5518,7 +5962,10 @@
       "tags": [
         "robot",
         "speedy"
-      ]
+      ],
+      "personality": "methodical",
+      "specialty": "Deterministic CI",
+      "catchphrase": "Zero syntax faults allowed."
     },
     {
       "schemaVersion": 1,
@@ -5553,7 +6000,10 @@
       "tags": [
         "slime",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -5590,7 +6040,10 @@
       "tags": [
         "slime",
         "royal"
-      ]
+      ],
+      "personality": "fluid",
+      "specialty": "Dynamic Elasticity",
+      "catchphrase": "Wobbling through edge cases smoothly."
     },
     {
       "schemaVersion": 1,
@@ -5627,7 +6080,10 @@
       "tags": [
         "slime",
         "ocean"
-      ]
+      ],
+      "personality": "fluid",
+      "specialty": "Dynamic Elasticity",
+      "catchphrase": "Wobbling through edge cases smoothly."
     },
     {
       "schemaVersion": 1,
@@ -5664,7 +6120,10 @@
       "tags": [
         "slime",
         "cozy"
-      ]
+      ],
+      "personality": "fluid",
+      "specialty": "Dynamic Elasticity",
+      "catchphrase": "Wobbling through edge cases smoothly."
     },
     {
       "schemaVersion": 1,
@@ -5699,7 +6158,10 @@
       "tags": [
         "slime",
         "fire"
-      ]
+      ],
+      "personality": "fluid",
+      "specialty": "Dynamic Elasticity",
+      "catchphrase": "Wobbling through edge cases smoothly."
     },
     {
       "schemaVersion": 1,
@@ -5736,7 +6198,10 @@
       "tags": [
         "slime",
         "nature"
-      ]
+      ],
+      "personality": "fluid",
+      "specialty": "Dynamic Elasticity",
+      "catchphrase": "Wobbling through edge cases smoothly."
     },
     {
       "schemaVersion": 1,
@@ -5773,7 +6238,10 @@
       "tags": [
         "slime",
         "magic"
-      ]
+      ],
+      "personality": "mystical",
+      "specialty": "AST Transmutation",
+      "catchphrase": "Casting clean checkmarks into the terminal."
     },
     {
       "schemaVersion": 1,
@@ -5810,7 +6278,10 @@
       "tags": [
         "slime",
         "magic"
-      ]
+      ],
+      "personality": "mystical",
+      "specialty": "AST Transmutation",
+      "catchphrase": "Casting clean checkmarks into the terminal."
     },
     {
       "schemaVersion": 1,
@@ -5848,7 +6319,10 @@
         "slime",
         "cat",
         "cute"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -5885,7 +6359,10 @@
       "tags": [
         "owl",
         "night"
-      ]
+      ],
+      "personality": "analytical",
+      "specialty": "Deep Inspection",
+      "catchphrase": "Every stack trace reveals the system's truth."
     },
     {
       "schemaVersion": 1,
@@ -5922,7 +6399,10 @@
       "tags": [
         "penguin",
         "winter"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -5959,7 +6439,10 @@
       "tags": [
         "parrot",
         "talkative"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -5996,7 +6479,10 @@
       "tags": [
         "crow",
         "night"
-      ]
+      ],
+      "personality": "analytical",
+      "specialty": "Deep Inspection",
+      "catchphrase": "Every stack trace reveals the system's truth."
     },
     {
       "schemaVersion": 1,
@@ -6033,7 +6519,10 @@
       "tags": [
         "canary",
         "music"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -6070,7 +6559,10 @@
       "tags": [
         "puffin",
         "ocean"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -6107,7 +6599,10 @@
       "tags": [
         "phoenix",
         "fire"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -6144,7 +6639,10 @@
       "tags": [
         "dove",
         "calm"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -6181,7 +6679,10 @@
       "tags": [
         "robin",
         "explorer"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -6218,7 +6719,10 @@
       "tags": [
         "toucan",
         "explorer"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -6261,6 +6765,9 @@
         "divine",
         "krishna"
       ],
+      "personality": "serene",
+      "specialty": "Divine Orchestration",
+      "catchphrase": "Action without attachment ships the finest code.",
       "hairTip": "#38bdf8"
     },
     {
@@ -6303,7 +6810,10 @@
         "grace",
         "radha",
         "vrindavan"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -6345,7 +6855,10 @@
         "archer",
         "king",
         "rama"
-      ]
+      ],
+      "personality": "stoic",
+      "specialty": "Branch Guarding",
+      "catchphrase": "Stand between main and bad merges."
     },
     {
       "schemaVersion": 1,
@@ -6387,7 +6900,10 @@
         "princess",
         "sita",
         "grace"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -6430,6 +6946,9 @@
         "hanuman",
         "courage"
       ],
+      "personality": "loyal",
+      "specialty": "Heavy Infrastructure",
+      "catchphrase": "Leaping across regions with boundless energy.",
       "hairTip": "#ffd700"
     },
     {
@@ -6472,7 +6991,10 @@
         "ganesha",
         "wisdom",
         "fortune"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -6515,6 +7037,9 @@
         "ascetic",
         "calm"
       ],
+      "personality": "transcendent",
+      "specialty": "Garbage Collection",
+      "catchphrase": "Destroying memory leaks with cosmic stillness.",
       "hairTip": "#38bdf8"
     },
     {
@@ -6557,7 +7082,10 @@
         "goddess",
         "parvati",
         "devotion"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -6599,7 +7127,10 @@
         "goddess",
         "lakshmi",
         "prosperity"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -6641,7 +7172,10 @@
         "wisdom",
         "saraswati",
         "arts"
-      ]
+      ],
+      "personality": "zen",
+      "specialty": "Code Cleanliness",
+      "catchphrase": "Patient cultivation builds stable software."
     },
     {
       "schemaVersion": 1,
@@ -6684,6 +7218,9 @@
         "arjuna",
         "epic"
       ],
+      "personality": "focused",
+      "specialty": "Targeted Unit Tests",
+      "catchphrase": "My focus never wavers from the target assertion.",
       "hairTip": "#ff9933"
     },
     {
@@ -6724,7 +7261,10 @@
         "sorcerer",
         "gojo",
         "strongest"
-      ]
+      ],
+      "personality": "confident",
+      "specialty": "Fault Tolerance",
+      "catchphrase": "Don't sweat the compiler. I'm the strongest."
     },
     {
       "schemaVersion": 1,
@@ -6763,6 +7303,9 @@
         "yuji",
         "brawler"
       ],
+      "personality": "mystical",
+      "specialty": "AST Transmutation",
+      "catchphrase": "Casting clean checkmarks into the terminal.",
       "hairTip": "#1f2937"
     },
     {
@@ -6804,6 +7347,9 @@
         "tanjiro",
         "sun"
       ],
+      "personality": "earnest",
+      "specialty": "Test-Driven TDD",
+      "catchphrase": "Work through every red test until it turns green!",
       "hairTip": "#dc2626"
     },
     {
@@ -6845,6 +7391,9 @@
         "nezuko",
         "demon"
       ],
+      "personality": "protective",
+      "specialty": "Workspace Security",
+      "catchphrase": "Guarding your project workspace with gentle ferocity.",
       "hairTip": "#ea580c"
     },
     {
@@ -6883,7 +7432,10 @@
         "pirate",
         "luffy",
         "captain"
-      ]
+      ],
+      "personality": "fearless",
+      "specialty": "Rapid Prototyping",
+      "catchphrase": "I'm gonna be the King of Shipped Features!"
     },
     {
       "schemaVersion": 1,
@@ -6923,7 +7475,10 @@
         "samurai",
         "zoro",
         "swordsman"
-      ]
+      ],
+      "personality": "stoic",
+      "specialty": "Dead-Code Elimination",
+      "catchphrase": "Nothing happened... just three clean commits."
     },
     {
       "schemaVersion": 1,
@@ -6963,7 +7518,10 @@
         "navigator",
         "nami",
         "ocean"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -7001,7 +7559,10 @@
         "chef",
         "sanji",
         "suit"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -7041,7 +7602,10 @@
         "ninja",
         "naruto",
         "leaf"
-      ]
+      ],
+      "personality": "spirited",
+      "specialty": "Continuous Delivery",
+      "catchphrase": "Believe it! I never back down from a failing build."
     },
     {
       "schemaVersion": 1,
@@ -7082,6 +7646,9 @@
         "sasuke",
         "avenger"
       ],
+      "personality": "intense",
+      "specialty": "Precision Refactoring",
+      "catchphrase": "Weak abstractions are unacceptable.",
       "hairTip": "#1e3a8a"
     },
     {
@@ -7120,7 +7687,10 @@
         "saiyan",
         "goku",
         "warrior"
-      ]
+      ],
+      "personality": "cheerful",
+      "specialty": "Stress Testing",
+      "catchphrase": "This benchmark looks strong! Let's push it higher!"
     },
     {
       "schemaVersion": 1,
@@ -7158,7 +7728,10 @@
         "saiyan",
         "vegeta",
         "prince"
-      ]
+      ],
+      "personality": "proud",
+      "specialty": "Zero-Regression CI",
+      "catchphrase": "A Saiyan prince does not push broken builds."
     },
     {
       "schemaVersion": 1,
@@ -7199,7 +7772,10 @@
         "scout",
         "levi",
         "captain"
-      ]
+      ],
+      "personality": "disciplined",
+      "specialty": "Code Cleanup",
+      "catchphrase": "Tidy your modules. Filthy code is unacceptable."
     },
     {
       "schemaVersion": 1,
@@ -7241,7 +7817,10 @@
         "scout",
         "mikasa",
         "blade"
-      ]
+      ],
+      "personality": "steadfast",
+      "specialty": "Branch Protection",
+      "catchphrase": "I will protect this repository at all costs."
     },
     {
       "schemaVersion": 1,
@@ -7283,6 +7862,9 @@
         "gon",
         "green"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#22c55e"
     },
     {
@@ -7322,6 +7904,9 @@
         "killua",
         "prodigy"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#93c5fd"
     },
     {
@@ -7360,7 +7945,10 @@
         "detective",
         "l-lawliet",
         "mystery"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -7400,7 +7988,10 @@
         "scholar",
         "light",
         "genius"
-      ]
+      ],
+      "personality": "analytical",
+      "specialty": "Deep Inspection",
+      "catchphrase": "Every stack trace reveals the system's truth."
     },
     {
       "schemaVersion": 1,
@@ -7441,6 +8032,9 @@
         "ichigo",
         "shinigami"
       ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always.",
       "hairTip": "#f97316"
     },
     {
@@ -7481,7 +8075,10 @@
         "reaper",
         "rukia",
         "frost"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -7521,7 +8118,10 @@
         "hero",
         "saitama",
         "punch"
-      ]
+      ],
+      "personality": "deadpan",
+      "specialty": "Single-Pass Optimization",
+      "catchphrase": "One punch. One test. Done."
     },
     {
       "schemaVersion": 1,
@@ -7559,7 +8159,10 @@
         "cyborg",
         "genos",
         "fire"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -7597,7 +8200,10 @@
         "devil",
         "denji",
         "chainsaw"
-      ]
+      ],
+      "personality": "chaotic",
+      "specialty": "Brute-Force Patching",
+      "catchphrase": "If it runs, I get jam on my toast!"
     },
     {
       "schemaVersion": 1,
@@ -7635,7 +8241,10 @@
         "devil",
         "power",
         "horns"
-      ]
+      ],
+      "personality": "boastful",
+      "specialty": "Chaos Engineering",
+      "catchphrase": "Bow before my genius! The bug was terrified of me!"
     },
     {
       "schemaVersion": 1,
@@ -7675,7 +8284,10 @@
         "telepath",
         "anya",
         "cute"
-      ]
+      ],
+      "personality": "cheerful",
+      "specialty": "Telepathic Linting",
+      "catchphrase": "Waku waku! All tests passed!"
     },
     {
       "schemaVersion": 1,
@@ -7716,7 +8328,10 @@
         "assassin",
         "yor",
         "thorn"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -7757,7 +8372,10 @@
         "elf",
         "frieren",
         "mage"
-      ]
+      ],
+      "personality": "timeless",
+      "specialty": "Legacy Maintenance",
+      "catchphrase": "Take your time. A century of maintenance is nothing."
     },
     {
       "schemaVersion": 1,
@@ -7796,6 +8414,9 @@
         "pikachu",
         "mouse"
       ],
+      "personality": "perky",
+      "specialty": "Cache Re-ignition",
+      "catchphrase": "Pika! Lighting up the build pipeline!",
       "hairTip": "#1c1917"
     },
     {
@@ -7836,7 +8457,10 @@
         "spirit",
         "kodama",
         "forest"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -7878,7 +8502,10 @@
         "witch",
         "delivery",
         "noa"
-      ]
+      ],
+      "personality": "mystical",
+      "specialty": "AST Transmutation",
+      "catchphrase": "Casting clean checkmarks into the terminal."
     },
     {
       "schemaVersion": 1,
@@ -7920,7 +8547,10 @@
         "glider",
         "explorer",
         "wind"
-      ]
+      ],
+      "personality": "focused",
+      "specialty": "Full-Stack Engineering",
+      "catchphrase": "Ship clean, verify always."
     },
     {
       "schemaVersion": 1,
@@ -7960,7 +8590,10 @@
         "guardian",
         "beast",
         "bramble"
-      ]
+      ],
+      "personality": "playful",
+      "specialty": "Cache & Triage",
+      "catchphrase": "Pouncing on stale dependencies with a grin!"
     },
     {
       "schemaVersion": 1,
@@ -8003,6 +8636,9 @@
         "cat",
         "shinobi"
       ],
+      "personality": "stealthy",
+      "specialty": "Silent Instrumentation",
+      "catchphrase": "Tracing execution unseen in the shadows.",
       "hairTip": "#00f0ff"
     },
     {
@@ -8046,6 +8682,9 @@
         "monkey",
         "sage"
       ],
+      "personality": "playful",
+      "specialty": "Distributed Chaos",
+      "catchphrase": "Seven-fold transformations for every deployment.",
       "hairTip": "#ffb703"
     }
   ]

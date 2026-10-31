@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hoot",
+  "name": "Hoot",
+  "title": "Night Owl Reviewer",
+  "description": "Reviews pull requests long after midnight.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#92400e",
+    "hair": "#fef3c7",
+    "eyes": "#f59e0b",
+    "primary": "#78350f",
+    "secondary": "#fef3c7",
+    "accent": "#f59e0b"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.8,
+  "tags": [
+    "owl",
+    "night"
+  ],
+  "personality": "analytical",
+  "specialty": "Deep Inspection",
+  "catchphrase": "Every stack trace reveals the system's truth."
+}

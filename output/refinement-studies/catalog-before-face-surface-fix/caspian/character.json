@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.caspian",
+  "name": "Caspian",
+  "title": "Ocean Cartographer",
+  "description": "Measures every current twice before setting sail.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "ponytail",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#1e3a8a",
+    "eyes": "#0e7490",
+    "primary": "#0f766e",
+    "secondary": "#e2e8f0",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "ocean",
+    "explorer"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

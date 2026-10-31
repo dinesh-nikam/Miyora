@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "requested": 213,
+  "structurallyValidated": 213,
+  "missing": [],
+  "bodyCounts": {
+    "humanoid": 119,
+    "beast": 56,
+    "bird": 12,
+    "slime": 12,
+    "robot": 14
+  },
+  "runtimeValidated": 213,
+  "artReview": "all front overviews and selected portraits, poses, and back geometry reviewed",
+  "style": "full-anime",
+  "refinementRevision": "refined-catalog-v3.2",
+  "paidServicesUsed": false,
+  "poseChecks": 3195,
+  "expressionChecks": 1065,
+  "nativeValidated": 213,
+  "nativeImported": 213,
+  "reviewSheets": 9,
+  "native3dOverlay": "verified"
+}

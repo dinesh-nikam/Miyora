@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.vale",
+  "name": "Vale",
+  "title": "Thunder Monk",
+  "description": "Meditates through outages, then strikes like lightning.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "robe",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a86b4c",
+    "hair": "#0c0a09",
+    "eyes": "#38bdf8",
+    "primary": "#f59e0b",
+    "secondary": "#7c2d12",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "monk"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

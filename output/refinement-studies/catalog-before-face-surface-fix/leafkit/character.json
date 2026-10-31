@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.leafkit",
+  "name": "Leafkit",
+  "title": "Leaf Kit",
+  "description": "The grassy form of Vixi; smells faintly of fresh mint.",
+  "body": "beast",
+  "ears": "leaf",
+  "tail": "leaf",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#d9f99d",
+    "hair": "#f7fee7",
+    "eyes": "#365314",
+    "primary": "#d9f99d",
+    "secondary": "#65a30d",
+    "accent": "#4ade80"
+  },
+  "proportions": {
+    "height": 0.86,
+    "headScale": 1.28,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "pocket-monster",
+    "grass"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

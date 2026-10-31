@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.mirei",
+  "name": "Mirei",
+  "title": "Student Council President",
+  "description": "Approves pull requests only after reading every line.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "hime",
+  "eyes": "sharp",
+  "outfit": "sailor",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#1e293b",
+    "eyes": "#7c3aed",
+    "primary": "#f8fafc",
+    "secondary": "#1e3a8a",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "anime",
+    "school"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

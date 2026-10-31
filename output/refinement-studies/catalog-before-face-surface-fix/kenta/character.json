@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.kenta",
+  "name": "Kenta",
+  "title": "Soccer Ace",
+  "description": "Scores a goal for every merged pull request.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#f97316",
+    "eyes": "#16a34a",
+    "primary": "#1d4ed8",
+    "secondary": "#f8fafc",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.6,
+  "tags": [
+    "anime",
+    "sports"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#fde047"
+}

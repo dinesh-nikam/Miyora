@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.haruki",
+  "name": "Haruki",
+  "title": "Transfer Student",
+  "description": "New to the codebase, already fixing the hard bugs.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "suit",
+  "accessories": [
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#78350f",
+    "eyes": "#92400e",
+    "primary": "#111827",
+    "secondary": "#f8fafc",
+    "accent": "#ca8a04"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "anime",
+    "school"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#b45309"
+}

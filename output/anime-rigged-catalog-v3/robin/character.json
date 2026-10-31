@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.robin",
+  "name": "Robin",
+  "title": "Trail Scout",
+  "description": "First to spot a new release on the horizon.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#78350f",
+    "hair": "#fef3c7",
+    "eyes": "#1c1917",
+    "primary": "#ea580c",
+    "secondary": "#78350f",
+    "accent": "#22c55e"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.2,
+  "tags": [
+    "robin",
+    "explorer"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

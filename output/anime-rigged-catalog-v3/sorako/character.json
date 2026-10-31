@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sorako",
+  "name": "Sorako",
+  "title": "Nine-Tail Fox Spirit",
+  "description": "An old spirit who guards the shrine of passing builds.",
+  "body": "humanoid",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "hime",
+  "eyes": "sharp",
+  "outfit": "kimono",
+  "accessories": [
+    "kitsune_mask"
+  ],
+  "pattern": "petals",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#f5f5f4",
+    "eyes": "#f59e0b",
+    "primary": "#dc2626",
+    "secondary": "#f8fafc",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.9,
+  "tags": [
+    "anime",
+    "kitsune"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#f97316"
+}

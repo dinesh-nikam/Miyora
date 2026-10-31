@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.vesper",
+  "name": "Vesper",
+  "title": "Midnight Poet",
+  "description": "Writes commit messages in perfect verse.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "bat",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "suit",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6e7e7",
+    "hair": "#1c1917",
+    "eyes": "#dc2626",
+    "primary": "#1c1917",
+    "secondary": "#7f1d1d",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.8,
+  "tags": [
+    "night",
+    "poet"
+  ],
+  "personality": "analytical",
+  "specialty": "Deep Inspection",
+  "catchphrase": "Every stack trace reveals the system's truth."
+}

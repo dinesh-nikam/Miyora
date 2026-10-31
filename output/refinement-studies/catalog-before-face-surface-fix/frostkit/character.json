@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.frostkit",
+  "name": "Frostkit",
+  "title": "Frost Kit",
+  "description": "The frosty form of Vixi, cool under any production pressure.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [
+    "gem",
+    "scarf"
+  ],
+  "pattern": "diamonds",
+  "palette": {
+    "skin": "#e0f2fe",
+    "hair": "#f8fafc",
+    "eyes": "#1d4ed8",
+    "primary": "#e0f2fe",
+    "secondary": "#93c5fd",
+    "accent": "#67e8f9"
+  },
+  "proportions": {
+    "height": 0.86,
+    "headScale": 1.28,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.8,
+  "tags": [
+    "pocket-monster",
+    "ice"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

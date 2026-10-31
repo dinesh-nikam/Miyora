@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.light",
+  "name": "Light",
+  "title": "Prodigy Honor Scholar",
+  "description": "Immaculate honor student in caramel blazer and crimson tie, harboring brilliant cold deduction.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "suit",
+  "accessories": [
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#78350f",
+    "eyes": "#991b1b",
+    "primary": "#b45309",
+    "secondary": "#111827",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1.08,
+    "headScale": 0.96,
+    "build": 1.02,
+    "limbLength": 1.06
+  },
+  "energy": 1.1,
+  "tags": [
+    "anime",
+    "avatar",
+    "scholar",
+    "light",
+    "genius"
+  ],
+  "personality": "analytical",
+  "specialty": "Deep Inspection",
+  "catchphrase": "Every stack trace reveals the system's truth."
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.dove",
+  "name": "Dove",
+  "title": "Peace Keeper",
+  "description": "Resolves merge conflicts gently.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f8fafc",
+    "hair": "#e2e8f0",
+    "eyes": "#1e293b",
+    "primary": "#f8fafc",
+    "secondary": "#e2e8f0",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.7,
+  "tags": [
+    "dove",
+    "calm"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}

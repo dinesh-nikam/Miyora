@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.dash",
+  "name": "Dash",
+  "title": "Sprint Cat",
+  "description": "Finishes the sprint before planning ends.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "jacket",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#facc15",
+    "hair": "#1c1917",
+    "eyes": "#f97316",
+    "primary": "#dc2626",
+    "secondary": "#1c1917",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.6,
+  "tags": [
+    "cat",
+    "speedy"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

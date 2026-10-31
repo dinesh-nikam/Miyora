@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.echo",
+  "name": "Echo",
+  "title": "Listening Unit",
+  "description": "Hears every hook event and nods.",
+  "body": "robot",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "visor",
+  "outfit": "plating",
+  "accessories": [
+    "headphones"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#1e293b",
+    "hair": "#0f172a",
+    "eyes": "#22d3ee",
+    "primary": "#334155",
+    "secondary": "#0f172a",
+    "accent": "#22d3ee"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "robot",
+    "calm"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.mikasa",
+  "name": "Mikasa",
+  "title": "Devoted Scout Protector",
+  "description": "Deadly elite scout with sleek black bob, iconic dark crimson knit scarf, dual blades, and steadfast poise.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "feather",
+  "hair": "bob",
+  "eyes": "sharp",
+  "outfit": "jacket",
+  "accessories": [
+    "scarf",
+    "katana",
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6e7e7",
+    "hair": "#111827",
+    "eyes": "#1f2937",
+    "primary": "#78350f",
+    "secondary": "#991b1b",
+    "accent": "#e2e8f0"
+  },
+  "proportions": {
+    "height": 1.04,
+    "headScale": 0.98,
+    "build": 1.08,
+    "limbLength": 1.05
+  },
+  "energy": 1.2,
+  "tags": [
+    "anime",
+    "avatar",
+    "scout",
+    "mikasa",
+    "blade"
+  ],
+  "personality": "steadfast",
+  "specialty": "Branch Protection",
+  "catchphrase": "I will protect this repository at all costs."
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.chirp",
+  "name": "Chirp",
+  "title": "Canary Singer",
+  "description": "Sings out the moment something is off.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "bow"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fde047",
+    "hair": "#facc15",
+    "eyes": "#1c1917",
+    "primary": "#fde047",
+    "secondary": "#f59e0b",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 0.85,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.5,
+  "tags": [
+    "canary",
+    "music"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

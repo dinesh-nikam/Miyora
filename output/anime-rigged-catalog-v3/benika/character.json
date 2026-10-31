@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.benika",
+  "name": "Benika",
+  "title": "Oni Brawler",
+  "description": "Punches through blockers with a grin.",
+  "body": "humanoid",
+  "ears": "horns",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#7f1d1d",
+    "eyes": "#f59e0b",
+    "primary": "#f8fafc",
+    "secondary": "#dc2626",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1.15,
+    "limbLength": 1
+  },
+  "energy": 1.5,
+  "tags": [
+    "anime",
+    "oni"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#f97316"
+}

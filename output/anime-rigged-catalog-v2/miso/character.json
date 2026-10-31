@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.miso",
+  "name": "Miso",
+  "title": "Tabby Debugger",
+  "description": "Pounces on bugs the moment they twitch.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "hoodie",
+  "accessories": [
+    "bell"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f59e0b",
+    "hair": "#92400e",
+    "eyes": "#16a34a",
+    "primary": "#0f766e",
+    "secondary": "#134e4a",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "cat",
+    "coder"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

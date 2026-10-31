@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.vega",
+  "name": "Vega",
+  "title": "Satellite Sentinel",
+  "description": "Orbits your infrastructure and reports in.",
+  "body": "robot",
+  "ears": "none",
+  "tail": "none",
+  "wings": "jet",
+  "hair": "none",
+  "eyes": "visor",
+  "outfit": "plating",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f8fafc",
+    "hair": "#94a3b8",
+    "eyes": "#a855f7",
+    "primary": "#e2e8f0",
+    "secondary": "#475569",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "robot",
+    "space"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

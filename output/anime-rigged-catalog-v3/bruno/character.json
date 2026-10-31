@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.bruno",
+  "name": "Bruno",
+  "title": "Honey Bear Sysadmin",
+  "description": "Slow, steady, and never forgets a backup.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "overalls",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#92400e",
+    "hair": "#78350f",
+    "eyes": "#451a03",
+    "primary": "#1e40af",
+    "secondary": "#1e3a8a",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1.25,
+    "limbLength": 1
+  },
+  "energy": 0.7,
+  "tags": [
+    "bear",
+    "calm"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

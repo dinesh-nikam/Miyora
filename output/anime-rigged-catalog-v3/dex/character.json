@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.dex",
+  "name": "Dex",
+  "title": "Arcade Champion",
+  "description": "Holds the high score on every leaderboard.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sparkle",
+  "outfit": "jacket",
+  "accessories": [
+    "headphones"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#c68863",
+    "hair": "#7c3aed",
+    "eyes": "#facc15",
+    "primary": "#facc15",
+    "secondary": "#1e1b4b",
+    "accent": "#22d3ee"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.5,
+  "tags": [
+    "gamer"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

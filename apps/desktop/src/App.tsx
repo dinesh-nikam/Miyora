@@ -7,6 +7,7 @@ import { CompanionRenderer, PetState, SelectedPetAnimation } from "./components/
 import { CommandDeck, ProviderReport } from "./components/CommandDeck";
 import { CharacterStudio } from "./avatar/CharacterStudio";
 import type { AvatarHud, ResolvedAvatar } from "./avatar/types";
+import { StudioView } from "./studio/StudioView";
 
 interface RuntimeSnapshot {
   petState: PetState;
@@ -92,7 +93,7 @@ export default function App() {
   const isOverlayWindow = new URLSearchParams(window.location.search).get("overlay") === "1";
 
   // Navigation State
-  const [activeTab, setActiveTab] = useState<"den" | "sessions" | "companions" | "progress" | "settings">("den");
+  const [activeTab, setActiveTab] = useState<"den" | "sessions" | "companions" | "studio" | "progress" | "settings">("den");
   const [isCommandDeckOpen, setIsCommandDeckOpen] = useState(false);
 
   // Core Data
@@ -486,21 +487,24 @@ export default function App() {
           overflow: "hidden",
         }}
       >
-        {/* Overlay Draggable Titlebar */}
+        {/* Overlay Sleek Floating Organic Handle (No square box!) */}
         <div
-          className="edge shadow-pop-sm"
           style={{
-            width: "100%",
+            width: "calc(100% - 12px)",
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            background: "#ffffff",
-            padding: "6px 10px",
+            background: "rgba(15, 23, 42, 0.88)",
+            border: "1px solid rgba(255, 255, 255, 0.16)",
+            borderRadius: "20px",
+            padding: "5px 12px",
             cursor: "grab",
-            fontSize: "11px",
-            color: "#0a0a0a",
+            fontSize: "10.5px",
+            color: "#f8fafc",
             boxSizing: "border-box",
-            fontFamily: "'Space Grotesk', sans-serif",
+            backdropFilter: "blur(14px)",
+            boxShadow: "0 6px 20px rgba(0, 0, 0, 0.35)",
+            transition: "all 0.2s ease",
           }}
           onMouseDown={() => {
             void getCurrentWindow()
@@ -510,23 +514,26 @@ export default function App() {
               });
           }}
         >
-          <span style={{ fontWeight: 900, color: "#0a0a0a", letterSpacing: "0.5px" }}>
-            AGENTPET {isSimulated ? "· SIMULATED" : ""}
-          </span>
-          <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+            <span style={{ fontSize: "12px" }}>🐾</span>
+            <span style={{ fontWeight: 800, color: "#f8fafc", letterSpacing: "0.4px" }}>
+              {activePetName} {isSimulated ? "· SIM" : ""}
+            </span>
+          </div>
+          <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
             <button
               onClick={toggleSound}
               aria-label={soundMuted ? "Unmute sounds" : "Mute sounds"}
               title={soundMuted ? "Unmute Sounds" : "Mute Sounds"}
               style={{
-                background: soundMuted ? "#ffffff" : "#ffd000",
-                border: "2px solid #0a0a0a",
-                borderRadius: "4px",
-                color: "#0a0a0a",
+                background: soundMuted ? "rgba(255, 255, 255, 0.08)" : "rgba(250, 204, 21, 0.22)",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
+                borderRadius: "12px",
+                color: soundMuted ? "#94a3b8" : "#facc15",
                 fontSize: "11px",
-                padding: "2px 5px",
+                padding: "2px 6px",
                 cursor: "pointer",
-                fontWeight: 800,
+                fontWeight: 700,
               }}
             >
               {soundMuted ? "🔇" : "🔊"}
@@ -536,14 +543,14 @@ export default function App() {
               aria-label="Open Command Deck"
               title="Open Command Deck"
               style={{
-                background: "#ffd000",
-                border: "2px solid #0a0a0a",
-                borderRadius: "4px",
-                color: "#0a0a0a",
+                background: "rgba(56, 189, 248, 0.2)",
+                border: "1px solid rgba(56, 189, 248, 0.4)",
+                borderRadius: "12px",
+                color: "#38bdf8",
                 fontSize: "11px",
-                padding: "2px 5px",
+                padding: "2px 7px",
                 cursor: "pointer",
-                fontWeight: 900,
+                fontWeight: 800,
               }}
             >
               ⚡
@@ -554,14 +561,14 @@ export default function App() {
               aria-label={snapshot.petState === "paused" ? "Resume companion" : "Pause companion"}
               title={snapshot.petState === "paused" ? "Resume" : "Pause"}
               style={{
-                background: "#00d4ff",
-                border: "2px solid #0a0a0a",
-                borderRadius: "4px",
-                color: "#0a0a0a",
+                background: "rgba(168, 85, 247, 0.2)",
+                border: "1px solid rgba(168, 85, 247, 0.4)",
+                borderRadius: "12px",
+                color: "#c084fc",
                 fontSize: "10px",
-                padding: "2px 6px",
+                padding: "2px 7px",
                 cursor: "pointer",
-                fontWeight: 900,
+                fontWeight: 800,
               }}
             >
               {snapshot.petState === "paused" ? "▶" : "Ⅱ"}
@@ -571,14 +578,14 @@ export default function App() {
               aria-label="Hide overlay window"
               title="Hide Overlay"
               style={{
-                background: "#ff2db7",
-                border: "2px solid #0a0a0a",
-                borderRadius: "4px",
-                color: "#ffffff",
+                background: "rgba(244, 63, 94, 0.2)",
+                border: "1px solid rgba(244, 63, 94, 0.4)",
+                borderRadius: "12px",
+                color: "#fb7185",
                 fontSize: "11px",
-                padding: "2px 6px",
+                padding: "2px 7px",
                 cursor: "pointer",
-                fontWeight: 900,
+                fontWeight: 800,
               }}
             >
               ×
@@ -796,6 +803,7 @@ export default function App() {
                 { id: "sessions", label: "Sessions", icon: "📊" },
                 { id: "companions", label: "Companions", icon: "✨" },
                 { id: "progress", label: "Progress", icon: "🔒" },
+                { id: "studio", label: "3D Studio", icon: "🧊" },
                 { id: "settings", label: "Settings", icon: "⚙️" },
               ] as const
             ).map((tab) => {
@@ -1025,6 +1033,8 @@ export default function App() {
           boxSizing: "border-box",
         }}
       >
+        {activeTab === "studio" && <StudioView />}
+
         {/* =========================================================
             TAB 1: DEN
            ========================================================= */}
@@ -1141,17 +1151,21 @@ export default function App() {
               </div>
             </div>
 
-            {/* Stage Showcase Card */}
+            {/* Living Companion Sanctuary Pod (Replaces harsh square brutalist box) */}
             <div
-              className="edge-thick shadow-pop-lg"
+              className="companion-sanctuary-pod"
               style={{
-                backgroundColor: "#ffffff",
-                padding: "40px 24px",
+                background: "radial-gradient(ellipse at 50% 25%, rgba(255, 182, 193, 0.1) 0%, rgba(255, 255, 255, 0.98) 55%, rgba(241, 245, 249, 0.95) 100%)",
+                borderRadius: "36px",
+                padding: "44px 28px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
                 position: "relative",
+                boxShadow: "0 24px 65px -15px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.04)",
+                overflow: "hidden",
+                border: "1px solid rgba(255, 255, 255, 0.9)",
               }}
             >
               {/* Top-Right Stage Mode Toggle */}
@@ -1165,24 +1179,25 @@ export default function App() {
                       localStorage.setItem("agentpet_render_mode", next);
                     } catch {}
                   }}
-                  className="font-grotesk shadow-pop-sm shadow-pop-hover"
                   style={{
-                    backgroundColor: renderMode === "3d" ? "#ffd000" : "#ffffff",
-                    color: "#0a0a0a",
-                    border: "3px solid #0a0a0a",
+                    backgroundColor: renderMode === "3d" ? "rgba(250, 204, 21, 0.22)" : "rgba(15, 23, 42, 0.06)",
+                    color: renderMode === "3d" ? "#854d0e" : "#475569",
+                    border: renderMode === "3d" ? "1.5px solid #facc15" : "1.5px solid rgba(148, 163, 184, 0.3)",
                     borderRadius: "999px",
                     padding: "8px 18px",
                     fontSize: "12px",
-                    fontWeight: 900,
-                    letterSpacing: "0.05em",
+                    fontWeight: 800,
+                    letterSpacing: "0.04em",
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     gap: "8px",
+                    backdropFilter: "blur(10px)",
+                    transition: "all 0.15s ease",
                   }}
                 >
-                  <span>{renderMode === "3d" ? "🎮 3D AVATAR ACTIVE" : "🖼️ 2D SPRITE ACTIVE"}</span>
-                  <span style={{ opacity: 0.6 }}>⇄ Toggle</span>
+                  <span>{renderMode === "3d" ? "🎮 3D LIVING PET" : "🖼️ 2D SPRITE PET"}</span>
+                  <span style={{ opacity: 0.6 }}>⇄ Switch</span>
                 </button>
               </div>
 
@@ -1217,22 +1232,22 @@ export default function App() {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
                   <span
-                    className="font-grotesk shadow-pop-sm"
                     style={{
-                      backgroundColor: "#00d4ff",
-                      color: "#0a0a0a",
-                      border: "3px solid #0a0a0a",
+                      backgroundColor: "rgba(56, 189, 248, 0.18)",
+                      color: "#0369a1",
+                      border: "1.5px solid rgba(56, 189, 248, 0.5)",
                       borderRadius: "999px",
                       padding: "4px 18px",
-                      fontSize: "13px",
-                      fontWeight: 900,
+                      fontSize: "12px",
+                      fontWeight: 800,
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
+                      boxShadow: "0 4px 12px rgba(56, 189, 248, 0.15)",
                     }}
                   >
                     STATE: {snapshot.petState.toUpperCase().replaceAll("_", " ")}
                   </span>
-                  <span className="font-grotesk" style={{ fontSize: "12px", color: "#0a0a0a", fontWeight: 700 }}>
+                  <span style={{ fontSize: "12px", color: "#475569", fontWeight: 700 }}>
                     ⚡ Double-click companion to summon Command Deck
                   </span>
                 </div>

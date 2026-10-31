@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.denji",
+  "name": "Denji",
+  "title": "Chainsaw Devil Fiend",
+  "description": "Wild-eyed devil hunter with scruffy blond hair, rumpled white shirt, black tie, and chest pull cord.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "suit",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fcd5be",
+    "hair": "#f59e0b",
+    "eyes": "#b45309",
+    "primary": "#f8fafc",
+    "secondary": "#111827",
+    "accent": "#111827"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1.04,
+    "build": 1.05,
+    "limbLength": 1.02
+  },
+  "energy": 1.6,
+  "tags": [
+    "anime",
+    "avatar",
+    "devil",
+    "denji",
+    "chainsaw"
+  ],
+  "personality": "chaotic",
+  "specialty": "Brute-Force Patching",
+  "catchphrase": "If it runs, I get jam on my toast!"
+}

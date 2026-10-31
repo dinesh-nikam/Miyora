@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.shiva",
+  "name": "Shiva",
+  "title": "Serene Ascetic Lord",
+  "description": "Ascetic blue lord of deep stillness with jatamukuta bun, crescent moon halo, and third-eye sapphire.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bun",
+  "eyes": "sleepy",
+  "outfit": "robe",
+  "accessories": [
+    "gem",
+    "staff",
+    "halo"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#8ba3be",
+    "hair": "#0f172a",
+    "eyes": "#1e293b",
+    "primary": "#d97706",
+    "secondary": "#475569",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 1.05,
+    "headScale": 0.98,
+    "build": 1.05,
+    "limbLength": 1.05
+  },
+  "energy": 0.7,
+  "tags": [
+    "devotional",
+    "avatar",
+    "shiva",
+    "ascetic",
+    "calm"
+  ],
+  "personality": "transcendent",
+  "specialty": "Garbage Collection",
+  "catchphrase": "Destroying memory leaks with cosmic stillness.",
+  "hairTip": "#38bdf8"
+}

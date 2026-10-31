@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.lina",
+  "name": "Lina",
+  "title": "Lab Researcher",
+  "description": "Runs every experiment twice and writes down both results.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "ponytail",
+  "eyes": "round",
+  "outfit": "labcoat",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#1c1917",
+    "eyes": "#0891b2",
+    "primary": "#f1f5f9",
+    "secondary": "#0e7490",
+    "accent": "#14b8a6"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "science"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.vamp",
+  "name": "Vamp",
+  "title": "Night Bat",
+  "description": "Echolocates memory leaks.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "none",
+  "wings": "bat",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#4c1d95",
+    "hair": "#2e1065",
+    "eyes": "#f43f5e",
+    "primary": "#4c1d95",
+    "secondary": "#1e1b4b",
+    "accent": "#f43f5e"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "bat",
+    "night"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

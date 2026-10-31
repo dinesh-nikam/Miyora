@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.krishna",
+  "name": "Krishna",
+  "title": "Divine Flute Avatar",
+  "description": "Sky-blue Krishna with dark curly locks, glowing golden pitambara silk, peacock feather crown, and gentle sparkle eyes.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "sparkle",
+  "outfit": "robe",
+  "accessories": [
+    "crown",
+    "flower",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#7da4d4",
+    "hair": "#1a2238",
+    "eyes": "#231f20",
+    "primary": "#ffd700",
+    "secondary": "#f59e0b",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1.08,
+    "build": 0.95,
+    "limbLength": 1
+  },
+  "energy": 1.2,
+  "tags": [
+    "devotional",
+    "avatar",
+    "flute",
+    "divine",
+    "krishna"
+  ],
+  "personality": "serene",
+  "specialty": "Divine Orchestration",
+  "catchphrase": "Action without attachment ships the finest code.",
+  "hairTip": "#38bdf8"
+}

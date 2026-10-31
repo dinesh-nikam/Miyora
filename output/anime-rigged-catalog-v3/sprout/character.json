@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sprout",
+  "name": "Sprout",
+  "title": "Seedling Slime",
+  "description": "Grows a little with every completed session.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a3e635",
+    "hair": "#65a30d",
+    "eyes": "#1a2e05",
+    "primary": "#a3e635",
+    "secondary": "#65a30d",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "slime",
+    "nature"
+  ],
+  "personality": "fluid",
+  "specialty": "Dynamic Elasticity",
+  "catchphrase": "Wobbling through edge cases smoothly."
+}

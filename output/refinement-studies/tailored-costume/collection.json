@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "style": "full-anime",
+  "characters": [
+    {
+      "id": "miyora.nezuko",
+      "name": "Nezuko",
+      "body": "humanoid",
+      "model": "nezuko/model.vrm",
+      "source": "nezuko/source.blend",
+      "sha256": "2f93f21da7a341cf47da620aa69872cdd47da024c1b94c4ac4baae7e9c181c90",
+      "triangles": 38864,
+      "animations": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ]
+    },
+    {
+      "id": "miyora.aoi",
+      "name": "Aoi",
+      "body": "humanoid",
+      "model": "aoi/model.vrm",
+      "source": "aoi/source.blend",
+      "sha256": "5cd96d2600a89a3776f7286dfa762c33b24afae196d31a65224df0ebb62954d4",
+      "triangles": 36004,
+      "animations": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ]
+    },
+    {
+      "id": "miyora.ember",
+      "name": "Ember",
+      "body": "beast",
+      "model": "ember/model.vrm",
+      "source": "ember/source.blend",
+      "sha256": "0c9deed1e2ebd2bad387122ef57a30cdf3844f42a46b912054617324913dfae6",
+      "triangles": 37168,
+      "animations": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.lumeow",
+  "name": "Lumeow",
+  "title": "Dream Kitten",
+  "description": "Floats a little when it dreams, which is most of the time.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a5f3fc",
+    "hair": "#ecfeff",
+    "eyes": "#6d28d9",
+    "primary": "#a5f3fc",
+    "secondary": "#22d3ee",
+    "accent": "#f0abfc"
+  },
+  "proportions": {
+    "height": 0.84,
+    "headScale": 1.32,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.1,
+  "tags": [
+    "pocket-monster",
+    "psychic",
+    "cute"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

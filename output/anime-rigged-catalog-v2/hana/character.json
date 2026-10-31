@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hana",
+  "name": "Hana",
+  "title": "Garden Botanist",
+  "description": "Grows tidy modules the way she grows tomatoes: patiently.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bun",
+  "eyes": "round",
+  "outfit": "overalls",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#9a3412",
+    "eyes": "#65a30d",
+    "primary": "#84cc16",
+    "secondary": "#365314",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "nature",
+    "calm"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}

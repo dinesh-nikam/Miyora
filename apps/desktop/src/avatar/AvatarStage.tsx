@@ -7,6 +7,7 @@ import type { PetState } from "../components/CompanionRenderer";
 import { disposeObject, disposeScene } from "./dispose";
 import { applyToRig, applyToSculpt, applyToVrm, easePose, motionFor, POSE_EASE_RATE, restPose, type LookTarget } from "./motion";
 import { StageProps } from "./props";
+import { modelResponseBytes } from "./modelTransport";
 import { buildCharacter, type CharacterRig } from "./rig";
 import { subjectKey, type AvatarHud, type StageSubject } from "./types";
 
@@ -41,10 +42,7 @@ const modelCache = new Map<string, ArrayBuffer>();
 async function fetchModel(avatarId: string, sha256: string): Promise<ArrayBuffer> {
   const cached = modelCache.get(sha256);
   if (cached) return cached;
-  const bytes = await invoke<ArrayBuffer>("get_avatar_model", { avatarId });
-  if (!(bytes instanceof ArrayBuffer)) {
-    throw new Error("AVATAR_MODEL_READ_FAILED: model response was not binary");
-  }
+  const bytes = modelResponseBytes(await invoke<unknown>("get_avatar_model", { avatarId }));
   modelCache.set(sha256, bytes);
   while (modelCache.size > MODEL_CACHE_LIMIT) {
     const oldest = modelCache.keys().next().value;
@@ -218,7 +216,8 @@ export function AvatarStage({ subject, state, hud = null, size = 240, interactiv
       const stage = stageRef.current;
       if (!stage) return;
       const avatar = stage.avatar;
-      const motion = motionFor(stateRef.current, elapsed, avatar?.energy ?? 1);
+      const currentSpec = avatar?.kind === "rig" ? avatar.rig.spec : (subjectRef.current?.kind === "procedural" ? subjectRef.current.spec : null);
+      const motion = motionFor(stateRef.current, elapsed, avatar?.energy ?? 1, currentSpec);
       sinceRender += dt;
       if (sinceRender < 1 / motion.frameRate) return;
       const step = Math.min(sinceRender, MAX_FRAME_STEP);

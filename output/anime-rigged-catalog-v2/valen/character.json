@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.valen",
+  "name": "Valen",
+  "title": "Vampire Noble",
+  "description": "Only works night shifts, and only on elegant code.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "bat",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "coat",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f5ece8",
+    "hair": "#e5e7eb",
+    "eyes": "#dc2626",
+    "primary": "#450a0a",
+    "secondary": "#1c1917",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "anime",
+    "vampire"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#94a3b8"
+}

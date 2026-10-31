@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sun-wukong",
+  "name": "Sun Wukong",
+  "title": "Great Sage Equal to Heaven",
+  "description": "The Monkey King crowned with the golden fillet, clad in crimson and gold armor, wielding the Ruyi Jingu Bang.",
+  "body": "beast",
+  "ears": "human",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sparkle",
+  "outfit": "armor",
+  "accessories": [
+    "headband",
+    "staff",
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fad7b9",
+    "hair": "#d7965f",
+    "eyes": "#ffb703",
+    "primary": "#e63946",
+    "secondary": "#ffb703",
+    "accent": "#232832"
+  },
+  "proportions": {
+    "height": 0.98,
+    "headScale": 1.14,
+    "build": 1.1,
+    "limbLength": 1.02
+  },
+  "energy": 1.6,
+  "tags": [
+    "mythology",
+    "avatar",
+    "wukong",
+    "monkey",
+    "sage"
+  ],
+  "personality": "playful",
+  "specialty": "Distributed Chaos",
+  "catchphrase": "Seven-fold transformations for every deployment.",
+  "hairTip": "#ffb703"
+}

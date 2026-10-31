@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.luffy",
+  "name": "Luffy",
+  "title": "Straw Hat Captain",
+  "description": "Fearless pirate captain with straw hat, bold red vest, denim shorts, chest scar, and boundless optimism.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#0c0a09",
+    "eyes": "#1e293b",
+    "primary": "#dc2626",
+    "secondary": "#0284c7",
+    "accent": "#eab308"
+  },
+  "proportions": {
+    "height": 0.98,
+    "headScale": 1.08,
+    "build": 1,
+    "limbLength": 1.05
+  },
+  "energy": 1.6,
+  "tags": [
+    "anime",
+    "avatar",
+    "pirate",
+    "luffy",
+    "captain"
+  ],
+  "personality": "fearless",
+  "specialty": "Rapid Prototyping",
+  "catchphrase": "I'm gonna be the King of Shipped Features!"
+}

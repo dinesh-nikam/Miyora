@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.magma",
+  "name": "Magma",
+  "title": "Lava Slime",
+  "description": "Bubbles hotter as CPU usage climbs.",
+  "body": "slime",
+  "ears": "horns",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f97316",
+    "hair": "#dc2626",
+    "eyes": "#450a0a",
+    "primary": "#f97316",
+    "secondary": "#dc2626",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "slime",
+    "fire"
+  ],
+  "personality": "fluid",
+  "specialty": "Dynamic Elasticity",
+  "catchphrase": "Wobbling through edge cases smoothly."
+}

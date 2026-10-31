@@ -86,6 +86,9 @@ export interface CharacterSpec {
   proportions: Proportions;
   energy: number;
   tags: string[];
+  catchphrase?: string;
+  specialty?: string;
+  personality?: string;
 }
 
 export type AvatarSource = "catalog" | "custom";

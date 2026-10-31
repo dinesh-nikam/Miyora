@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sanji",
+  "name": "Sanji",
+  "title": "Black Leg Chef",
+  "description": "Refined ship cook in impeccable black suit with swept blond fringe and fiery diable jambe footwork.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "suit",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#facc15",
+    "eyes": "#1e293b",
+    "primary": "#0f172a",
+    "secondary": "#1e1b4b",
+    "accent": "#ea580c"
+  },
+  "proportions": {
+    "height": 1.08,
+    "headScale": 0.96,
+    "build": 1.05,
+    "limbLength": 1.12
+  },
+  "energy": 1.2,
+  "tags": [
+    "anime",
+    "avatar",
+    "chef",
+    "sanji",
+    "suit"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

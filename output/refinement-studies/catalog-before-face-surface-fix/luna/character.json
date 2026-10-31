@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.luna",
+  "name": "Luna",
+  "title": "Moon Wolf",
+  "description": "Howls once when the nightly build goes green.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#94a3b8",
+    "hair": "#e2e8f0",
+    "eyes": "#38bdf8",
+    "primary": "#64748b",
+    "secondary": "#1e293b",
+    "accent": "#a5b4fc"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "wolf",
+    "night"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

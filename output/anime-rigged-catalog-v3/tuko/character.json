@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tuko",
+  "name": "Tuko",
+  "title": "Toucan Navigator",
+  "description": "Navigates jungles of nested callbacks.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#1c1917",
+    "hair": "#fef3c7",
+    "eyes": "#0ea5e9",
+    "primary": "#1c1917",
+    "secondary": "#fef3c7",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "toucan",
+    "explorer"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

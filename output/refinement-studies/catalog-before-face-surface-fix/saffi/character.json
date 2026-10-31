@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.saffi",
+  "name": "Saffi",
+  "title": "Ember Wyrmling",
+  "description": "Hoards achievements like gold.",
+  "body": "beast",
+  "ears": "horns",
+  "tail": "dragon",
+  "wings": "bat",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "crown"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#dc2626",
+    "hair": "#7f1d1d",
+    "eyes": "#facc15",
+    "primary": "#dc2626",
+    "secondary": "#450a0a",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "dragon"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

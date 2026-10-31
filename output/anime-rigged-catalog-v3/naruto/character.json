@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.naruto",
+  "name": "Naruto",
+  "title": "Hero of the Hidden Leaf",
+  "description": "Spirited ninja with spiky blond hair, metallic Leaf forehead protector, whisker marks, and rasengan energy.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fcd5be",
+    "hair": "#facc15",
+    "eyes": "#0284c7",
+    "primary": "#ea580c",
+    "secondary": "#1f2937",
+    "accent": "#f8fafc"
+  },
+  "proportions": {
+    "height": 0.98,
+    "headScale": 1.08,
+    "build": 1.02,
+    "limbLength": 1
+  },
+  "energy": 1.6,
+  "tags": [
+    "anime",
+    "avatar",
+    "ninja",
+    "naruto",
+    "leaf"
+  ],
+  "personality": "spirited",
+  "specialty": "Continuous Delivery",
+  "catchphrase": "Believe it! I never back down from a failing build."
+}

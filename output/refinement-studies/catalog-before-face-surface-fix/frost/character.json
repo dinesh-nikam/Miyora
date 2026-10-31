@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.frost",
+  "name": "Frost",
+  "title": "Arctic Fox Scout",
+  "description": "Leaves neat footprints across snowy logs.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f1f5f9",
+    "hair": "#e2e8f0",
+    "eyes": "#38bdf8",
+    "primary": "#f1f5f9",
+    "secondary": "#cbd5e1",
+    "accent": "#0ea5e9"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "fox",
+    "winter"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

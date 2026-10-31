@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "style": "full-anime",
+  "characters": [
+    {
+      "id": "miyora.nezuko",
+      "name": "Nezuko",
+      "body": "humanoid",
+      "model": "nezuko/model.vrm",
+      "source": "nezuko/source.blend",
+      "sha256": "dfd46c0839dcf94c61d1c9dd2adcb787672a9aaa6f5f65cd4b309e93dbc3972d",
+      "triangles": 38600,
+      "animations": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ]
+    },
+    {
+      "id": "miyora.magnebit",
+      "name": "Magnebit",
+      "body": "robot",
+      "model": "magnebit/model.vrm",
+      "source": "magnebit/source.blend",
+      "sha256": "47d25ac73018f85ee7abb39099ca00a8db0c61687375e955787a29668acc43d1",
+      "triangles": 18296,
+      "animations": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ]
+    },
+    {
+      "id": "miyora.puffaloo",
+      "name": "Puffaloo",
+      "body": "slime",
+      "model": "puffaloo/model.vrm",
+      "source": "puffaloo/source.blend",
+      "sha256": "4c3084158f8aec816d1a254d5e6fea075c86752de52b44cce44096465dda5af8",
+      "triangles": 14060,
+      "animations": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ]
+    }
+  ]
+}

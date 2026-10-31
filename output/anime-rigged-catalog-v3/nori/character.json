@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.nori",
+  "name": "Nori",
+  "title": "River Otter Engineer",
+  "description": "Builds dams of clean abstractions.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "overalls",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#78350f",
+    "hair": "#fef3c7",
+    "eyes": "#1c1917",
+    "primary": "#0284c7",
+    "secondary": "#0c4a6e",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "otter",
+    "maker"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

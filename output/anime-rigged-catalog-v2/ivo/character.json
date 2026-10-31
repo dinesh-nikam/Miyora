@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.ivo",
+  "name": "Ivo",
+  "title": "Glacier Engineer",
+  "description": "Keeps hot paths ice cold.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "overalls",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#f1f5f9",
+    "eyes": "#38bdf8",
+    "primary": "#0ea5e9",
+    "secondary": "#1e293b",
+    "accent": "#fef08a"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "maker",
+    "winter"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

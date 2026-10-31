@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hoshimi",
+  "name": "Hoshimi",
+  "title": "Magical Star Girl",
+  "description": "Transforms failing tests into shooting stars.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "twintails",
+  "eyes": "sparkle",
+  "outfit": "sailor",
+  "accessories": [
+    "wand",
+    "bow"
+  ],
+  "pattern": "stars",
+  "palette": {
+    "skin": "#fbe3d4",
+    "hair": "#f9a8d4",
+    "eyes": "#db2777",
+    "primary": "#f8fafc",
+    "secondary": "#ec4899",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.5,
+  "tags": [
+    "anime",
+    "magical-girl"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#fde047"
+}

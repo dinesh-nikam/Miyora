@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.suki",
+  "name": "Suki",
+  "title": "Tea House Host",
+  "description": "Serves green tea and green test suites.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bun",
+  "eyes": "round",
+  "outfit": "kimono",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "waves",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#3f1d0b",
+    "eyes": "#166534",
+    "primary": "#15803d",
+    "secondary": "#fef3c7",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.8,
+  "tags": [
+    "calm"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}

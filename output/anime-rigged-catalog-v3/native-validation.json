@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "clientDate": "2026-10-30",
+  "revision": "refined-catalog-v3.2",
+  "nativeValidated": 213,
+  "nativeImported": 213,
+  "uniqueImportedAvatars": 213,
+  "verifiedExistingModelsReused": true,
+  "selectedCharacter": "miyora.nezuko",
+  "selectedModelSha256": "72606e033377db18fc29c91da0505612ed88c77c2b0caa73ddcb3e8c53616a87",
+  "nativeStudioRender": "observed",
+  "nativeOverlayVerification": "verified-visible-3d-mode",
+  "renderMode": "3d",
+  "selectedDisplayName": "Nezuko · Refined"
+}

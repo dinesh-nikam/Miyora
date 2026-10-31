@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.lakshmi",
+  "name": "Lakshmi",
+  "title": "Goddess of Prosperity",
+  "description": "Radiant goddess of abundance surrounded by blooming pink lotuses, draped in magenta and shower of gold.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "crown",
+    "flower",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fbe3d4",
+    "hair": "#1c1917",
+    "eyes": "#451a03",
+    "primary": "#be123c",
+    "secondary": "#ffd700",
+    "accent": "#fda4af"
+  },
+  "proportions": {
+    "height": 0.98,
+    "headScale": 1.04,
+    "build": 0.92,
+    "limbLength": 1.0
+  },
+  "energy": 1.1,
+  "tags": [
+    "devotional",
+    "avatar",
+    "goddess",
+    "lakshmi",
+    "prosperity"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}

@@ -118,7 +118,11 @@ Rendering uses `@pixiv/three-vrm`: `VRMUtils.rotateVRM0` for VRM 0.x, normalizat
 | `avatar_customizations` | One validated full spec per customized catalog id |
 | `custom_avatars` | `avatar_id`, `kind` (`procedural`, `image_sculpt`, `vrm`), `name`, `spec_json` (procedural only), `model_file` and `model_sha256` (model kinds only), `triangle_count`, `metadata_json`, `source_avatar_id`, timestamps. CHECK constraints enforce the kind/column pairing |
 
-Model files live in `<app data>/avatars/<avatar_id>/` and are written to a staging directory first, then renamed. Only the relative file name is stored. Reads canonicalize the path, refuse anything outside the avatar directory, enforce a size bound, and verify the recorded SHA-256 before returning bytes. The library holds at most 200 custom avatars. Deleting the selected custom avatar returns the selection to the default character in the same transaction.
+Model files live in `<app data>/avatars/<avatar_id>/` and are written to a staging directory first, then renamed. Only the relative file name is stored. Reads canonicalize the path, refuse anything outside the avatar directory, enforce a size bound, and verify the recorded SHA-256 before returning bytes. The library holds at most 512 custom avatars, accommodating the 213-character model collection alongside personal imports. Single-model and paired image imports both enforce the same limit. Deleting the selected custom avatar returns the selection to the default character in the same transaction.
+
+Interrupted-import cleanup finishes before the UI can begin new imports. Bundled PetPack seeding runs on a finite startup worker after the local core and window state are ready. Pack image decoding does not block Tauri's native event loop; newly seeded packs appear through normal state polling. Pack validation and atomic installation remain unchanged.
+
+The model transport accepts both Tauri's binary `ArrayBuffer` response and its JSON byte-array fallback, with the same 50 MiB bound as native VRM validation. Invalid or out-of-range bytes fail before model allocation or parsing.
 
 ## Rendering and data
 

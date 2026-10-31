@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sayuri",
+  "name": "Sayuri",
+  "title": "Shrine Maiden",
+  "description": "Keeps the shrine of stable releases swept and quiet.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "hime",
+  "eyes": "sleepy",
+  "outfit": "hakama",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#0c0a09",
+    "eyes": "#991b1b",
+    "primary": "#f8fafc",
+    "secondary": "#dc2626",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.7,
+  "tags": [
+    "anime",
+    "miko"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

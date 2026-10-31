@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.frizzle",
+  "name": "Frizzle",
+  "title": "Snowdrift Chick",
+  "description": "A fluffy chick that sneezes snowflakes.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0f2fe",
+    "hair": "#ffffff",
+    "eyes": "#0c4a6e",
+    "primary": "#e0f2fe",
+    "secondary": "#bae6fd",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 0.82,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.1,
+  "tags": [
+    "pocket-monster",
+    "ice",
+    "cute"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

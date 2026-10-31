@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.ichigo",
+  "name": "Ichigo",
+  "title": "Substitute Shinigami",
+  "description": "Orange-haired protector in black soul reaper hakama wielding the black Zangetsu cleaver with fierce resolve.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "katana"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#ea580c",
+    "eyes": "#854d0e",
+    "primary": "#0f172a",
+    "secondary": "#f8fafc",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1.08,
+    "headScale": 0.96,
+    "build": 1.14,
+    "limbLength": 1.08
+  },
+  "energy": 1.4,
+  "tags": [
+    "anime",
+    "avatar",
+    "reaper",
+    "ichigo",
+    "shinigami"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#f97316"
+}

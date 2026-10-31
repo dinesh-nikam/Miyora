@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.lunaria",
+  "name": "Lunaria",
+  "title": "Moon Princess",
+  "description": "Rules the night shift from a silver tower.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "fairy",
+  "hair": "long",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "crown",
+    "wand"
+  ],
+  "pattern": "stars",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#e0e7ff",
+    "eyes": "#818cf8",
+    "primary": "#312e81",
+    "secondary": "#e0e7ff",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.9,
+  "tags": [
+    "anime",
+    "princess"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#818cf8"
+}

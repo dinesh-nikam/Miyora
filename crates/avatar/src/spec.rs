@@ -245,6 +245,15 @@ pub struct CharacterSpec {
     pub energy: f32,
     #[serde(default)]
     pub tags: Vec<String>,
+    /// Optional signature catchphrase or developer philosophy.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub catchphrase: Option<String>,
+    /// Optional engineering specialty or role domain.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub specialty: Option<String>,
+    /// Optional core personality temperament.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub personality: Option<String>,
 }
 
 impl CharacterSpec {
@@ -311,6 +320,15 @@ impl CharacterSpec {
                     format!("tag `{tag}` must be 1-{MAX_TAG_CHARS} lowercase ASCII letters, digits, or hyphens"),
                 ));
             }
+        }
+        if let Some(catchphrase) = &self.catchphrase {
+            validate_text("catchphrase", catchphrase, 1, 160)?;
+        }
+        if let Some(specialty) = &self.specialty {
+            validate_text("specialty", specialty, 1, 48)?;
+        }
+        if let Some(personality) = &self.personality {
+            validate_text("personality", personality, 1, 32)?;
         }
         Ok(())
     }
@@ -411,6 +429,9 @@ pub(crate) fn sample_spec() -> CharacterSpec {
         proportions: Proportions::default(),
         energy: 1.0,
         tags: vec!["fox".into()],
+        catchphrase: Some("Always one step ahead of the stack trace.".into()),
+        specialty: Some("Rapid Triage".into()),
+        personality: Some("clever".into()),
     }
 }
 

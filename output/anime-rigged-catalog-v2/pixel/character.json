@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.pixel",
+  "name": "Pixel",
+  "title": "Pocket Assistant",
+  "description": "Small enough to sit on your taskbar, bright enough to light it.",
+  "body": "robot",
+  "ears": "antenna",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "plating",
+  "accessories": [
+    "headphones"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a7f3d0",
+    "hair": "#34d399",
+    "eyes": "#0f172a",
+    "primary": "#6ee7b7",
+    "secondary": "#065f46",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 0.85,
+    "headScale": 1.25,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "robot",
+    "cute"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

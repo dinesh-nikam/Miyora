@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sled",
+  "name": "Sled",
+  "title": "Husky Hauler",
+  "description": "Hauls heavy migrations through the snow.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#64748b",
+    "hair": "#f8fafc",
+    "eyes": "#0ea5e9",
+    "primary": "#dc2626",
+    "secondary": "#1e293b",
+    "accent": "#f8fafc"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1.15,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "dog",
+    "winter"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

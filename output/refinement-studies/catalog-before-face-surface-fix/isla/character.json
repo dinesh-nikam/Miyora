@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.isla",
+  "name": "Isla",
+  "title": "Coral Diver",
+  "description": "Dives deep into legacy code and surfaces with pearls.",
+  "body": "humanoid",
+  "ears": "fin",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bob",
+  "eyes": "round",
+  "outfit": "dress",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#c68863",
+    "hair": "#0d9488",
+    "eyes": "#2dd4bf",
+    "primary": "#0e7490",
+    "secondary": "#134e4a",
+    "accent": "#fb7185"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "ocean"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.biscuit",
+  "name": "Biscuit",
+  "title": "Floppy-Eared Tester",
+  "description": "Fetches every edge case and drops it at your feet.",
+  "body": "beast",
+  "ears": "floppy",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "hoodie",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#d6a26b",
+    "hair": "#92400e",
+    "eyes": "#451a03",
+    "primary": "#dc2626",
+    "secondary": "#7f1d1d",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.4,
+  "tags": [
+    "dog",
+    "tester"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

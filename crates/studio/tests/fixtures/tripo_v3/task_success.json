@@ -1,0 +1,16 @@
+{
+  "code": 0,
+  "data": {
+    "task_id": "task_abc123",
+    "type": "text_to_model",
+    "status": "success",
+    "progress": 100,
+    "output": {
+      "model_url": "https://cdn.tripo3d.ai/output/model_pbr.glb",
+      "rendered_image_url": "https://cdn.tripo3d.ai/output/preview.png"
+    },
+    "credits_consumed": 100.00,
+    "created_at": "2026-04-28T12:00:00Z",
+    "completed_at": "2026-04-28T12:01:30Z"
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.bjorn",
+  "name": "Bjorn",
+  "title": "Shield Bearer",
+  "description": "Stands between your main branch and every bad merge.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#ca8a04",
+    "eyes": "#1e40af",
+    "primary": "#64748b",
+    "secondary": "#334155",
+    "accent": "#eab308"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1.25,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "knight"
+  ],
+  "personality": "stoic",
+  "specialty": "Branch Guarding",
+  "catchphrase": "Stand between main and bad merges."
+}

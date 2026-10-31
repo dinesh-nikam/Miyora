@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.l-lawliet",
+  "name": "L Lawliet",
+  "title": "Eccentric Master Detective",
+  "description": "Crouching world detective in loose white tee with messy bedhead, dark circles, and sugar-fueled logic.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sleepy",
+  "outfit": "tunic",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f5ece8",
+    "hair": "#111827",
+    "eyes": "#1e1b4b",
+    "primary": "#f8fafc",
+    "secondary": "#334155",
+    "accent": "#ef4444"
+  },
+  "proportions": {
+    "height": 0.96,
+    "headScale": 1.12,
+    "build": 0.9,
+    "limbLength": 1.02
+  },
+  "energy": 0.7,
+  "tags": [
+    "anime",
+    "avatar",
+    "detective",
+    "l-lawliet",
+    "mystery"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

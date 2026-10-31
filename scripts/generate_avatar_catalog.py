@@ -36,8 +36,60 @@ PALETTE_KEYS = ("skin", "hair", "eyes", "primary", "secondary", "accent")
 HEX = re.compile(r"^[0-9a-f]{6}$")
 
 
+def derive_identity(slug: str, name: str, title: str, body: str, tags: list[str]) -> tuple[str, str, str]:
+    tag_set = set(tags)
+    ICONIC = {
+        "aoi": ("composed", "Async Pipelines", "Calm code, steady commits, zero drama."),
+        "kenji": ("relentless", "Root Cause Debugging", "Stack traces at 3 a.m. are the truest truth."),
+        "mira": ("inquisitive", "Type Architecture", "I read build logs like constellations."),
+        "gojo": ("confident", "Fault Tolerance", "Don't sweat the compiler. I'm the strongest."),
+        "tanjiro": ("earnest", "Test-Driven TDD", "Work through every red test until it turns green!"),
+        "nezuko": ("protective", "Workspace Security", "Guarding your project workspace with gentle ferocity."),
+        "zoro": ("stoic", "Dead-Code Elimination", "Nothing happened... just three clean commits."),
+        "luffy": ("fearless", "Rapid Prototyping", "I'm gonna be the King of Shipped Features!"),
+        "saitama": ("deadpan", "Single-Pass Optimization", "One punch. One test. Done."),
+        "frieren": ("timeless", "Legacy Maintenance", "Take your time. A century of maintenance is nothing."),
+        "anya": ("cheerful", "Telepathic Linting", "Waku waku! All tests passed!"),
+        "krishna": ("serene", "Divine Orchestration", "Action without attachment ships the finest code."),
+        "hanuman": ("loyal", "Heavy Infrastructure", "Leaping across regions with boundless energy."),
+        "naruto": ("spirited", "Continuous Delivery", "Believe it! I never back down from a failing build."),
+        "sasuke": ("intense", "Precision Refactoring", "Weak abstractions are unacceptable."),
+        "goku": ("cheerful", "Stress Testing", "This benchmark looks strong! Let's push it higher!"),
+        "vegeta": ("proud", "Zero-Regression CI", "A Saiyan prince does not push broken builds."),
+        "levi": ("disciplined", "Code Cleanup", "Tidy your modules. Filthy code is unacceptable."),
+        "mikasa": ("steadfast", "Branch Protection", "I will protect this repository at all costs."),
+        "denji": ("chaotic", "Brute-Force Patching", "If it runs, I get jam on my toast!"),
+        "power": ("boastful", "Chaos Engineering", "Bow before my genius! The bug was terrified of me!"),
+        "pikachu": ("perky", "Cache Re-ignition", "Pika! Lighting up the build pipeline!"),
+        "shiva": ("transcendent", "Garbage Collection", "Destroying memory leaks with cosmic stillness."),
+        "arjuna": ("focused", "Targeted Unit Tests", "My focus never wavers from the target assertion."),
+        "sun-wukong": ("playful", "Distributed Chaos", "Seven-fold transformations for every deployment."),
+        "ninja-cat": ("stealthy", "Silent Instrumentation", "Tracing execution unseen in the shadows."),
+    }
+    if slug in ICONIC:
+        return ICONIC[slug]
+    if any(k in tag_set for k in ("sword", "samurai", "knight", "warrior", "archer", "blade")):
+        return ("stoic", "Branch Guarding", "Stand between main and bad merges.")
+    if any(k in tag_set for k in ("magic", "witch", "mage", "sorcerer", "cleric")):
+        return ("mystical", "AST Transmutation", "Casting clean checkmarks into the terminal.")
+    if body == "robot" or "robot" in tag_set:
+        return ("methodical", "Deterministic CI", "Zero syntax faults allowed.")
+    if body == "beast" or any(k in tag_set for k in ("cat", "fox", "dog", "cute", "pocket-monster")):
+        return ("playful", "Cache & Triage", "Pouncing on stale dependencies with a grin!")
+    if body == "slime":
+        return ("fluid", "Dynamic Elasticity", "Wobbling through edge cases smoothly.")
+    if "night" in tag_set or "scholar" in tag_set:
+        return ("analytical", "Deep Inspection", "Every stack trace reveals the system's truth.")
+    if "speedy" in tag_set:
+        return ("energetic", "Fast-Path Execution", "Faster than the next clock cycle.")
+    if any(k in tag_set for k in ("calm", "nature", "cozy", "devotional")):
+        return ("zen", "Code Cleanliness", "Patient cultivation builds stable software.")
+    return ("focused", "Full-Stack Engineering", "Ship clean, verify always.")
+
+
 def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessories, palette, description, tags,
-      energy=1.0, height=1.0, head=1.0, build=1.0, limbs=1.0, pattern="none", tip=None):
+      energy=1.0, height=1.0, head=1.0, build=1.0, limbs=1.0, pattern="none", tip=None,
+      catchphrase=None, specialty=None, personality=None):
     colors = palette.split()
     if len(colors) != len(PALETTE_KEYS) or not all(HEX.match(color) for color in colors):
         raise ValueError(f"{slug}: palette must contain six lowercase hex colors")
@@ -53,6 +105,8 @@ def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessorie
     for accessory in accessory_list:
         if accessory not in ACCESSORIES:
             raise ValueError(f"{slug}: unknown accessory `{accessory}`")
+    tag_list = tags.split()
+    default_p, default_s, default_cp = derive_identity(slug, name, title, body, tag_list)
     character = {
         "schemaVersion": 1,
         "id": f"miyora.{slug}",
@@ -71,7 +125,10 @@ def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessorie
         "palette": {key: f"#{color}" for key, color in zip(PALETTE_KEYS, colors)},
         "proportions": {"height": height, "headScale": head, "build": build, "limbLength": limbs},
         "energy": energy,
-        "tags": tags.split(),
+        "tags": tag_list,
+        "personality": personality or default_p,
+        "specialty": specialty or default_s,
+        "catchphrase": catchphrase or default_cp,
     }
     if tip is not None:
         character["hairTip"] = f"#{tip}"

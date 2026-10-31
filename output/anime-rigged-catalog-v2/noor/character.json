@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.noor",
+  "name": "Noor",
+  "title": "Moonlit Scholar",
+  "description": "Annotates documentation by lamplight.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sleepy",
+  "outfit": "robe",
+  "accessories": [
+    "glasses",
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a86b4c",
+    "hair": "#0f172a",
+    "eyes": "#a78bfa",
+    "primary": "#1e1b4b",
+    "secondary": "#6d28d9",
+    "accent": "#e9d5ff"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "scholar",
+    "night"
+  ],
+  "personality": "analytical",
+  "specialty": "Deep Inspection",
+  "catchphrase": "Every stack trace reveals the system's truth."
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hayato",
+  "name": "Hayato",
+  "title": "Rival Swordsman",
+  "description": "Always one benchmark behind you, and determined to win.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "katana"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#1e3a8a",
+    "eyes": "#0284c7",
+    "primary": "#1e293b",
+    "secondary": "#64748b",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.4,
+  "tags": [
+    "anime",
+    "rival"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#38bdf8"
+}

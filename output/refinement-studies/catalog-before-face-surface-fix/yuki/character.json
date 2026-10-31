@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.yuki",
+  "name": "Yuki",
+  "title": "Snow Spirit",
+  "description": "A quiet spirit who settles over idle terminals like fresh snow.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sleepy",
+  "outfit": "kimono",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "petals",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#e0f2fe",
+    "eyes": "#7dd3fc",
+    "primary": "#e0f2fe",
+    "secondary": "#93c5fd",
+    "accent": "#f9a8d4"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.7,
+  "tags": [
+    "spirit",
+    "winter"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#bae6fd"
+}

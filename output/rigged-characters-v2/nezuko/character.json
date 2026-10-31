@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.nezuko",
+  "name": "Nezuko",
+  "title": "Beloved Kimono Sister",
+  "description": "Beloved companion with flowing black hair fading to fiery orange tips, bamboo muzzle, and pink kimono.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "kimono",
+  "accessories": [
+    "bow"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fde2d2",
+    "hair": "#111827",
+    "eyes": "#f43f5e",
+    "primary": "#f472b6",
+    "secondary": "#1c1917",
+    "accent": "#ea580c"
+  },
+  "proportions": {
+    "height": 0.88,
+    "headScale": 1.18,
+    "build": 0.92,
+    "limbLength": 0.92
+  },
+  "energy": 1.1,
+  "tags": [
+    "anime",
+    "avatar",
+    "kimono",
+    "nezuko",
+    "demon"
+  ],
+  "personality": "protective",
+  "specialty": "Workspace Security",
+  "catchphrase": "Guarding your project workspace with gentle ferocity.",
+  "hairTip": "#ea580c"
+}

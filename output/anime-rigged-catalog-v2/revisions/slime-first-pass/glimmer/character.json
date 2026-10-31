@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.glimmer",
+  "name": "Glimmer",
+  "title": "Crystal Slime",
+  "description": "Refracts status lights into rainbows.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "halo"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a5f3fc",
+    "hair": "#67e8f9",
+    "eyes": "#164e63",
+    "primary": "#a5f3fc",
+    "secondary": "#22d3ee",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "slime",
+    "magic"
+  ],
+  "personality": "mystical",
+  "specialty": "AST Transmutation",
+  "catchphrase": "Casting clean checkmarks into the terminal."
+}

@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.kodama-spirit",
+  "name": "Suzu",
+  "title": "Forest Sprout Spirit",
+  "description": "Gentle porcelain forest spirit with tilted bobblehead, fresh clover sprout, soft celadon glow, and lotus leaf umbrella.",
+  "body": "humanoid",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "staff"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fdfbf7",
+    "hair": "#ecfdf5",
+    "eyes": "#1c1917",
+    "primary": "#ecfdf5",
+    "secondary": "#a7f3d0",
+    "accent": "#34d399"
+  },
+  "proportions": {
+    "height": 0.84,
+    "headScale": 1.35,
+    "build": 0.88,
+    "limbLength": 0.88
+  },
+  "energy": 0.8,
+  "tags": [
+    "ghibli",
+    "avatar",
+    "spirit",
+    "kodama",
+    "forest"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

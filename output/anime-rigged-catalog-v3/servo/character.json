@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.servo",
+  "name": "Servo",
+  "title": "Butler Unit",
+  "description": "Announces every finished session with a bow.",
+  "body": "robot",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "suit",
+  "accessories": [
+    "bow"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e5e7eb",
+    "hair": "#9ca3af",
+    "eyes": "#0ea5e9",
+    "primary": "#1f2937",
+    "secondary": "#f8fafc",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.7,
+  "tags": [
+    "robot",
+    "butler"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

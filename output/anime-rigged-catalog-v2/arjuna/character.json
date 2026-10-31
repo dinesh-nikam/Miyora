@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.arjuna",
+  "name": "Arjuna",
+  "title": "Peerless Gandiva Archer",
+  "description": "Epic Pandava archer in midnight indigo armor with saffron cape, golden crest, and pinpoint cyan focus.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "ponytail",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [
+    "crown",
+    "cape",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f5d2b9",
+    "hair": "#0a0a20",
+    "eyes": "#00f0ff",
+    "primary": "#191c41",
+    "secondary": "#ff9933",
+    "accent": "#ffd700"
+  },
+  "proportions": {
+    "height": 1.05,
+    "headScale": 0.98,
+    "build": 1.12,
+    "limbLength": 1.05
+  },
+  "energy": 1.3,
+  "tags": [
+    "warrior",
+    "avatar",
+    "archer",
+    "arjuna",
+    "epic"
+  ],
+  "personality": "focused",
+  "specialty": "Targeted Unit Tests",
+  "catchphrase": "My focus never wavers from the target assertion.",
+  "hairTip": "#ff9933"
+}

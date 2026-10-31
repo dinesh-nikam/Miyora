@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.polly",
+  "name": "Polly",
+  "title": "Parrot Linguist",
+  "description": "Repeats error messages until someone listens.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "headphones"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#16a34a",
+    "hair": "#dc2626",
+    "eyes": "#1c1917",
+    "primary": "#16a34a",
+    "secondary": "#facc15",
+    "accent": "#2563eb"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.4,
+  "tags": [
+    "parrot",
+    "talkative"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

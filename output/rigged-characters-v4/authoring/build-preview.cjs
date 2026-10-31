@@ -1,0 +1,12 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const root=path.resolve(__dirname,'../..');
+const deps=path.join(root,'apps/desktop/node_modules');
+const esbuild=require(path.join(deps,'esbuild'));
+const model=process.argv[2], output=process.argv[3];
+if(!model||!output)throw new Error('Usage: node build-preview.cjs model.vrm preview.html');
+const bundle=esbuild.buildSync({entryPoints:[path.join(__dirname,'preview-entry.js')],bundle:true,write:false,format:'esm',minify:true,nodePaths:[deps],target:'es2022'}).outputFiles[0].text;
+const base64=fs.readFileSync(model).toString('base64');
+const html=`<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nezuko — Rigged 3D Model Review</title><style>*{box-sizing:border-box}body{margin:0;background:#14121d;color:#eee9f3;font:15px system-ui}header{padding:20px 24px;border-bottom:1px solid #36313f}h1{font-size:22px;margin:0 0 7px}p{margin:0;color:#b6afc4;font-size:13px}main{height:calc(100dvh - 144px);min-height:350px}canvas{display:block;width:100%;height:100%;touch-action:none}footer{display:flex;flex-wrap:wrap;align-items:center;gap:12px;padding:12px 24px;background:#211e2b}button,select{color:#eee9f3;background:#343040;border:1px solid #5d526b;border-radius:7px;padding:8px}label{display:flex;gap:6px;align-items:center;font-size:13px}#status{margin-top:8px;font-size:12px;color:#d8b4cc}</style><header><h1>Nezuko · Rigged model candidate</h1><p>Local Blender asset review · Drag to rotate · Scroll to zoom · Visual animation preview only</p><div id="status" role="status">Loading embedded 3D model…</div></header><main><canvas aria-label="Interactive skinned 3D Nezuko model"></canvas></main><footer><select id="animation" aria-label="Animation"></select><button id="pause">Pause animation</button><button id="front">Front</button><button id="back">Back</button><button id="side">Side</button><label><input type="checkbox" id="skeleton">Skeleton</label><label><input type="checkbox" id="blink" checked>Blink</label></footer><script>window.MODEL_BASE64="${base64}";</script><script type="module">${bundle.replaceAll('</script','<\\/script')}</script></html>`;
+fs.writeFileSync(output,html.replace('body{margin:0;', 'body{height:100dvh;display:flex;flex-direction:column;overflow:hidden;margin:0;').replace('main{height:calc(100dvh - 144px);min-height:350px}', 'main{flex:1;min-height:0}header,footer{flex:none}'));
+console.log(`Standalone offline 3D preview: ${output}`);

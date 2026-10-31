@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.pixkit",
+  "name": "Pixkit",
+  "title": "Pixie Kit",
+  "description": "The fairy form of Vixi, trailing ribbons and good luck.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "fairy",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "bow"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fbcfe8",
+    "hair": "#fdf2f8",
+    "eyes": "#831843",
+    "primary": "#fbcfe8",
+    "secondary": "#f472b6",
+    "accent": "#a5b4fc"
+  },
+  "proportions": {
+    "height": 0.86,
+    "headScale": 1.28,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.2,
+  "tags": [
+    "pocket-monster",
+    "fairy"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

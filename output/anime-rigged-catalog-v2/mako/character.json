@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.mako",
+  "name": "Mako",
+  "title": "Cloud-Step Monkey",
+  "description": "Leaps between clouds and cloud regions alike.",
+  "body": "beast",
+  "ears": "human",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#92400e",
+    "hair": "#78350f",
+    "eyes": "#f59e0b",
+    "primary": "#dc2626",
+    "secondary": "#facc15",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.5,
+  "tags": [
+    "monkey",
+    "speedy"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.bandit",
+  "name": "Bandit",
+  "title": "Raccoon Hacker",
+  "description": "Rummages through dumps for treasure.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "hoodie",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#78716c",
+    "hair": "#1c1917",
+    "eyes": "#facc15",
+    "primary": "#1c1917",
+    "secondary": "#44403c",
+    "accent": "#22c55e"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.2,
+  "tags": [
+    "raccoon",
+    "coder"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

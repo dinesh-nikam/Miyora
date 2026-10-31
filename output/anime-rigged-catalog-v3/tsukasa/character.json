@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tsukasa",
+  "name": "Tsukasa",
+  "title": "Wandering Ronin",
+  "description": "Drifts between repositories, fixing what others left behind.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "katana",
+    "scarf"
+  ],
+  "pattern": "waves",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#1c1917",
+    "eyes": "#78716c",
+    "primary": "#334155",
+    "secondary": "#78716c",
+    "accent": "#ca8a04"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.8,
+  "tags": [
+    "anime",
+    "samurai"
+  ],
+  "personality": "stoic",
+  "specialty": "Branch Guarding",
+  "catchphrase": "Stand between main and bad merges."
+}

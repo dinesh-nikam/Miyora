@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.kenji",
+  "name": "Kenji",
+  "title": "Night-Shift Debugger",
+  "description": "Lives for stack traces at 3 a.m. and never loses a breakpoint.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "jacket",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#111827",
+    "eyes": "#6366f1",
+    "primary": "#1f2937",
+    "secondary": "#4b5563",
+    "accent": "#818cf8"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "coder",
+    "night"
+  ],
+  "personality": "relentless",
+  "specialty": "Root Cause Debugging",
+  "catchphrase": "Stack traces at 3 a.m. are the truest truth."
+}

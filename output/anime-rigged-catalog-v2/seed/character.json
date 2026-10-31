@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.seed",
+  "name": "Seed",
+  "title": "Pocket Hamster",
+  "description": "Stores snacks and snippets in equal measure.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "overalls",
+  "accessories": [
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fdba74",
+    "hair": "#fff7ed",
+    "eyes": "#1c1917",
+    "primary": "#22c55e",
+    "secondary": "#14532d",
+    "accent": "#f43f5e"
+  },
+  "proportions": {
+    "height": 0.85,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.4,
+  "tags": [
+    "hamster",
+    "cute"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

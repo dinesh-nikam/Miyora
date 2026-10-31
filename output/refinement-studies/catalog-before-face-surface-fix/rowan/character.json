@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.rowan",
+  "name": "Rowan",
+  "title": "Forest Ranger",
+  "description": "Tracks every branch in the repository forest.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "ponytail",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#c68863",
+    "hair": "#7c2d12",
+    "eyes": "#15803d",
+    "primary": "#166534",
+    "secondary": "#78350f",
+    "accent": "#a3e635"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "nature",
+    "fantasy"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}

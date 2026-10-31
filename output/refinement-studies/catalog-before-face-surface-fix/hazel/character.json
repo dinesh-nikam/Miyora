@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hazel",
+  "name": "Hazel",
+  "title": "Acorn Archivist",
+  "description": "Stashes snippets for the long winter.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a16207",
+    "hair": "#fef3c7",
+    "eyes": "#451a03",
+    "primary": "#15803d",
+    "secondary": "#365314",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "squirrel",
+    "scholar"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

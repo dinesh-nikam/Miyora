@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.kazane",
+  "name": "Kazane",
+  "title": "Wind Tengu Guard",
+  "description": "Patrols the mountain pass between staging and production.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "feather",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "staff"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#1c1917",
+    "eyes": "#dc2626",
+    "primary": "#f8fafc",
+    "secondary": "#1c1917",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.2,
+  "tags": [
+    "anime",
+    "tengu"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

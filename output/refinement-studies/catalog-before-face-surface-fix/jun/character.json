@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.jun",
+  "name": "Jun",
+  "title": "Cafe Barista",
+  "description": "Brews strong coffee for long refactors.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "overalls",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#3f3f46",
+    "eyes": "#78350f",
+    "primary": "#78350f",
+    "secondary": "#fef3c7",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "cozy"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.ignis",
+  "name": "Ignis",
+  "title": "Dragonkin Smith",
+  "description": "Forges sturdy binaries in dragonfire.",
+  "body": "humanoid",
+  "ears": "horns",
+  "tail": "dragon",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#7f1d1d",
+    "eyes": "#f97316",
+    "primary": "#431407",
+    "secondary": "#7c2d12",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1.2,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "dragon",
+    "maker"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

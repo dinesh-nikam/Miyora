@@ -1,0 +1,14 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "archive": "miyora-213-rigged-models-refined.zip",
+  "bytes": 480317347,
+  "sha256": "b32018b9aaa7178a0d0577953217afe8722ecdaa5e2446faac1af27e2a7ce911",
+  "crcVerified": true,
+  "models": 213,
+  "blenderSources": 213,
+  "vrmFiles": 213,
+  "glbFiles": 213,
+  "reviewImages": 213,
+  "localImportIdsExcluded": true
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.puffaloo",
+  "name": "Puffaloo",
+  "title": "Lullaby Puff",
+  "description": "Sings everyone to sleep, then pouts that nobody listened.",
+  "body": "slime",
+  "ears": "cat",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "bow",
+    "headphones"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fed7aa",
+    "hair": "#ffedd5",
+    "eyes": "#0f766e",
+    "primary": "#fed7aa",
+    "secondary": "#fdba74",
+    "accent": "#2dd4bf"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "pocket-monster",
+    "normal",
+    "cute"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

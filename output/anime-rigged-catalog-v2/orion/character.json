@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.orion",
+  "name": "Orion",
+  "title": "Star Navigator",
+  "description": "Plots courses between distant microservices.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "suit",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#8a5a3c",
+    "hair": "#e5e7eb",
+    "eyes": "#93c5fd",
+    "primary": "#0f172a",
+    "secondary": "#1e3a8a",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "space",
+    "leader"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

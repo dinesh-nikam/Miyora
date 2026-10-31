@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.mira",
+  "name": "Mira",
+  "title": "Starlight Mage",
+  "description": "Reads build logs like constellations and casts green checkmarks.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sparkle",
+  "outfit": "robe",
+  "accessories": [
+    "witch_hat"
+  ],
+  "pattern": "stars",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#7c3aed",
+    "eyes": "#f0abfc",
+    "primary": "#312e81",
+    "secondary": "#4c1d95",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "magic",
+    "fantasy"
+  ],
+  "personality": "inquisitive",
+  "specialty": "Type Architecture",
+  "catchphrase": "I read build logs like constellations.",
+  "hairTip": "#f0abfc"
+}

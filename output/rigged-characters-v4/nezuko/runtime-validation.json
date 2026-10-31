@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "engine": "Chrome WebGL + three-vrm",
+  "vrm": true,
+  "triangles": 34140,
+  "bones": 51,
+  "skinned": 27,
+  "clips": [
+    "achievement",
+    "attention_required",
+    "celebrating",
+    "eating",
+    "error",
+    "hungry",
+    "idle",
+    "level_up",
+    "offline",
+    "paused",
+    "sleeping",
+    "success",
+    "thinking",
+    "waiting",
+    "working"
+  ],
+  "errors": [],
+  "captures": [
+    "D:\\mirai\\nezuko\\output\\rigged-characters-v4\\nezuko\\runtime-idle.png",
+    "D:\\mirai\\nezuko\\output\\rigged-characters-v4\\nezuko\\runtime-working.png",
+    "D:\\mirai\\nezuko\\output\\rigged-characters-v4\\nezuko\\runtime-success.png",
+    "D:\\mirai\\nezuko\\output\\rigged-characters-v4\\nezuko\\runtime-sleeping.png"
+  ]
+}

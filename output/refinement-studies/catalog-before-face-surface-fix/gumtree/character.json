@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.gumtree",
+  "name": "Gumtree",
+  "title": "Sleepy Koala",
+  "description": "Mostly asleep; wakes for green builds.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [
+    "headphones"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a8a29e",
+    "hair": "#e7e5e4",
+    "eyes": "#1c1917",
+    "primary": "#78716c",
+    "secondary": "#d6d3d1",
+    "accent": "#22c55e"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.5,
+  "tags": [
+    "koala",
+    "cozy"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

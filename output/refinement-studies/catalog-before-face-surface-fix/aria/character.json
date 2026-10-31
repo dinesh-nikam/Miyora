@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.aria",
+  "name": "Aria",
+  "title": "Wind Bard",
+  "description": "Sings release notes from the treetops.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "none",
+  "hair": "ponytail",
+  "eyes": "sparkle",
+  "outfit": "tunic",
+  "accessories": [
+    "cape",
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#65a30d",
+    "eyes": "#22c55e",
+    "primary": "#15803d",
+    "secondary": "#fef9c3",
+    "accent": "#f59e0b"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "music",
+    "fantasy"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

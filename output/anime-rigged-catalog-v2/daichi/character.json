@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.daichi",
+  "name": "Daichi",
+  "title": "School Delinquent",
+  "description": "Acts tough, then quietly fixes the flaky tests.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "coat",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#facc15",
+    "eyes": "#b45309",
+    "primary": "#111827",
+    "secondary": "#1f2937",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "anime",
+    "delinquent"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#f97316"
+}

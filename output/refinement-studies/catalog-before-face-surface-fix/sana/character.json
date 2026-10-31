@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sana",
+  "name": "Sana",
+  "title": "Origami Artist",
+  "description": "Folds complex problems into simple shapes.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bob",
+  "eyes": "sleepy",
+  "outfit": "kimono",
+  "accessories": [
+    "bow"
+  ],
+  "pattern": "dots",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#0c0a09",
+    "eyes": "#be123c",
+    "primary": "#fda4af",
+    "secondary": "#fff1f2",
+    "accent": "#e11d48"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.8,
+  "tags": [
+    "artist",
+    "calm"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}
