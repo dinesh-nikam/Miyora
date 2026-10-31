@@ -8,6 +8,7 @@ import { CommandDeck, ProviderReport } from "./components/CommandDeck";
 import { CharacterStudio } from "./avatar/CharacterStudio";
 import type { AvatarHud, ResolvedAvatar } from "./avatar/types";
 import { StudioView } from "./studio/StudioView";
+import { saveCompanionPreferences, useCompanionPreferences, type RenderMode } from "./settings/companionPreferences";
 
 interface RuntimeSnapshot {
   petState: PetState;
@@ -97,15 +98,11 @@ export default function App() {
   const [isCommandDeckOpen, setIsCommandDeckOpen] = useState(false);
 
   // Core Data
-  const [renderMode, setRenderMode] = useState<"3d" | "2d">(() => {
-    try {
-      const saved = localStorage.getItem("agentpet_render_mode");
-      if (saved === "2d" || saved === "3d") return saved;
-    } catch {
-      // ignore
-    }
-    return "3d";
-  });
+  const companionPreferences = useCompanionPreferences();
+  const renderMode = companionPreferences.renderMode;
+  const setRenderMode = (mode: RenderMode) => {
+    void saveCompanionPreferences({ renderMode: mode });
+  };
   const [snapshot, setSnapshot] = useState<RuntimeSnapshot>({
     petState: "idle",
     selectedPetId: null,
@@ -440,14 +437,10 @@ export default function App() {
       ? (totalInTokensToday ?? 0) + (totalOutTokensToday ?? 0)
       : null;
 
-  const [soundMuted, setSoundMuted] = useState<boolean>(() => {
-    return localStorage.getItem("agentpet_sound_muted") === "true";
-  });
+  const soundMuted = companionPreferences.soundMuted;
 
   const toggleSound = () => {
-    const next = !soundMuted;
-    setSoundMuted(next);
-    localStorage.setItem("agentpet_sound_muted", String(next));
+    void saveCompanionPreferences({ soundMuted: !soundMuted });
   };
 
   const handleNextPet = useCallback(async () => {
@@ -1172,13 +1165,7 @@ export default function App() {
               <div style={{ position: "absolute", top: "20px", right: "20px", zIndex: 10 }}>
                 <button
                   type="button"
-                  onClick={() => {
-                    const next = renderMode === "3d" ? "2d" : "3d";
-                    setRenderMode(next);
-                    try {
-                      localStorage.setItem("agentpet_render_mode", next);
-                    } catch {}
-                  }}
+                  onClick={() => setRenderMode(renderMode === "3d" ? "2d" : "3d")}
                   style={{
                     backgroundColor: renderMode === "3d" ? "rgba(250, 204, 21, 0.22)" : "rgba(15, 23, 42, 0.06)",
                     color: renderMode === "3d" ? "#854d0e" : "#475569",

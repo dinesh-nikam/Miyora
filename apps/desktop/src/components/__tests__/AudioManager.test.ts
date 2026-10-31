@@ -1,5 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from "vitest";
 import { AudioManager, playChime } from "../CompanionRenderer";
+import { resetCompanionPreferencesForTests, saveCompanionPreferences } from "../../settings/companionPreferences";
+
+// Rust echoes back the validated preferences it saved.
+vi.mock("@tauri-apps/api/core", () => ({
+  invoke: vi.fn(async (_command: string, args?: { preferences?: unknown }) => args?.preferences),
+}));
 
 class MockGainNode {
   gain = {
@@ -37,7 +43,7 @@ class MockAudioContext {
 describe("AudioManager", () => {
   beforeEach(() => {
     AudioManager.resetInstance();
-    localStorage.clear();
+    resetCompanionPreferencesForTests();
     // @ts-expect-error Mocking browser AudioContext
     window.AudioContext = MockAudioContext;
   });
@@ -80,8 +86,8 @@ describe("AudioManager", () => {
     expect(nextCtx).not.toBe(ctx);
   });
 
-  it("does not play chime when sound is muted in localStorage", () => {
-    localStorage.setItem("agentpet_sound_muted", "true");
+  it("does not play chime when sound is muted in Rust preferences", async () => {
+    await saveCompanionPreferences({ soundMuted: true });
     const manager = AudioManager.getInstance();
     const spy = vi.spyOn(manager, "getContext");
 

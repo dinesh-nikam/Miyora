@@ -703,7 +703,7 @@ pub fn write_glb(mesh: &ExportMesh) -> Vec<u8> {
     let mut bin: Vec<u8> = Vec::new();
     let mut views = Vec::new();
     let mut push_view = |bytes: &[u8], target: Option<u32>| -> usize {
-        while bin.len() % 4 != 0 {
+        while !bin.len().is_multiple_of(4) {
             bin.push(0);
         }
         let mut view =
@@ -788,14 +788,14 @@ pub fn write_glb(mesh: &ExportMesh) -> Vec<u8> {
         document["materials"][0]["pbrMetallicRoughness"]["baseColorTexture"] =
             serde_json::json!({ "index": 0 });
     }
-    while bin.len() % 4 != 0 {
+    while !bin.len().is_multiple_of(4) {
         bin.push(0);
     }
     document["accessors"] = Value::Array(accessors);
     document["bufferViews"] = Value::Array(views);
     document["buffers"] = serde_json::json!([{ "byteLength": bin.len() }]);
     let mut json = document.to_string().into_bytes();
-    while json.len() % 4 != 0 {
+    while !json.len().is_multiple_of(4) {
         json.push(b' ');
     }
     let total = 12 + 8 + json.len() + 8 + bin.len();

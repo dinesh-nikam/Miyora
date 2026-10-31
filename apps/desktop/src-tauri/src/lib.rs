@@ -7,13 +7,14 @@ use std::{
 
 use agentpet_avatar::CharacterSpec;
 use agentpet_core::{
-    AchievementSummary, AgentSessionSummary, AvatarCatalogEntry, AvatarSource, Core,
-    CustomAvatarSummary, DesktopPosition, EventType, InstalledPetPackSummary, PetEvent,
-    ProgressionSnapshot, ResolvedAvatar, RuntimeSnapshot, XpTransaction,
+    AchievementSummary, AgentSessionSummary, AvatarCatalogEntry, AvatarSource,
+    CompanionPreferences, Core, CustomAvatarSummary, DesktopPosition, EventType,
+    InstalledPetPackSummary, LegacyCompanionSettings, LegacyImportOutcome, OverlayPlacement,
+    PetEvent, ProgressionSnapshot, ResolvedAvatar, RuntimeSnapshot, XpTransaction,
 };
 use agentpet_pet_engine::PetState;
 use agentpet_pet_pack::PetPackManifest;
-use tauri::{Manager, State};
+use tauri::{Emitter, Manager, State};
 
 mod studio_commands;
 use studio_commands::*;
@@ -23,6 +24,8 @@ const POSITION_WRITE_DEBOUNCE: Duration = Duration::from_millis(400);
 const AVATAR_LIBRARY_DIR: &str = "avatars";
 const QUOTA_FRESHNESS_LIMIT_SECS: u64 = 300;
 const MAX_COSTS_FILE_BYTES: u64 = 2 * 1024 * 1024;
+/// Broadcast to every window so main and overlay share one preference state.
+const COMPANION_PREFERENCES_EVENT: &str = "companion-preferences-changed";
 
 struct AppRuntime {
     core: Core,
@@ -600,6 +603,58 @@ fn show_pet_overlay(app: tauri::AppHandle, window: tauri::WebviewWindow) -> Resu
 }
 
 #[tauri::command]
+fn get_companion_preferences(
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<CompanionPreferences, String> {
+    require_app_window(&window)?;
+    runtime
+        .core
+        .companion_preferences()
+        .map_err(|error| format!("COMPANION_PREFERENCES_READ_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn save_companion_preferences(
+    app: tauri::AppHandle,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+    preferences: CompanionPreferences,
+) -> Result<CompanionPreferences, String> {
+    require_app_window(&window)?;
+    let saved = runtime
+        .core
+        .save_companion_preferences(&preferences)
+        .map_err(|error| format!("COMPANION_PREFERENCES_SAVE_FAILED: {error}"))?;
+    broadcast_companion_preferences(&app, &saved);
+    Ok(saved)
+}
+
+#[tauri::command]
+fn import_legacy_companion_settings(
+    app: tauri::AppHandle,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+    legacy: LegacyCompanionSettings,
+) -> Result<LegacyImportOutcome, String> {
+    require_app_window(&window)?;
+    let outcome = runtime
+        .core
+        .import_legacy_companion_settings(&legacy)
+        .map_err(|error| format!("COMPANION_LEGACY_IMPORT_FAILED: {error}"))?;
+    if outcome.imported {
+        broadcast_companion_preferences(&app, &outcome.preferences);
+    }
+    Ok(outcome)
+}
+
+fn broadcast_companion_preferences(app: &tauri::AppHandle, preferences: &CompanionPreferences) {
+    if let Err(error) = app.emit(COMPANION_PREFERENCES_EVENT, preferences) {
+        eprintln!("AgentPet could not broadcast companion preferences: {error}");
+    }
+}
+
+#[tauri::command]
 fn verify_ledger(
     runtime: State<'_, AppRuntime>,
     window: tauri::WebviewWindow,
@@ -924,27 +979,49 @@ fn simulate_agent_event(
     }
 }
 
+/// Monitor identity for placement: the OS device name, else its desktop origin.
+fn monitor_identity(monitor: &tauri::Monitor) -> String {
+    monitor.name().cloned().unwrap_or_else(|| {
+        let origin = monitor.position();
+        format!("@{},{}", origin.x, origin.y)
+    })
+}
+
+fn work_area_contains(monitor: &tauri::Monitor, x: i64, y: i64) -> bool {
+    let work = monitor.work_area();
+    let left = i64::from(work.position.x);
+    let top = i64::from(work.position.y);
+    x >= left
+        && x < left + i64::from(work.size.width)
+        && y >= top
+        && y < top + i64::from(work.size.height)
+}
+
+/// Restores the overlay from its monitor-relative placement. Falls back to the
+/// pre-v11 physical position, then to the primary monitor when the named
+/// monitor is gone; the result is always clamped inside a work area.
 fn restore_visible_position(
     window: &tauri::WebviewWindow,
-    saved: Option<DesktopPosition>,
+    placement: Option<OverlayPlacement>,
+    legacy: Option<DesktopPosition>,
 ) -> Result<(), String> {
     let monitors = window
         .available_monitors()
         .map_err(|error| format!("MONITOR_QUERY_FAILED: {error}"))?;
-    let saved_monitor = saved.and_then(|position| {
-        monitors
+    let saved_monitor = match &placement {
+        Some(placement) => monitors
             .iter()
-            .find(|monitor| {
-                let work = monitor.work_area();
-                let right = i64::from(work.position.x) + i64::from(work.size.width);
-                let bottom = i64::from(work.position.y) + i64::from(work.size.height);
-                i64::from(position.x) >= i64::from(work.position.x)
-                    && i64::from(position.x) < right
-                    && i64::from(position.y) >= i64::from(work.position.y)
-                    && i64::from(position.y) < bottom
-            })
-            .cloned()
-    });
+            .find(|monitor| monitor_identity(monitor) == placement.monitor)
+            .cloned(),
+        None => legacy.and_then(|position| {
+            monitors
+                .iter()
+                .find(|monitor| {
+                    work_area_contains(monitor, i64::from(position.x), i64::from(position.y))
+                })
+                .cloned()
+        }),
+    };
     let primary_monitor = if saved_monitor.is_none() {
         window
             .primary_monitor()
@@ -956,7 +1033,7 @@ fn restore_visible_position(
         .or(primary_monitor)
         .or_else(|| monitors.first().cloned());
     let Some(monitor) = monitor else {
-        if let Some(position) = saved {
+        if let Some(position) = legacy {
             window
                 .set_position(tauri::PhysicalPosition::new(position.x, position.y))
                 .map_err(|error| format!("PET_POSITION_RESTORE_FAILED: {error}"))?;
@@ -969,14 +1046,22 @@ fn restore_visible_position(
         .map_err(|error| format!("PET_WINDOW_SIZE_FAILED: {error}"))?;
     let left = i64::from(work.position.x);
     let top = i64::from(work.position.y);
+    let desired = match &placement {
+        // Placement offsets are validated finite and bounded, so rounding cannot overflow.
+        Some(placement) => Some((
+            left + (placement.logical_x * monitor.scale_factor()).round() as i64,
+            top + (placement.logical_y * monitor.scale_factor()).round() as i64,
+        )),
+        None => legacy.map(|position| (i64::from(position.x), i64::from(position.y))),
+    };
     let max_x = (left + i64::from(work.size.width) - i64::from(size.width)).max(left);
     let max_y = (top + i64::from(work.size.height) - i64::from(size.height)).max(top);
-    let x = saved
-        .map_or(max_x - 16, |position| i64::from(position.x))
+    let x = desired
+        .map_or(max_x - 16, |(x, _)| x)
         .clamp(left, max_x)
         .clamp(i64::from(i32::MIN), i64::from(i32::MAX)) as i32;
-    let y = saved
-        .map_or(max_y - 16, |position| i64::from(position.y))
+    let y = desired
+        .map_or(max_y - 16, |(_, y)| y)
         .clamp(top, max_y)
         .clamp(i64::from(i32::MIN), i64::from(i32::MAX)) as i32;
     window
@@ -984,8 +1069,39 @@ fn restore_visible_position(
         .map_err(|error| format!("PET_POSITION_RESTORE_FAILED: {error}"))
 }
 
+/// Converts a physical window position into a logical-DIP offset from the
+/// work-area origin of the monitor that contains it.
+fn overlay_placement_at(
+    window: &tauri::WebviewWindow,
+    position: tauri::PhysicalPosition<i32>,
+) -> Result<Option<OverlayPlacement>, String> {
+    let monitors = window
+        .available_monitors()
+        .map_err(|error| format!("MONITOR_QUERY_FAILED: {error}"))?;
+    let containing = monitors
+        .into_iter()
+        .find(|monitor| work_area_contains(monitor, i64::from(position.x), i64::from(position.y)));
+    let monitor = match containing {
+        Some(monitor) => Some(monitor),
+        None => window
+            .current_monitor()
+            .map_err(|error| format!("MONITOR_QUERY_FAILED: {error}"))?,
+    };
+    let Some(monitor) = monitor else {
+        return Ok(None);
+    };
+    let work = monitor.work_area();
+    let scale = monitor.scale_factor();
+    Ok(Some(OverlayPlacement {
+        monitor: monitor_identity(&monitor),
+        logical_x: (i64::from(position.x) - i64::from(work.position.x)) as f64 / scale,
+        logical_y: (i64::from(position.y) - i64::from(work.position.y)) as f64 / scale,
+    }))
+}
+
 fn run_position_writer(
     core: Core,
+    window: tauri::WebviewWindow,
     receiver: Receiver<tauri::PhysicalPosition<i32>>,
 ) -> std::io::Result<()> {
     std::thread::Builder::new()
@@ -995,10 +1111,13 @@ fn run_position_writer(
                 while let Ok(position) = receiver.recv_timeout(POSITION_WRITE_DEBOUNCE) {
                     latest = position;
                 }
-                if let Err(error) = core.save_overlay_position(DesktopPosition {
-                    x: latest.x,
-                    y: latest.y,
-                }) {
+                let saved = overlay_placement_at(&window, latest).and_then(|placement| {
+                    placement.map_or(Ok(()), |placement| {
+                        core.save_overlay_placement(&placement)
+                            .map_err(|error| error.to_string())
+                    })
+                });
+                if let Err(error) = saved {
                     eprintln!("AgentPet could not persist companion position: {error}");
                 }
             }
@@ -1104,9 +1223,14 @@ pub fn run() {
             let overlay_window = app
                 .get_webview_window("pet-overlay")
                 .ok_or("pet-overlay window is missing")?;
-            restore_visible_position(&overlay_window, core.overlay_position()?)
+            restore_visible_position(
+                &overlay_window,
+                core.overlay_placement()?,
+                core.overlay_position()?,
+            )
+            .map_err(std::io::Error::other)?;
+            run_position_writer(core.clone(), overlay_window.clone(), position_receiver)
                 .map_err(std::io::Error::other)?;
-            run_position_writer(core.clone(), position_receiver).map_err(std::io::Error::other)?;
             run_state_timer(
                 core.clone(),
                 #[cfg(feature = "dev-simulator")]
@@ -1155,6 +1279,9 @@ pub fn run() {
             select_pet,
             show_pet_overlay,
             toggle_pet_pause,
+            get_companion_preferences,
+            save_companion_preferences,
+            import_legacy_companion_settings,
             verify_ledger,
             get_real_events,
             get_providers_status,

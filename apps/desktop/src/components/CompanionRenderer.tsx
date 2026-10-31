@@ -1,6 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AvatarStage } from "../avatar/AvatarStage";
 import { subjectFromAvatar, type AvatarHud, type ResolvedAvatar } from "../avatar/types";
+import {
+  currentCompanionPreferences,
+  saveCompanionPreferences,
+  useCompanionPreferences,
+  type CompanionVibe,
+} from "../settings/companionPreferences";
 
 export type PetState =
   | "idle"
@@ -98,8 +104,7 @@ export class AudioManager {
 
   public playChime(type: ChimeType): void {
     try {
-      const isMuted = localStorage.getItem("agentpet_sound_muted") === "true";
-      if (isMuted) return;
+      if (currentCompanionPreferences().soundMuted) return;
 
       const ctx = this.getContext();
       if (!ctx) return;
@@ -230,22 +235,8 @@ export function CompanionRenderer({
   onWakePet,
   onError,
 }: CompanionRendererProps) {
-  const [renderMode, setRenderMode] = useState<"3d" | "2d">(() => {
-    if (mode) return mode;
-    try {
-      const saved = localStorage.getItem("agentpet_render_mode");
-      if (saved === "2d" || saved === "3d") return saved;
-    } catch {
-      // ignore
-    }
-    return "3d";
-  });
-
-  useEffect(() => {
-    if (mode && mode !== renderMode) {
-      setRenderMode(mode);
-    }
-  }, [mode]);
+  const preferences = useCompanionPreferences();
+  const renderMode = mode ?? preferences.renderMode;
 
   useEffect(() => {
     return () => {
@@ -256,14 +247,11 @@ export function CompanionRenderer({
   const handleToggleRenderMode = (e: React.MouseEvent) => {
     e.stopPropagation();
     const nextMode = renderMode === "3d" ? "2d" : "3d";
-    setRenderMode(nextMode);
-    try {
-      localStorage.setItem("agentpet_render_mode", nextMode);
-    } catch {
-      // ignore
-    }
+    // A parent that controls `mode` owns persistence; otherwise save here.
     if (onModeToggle) {
       onModeToggle(nextMode);
+    } else {
+      void saveCompanionPreferences({ renderMode: nextMode });
     }
   };
 
@@ -280,45 +268,26 @@ export function CompanionRenderer({
   const [isBlushing, setIsBlushing] = useState(false);
   const [activeSpeech, setActiveSpeech] = useState<string>("");
   const [speechVisible, setSpeechVisible] = useState(true);
-  const [bondXp, setBondXp] = useState<number>(() => {
-    const saved = localStorage.getItem("agentpet_companion_bond_xp");
-    return saved ? parseInt(saved, 10) || 15 : 15;
-  });
-  const [affection, setAffection] = useState<number>(() => {
-    const saved = localStorage.getItem("agentpet_affection");
-    return saved ? parseInt(saved, 10) || 75 : 75;
-  });
+  // Session-only display value: never persisted and never ledger XP.
+  const [bondXp, setBondXp] = useState(15);
+  const affection = preferences.affection;
   const [wellnessAlert, setWellnessAlert] = useState<string | null>(null);
 
-  // User In-Place Customizations
-  const [customNickname, setCustomNickname] = useState<string>(() => {
-    return localStorage.getItem("agentpet_custom_nickname") || "";
-  });
-  const [customAccessory, setCustomAccessory] = useState<string>(() => {
-    return localStorage.getItem("agentpet_custom_accessory") || "none";
-  });
-  const [customAura, setCustomAura] = useState<string>(() => {
-    return localStorage.getItem("agentpet_custom_aura") || "";
-  });
-  const [customVibe, setCustomVibe] = useState<"sweet" | "playful" | "loyal" | "calm">(() => {
-    const saved = localStorage.getItem("agentpet_custom_vibe");
-    if (saved === "sweet" || saved === "playful" || saved === "loyal" || saved === "calm") return saved;
-    return "sweet";
-  });
+  // User In-Place Customizations (persisted by Rust)
+  const customNickname = preferences.nickname;
+  const customAccessory = preferences.accessory;
+  const customAura = preferences.aura;
+  const customVibe = preferences.vibe;
   const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
   const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
   const stageBoxRef = useRef<HTMLDivElement | null>(null);
 
   const awardBondXp = (amount: number) => {
-    setBondXp((prev) => {
-      const next = prev + amount;
-      try {
-        localStorage.setItem("agentpet_companion_bond_xp", String(next));
-      } catch {
-        // ignore
-      }
-      return next;
-    });
+    setBondXp((prev) => prev + amount);
+  };
+
+  const raiseAffection = (amount: number) => {
+    void saveCompanionPreferences({ affection: Math.min(100, currentCompanionPreferences().affection + amount) });
   };
 
   const spec = avatar?.spec ?? null;
@@ -686,41 +655,21 @@ export function CompanionRenderer({
 
   // User Customization Persistence
   const saveNickname = (name: string) => {
-    setCustomNickname(name);
-    try {
-      localStorage.setItem("agentpet_custom_nickname", name);
-    } catch {
-      // ignore
-    }
+    void saveCompanionPreferences({ nickname: name });
   };
 
   const saveAccessory = (acc: string) => {
-    setCustomAccessory(acc);
-    try {
-      localStorage.setItem("agentpet_custom_accessory", acc);
-    } catch {
-      // ignore
-    }
+    void saveCompanionPreferences({ accessory: acc });
     playChime("bubble");
   };
 
   const saveAura = (color: string) => {
-    setCustomAura(color);
-    try {
-      localStorage.setItem("agentpet_custom_aura", color);
-    } catch {
-      // ignore
-    }
+    void saveCompanionPreferences({ aura: color });
     playChime("bubble");
   };
 
-  const saveVibe = (vibe: "sweet" | "playful" | "loyal" | "calm") => {
-    setCustomVibe(vibe);
-    try {
-      localStorage.setItem("agentpet_custom_vibe", vibe);
-    } catch {
-      // ignore
-    }
+  const saveVibe = (vibe: CompanionVibe) => {
+    void saveCompanionPreferences({ vibe });
     playChime("bubble");
   };
 
@@ -809,15 +758,7 @@ export function CompanionRenderer({
 
     // Increase Bond & Affection
     awardBondXp(1);
-    setAffection((prev) => {
-      const next = Math.min(100, prev + 3);
-      try {
-        localStorage.setItem("agentpet_affection", String(next));
-      } catch {
-        // ignore
-      }
-      return next;
-    });
+    raiseAffection(3);
 
     const petLines = [
       "Aww, thank you! I love pets! (˶ᵔ ᵕ ᵔ˶)💕",
@@ -856,15 +797,7 @@ export function CompanionRenderer({
 
     // Increase Bond & Affection
     awardBondXp(2);
-    setAffection((prev) => {
-      const next = Math.min(100, prev + 5);
-      try {
-        localStorage.setItem("agentpet_affection", String(next));
-      } catch {
-        // ignore
-      }
-      return next;
-    });
+    raiseAffection(5);
 
     const feedLines = [
       `*Nom nom nom* Delicious ${companionInfo.treatName}! Thank you, Chief! 😋`,

@@ -17,16 +17,21 @@ use thiserror::Error;
 use uuid::Uuid;
 
 mod avatars;
+mod companion;
 
 pub use avatars::{
     AvatarCatalogEntry, AvatarKind, AvatarSelection, AvatarSource, CustomAvatarSummary,
     ResolvedAvatar,
 };
+pub use companion::{
+    CompanionPreferences, CompanionVibe, LegacyCompanionSettings, LegacyImportOutcome,
+    OverlayPlacement, RenderMode,
+};
 
 const DATABASE_FILE: &str = "agentpet.sqlite3";
 #[cfg(feature = "dev-simulator")]
 pub const SIMULATED_DATABASE_FILE: &str = "agentpet_simulated.sqlite3";
-const SCHEMA_VERSION: i64 = 10;
+const SCHEMA_VERSION: i64 = 11;
 const SQLITE_BUSY_TIMEOUT: Duration = Duration::from_secs(5);
 const DEFAULT_SESSION_XP: i64 = 10;
 const DEFAULT_LEVEL_XP: i64 = 100;
@@ -443,6 +448,10 @@ pub enum CoreError {
     AvatarNotFound(String),
     #[error("avatar file operation failed: {0}")]
     AvatarStorage(String),
+    #[error("database backup failed: {0}")]
+    Backup(String),
+    #[error("companion preferences are invalid: {0}")]
+    InvalidCompanionPreferences(String),
 }
 
 #[derive(Clone)]
@@ -466,6 +475,10 @@ impl Core {
         connection.busy_timeout(SQLITE_BUSY_TIMEOUT)?;
         connection.pragma_update(None, "foreign_keys", "ON")?;
         connection.pragma_update(None, "journal_mode", "WAL")?;
+        let current = companion::stored_schema_version(&connection)?;
+        if current > 0 && current < SCHEMA_VERSION {
+            companion::backup_before_migration(&connection, data_dir, current)?;
+        }
         Self::migrate(&connection)?;
         Ok(Self {
             connection: Arc::new(Mutex::new(connection)),
@@ -815,6 +828,20 @@ impl Core {
             transaction.execute(
                 "INSERT INTO schema_versions(version, applied_at) VALUES (?1, ?2)",
                 params![10, Utc::now().to_rfc3339()],
+            )?;
+            transaction.commit()?;
+        }
+        if current < 11 && target >= 11 {
+            let now = Utc::now().to_rfc3339();
+            let transaction = connection.unchecked_transaction()?;
+            transaction.execute_batch(companion::COMPANION_SCHEMA_V11)?;
+            transaction.execute(
+                "INSERT INTO companion_preferences(singleton, updated_at) VALUES (1, ?1)",
+                [&now],
+            )?;
+            transaction.execute(
+                "INSERT INTO schema_versions(version, applied_at) VALUES (?1, ?2)",
+                params![11, now],
             )?;
             transaction.commit()?;
         }
