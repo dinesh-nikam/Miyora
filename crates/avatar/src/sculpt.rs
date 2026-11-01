@@ -946,6 +946,7 @@ fn derive_spec(
         category: None,
         three_d_eligible: true,
         attribution: None,
+        companion_personality: None,
     };
     spec.validate()?;
     Ok(spec)

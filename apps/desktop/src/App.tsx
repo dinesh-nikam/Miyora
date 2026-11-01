@@ -1665,13 +1665,7 @@ export default function App() {
                         />
                       ) : (
                         <span style={{ fontSize: "56px", filter: "drop-shadow(4px 4px 0 #ff2db7)" }}>
-                          {pack.name.includes("Arjuna")
-                            ? "🏹"
-                            : pack.name.includes("Wukong")
-                            ? "👑"
-                            : pack.name.includes("Ninja")
-                            ? "🐱"
-                            : "⚡"}
+                          ⚡
                         </span>
                       )}
                     </div>

@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "denji"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#f59e0b",
+    "icon": "🪚",
+    "treatName": "Toast",
+    "treatEmoji": "🍞",
+    "feedReaction": "Toast with jam! Best food in the whole world! 🍞✨",
+    "wakeReaction": "Gaaaah! Pull the cord! Let's rip through some tickets! 🪚⚡",
+    "petReaction": "Heh, pats? Pretty nice... Pochita used to like this too. 🪚",
+    "dialogue": {
+      "idle": "Chainsaw ready. Point me at whatever's broken, Chief! 🪚",
+      "working": "Chainsaw revving! Shredding messy spaghetti code! 🪚⚡",
+      "thinking": "What if... we just delete the legacy branch? 🤔",
+      "success": "Hell yeah! Task obliterated! Toast time! 🍞🎉",
+      "error": "Stupid compiler devil! I'll rev up and saw it in half! 🪚",
+      "sleeping": "Zzz... snuggling with toast dreams... 🌙"
+    }
+  }
 }

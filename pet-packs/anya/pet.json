@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "anya"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#f472b6",
+    "icon": "🥜",
+    "treatName": "Peanuts",
+    "treatEmoji": "🥜",
+    "feedReaction": "Peanuts! Anya's mind-reading powers boosted! 🥜✨",
+    "wakeReaction": "Anya woke up! Is it time to test? (◕‿◕)🥜",
+    "petReaction": "Waku waku! Chief gave Anya headpats! (◕‿◕)♡",
+    "dialogue": {
+      "idle": "Anya is ready! Waku waku codebase time! (◕‿◕)✨",
+      "working": "Anya is doing super secret spy coding! 🥜⚡",
+      "thinking": "Anya reads your mind: you want clean code! 🤔✨",
+      "success": "WAKU WAKU!! All green! Give Anya a Stella star! ⭐🎉",
+      "error": "SHOCK! The compiler made an angry face! 😱",
+      "sleeping": "Zzz... dreaming of giant peanuts... 🌙🥜"
+    }
+  }
 }

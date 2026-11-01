@@ -25,73 +25,173 @@
   "animations": {
     "idle": {
       "asset": "idle",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "working": {
       "asset": "working",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "thinking": {
       "asset": "thinking",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "waiting": {
       "asset": "waiting",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "success": {
       "asset": "success",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "celebrating": {
       "asset": "success",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "error": {
       "asset": "error",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "level_up": {
       "asset": "level_up",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "achievement": {
       "asset": "level_up",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "sleeping": {
       "asset": "sleeping",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     }
   },
   "stateMappings": {
@@ -108,5 +208,29 @@
     "offline": "sleeping",
     "attention_required": "waiting"
   },
-  "tags": ["starter", "anime", "cyberpunk", "original", "2d-sprite", "clean-room"]
+  "tags": [
+    "starter",
+    "anime",
+    "cyberpunk",
+    "original",
+    "2d-sprite",
+    "clean-room"
+  ],
+  "personality": {
+    "themeColor": "#38bdf8",
+    "icon": "🎧",
+    "treatName": "Coffee",
+    "treatEmoji": "☕",
+    "feedReaction": "Mmm, warm coffee! Ready for the next sprint, Chief! ☕⚡",
+    "wakeReaction": "Systems online! Let's conquer this codebase together! ⚡",
+    "petReaction": "Aw, thanks for the pats, Chief! We're an unbeatable coding duo! 🎧💖",
+    "dialogue": {
+      "idle": "Hey Chief! Ready to build something awesome? 🎧✨",
+      "working": "In the zone! Writing clean, beautiful code! ⚡",
+      "thinking": "Tracing the call graph... let's check edge cases. 🤔",
+      "success": "Clean build, zero warnings! High five, Chief! 🚀",
+      "error": "Compiler caught an issue — let's inspect line 1! 🔍",
+      "sleeping": "Power-nap mode active... Zzz... ping me anytime! 🌙"
+    }
+  }
 }

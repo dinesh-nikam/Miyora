@@ -64,6 +64,17 @@ export interface Proportions {
   limbLength: number;
 }
 
+export interface CompanionPersonality {
+  themeColor?: string;
+  icon?: string;
+  treatName?: string;
+  treatEmoji?: string;
+  feedReaction?: string;
+  wakeReaction?: string;
+  petReaction?: string;
+  dialogue?: Record<string, string>;
+}
+
 export interface CharacterSpec {
   schemaVersion: number;
   id: string;
@@ -94,6 +105,7 @@ export interface CharacterSpec {
   /** False only for legacy rows, which Rust never offers as the active pet. */
   threeDEligible: boolean;
   attribution?: Attribution;
+  companionPersonality?: CompanionPersonality;
 }
 
 /** Mirrors `agentpet_pet_engine::AnimationClip`. */

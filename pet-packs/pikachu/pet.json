@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "pikachu"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#facc15",
+    "icon": "⚡",
+    "treatName": "Berry",
+    "treatEmoji": "🍓",
+    "feedReaction": "Pika-pi! (Cheeks charged with clean energy!) 🍓⚡",
+    "wakeReaction": "Pika-chuuuu! (Sparking brightly to start the day!) ⚡",
+    "petReaction": "Pikaaa-chuuu! (Warm happy sparks!) ⚡💖",
+    "dialogue": {
+      "idle": "Pikachu! Ready for battle against bugs, Chief! ⚡✨",
+      "working": "Pika pika! (Rapid-fire keystrokes like Thunder Shock!) ⚡",
+      "thinking": "Pika? (Ear twitches, sensing an edge case) 🤔",
+      "success": "PIKACHU! (Triumphant electrical burst!) ⚡🎉",
+      "error": "Pika-pi... (Mild static shock. We can fix it!) ⚡",
+      "sleeping": "Pika... zzz... (Cheeks softly glowing in sleep) 🌙⚡"
+    }
+  }
 }

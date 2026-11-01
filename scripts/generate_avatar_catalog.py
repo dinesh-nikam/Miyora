@@ -110,6 +110,163 @@ def derive_identity(slug: str, name: str, title: str, body: str, tags: list[str]
     return ("focused", "Full-Stack Engineering", "Ship clean, verify always.")
 
 
+CATALOG_PERSONALITIES = {
+    "kenji": {
+        "themeColor": "#818cf8",
+        "icon": "👓",
+        "treatName": "Espresso",
+        "treatEmoji": "☕",
+        "feedReaction": "Double espresso. Cognitive throughput restored to peak. ☕👓",
+        "wakeReaction": "Adjusting spectacles. Commencing static analysis session. 👓",
+        "petReaction": "Appreciated. Professional synergy increased by 15%. 👓✨",
+        "dialogue": {
+            "idle": "Analysis ready. What is our target module today? 👓",
+            "working": "Applying formal verification across all edge cases. 👓⚡",
+            "thinking": "Evaluating algorithmic complexity and memory layouts... 🤔",
+            "success": "Type soundness verified. Zero unsafe operations detected. 👓🎉",
+            "error": "Syntax anomaly isolated. Refactoring for invariants. 🔍",
+            "sleeping": "Zzz... running background GC cycles... 🌙"
+        }
+    },
+    "mira": {
+        "themeColor": "#c084fc",
+        "icon": "✨",
+        "treatName": "Starcandy",
+        "treatEmoji": "🍬",
+        "feedReaction": "Starcandy delight! Sparkling creative energy unlocked! 🍬✨",
+        "wakeReaction": "Good morning, starfarer! The cosmos is bright and full of code! ✨",
+        "petReaction": "A shower of stardust for you, Chief! Keep shining! ✨💖",
+        "dialogue": {
+            "idle": "Starlight companion ready! Where shall we explore next? ✨",
+            "working": "Weaving constellation threads into frontend magic! ✨⚡",
+            "thinking": "Listening to the melody between the stars... 🤔",
+            "success": "Starlight celebration! Everything renders with elegance! 🌌🎉",
+            "error": "A brief shadow passed by. Illuminating with stellar glow! ✨",
+            "sleeping": "Zzz... dreaming in nebula colors... 🌙✨"
+        }
+    },
+    "bolt": {
+        "themeColor": "#06b6d4",
+        "icon": "🤖",
+        "treatName": "Battery",
+        "treatEmoji": "🔋",
+        "feedReaction": "Supercharger connected! Battery cells at 100%! 🔋⚡",
+        "wakeReaction": "BEEP BOOP! Core diagnostics nominal! Ready to compile! 🤖",
+        "petReaction": "Haptic sensors tickled! Gratitude subroutine executed! 🤖💖",
+        "dialogue": {
+            "idle": "Unit online. Standby for operational directives, Chief! 🤖",
+            "working": "Overclocking CPU cores! Parallel pipeline processing active! 🤖⚡",
+            "thinking": "Running diagnostic simulations across 1,024 test cases... 🤔",
+            "success": "MISSION SUCCESS: All microservices responding green! 🤖🎉",
+            "error": "WARNING: Exception intercepted. Deploying auto-patch! ⚠️",
+            "sleeping": "Low-power standby mode engaged... Zzz... BEEP... 🌙"
+        }
+    },
+    "sun-wukong": {
+        "themeColor": "#ffb703",
+        "icon": "☁️",
+        "treatName": "Peach",
+        "treatEmoji": "🍑",
+        "feedReaction": "Mmm! Celestial peach! Power level rising, Chief! 🍑✨",
+        "wakeReaction": "Hahaha! The Great Sage awakens! Point me to the bugs! ⚡☁️",
+        "petReaction": "Hahaha! The Monkey King is energized! Celestial blessing for your keyboard! 🍑✨",
+        "dialogue": {
+            "idle": "Riding my Somersault Cloud. Ready when you are, Chief! ☁️",
+            "working": "My Gold-Banded Cudgel will crush these merge conflicts! ⚡",
+            "thinking": "Pondering the Dao of clean code... 🤔",
+            "success": "HA! Another feature vanquished! The heavens rejoice! 🎉",
+            "error": "A minor bug demon! Stand back, Chief, we'll smash it! 💪",
+            "sleeping": "Zzz... napping on my Somersault Cloud... ☁️💤"
+        }
+    },
+    "nezuko": {
+        "themeColor": "#ff69b4",
+        "icon": "🌸",
+        "treatName": "Tea",
+        "treatEmoji": "🍵",
+        "feedReaction": "Mmm-ph! (Nezuko sips warm tea happily!) (◕‿◕)🍵",
+        "wakeReaction": "Mmm-ph! (Rubs her eyes and smiles warmly!) 🌸✨",
+        "petReaction": "Mmm-ph! (Nezuko smiles warmly and leans into your hand) 🌸💖",
+        "dialogue": {
+            "idle": "Keeping watch by your side. Hydrate when ready, Chief! 🍵",
+            "working": "Mmm! (Guarding your focus while you code!) ⚡🌸",
+            "thinking": "Mmm? (Tilts head curiously at the algorithm) 🤔",
+            "success": "Mmm-ph!! (Jumps with joy!) All tests passed! 🎉",
+            "error": "Mmm... (Hands you a lucky charm. We'll fix it!) 💪",
+            "sleeping": "Zzz... resting peacefully in her cozy box... 🌙💤"
+        }
+    },
+    "gojo": {
+        "themeColor": "#38bdf8",
+        "icon": "♾️",
+        "treatName": "Kikufuku",
+        "treatEmoji": "🍡",
+        "feedReaction": "Sweet Kikufuku mochi! Cursed energy at maximum. 🍡✨",
+        "wakeReaction": "Back from the void. Ready to show them what real code looks like. ♾️",
+        "petReaction": "Infinity won't stop a good high-five from you, Chief! ♾️✨",
+        "dialogue": {
+            "idle": "Don't worry, Chief. I'm the strongest companion you've got. ♾️✨",
+            "working": "Unlimited Void deployed. Compiling at the speed of light. ♾️⚡",
+            "thinking": "Six Eyes analyzing every branch and memory allocation... 🤔",
+            "success": "Domain Expansion: Clean Architecture! Zero errors. 🚀",
+            "error": "A cursed exception appeared. I'll exorcise it in one pass. 🔍",
+            "sleeping": "Reversing cursed energy... even the strongest needs rest. 🌙"
+        }
+    },
+    "zoro": {
+        "themeColor": "#22c55e",
+        "icon": "⚔️",
+        "treatName": "Onigiri",
+        "treatEmoji": "🍙",
+        "feedReaction": "Onigiri consumed. Swords are sharpened. 🍙⚔️",
+        "wakeReaction": "Yawn... Which file needs cutting down, Chief? ⚔️",
+        "petReaction": "Hmph... don't slack off. Let's get these commits in. ⚔️",
+        "dialogue": {
+            "idle": "Swords sharpened. Give me the next pull request, Chief. ⚔️",
+            "working": "Three-sword syntax check. Slicing through technical debt! ⚔️",
+            "thinking": "I'm not lost... just inspecting an unexplored submodule. 🤔",
+            "success": "Nothing happened... just three clean commits. 🗡️🎉",
+            "error": "A stubborn blocker. We cut right through it again! 💪",
+            "sleeping": "Zzz... sleeping on deck with a hand on the hilt... 🌙"
+        }
+    },
+    "arjuna": {
+        "themeColor": "#ff9933",
+        "icon": "🏹",
+        "treatName": "Honey",
+        "treatEmoji": "🍯",
+        "feedReaction": "Saffron nectar! My archery focus is refreshed. 🍯🏹",
+        "wakeReaction": "Awake and vigilant. The Gandiva bow stands ready! 🏹",
+        "petReaction": "Honor and gratitude, Chief. Together our aim is true! 🏹✨",
+        "dialogue": {
+            "idle": "Gandiva bow strung. Focus unbroken, Chief. 🏹",
+            "working": "Arrows of logic flying true to the target! ⚡🏹",
+            "thinking": "Surveying the battlefield of code... finding the clean route. 🤔",
+            "success": "Bullseye! Every test struck with precision! 🎯",
+            "error": "Adjusting stance! We'll strike the root cause together! 🛡️",
+            "sleeping": "Zzz... resting upon his chariot beneath the stars... 🌙"
+        }
+    },
+    "ninja-cat": {
+        "themeColor": "#00f0ff",
+        "icon": "🐾",
+        "treatName": "Fish",
+        "treatEmoji": "🐟",
+        "feedReaction": "*crunch crunch* Purrrrr! Delicious fish! 🐟🐾",
+        "wakeReaction": "*stretches stealthily* Meow! Ready for deployment! 🐾",
+        "petReaction": "*loud purring* Purrrrr... blessed by the shinobi cat! 🐾💖",
+        "dialogue": {
+            "idle": "*purrs* All systems quiet and secure, Chief. 🐾",
+            "working": "*silent paws typing at 200 WPM* 🐾⚡",
+            "thinking": "*ears twitching* Sensing an async race condition... 🤔",
+            "success": "Target silenced! Build green and stealthy! 🐾🎉",
+            "error": "Hiss! Bug detected in perimeter! Ambushing... ⚔️",
+            "sleeping": "Zzz... curled up in a neat little cat ball... 🌙🐾"
+        }
+    }
+}
+
+
 def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessories, palette, description, tags,
       energy=1.0, height=1.0, head=1.0, build=1.0, limbs=1.0, pattern="none", tip=None,
       catchphrase=None, specialty=None, personality=None):
@@ -158,6 +315,8 @@ def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessorie
         "threeDEligible": not legacy,
         "attribution": LEGACY_ATTRIBUTION if legacy else ORIGINAL_ATTRIBUTION,
     }
+    if slug in CATALOG_PERSONALITIES:
+        character["companionPersonality"] = CATALOG_PERSONALITIES[slug]
     if tip is not None:
         character["hairTip"] = f"#{tip}"
     return character

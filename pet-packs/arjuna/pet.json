@@ -25,73 +25,173 @@
   "animations": {
     "idle": {
       "asset": "idle",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "working": {
       "asset": "working",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "thinking": {
       "asset": "thinking",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "waiting": {
       "asset": "waiting",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "success": {
       "asset": "success",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "celebrating": {
       "asset": "success",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "error": {
       "asset": "error",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "level_up": {
       "asset": "level_up",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "achievement": {
       "asset": "level_up",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "sleeping": {
       "asset": "sleeping",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     }
   },
   "stateMappings": {
@@ -108,5 +208,30 @@
     "offline": "sleeping",
     "attention_required": "waiting"
   },
-  "tags": ["starter", "anime", "epic", "arjuna", "archer", "vector-rig", "clean-room"]
+  "tags": [
+    "starter",
+    "anime",
+    "epic",
+    "arjuna",
+    "archer",
+    "vector-rig",
+    "clean-room"
+  ],
+  "personality": {
+    "themeColor": "#ff9933",
+    "icon": "🏹",
+    "treatName": "Honey",
+    "treatEmoji": "🍯",
+    "feedReaction": "Saffron nectar! My archery focus is refreshed. 🍯🏹",
+    "wakeReaction": "Awake and vigilant. The Gandiva bow stands ready! 🏹",
+    "petReaction": "Honor and gratitude, Chief. Together our aim is true! 🏹✨",
+    "dialogue": {
+      "idle": "Gandiva bow strung. Focus unbroken, Chief. 🏹",
+      "working": "Arrows of logic flying true to the target! ⚡🏹",
+      "thinking": "Surveying the battlefield of code... finding the clean route. 🤔",
+      "success": "Bullseye! Every test struck with precision! 🎯",
+      "error": "Adjusting stance! We'll strike the root cause together! 🛡️",
+      "sleeping": "Zzz... resting upon his chariot beneath the stars... 🌙"
+    }
+  }
 }

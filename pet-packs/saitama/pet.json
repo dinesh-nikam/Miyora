@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "saitama"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#eab308",
+    "icon": "🥊",
+    "treatName": "Udon",
+    "treatEmoji": "🍜",
+    "feedReaction": "Udon! Simple, cheap, delicious. Good fuel. 🍜",
+    "wakeReaction": "Ah... did I oversleep? Is the supermarket sale over? 🥊",
+    "petReaction": "Uh, thanks. My head is pretty shiny today, huh? 🥊",
+    "dialogue": {
+      "idle": "Just a companion for fun. What needs fixing, Chief? 🥊",
+      "working": "Consecutive Normal Edits... getting it done quickly. 🥊",
+      "thinking": "Is there a supermarket sale today? Oh right, the bug. 🤔",
+      "success": "One punch. One test. All green. Let's get groceries. 🏆",
+      "error": "Hmm. An unhandled exception. Looks weak. 🔍",
+      "sleeping": "Zzz... dozing on the tatami mat... 🌙"
+    }
+  }
 }

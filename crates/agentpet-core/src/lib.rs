@@ -44,8 +44,11 @@ pub use roaming::{
 const DATABASE_FILE: &str = "agentpet.sqlite3";
 #[cfg(feature = "dev-simulator")]
 pub const SIMULATED_DATABASE_FILE: &str = "agentpet_simulated.sqlite3";
-const SCHEMA_VERSION: i64 = 11;
+const SCHEMA_VERSION: i64 = 12;
 const SQLITE_BUSY_TIMEOUT: Duration = Duration::from_secs(5);
+pub const DAILY_AFFECTION_CAP: u32 = 50;
+pub const AFFECTION_PET_GAIN: u32 = 3;
+pub const AFFECTION_FEED_GAIN: u32 = 5;
 const DEFAULT_SESSION_XP: i64 = 10;
 const DEFAULT_LEVEL_XP: i64 = 100;
 const DEFAULT_LEVEL_XP_INCREMENT: i64 = 50;
@@ -196,6 +199,15 @@ pub struct RuntimeSnapshot {
     /// Clip the renderer plays; the desktop host sets locomotion while roaming.
     #[serde(default)]
     pub presentation: PetPresentation,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AffectionStatus {
+    pub affection: u32,
+    pub daily_gain: u32,
+    pub daily_cap: u32,
+    pub updated_at: DateTime<Utc>,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
@@ -880,6 +892,29 @@ impl Core {
             )?;
             transaction.commit()?;
         }
+        if current < 12 && target >= 12 {
+            let now = Utc::now().to_rfc3339();
+            let today = Utc::now().date_naive().to_string();
+            let transaction = connection.unchecked_transaction()?;
+            transaction.execute_batch(
+                "CREATE TABLE companion_affection (
+                    singleton INTEGER PRIMARY KEY CHECK (singleton = 1),
+                    affection INTEGER NOT NULL DEFAULT 0,
+                    daily_date TEXT NOT NULL,
+                    daily_gain INTEGER NOT NULL DEFAULT 0,
+                    updated_at TEXT NOT NULL
+                 );",
+            )?;
+            transaction.execute(
+                "INSERT INTO companion_affection(singleton, affection, daily_date, daily_gain, updated_at) VALUES (1, 0, ?1, 0, ?2)",
+                params![today, now],
+            )?;
+            transaction.execute(
+                "INSERT INTO schema_versions(version, applied_at) VALUES (?1, ?2)",
+                params![12, now],
+            )?;
+            transaction.commit()?;
+        }
         Ok(())
     }
 
@@ -1324,16 +1359,49 @@ impl Core {
         Ok(accepted)
     }
 
-    pub fn pet_interact(&self, source: impl Into<String>) -> Result<(), CoreError> {
-        let event = PetEvent::new(EventType::PetInteracted, source);
-        self.accept_event(&event)?;
-        Ok(())
+    pub fn get_affection(&self) -> Result<AffectionStatus, CoreError> {
+        let connection = self
+            .connection
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
+        let today = Utc::now().date_naive().to_string();
+        let (affection, daily_date, daily_gain, updated_at): (u32, String, u32, String) = connection.query_row(
+            "SELECT affection, daily_date, daily_gain, updated_at FROM companion_affection WHERE singleton = 1",
+            [],
+            |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?, row.get(3)?)),
+        )?;
+        let current_daily_gain = if daily_date == today { daily_gain } else { 0 };
+        let parsed_time = parse_timestamp(Some(updated_at))?.unwrap_or_else(Utc::now);
+        Ok(AffectionStatus {
+            affection,
+            daily_gain: current_daily_gain,
+            daily_cap: DAILY_AFFECTION_CAP,
+            updated_at: parsed_time,
+        })
     }
 
-    pub fn pet_feed(&self, source: impl Into<String>) -> Result<(), CoreError> {
+    pub fn record_affection_gain(&self, amount: u32) -> Result<AffectionStatus, CoreError> {
+        let mut connection = self
+            .connection
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
+        let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
+        let now = Utc::now();
+        let status = record_affection_gain_in_tx(&transaction, amount, now)?;
+        transaction.commit()?;
+        Ok(status)
+    }
+
+    pub fn pet_interact(&self, source: impl Into<String>) -> Result<AffectionStatus, CoreError> {
+        let event = PetEvent::new(EventType::PetInteracted, source);
+        self.accept_event(&event)?;
+        self.record_affection_gain(AFFECTION_PET_GAIN)
+    }
+
+    pub fn pet_feed(&self, source: impl Into<String>) -> Result<AffectionStatus, CoreError> {
         let event = PetEvent::new(EventType::PetFed, source);
         self.accept_event(&event)?;
-        Ok(())
+        self.record_affection_gain(AFFECTION_FEED_GAIN)
     }
 
     /// Ingests a normalized hook event from a local agent adapter.
@@ -2074,6 +2142,37 @@ fn settle_state(
     Ok(next)
 }
 
+fn record_affection_gain_in_tx(
+    transaction: &rusqlite::Transaction<'_>,
+    amount: u32,
+    now: DateTime<Utc>,
+) -> Result<AffectionStatus, CoreError> {
+    let today = now.date_naive().to_string();
+    let (mut affection, daily_date, mut daily_gain): (u32, String, u32) = transaction.query_row(
+        "SELECT affection, daily_date, daily_gain FROM companion_affection WHERE singleton = 1",
+        [],
+        |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?)),
+    )?;
+    if daily_date != today {
+        daily_gain = 0;
+    }
+    let allowed = DAILY_AFFECTION_CAP.saturating_sub(daily_gain);
+    let to_add = amount.min(allowed);
+    affection = affection.saturating_add(to_add);
+    daily_gain = daily_gain.saturating_add(to_add);
+    let now_str = now.to_rfc3339();
+    transaction.execute(
+        "UPDATE companion_affection SET affection = ?1, daily_date = ?2, daily_gain = ?3, updated_at = ?4 WHERE singleton = 1",
+        params![affection, today, daily_gain, now_str],
+    )?;
+    Ok(AffectionStatus {
+        affection,
+        daily_gain,
+        daily_cap: DAILY_AFFECTION_CAP,
+        updated_at: now,
+    })
+}
+
 fn record_event(
     transaction: &rusqlite::Transaction<'_>,
     engine: &PetEngine,
@@ -2364,6 +2463,8 @@ mod tests {
             )]),
             state_mappings: BTreeMap::new(),
             tags: vec![],
+            personality: None,
+            animation: None,
         };
         std::fs::write(
             source.join("pet.json"),
@@ -2641,6 +2742,41 @@ mod tests {
             core.advance_state_timers_at(later_success).expect("success expires to idle"),
             Some(PetState::Idle)
         );
+    }
+
+    #[test]
+    fn affection_persists_in_sqlite_and_respects_daily_cap() {
+        let core = Core::in_memory().expect("database initializes");
+        let initial = core.get_affection().expect("initial affection");
+        assert_eq!(initial.affection, 0);
+        assert_eq!(initial.daily_gain, 0);
+        assert_eq!(initial.daily_cap, 50);
+
+        let after_pet = core.pet_interact("desktop").expect("pet succeeds");
+        assert_eq!(after_pet.affection, 3);
+        assert_eq!(after_pet.daily_gain, 3);
+
+        let after_feed = core.pet_feed("desktop").expect("feed succeeds");
+        assert_eq!(after_feed.affection, 8);
+        assert_eq!(after_feed.daily_gain, 8);
+
+        // Cap is 50. Feed 9 more times (9 * 5 = 45 -> 8 + 45 = 53 -> capped at 50)
+        for _ in 0..9 {
+            core.pet_feed("desktop").expect("feed succeeds");
+        }
+        let capped = core.get_affection().expect("get affection");
+        assert_eq!(capped.affection, 50);
+        assert_eq!(capped.daily_gain, 50);
+
+        // Further interaction today yields no additional affection
+        let extra = core.pet_interact("desktop").expect("pet succeeds");
+        assert_eq!(extra.affection, 50);
+        assert_eq!(extra.daily_gain, 50);
+
+        // Ledger XP is completely untouched
+        let progression = core.progression().expect("progression");
+        assert_eq!(progression.total_xp, 0);
+        assert_eq!(progression.level, 1);
     }
 
     #[test]

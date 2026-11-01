@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "zoro"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#22c55e",
+    "icon": "⚔️",
+    "treatName": "Onigiri",
+    "treatEmoji": "🍙",
+    "feedReaction": "Onigiri consumed. Swords are sharpened. 🍙⚔️",
+    "wakeReaction": "Yawn... Which file needs cutting down, Chief? ⚔️",
+    "petReaction": "Hmph... don't slack off. Let's get these commits in. ⚔️",
+    "dialogue": {
+      "idle": "Swords sharpened. Give me the next pull request, Chief. ⚔️",
+      "working": "Three-sword syntax check. Slicing through technical debt! ⚔️",
+      "thinking": "I'm not lost... just inspecting an unexplored submodule. 🤔",
+      "success": "Nothing happened... just three clean commits. 🗡️🎉",
+      "error": "A stubborn blocker. We cut right through it again! 💪",
+      "sleeping": "Zzz... sleeping on deck with a hand on the hilt... 🌙"
+    }
+  }
 }

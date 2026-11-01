@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AvatarStage } from "../avatar/AvatarStage";
-import { subjectFromAvatar, type AvatarHud, type PetPresentation, type ResolvedAvatar } from "../avatar/types";
+import { subjectFromAvatar, type AvatarHud, type CompanionPersonality, type PetPresentation, type ResolvedAvatar } from "../avatar/types";
+import { invokeSafe } from "../utils/ipc";
 import {
   currentCompanionPreferences,
   saveCompanionPreferences,
@@ -39,6 +40,7 @@ export interface SelectedPetAnimation {
   loopAnimation: boolean;
   frames: SpriteFrame[];
   imageDataUrl: string;
+  personality?: CompanionPersonality;
 }
 
 export interface QuotaWindow {
@@ -82,12 +84,20 @@ export type ChimeType = "pet" | "success" | "bubble" | "care" | "eat" | "wake";
 export class AudioManager {
   private static instance: AudioManager | null = null;
   private ctx: AudioContext | null = null;
+  private hasUserGesture = false;
 
   public static getInstance(): AudioManager {
     if (!AudioManager.instance) {
       AudioManager.instance = new AudioManager();
     }
     return AudioManager.instance;
+  }
+
+  public markUserGesture(): void {
+    this.hasUserGesture = true;
+    if (this.ctx && this.ctx.state === "suspended") {
+      this.ctx.resume().catch(() => {});
+    }
   }
 
   public getContext(): AudioContext | null {
@@ -110,8 +120,19 @@ export class AudioManager {
     try {
       if (currentCompanionPreferences().soundMuted) return;
 
+      // User initiated sounds mark gesture; automatic background sounds are suppressed before initial user interaction
+      if (type === "pet" || type === "eat" || type === "wake" || type === "bubble") {
+        this.hasUserGesture = true;
+      } else if (!this.hasUserGesture) {
+        return;
+      }
+
       const ctx = this.getContext();
       if (!ctx) return;
+      if (ctx.state === "suspended") {
+        ctx.resume().catch(() => {});
+        if (ctx.state === "suspended") return;
+      }
 
       if (type === "pet") {
         // Warm major arpeggio
@@ -274,9 +295,8 @@ export function CompanionRenderer({
   const [isBlushing, setIsBlushing] = useState(false);
   const [activeSpeech, setActiveSpeech] = useState<string>("");
   const [speechVisible, setSpeechVisible] = useState(true);
-  // Session-only display value: never persisted and never ledger XP.
-  const [bondXp, setBondXp] = useState(15);
-  const affection = preferences.affection;
+  // Session affection state synced with SQLite
+  const [affectionScore, setAffectionScore] = useState<number>(0);
   const [wellnessAlert, setWellnessAlert] = useState<string | null>(null);
 
   // User In-Place Customizations (persisted by Rust)
@@ -288,108 +308,53 @@ export function CompanionRenderer({
   const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
   const stageBoxRef = useRef<HTMLDivElement | null>(null);
 
-  const awardBondXp = (amount: number) => {
-    setBondXp((prev) => prev + amount);
-  };
-
-  const raiseAffection = (amount: number) => {
-    void saveCompanionPreferences({ affection: Math.min(100, currentCompanionPreferences().affection + amount) });
-  };
+  useEffect(() => {
+    void invokeSafe<{ affection: number }>("get_affection").then((res) => {
+      if (res.ok && res.data) {
+        setAffectionScore(res.data.affection);
+      }
+    });
+  }, []);
 
   const spec = avatar?.spec ?? null;
   const petName = avatar?.name ?? spec?.name ?? animation?.petName ?? "Companion";
-  const nameLower = petName.toLowerCase();
   const specCatchphrase = spec?.catchphrase;
   const specSpecialty = spec?.specialty;
-  const specPersonality = spec?.personality;
 
-  const isWukong = nameLower.includes("wukong") || nameLower.includes("monkey");
-  const isNezuko = nameLower.includes("nezuko");
-  const isArjuna = nameLower.includes("arjuna");
-  const isAoi = nameLower.includes("aoi");
-  const isNinjaCat = nameLower.includes("ninja-cat") || (nameLower.includes("ninja") && nameLower.includes("cat"));
-  const isGojo = nameLower.includes("gojo");
-  const isZoro = nameLower.includes("zoro");
-  const isLuffy = nameLower.includes("luffy");
-  const isTanjiro = nameLower.includes("tanjiro");
-  const isSaitama = nameLower.includes("saitama");
-  const isFrieren = nameLower.includes("frieren");
-  const isAnya = nameLower.includes("anya");
-  const isDenji = nameLower.includes("denji");
-  const isPower = nameLower.includes("power");
-  const isPikachu = nameLower.includes("pikachu");
-  const isKrishna = nameLower.includes("krishna");
-  const isHanuman = nameLower.includes("hanuman");
-  const isShiva = nameLower.includes("shiva");
-  const isKenji = nameLower.includes("kenji");
-  const isMira = nameLower.includes("mira");
-  const isBolt = nameLower.includes("bolt") || nameLower.includes("seven") || spec?.body === "robot";
+  const personality: CompanionPersonality | undefined =
+    animation?.personality ?? spec?.companionPersonality;
 
-  // Character metadata & favorites
-  const companionInfo = isWukong
-    ? { icon: "☁️", themeColor: "#ffb703", glow: "radial-gradient(circle, #ffb703 0%, rgba(230, 57, 70, 0.45) 60%, transparent 80%)", treatName: "Peach", treatEmoji: "🍑" }
-    : isNezuko
-    ? { icon: "🌸", themeColor: "#ff69b4", glow: "radial-gradient(circle, #ff6b8b 0%, rgba(255, 105, 180, 0.45) 60%, transparent 80%)", treatName: "Tea", treatEmoji: "🍵" }
-    : isGojo
-    ? { icon: "♾️", themeColor: "#38bdf8", glow: "radial-gradient(circle, #38bdf8 0%, rgba(56, 189, 248, 0.45) 60%, transparent 80%)", treatName: "Kikufuku", treatEmoji: "🍡" }
-    : isZoro
-    ? { icon: "⚔️", themeColor: "#22c55e", glow: "radial-gradient(circle, #22c55e 0%, rgba(34, 197, 94, 0.45) 60%, transparent 80%)", treatName: "Onigiri", treatEmoji: "🍙" }
-    : isLuffy
-    ? { icon: "🍖", themeColor: "#ef4444", glow: "radial-gradient(circle, #ef4444 0%, rgba(239, 68, 68, 0.45) 60%, transparent 80%)", treatName: "Meat", treatEmoji: "🍖" }
-    : isTanjiro
-    ? { icon: "🌊", themeColor: "#10b981", glow: "radial-gradient(circle, #10b981 0%, rgba(16, 185, 129, 0.45) 60%, transparent 80%)", treatName: "Rice Ball", treatEmoji: "🍙" }
-    : isSaitama
-    ? { icon: "🥊", themeColor: "#eab308", glow: "radial-gradient(circle, #eab308 0%, rgba(234, 179, 8, 0.45) 60%, transparent 80%)", treatName: "Udon", treatEmoji: "🍜" }
-    : isFrieren
-    ? { icon: "🪄", themeColor: "#a7f3d0", glow: "radial-gradient(circle, #a7f3d0 0%, rgba(167, 243, 208, 0.45) 60%, transparent 80%)", treatName: "Grimoire", treatEmoji: "📖" }
-    : isAnya
-    ? { icon: "🥜", themeColor: "#f472b6", glow: "radial-gradient(circle, #f472b6 0%, rgba(244, 114, 182, 0.45) 60%, transparent 80%)", treatName: "Peanuts", treatEmoji: "🥜" }
-    : isDenji
-    ? { icon: "🪚", themeColor: "#f59e0b", glow: "radial-gradient(circle, #f59e0b 0%, rgba(245, 158, 11, 0.45) 60%, transparent 80%)", treatName: "Toast", treatEmoji: "🍞" }
-    : isPower
-    ? { icon: "😈", themeColor: "#f43f5e", glow: "radial-gradient(circle, #f43f5e 0%, rgba(244, 63, 94, 0.45) 60%, transparent 80%)", treatName: "Blood", treatEmoji: "🩸" }
-    : isPikachu
-    ? { icon: "⚡", themeColor: "#facc15", glow: "radial-gradient(circle, #facc15 0%, rgba(250, 204, 21, 0.45) 60%, transparent 80%)", treatName: "Berry", treatEmoji: "🍓" }
-    : isKrishna
-    ? { icon: "🪈", themeColor: "#38bdf8", glow: "radial-gradient(circle, #38bdf8 0%, rgba(255, 215, 0, 0.45) 60%, transparent 80%)", treatName: "Makhan", treatEmoji: "🍯" }
-    : isHanuman
-    ? { icon: "🔥", themeColor: "#ea580c", glow: "radial-gradient(circle, #ea580c 0%, rgba(234, 88, 12, 0.45) 60%, transparent 80%)", treatName: "Fruit", treatEmoji: "🥭" }
-    : isShiva
-    ? { icon: "🔱", themeColor: "#0284c7", glow: "radial-gradient(circle, #0284c7 0%, rgba(2, 132, 199, 0.45) 60%, transparent 80%)", treatName: "Belpatra", treatEmoji: "🌿" }
-    : isArjuna
-    ? { icon: "🏹", themeColor: "#ff9933", glow: "radial-gradient(circle, #ff9933 0%, rgba(255, 215, 0, 0.45) 60%, transparent 80%)", treatName: "Honey", treatEmoji: "🍯" }
-    : isNinjaCat
-    ? { icon: "🐾", themeColor: "#00f0ff", glow: "radial-gradient(circle, #00f0ff 0%, rgba(13, 148, 136, 0.45) 60%, transparent 80%)", treatName: "Fish", treatEmoji: "🐟" }
-    : isAoi
-    ? { icon: "🎧", themeColor: "#38bdf8", glow: "radial-gradient(circle, #38bdf8 0%, rgba(14, 165, 233, 0.45) 60%, transparent 80%)", treatName: "Coffee", treatEmoji: "☕" }
-    : isKenji
-    ? { icon: "👓", themeColor: "#818cf8", glow: "radial-gradient(circle, #818cf8 0%, rgba(99, 102, 241, 0.45) 60%, transparent 80%)", treatName: "Espresso", treatEmoji: "☕" }
-    : isMira
-    ? { icon: "✨", themeColor: "#c084fc", glow: "radial-gradient(circle, #c084fc 0%, rgba(192, 132, 252, 0.45) 60%, transparent 80%)", treatName: "Starcandy", treatEmoji: "🍬" }
-    : isBolt
-    ? { icon: "🤖", themeColor: "#06b6d4", glow: "radial-gradient(circle, #06b6d4 0%, rgba(6, 182, 212, 0.45) 60%, transparent 80%)", treatName: "Battery", treatEmoji: "🔋" }
-    : spec?.body === "beast"
-    ? { icon: "🐾", themeColor: spec?.palette.accent ?? "#f59e0b", glow: `radial-gradient(circle, ${spec?.palette.accent ?? "#f59e0b"} 0%, rgba(245, 158, 11, 0.45) 60%, transparent 80%)`, treatName: "Treat", treatEmoji: "🦴" }
-    : spec?.body === "slime"
-    ? { icon: "💧", themeColor: spec?.palette.accent ?? "#34d399", glow: `radial-gradient(circle, ${spec?.palette.accent ?? "#34d399"} 0%, rgba(52, 211, 153, 0.45) 60%, transparent 80%)`, treatName: "Syrup", treatEmoji: "🍯" }
-    : {
-        icon: "✨",
-        themeColor: spec?.palette.accent ?? "#a855f7",
-        glow: `radial-gradient(circle, ${spec?.palette.accent ?? "#a855f7"} 0%, rgba(168, 85, 247, 0.45) 60%, transparent 80%)`,
-        treatName: "Cupcake",
-        treatEmoji: "🧁",
-      };
-
-  // Bond Level
-  const bondLevel = Math.max(1, Math.floor(bondXp / 15) + 1);
-  const bondTitle =
-    bondLevel >= 10
-      ? "Legendary Partner"
-      : bondLevel >= 6
-      ? "Devoted Companion"
-      : bondLevel >= 3
-      ? "Close Friend"
-      : "Coding Buddy";
+  const companionInfo = {
+    icon:
+      personality?.icon ??
+      (spec?.body === "beast"
+        ? "🐾"
+        : spec?.body === "slime"
+        ? "💧"
+        : spec?.body === "robot"
+        ? "🤖"
+        : "✨"),
+    themeColor: personality?.themeColor ?? spec?.palette?.accent ?? "#a855f7",
+    glow: `radial-gradient(circle, ${personality?.themeColor ?? spec?.palette?.accent ?? "#a855f7"} 0%, rgba(168, 85, 247, 0.45) 60%, transparent 80%)`,
+    treatName:
+      personality?.treatName ??
+      (spec?.body === "beast"
+        ? "Treat"
+        : spec?.body === "slime"
+        ? "Syrup"
+        : spec?.body === "robot"
+        ? "Battery"
+        : "Cupcake"),
+    treatEmoji:
+      personality?.treatEmoji ??
+      (spec?.body === "beast"
+        ? "🦴"
+        : spec?.body === "slime"
+        ? "🍯"
+        : spec?.body === "robot"
+        ? "🔋"
+        : "🧁"),
+  };
 
   const displayName = customNickname.trim() || (renderMode === "3d" && avatar ? avatar.name : petName);
   const activeThemeColor = customAura || companionInfo.themeColor;
@@ -400,175 +365,33 @@ export function CompanionRenderer({
   // Authentic Human & Character Dialogue
   const getSpeechForState = useCallback(
     (currentState: PetState, trigger: "auto" | "pet" | "feed" | "wake"): string => {
-      // 1. Feeding Response
       if (trigger === "feed") {
-        if (isWukong) return "Mmm! Celestial peach! Power level rising, Chief! 🍑✨";
-        if (isNezuko) return "Mmm-ph! (Nezuko sips warm tea happily!) (◕‿◕)🍵";
-        if (isArjuna) return "Saffron nectar! My archery focus is refreshed. 🍯🏹";
-        if (isNinjaCat) return "*crunch crunch* Purrrrr! Delicious fish! 🐟🐾";
-        if (isGojo) return "Sweet Kikufuku mochi! Cursed energy at maximum. 🍡✨";
-        if (isZoro) return "Onigiri consumed. Swords are sharpened. 🍙⚔️";
-        if (isLuffy) return "MEEEAT! Hahaha, let's ship the whole feature! 🍖🎉";
-        if (isAnya) return "Peanuts! Anya's mind-reading powers boosted! 🥜✨";
-        if (isFrieren) return "A peaceful sweet before diving into old grimoires. 📖☕";
-        if (isPikachu) return "Pika-pi! (Cheeks charged with clean energy!) 🍓⚡";
-        if (isKrishna) return "Sacred makhan! Divine harmony flows through your code. 🍯🪈";
-        if (spec) return `Mmm, ${companionInfo.treatName}! ${petName} is energized for the next sprint, Chief! ⚡`;
-        return "Mmm, warm coffee! Ready for the next sprint, Chief! ☕⚡";
+        return (
+          personality?.feedReaction ??
+          (spec
+            ? `Mmm, ${companionInfo.treatName}! ${petName} is energized for the next sprint, Chief! ⚡`
+            : "Mmm, warm coffee! Ready for the next sprint, Chief! ☕⚡")
+        );
       }
-
-      // 2. Wake-up Response
       if (trigger === "wake") {
-        if (isWukong) return "Hahaha! The Great Sage awakens! Point me to the bugs! ⚡☁️";
-        if (isNezuko) return "Mmm-ph! (Rubs her eyes and smiles warmly!) 🌸✨";
-        if (isArjuna) return "Awake and vigilant. The Gandiva bow stands ready! 🏹";
-        if (isNinjaCat) return "*stretches stealthily* Meow! Ready for deployment! 🐾";
-        if (isGojo) return "Back from the void. Ready to show them what real code looks like. ♾️";
-        if (isZoro) return "Yawn... Which file needs cutting down, Chief? ⚔️";
-        if (isAnya) return "Anya woke up! Is it time to test? (◕‿◕)🥜";
-        if (isFrieren) return "Awake. Another century, another stable release. 🪄";
-        if (specCatchphrase) return `${petName} awakens: "${specCatchphrase}" ⚡`;
-        return "Systems online! Let's conquer this codebase together! ⚡";
+        return (
+          personality?.wakeReaction ??
+          (specCatchphrase
+            ? `${petName} awakens: "${specCatchphrase}" ⚡`
+            : "Systems online! Let's conquer this codebase together! ⚡")
+        );
       }
-
-      // 3. Petting / Affection Response
       if (trigger === "pet") {
-        if (isWukong) return "Hahaha! The Monkey King is energized! Celestial blessing for your keyboard! 🍑✨";
-        if (isNezuko) return "Mmm-ph! (Nezuko smiles warmly and leans into your hand) 🌸💖";
-        if (isArjuna) return "Honor and gratitude, Chief. Together our aim is true! 🏹✨";
-        if (isNinjaCat) return "*loud purring* Purrrrr... blessed by the shinobi cat! 🐾💖";
-        if (isGojo) return "Infinity won't stop a good high-five from you, Chief! ♾️✨";
-        if (isZoro) return "Hmph... don't slack off. Let's get these commits in. ⚔️";
-        if (isAnya) return "Waku waku! Chief gave Anya headpats! (◕‿◕)♡";
-        if (isFrieren) return "Headpats? Himmel used to do that. It is pleasant. 🪄";
-        if (isPikachu) return "Pikaaa-chuuu! (Warm happy sparks!) ⚡💖";
-        if (spec) return `${petName} (${specPersonality ?? "happy"}): "Thanks for the support, Chief! Let's build!" ✨`;
-        return "Aw, thanks for the pats, Chief! We're an unbeatable coding duo! 🎧💖";
+        return (
+          personality?.petReaction ??
+          (spec
+            ? `${petName}: "Thanks for the support, Chief! Let's build!" ✨`
+            : "Aw, thanks for the pats, Chief! We're an unbeatable coding duo! 🎧💖")
+        );
       }
-
-      // 4. Automatic Contextual State Dialogue
-      if (isWukong) {
-        switch (currentState) {
-          case "working": return "My Gold-Banded Cudgel will crush these merge conflicts! ⚡";
-          case "thinking": return "Pondering the Dao of clean code... 🤔";
-          case "success": return "HA! Another feature vanquished! The heavens rejoice! 🎉";
-          case "error": return "A minor bug demon! Stand back, Chief, we'll smash it! 💪";
-          case "sleeping": return "Zzz... napping on my Somersault Cloud... ☁️💤";
-          default: return "Riding my Somersault Cloud. Ready when you are, Chief! ☁️";
-        }
+      if (personality?.dialogue?.[currentState]) {
+        return personality.dialogue[currentState];
       }
-
-      if (isNezuko) {
-        switch (currentState) {
-          case "working": return "Mmm! (Guarding your focus while you code!) ⚡🌸";
-          case "thinking": return "Mmm? (Tilts head curiously at the algorithm) 🤔";
-          case "success": return "Mmm-ph!! (Jumps with joy!) All tests passed! 🎉";
-          case "error": return "Mmm... (Hands you a lucky charm. We'll fix it!) 💪";
-          case "sleeping": return "Zzz... resting peacefully in her cozy box... 🌙💤";
-          default: return "Keeping watch by your side. Hydrate when ready, Chief! 🍵";
-        }
-      }
-
-      if (isGojo) {
-        switch (currentState) {
-          case "working": return "Unlimited Void deployed. Compiling at the speed of light. ♾️⚡";
-          case "thinking": return "Six Eyes analyzing every branch and memory allocation... 🤔";
-          case "success": return "Domain Expansion: Clean Architecture! Zero errors. 🚀";
-          case "error": return "A cursed exception appeared. I'll exorcise it in one pass. 🔍";
-          case "sleeping": return "Reversing cursed energy... even the strongest needs rest. 🌙";
-          default: return "Don't worry, Chief. I'm the strongest companion you've got. ♾️✨";
-        }
-      }
-
-      if (isZoro) {
-        switch (currentState) {
-          case "working": return "Three-sword syntax check. Slicing through technical debt! ⚔️";
-          case "thinking": return "I'm not lost... just inspecting an unexplored submodule. 🤔";
-          case "success": return "Nothing happened... just three clean commits. 🗡️🎉";
-          case "error": return "A stubborn blocker. We cut right through it again! 💪";
-          case "sleeping": return "Zzz... sleeping on deck with a hand on the hilt... 🌙";
-          default: return "Swords sharpened. Give me the next pull request, Chief. ⚔️";
-        }
-      }
-
-      if (isTanjiro) {
-        switch (currentState) {
-          case "working": return "Total Concentration Breathing! Following the thread to clean code! 🌊⚡";
-          case "thinking": return "I can smell the seam in this logic bug... almost there! 🤔";
-          case "success": return "Sun Breathing: Clear Blue Sky! All test suites green! ☀️🎉";
-          case "error": return "Never give up! We'll keep refining until the tests pass! 💪";
-          case "sleeping": return "Zzz... resting by the mountain hearth... 🌙";
-          default: return "Swordsman of the Sun at your service, Chief! ☀️";
-        }
-      }
-
-      if (isSaitama) {
-        switch (currentState) {
-          case "working": return "Consecutive Normal Edits... getting it done quickly. 🥊";
-          case "thinking": return "Is there a supermarket sale today? Oh right, the bug. 🤔";
-          case "success": return "One punch. One test. All green. Let's get groceries. 🏆";
-          case "error": return "Hmm. An unhandled exception. Looks weak. 🔍";
-          case "sleeping": return "Zzz... dozing on the tatami mat... 🌙";
-          default: return "Just a companion for fun. What needs fixing, Chief? 🥊";
-        }
-      }
-
-      if (isFrieren) {
-        switch (currentState) {
-          case "working": return "Transmuting ancient modules into elegant modern functions... 🪄";
-          case "thinking": return "Pondering the spell for automatic memory deallocation... 🤔";
-          case "success": return "Zoltraak pierced the bug cleanly. 100 years of stability assured. ✨";
-          case "error": return "A mimic chest? No, just an unhandled Promise rejection. 🔍";
-          case "sleeping": return "Zzz... wake me up in thirty years... or when the build finishes. 🌙";
-          default: return "Take your time, Chief. Good code, like journeying, cannot be rushed. 📖";
-        }
-      }
-
-      if (isAnya) {
-        switch (currentState) {
-          case "working": return "Anya is doing super secret spy coding! 🥜⚡";
-          case "thinking": return "Anya reads your mind: you want clean code! 🤔✨";
-          case "success": return "WAKU WAKU!! All green! Give Anya a Stella star! ⭐🎉";
-          case "error": return "SHOCK! The compiler made an angry face! 😱";
-          case "sleeping": return "Zzz... dreaming of giant peanuts... 🌙🥜";
-          default: return "Anya is ready! Waku waku codebase time! (◕‿◕)✨";
-        }
-      }
-
-      if (isKrishna) {
-        switch (currentState) {
-          case "working": return "Performing code karma with focus and devotion. 🪈⚡";
-          case "thinking": return "The cosmic flute guides the flow of every abstraction... 🤔";
-          case "success": return "Victory without attachment! The architecture sings in harmony! 🪈🎉";
-          case "error": return "Every obstacle is an invitation to deeper understanding, Chief. 🧘";
-          case "sleeping": return "Resting in cosmic stillness beneath the kadamba tree... 🌙";
-          default: return "Act with steadfast purpose, Chief. The code will flourish. 🪈✨";
-        }
-      }
-
-      if (isArjuna) {
-        switch (currentState) {
-          case "working": return "Arrows of logic flying true to the target! ⚡🏹";
-          case "thinking": return "Surveying the battlefield of code... finding the clean route. 🤔";
-          case "success": return "Bullseye! Every test struck with precision! 🎯";
-          case "error": return "Adjusting stance! We'll strike the root cause together! 🛡️";
-          case "sleeping": return "Zzz... resting upon his chariot beneath the stars... 🌙";
-          default: return "Gandiva bow strung. Focus unbroken, Chief. 🏹";
-        }
-      }
-
-      if (isNinjaCat) {
-        switch (currentState) {
-          case "working": return "*silent paws typing at 200 WPM* 🐾⚡";
-          case "thinking": return "*ears twitching* Sensing an async race condition... 🤔";
-          case "success": return "Target silenced! Build green and stealthy! 🐾🎉";
-          case "error": return "Hiss! Bug detected in perimeter! Ambushing... ⚔️";
-          case "sleeping": return "Zzz... curled up in a neat little cat ball... 🌙🐾";
-          default: return "*purrs* All systems quiet and secure, Chief. 🐾";
-        }
-      }
-
-      // Catalog procedural spec with bespoke catchphrase & specialty
       if (specCatchphrase) {
         switch (currentState) {
           case "working":
@@ -576,7 +399,7 @@ export function CompanionRenderer({
               ? `${petName} deploying ${specSpecialty}: "${specCatchphrase}" ⚡`
               : `${petName}: "${specCatchphrase}" ⚡`;
           case "thinking":
-            return `${petName} (${specPersonality ?? "focused"} focus) analyzing the architecture... 🤔`;
+            return `${petName} analyzing the architecture... 🤔`;
           case "success":
             return `${petName}: "Verification complete! ${specCatchphrase}" 🚀🎉`;
           case "error":
@@ -590,8 +413,6 @@ export function CompanionRenderer({
             return `${petName}: "${specCatchphrase}" ✨`;
         }
       }
-
-      // Default Aoi fallback
       switch (currentState) {
         case "working":
           return "In the zone! Writing clean, beautiful code! ⚡";
@@ -610,29 +431,7 @@ export function CompanionRenderer({
           return "Hey Chief! Ready to build something awesome? 🎧✨";
       }
     },
-    [
-      isAnya,
-      isAoi,
-      isArjuna,
-      isBolt,
-      isDenji,
-      isFrieren,
-      isGojo,
-      isKrishna,
-      isLuffy,
-      isNezuko,
-      isNinjaCat,
-      isPikachu,
-      isSaitama,
-      isTanjiro,
-      isWukong,
-      isZoro,
-      petName,
-      spec,
-      specCatchphrase,
-      specPersonality,
-      specSpecialty,
-    ]
+    [companionInfo.treatName, personality, petName, spec, specCatchphrase, specSpecialty]
   );
 
   // Sync speech on state changes
@@ -763,9 +562,12 @@ export function CompanionRenderer({
       }, i * 90);
     }
 
-    // Increase Bond & Affection
-    awardBondXp(1);
-    raiseAffection(3);
+    // Increase Affection in SQLite & trigger engine reaction
+    void invokeSafe<{ affection: number }>("pet_interact").then((res) => {
+      if (res.ok && res.data) {
+        setAffectionScore(res.data.affection);
+      }
+    });
 
     const petLines = [
       "Aww, thank you! I love pets! (˶ᵔ ᵕ ᵔ˶)💕",
@@ -802,9 +604,12 @@ export function CompanionRenderer({
       setParticles((prev) => prev.filter((p) => p.id !== id));
     }, 1200);
 
-    // Increase Bond & Affection
-    awardBondXp(2);
-    raiseAffection(5);
+    // Increase Affection in SQLite & trigger engine reaction
+    void invokeSafe<{ affection: number }>("pet_feed").then((res) => {
+      if (res.ok && res.data) {
+        setAffectionScore(res.data.affection);
+      }
+    });
 
     const feedLines = [
       `*Nom nom nom* Delicious ${companionInfo.treatName}! Thank you, Chief! 😋`,
@@ -1008,10 +813,9 @@ export function CompanionRenderer({
           onClick={(e) => {
             e.stopPropagation();
             setWellnessAlert(null);
-            awardBondXp(5);
             playChime("pet");
           }}
-          title="Click to acknowledge: +5 Bond XP!"
+          title="Click to acknowledge"
           style={{
             position: "absolute",
             top: "2px",
@@ -1301,7 +1105,7 @@ export function CompanionRenderer({
             <span style={{ color: activeThemeColor, fontWeight: 800 }}>{displayName}</span>
             {/* Cute Affection Heart Meter */}
             <span
-              title={`Affection: ${affection}% — pet and treat to increase!`}
+              title={`Affection: ${affectionScore} — pet and treat to increase!`}
               style={{
                 display: "inline-flex",
                 alignItems: "center",
@@ -1315,7 +1119,7 @@ export function CompanionRenderer({
                 fontWeight: 800,
               }}
             >
-              ❤️ {affection}%
+              ❤️ {affectionScore}
             </span>
           </div>
           <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
@@ -1373,7 +1177,7 @@ export function CompanionRenderer({
               {state.toUpperCase()}
             </span>
             <span style={{ color: "#94a3b8", fontSize: "8.5px" }}>
-              LVL {bondLevel} {bondTitle}
+              Affection {affectionScore}
             </span>
           </div>
         </div>

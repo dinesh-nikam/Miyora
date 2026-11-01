@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "nezuko"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#ff69b4",
+    "icon": "🌸",
+    "treatName": "Tea",
+    "treatEmoji": "🍵",
+    "feedReaction": "Mmm-ph! (Nezuko sips warm tea happily!) (◕‿◕)🍵",
+    "wakeReaction": "Mmm-ph! (Rubs her eyes and smiles warmly!) 🌸✨",
+    "petReaction": "Mmm-ph! (Nezuko smiles warmly and leans into your hand) 🌸💖",
+    "dialogue": {
+      "idle": "Keeping watch by your side. Hydrate when ready, Chief! 🍵",
+      "working": "Mmm! (Guarding your focus while you code!) ⚡🌸",
+      "thinking": "Mmm? (Tilts head curiously at the algorithm) 🤔",
+      "success": "Mmm-ph!! (Jumps with joy!) All tests passed! 🎉",
+      "error": "Mmm... (Hands you a lucky charm. We'll fix it!) 💪",
+      "sleeping": "Zzz... resting peacefully in her cozy box... 🌙💤"
+    }
+  }
 }

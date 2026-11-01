@@ -35,8 +35,8 @@ def check_pack(folder):
     except (OSError, json.JSONDecodeError) as exc:
         return [f"pet.json invalid JSON: {exc}"], warnings
 
-    if m.get("schemaVersion") != 1:
-        errors.append(f"schemaVersion must be 1, got {m.get('schemaVersion')!r}")
+    if m.get("schemaVersion") not in (1, 2):
+        errors.append(f"schemaVersion must be 1 or 2, got {m.get('schemaVersion')!r}")
     for key in REQUIRED_STRINGS:
         value = m.get(key)
         if not isinstance(value, str) or not value.strip():
@@ -48,6 +48,22 @@ def check_pack(folder):
     for flag in ("commercialUse", "redistribution", "derivativeWorks"):
         if not isinstance(m.get(flag), bool):
             errors.append(f"'{flag}' must be a boolean")
+
+    personality = m.get("personality")
+    if personality is not None:
+        if not isinstance(personality, dict):
+            errors.append("'personality' must be an object")
+        else:
+            tc = personality.get("themeColor")
+            if tc is not None and (not isinstance(tc, str) or not re.match(r"^#[0-9a-fA-F]{6}$", tc)):
+                errors.append(f"'themeColor' must be a #rrggbb hex string, got {tc!r}")
+            for text_field in ("feedReaction", "wakeReaction", "petReaction"):
+                val = personality.get(text_field)
+                if val is not None and not isinstance(val, str):
+                    errors.append(f"'{text_field}' must be a string")
+            dlg = personality.get("dialogue")
+            if dlg is not None and not isinstance(dlg, dict):
+                errors.append("'dialogue' must be an object")
 
     assets = m.get("assets")
     if not isinstance(assets, dict) or not assets:

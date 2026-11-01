@@ -10,7 +10,7 @@ use agentpet_adapters::quota::{
 };
 use agentpet_avatar::CharacterSpec;
 use agentpet_core::{
-    AchievementSummary, AgentSessionSummary, AvatarCatalogEntry, AvatarSource,
+    AchievementSummary, AffectionStatus, AgentSessionSummary, AvatarCatalogEntry, AvatarSource,
     CompanionPreferences, Core, CustomAvatarSummary, DesktopPosition, InstalledPetPackSummary,
     LegacyCompanionSettings, LegacyImportOutcome, OverlayPlacement, ProgressionSnapshot,
     ResolvedAvatar, RuntimeSnapshot, XpTransaction,
@@ -196,6 +196,7 @@ struct SelectedPetAnimation {
     loop_animation: bool,
     frames: Vec<SpriteFrame>,
     image_data_url: String,
+    personality: Option<agentpet_pet_pack::PetPersonality>,
 }
 
 #[tauri::command]
@@ -280,6 +281,7 @@ fn get_selected_pet_animation(
             "data:{mime};base64,{}",
             base64::Engine::encode(&base64::engine::general_purpose::STANDARD, bytes)
         ),
+        personality: manifest.personality,
     }))
 }
 
@@ -640,6 +642,30 @@ fn import_legacy_companion_settings(
         broadcast_companion_preferences(&app, &outcome.preferences);
     }
     Ok(outcome)
+}
+
+#[tauri::command]
+fn pet_interact(runtime: State<'_, AppRuntime>) -> Result<AffectionStatus, String> {
+    runtime
+        .active_core()
+        .pet_interact("desktop")
+        .map_err(|error| format!("PET_INTERACT_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn pet_feed(runtime: State<'_, AppRuntime>) -> Result<AffectionStatus, String> {
+    runtime
+        .active_core()
+        .pet_feed("desktop")
+        .map_err(|error| format!("PET_FEED_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn get_affection(runtime: State<'_, AppRuntime>) -> Result<AffectionStatus, String> {
+    runtime
+        .active_core()
+        .get_affection()
+        .map_err(|error| format!("AFFECTION_READ_FAILED: {error}"))
 }
 
 fn broadcast_companion_preferences(app: &tauri::AppHandle, preferences: &CompanionPreferences) {
@@ -1255,6 +1281,9 @@ pub fn run() {
             get_companion_preferences,
             save_companion_preferences,
             import_legacy_companion_settings,
+            pet_interact,
+            pet_feed,
+            get_affection,
             get_companion_shortcuts,
             set_companion_shortcut,
             run_companion_action,

@@ -217,6 +217,27 @@ impl Default for Proportions {
 }
 
 /// A complete, data-only description of a procedural 3D character.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Default)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct CompanionPersonality {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub theme_color: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub icon: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub treat_name: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub treat_emoji: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub feed_reaction: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub wake_reaction: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pet_reaction: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub dialogue: Option<std::collections::BTreeMap<String, String>>,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct CharacterSpec {
@@ -264,6 +285,9 @@ pub struct CharacterSpec {
     /// Rights metadata. Required for bundled catalog rows.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub attribution: Option<Attribution>,
+    /// Optional rich personality profile with dialogues and treat reactions.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub companion_personality: Option<CompanionPersonality>,
 }
 
 fn eligible_by_default() -> bool {
@@ -491,6 +515,7 @@ pub(crate) fn sample_spec() -> CharacterSpec {
             source: "unit test".into(),
             attribution: "Original test design".into(),
         }),
+        companion_personality: None,
     }
 }
 

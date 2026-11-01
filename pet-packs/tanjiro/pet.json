@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "tanjiro"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#10b981",
+    "icon": "🌊",
+    "treatName": "Rice Ball",
+    "treatEmoji": "🍙",
+    "feedReaction": "Delicious rice ball! Thank you for the sustenance, Chief! 🍙✨",
+    "wakeReaction": "Awake and ready! Let's face the day with determination! ☀️",
+    "petReaction": "Thank you, Chief! Your encouragement means everything! 🌊✨",
+    "dialogue": {
+      "idle": "Swordsman of the Sun at your service, Chief! ☀️",
+      "working": "Total Concentration Breathing! Following the thread to clean code! 🌊⚡",
+      "thinking": "I can smell the seam in this logic bug... almost there! 🤔",
+      "success": "Sun Breathing: Clear Blue Sky! All test suites green! ☀️🎉",
+      "error": "Never give up! We'll keep refining until the tests pass! 💪",
+      "sleeping": "Zzz... resting by the mountain hearth... 🌙"
+    }
+  }
 }

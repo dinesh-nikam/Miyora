@@ -25,73 +25,173 @@
   "animations": {
     "idle": {
       "asset": "idle",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "working": {
       "asset": "working",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "thinking": {
       "asset": "thinking",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "waiting": {
       "asset": "waiting",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "success": {
       "asset": "success",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "celebrating": {
       "asset": "success",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "error": {
       "asset": "error",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "level_up": {
       "asset": "level_up",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "achievement": {
       "asset": "level_up",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "sleeping": {
       "asset": "sleeping",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     }
   },
   "stateMappings": {
@@ -108,5 +208,29 @@
     "offline": "sleeping",
     "attention_required": "waiting"
   },
-  "tags": ["starter", "anime", "cyberpunk", "shinobi", "ninja-cat", "clean-room"]
+  "tags": [
+    "starter",
+    "anime",
+    "cyberpunk",
+    "shinobi",
+    "ninja-cat",
+    "clean-room"
+  ],
+  "personality": {
+    "themeColor": "#00f0ff",
+    "icon": "🐾",
+    "treatName": "Fish",
+    "treatEmoji": "🐟",
+    "feedReaction": "*crunch crunch* Purrrrr! Delicious fish! 🐟🐾",
+    "wakeReaction": "*stretches stealthily* Meow! Ready for deployment! 🐾",
+    "petReaction": "*loud purring* Purrrrr... blessed by the shinobi cat! 🐾💖",
+    "dialogue": {
+      "idle": "*purrs* All systems quiet and secure, Chief. 🐾",
+      "working": "*silent paws typing at 200 WPM* 🐾⚡",
+      "thinking": "*ears twitching* Sensing an async race condition... 🤔",
+      "success": "Target silenced! Build green and stealthy! 🐾🎉",
+      "error": "Hiss! Bug detected in perimeter! Ambushing... ⚔️",
+      "sleeping": "Zzz... curled up in a neat little cat ball... 🌙🐾"
+    }
+  }
 }

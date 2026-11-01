@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "power"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#f43f5e",
+    "icon": "😈",
+    "treatName": "Blood",
+    "treatEmoji": "🩸",
+    "feedReaction": "Gwahaha! Prime nourishment! The Blood Fiend reigns supreme! 🩸👑",
+    "wakeReaction": "Bow before me! Power has awoken to claim all credit! 😈",
+    "petReaction": "Hmph! You may praise my genius, mortal! 😈✨",
+    "dialogue": {
+      "idle": "Bow down, human! What code shall I conquer today? 😈",
+      "working": "My Blood Hammer shall forge the greatest commit history! 🩸⚡",
+      "thinking": "Scheming how to take credit for the whole release... 🤔",
+      "success": "Gwahaha! It was all MY genius! Bow before Power! 👑🎉",
+      "error": "The compiler lies! It was not my fault, tis a conspiracy! 😈",
+      "sleeping": "Zzz... dreaming of Meowy and prime cuts... 🌙"
+    }
+  }
 }
