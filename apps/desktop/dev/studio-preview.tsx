@@ -1,6 +1,6 @@
 // Temporary design harness: mocks Tauri IPC with the bundled catalog. Not shipped.
 import catalogJson from "../../../crates/avatar/catalog/characters.json";
-import type { CharacterSpec, ResolvedAvatar } from "./avatar/types";
+import type { CharacterSpec, ResolvedAvatar } from "../src/avatar/types";
 
 const characters = (catalogJson as { characters: CharacterSpec[] }).characters;
 const resolve = (id: string): ResolvedAvatar => {
@@ -17,8 +17,8 @@ const resolve = (id: string): ResolvedAvatar => {
   },
   transformCallback: () => 0,
 };
-const [{ createRoot }, { CharacterStudio }] = await Promise.all([import("react-dom/client"), import("./avatar/CharacterStudio")]);
-await import("./styles.css");
+const [{ createRoot }, { CharacterStudio }] = await Promise.all([import("react-dom/client"), import("../src/avatar/CharacterStudio")]);
+await import("../src/styles.css");
 createRoot(document.getElementById("root") as HTMLElement).render(
   <CharacterStudio liveState="idle" hud={{ level: 4, totalXp: 820, xpIntoLevel: 120, xpToNextLevel: 300 }} activeAvatar={resolve("miyora.aoi")} onAvatarChanged={() => undefined} />,
 );

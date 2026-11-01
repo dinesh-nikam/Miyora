@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { invokeSafe } from "../utils/ipc";
 import { ExportPanel } from "./ExportPanel";
 import { RetopologyPanel } from "./RetopologyPanel";
 import { formatBytes, formatCount, taskStatusLabel } from "./format";
@@ -144,6 +145,28 @@ export function Inspector({ detail, generation, stats, onSelectGeneration, onReg
           <RetopologyPanel generation={generation} triangles={stats?.triangles ?? report?.triangles ?? null} onCreated={onVersionCreated} />
 
           <ExportPanel generation={generation} onExported={onExported} />
+
+          {generation.outputs.some((o) => o.kind === "model") && (
+            <div style={{ marginTop: "10px", marginBottom: "14px" }}>
+              <button
+                type="button"
+                className="studio-primary"
+                style={{ width: "100%", padding: "8px" }}
+                onClick={async () => {
+                  const modelOutput = generation.outputs.find((o) => o.kind === "model");
+                  if (!modelOutput) return;
+                  const res = await invokeSafe("studio_import_as_avatar", { outputId: modelOutput.id });
+                  if (res.ok) {
+                    alert("Added model to your Pet Library companions!");
+                  } else {
+                    alert(`Failed to import to Pet Library: ${res.error}`);
+                  }
+                }}
+              >
+                Add to Pet Library
+              </button>
+            </div>
+          )}
 
           <h4>Rig &amp; animation</h4>
           <dl>

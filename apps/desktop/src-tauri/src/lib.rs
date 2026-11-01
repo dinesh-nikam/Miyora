@@ -574,6 +574,30 @@ async fn import_vrm_avatar(
     .map_err(|error| format!("AVATAR_VRM_IMPORT_FAILED: {error}"))
 }
 
+#[cfg(feature = "studio")]
+#[tauri::command]
+async fn studio_import_as_avatar(
+    output_id: i64,
+    studio: State<'_, agentpet_studio::service::StudioService>,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<CustomAvatarSummary, String> {
+    require_main_window(&window)?;
+    let service = studio.inner().clone();
+    let core = runtime.core.clone();
+    let avatars_root = runtime.avatars_root.clone();
+    drop(window);
+    tauri::async_runtime::spawn_blocking(move || {
+        let path = service
+            .output_path(output_id)
+            .map_err(|error| format!("STUDIO_OUTPUT_NOT_FOUND: {error}"))?;
+        core.import_vrm_avatar(&path, &avatars_root)
+            .map_err(|error| format!("AVATAR_VRM_IMPORT_FAILED: {error}"))
+    })
+    .await
+    .map_err(|error| format!("STUDIO_IMPORT_WORKER_FAILED: {error}"))?
+}
+
 #[tauri::command]
 fn delete_custom_avatar(
     avatar_id: String,
@@ -1361,7 +1385,9 @@ pub fn run() {
             #[cfg(feature = "studio")]
             studio_export_output,
             #[cfg(feature = "studio")]
-            studio_retopologize
+            studio_retopologize,
+            #[cfg(feature = "studio")]
+            studio_import_as_avatar
         ])
         .run(tauri::generate_context!())
         .expect("failed to run AgentPet desktop application");

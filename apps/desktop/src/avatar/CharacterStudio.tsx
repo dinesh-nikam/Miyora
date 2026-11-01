@@ -35,7 +35,7 @@ export interface CharacterStudioProps {
   onAvatarChanged: (avatar: ResolvedAvatar) => void;
 }
 
-type StudioTab = "library" | "customize" | "import";
+type StudioTab = "library" | "customize" | "generate" | "import";
 type Viewing = { source: AvatarSource; id: string };
 
 const PREVIEW_STATES: PetState[] = [
@@ -243,6 +243,8 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
   const [status, setStatus] = useState<{ tone: "info" | "error"; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
   const [imageName, setImageName] = useState("My Character");
+  const [generatePrompt, setGeneratePrompt] = useState("");
+  const [generatePreset, setGeneratePreset] = useState("anime-character");
 
   const reportError = useCallback((text: string) => setStatus({ tone: "error", text }), []);
 
@@ -413,6 +415,100 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
       setStatus({ tone: "info", text: `Imported ${result.data.name}.` });
     });
 
+  const generateCompanion = () =>
+    run(async () => {
+      if (!generatePrompt.trim()) return;
+      setStatus({ tone: "info", text: "Initializing 3D generation project..." });
+
+      let projectId: string | null = null;
+      const projectsRes = await invokeSafe<Array<{ id: string; name: string }>>("studio_list_projects");
+      if (projectsRes.ok && projectsRes.data.length > 0) {
+        projectId = projectsRes.data[0].id;
+      } else {
+        const createRes = await invokeSafe<{ id: string }>("studio_create_project", { name: "Companions" });
+        if (createRes.ok) projectId = createRes.data.id;
+      }
+      if (!projectId) {
+        reportError("Failed to initialize Studio project.");
+        return;
+      }
+
+      const overviewRes = await invokeSafe<{ providers: Array<{ id: string; configured: boolean; label: string }> }>("studio_overview");
+      let providerId = "tripo";
+      if (overviewRes.ok) {
+        const readyProvider = overviewRes.data.providers.find((p) => p.configured) ?? overviewRes.data.providers[0];
+        if (readyProvider) providerId = readyProvider.id;
+      }
+
+      setStatus({ tone: "info", text: "Submitting prompt to 3D engine..." });
+      const submitRes = await invokeSafe<{ id: string; assetId: string; generationId: string }>("studio_submit_text", {
+        submission: {
+          projectId,
+          provider: providerId,
+          prompt: generatePrompt.trim(),
+          negativePrompt: null,
+          assetName: generatePrompt.trim().slice(0, 32),
+          settings: {
+            pbr: true,
+            texture: true,
+          },
+        },
+      });
+
+      if (!submitRes.ok) {
+        reportError(`3D Generation submission failed: ${submitRes.error}`);
+        return;
+      }
+
+      const taskId = submitRes.data.id;
+      const assetId = submitRes.data.assetId;
+      setStatus({ tone: "info", text: "3D model is generating... (polling progress)" });
+
+      let attempts = 0;
+      const maxAttempts = 150;
+      while (attempts < maxAttempts) {
+        await new Promise((r) => setTimeout(r, 2000));
+        attempts++;
+        const tasksRes = await invokeSafe<Array<{ id: string; state: string; progressPercent: number | null }>>("studio_list_tasks");
+        if (!tasksRes.ok) continue;
+        const task = tasksRes.data.find((t) => t.id === taskId);
+        if (!task) continue;
+
+        if (task.state === "completed") {
+          const detailRes = await invokeSafe<{ generations: Array<{ id: string; outputs: Array<{ id: number; kind: string }> }> }>("studio_asset_detail", { assetId });
+          if (detailRes.ok) {
+            const modelOutput = detailRes.data.generations
+              .flatMap((g) => g.outputs)
+              .find((o) => o.kind === "model");
+            if (modelOutput) {
+              setStatus({ tone: "info", text: "Importing 3D companion into library..." });
+              const importRes = await invokeSafe<CustomAvatarSummary>("studio_import_as_avatar", {
+                outputId: modelOutput.id,
+              });
+              if (importRes.ok) {
+                await refresh();
+                setViewing({ source: "custom", id: importRes.data.avatarId });
+                setTab("library");
+                setStatus({ tone: "info", text: `Success! ${importRes.data.name} is now available in your characters.` });
+                return;
+              }
+            }
+          }
+          await refresh();
+          setTab("library");
+          setStatus({ tone: "info", text: "3D generation completed and saved." });
+          return;
+        } else if (task.state === "failed") {
+          reportError("3D generation failed on the provider. Check API key and quota.");
+          return;
+        } else {
+          const pct = task.progressPercent ?? 0;
+          setStatus({ tone: "info", text: `3D model generating: ${pct}%...` });
+        }
+      }
+      reportError("3D generation timed out. You can check task status in Studio.");
+    });
+
   const isActive = (source: AvatarSource, id: string) => activeAvatar?.source === source && activeAvatar.avatarId === id;
   const vrmMeta = viewedCustom?.kind === "vrm" ? viewedCustom.metadata : null;
   const metaText = (key: string) => {
@@ -501,8 +597,7 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
             border: "1px solid rgba(255, 255, 255, 0.08)",
           }}
         >
-          {/* Image sculpts and VRM imports cannot become the active pet in v1, so no Import tab. */}
-          {(["library", "customize"] as StudioTab[]).map((name) => {
+          {(["library", "customize", "generate", "import"] as StudioTab[]).map((name) => {
             const isSelected = tab === name;
             return (
               <button
@@ -523,7 +618,11 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
                 }}
                 onClick={() => setTab(name)}
               >
-                {name === "library" ? `Library (${catalog.length + customs.length})` : humanize(name)}
+                {name === "library"
+                  ? `Library (${catalog.length + customs.length})`
+                  : name === "generate"
+                    ? "Generate 3D"
+                    : humanize(name)}
               </button>
             );
           })}
@@ -705,6 +804,45 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
               Image sculpts and VRM models keep their own geometry. Select a library character, or the styled character created from your image, to customize it.
             </div>
           ))}
+
+        {tab === "generate" && (
+          <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
+            <div style={{ ...panel, display: "flex", flexDirection: "column", gap: "12px" }}>
+              <div style={{ fontSize: "14px", fontWeight: 700, color: "#e2e8f0" }}>AI 3D Companion Generator</div>
+              <div style={{ fontSize: "12px", color: "#94a3b8", lineHeight: 1.6 }}>
+                Generate an original 3D avatar companion from a description. Once generated, the model is automatically imported, rigged, and added to your companion library.
+              </div>
+              <Field title="Character prompt">
+                <input
+                  style={input}
+                  maxLength={256}
+                  value={generatePrompt}
+                  placeholder="e.g. Cyberpunk fox spirit with neon goggles"
+                  onChange={(event) => setGeneratePrompt(event.target.value)}
+                />
+              </Field>
+              <Field title="Style Preset">
+                <select style={input} value={generatePreset} onChange={(event) => setGeneratePreset(event.target.value)}>
+                  <option value="anime-character">Anime Character</option>
+                  <option value="character">Standard Character</option>
+                  <option value="low-poly">Low Poly</option>
+                  <option value="game-asset">Game Asset</option>
+                  <option value="fantasy">Fantasy</option>
+                  <option value="sci-fi">Sci-Fi</option>
+                </select>
+              </Field>
+              <div>
+                <button
+                  style={button("primary", busy || !generatePrompt.trim())}
+                  disabled={busy || !generatePrompt.trim()}
+                  onClick={() => void generateCompanion()}
+                >
+                  {busy ? "Generating 3D Companion..." : "Generate & Add to Library"}
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
 
         {tab === "import" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "12px" }}>

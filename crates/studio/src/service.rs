@@ -835,6 +835,11 @@ impl StudioService {
         Ok(std::fs::read(self.managed_path(&relative)?)?)
     }
 
+    pub fn output_path(&self, output_id: i64) -> Result<PathBuf, StudioError> {
+        let (relative, _) = self.store.output_location(output_id)?;
+        self.managed_path(&relative)
+    }
+
     fn managed_path(&self, relative: &str) -> Result<PathBuf, StudioError> {
         let path = Path::new(relative);
         if !path

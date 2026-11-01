@@ -67,7 +67,20 @@ const NONE: PresetDefaults = PresetDefaults {
     texture_quality: None,
 };
 
-pub const PRESETS: [Preset; 12] = [
+pub const PRESETS: [Preset; 13] = [
+    Preset {
+        id: "anime-character",
+        label: "Anime Character",
+        style_hint: "full-body stylized anime character, cel-shaded aesthetic, clean silhouette, neutral A-pose",
+        topology_hint: "clean limbs separated from body, stylized anime proportions",
+        negative_hint: "merged limbs, extra fingers, photorealistic skin, western cartoon style",
+        defaults: PresetDefaults {
+            pbr: Some(true),
+            geometry_quality: Some(GeometryQuality::Detailed),
+            texture_quality: Some(TextureQuality::Detailed),
+            ..NONE
+        },
+    },
     Preset {
         id: "game-asset",
         label: "Game Asset",
@@ -241,6 +254,52 @@ fn sanitize(text: &str, removed: &mut bool) -> String {
     filtered.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
+pub const COPYRIGHT_REPLACEMENTS: &[(&str, &str)] = &[
+    ("nezuko", "original demon-inspired anime heroine, long dark hair with gradient salmon-pink tips"),
+    ("tanjiro", "original swordsman youth, dark red-tinted hair, haori mantle"),
+    ("zenitsu", "original lightning warrior youth, yellow gradient hair"),
+    ("inosuke", "original dual-wielding wild warrior, animal pelt details"),
+    ("naruto", "original spirited ninja youth, spiky blond hair, orange shinobi outfit"),
+    ("sasuke", "original cool avenger prodigy, high-collar tunic"),
+    ("goku", "original martial arts champion, wild spiky hair, orange and navy gi"),
+    ("vegeta", "original proud warrior prince, swept-up dark hair, battle armor"),
+    ("pikachu", "original electric mascot creature, golden yellow fur"),
+    ("luffy", "original adventurous sea captain, straw hat, red vest"),
+    ("zoro", "original stoic swordsman, cropped moss-green hair"),
+    ("sanji", "original culinary martial artist, formal suit"),
+    ("gojo", "original sorcerer, snow-white spiky hair, dark uniform"),
+    ("itadori", "original athletic brawler youth, spiked hair"),
+    ("levi", "original tactical scout captain, green hooded cloak"),
+    ("mikasa", "original elite scout heroine, dark red scarf"),
+    ("anya", "original cute telepathic child, ornamental hairclips"),
+    ("frieren", "original timeless elven mage, silver twintails, traveling robe"),
+    ("denji", "original wild devil hunter, relaxed shirt and tie"),
+];
+
+/// Replaces known copyrighted anime franchise character names with descriptive stylistic archetypes.
+pub fn sanitize_franchise_names(text: &str) -> String {
+    let lower = text.to_lowercase();
+    let replaced = text.to_string();
+    for &(franchise, description) in COPYRIGHT_REPLACEMENTS {
+        let mut search_from = 0;
+        while let Some(pos) = lower[search_from..].find(franchise) {
+            let abs_pos = search_from + pos;
+            let end_pos = abs_pos + franchise.len();
+            let boundary_before = abs_pos == 0 || !lower.as_bytes()[abs_pos - 1].is_ascii_alphanumeric();
+            let boundary_after = end_pos >= lower.len() || !lower.as_bytes()[end_pos].is_ascii_alphanumeric();
+            if boundary_before && boundary_after {
+                let mut new_text = String::with_capacity(replaced.len() + description.len());
+                new_text.push_str(&replaced[..abs_pos]);
+                new_text.push_str(description);
+                new_text.push_str(&replaced[end_pos..]);
+                return sanitize_franchise_names(&new_text);
+            }
+            search_from = end_pos;
+        }
+    }
+    replaced
+}
+
 /// Cuts at the last word boundary within `max_chars`.
 fn bound(text: &str, max_chars: usize, truncated: &mut bool) -> String {
     if text.chars().count() <= max_chars {
@@ -260,7 +319,7 @@ pub fn build_prompt(
     limits: &ProviderLimits,
 ) -> Result<BuiltPrompt, String> {
     let mut sanitized = false;
-    let mut clean = |text: &str| sanitize(text, &mut sanitized);
+    let mut clean = |text: &str| sanitize(&sanitize_franchise_names(text), &mut sanitized);
     let object = clean(&intent.object_identity);
     if object.is_empty() {
         return Err("Describe the object to generate.".into());
@@ -412,10 +471,22 @@ mod tests {
     }
 
     #[test]
-    fn twelve_unique_presets() {
+    fn thirteen_unique_presets() {
         let mut ids: Vec<_> = PRESETS.iter().map(|preset| preset.id).collect();
         ids.sort_unstable();
         ids.dedup();
-        assert_eq!(ids.len(), 12);
+        assert_eq!(ids.len(), 13);
+        assert!(preset("anime-character").is_some());
+    }
+
+    #[test]
+    fn franchise_names_sanitized_to_original_archetypes() {
+        let intent = PromptIntent {
+            object_identity: "Nezuko in modern clothes".into(),
+            ..PromptIntent::default()
+        };
+        let built = build_prompt(&intent, preset("anime-character"), &WIDE).unwrap();
+        assert!(!built.prompt.to_lowercase().contains("nezuko"));
+        assert!(built.prompt.contains("original demon-inspired anime heroine"));
     }
 }

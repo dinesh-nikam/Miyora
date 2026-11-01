@@ -2,11 +2,11 @@
 // Not part of `vite build` (only index.html is an entry) and never shipped.
 // Mocks read-only studio IPC; the viewer loads a real local GLB from output/.
 // No provider is contacted and no task here is real.
-import glbUrl from "../../../output/anime-rigged-catalog-v1/ember/model.glb?url";
-import type { AssetDetail, StudioOverview, TaskView } from "./studio/types";
+import glbUrl from "../../output/anime-rigged-catalog-v1/ember/model.glb?url";
+import type { AssetDetail, StudioOverview, TaskView } from "../src/studio/types";
 
 // `?model=<name>` loads output/smoke/<name>.glb (real engine results copied there for review).
-const smokeModels = import.meta.glob<string>("../../../output/smoke/*.glb", { query: "?url", import: "default", eager: true });
+const smokeModels = import.meta.glob<string>("../../output/smoke/*.glb", { query: "?url", import: "default", eager: true });
 const requested = new URLSearchParams(window.location.search).get("model");
 const modelUrl =
   Object.entries(smokeModels).find(([path]) => requested !== null && path.endsWith(`/${requested}.glb`))?.[1] ?? glbUrl;
@@ -80,7 +80,7 @@ const responses: Record<string, () => unknown> = {
   },
   transformCallback: () => 0,
 };
-const [{ createRoot }, { StudioView }] = await Promise.all([import("react-dom/client"), import("./studio/StudioView")]);
+const [{ createRoot }, { StudioView }] = await Promise.all([import("react-dom/client"), import("../src/studio/StudioView")]);
 createRoot(document.getElementById("root") as HTMLElement).render(
   <>
     <p style={{ color: "#fbbf24", font: "600 13px system-ui", margin: "0 0 8px" }}>[SIMULATED - DEV ONLY] UI harness: no provider calls, data below is mocked.</p>

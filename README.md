@@ -101,42 +101,15 @@ $env:TRIPO_API_KEY = "your_tripo_api_key_here"
 export TRIPO_API_KEY="your_tripo_api_key_here"
 ```
 
-### Running Text-to-3D Generation
+### 3D Companion Studio Pipeline
 
-Convert user text requests into fully detailed, original anime 3D models:
+Miyora features an integrated native 3D companion generation and management pipeline powered by `crates/studio` and the desktop Command Deck:
 
-```powershell
-python avatar_workflow.py --prompt "anime girl with pink hair"
-```
-
-The system automatically runs `anime_character_prompt.py` to expand short user descriptions into production-grade prompts (e.g. `Original full-body 3D anime-style girl character, long pink hair, large expressive eyes, stylish modern outfit, clean silhouette, appealing stylized proportions, T-pose, symmetrical face, high-quality PBR textures, clean topology, game-ready 3D model`), while guaranteeing that no copyrighted franchise character names (Nezuko, Naruto, Goku, Pikachu, etc.) are requested.
-
-### Running Image-to-3D Generation
-
-Create a 3D avatar from an uploaded local reference image or remote URL:
-
-```powershell
-# Local file
-python avatar_workflow.py --image "assets/reference_character.png"
-
-# Remote URL
-python avatar_workflow.py --image "https://example.com/character.png"
-```
-
-### Where Generated Models Are Saved
-
-All generated assets are saved under `/output/models/`:
-- **3D Model**: `output/models/<task_id>.glb` (standard PBR textured binary glTF)
-- **Rendered Preview**: `output/models/<task_id>_rendered.png` (studio-lit transparent render)
-
-### Post-Processing Architecture
-
-Blender post-processing (`blender_postprocess.py`) is reserved exclusively for presentation adjustments:
-- Importing and inspecting the downloaded mesh
-- Centering the geometry at origin and scaling to standard character height (1.8 units)
-- Positioning three-point studio lighting (Key, Fill, and Anime Rim lights)
-- Framing the camera for a complete full-body T-pose preview render
-- *It strictly does not rebuild the character or generate procedural mesh primitives.*
+- **Desktop Pet Library Generator:** Open the **Pet Library** tab in the desktop application and navigate to **Generate 3D** to create custom 3D companions from text prompts with real-time status and automatic catalog registration.
+- **Provider-Neutral Generation:** Native support for cloud 3D generation (Tripo API v3) and local offline generation (local TripoSR).
+- **Prompt Presets & Sanitization:** The prompt engine includes anime character presets and automatic copyright franchise sanitization (replacing copyrighted names with original stylistic archetypes).
+- **Post-Processing & Retopology:** Local polygon reduction / mesh decimation (`crates/studio/src/decimate.rs`) and full GLB/glTF export with normalization (`crates/studio/src/export.rs`).
+- **Legacy CLI Scripts:** Historical standalone Python workflows (`avatar_workflow.py`, `anime_character_prompt.py`, etc.) have been archived to `legacy/scripts/` for reference.
 
 ---
 
