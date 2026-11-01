@@ -4,11 +4,11 @@ use std::{
     path::{Path, PathBuf},
     process::{Child, ChildStderr, ChildStdout, Command, Stdio},
     thread::{self, JoinHandle},
-    time::Instant,
+    time::{Duration, Instant},
 };
 
 use agentpet_adapters::{
-    adapter_by_id, claude_code::InstallReport, AdapterError, NormalizedEvent, ADAPTERS,
+    adapter_by_id, claude_code::InstallReport, AdapterError, HookEventKind, NormalizedEvent, ADAPTERS,
 };
 use agentpet_core::{default_data_directory, Core, HookInstallRecord, SessionOutcome};
 use uuid::Uuid;
@@ -56,13 +56,6 @@ fn run_wrapped_command(mut args: impl Iterator<Item = OsString>) -> i32 {
     };
     let child_args: Vec<OsString> = args.collect();
     let session_id = Uuid::new_v4().to_string();
-    let core = match Core::open_default() {
-        Ok(core) => Some(core),
-        Err(error) => {
-            eprintln!("agentpet: local tracking is unavailable; running command without tracking: {error}");
-            None
-        }
-    };
     let project_path = match std::env::current_dir() {
         Ok(path) => Some(path.to_string_lossy().into_owned()),
         Err(error) => {
@@ -71,15 +64,59 @@ fn run_wrapped_command(mut args: impl Iterator<Item = OsString>) -> i32 {
         }
     };
     let agent_id = detect_agent_id(&program).unwrap_or("universal");
-    let tracking = core.as_ref().and_then(|runtime| {
-        match runtime.start_session(&session_id, agent_id, project_path.as_deref()) {
-            Ok(()) => Some(()),
+
+    let data_dir = default_data_directory().ok();
+    let mut ipc_tracked = false;
+
+    if let Some(ref dir) = data_dir {
+        if let (Ok(endpoint), Ok(secret)) = (
+            agentpet_ipc::Endpoint::resolve(dir),
+            agentpet_ipc::load_or_create_secret(&agentpet_ipc::secret_path(dir)),
+        ) {
+            let start_event = NormalizedEvent {
+                event_id: Uuid::new_v4().to_string(),
+                kind: HookEventKind::AgentStarted,
+                agent_id: agent_id.to_owned(),
+                session_id: Some(session_id.clone()),
+                project_path: project_path.clone(),
+            };
+            if let Ok(ack) = agentpet_adapters::ipc::send_event_sync(
+                &endpoint,
+                secret.as_bytes(),
+                &start_event,
+                Duration::from_millis(500),
+            ) {
+                if ack.accepted {
+                    ipc_tracked = true;
+                }
+            }
+        }
+    }
+
+    let core = if !ipc_tracked {
+        match Core::open_default() {
+            Ok(core) => Some(core),
             Err(error) => {
-                eprintln!("agentpet: session tracking could not start; running command without tracking: {error}");
+                eprintln!("agentpet: local tracking is unavailable; running command without tracking: {error}");
                 None
             }
         }
-    });
+    } else {
+        None
+    };
+    let tracking = if !ipc_tracked {
+        core.as_ref().and_then(|runtime| {
+            match runtime.start_session(&session_id, agent_id, project_path.as_deref()) {
+                Ok(()) => Some(()),
+                Err(error) => {
+                    eprintln!("agentpet: session tracking could not start; running command without tracking: {error}");
+                    None
+                }
+            }
+        })
+    } else {
+        None
+    };
 
     let mut child = match Command::new(&program)
         .args(&child_args)
@@ -148,7 +185,48 @@ fn run_wrapped_command(mut args: impl Iterator<Item = OsString>) -> i32 {
         SessionOutcome::Failed
     };
     let exit_code = child_exit_code(&status);
-    if tracking.is_some() {
+    if ipc_tracked {
+        let finish_kind = match outcome {
+            SessionOutcome::Completed => HookEventKind::AgentCompleted,
+            SessionOutcome::Failed | SessionOutcome::Interrupted => HookEventKind::AgentFailed,
+        };
+        let finish_event = NormalizedEvent {
+            event_id: Uuid::new_v4().to_string(),
+            kind: finish_kind,
+            agent_id: agent_id.to_owned(),
+            session_id: Some(session_id.clone()),
+            project_path: project_path.clone(),
+        };
+        let mut finished_via_ipc = false;
+        if let Some(ref dir) = data_dir {
+            if let (Ok(endpoint), Ok(secret)) = (
+                agentpet_ipc::Endpoint::resolve(dir),
+                agentpet_ipc::load_or_create_secret(&agentpet_ipc::secret_path(dir)),
+            ) {
+                if let Ok(ack) = agentpet_adapters::ipc::send_event_sync(
+                    &endpoint,
+                    secret.as_bytes(),
+                    &finish_event,
+                    Duration::from_millis(1000),
+                ) {
+                    if ack.accepted {
+                        finished_via_ipc = true;
+                    }
+                }
+            }
+        }
+        if !finished_via_ipc {
+            if let Ok(fallback_core) = Core::open_default() {
+                finish_tracking(
+                    &Some(fallback_core),
+                    &session_id,
+                    outcome,
+                    status.code(),
+                    elapsed_ms(started),
+                );
+            }
+        }
+    } else if tracking.is_some() {
         finish_tracking(
             &core,
             &session_id,
@@ -616,6 +694,23 @@ fn run_hook_command(mut args: impl Iterator<Item = OsString>) -> i32 {
             return 0;
         }
     };
+    if let Ok(data_dir) = default_data_directory() {
+        if let (Ok(endpoint), Ok(secret)) = (
+            agentpet_ipc::Endpoint::resolve(&data_dir),
+            agentpet_ipc::load_or_create_secret(&agentpet_ipc::secret_path(&data_dir)),
+        ) {
+            if let Ok(ack) = agentpet_adapters::ipc::send_event_sync(
+                &endpoint,
+                secret.as_bytes(),
+                &event,
+                Duration::from_millis(500),
+            ) {
+                if ack.accepted {
+                    return 0;
+                }
+            }
+        }
+    }
     let core = match Core::open_default() {
         Ok(core) => core,
         Err(error) => {
@@ -1061,5 +1156,58 @@ mod tests {
     #[test]
     fn leaves_unknown_commands_as_universal() {
         assert_eq!(detect_agent_id(OsStr::new("custom-agent")), None);
+    }
+
+    #[test]
+    fn cli_ipc_offline_fallback_records_event() {
+        let temp_dir = tempfile::tempdir().expect("tempdir");
+        let event = agentpet_adapters::NormalizedEvent {
+            event_id: uuid::Uuid::new_v4().to_string(),
+            kind: agentpet_adapters::HookEventKind::AgentWorking,
+            agent_id: "claude_code".into(),
+            session_id: Some("session-cli-fb".into()),
+            project_path: None,
+        };
+
+        // No IPC server running; fallback directly persists to SQLite
+        let ack = agentpet_adapters::ipc::dispatch_event_with_fallback(temp_dir.path(), &event)
+            .expect("fallback succeeds");
+        assert!(ack.accepted);
+
+        let core = agentpet_core::Core::open(temp_dir.path()).expect("core");
+        let snap = core.snapshot().expect("snapshot");
+        assert_eq!(snap.pet_state, agentpet_core::PetState::Working);
+    }
+
+    #[test]
+    fn cli_ipc_online_updates_daemon_core() {
+        let temp_dir = tempfile::tempdir().expect("tempdir");
+        let core = agentpet_core::Core::open(temp_dir.path()).expect("core");
+        #[cfg(windows)]
+        let endpoint = agentpet_ipc::Endpoint::NamedPipe(format!(r"\\.\pipe\test-cli-ipc-{}", uuid::Uuid::new_v4()));
+        #[cfg(unix)]
+        let endpoint = agentpet_ipc::Endpoint::UnixSocket(temp_dir.path().join("test_cli.sock"));
+
+        let secret = agentpet_ipc::LocalSecret::generate().expect("secret");
+        let handle = agentpet_adapters::ipc::spawn_ipc_server(core.clone(), endpoint.clone(), secret.clone())
+            .expect("server spawned");
+        std::thread::sleep(std::time::Duration::from_millis(50));
+
+        let event = agentpet_adapters::NormalizedEvent {
+            event_id: uuid::Uuid::new_v4().to_string(),
+            kind: agentpet_adapters::HookEventKind::AgentWorking,
+            agent_id: "claude_code".into(),
+            session_id: Some("session-cli-online".into()),
+            project_path: None,
+        };
+
+        let ack = agentpet_adapters::ipc::send_event_sync(&endpoint, secret.as_bytes(), &event, std::time::Duration::from_secs(5))
+            .expect("send via ipc");
+        assert!(ack.accepted);
+
+        let snap = core.snapshot().expect("snapshot");
+        assert_eq!(snap.pet_state, agentpet_core::PetState::Working);
+
+        handle.shutdown();
     }
 }

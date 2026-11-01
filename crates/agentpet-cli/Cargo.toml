@@ -12,6 +12,11 @@ path = "src/main.rs"
 [dependencies]
 agentpet-adapters = { path = "../agentpet-adapters" }
 agentpet-core = { path = "../agentpet-core" }
+agentpet-ipc = { path = "../agentpet-ipc" }
 agentpet-pet-pack = { path = "../pet-pack" }
 chrono.workspace = true
+tokio.workspace = true
 uuid.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

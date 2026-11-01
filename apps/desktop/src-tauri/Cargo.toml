@@ -27,6 +27,7 @@ base64.workspace = true
 agentpet-core = { path = "../../../crates/agentpet-core" }
 agentpet-adapters = { path = "../../../crates/agentpet-adapters" }
 agentpet-avatar = { path = "../../../crates/avatar" }
+agentpet-ipc = { path = "../../../crates/agentpet-ipc" }
 agentpet-pet-engine = { path = "../../../crates/pet-engine" }
 agentpet-pet-pack = { path = "../../../crates/pet-pack" }
 agentpet-studio = { path = "../../../crates/studio", optional = true }

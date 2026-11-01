@@ -5,8 +5,7 @@ use std::{
 };
 
 use agentpet_pet_engine::{
-    EngineContext, PetEngine, PetPresentation, PetState, ReactionQueue, SessionReaction, Stimulus,
-    Transition,
+    EngineContext, PetEngine, ReactionQueue, SessionReaction, Stimulus, Transition,
 };
 use agentpet_pet_pack::{
     signature::TrustedSigner, PetPackError, PetPackManifest, ValidationLimits,
@@ -23,6 +22,7 @@ mod daily;
 mod overlay_control;
 mod roaming;
 
+pub use agentpet_pet_engine::{PetPresentation, PetState};
 pub use avatars::{
     AvatarCatalogEntry, AvatarKind, AvatarSelection, AvatarSource, CustomAvatarSummary,
     ResolvedAvatar,

@@ -1225,6 +1225,18 @@ pub fn run() {
                 #[cfg(feature = "dev-simulator")]
                 is_simulated.clone(),
             )?;
+            let endpoint = agentpet_ipc::Endpoint::resolve(&data_dir)
+                .map_err(std::io::Error::other)?;
+            let secret = agentpet_ipc::load_or_create_secret(&agentpet_ipc::secret_path(&data_dir))
+                .map_err(std::io::Error::other)?;
+            match agentpet_adapters::ipc::spawn_ipc_server(core.clone(), endpoint, secret) {
+                Ok(handle) => {
+                    app.manage(handle);
+                }
+                Err(error) => {
+                    eprintln!("AgentPet could not start local daemon IPC listener: {error}");
+                }
+            }
             #[cfg(feature = "studio")]
             app.manage(open_studio(&data_dir)?);
             app.manage(AppRuntime {

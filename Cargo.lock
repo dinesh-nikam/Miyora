@@ -13,11 +13,13 @@ name = "agentpet-adapters"
 version = "0.1.0"
 dependencies = [
  "agentpet-core",
+ "agentpet-ipc",
  "chrono",
  "serde",
  "serde_json",
  "tempfile",
  "thiserror 2.0.21",
+ "tokio",
  "uuid",
 ]
 
@@ -38,8 +40,11 @@ version = "0.1.0"
 dependencies = [
  "agentpet-adapters",
  "agentpet-core",
+ "agentpet-ipc",
  "agentpet-pet-pack",
  "chrono",
+ "tempfile",
+ "tokio",
  "uuid",
 ]
 
@@ -68,6 +73,7 @@ dependencies = [
  "agentpet-adapters",
  "agentpet-avatar",
  "agentpet-core",
+ "agentpet-ipc",
  "agentpet-pet-engine",
  "agentpet-pet-pack",
  "agentpet-studio",
