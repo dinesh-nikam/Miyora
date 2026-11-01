@@ -1,27 +1,62 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { DailyMoments } from "./DailyMoments";
+
+export interface MeasuredWindow {
+  window: string;
+  remainingPercent: number;
+  resetAt: string | null;
+}
+
+/** Mirrors `agentpet_adapters::quota::QuotaStatus`: never an estimate. */
+export type QuotaStatus =
+  | { kind: "measured"; windows: MeasuredWindow[]; observedAt: string; provenance: string }
+  | {
+      kind: "unavailable";
+      reason: "not_detected" | "not_configured" | "not_exposed_locally" | "stale" | "read_failed";
+      action: "copy_codex_status_command" | null;
+    }
+  | { kind: "unsupported"; reason: string };
 
 export interface ProviderReport {
   providerId: string;
   displayName: string;
   detected: boolean;
   hookStatus: string;
-  quotaStatus?: {
-    fiveHour?: { usedPercentage: number; resetsAt?: string };
-    sevenDay?: { usedPercentage: number; resetsAt?: string };
-    contextWindowUsedPercentage?: number;
-    updatedAt: string;
-    provenance: string;
-  } | null;
-  quotaProvenance: string;
-  quotaUpdatedSecondsAgo?: number | null;
+  quota: QuotaStatus;
   costUsd?: number | null;
   costProvenance: string;
   inputTokens?: number | null;
   outputTokens?: number | null;
   tokensProvenance: string;
-  configPath?: string | null;
 }
+
+export function measuredWindow(quota: QuotaStatus, window: string): MeasuredWindow | null {
+  return quota.kind === "measured" ? (quota.windows.find((candidate) => candidate.window === window) ?? null) : null;
+}
+
+const UNAVAILABLE_TEXT: Record<Extract<QuotaStatus, { kind: "unavailable" }>["reason"], string> = {
+  not_detected: "Not detected on this machine.",
+  not_configured: "No quota reading yet. It appears once the agent reports one.",
+  not_exposed_locally: "Usage is not available locally.",
+  stale: "The last quota reading is out of date.",
+  read_failed: "The quota reading could not be read.",
+};
+
+/** One honest sentence about a provider's quota. */
+export function quotaSummary(quota: QuotaStatus): string {
+  switch (quota.kind) {
+    case "measured": {
+      const fiveHour = measuredWindow(quota, "five_hour") ?? quota.windows[0];
+      return `${fiveHour.remainingPercent.toFixed(0)}% of ${fiveHour.window.replace("_", "-")} limit left`;
+    }
+    case "unavailable":
+      return UNAVAILABLE_TEXT[quota.reason];
+    case "unsupported":
+      return quota.reason;
+  }
+}
+
+const CODEX_STATUS_COMMAND = "/status";
 
 export interface CommandDeckProps {
   isOpen: boolean;
@@ -63,13 +98,6 @@ function formatResetTime(resetsAt: string | undefined): string | null {
   return date.toLocaleTimeString([], { hour: "numeric", minute: "2-digit" });
 }
 
-function formatAge(seconds: number): string {
-  if (seconds < 60) return `${seconds}s ago`;
-  const minutes = Math.floor(seconds / 60);
-  if (minutes < 60) return `${minutes}m ago`;
-  return `${Math.floor(minutes / 60)}h ago`;
-}
-
 function hookLabel(p: ProviderReport): string {
   return p.hookStatus === "installed" ? "Hook on" : "Detected";
 }
@@ -101,10 +129,31 @@ function QuotaMeter({ label, used, resetsAt }: { label: string; used: number; re
   );
 }
 
+function CopyStatusCommand() {
+  const [copied, setCopied] = useState(false);
+  return (
+    <p className="deck-quiet">
+      Check Usage in Codex, or run <code>{CODEX_STATUS_COMMAND}</code> in an active Codex CLI session.{" "}
+      <button
+        type="button"
+        className="deck-action is-quiet"
+        onClick={() => {
+          void navigator.clipboard
+            .writeText(CODEX_STATUS_COMMAND)
+            .then(() => setCopied(true))
+            .catch((error: unknown) => console.error("[CommandDeck] copy failed:", error));
+        }}
+      >
+        {copied ? "Copied" : `Copy ${CODEX_STATUS_COMMAND}`}
+      </button>
+    </p>
+  );
+}
+
 function AgentRow({ p }: { p: ProviderReport }) {
-  const fiveHour = p.quotaStatus?.fiveHour;
-  const sevenDay = p.quotaStatus?.sevenDay;
-  const quotaSource = provenanceLabel(p.quotaProvenance);
+  const fiveHour = measuredWindow(p.quota, "five_hour");
+  const sevenDay = measuredWindow(p.quota, "seven_day");
+  const quotaSource = p.quota.kind === "measured" ? provenanceLabel(p.quota.provenance) : null;
   const costSource = provenanceLabel(p.costProvenance);
   const hasTokens = p.inputTokens !== undefined && p.inputTokens !== null;
   const hasCost = p.costUsd !== undefined && p.costUsd !== null;
@@ -117,16 +166,17 @@ function AgentRow({ p }: { p: ProviderReport }) {
       </div>
 
       {fiveHour ? (
-        <QuotaMeter label="5-hour limit" used={fiveHour.usedPercentage} resetsAt={fiveHour.resetsAt} />
+        <QuotaMeter label="5-hour limit" used={100 - fiveHour.remainingPercent} resetsAt={fiveHour.resetAt ?? undefined} />
       ) : (
-        <p className="deck-quiet">No quota reading yet.</p>
+        <p className="deck-quiet">{quotaSummary(p.quota)}</p>
       )}
+      {p.quota.kind === "unavailable" && p.quota.action === "copy_codex_status_command" && <CopyStatusCommand />}
 
       {(sevenDay || hasCost || hasTokens) && (
       <div className="deck-agent-facts">
         {sevenDay && (
           <span>
-            <strong>{sevenDay.usedPercentage.toFixed(0)}%</strong> of weekly limit
+            <strong>{(100 - sevenDay.remainingPercent).toFixed(0)}%</strong> of weekly limit used
           </span>
         )}
         {hasCost && (
@@ -143,11 +193,10 @@ function AgentRow({ p }: { p: ProviderReport }) {
       </div>
       )}
 
-      {(quotaSource || costSource || p.quotaUpdatedSecondsAgo != null) && (
+      {(quotaSource || costSource) && (
         <p className="deck-quiet deck-agent-source">
           {quotaSource && <span>Quota {quotaSource}</span>}
           {costSource && <span>Cost {costSource}</span>}
-          {p.quotaUpdatedSecondsAgo != null && <span>Updated {formatAge(p.quotaUpdatedSecondsAgo)}</span>}
         </p>
       )}
     </li>

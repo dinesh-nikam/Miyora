@@ -3,7 +3,7 @@ import { invoke } from "@tauri-apps/api/core";
 import { invokeSafe } from "./utils/ipc";
 import { open } from "@tauri-apps/plugin-dialog";
 import { CompanionRenderer, PetState, SelectedPetAnimation } from "./components/CompanionRenderer";
-import { CommandDeck, ProviderReport } from "./components/CommandDeck";
+import { CommandDeck, measuredWindow, quotaSummary, type ProviderReport } from "./components/CommandDeck";
 import { CharacterStudio } from "./avatar/CharacterStudio";
 import type { AvatarHud, PetPresentation, ResolvedAvatar } from "./avatar/types";
 import { StudioView } from "./studio/StudioView";
@@ -428,8 +428,9 @@ export default function App() {
 
   const activePetName = selectedAnimation?.petName ?? "Aoi";
   const claudeProvider = providers.find((p) => p.providerId === "claude_code");
-  const quotaWindow = claudeProvider?.quotaStatus?.fiveHour;
-  const quotaProvenance = claudeProvider?.quotaProvenance ?? "N/A";
+  const fiveHour = claudeProvider ? measuredWindow(claudeProvider.quota, "five_hour") : null;
+  const quotaWindow = fiveHour ? { usedPercentage: 100 - fiveHour.remainingPercent, resetsAt: fiveHour.resetAt ?? undefined } : null;
+  const quotaProvenance = claudeProvider?.quota.kind === "measured" ? claudeProvider.quota.provenance : "N/A";
 
   // Real today metrics computed from real local evidence
   const totalCostToday = claudeProvider?.costUsd ?? null;
@@ -1250,10 +1251,7 @@ export default function App() {
                     : "N/A"}
                 </div>
                 <div className="font-grotesk" style={{ fontSize: "11px", color: "rgba(255,255,255,0.7)" }}>
-                  {claudeProvider?.quotaUpdatedSecondsAgo !== undefined &&
-                  claudeProvider?.quotaUpdatedSecondsAgo !== null
-                    ? `Updated ${claudeProvider.quotaUpdatedSecondsAgo}s ago`
-                    : "No statusline hook payload received"}
+                  {claudeProvider ? quotaSummary(claudeProvider.quota) : "Claude Code not detected"}
                 </div>
               </div>
             </div>
@@ -2047,7 +2045,7 @@ export default function App() {
                         {p.displayName}
                       </div>
                       <div className="font-grotesk" style={{ fontSize: "11px", color: "rgba(10,10,10,0.6)", marginTop: "2px", fontWeight: 600 }}>
-                        Config: {p.configPath ?? "Default directory"}
+                        Usage: {quotaSummary(p.quota)}
                       </div>
                     </div>
                     <span

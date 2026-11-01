@@ -5,6 +5,9 @@ use std::{
     time::Duration,
 };
 
+use agentpet_adapters::quota::{
+    claude_quota_status, codex_quota_status, unsupported_quota_status, QuotaStatus,
+};
 use agentpet_avatar::CharacterSpec;
 use agentpet_core::{
     AchievementSummary, AgentSessionSummary, AvatarCatalogEntry, AvatarSource,
@@ -28,7 +31,6 @@ use studio_commands::*;
 const STATE_TIMER_INTERVAL: Duration = Duration::from_secs(1);
 const POSITION_WRITE_DEBOUNCE: Duration = Duration::from_millis(400);
 const AVATAR_LIBRARY_DIR: &str = "avatars";
-const QUOTA_FRESHNESS_LIMIT_SECS: u64 = 300;
 const MAX_COSTS_FILE_BYTES: u64 = 2 * 1024 * 1024;
 /// Broadcast to every window so main and overlay share one preference state.
 const COMPANION_PREFERENCES_EVENT: &str = "companion-preferences-changed";
@@ -674,64 +676,50 @@ struct ProviderStatusReport {
     display_name: String,
     detected: bool,
     hook_status: String,
-    quota_status: Option<agentpet_adapters::claude_code::ClaudeQuotaReport>,
-    quota_provenance: String,
-    quota_updated_seconds_ago: Option<u64>,
+    /// Measured only from a provider-reported value; never estimated.
+    quota: QuotaStatus,
     cost_usd: Option<f64>,
     cost_provenance: String,
     input_tokens: Option<i64>,
     output_tokens: Option<i64>,
     tokens_provenance: String,
-    config_path: Option<String>,
 }
 
-#[tauri::command]
-fn get_providers_status(
-    runtime: State<'_, AppRuntime>,
-    window: tauri::WebviewWindow,
-) -> Result<Vec<ProviderStatusReport>, String> {
-    require_app_window(&window)?;
-    let home = std::env::var_os("HOME")
-        .or_else(|| std::env::var_os("USERPROFILE"))
-        .map(PathBuf::from);
+impl ProviderStatusReport {
+    /// A provider with no local cost or token evidence.
+    fn without_usage(
+        provider_id: &str,
+        display_name: &str,
+        detected: bool,
+        hook_status: &str,
+        quota: QuotaStatus,
+    ) -> Self {
+        Self {
+            provider_id: provider_id.into(),
+            display_name: display_name.into(),
+            detected,
+            hook_status: hook_status.into(),
+            quota,
+            cost_usd: None,
+            cost_provenance: "N/A".into(),
+            input_tokens: None,
+            output_tokens: None,
+            tokens_provenance: "N/A".into(),
+        }
+    }
+}
 
-    let mut reports = Vec::new();
-
-    // 1. Claude Code
-    let claude_dir = home.as_ref().map(|h| h.join(".claude"));
-    let claude_detected = claude_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
-    let settings_path = claude_dir.as_ref().map(|d| d.join("settings.json"));
-    let claude_hook_installed = settings_path
-        .as_ref()
-        .and_then(|p| fs::read_to_string(p).ok())
-        .map(|s| s.contains("agentpet hook"))
-        .unwrap_or(false);
-
-    let statusline_file = runtime.app_data_dir.join("claude_statusline.json");
-    let (quota_report, quota_updated_secs) = if let Ok(bytes) = fs::read(&statusline_file) {
-        let meta = fs::metadata(&statusline_file).ok();
-        let secs = meta
-            .and_then(|m| m.modified().ok())
-            .and_then(|m| std::time::SystemTime::now().duration_since(m).ok())
-            .map(|d| d.as_secs());
-        (
-            agentpet_adapters::claude_code::parse_statusline_payload(&bytes).ok(),
-            secs,
-        )
-    } else {
-        (None, None)
-    };
-
-    let (claude_cost, claude_in_tokens, claude_out_tokens) = claude_dir
-        .as_ref()
-        .map(|d| d.join("metrics").join("costs.jsonl"))
-        .filter(|p| p.is_file())
-        .and_then(|p| {
-            let meta = fs::metadata(&p).ok()?;
+/// Sums cost and token fields from Claude Code's local cost log.
+fn claude_local_usage(claude_dir: Option<&Path>) -> (Option<f64>, Option<i64>, Option<i64>) {
+    claude_dir
+        .map(|dir| dir.join("metrics").join("costs.jsonl"))
+        .filter(|path| path.is_file())
+        .and_then(|path| {
+            let meta = fs::metadata(&path).ok()?;
             if meta.len() > MAX_COSTS_FILE_BYTES {
                 return None;
             }
-            fs::read_to_string(&p).ok()
+            fs::read_to_string(&path).ok()
         })
         .map(|content| {
             let mut cost_sum = 0.0f64;
@@ -752,61 +740,82 @@ fn get_providers_status(
             }
             (Some(cost_sum), Some(in_sum), Some(out_sum))
         })
-        .unwrap_or((None, None, None));
+        .unwrap_or((None, None, None))
+}
 
-    let claude_cost_prov = if claude_cost.is_some() {
-        "ESTIMATED".to_string()
-    } else {
-        "N/A".to_string()
+#[tauri::command]
+fn get_providers_status(
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<Vec<ProviderStatusReport>, String> {
+    require_app_window(&window)?;
+    let home = std::env::var_os("HOME")
+        .or_else(|| std::env::var_os("USERPROFILE"))
+        .map(PathBuf::from);
+    let detected_dir = |parts: &[&str]| {
+        home.as_ref()
+            .map(|h| parts.iter().fold(h.clone(), |path, part| path.join(part)))
+            .is_some_and(|path| path.is_dir())
     };
-    let claude_tokens_prov = if claude_in_tokens.is_some() {
-        "LOCAL".to_string()
-    } else {
-        "N/A".to_string()
-    };
-    let claude_quota_prov = if let Some(ref report) = quota_report {
-        if quota_updated_secs.is_some_and(|secs| secs > QUOTA_FRESHNESS_LIMIT_SECS) {
-            "STALE".to_string()
-        } else {
-            report.provenance.clone()
+    let hook_or_missing = |detected: bool| if detected { "unsupported" } else { "missing" };
+
+    // 1. Claude Code: quota comes only from the status line AgentPet records.
+    let claude_dir = home.as_ref().map(|h| h.join(".claude"));
+    let claude_detected = claude_dir.as_ref().is_some_and(|p| p.is_dir());
+    let claude_hook_installed = claude_dir
+        .as_ref()
+        .map(|d| d.join("settings.json"))
+        .and_then(|p| fs::read_to_string(p).ok())
+        .is_some_and(|s| s.contains("agentpet hook"));
+    let statusline_file = runtime.app_data_dir.join("claude_statusline.json");
+    let (quota_record, quota_age_secs) = match fs::read(&statusline_file) {
+        Ok(bytes) => {
+            let age = fs::metadata(&statusline_file)
+                .ok()
+                .and_then(|m| m.modified().ok())
+                .and_then(|m| std::time::SystemTime::now().duration_since(m).ok())
+                .map(|d| d.as_secs());
+            (
+                Some(agentpet_adapters::claude_code::parse_statusline_payload(
+                    &bytes,
+                )),
+                age,
+            )
         }
-    } else {
-        "N/A".to_string()
+        Err(_) => (None, None),
     };
-
-    reports.push(ProviderStatusReport {
-        provider_id: "claude_code".into(),
-        display_name: "Claude Code".into(),
-        detected: claude_detected,
-        hook_status: if claude_hook_installed {
-            "installed".into()
+    let (cost_usd, input_tokens, output_tokens) = claude_local_usage(claude_dir.as_deref());
+    let mut claude = ProviderStatusReport::without_usage(
+        "claude_code",
+        "Claude Code",
+        claude_detected,
+        if claude_hook_installed {
+            "installed"
         } else {
-            "not_installed".into()
+            "not_installed"
         },
-        quota_status: quota_report,
-        quota_provenance: claude_quota_prov,
-        quota_updated_seconds_ago: quota_updated_secs,
-        cost_usd: claude_cost,
-        cost_provenance: claude_cost_prov,
-        input_tokens: claude_in_tokens,
-        output_tokens: claude_out_tokens,
-        tokens_provenance: claude_tokens_prov,
-        config_path: settings_path.map(|p| p.to_string_lossy().to_string()),
-    });
+        claude_quota_status(claude_detected, quota_record, quota_age_secs),
+    );
+    if cost_usd.is_some() {
+        claude.cost_usd = cost_usd;
+        claude.cost_provenance = "ESTIMATED".into();
+    }
+    if input_tokens.is_some() {
+        claude.input_tokens = input_tokens;
+        claude.output_tokens = output_tokens;
+        claude.tokens_provenance = "LOCAL".into();
+    }
 
-    // 2. OpenAI Codex CLI
+    // 2. OpenAI Codex CLI: remaining allowance lives in Codex itself.
     let codex_hooks_file = agentpet_adapters::codex::default_hooks_path();
     let codex_detected = codex_hooks_file
         .as_ref()
         .and_then(|p| p.parent())
         .is_some_and(|dir| dir.is_dir());
-    let codex_hooks_installed = codex_hooks_file
-        .as_ref()
-        .map(|p| {
-            agentpet_adapters::codex::is_installed(p, agentpet_adapters::codex::HOOK_COMMAND)
-                .unwrap_or(false)
-        })
-        .unwrap_or(false);
+    let codex_hooks_installed = codex_hooks_file.as_ref().is_some_and(|p| {
+        agentpet_adapters::codex::is_installed(p, agentpet_adapters::codex::HOOK_COMMAND)
+            .unwrap_or(false)
+    });
     let codex_hook_status = if codex_hooks_installed {
         "installed"
     } else if codex_detected {
@@ -814,92 +823,41 @@ fn get_providers_status(
     } else {
         "missing"
     };
-    reports.push(ProviderStatusReport {
-        provider_id: "codex".into(),
-        display_name: "OpenAI Codex CLI".into(),
-        detected: codex_detected,
-        hook_status: codex_hook_status.into(),
-        quota_status: None,
-        quota_provenance: "N/A".into(),
-        quota_updated_seconds_ago: None,
-        cost_usd: None,
-        cost_provenance: "N/A".into(),
-        input_tokens: None,
-        output_tokens: None,
-        tokens_provenance: "N/A".into(),
-        config_path: codex_hooks_file.map(|p| p.to_string_lossy().to_string()),
-    });
 
-    // 3. GitHub Copilot CLI
-    let copilot_dir = home.as_ref().map(|h| h.join(".copilot"));
-    let copilot_detected = copilot_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
-    reports.push(ProviderStatusReport {
-        provider_id: "copilot".into(),
-        display_name: "GitHub Copilot CLI".into(),
-        detected: copilot_detected,
-        hook_status: if copilot_detected {
-            "unsupported".into()
-        } else {
-            "missing".into()
-        },
-        quota_status: None,
-        quota_provenance: "N/A".into(),
-        quota_updated_seconds_ago: None,
-        cost_usd: None,
-        cost_provenance: "N/A".into(),
-        input_tokens: None,
-        output_tokens: None,
-        tokens_provenance: "N/A".into(),
-        config_path: copilot_dir.map(|p| p.to_string_lossy().to_string()),
-    });
-
-    // 4. Google Antigravity
-    let ag_dir = home.as_ref().map(|h| h.join(".gemini").join("antigravity"));
-    let ag_detected = ag_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
-    reports.push(ProviderStatusReport {
-        provider_id: "antigravity".into(),
-        display_name: "Google Antigravity".into(),
-        detected: ag_detected,
-        hook_status: if ag_detected {
-            "unsupported".into()
-        } else {
-            "missing".into()
-        },
-        quota_status: None,
-        quota_provenance: "N/A".into(),
-        quota_updated_seconds_ago: None,
-        cost_usd: None,
-        cost_provenance: "N/A".into(),
-        input_tokens: None,
-        output_tokens: None,
-        tokens_provenance: "N/A".into(),
-        config_path: ag_dir.map(|p| p.to_string_lossy().to_string()),
-    });
-
-    // 5. Cursor IDE
-    let cursor_dir = home.as_ref().map(|h| h.join(".cursor"));
-    let cursor_detected = cursor_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
-    reports.push(ProviderStatusReport {
-        provider_id: "cursor".into(),
-        display_name: "Cursor IDE".into(),
-        detected: cursor_detected,
-        hook_status: if cursor_detected {
-            "unsupported".into()
-        } else {
-            "missing".into()
-        },
-        quota_status: None,
-        quota_provenance: "N/A".into(),
-        quota_updated_seconds_ago: None,
-        cost_usd: None,
-        cost_provenance: "N/A".into(),
-        input_tokens: None,
-        output_tokens: None,
-        tokens_provenance: "N/A".into(),
-        config_path: cursor_dir.map(|p| p.to_string_lossy().to_string()),
-    });
-
-    Ok(reports)
+    let copilot = detected_dir(&[".copilot"]);
+    let antigravity = detected_dir(&[".gemini", "antigravity"]);
+    let cursor = detected_dir(&[".cursor"]);
+    Ok(vec![
+        claude,
+        ProviderStatusReport::without_usage(
+            "codex",
+            "OpenAI Codex CLI",
+            codex_detected,
+            codex_hook_status,
+            codex_quota_status(codex_detected),
+        ),
+        ProviderStatusReport::without_usage(
+            "copilot",
+            "GitHub Copilot CLI",
+            copilot,
+            hook_or_missing(copilot),
+            unsupported_quota_status(copilot),
+        ),
+        ProviderStatusReport::without_usage(
+            "antigravity",
+            "Google Antigravity",
+            antigravity,
+            hook_or_missing(antigravity),
+            unsupported_quota_status(antigravity),
+        ),
+        ProviderStatusReport::without_usage(
+            "cursor",
+            "Cursor IDE",
+            cursor,
+            hook_or_missing(cursor),
+            unsupported_quota_status(cursor),
+        ),
+    ])
 }
 
 #[cfg(debug_assertions)]
