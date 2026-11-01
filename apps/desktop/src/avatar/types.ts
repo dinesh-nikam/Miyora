@@ -89,6 +89,20 @@ export interface CharacterSpec {
   catchphrase?: string;
   specialty?: string;
   personality?: string;
+  /** Browsing group; required on bundled catalog rows, absent on user designs. */
+  category?: CharacterCategory;
+  /** False only for legacy rows, which Rust never offers as the active pet. */
+  threeDEligible: boolean;
+  attribution?: Attribution;
+}
+
+export type CharacterCategory = "character" | "animal" | "creature" | "robot" | "deity_inspired" | "legacy";
+
+export interface Attribution {
+  creator: string;
+  license: string;
+  source: string;
+  attribution: string;
 }
 
 export type AvatarSource = "catalog" | "custom";

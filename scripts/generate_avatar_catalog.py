@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Generate the bundled 3D character catalog.
 
-Every row below is an original, hand-authored character design for the
-procedural renderer. The script only formats and checks the rows; it does not
-randomize anything, so running it twice produces byte-identical output.
+Rows are hand-authored character designs for the procedural renderer. Most are
+original; rows in LEGACY_FRANCHISE imitate third-party franchise characters the
+project holds no license for, so they are marked `legacy` and are never offered
+as 3D pets. The script only formats and checks the rows; it does not randomize
+anything, so running it twice produces byte-identical output.
 
 Usage:
     python scripts/generate_avatar_catalog.py [--output PATH] [--check]
@@ -34,6 +36,27 @@ PATTERNS = {"none", "dots", "stripes", "waves", "petals", "stars", "diamonds"}
 ACCESSORIES = {"glasses", "headphones", "scarf", "beanie", "witch_hat", "crown", "halo", "cape", "backpack", "headband", "bow", "flower", "goggles", "bell", "katana", "wand", "staff", "kitsune_mask", "shell", "gem"}
 PALETTE_KEYS = ("skin", "hair", "eyes", "primary", "secondary", "accent")
 HEX = re.compile(r"^[0-9a-f]{6}$")
+BODY_CATEGORY = {"humanoid": "character", "beast": "animal", "bird": "animal", "slime": "creature", "robot": "robot"}
+LEGACY_FRANCHISE = frozenset(
+    "anya denji frieren genos gojo goku gon ichigo killua kodama-spirit l-lawliet levi light luffy mikasa momiji "
+    "nami naruto nezuko pikachu power rukia saitama sanji sasuke tanjiro valley-flyer vegeta witch-apprentice "
+    "woodland-guardian yor yuji zoro".split()
+)
+DEITY_INSPIRED = frozenset(
+    "arjuna ganesha hanuman krishna lakshmi parvati radha rama saraswati shiva sita sun-wukong".split()
+)
+ORIGINAL_ATTRIBUTION = {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design",
+}
+LEGACY_ATTRIBUTION = {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only.",
+}
 
 
 def derive_identity(slug: str, name: str, title: str, body: str, tags: list[str]) -> tuple[str, str, str]:
@@ -107,6 +130,8 @@ def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessorie
             raise ValueError(f"{slug}: unknown accessory `{accessory}`")
     tag_list = tags.split()
     default_p, default_s, default_cp = derive_identity(slug, name, title, body, tag_list)
+    legacy = slug in LEGACY_FRANCHISE
+    category = "legacy" if legacy else "deity_inspired" if slug in DEITY_INSPIRED else BODY_CATEGORY[body]
     character = {
         "schemaVersion": 1,
         "id": f"miyora.{slug}",
@@ -129,6 +154,9 @@ def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessorie
         "personality": personality or default_p,
         "specialty": specialty or default_s,
         "catchphrase": catchphrase or default_cp,
+        "category": category,
+        "threeDEligible": not legacy,
+        "attribution": LEGACY_ATTRIBUTION if legacy else ORIGINAL_ATTRIBUTION,
     }
     if tip is not None:
         character["hairTip"] = f"#{tip}"
@@ -640,6 +668,9 @@ def build_catalog() -> dict:
         names.add(character["name"])
     if len(CHARACTERS) < 100:
         raise ValueError(f"catalog has only {len(CHARACTERS)} characters")
+    unknown = (LEGACY_FRANCHISE | DEITY_INSPIRED) - {character["id"].removeprefix("miyora.") for character in CHARACTERS}
+    if unknown:
+        raise ValueError(f"category sets name unknown slugs: {sorted(unknown)}")
     return {
         "schemaVersion": 1,
         "creator": "Miyora contributors",

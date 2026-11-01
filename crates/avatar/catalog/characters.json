@@ -43,7 +43,15 @@
       ],
       "personality": "composed",
       "specialty": "Async Pipelines",
-      "catchphrase": "Calm code, steady commits, zero drama."
+      "catchphrase": "Calm code, steady commits, zero drama.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -83,7 +91,15 @@
       ],
       "personality": "relentless",
       "specialty": "Root Cause Debugging",
-      "catchphrase": "Stack traces at 3 a.m. are the truest truth."
+      "catchphrase": "Stack traces at 3 a.m. are the truest truth.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -124,6 +140,14 @@
       "personality": "inquisitive",
       "specialty": "Type Architecture",
       "catchphrase": "I read build logs like constellations.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#f0abfc"
     },
     {
@@ -164,7 +188,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -204,7 +236,15 @@
       ],
       "personality": "energetic",
       "specialty": "Fast-Path Execution",
-      "catchphrase": "Faster than the next clock cycle."
+      "catchphrase": "Faster than the next clock cycle.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -244,7 +284,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -284,7 +332,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -323,7 +379,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -364,7 +428,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -405,6 +477,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#bae6fd"
     },
     {
@@ -445,7 +525,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -484,7 +572,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -525,7 +621,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -566,7 +670,15 @@
       ],
       "personality": "analytical",
       "specialty": "Deep Inspection",
-      "catchphrase": "Every stack trace reveals the system's truth."
+      "catchphrase": "Every stack trace reveals the system's truth.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -603,7 +715,15 @@
       ],
       "personality": "stoic",
       "specialty": "Branch Guarding",
-      "catchphrase": "Stand between main and bad merges."
+      "catchphrase": "Stand between main and bad merges.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -643,7 +763,15 @@
       ],
       "personality": "analytical",
       "specialty": "Deep Inspection",
-      "catchphrase": "Every stack trace reveals the system's truth."
+      "catchphrase": "Every stack trace reveals the system's truth.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -683,7 +811,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -724,7 +860,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -763,7 +907,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -803,7 +955,15 @@
       ],
       "personality": "energetic",
       "specialty": "Fast-Path Execution",
-      "catchphrase": "Faster than the next clock cycle."
+      "catchphrase": "Faster than the next clock cycle.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -844,7 +1004,15 @@
       ],
       "personality": "analytical",
       "specialty": "Deep Inspection",
-      "catchphrase": "Every stack trace reveals the system's truth."
+      "catchphrase": "Every stack trace reveals the system's truth.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -883,7 +1051,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -922,7 +1098,15 @@
       ],
       "personality": "stoic",
       "specialty": "Branch Guarding",
-      "catchphrase": "Stand between main and bad merges."
+      "catchphrase": "Stand between main and bad merges.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -962,7 +1146,15 @@
       ],
       "personality": "analytical",
       "specialty": "Deep Inspection",
-      "catchphrase": "Every stack trace reveals the system's truth."
+      "catchphrase": "Every stack trace reveals the system's truth.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1001,7 +1193,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1041,7 +1241,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1080,7 +1288,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1120,7 +1336,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1160,7 +1384,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1197,7 +1429,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1237,6 +1477,14 @@
       "personality": "mystical",
       "specialty": "AST Transmutation",
       "catchphrase": "Casting clean checkmarks into the terminal.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#dc2626"
     },
     {
@@ -1276,7 +1524,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1316,7 +1572,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1356,7 +1620,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1396,7 +1668,15 @@
       ],
       "personality": "stoic",
       "specialty": "Branch Guarding",
-      "catchphrase": "Stand between main and bad merges."
+      "catchphrase": "Stand between main and bad merges.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1435,7 +1715,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1475,7 +1763,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1514,7 +1810,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1555,7 +1859,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1595,7 +1907,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1635,7 +1955,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1674,7 +2002,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1715,7 +2051,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1755,7 +2099,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1793,7 +2145,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1833,7 +2193,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1873,7 +2241,15 @@
       ],
       "personality": "analytical",
       "specialty": "Deep Inspection",
-      "catchphrase": "Every stack trace reveals the system's truth."
+      "catchphrase": "Every stack trace reveals the system's truth.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1912,7 +2288,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -1954,6 +2338,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#b91c1c"
     },
     {
@@ -1995,7 +2387,15 @@
       ],
       "personality": "stoic",
       "specialty": "Branch Guarding",
-      "catchphrase": "Stand between main and bad merges."
+      "catchphrase": "Stand between main and bad merges.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -2037,6 +2437,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#7c3aed"
     },
     {
@@ -2077,7 +2485,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -2119,6 +2535,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#fde047"
     },
     {
@@ -2161,6 +2585,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#1e3a8a"
     },
     {
@@ -2202,7 +2634,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -2244,6 +2684,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#f0abfc"
     },
     {
@@ -2285,6 +2733,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#f97316"
     },
     {
@@ -2326,6 +2782,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#f97316"
     },
     {
@@ -2367,6 +2831,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#94a3b8"
     },
     {
@@ -2410,6 +2882,14 @@
       "personality": "stoic",
       "specialty": "Branch Guarding",
       "catchphrase": "Stand between main and bad merges.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#22c55e"
     },
     {
@@ -2451,7 +2931,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -2492,6 +2980,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#7c3aed"
     },
     {
@@ -2533,7 +3029,15 @@
       ],
       "personality": "stoic",
       "specialty": "Branch Guarding",
-      "catchphrase": "Stand between main and bad merges."
+      "catchphrase": "Stand between main and bad merges.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -2575,6 +3079,14 @@
       "personality": "mystical",
       "specialty": "AST Transmutation",
       "catchphrase": "Casting clean checkmarks into the terminal.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#fde68a"
     },
     {
@@ -2616,7 +3128,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -2657,6 +3177,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#38bdf8"
     },
     {
@@ -2699,6 +3227,14 @@
       "personality": "mystical",
       "specialty": "AST Transmutation",
       "catchphrase": "Casting clean checkmarks into the terminal.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#a855f7"
     },
     {
@@ -2740,6 +3276,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#93c5fd"
     },
     {
@@ -2781,6 +3325,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#f97316"
     },
     {
@@ -2821,7 +3373,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -2861,7 +3421,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -2902,6 +3470,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#fde047"
     },
     {
@@ -2942,7 +3518,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -2983,6 +3567,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#b45309"
     },
     {
@@ -3025,6 +3617,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#818cf8"
     },
     {
@@ -3066,6 +3666,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#94a3b8"
     },
     {
@@ -3108,6 +3716,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#1e3a8a"
     },
     {
@@ -3148,7 +3764,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3191,6 +3815,14 @@
       "personality": "zen",
       "specialty": "Code Cleanliness",
       "catchphrase": "Patient cultivation builds stable software.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      },
       "hairTip": "#fb7185"
     },
     {
@@ -3232,7 +3864,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3272,7 +3912,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3310,7 +3958,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3350,7 +4006,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3390,7 +4054,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3430,7 +4102,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3468,7 +4148,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3508,7 +4196,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3546,7 +4242,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3586,7 +4290,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3626,7 +4338,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3667,7 +4387,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3707,7 +4435,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3747,7 +4483,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3787,7 +4531,15 @@
       ],
       "personality": "stoic",
       "specialty": "Branch Guarding",
-      "catchphrase": "Stand between main and bad merges."
+      "catchphrase": "Stand between main and bad merges.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3827,7 +4579,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3867,7 +4627,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3907,7 +4675,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3947,7 +4723,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -3987,7 +4771,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4025,7 +4817,15 @@
       ],
       "personality": "stoic",
       "specialty": "Branch Guarding",
-      "catchphrase": "Stand between main and bad merges."
+      "catchphrase": "Stand between main and bad merges.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4065,7 +4865,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4105,7 +4913,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4145,7 +4961,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4185,7 +5009,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4225,7 +5057,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4265,7 +5105,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4303,7 +5151,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4342,7 +5198,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4380,7 +5244,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4420,7 +5292,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4460,7 +5340,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4499,7 +5387,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4538,7 +5434,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4579,7 +5483,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4620,7 +5532,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4661,7 +5581,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4699,7 +5627,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4739,7 +5675,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4780,7 +5724,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4818,7 +5770,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4856,7 +5816,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4897,7 +5865,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4937,7 +5913,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -4978,7 +5962,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5017,7 +6009,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5056,7 +6056,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5097,7 +6105,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5137,7 +6153,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5179,7 +6203,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5217,7 +6249,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5255,7 +6295,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5296,7 +6344,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5338,7 +6394,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5378,7 +6442,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5416,7 +6488,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5457,7 +6537,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5495,7 +6583,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5533,7 +6629,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5573,7 +6677,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5611,7 +6723,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5651,7 +6771,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5689,7 +6817,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5729,7 +6865,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5769,7 +6913,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5809,7 +6961,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5847,7 +7007,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5887,7 +7055,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5927,7 +7103,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -5965,7 +7149,15 @@
       ],
       "personality": "methodical",
       "specialty": "Deterministic CI",
-      "catchphrase": "Zero syntax faults allowed."
+      "catchphrase": "Zero syntax faults allowed.",
+      "category": "robot",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6003,7 +7195,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6043,7 +7243,15 @@
       ],
       "personality": "fluid",
       "specialty": "Dynamic Elasticity",
-      "catchphrase": "Wobbling through edge cases smoothly."
+      "catchphrase": "Wobbling through edge cases smoothly.",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6083,7 +7291,15 @@
       ],
       "personality": "fluid",
       "specialty": "Dynamic Elasticity",
-      "catchphrase": "Wobbling through edge cases smoothly."
+      "catchphrase": "Wobbling through edge cases smoothly.",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6123,7 +7339,15 @@
       ],
       "personality": "fluid",
       "specialty": "Dynamic Elasticity",
-      "catchphrase": "Wobbling through edge cases smoothly."
+      "catchphrase": "Wobbling through edge cases smoothly.",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6161,7 +7385,15 @@
       ],
       "personality": "fluid",
       "specialty": "Dynamic Elasticity",
-      "catchphrase": "Wobbling through edge cases smoothly."
+      "catchphrase": "Wobbling through edge cases smoothly.",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6201,7 +7433,15 @@
       ],
       "personality": "fluid",
       "specialty": "Dynamic Elasticity",
-      "catchphrase": "Wobbling through edge cases smoothly."
+      "catchphrase": "Wobbling through edge cases smoothly.",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6241,7 +7481,15 @@
       ],
       "personality": "mystical",
       "specialty": "AST Transmutation",
-      "catchphrase": "Casting clean checkmarks into the terminal."
+      "catchphrase": "Casting clean checkmarks into the terminal.",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6281,7 +7529,15 @@
       ],
       "personality": "mystical",
       "specialty": "AST Transmutation",
-      "catchphrase": "Casting clean checkmarks into the terminal."
+      "catchphrase": "Casting clean checkmarks into the terminal.",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6322,7 +7578,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "creature",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6362,7 +7626,15 @@
       ],
       "personality": "analytical",
       "specialty": "Deep Inspection",
-      "catchphrase": "Every stack trace reveals the system's truth."
+      "catchphrase": "Every stack trace reveals the system's truth.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6402,7 +7674,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6442,7 +7722,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6482,7 +7770,15 @@
       ],
       "personality": "analytical",
       "specialty": "Deep Inspection",
-      "catchphrase": "Every stack trace reveals the system's truth."
+      "catchphrase": "Every stack trace reveals the system's truth.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6522,7 +7818,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6562,7 +7866,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6602,7 +7914,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6642,7 +7962,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6682,7 +8010,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6722,7 +8058,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6768,6 +8112,14 @@
       "personality": "serene",
       "specialty": "Divine Orchestration",
       "catchphrase": "Action without attachment ships the finest code.",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#38bdf8"
     },
     {
@@ -6813,7 +8165,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6858,7 +8218,15 @@
       ],
       "personality": "stoic",
       "specialty": "Branch Guarding",
-      "catchphrase": "Stand between main and bad merges."
+      "catchphrase": "Stand between main and bad merges.",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6903,7 +8271,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -6949,6 +8325,14 @@
       "personality": "loyal",
       "specialty": "Heavy Infrastructure",
       "catchphrase": "Leaping across regions with boundless energy.",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#ffd700"
     },
     {
@@ -6994,7 +8378,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -7040,6 +8432,14 @@
       "personality": "transcendent",
       "specialty": "Garbage Collection",
       "catchphrase": "Destroying memory leaks with cosmic stillness.",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#38bdf8"
     },
     {
@@ -7085,7 +8485,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -7130,7 +8538,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -7175,7 +8591,15 @@
       ],
       "personality": "zen",
       "specialty": "Code Cleanliness",
-      "catchphrase": "Patient cultivation builds stable software."
+      "catchphrase": "Patient cultivation builds stable software.",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      }
     },
     {
       "schemaVersion": 1,
@@ -7221,6 +8645,14 @@
       "personality": "focused",
       "specialty": "Targeted Unit Tests",
       "catchphrase": "My focus never wavers from the target assertion.",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#ff9933"
     },
     {
@@ -7264,7 +8696,15 @@
       ],
       "personality": "confident",
       "specialty": "Fault Tolerance",
-      "catchphrase": "Don't sweat the compiler. I'm the strongest."
+      "catchphrase": "Don't sweat the compiler. I'm the strongest.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -7306,6 +8746,14 @@
       "personality": "mystical",
       "specialty": "AST Transmutation",
       "catchphrase": "Casting clean checkmarks into the terminal.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      },
       "hairTip": "#1f2937"
     },
     {
@@ -7350,6 +8798,14 @@
       "personality": "earnest",
       "specialty": "Test-Driven TDD",
       "catchphrase": "Work through every red test until it turns green!",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      },
       "hairTip": "#dc2626"
     },
     {
@@ -7394,6 +8850,14 @@
       "personality": "protective",
       "specialty": "Workspace Security",
       "catchphrase": "Guarding your project workspace with gentle ferocity.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      },
       "hairTip": "#ea580c"
     },
     {
@@ -7435,7 +8899,15 @@
       ],
       "personality": "fearless",
       "specialty": "Rapid Prototyping",
-      "catchphrase": "I'm gonna be the King of Shipped Features!"
+      "catchphrase": "I'm gonna be the King of Shipped Features!",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -7478,7 +8950,15 @@
       ],
       "personality": "stoic",
       "specialty": "Dead-Code Elimination",
-      "catchphrase": "Nothing happened... just three clean commits."
+      "catchphrase": "Nothing happened... just three clean commits.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -7521,7 +9001,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -7562,7 +9050,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -7605,7 +9101,15 @@
       ],
       "personality": "spirited",
       "specialty": "Continuous Delivery",
-      "catchphrase": "Believe it! I never back down from a failing build."
+      "catchphrase": "Believe it! I never back down from a failing build.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -7649,6 +9153,14 @@
       "personality": "intense",
       "specialty": "Precision Refactoring",
       "catchphrase": "Weak abstractions are unacceptable.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      },
       "hairTip": "#1e3a8a"
     },
     {
@@ -7690,7 +9202,15 @@
       ],
       "personality": "cheerful",
       "specialty": "Stress Testing",
-      "catchphrase": "This benchmark looks strong! Let's push it higher!"
+      "catchphrase": "This benchmark looks strong! Let's push it higher!",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -7731,7 +9251,15 @@
       ],
       "personality": "proud",
       "specialty": "Zero-Regression CI",
-      "catchphrase": "A Saiyan prince does not push broken builds."
+      "catchphrase": "A Saiyan prince does not push broken builds.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -7775,7 +9303,15 @@
       ],
       "personality": "disciplined",
       "specialty": "Code Cleanup",
-      "catchphrase": "Tidy your modules. Filthy code is unacceptable."
+      "catchphrase": "Tidy your modules. Filthy code is unacceptable.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -7820,7 +9356,15 @@
       ],
       "personality": "steadfast",
       "specialty": "Branch Protection",
-      "catchphrase": "I will protect this repository at all costs."
+      "catchphrase": "I will protect this repository at all costs.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -7865,6 +9409,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      },
       "hairTip": "#22c55e"
     },
     {
@@ -7907,6 +9459,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      },
       "hairTip": "#93c5fd"
     },
     {
@@ -7948,7 +9508,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -7991,7 +9559,15 @@
       ],
       "personality": "analytical",
       "specialty": "Deep Inspection",
-      "catchphrase": "Every stack trace reveals the system's truth."
+      "catchphrase": "Every stack trace reveals the system's truth.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8035,6 +9611,14 @@
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
       "catchphrase": "Ship clean, verify always.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      },
       "hairTip": "#f97316"
     },
     {
@@ -8078,7 +9662,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8121,7 +9713,15 @@
       ],
       "personality": "deadpan",
       "specialty": "Single-Pass Optimization",
-      "catchphrase": "One punch. One test. Done."
+      "catchphrase": "One punch. One test. Done.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8162,7 +9762,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8203,7 +9811,15 @@
       ],
       "personality": "chaotic",
       "specialty": "Brute-Force Patching",
-      "catchphrase": "If it runs, I get jam on my toast!"
+      "catchphrase": "If it runs, I get jam on my toast!",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8244,7 +9860,15 @@
       ],
       "personality": "boastful",
       "specialty": "Chaos Engineering",
-      "catchphrase": "Bow before my genius! The bug was terrified of me!"
+      "catchphrase": "Bow before my genius! The bug was terrified of me!",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8287,7 +9911,15 @@
       ],
       "personality": "cheerful",
       "specialty": "Telepathic Linting",
-      "catchphrase": "Waku waku! All tests passed!"
+      "catchphrase": "Waku waku! All tests passed!",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8331,7 +9963,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8375,7 +10015,15 @@
       ],
       "personality": "timeless",
       "specialty": "Legacy Maintenance",
-      "catchphrase": "Take your time. A century of maintenance is nothing."
+      "catchphrase": "Take your time. A century of maintenance is nothing.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8417,6 +10065,14 @@
       "personality": "perky",
       "specialty": "Cache Re-ignition",
       "catchphrase": "Pika! Lighting up the build pipeline!",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      },
       "hairTip": "#1c1917"
     },
     {
@@ -8460,7 +10116,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8505,7 +10169,15 @@
       ],
       "personality": "mystical",
       "specialty": "AST Transmutation",
-      "catchphrase": "Casting clean checkmarks into the terminal."
+      "catchphrase": "Casting clean checkmarks into the terminal.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8550,7 +10222,15 @@
       ],
       "personality": "focused",
       "specialty": "Full-Stack Engineering",
-      "catchphrase": "Ship clean, verify always."
+      "catchphrase": "Ship clean, verify always.",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8593,7 +10273,15 @@
       ],
       "personality": "playful",
       "specialty": "Cache & Triage",
-      "catchphrase": "Pouncing on stale dependencies with a grin!"
+      "catchphrase": "Pouncing on stale dependencies with a grin!",
+      "category": "legacy",
+      "threeDEligible": false,
+      "attribution": {
+        "creator": "Third-party rights holder",
+        "license": "LicenseRef-Unlicensed",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+      }
     },
     {
       "schemaVersion": 1,
@@ -8639,6 +10327,14 @@
       "personality": "stealthy",
       "specialty": "Silent Instrumentation",
       "catchphrase": "Tracing execution unseen in the shadows.",
+      "category": "animal",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#00f0ff"
     },
     {
@@ -8685,6 +10381,14 @@
       "personality": "playful",
       "specialty": "Distributed Chaos",
       "catchphrase": "Seven-fold transformations for every deployment.",
+      "category": "deity_inspired",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
       "hairTip": "#ffb703"
     }
   ]

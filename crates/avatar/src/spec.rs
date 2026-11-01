@@ -13,6 +13,7 @@ pub const MAX_DESCRIPTION_CHARS: usize = 240;
 pub const MAX_ACCESSORIES: usize = 5;
 pub const MAX_TAGS: usize = 6;
 pub const MAX_TAG_CHARS: usize = 24;
+pub const MAX_ATTRIBUTION_CHARS: usize = 200;
 pub const HEIGHT_RANGE: (f32, f32) = (0.8, 1.2);
 pub const HEAD_SCALE_RANGE: (f32, f32) = (0.85, 1.35);
 pub const BUILD_RANGE: (f32, f32) = (0.8, 1.3);
@@ -254,6 +255,40 @@ pub struct CharacterSpec {
     /// Optional core personality temperament.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub personality: Option<String>,
+    /// Browsing group. Required for bundled catalog rows; absent on user designs.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub category: Option<Category>,
+    /// `false` for legacy designs that must never render as the active 3D pet.
+    #[serde(default = "eligible_by_default")]
+    pub three_d_eligible: bool,
+    /// Rights metadata. Required for bundled catalog rows.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub attribution: Option<Attribution>,
+}
+
+fn eligible_by_default() -> bool {
+    true
+}
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[serde(rename_all = "snake_case")]
+pub enum Category {
+    Character,
+    Animal,
+    Creature,
+    Robot,
+    DeityInspired,
+    /// Imitates an unlicensed franchise character; 2D legacy use only.
+    Legacy,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct Attribution {
+    pub creator: String,
+    pub license: String,
+    pub source: String,
+    pub attribution: String,
 }
 
 impl CharacterSpec {
@@ -329,6 +364,22 @@ impl CharacterSpec {
         }
         if let Some(personality) = &self.personality {
             validate_text("personality", personality, 1, 32)?;
+        }
+        if (self.category == Some(Category::Legacy)) == self.three_d_eligible {
+            return Err(invalid(
+                "threeDEligible",
+                "legacy characters, and only legacy characters, are ineligible for 3D",
+            ));
+        }
+        if let Some(attribution) = &self.attribution {
+            for (field, value) in [
+                ("attribution.creator", &attribution.creator),
+                ("attribution.license", &attribution.license),
+                ("attribution.source", &attribution.source),
+                ("attribution.attribution", &attribution.attribution),
+            ] {
+                validate_text(field, value, 1, MAX_ATTRIBUTION_CHARS)?;
+            }
         }
         Ok(())
     }
@@ -432,6 +483,14 @@ pub(crate) fn sample_spec() -> CharacterSpec {
         catchphrase: Some("Always one step ahead of the stack trace.".into()),
         specialty: Some("Rapid Triage".into()),
         personality: Some("clever".into()),
+        category: Some(Category::Animal),
+        three_d_eligible: true,
+        attribution: Some(Attribution {
+            creator: "Test".into(),
+            license: "CC0-1.0".into(),
+            source: "unit test".into(),
+            attribution: "Original test design".into(),
+        }),
     }
 }
 

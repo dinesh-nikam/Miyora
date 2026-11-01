@@ -180,6 +180,13 @@ fn validate_spec(spec: &CharacterSpec) -> Result<(), CoreError> {
         .map_err(|error| CoreError::InvalidAvatar(error.to_string()))
 }
 
+/// User designs carry no catalog category or attribution and are always eligible.
+fn clear_catalog_metadata(spec: &mut CharacterSpec) {
+    spec.category = None;
+    spec.three_d_eligible = true;
+    spec.attribution = None;
+}
+
 fn validate_avatar_id(id: &str) -> Result<(), CoreError> {
     validate_id(id).map_err(|error| CoreError::InvalidAvatar(error.to_string()))
 }
@@ -455,12 +462,15 @@ impl Core {
     }
 
     /// Resolves the selection into what the renderer needs. A selection that
-    /// points at a deleted custom avatar falls back to the default character.
+    /// points at a deleted custom avatar, a non-procedural model (image sculpt
+    /// or VRM), or a legacy catalog row falls back to the default character.
     pub fn resolve_avatar(&self) -> Result<ResolvedAvatar, CoreError> {
         let selection = self.avatar_selection()?;
         let connection = self.lock_connection()?;
         if selection.source == AvatarSource::Custom {
-            if let Some(row) = load_custom(&connection, &selection.avatar_id)? {
+            if let Some(row) = load_custom(&connection, &selection.avatar_id)?
+                .filter(|row| row.summary.kind == AvatarKind::Procedural)
+            {
                 let summary = row.summary;
                 return Ok(ResolvedAvatar {
                     source: AvatarSource::Custom,
@@ -477,6 +487,7 @@ impl Core {
         let catalog = catalog()?;
         let base = catalog
             .get(&selection.avatar_id)
+            .filter(|character| character.three_d_eligible)
             .unwrap_or_else(|| catalog.default_character());
         let customization = load_customization(&connection, &base.id)?;
         let customized = customization.is_some();
@@ -493,19 +504,35 @@ impl Core {
         })
     }
 
+    /// Selects the active 3D pet. Only eligible catalog characters and custom
+    /// procedural characters qualify; image sculpts and VRM imports stay in
+    /// the library but cannot become the active pet.
     pub fn select_avatar(&self, source: AvatarSource, avatar_id: &str) -> Result<(), CoreError> {
         validate_avatar_id(avatar_id)?;
         let connection = self.lock_connection()?;
-        let exists = match source {
-            AvatarSource::Catalog => catalog()?.contains(avatar_id),
-            AvatarSource::Custom => connection.query_row(
-                "SELECT EXISTS(SELECT 1 FROM custom_avatars WHERE avatar_id = ?1)",
-                [avatar_id],
-                |row| row.get::<_, bool>(0),
-            )?,
+        let eligible = match source {
+            AvatarSource::Catalog => match catalog()?.get(avatar_id) {
+                None => return Err(CoreError::AvatarNotFound(avatar_id.to_owned())),
+                Some(character) => character.three_d_eligible,
+            },
+            AvatarSource::Custom => {
+                let kind: Option<String> = connection
+                    .query_row(
+                        "SELECT kind FROM custom_avatars WHERE avatar_id = ?1",
+                        [avatar_id],
+                        |row| row.get(0),
+                    )
+                    .optional()?;
+                match kind {
+                    None => return Err(CoreError::AvatarNotFound(avatar_id.to_owned())),
+                    Some(kind) => AvatarKind::parse(&kind)? == AvatarKind::Procedural,
+                }
+            }
         };
-        if !exists {
-            return Err(CoreError::AvatarNotFound(avatar_id.to_owned()));
+        if !eligible {
+            return Err(CoreError::InvalidAvatar(format!(
+                "{avatar_id} cannot be the active pet; choose a rigged Miyora pet"
+            )));
         }
         connection.execute(
             "INSERT INTO avatar_selection(singleton, source, avatar_id, updated_at) VALUES (1, ?1, ?2, ?3)
@@ -515,7 +542,8 @@ impl Core {
         Ok(())
     }
 
-    /// Lists every bundled character with any saved customization applied.
+    /// Lists every 3D-eligible bundled character with any saved customization
+    /// applied. Legacy rows are never offered.
     pub fn list_avatar_catalog(&self) -> Result<Vec<AvatarCatalogEntry>, CoreError> {
         let connection = self.lock_connection()?;
         let mut statement =
@@ -528,8 +556,7 @@ impl Core {
             customizations.insert(id, parse_spec(&json)?);
         }
         Ok(catalog()?
-            .characters
-            .iter()
+            .eligible()
             .map(|base| match customizations.remove(&base.id) {
                 Some(spec) => AvatarCatalogEntry {
                     spec,
@@ -546,11 +573,29 @@ impl Core {
     /// Saves a customized spec. Catalog ids store a customization; custom
     /// procedural ids are updated in place. The id itself cannot change.
     pub fn save_avatar_customization(&self, spec: &CharacterSpec) -> Result<(), CoreError> {
-        validate_spec(spec)?;
+        let mut spec = spec.clone();
+        let base = catalog()?.get(&spec.id);
+        match base {
+            // Rights metadata always comes from the catalog, never from the caller.
+            Some(base) if base.three_d_eligible => {
+                spec.category = base.category;
+                spec.three_d_eligible = true;
+                spec.attribution = base.attribution.clone();
+            }
+            Some(_) => {
+                return Err(CoreError::InvalidAvatar(format!(
+                    "{} is a legacy character and cannot be customized",
+                    spec.id
+                )))
+            }
+            None => clear_catalog_metadata(&mut spec),
+        }
+        validate_spec(&spec)?;
+        let spec = &spec;
         let connection = self.lock_connection()?;
         let now = Utc::now().to_rfc3339();
         let json = serde_json::to_string(spec)?;
-        if catalog()?.contains(&spec.id) {
+        if base.is_some() {
             connection.execute(
                 "INSERT INTO avatar_customizations(catalog_id, spec_json, updated_at) VALUES (?1, ?2, ?3)
                  ON CONFLICT(catalog_id) DO UPDATE SET spec_json = excluded.spec_json, updated_at = excluded.updated_at",
@@ -587,6 +632,7 @@ impl Core {
     ) -> Result<CustomAvatarSummary, CoreError> {
         let mut spec = spec.clone();
         spec.id = new_custom_id("custom");
+        clear_catalog_metadata(&mut spec);
         validate_spec(&spec)?;
         let connection = self.lock_connection()?;
         ensure_capacity(&connection, 1)?;
@@ -978,6 +1024,60 @@ mod tests {
     }
 
     #[test]
+    fn legacy_franchise_characters_are_never_offered_or_resolved() {
+        let core = Core::in_memory().expect("core");
+        let listed = core.list_avatar_catalog().expect("list");
+        assert!(listed.iter().all(|entry| entry.spec.three_d_eligible));
+        assert!(!listed.iter().any(|entry| entry.spec.id == "miyora.nezuko"));
+
+        assert!(matches!(
+            core.select_avatar(AvatarSource::Catalog, "miyora.nezuko"),
+            Err(CoreError::InvalidAvatar(_))
+        ));
+        // A selection stored before legacy rows were excluded falls back safely.
+        core.lock_connection()
+            .expect("lock")
+            .execute(
+                "INSERT INTO avatar_selection(singleton, source, avatar_id, updated_at)
+                 VALUES (1, 'catalog', 'miyora.nezuko', 'then')",
+                [],
+            )
+            .expect("seed legacy selection");
+        assert_eq!(
+            core.resolve_avatar().expect("resolve").avatar_id,
+            DEFAULT_AVATAR_ID
+        );
+
+        let mut legacy = catalog()
+            .expect("catalog")
+            .get("miyora.nezuko")
+            .expect("row")
+            .clone();
+        legacy.name = "Renamed".into();
+        assert!(core.save_avatar_customization(&legacy).is_err());
+
+        // Customizing an eligible row cannot rewrite its rights metadata.
+        let mut ember = catalog()
+            .expect("catalog")
+            .get("miyora.ember")
+            .expect("row")
+            .clone();
+        let catalog_attribution = ember.attribution.clone();
+        ember.attribution = None;
+        ember.category = Some(agentpet_avatar::Category::Legacy);
+        ember.three_d_eligible = false;
+        core.save_avatar_customization(&ember).expect("customize");
+        let saved = core
+            .list_avatar_catalog()
+            .expect("list")
+            .into_iter()
+            .find(|entry| entry.spec.id == "miyora.ember")
+            .expect("ember listed");
+        assert!(saved.customized && saved.spec.three_d_eligible);
+        assert_eq!(saved.spec.attribution, catalog_attribution);
+    }
+
+    #[test]
     fn defaults_selects_and_rejects_unknown_avatars() {
         let core = Core::in_memory().expect("core");
         let resolved = core.resolve_avatar().expect("resolve");
@@ -1119,11 +1219,15 @@ mod tests {
             .custom_avatar_model(&style.avatar_id, &library)
             .is_err());
 
-        core.select_avatar(AvatarSource::Custom, &sculpt.avatar_id)
-            .expect("select");
-        let resolved = core.resolve_avatar().expect("resolve");
-        assert_eq!(resolved.kind, AvatarKind::ImageSculpt);
-        assert_eq!(resolved.model_sha256, sculpt.model_sha256);
+        // Image sculpts are not rigged pets, so they cannot become active.
+        assert!(matches!(
+            core.select_avatar(AvatarSource::Custom, &sculpt.avatar_id),
+            Err(CoreError::InvalidAvatar(_))
+        ));
+        assert_eq!(
+            core.resolve_avatar().expect("resolve").kind,
+            AvatarKind::Procedural
+        );
 
         // Tampering with the stored model is detected.
         fs::write(

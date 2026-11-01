@@ -20,11 +20,13 @@ import {
   type AvatarCatalogEntry,
   type AvatarHud,
   type AvatarSource,
+  type CharacterCategory,
   type CharacterSpec,
   type CustomAvatarSummary,
   type ResolvedAvatar,
   type StageSubject,
 } from "./types";
+import { CATEGORY_LABELS, searchCatalog } from "./catalogSearch";
 
 export interface CharacterStudioProps {
   liveState: PetState;
@@ -142,7 +144,6 @@ function SpecThumbnail({ spec, size = 84 }: { spec: CharacterSpec; size?: number
 }
 
 const ANIME_TAG = "anime";
-const ANIME_COLLECTION = "collection:anime";
 const BADGE_STYLE: CSSProperties = {
   fontSize: "9px",
   fontWeight: 700,
@@ -237,7 +238,7 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
   const [viewing, setViewing] = useState<Viewing | null>(null);
   const [draft, setDraft] = useState<CharacterSpec | null>(null);
   const [search, setSearch] = useState("");
-  const [bodyFilter, setBodyFilter] = useState<string>("all");
+  const [categoryFilter, setCategoryFilter] = useState<CharacterCategory | "all">("all");
   const [previewState, setPreviewState] = useState<PetState | "live">("live");
   const [status, setStatus] = useState<{ tone: "info" | "error"; text: string } | null>(null);
   const [busy, setBusy] = useState(false);
@@ -308,18 +309,7 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
     return null;
   }, [draft, viewedCustom]);
 
-  const filtered = useMemo(() => {
-    const query = search.trim().toLowerCase();
-    return catalog.filter(({ spec }) => {
-      if (bodyFilter === ANIME_COLLECTION) {
-        if (!spec.tags.includes(ANIME_TAG)) return false;
-      } else if (bodyFilter !== "all" && spec.body !== bodyFilter) {
-        return false;
-      }
-      if (!query) return true;
-      return [spec.name, spec.title, spec.description, ...spec.tags].some((text) => text.toLowerCase().includes(query));
-    });
-  }, [catalog, search, bodyFilter]);
+  const filtered = useMemo(() => searchCatalog(catalog, search, categoryFilter), [catalog, search, categoryFilter]);
 
   const update = (patch: Partial<CharacterSpec>) => {
     setDraft((current) => (current ? { ...current, ...patch } : current));
@@ -591,13 +581,23 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
             )}
             <div style={panel}>
               <div style={{ display: "flex", gap: "8px", marginBottom: "12px", flexWrap: "wrap" }}>
-                <input style={{ ...input, flex: 1, minWidth: "160px" }} placeholder="Search name, role, or tag" value={search} onChange={(event) => setSearch(event.target.value)} />
-                <select style={input} value={bodyFilter} onChange={(event) => setBodyFilter(event.target.value)}>
-                  <option value="all">All characters</option>
-                  <option value={ANIME_COLLECTION}>Anime style ({catalog.filter(({ spec }) => spec.tags.includes(ANIME_TAG)).length})</option>
-                  {BODY_TYPES.map((body) => (
-                    <option key={body} value={body}>
-                      {humanize(body)} (species)
+                <input
+                  style={{ ...input, flex: 1, minWidth: "160px" }}
+                  placeholder="Search name, species, tag, or personality"
+                  aria-label="Search pets"
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                />
+                <select
+                  style={input}
+                  aria-label="Pet category"
+                  value={categoryFilter}
+                  onChange={(event) => setCategoryFilter(event.target.value as CharacterCategory | "all")}
+                >
+                  <option value="all">All pets</option>
+                  {(Object.keys(CATEGORY_LABELS) as (keyof typeof CATEGORY_LABELS)[]).map((category) => (
+                    <option key={category} value={category}>
+                      {CATEGORY_LABELS[category]} ({catalog.filter(({ spec }) => spec.category === category).length})
                     </option>
                   ))}
                 </select>

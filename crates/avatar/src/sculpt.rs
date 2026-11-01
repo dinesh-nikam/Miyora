@@ -943,6 +943,9 @@ fn derive_spec(
         catchphrase: None,
         specialty: None,
         personality: None,
+        category: None,
+        three_d_eligible: true,
+        attribution: None,
     };
     spec.validate()?;
     Ok(spec)

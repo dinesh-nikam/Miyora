@@ -92,15 +92,31 @@ impl AvatarCatalog {
             {
                 return Err(CatalogError::Namespace(character.id.clone()));
             }
+            if character.category.is_none() || character.attribution.is_none() {
+                return Err(CatalogError::Character {
+                    id: character.id.clone(),
+                    reason: "bundled characters need a category and attribution".into(),
+                });
+            }
             if !seen.insert(character.id.clone()) {
                 return Err(CatalogError::DuplicateId(character.id.clone()));
             }
             catalog.index.insert(character.id.clone(), position);
         }
-        if !catalog.index.contains_key(DEFAULT_AVATAR_ID) {
+        if !catalog
+            .get(DEFAULT_AVATAR_ID)
+            .is_some_and(|character| character.three_d_eligible)
+        {
             return Err(CatalogError::MissingDefault(DEFAULT_AVATAR_ID));
         }
         Ok(catalog)
+    }
+
+    /// Characters that may be offered and rendered as the active 3D pet.
+    pub fn eligible(&self) -> impl Iterator<Item = &CharacterSpec> {
+        self.characters
+            .iter()
+            .filter(|character| character.three_d_eligible)
     }
 
     pub fn get(&self, id: &str) -> Option<&CharacterSpec> {
@@ -192,5 +208,48 @@ mod tests {
         let catalog = AvatarCatalog::parse(&catalog_json(vec![default])).expect("valid");
         assert!(catalog.contains(DEFAULT_AVATAR_ID));
         assert!(catalog.get("miyora.unknown").is_none());
+    }
+
+    #[test]
+    fn bundled_catalog_rows_carry_category_attribution_and_consistent_eligibility() {
+        use crate::spec::Category;
+        let catalog = AvatarCatalog::bundled().expect("bundled catalog validates");
+        let legacy: Vec<_> = catalog
+            .characters
+            .iter()
+            .filter(|c| c.category == Some(Category::Legacy))
+            .map(|c| c.id.as_str())
+            .collect();
+        assert!(
+            legacy.contains(&"miyora.nezuko"),
+            "franchise rows are legacy"
+        );
+        assert!(catalog
+            .eligible()
+            .all(|c| c.category != Some(Category::Legacy)));
+        assert_eq!(
+            catalog.eligible().count() + legacy.len(),
+            catalog.characters.len()
+        );
+    }
+
+    #[test]
+    fn rejects_rows_without_metadata_and_an_ineligible_default() {
+        let mut default = sample_spec();
+        default.id = DEFAULT_AVATAR_ID.into();
+        let mut unattributed = sample_spec();
+        unattributed.id = "miyora.unattributed".into();
+        unattributed.attribution = None;
+        assert!(matches!(
+            AvatarCatalog::parse(&catalog_json(vec![default.clone(), unattributed])),
+            Err(CatalogError::Character { .. })
+        ));
+
+        default.category = Some(crate::spec::Category::Legacy);
+        default.three_d_eligible = false;
+        assert_eq!(
+            AvatarCatalog::parse(&catalog_json(vec![default])).unwrap_err(),
+            CatalogError::MissingDefault(DEFAULT_AVATAR_ID)
+        );
     }
 }
