@@ -66,7 +66,16 @@ pub struct OverlayControl {
     statuses: Mutex<HashMap<ShortcutAction, ShortcutStatus>>,
 }
 
-fn overlay(app: &AppHandle) -> Result<WebviewWindow, String> {
+impl OverlayControl {
+    pub(crate) fn is_repositioning(&self) -> bool {
+        self.reposition
+            .lock()
+            .map(|session| session.is_some())
+            .unwrap_or(true)
+    }
+}
+
+pub(crate) fn overlay(app: &AppHandle) -> Result<WebviewWindow, String> {
     app.get_webview_window(OVERLAY_LABEL)
         .ok_or_else(|| "PET_OVERLAY_UNAVAILABLE: companion window is not configured".to_string())
 }

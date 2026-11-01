@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { DailyMoments } from "./DailyMoments";
 
 export interface ProviderReport {
   providerId: string;
@@ -234,6 +235,11 @@ export function CommandDeck({
             {missing.length > 0 && (
               <p className="deck-quiet deck-missing">Not installed: {missing.map((p) => p.displayName).join(", ")}</p>
             )}
+          </section>
+
+          <section aria-labelledby="deck-moments">
+            <h2 id="deck-moments" className="deck-heading">Daily moments</h2>
+            <DailyMoments active={isOpen} />
           </section>
 
           {installedPacks.length > 0 && (

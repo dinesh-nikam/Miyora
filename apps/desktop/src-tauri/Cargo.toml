@@ -30,11 +30,16 @@ agentpet-avatar = { path = "../../../crates/avatar" }
 agentpet-pet-engine = { path = "../../../crates/pet-engine" }
 agentpet-pet-pack = { path = "../../../crates/pet-pack" }
 agentpet-studio = { path = "../../../crates/studio" }
+chrono.workspace = true
 serde.workspace = true
 serde_json.workspace = true
 tauri = { version = "2", features = ["tray-icon"] }
 tauri-plugin-dialog = "2"
 tauri-plugin-global-shortcut = "2"
+
+[target.'cfg(windows)'.dependencies]
+# Already in the lockfile via Tauri; used for fullscreen and reduced-motion checks.
+windows-sys = { version = "0.61", features = ["Win32_Foundation", "Win32_Graphics_Gdi", "Win32_UI_WindowsAndMessaging"] }
 
 [features]
 default = []

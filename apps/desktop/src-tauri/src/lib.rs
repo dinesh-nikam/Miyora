@@ -15,8 +15,10 @@ use agentpet_core::{
 use agentpet_pet_pack::PetPackManifest;
 use tauri::{Emitter, Manager, State};
 
+mod companion_host;
 mod overlay_controls;
 mod studio_commands;
+use companion_host::{get_daily_moments, CompanionHost};
 use overlay_controls::{
     exit_overlay_reposition, get_companion_shortcuts, report_overlay_activity,
     run_companion_action, set_companion_shortcut,
@@ -55,12 +57,15 @@ impl AppRuntime {
 }
 
 #[tauri::command]
-fn get_runtime_snapshot(runtime: State<'_, AppRuntime>) -> Result<RuntimeSnapshot, String> {
-    #[allow(unused_mut)]
+fn get_runtime_snapshot(
+    runtime: State<'_, AppRuntime>,
+    host: State<'_, CompanionHost>,
+) -> Result<RuntimeSnapshot, String> {
     let mut snapshot = runtime
         .active_core()
         .snapshot()
         .map_err(|error| format!("RUNTIME_READ_FAILED: {error}"))?;
+    snapshot.presentation = host.presentation(snapshot.pet_state);
     #[cfg(feature = "dev-simulator")]
     {
         snapshot.is_simulated = runtime
@@ -1243,6 +1248,10 @@ pub fn run() {
                 avatars_root,
                 app_data_dir: data_dir,
             });
+            // Both loops read AppRuntime, so they start after it is managed.
+            app.manage(CompanionHost::default());
+            companion_host::spawn_roaming(app.handle().clone())?;
+            companion_host::spawn_daily_moments(app.handle().clone())?;
             // Pack validation decodes images and must not block the native event loop.
             // This finite worker is intentionally detached; the UI polls persisted state.
             let _startup_worker = std::thread::Builder::new()
@@ -1288,6 +1297,7 @@ pub fn run() {
             run_companion_action,
             report_overlay_activity,
             exit_overlay_reposition,
+            get_daily_moments,
             verify_ledger,
             get_real_events,
             get_providers_status,

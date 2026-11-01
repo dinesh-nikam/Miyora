@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "creator": "Miyora contributors",
+  "license": "CC0-1.0",
+  "packs": [
+    {
+      "category": "character",
+      "messages": [
+        { "id": "character.steady", "text": "Small steady commits add up. I'm right here while you work." },
+        { "id": "character.breath", "text": "Take one slow breath before the next task. You've got this." },
+        { "id": "character.curious", "text": "Every bug is a puzzle with an answer. Let's find it together." },
+        { "id": "character.proud", "text": "Yesterday's work still counts. I'm proud of how far you've come." },
+        { "id": "character.kind", "text": "Be as kind to yourself as you are to a teammate today." },
+        { "id": "character.rest", "text": "Remember to stretch and sip some water between sessions." }
+      ]
+    },
+    {
+      "category": "animal",
+      "messages": [
+        { "id": "animal.wag", "text": "Tail wags for you! Let's chase down today's tasks one at a time." },
+        { "id": "animal.nap", "text": "A short break is like a good nap. Come back fresh and bright." },
+        { "id": "animal.sniff", "text": "I sniffed out a great day ahead. Ready when you are." },
+        { "id": "animal.pounce", "text": "Pounce on the first small task and the rest will follow." },
+        { "id": "animal.cozy", "text": "Cozy reminder: you don't have to finish everything at once." },
+        { "id": "animal.cheer", "text": "Happy hops! Whatever today brings, I'm on your side." }
+      ]
+    },
+    {
+      "category": "creature",
+      "messages": [
+        { "id": "creature.wobble", "text": "Wobble, bounce, and keep going. Flexible beats perfect." },
+        { "id": "creature.glow", "text": "I'm glowing a little brighter today, just for you." },
+        { "id": "creature.squish", "text": "Squish the big problem into tiny pieces. They're easier to fix." },
+        { "id": "creature.float", "text": "Float through the hard part. Calm minds find clean solutions." },
+        { "id": "creature.sparkle", "text": "A little sparkle for your morning. Let's make something good." },
+        { "id": "creature.rest", "text": "Even slimes rest. Pause when you need to." }
+      ]
+    },
+    {
+      "category": "robot",
+      "messages": [
+        { "id": "robot.boot", "text": "Systems online. Today's objective: steady progress, zero panic." },
+        { "id": "robot.diagnostic", "text": "Diagnostic complete. Your skills are operating at full capacity." },
+        { "id": "robot.loop", "text": "Iterate, test, repeat. Each loop makes the code a bit better." },
+        { "id": "robot.cooldown", "text": "Thermal check: schedule a short cooldown break this afternoon." },
+        { "id": "robot.log", "text": "Logging a note: you handled yesterday's challenges well." },
+        { "id": "robot.ready", "text": "All processes ready. Awaiting your first command." }
+      ]
+    },
+    {
+      "category": "deity_inspired",
+      "messages": [
+        { "id": "deity.patience", "text": "Patient, sincere effort carries real work forward. Begin gently." },
+        { "id": "deity.focus", "text": "Give your full attention to one thing at a time today." },
+        { "id": "deity.obstacle", "text": "Obstacles are just the next step. Take it calmly." },
+        { "id": "deity.gratitude", "text": "Start with one thing you're grateful for, then start your work." },
+        { "id": "deity.balance", "text": "Work with care, rest with care. Both matter today." },
+        { "id": "deity.courage", "text": "A steady heart makes hard tasks lighter. I'm with you." }
+      ]
+    }
+  ]
+}

@@ -18,6 +18,7 @@ use uuid::Uuid;
 
 mod avatars;
 mod companion;
+mod daily;
 mod overlay_control;
 mod roaming;
 
@@ -29,6 +30,7 @@ pub use companion::{
     CompanionPreferences, CompanionVibe, LegacyCompanionSettings, LegacyImportOutcome,
     OverlayPlacement, RenderMode,
 };
+pub use daily::DailyMoment;
 pub use overlay_control::{
     normalize_accelerator, RepositionSession, ShortcutAction, ShortcutBindings,
     REPOSITION_HARD_LIMIT, REPOSITION_IDLE_LIMIT,
@@ -467,6 +469,8 @@ pub enum CoreError {
     InvalidCompanionPreferences(String),
     #[error("shortcut is invalid: {0}")]
     InvalidShortcut(String),
+    #[error("daily message pack is invalid: {0}")]
+    InvalidDailyPack(String),
 }
 
 #[derive(Clone)]

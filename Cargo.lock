@@ -72,12 +72,14 @@ dependencies = [
  "agentpet-pet-pack",
  "agentpet-studio",
  "base64 0.22.1",
+ "chrono",
  "serde",
  "serde_json",
  "tauri",
  "tauri-build",
  "tauri-plugin-dialog",
  "tauri-plugin-global-shortcut",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
