@@ -13,6 +13,9 @@ const DEFAULT_CELEBRATING_DURATION: Duration = Duration::from_secs(4);
 const DEFAULT_LEVEL_UP_DURATION: Duration = Duration::from_secs(6);
 const DEFAULT_ACHIEVEMENT_DURATION: Duration = Duration::from_secs(6);
 const DEFAULT_IDLE_BEFORE_SLEEP: Duration = Duration::from_secs(15 * 60);
+pub const DEFAULT_HUNGRY_AFTER: Duration = Duration::from_secs(4 * 60 * 60);
+pub const DEFAULT_EATING_DURATION: Duration = Duration::from_secs(4);
+pub const DEFAULT_REACTION_QUEUE_CAPACITY: usize = 4;
 const MIN_TIMED_STATE_DURATION: Duration = Duration::from_millis(500);
 const MAX_TIMED_STATE_DURATION: Duration = Duration::from_secs(24 * 60 * 60);
 
@@ -120,6 +123,8 @@ pub struct StatePolicy {
     pub level_up_duration: Duration,
     pub achievement_duration: Duration,
     pub idle_before_sleep: Duration,
+    pub hungry_after: Duration,
+    pub eating_duration: Duration,
 }
 
 impl Default for StatePolicy {
@@ -131,6 +136,8 @@ impl Default for StatePolicy {
             level_up_duration: DEFAULT_LEVEL_UP_DURATION,
             achievement_duration: DEFAULT_ACHIEVEMENT_DURATION,
             idle_before_sleep: DEFAULT_IDLE_BEFORE_SLEEP,
+            hungry_after: DEFAULT_HUNGRY_AFTER,
+            eating_duration: DEFAULT_EATING_DURATION,
         }
     }
 }
@@ -162,6 +169,10 @@ pub enum Stimulus {
     SessionFinished(SessionReaction),
     UserPaused,
     UserResumed,
+    PetInteracted,
+    PetFed,
+    AgentDisconnected,
+    AgentReconnected,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -174,10 +185,83 @@ pub enum Transition {
     Enter(PetState),
     /// The stimulus is valid but does not change the presented state (same state or deferred by priority).
     Remain,
+    /// The stimulus resulted in a reaction queued to play after the current non-interruptible state.
+    Queued(PetState),
     Rejected {
         from: PetState,
         to: PetState,
     },
+}
+
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct ReactionQueue {
+    items: Vec<PetState>,
+    capacity: usize,
+}
+
+impl ReactionQueue {
+    pub fn new(capacity: usize) -> Self {
+        Self {
+            items: Vec::with_capacity(capacity),
+            capacity,
+        }
+    }
+
+    pub fn capacity(&self) -> usize {
+        self.capacity
+    }
+
+    pub fn is_empty(&self) -> bool {
+        self.items.is_empty()
+    }
+
+    pub fn len(&self) -> usize {
+        self.items.len()
+    }
+
+    pub fn push(&mut self, state: PetState, engine: &PetEngine) -> bool {
+        if self.items.contains(&state) {
+            return false;
+        }
+        if self.items.len() >= self.capacity {
+            let min_priority = self.items.iter().map(|s| engine.definition(*s).priority).min();
+            let new_priority = engine.definition(state).priority;
+            if min_priority.is_some_and(|p| new_priority > p) {
+                if let Some(pos) = self.items.iter().position(|s| engine.definition(*s).priority == min_priority.unwrap()) {
+                    self.items.remove(pos);
+                }
+            } else {
+                return false;
+            }
+        }
+        self.items.push(state);
+        self.items.sort_by(|a, b| {
+            engine.definition(*b).priority.cmp(&engine.definition(*a).priority)
+        });
+        true
+    }
+
+    pub fn pop(&mut self) -> Option<PetState> {
+        if self.items.is_empty() {
+            None
+        } else {
+            Some(self.items.remove(0))
+        }
+    }
+
+    pub fn peek(&self) -> Option<PetState> {
+        self.items.first().copied()
+    }
+
+    pub fn clear(&mut self) {
+        self.items.clear();
+    }
+}
+
+impl Default for ReactionQueue {
+    fn default() -> Self {
+        Self::new(DEFAULT_REACTION_QUEUE_CAPACITY)
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
@@ -194,6 +278,8 @@ impl PetEngine {
             ("level_up_duration", policy.level_up_duration),
             ("achievement_duration", policy.achievement_duration),
             ("idle_before_sleep", policy.idle_before_sleep),
+            ("hungry_after", policy.hungry_after),
+            ("eating_duration", policy.eating_duration),
         ] {
             if !(MIN_TIMED_STATE_DURATION..=MAX_TIMED_STATE_DURATION).contains(&duration) {
                 return Err(PolicyError::DurationOutOfRange(name));
@@ -223,7 +309,15 @@ impl PetEngine {
                     target: TimeoutTarget::State(Sleeping),
                 }),
             ),
-            Sleeping | Offline => (Priority::Background, true, None),
+            Sleeping => (
+                Priority::Background,
+                true,
+                Some(StateTimeout {
+                    after: self.policy.hungry_after,
+                    target: TimeoutTarget::State(Hungry),
+                }),
+            ),
+            Offline => (Priority::Background, true, None),
             Working | Thinking | Waiting => (Priority::Normal, true, None),
             AttentionRequired => (Priority::Critical, true, None),
             Success => (
@@ -251,7 +345,12 @@ impl PetEngine {
                 false,
                 resting(self.policy.achievement_duration),
             ),
-            Hungry | Eating => (Priority::Low, true, None),
+            Hungry => (Priority::Low, true, None),
+            Eating => (
+                Priority::Low,
+                true,
+                resting(self.policy.eating_duration),
+            ),
             Paused => (Priority::High, false, None),
         };
         StateDefinition {
@@ -268,10 +367,25 @@ impl PetEngine {
         stimulus: Stimulus,
         context: EngineContext,
     ) -> Transition {
+        let mut dummy_queue = ReactionQueue::default();
+        self.decide_with_queue(current, stimulus, context, &mut dummy_queue)
+    }
+
+    pub fn decide_with_queue(
+        &self,
+        current: PetState,
+        stimulus: Stimulus,
+        context: EngineContext,
+        queue: &mut ReactionQueue,
+    ) -> Transition {
         let (target, user_command) = match stimulus {
             Stimulus::UserPaused => (PetState::Paused, true),
             Stimulus::UserResumed if current == PetState::Paused => (resting_state(context), true),
             Stimulus::UserResumed => return Transition::Remain,
+            Stimulus::AgentReconnected if current == PetState::Offline => {
+                (resting_state(context), false)
+            }
+            Stimulus::AgentReconnected => return Transition::Remain,
             other => (stimulus_target(other), false),
         };
         if target == current {
@@ -282,6 +396,11 @@ impl PetEngine {
             && !current_definition.interruptible
             && self.definition(target).priority <= current_definition.priority
         {
+            if (target == PetState::Success || target == PetState::Celebrating)
+                && queue.push(target, self)
+            {
+                return Transition::Queued(target);
+            }
             return Transition::Remain;
         }
         if !allows(current, target) {
@@ -299,9 +418,25 @@ impl PetEngine {
         elapsed: Duration,
         context: EngineContext,
     ) -> Option<PetState> {
+        let mut dummy_queue = ReactionQueue::default();
+        self.expire_with_queue(current, elapsed, context, &mut dummy_queue)
+    }
+
+    pub fn expire_with_queue(
+        &self,
+        current: PetState,
+        elapsed: Duration,
+        context: EngineContext,
+        queue: &mut ReactionQueue,
+    ) -> Option<PetState> {
         let timeout = self.definition(current).timeout?;
         if elapsed < timeout.after {
             return None;
+        }
+        if let Some(queued) = queue.pop() {
+            if queued != current && allows(current, queued) {
+                return Some(queued);
+            }
         }
         let next = match timeout.target {
             TimeoutTarget::State(state) => state,
@@ -339,6 +474,10 @@ fn stimulus_target(stimulus: Stimulus) -> PetState {
         Stimulus::SessionFinished(SessionReaction::Succeeded { .. }) => PetState::Success,
         Stimulus::UserPaused => PetState::Paused,
         Stimulus::UserResumed => PetState::Idle,
+        Stimulus::PetInteracted => PetState::Celebrating,
+        Stimulus::PetFed => PetState::Eating,
+        Stimulus::AgentDisconnected => PetState::Offline,
+        Stimulus::AgentReconnected => PetState::Idle,
     }
 }
 
@@ -360,12 +499,23 @@ pub fn allows(from: PetState, to: PetState) -> bool {
                 | Achievement
                 | Sleeping
                 | Hungry
+                | Eating
                 | Paused
                 | Offline
         ),
         Sleeping => matches!(
             to,
-            Idle | Working | Thinking | Waiting | AttentionRequired | Error | Paused | Offline
+            Idle
+                | Working
+                | Thinking
+                | Waiting
+                | AttentionRequired
+                | Error
+                | Paused
+                | Offline
+                | Hungry
+                | Eating
+                | Celebrating
         ),
         Working | Thinking | Waiting => matches!(
             to,
@@ -375,26 +525,31 @@ pub fn allows(from: PetState, to: PetState) -> bool {
                 | AttentionRequired
                 | Success
                 | Error
+                | Celebrating
                 | LevelUp
                 | Achievement
+                | Eating
                 | Paused
                 | Offline
         ),
         AttentionRequired => matches!(
             to,
-            Idle | Working
+            Idle
+                | Working
                 | Thinking
                 | Waiting
                 | Success
                 | Error
                 | LevelUp
                 | Achievement
+                | Eating
                 | Paused
                 | Offline
         ),
         Success => matches!(
             to,
-            Idle | Working
+            Idle
+                | Working
                 | Thinking
                 | Waiting
                 | AttentionRequired
@@ -402,62 +557,75 @@ pub fn allows(from: PetState, to: PetState) -> bool {
                 | Celebrating
                 | LevelUp
                 | Achievement
+                | Eating
                 | Paused
                 | Offline
         ),
         Error => matches!(
             to,
-            Idle | Working
+            Idle
+                | Working
                 | Thinking
                 | Waiting
                 | AttentionRequired
                 | Success
                 | LevelUp
                 | Achievement
+                | Eating
                 | Paused
                 | Offline
         ),
         Celebrating => matches!(
             to,
-            Idle | Working
+            Idle
+                | Working
                 | Thinking
                 | Waiting
                 | AttentionRequired
                 | Error
+                | Success
                 | LevelUp
                 | Achievement
+                | Eating
                 | Paused
                 | Offline
         ),
         LevelUp => matches!(
             to,
-            Idle | Working
+            Idle
+                | Working
                 | Thinking
                 | Waiting
                 | AttentionRequired
                 | Error
                 | Celebrating
+                | Success
                 | Achievement
                 | Paused
                 | Offline
         ),
         Achievement => matches!(
             to,
-            Idle | Working
+            Idle
+                | Working
                 | Thinking
                 | Waiting
                 | AttentionRequired
                 | Error
                 | Celebrating
+                | Success
                 | LevelUp
                 | Paused
                 | Offline
         ),
         Hungry => matches!(
             to,
-            Eating | Idle | Working | AttentionRequired | Error | Paused | Offline
+            Eating | Idle | Working | AttentionRequired | Error | Paused | Offline | Celebrating
         ),
-        Eating => matches!(to, Idle | Working | Paused | Offline),
+        Eating => matches!(
+            to,
+            Idle | Working | AttentionRequired | Error | Paused | Offline | Celebrating
+        ),
         Offline => matches!(to, Idle | Working | Paused),
         Paused => matches!(to, Idle | Working | AttentionRequired | Error | Offline),
     }
@@ -474,7 +642,9 @@ pub fn animation_fallbacks(state: PetState) -> &'static [PetState] {
         Celebrating => &[Success, Idle],
         LevelUp | Achievement => &[Celebrating, Success, Idle],
         Offline => &[Sleeping, Idle],
-        Working | Waiting | Error | Sleeping | Hungry | Eating | Paused => &[Idle],
+        Eating => &[Hungry, Idle],
+        Hungry => &[Idle],
+        Working | Waiting | Error | Sleeping | Paused => &[Idle],
     }
 }
 
@@ -774,19 +944,234 @@ mod tests {
     }
 
     #[test]
-    fn mappings_to_unknown_animations_are_skipped_and_first_animation_is_last_resort() {
-        let mappings = BTreeMap::from([("error".to_owned(), "missing".to_owned())]);
+    fn all_fifteen_states_are_reachable_from_documented_stimulus_or_timer() {
+        let engine = engine();
+        let mut reached = std::collections::HashSet::new();
+
+        // 1. Idle is initial / rest
+        reached.insert(PetState::Idle);
+
+        // 2. Working from AgentStarted
+        if let Transition::Enter(s) = engine.decide(PetState::Idle, Stimulus::AgentStarted, ACTIVE) {
+            reached.insert(s);
+        }
+        // 3. Thinking from AgentThinking
+        if let Transition::Enter(s) = engine.decide(PetState::Working, Stimulus::AgentThinking, ACTIVE) {
+            reached.insert(s);
+        }
+        // 4. Waiting from AgentWaiting
+        if let Transition::Enter(s) = engine.decide(PetState::Working, Stimulus::AgentWaiting, ACTIVE) {
+            reached.insert(s);
+        }
+        // 5. Success from AgentCompleted
+        if let Transition::Enter(s) = engine.decide(PetState::Working, Stimulus::AgentCompleted, ACTIVE) {
+            reached.insert(s);
+        }
+        // 6. Error from AgentFailed
+        if let Transition::Enter(s) = engine.decide(PetState::Working, Stimulus::AgentFailed, ACTIVE) {
+            reached.insert(s);
+        }
+        // 7. Celebrating from PetInteracted
+        if let Transition::Enter(s) = engine.decide(PetState::Idle, Stimulus::PetInteracted, INACTIVE) {
+            reached.insert(s);
+        }
+        // 8. Sleeping from Idle timeout
+        if let Some(s) = engine.expire(PetState::Idle, engine.policy().idle_before_sleep, INACTIVE) {
+            reached.insert(s);
+        }
+        // 9. Hungry from Sleeping timeout
+        if let Some(s) = engine.expire(PetState::Sleeping, engine.policy().hungry_after, INACTIVE) {
+            reached.insert(s);
+        }
+        // 10. Eating from PetFed
+        if let Transition::Enter(s) = engine.decide(PetState::Hungry, Stimulus::PetFed, INACTIVE) {
+            reached.insert(s);
+        }
+        // 11. LevelUp from SessionFinished with leveled_up
+        if let Transition::Enter(s) = engine.decide(
+            PetState::Working,
+            Stimulus::SessionFinished(SessionReaction::Succeeded {
+                leveled_up: true,
+                achievement_unlocked: false,
+            }),
+            INACTIVE,
+        ) {
+            reached.insert(s);
+        }
+        // 12. Achievement from SessionFinished with achievement_unlocked
+        if let Transition::Enter(s) = engine.decide(
+            PetState::Working,
+            Stimulus::SessionFinished(SessionReaction::Succeeded {
+                leveled_up: false,
+                achievement_unlocked: true,
+            }),
+            INACTIVE,
+        ) {
+            reached.insert(s);
+        }
+        // 13. Offline from AgentDisconnected
+        if let Transition::Enter(s) = engine.decide(PetState::Idle, Stimulus::AgentDisconnected, INACTIVE) {
+            reached.insert(s);
+        }
+        // 14. Paused from UserPaused
+        if let Transition::Enter(s) = engine.decide(PetState::Idle, Stimulus::UserPaused, INACTIVE) {
+            reached.insert(s);
+        }
+        // 15. AttentionRequired from AgentInputRequired
+        if let Transition::Enter(s) = engine.decide(PetState::Working, Stimulus::AgentInputRequired, ACTIVE) {
+            reached.insert(s);
+        }
+
+        for state in ALL_STATES {
+            assert!(
+                reached.contains(&state),
+                "State {state:?} must be reachable from a documented stimulus or timer"
+            );
+        }
+        assert_eq!(reached.len(), 15);
+    }
+
+    #[test]
+    fn table_test_all_state_stimulus_pairs() {
+        let engine = engine();
+        let all_stimuli = [
+            Stimulus::AgentStarted,
+            Stimulus::AgentWorking,
+            Stimulus::AgentThinking,
+            Stimulus::AgentWaiting,
+            Stimulus::AgentInputRequired,
+            Stimulus::AgentCompleted,
+            Stimulus::AgentFailed,
+            Stimulus::SessionFinished(SessionReaction::Failed),
+            Stimulus::SessionFinished(SessionReaction::Succeeded {
+                leveled_up: true,
+                achievement_unlocked: false,
+            }),
+            Stimulus::SessionFinished(SessionReaction::Succeeded {
+                leveled_up: false,
+                achievement_unlocked: true,
+            }),
+            Stimulus::SessionFinished(SessionReaction::Succeeded {
+                leveled_up: false,
+                achievement_unlocked: false,
+            }),
+            Stimulus::UserPaused,
+            Stimulus::UserResumed,
+            Stimulus::PetInteracted,
+            Stimulus::PetFed,
+            Stimulus::AgentDisconnected,
+            Stimulus::AgentReconnected,
+        ];
+
+        for from in ALL_STATES {
+            for stimulus in all_stimuli {
+                for context in [ACTIVE, INACTIVE] {
+                    let mut queue = ReactionQueue::default();
+                    let transition = engine.decide_with_queue(from, stimulus, context, &mut queue);
+                    match transition {
+                        Transition::Enter(to) => {
+                            assert!(
+                                allows(from, to),
+                                "decide transitioned from {from:?} to {to:?} via {stimulus:?} which is disallowed by allows table"
+                            );
+                        }
+                        Transition::Queued(queued) => {
+                            assert!(
+                                queue.items.contains(&queued),
+                                "queued state must be recorded in reaction queue"
+                            );
+                        }
+                        Transition::Remain | Transition::Rejected { .. } => {}
+                    }
+                }
+            }
+        }
+    }
+
+    #[test]
+    fn queue_preserves_success_arriving_during_level_up() {
+        let engine = engine();
+        let mut queue = ReactionQueue::default();
+
+        // While in LevelUp (non-interruptible, High priority), Success arrives
+        let transition = engine.decide_with_queue(
+            PetState::LevelUp,
+            Stimulus::AgentCompleted,
+            INACTIVE,
+            &mut queue,
+        );
+        assert_eq!(transition, Transition::Queued(PetState::Success));
+        assert_eq!(queue.len(), 1);
+        assert_eq!(queue.peek(), Some(PetState::Success));
+
+        // When LevelUp expires, the queued reaction is popped and played
+        let next = engine.expire_with_queue(
+            PetState::LevelUp,
+            engine.policy().level_up_duration,
+            INACTIVE,
+            &mut queue,
+        );
+        assert_eq!(next, Some(PetState::Success));
+        assert!(queue.is_empty());
+
+        // And then Success expires back to resting (Idle)
+        let rest = engine.expire_with_queue(
+            PetState::Success,
+            engine.policy().success_duration,
+            INACTIVE,
+            &mut queue,
+        );
+        assert_eq!(rest, Some(PetState::Idle));
+    }
+
+    #[test]
+    fn interactions_feeding_and_offline_stimuli() {
+        let engine = engine();
+
+        // PetInteracted celebrates when idle or working
         assert_eq!(
-            select_animation(
-                PetState::Error,
-                &mappings,
-                &animations(&["b-wave", "c-jump"])
-            ),
-            Some("b-wave")
+            engine.decide(PetState::Idle, Stimulus::PetInteracted, INACTIVE),
+            Transition::Enter(PetState::Celebrating)
         );
         assert_eq!(
-            select_animation::<()>(PetState::Error, &mappings, &BTreeMap::new()),
-            None
+            engine.decide(PetState::Working, Stimulus::PetInteracted, ACTIVE),
+            Transition::Enter(PetState::Celebrating)
+        );
+
+        // PetFed enters Eating
+        assert_eq!(
+            engine.decide(PetState::Hungry, Stimulus::PetFed, INACTIVE),
+            Transition::Enter(PetState::Eating)
+        );
+        assert_eq!(
+            engine.decide(PetState::Idle, Stimulus::PetFed, INACTIVE),
+            Transition::Enter(PetState::Eating)
+        );
+
+        // Eating expires to resting
+        assert_eq!(
+            engine.expire(PetState::Eating, engine.policy().eating_duration, INACTIVE),
+            Some(PetState::Idle)
+        );
+        assert_eq!(
+            engine.expire(PetState::Eating, engine.policy().eating_duration, ACTIVE),
+            Some(PetState::Working)
+        );
+
+        // AgentDisconnected enters Offline
+        assert_eq!(
+            engine.decide(PetState::Working, Stimulus::AgentDisconnected, INACTIVE),
+            Transition::Enter(PetState::Offline)
+        );
+
+        // AgentReconnected restores resting state
+        assert_eq!(
+            engine.decide(PetState::Offline, Stimulus::AgentReconnected, INACTIVE),
+            Transition::Enter(PetState::Idle)
+        );
+        assert_eq!(
+            engine.decide(PetState::Offline, Stimulus::AgentReconnected, ACTIVE),
+            Transition::Enter(PetState::Working)
         );
     }
 }

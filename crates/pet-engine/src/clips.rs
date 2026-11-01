@@ -42,7 +42,7 @@ impl PetState {
             Self::Celebrating => &[C::Celebrate, C::Success, C::Idle],
             Self::Sleeping => &[C::Sleep, C::Idle],
             Self::Hungry => &[C::Hungry, C::Idle],
-            Self::Eating => &[C::Eat, C::Idle],
+            Self::Eating => &[C::Eat, C::Hungry, C::Idle],
             Self::LevelUp => &[C::LevelUp, C::Celebrate, C::Success, C::Idle],
             Self::Achievement => &[C::Achievement, C::Celebrate, C::Success, C::Idle],
             Self::Offline => &[C::Offline, C::Sleep, C::Idle],

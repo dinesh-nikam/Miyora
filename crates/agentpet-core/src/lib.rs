@@ -5,7 +5,8 @@ use std::{
 };
 
 use agentpet_pet_engine::{
-    EngineContext, PetEngine, PetPresentation, PetState, SessionReaction, Stimulus, Transition,
+    EngineContext, PetEngine, PetPresentation, PetState, ReactionQueue, SessionReaction, Stimulus,
+    Transition,
 };
 use agentpet_pet_pack::{
     signature::TrustedSigner, PetPackError, PetPackManifest, ValidationLimits,
@@ -68,6 +69,10 @@ pub enum EventType {
     AgentFailed,
     UserPaused,
     UserResumed,
+    PetInteracted,
+    PetFed,
+    AgentDisconnected,
+    AgentReconnected,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -113,6 +118,10 @@ impl EventType {
             Self::AgentFailed => "AGENT_FAILED",
             Self::UserPaused => "USER_PAUSED",
             Self::UserResumed => "USER_RESUMED",
+            Self::PetInteracted => "PET_INTERACTED",
+            Self::PetFed => "PET_FED",
+            Self::AgentDisconnected => "AGENT_DISCONNECTED",
+            Self::AgentReconnected => "AGENT_RECONNECTED",
         }
     }
 
@@ -127,6 +136,10 @@ impl EventType {
             Self::AgentFailed => Stimulus::AgentFailed,
             Self::UserPaused => Stimulus::UserPaused,
             Self::UserResumed => Stimulus::UserResumed,
+            Self::PetInteracted => Stimulus::PetInteracted,
+            Self::PetFed => Stimulus::PetFed,
+            Self::AgentDisconnected => Stimulus::AgentDisconnected,
+            Self::AgentReconnected => Stimulus::AgentReconnected,
         }
     }
 }
@@ -477,6 +490,7 @@ pub enum CoreError {
 pub struct Core {
     connection: Arc<Mutex<Connection>>,
     engine: PetEngine,
+    reaction_queue: Arc<Mutex<ReactionQueue>>,
     /// Local application data directory used for non-database configuration
     /// such as trusted signing keys. `None` for in-memory test databases.
     #[allow(dead_code)]
@@ -502,6 +516,7 @@ impl Core {
         Ok(Self {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            reaction_queue: Arc::new(Mutex::new(ReactionQueue::default())),
             data_dir: Some(data_dir.to_path_buf()),
         })
     }
@@ -518,6 +533,7 @@ impl Core {
         Ok(Self {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            reaction_queue: Arc::new(Mutex::new(ReactionQueue::default())),
             data_dir: None,
         })
     }
@@ -898,18 +914,23 @@ impl Core {
             .connection
             .lock()
             .map_err(|_| CoreError::LockPoisoned)?;
+        let mut queue = self
+            .reaction_queue
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
         let (current, entered_at) = read_pet_state(&connection)?;
-        let due = self
-            .engine
-            .definition(current)
-            .timeout
-            .is_some_and(|timeout| elapsed_since(entered_at, now) >= timeout.after);
+        let due = !queue.is_empty()
+            || self
+                .engine
+                .definition(current)
+                .timeout
+                .is_some_and(|timeout| elapsed_since(entered_at, now) >= timeout.after);
         if !due {
             return Ok(None);
         }
         let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
         let (before, _) = read_pet_state(&transaction)?;
-        let after = settle_state(&transaction, &self.engine, now)?;
+        let after = settle_state(&transaction, &self.engine, now, &mut queue)?;
         transaction.commit()?;
         Ok((after != before).then_some(after))
     }
@@ -1286,16 +1307,33 @@ impl Core {
             .connection
             .lock()
             .map_err(|_| CoreError::LockPoisoned)?;
+        let mut queue = self
+            .reaction_queue
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
         let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
         let accepted = record_event(
             &transaction,
             &self.engine,
+            &mut queue,
             event,
             event.event_type.stimulus(),
             OnRejectedTransition::Fail,
         )?;
         transaction.commit()?;
         Ok(accepted)
+    }
+
+    pub fn pet_interact(&self, source: impl Into<String>) -> Result<(), CoreError> {
+        let event = PetEvent::new(EventType::PetInteracted, source);
+        self.accept_event(&event)?;
+        Ok(())
+    }
+
+    pub fn pet_feed(&self, source: impl Into<String>) -> Result<(), CoreError> {
+        let event = PetEvent::new(EventType::PetFed, source);
+        self.accept_event(&event)?;
+        Ok(())
     }
 
     /// Ingests a normalized hook event from a local agent adapter.
@@ -1342,9 +1380,18 @@ impl Core {
             .connection
             .lock()
             .map_err(|_| CoreError::LockPoisoned)?;
+        let mut queue = self
+            .reaction_queue
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
         let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
-        let outcome =
-            record_hook_event_in_transaction(&transaction, &self.engine, hook_event, session_id)?;
+        let outcome = record_hook_event_in_transaction(
+            &transaction,
+            &self.engine,
+            &mut queue,
+            hook_event,
+            session_id,
+        )?;
         transaction.commit()?;
         Ok(outcome)
     }
@@ -1425,6 +1472,10 @@ impl Core {
             .connection
             .lock()
             .map_err(|_| CoreError::LockPoisoned)?;
+        let mut queue = self
+            .reaction_queue
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
         let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
         let selected_pet: Option<String> = transaction.query_row(
             "SELECT selected_pet_id FROM pet_state WHERE singleton = 1",
@@ -1442,6 +1493,7 @@ impl Core {
         record_event(
             &transaction,
             &self.engine,
+            &mut queue,
             &event,
             Stimulus::AgentStarted,
             OnRejectedTransition::KeepState,
@@ -1460,6 +1512,10 @@ impl Core {
         let duration_ms = i64::try_from(duration_ms).map_err(|_| CoreError::InvalidDuration)?;
         let mut connection = self
             .connection
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
+        let mut queue = self
+            .reaction_queue
             .lock()
             .map_err(|_| CoreError::LockPoisoned)?;
         let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
@@ -1503,6 +1559,7 @@ impl Core {
         record_event(
             &transaction,
             &self.engine,
+            &mut queue,
             &event,
             Stimulus::SessionFinished(reaction),
             OnRejectedTransition::KeepState,
@@ -1999,12 +2056,14 @@ fn settle_state(
     connection: &Connection,
     engine: &PetEngine,
     now: DateTime<Utc>,
+    queue: &mut ReactionQueue,
 ) -> Result<PetState, CoreError> {
     let (current, entered_at) = read_pet_state(connection)?;
-    let Some(next) = engine.expire(
+    let Some(next) = engine.expire_with_queue(
         current,
         elapsed_since(entered_at, now),
         engine_context(connection)?,
+        queue,
     ) else {
         return Ok(current);
     };
@@ -2018,6 +2077,7 @@ fn settle_state(
 fn record_event(
     transaction: &rusqlite::Transaction<'_>,
     engine: &PetEngine,
+    queue: &mut ReactionQueue,
     event: &PetEvent,
     stimulus: Stimulus,
     on_rejected: OnRejectedTransition,
@@ -2033,9 +2093,9 @@ fn record_event(
         return Ok(false);
     }
     let now = Utc::now();
-    let current = settle_state(transaction, engine, now)?;
+    let current = settle_state(transaction, engine, now, queue)?;
     let occurred_at = event.occurred_at.to_rfc3339();
-    match engine.decide(current, stimulus, engine_context(transaction)?) {
+    match engine.decide_with_queue(current, stimulus, engine_context(transaction)?, queue) {
         Transition::Enter(next) => {
             transaction.execute(
                 "UPDATE pet_state SET state = ?1, state_entered_at = ?2, last_event_at = ?3 WHERE singleton = 1",
@@ -2045,7 +2105,7 @@ fn record_event(
         Transition::Rejected { from, to } if on_rejected == OnRejectedTransition::Fail => {
             return Err(CoreError::InvalidTransition { from, to });
         }
-        Transition::Remain | Transition::Rejected { .. } => {
+        Transition::Remain | Transition::Queued(_) | Transition::Rejected { .. } => {
             transaction.execute(
                 "UPDATE pet_state SET last_event_at = ?1 WHERE singleton = 1",
                 [&occurred_at],
@@ -2087,6 +2147,7 @@ fn rollback_pack_install(directory: &Path, primary: CoreError) -> CoreError {
 fn record_hook_event_in_transaction(
     transaction: &rusqlite::Transaction<'_>,
     engine: &PetEngine,
+    queue: &mut ReactionQueue,
     hook_event: &HookEvent,
     session_id: Option<&str>,
 ) -> Result<HookEventOutcome, CoreError> {
@@ -2099,6 +2160,7 @@ fn record_hook_event_in_transaction(
     let accepted = record_event(
         transaction,
         engine,
+        queue,
         &event,
         hook_event.event_type.stimulus(),
         OnRejectedTransition::KeepState,
@@ -2535,6 +2597,53 @@ mod tests {
     }
 
     #[test]
+    fn pet_interaction_feeding_and_reaction_queue_in_core() {
+        let core = Core::in_memory().expect("database initializes");
+
+        // PetInteracted triggers Celebrating
+        core.pet_interact("desktop").expect("interact succeeds");
+        assert_eq!(core.snapshot().expect("snapshot").pet_state, PetState::Celebrating);
+
+        // PetFed triggers Eating
+        core.pet_feed("desktop").expect("feed succeeds");
+        assert_eq!(core.snapshot().expect("snapshot").pet_state, PetState::Eating);
+
+        // Eating expires to Idle
+        let later = Utc::now() + chrono::Duration::seconds(10);
+        assert_eq!(core.advance_state_timers_at(later).expect("timer advances"), Some(PetState::Idle));
+
+        // Start session that levels up
+        core.set_progression_rules(ProgressionRules {
+            xp_per_completed_session: 100,
+            base_xp_per_level: 100,
+            level_xp_increment: 200,
+        }).expect("rules");
+        core.start_session("s1", "agent", None).expect("start");
+        core.finish_session("s1", SessionOutcome::Completed, Some(0), 10).expect("finish");
+        assert_eq!(core.snapshot().expect("snapshot").pet_state, PetState::LevelUp);
+
+        // While LevelUp is active, another session finishes successfully -> queued!
+        core.start_session("s2", "agent", None).expect("start s2");
+        core.finish_session("s2", SessionOutcome::Completed, Some(0), 10).expect("finish s2");
+        // State remains LevelUp
+        assert_eq!(core.snapshot().expect("snapshot").pet_state, PetState::LevelUp);
+
+        // When LevelUp expires, the queued reaction (Success) plays!
+        let later_level_up = Utc::now() + chrono::Duration::seconds(10);
+        assert_eq!(
+            core.advance_state_timers_at(later_level_up).expect("level up expires to queued reaction"),
+            Some(PetState::Success)
+        );
+
+        // Success expires to resting (Idle)
+        let later_success = later_level_up + chrono::Duration::seconds(10);
+        assert_eq!(
+            core.advance_state_timers_at(later_success).expect("success expires to idle"),
+            Some(PetState::Idle)
+        );
+    }
+
+    #[test]
     fn pause_holds_through_activity_until_the_user_resumes() {
         let core = Core::in_memory().expect("database initializes");
         assert!(core
@@ -2576,6 +2685,7 @@ mod tests {
         let core = Core {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            reaction_queue: Arc::new(Mutex::new(ReactionQueue::default())),
             data_dir: None,
         };
         assert_eq!(
@@ -2939,6 +3049,7 @@ mod tests {
         let core = Core {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            reaction_queue: Arc::new(Mutex::new(ReactionQueue::default())),
             data_dir: None,
         };
         let verification = core.verify_ledger().expect("ledger verifies");
