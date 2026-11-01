@@ -5,7 +5,7 @@ use std::{
 };
 
 use agentpet_pet_engine::{
-    EngineContext, PetEngine, PetState, SessionReaction, Stimulus, Transition,
+    EngineContext, PetEngine, PetPresentation, PetState, SessionReaction, Stimulus, Transition,
 };
 use agentpet_pet_pack::{
     signature::TrustedSigner, PetPackError, PetPackManifest, ValidationLimits,
@@ -19,6 +19,7 @@ use uuid::Uuid;
 mod avatars;
 mod companion;
 mod overlay_control;
+mod roaming;
 
 pub use avatars::{
     AvatarCatalogEntry, AvatarKind, AvatarSelection, AvatarSource, CustomAvatarSummary,
@@ -31,6 +32,10 @@ pub use companion::{
 pub use overlay_control::{
     normalize_accelerator, RepositionSession, ShortcutAction, ShortcutBindings,
     REPOSITION_HARD_LIMIT, REPOSITION_IDLE_LIMIT,
+};
+pub use roaming::{
+    LogicalRect, RoamInput, RoamOutput, Roamer, ROAM_EDGE_MARGIN_DIPS, ROAM_IDLE_BEFORE_WALK,
+    ROAM_MAX_WALK, ROAM_SPEED_DIPS, ROAM_TICK,
 };
 
 const DATABASE_FILE: &str = "agentpet.sqlite3";
@@ -173,6 +178,9 @@ pub struct RuntimeSnapshot {
     pub last_event_at: Option<DateTime<Utc>>,
     #[serde(default)]
     pub is_simulated: bool,
+    /// Clip the renderer plays; the desktop host sets locomotion while roaming.
+    #[serde(default)]
+    pub presentation: PetPresentation,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
@@ -866,11 +874,13 @@ impl Core {
                 [],
                 |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?)),
             )?;
+        let pet_state = parse_state(&state)?;
         Ok(RuntimeSnapshot {
-            pet_state: parse_state(&state)?,
+            pet_state,
             selected_pet_id,
             last_event_at: parse_timestamp(last_event_at)?,
             is_simulated: false,
+            presentation: PetPresentation::procedural(pet_state, false),
         })
     }
 

@@ -5,7 +5,7 @@ import { open } from "@tauri-apps/plugin-dialog";
 import { CompanionRenderer, PetState, SelectedPetAnimation } from "./components/CompanionRenderer";
 import { CommandDeck, ProviderReport } from "./components/CommandDeck";
 import { CharacterStudio } from "./avatar/CharacterStudio";
-import type { AvatarHud, ResolvedAvatar } from "./avatar/types";
+import type { AvatarHud, PetPresentation, ResolvedAvatar } from "./avatar/types";
 import { StudioView } from "./studio/StudioView";
 import { saveCompanionPreferences, useCompanionPreferences, type RenderMode } from "./settings/companionPreferences";
 import { CompanionControlsPanel } from "./settings/CompanionControlsPanel";
@@ -17,6 +17,7 @@ interface RuntimeSnapshot {
   selectedPetId: string | null;
   lastEventAt: string | null;
   isSimulated?: boolean;
+  presentation?: PetPresentation;
 }
 
 interface ProgressionSnapshot {
@@ -461,6 +462,7 @@ export default function App() {
           quotaProvenance={quotaProvenance}
           size={180}
           mode={renderMode}
+          presentation={snapshot.presentation}
           interactive={false}
           bare
           onError={setRuntimeError}
@@ -1037,6 +1039,7 @@ export default function App() {
               {/* Pet Renderer Stage */}
               <CompanionRenderer
                 state={snapshot.petState}
+                presentation={snapshot.presentation}
                 animation={selectedAnimation}
                 avatar={avatar}
                 hud={avatarHud}

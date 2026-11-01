@@ -3,6 +3,10 @@ use std::{collections::BTreeMap, time::Duration};
 use serde::{Deserialize, Serialize};
 use thiserror::Error;
 
+mod clips;
+
+pub use clips::{AnimationClip, PetPresentation};
+
 const DEFAULT_SUCCESS_DURATION: Duration = Duration::from_secs(4);
 const DEFAULT_ERROR_DURATION: Duration = Duration::from_secs(6);
 const DEFAULT_CELEBRATING_DURATION: Duration = Duration::from_secs(4);

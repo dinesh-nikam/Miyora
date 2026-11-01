@@ -8073,13 +8073,13 @@
       "id": "miyora.krishna",
       "name": "Krishna",
       "title": "Divine Flute Avatar",
-      "description": "Sky-blue Krishna with dark curly locks, glowing golden pitambara silk, peacock feather crown, and gentle sparkle eyes.",
+      "description": "Sky-blue Krishna with dark curly locks, golden pitambara silk, crimson sash, peacock feather in a temple crown, and a golden flute.",
       "body": "humanoid",
       "ears": "human",
       "tail": "none",
       "wings": "none",
       "hair": "curly",
-      "eyes": "sparkle",
+      "eyes": "round",
       "outfit": "robe",
       "accessories": [
         "crown",
@@ -8088,16 +8088,16 @@
       ],
       "pattern": "none",
       "palette": {
-        "skin": "#7da4d4",
+        "skin": "#8fb6e8",
         "hair": "#1a2238",
-        "eyes": "#231f20",
+        "eyes": "#6b3e1f",
         "primary": "#ffd700",
-        "secondary": "#f59e0b",
-        "accent": "#38bdf8"
+        "secondary": "#b91c1c",
+        "accent": "#0d9488"
       },
       "proportions": {
         "height": 1.0,
-        "headScale": 1.08,
+        "headScale": 1.12,
         "build": 0.95,
         "limbLength": 1.0
       },
@@ -8119,8 +8119,7 @@
         "license": "CC0-1.0",
         "source": "scripts/generate_avatar_catalog.py",
         "attribution": "Original Miyora design"
-      },
-      "hairTip": "#38bdf8"
+      }
     },
     {
       "schemaVersion": 1,
@@ -8144,7 +8143,7 @@
       "palette": {
         "skin": "#f6d7c3",
         "hair": "#1e1b18",
-        "eyes": "#451a03",
+        "eyes": "#6b3e1f",
         "primary": "#e11d48",
         "secondary": "#f59e0b",
         "accent": "#fbcfe8"
@@ -8180,27 +8179,26 @@
       "id": "miyora.rama",
       "name": "Rama",
       "title": "Righteous Archer King",
-      "description": "Dignified cloud-blue warrior prince of Ayodhya crowned in gold with saffron silks and steadfast archer focus.",
+      "description": "Dignified warrior prince of Ayodhya in a golden temple crown, gold dhoti with green sash, and the Kodanda bow.",
       "body": "humanoid",
       "ears": "human",
       "tail": "none",
       "wings": "none",
       "hair": "spiky",
-      "eyes": "sharp",
+      "eyes": "round",
       "outfit": "tunic",
       "accessories": [
         "crown",
-        "cape",
         "gem"
       ],
       "pattern": "none",
       "palette": {
-        "skin": "#6ba3b8",
-        "hair": "#111827",
-        "eyes": "#1e293b",
-        "primary": "#f97316",
-        "secondary": "#ffd700",
-        "accent": "#15803d"
+        "skin": "#d9a066",
+        "hair": "#1e1b4b",
+        "eyes": "#1f2937",
+        "primary": "#ffd700",
+        "secondary": "#15803d",
+        "accent": "#f97316"
       },
       "proportions": {
         "height": 1.08,
@@ -8250,7 +8248,7 @@
       "palette": {
         "skin": "#f8dfd0",
         "hair": "#1c1917",
-        "eyes": "#292524",
+        "eyes": "#6b3e1f",
         "primary": "#dc2626",
         "secondary": "#ffd700",
         "accent": "#fef08a"
@@ -8286,31 +8284,30 @@
       "id": "miyora.hanuman",
       "name": "Hanuman",
       "title": "Mighty Loyal Hero",
-      "description": "Golden-furred hero of boundless courage with curled tail, radiant mukut crown, and fiery saffron armor.",
+      "description": "Golden-furred hero of boundless courage with curled tail, radiant temple crown, red and saffron dhoti, and golden gada.",
       "body": "humanoid",
-      "ears": "cat",
+      "ears": "human",
       "tail": "cat",
       "wings": "none",
       "hair": "spiky",
-      "eyes": "sparkle",
-      "outfit": "armor",
+      "eyes": "round",
+      "outfit": "tunic",
       "accessories": [
         "crown",
-        "headband",
         "gem"
       ],
       "pattern": "none",
       "palette": {
-        "skin": "#e0ac83",
-        "hair": "#78350f",
-        "eyes": "#451a03",
-        "primary": "#ea580c",
-        "secondary": "#ffd700",
-        "accent": "#b91c1c"
+        "skin": "#e8a84c",
+        "hair": "#c27a2c",
+        "eyes": "#6b3e1f",
+        "primary": "#b91c1c",
+        "secondary": "#ea580c",
+        "accent": "#ffd700"
       },
       "proportions": {
         "height": 0.95,
-        "headScale": 1.15,
+        "headScale": 1.18,
         "build": 1.2,
         "limbLength": 0.95
       },
@@ -8332,35 +8329,33 @@
         "license": "CC0-1.0",
         "source": "scripts/generate_avatar_catalog.py",
         "attribution": "Original Miyora design"
-      },
-      "hairTip": "#ffd700"
+      }
     },
     {
       "schemaVersion": 1,
       "id": "miyora.ganesha",
       "name": "Ganesha",
       "title": "Lord of Good Fortune",
-      "description": "Beloved remover of obstacles with large friendly ears, jeweled golden crown, and warm sweet energy.",
+      "description": "Beloved remover of obstacles with golden skin, broad elephant ears, curled trunk, temple crown, and a bowl of sweet modaks.",
       "body": "beast",
-      "ears": "floppy",
-      "tail": "bunny",
+      "ears": "none",
+      "tail": "none",
       "wings": "none",
       "hair": "none",
-      "eyes": "sparkle",
+      "eyes": "round",
       "outfit": "robe",
       "accessories": [
         "crown",
-        "gem",
-        "bell"
+        "gem"
       ],
       "pattern": "none",
       "palette": {
-        "skin": "#f6d7c3",
-        "hair": "#78350f",
-        "eyes": "#312e81",
-        "primary": "#f97316",
-        "secondary": "#ffd700",
-        "accent": "#dc2626"
+        "skin": "#f0b860",
+        "hair": "#c27a2c",
+        "eyes": "#5b3417",
+        "primary": "#f5b301",
+        "secondary": "#c0392b",
+        "accent": "#ffd700"
       },
       "proportions": {
         "height": 0.88,
@@ -8393,31 +8388,30 @@
       "id": "miyora.shiva",
       "name": "Shiva",
       "title": "Serene Ascetic Lord",
-      "description": "Ascetic blue lord of deep stillness with jatamukuta bun, crescent moon halo, and third-eye sapphire.",
+      "description": "Ascetic blue lord of deep stillness with flowing jata, crescent moon, temple crown, coiled cobra, tiger-stripe dhoti, and trishula.",
       "body": "humanoid",
       "ears": "human",
       "tail": "none",
       "wings": "none",
-      "hair": "bun",
-      "eyes": "sleepy",
+      "hair": "long",
+      "eyes": "round",
       "outfit": "robe",
       "accessories": [
-        "gem",
-        "staff",
-        "halo"
+        "crown",
+        "gem"
       ],
-      "pattern": "none",
+      "pattern": "stripes",
       "palette": {
-        "skin": "#8ba3be",
-        "hair": "#0f172a",
-        "eyes": "#1e293b",
-        "primary": "#d97706",
-        "secondary": "#475569",
-        "accent": "#38bdf8"
+        "skin": "#9db4cf",
+        "hair": "#111827",
+        "eyes": "#6b3e1f",
+        "primary": "#e8a33d",
+        "secondary": "#1f2937",
+        "accent": "#422006"
       },
       "proportions": {
         "height": 1.05,
-        "headScale": 0.98,
+        "headScale": 1.04,
         "build": 1.05,
         "limbLength": 1.05
       },
@@ -8439,8 +8433,7 @@
         "license": "CC0-1.0",
         "source": "scripts/generate_avatar_catalog.py",
         "attribution": "Original Miyora design"
-      },
-      "hairTip": "#38bdf8"
+      }
     },
     {
       "schemaVersion": 1,
@@ -8464,7 +8457,7 @@
       "palette": {
         "skin": "#f8dfd0",
         "hair": "#18181b",
-        "eyes": "#3b0764",
+        "eyes": "#6b3e1f",
         "primary": "#059669",
         "secondary": "#ffd700",
         "accent": "#e11d48"
@@ -8500,7 +8493,7 @@
       "id": "miyora.lakshmi",
       "name": "Lakshmi",
       "title": "Goddess of Prosperity",
-      "description": "Radiant goddess of abundance surrounded by blooming pink lotuses, draped in magenta and shower of gold.",
+      "description": "Radiant goddess of abundance holding a pink lotus, draped in crimson silk with gold borders under a golden temple crown.",
       "body": "humanoid",
       "ears": "human",
       "tail": "none",
@@ -8515,9 +8508,9 @@
       ],
       "pattern": "none",
       "palette": {
-        "skin": "#fbe3d4",
+        "skin": "#f2c38f",
         "hair": "#1c1917",
-        "eyes": "#451a03",
+        "eyes": "#6b3e1f",
         "primary": "#be123c",
         "secondary": "#ffd700",
         "accent": "#fda4af"
@@ -8553,27 +8546,26 @@
       "id": "miyora.saraswati",
       "name": "Saraswati",
       "title": "Goddess of Arts and Wisdom",
-      "description": "Serene embodiment of music and wisdom in pure white silks with carved veena staff and tranquil azure eyes.",
+      "description": "Serene embodiment of music and wisdom in white and gold silks with a pearl tiara, white lotus blossoms, and a carved veena.",
       "body": "humanoid",
       "ears": "human",
       "tail": "none",
       "wings": "none",
-      "hair": "long",
-      "eyes": "sleepy",
+      "hair": "bun",
+      "eyes": "round",
       "outfit": "dress",
       "accessories": [
-        "crown",
-        "staff",
+        "flower",
         "gem"
       ],
       "pattern": "none",
       "palette": {
-        "skin": "#fdf2f8",
+        "skin": "#f6d2b8",
         "hair": "#1e293b",
-        "eyes": "#0284c7",
+        "eyes": "#3f3f46",
         "primary": "#f8fafc",
         "secondary": "#ca8a04",
-        "accent": "#67e8f9"
+        "accent": "#fde68a"
       },
       "proportions": {
         "height": 0.98,

@@ -5,15 +5,27 @@ import { VRM, VRMLoaderPlugin, VRMUtils } from "@pixiv/three-vrm";
 import { invoke } from "@tauri-apps/api/core";
 import type { PetState } from "../components/CompanionRenderer";
 import { disposeObject, disposeScene } from "./dispose";
-import { applyToRig, applyToSculpt, applyToVrm, easePose, motionFor, POSE_EASE_RATE, restPose, type LookTarget } from "./motion";
+import {
+  applyToRig,
+  applyToSculpt,
+  applyToVrm,
+  easePose,
+  motionFor,
+  motionForPresentation,
+  POSE_EASE_RATE,
+  restPose,
+  type LookTarget,
+} from "./motion";
 import { StageProps } from "./props";
 import { modelResponseBytes } from "./modelTransport";
 import { buildCharacter, type CharacterRig } from "./rig";
-import { subjectKey, type AvatarHud, type StageSubject } from "./types";
+import { subjectKey, type AvatarHud, type PetPresentation, type StageSubject } from "./types";
 
 export interface AvatarStageProps {
   subject: StageSubject | null;
   state: PetState;
+  /** Rust-resolved clip; when present it drives motion instead of `state`. */
+  presentation?: PetPresentation | null;
   hud?: AvatarHud | null;
   size?: number;
   interactive?: boolean;
@@ -114,7 +126,9 @@ function disposeAvatar(avatar: LoadedAvatar | null): void {
   }
 }
 
-export function AvatarStage({ subject, state, hud = null, size = 240, interactive = true, onDoubleClick, onError }: AvatarStageProps) {
+export function AvatarStage({ subject, state, presentation = null, hud = null, size = 240, interactive = true, onDoubleClick, onError }: AvatarStageProps) {
+  const presentationRef = useRef<PetPresentation | null>(presentation);
+  presentationRef.current = presentation;
   const containerRef = useRef<HTMLDivElement>(null);
   const stateRef = useRef<PetState>(state);
   stateRef.current = state;
@@ -217,7 +231,10 @@ export function AvatarStage({ subject, state, hud = null, size = 240, interactiv
       if (!stage) return;
       const avatar = stage.avatar;
       const currentSpec = avatar?.kind === "rig" ? avatar.rig.spec : (subjectRef.current?.kind === "procedural" ? subjectRef.current.spec : null);
-      const motion = motionFor(stateRef.current, elapsed, avatar?.energy ?? 1, currentSpec);
+      const energy = avatar?.energy ?? 1;
+      const motion = presentationRef.current
+        ? motionForPresentation(presentationRef.current, elapsed, energy, currentSpec)
+        : motionFor(stateRef.current, elapsed, energy, currentSpec);
       sinceRender += dt;
       if (sinceRender < 1 / motion.frameRate) return;
       const step = Math.min(sinceRender, MAX_FRAME_STEP);

@@ -96,6 +96,31 @@ export interface CharacterSpec {
   attribution?: Attribution;
 }
 
+/** Mirrors `agentpet_pet_engine::AnimationClip`. */
+export type AnimationClip =
+  | "idle"
+  | "work"
+  | "think"
+  | "wait"
+  | "success"
+  | "error"
+  | "celebrate"
+  | "sleep"
+  | "hungry"
+  | "eat"
+  | "level_up"
+  | "achievement"
+  | "offline"
+  | "paused"
+  | "attention"
+  | "walk";
+
+/** Clip Rust resolved for the current state; React only plays it. */
+export interface PetPresentation {
+  stateClip: AnimationClip;
+  locomotionClip: AnimationClip | null;
+}
+
 export type CharacterCategory = "character" | "animal" | "creature" | "robot" | "deity_inspired" | "legacy";
 
 export interface Attribution {

@@ -3,10 +3,10 @@ import * as THREE from "three";
 import catalogJson from "../../../../../crates/avatar/catalog/characters.json";
 import type { PetState } from "../../components/CompanionRenderer";
 import { disposeObject } from "../dispose";
-import { applyToRig, easePose, motionFor, restPose } from "../motion";
+import { applyToRig, easePose, motionFor, motionForPresentation, restPose } from "../motion";
 import { StageProps } from "../props";
-import { buildCharacter, MOUTH_SHAPES } from "../rig";
-import { subjectFromAvatar, type CharacterSpec, type ResolvedAvatar } from "../types";
+import { buildCharacter, EYE_SHAPES, MOUTH_SHAPES } from "../rig";
+import { subjectFromAvatar, type AnimationClip, type CharacterSpec, type ResolvedAvatar } from "../types";
 
 const catalog = catalogJson as { characters: CharacterSpec[] };
 
@@ -250,5 +250,85 @@ describe("anime styling", () => {
     const { rig } = materials({ ...base, hair });
     expect(rig.hairSway.length).toBeGreaterThan(0);
     disposeObject(rig.root);
+  });
+});
+
+describe("expressions and clips", () => {
+  const eligible = catalog.characters.filter((spec) => spec.threeDEligible);
+  const CLIPS: AnimationClip[] = [
+    "idle",
+    "work",
+    "think",
+    "wait",
+    "success",
+    "error",
+    "celebrate",
+    "sleep",
+    "hungry",
+    "eat",
+    "level_up",
+    "achievement",
+    "offline",
+    "paused",
+    "attention",
+  ];
+
+  it.each(eligible.filter((spec) => spec.eyes !== "visor").map((spec) => [spec.id, spec] as const))(
+    "%s shows exactly one eye shape per eye",
+    (_id, spec) => {
+      const rig = buildCharacter(spec);
+      const perEye = rig.eyeShapes.open.length;
+      if (perEye > 0) {
+        for (const shape of EYE_SHAPES) expect(rig.eyeShapes[shape]).toHaveLength(perEye);
+        for (const eyes of EYE_SHAPES) {
+          const expression = { ...motionFor("idle", 0).expression, eyes };
+          applyToRig(rig, restPose(), expression, { yaw: 0, pitch: 0 }, 1, 0);
+          const visible = EYE_SHAPES.filter((shape) => rig.eyeShapes[shape][0].visible);
+          expect(visible).toEqual(eyes === "teary" ? ["open", "teary"] : [eyes]);
+        }
+      }
+      disposeObject(rig.root);
+    },
+  );
+
+  it("uses cute eye shapes for happy, proud, sleepy, and sad moments", () => {
+    expect(motionFor("success", 1).expression.eyes).toBe("happy");
+    expect(motionFor("celebrating", 1).expression.eyes).toBe("happy");
+    expect(motionFor("level_up", 1).expression.eyes).toBe("star");
+    expect(motionFor("achievement", 1).expression.eyes).toBe("star");
+    expect(motionFor("sleeping", 1).expression.eyes).toBe("closed");
+    expect(motionFor("error", 1).expression.eyes).toBe("teary");
+  });
+
+  it("moves the hands for typing, waving, and chin taps", () => {
+    const span = (state: PetState, key: "wristL" | "wristR") => {
+      const values = Array.from({ length: 40 }, (_, frame) => motionFor(state, frame / 30).pose[key]);
+      return Math.max(...values) - Math.min(...values);
+    };
+    expect(span("working", "wristL")).toBeGreaterThan(0.1);
+    expect(span("success", "wristR")).toBeGreaterThan(0.5);
+    expect(motionFor("thinking", 1).pose.wristR).toBeLessThan(-0.3);
+  });
+
+  it.each(CLIPS)("plays the Rust clip %s with finite transforms", (clip) => {
+    const spec = eligible[0];
+    const rig = buildCharacter(spec);
+    const pose = restPose();
+    for (let frame = 0; frame < 10; frame += 1) {
+      const motion = motionForPresentation({ stateClip: clip, locomotionClip: null }, frame / 30, spec.energy, spec);
+      easePose(pose, motion.pose, 0.3);
+      applyToRig(rig, pose, motion.expression, { yaw: 0, pitch: 0 }, 1, frame / 30);
+    }
+    expect(allFinite(rig.root)).toBe(true);
+    disposeObject(rig.root);
+  });
+
+  it("layers the walk cycle over the state clip while roaming", () => {
+    const still = motionForPresentation({ stateClip: "idle", locomotionClip: null }, 0.1);
+    const walking = motionForPresentation({ stateClip: "idle", locomotionClip: "walk" }, 0.1);
+    expect(still.pose.legL).toBe(0);
+    expect(Math.abs(walking.pose.legL)).toBeGreaterThan(0.1);
+    expect(walking.pose.legL).toBeCloseTo(-walking.pose.legR, 6);
+    expect(walking.expression).toEqual(still.expression);
   });
 });

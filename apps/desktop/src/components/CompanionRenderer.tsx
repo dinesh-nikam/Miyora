@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AvatarStage } from "../avatar/AvatarStage";
-import { subjectFromAvatar, type AvatarHud, type ResolvedAvatar } from "../avatar/types";
+import { subjectFromAvatar, type AvatarHud, type PetPresentation, type ResolvedAvatar } from "../avatar/types";
 import {
   currentCompanionPreferences,
   saveCompanionPreferences,
@@ -59,6 +59,8 @@ export interface CompanionRendererProps {
   interactive?: boolean;
   /** Pet only, for the desktop overlay: no speech, popovers, reminders, or controls. */
   bare?: boolean;
+  /** Rust-resolved animation clip for the 3D stage. */
+  presentation?: PetPresentation | null;
   mode?: "3d" | "2d";
   onModeToggle?: (mode: "3d" | "2d") => void;
   onDoubleClick?: () => void;
@@ -231,6 +233,7 @@ export function CompanionRenderer({
   size = 200,
   interactive = true,
   bare = false,
+  presentation = null,
   mode,
   onModeToggle,
   onDoubleClick,
@@ -1183,6 +1186,7 @@ export function CompanionRenderer({
             <AvatarStage
               subject={subjectFromAvatar(avatar)}
               state={state}
+              presentation={presentation}
               hud={hud}
               size={size}
               interactive={interactive}

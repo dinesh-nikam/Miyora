@@ -9,7 +9,8 @@ const resolve = (id: string): ResolvedAvatar => {
 };
 (window as unknown as { __TAURI_INTERNALS__: unknown }).__TAURI_INTERNALS__ = {
   invoke: async (cmd: string, args: Record<string, unknown>) => {
-    if (cmd === "list_avatar_catalog") return characters.map((spec) => ({ spec, customized: spec.id === "miyora.zippa" }));
+    if (cmd === "list_avatar_catalog")
+      return characters.filter((spec) => spec.threeDEligible).map((spec) => ({ spec, customized: spec.id === "miyora.zippa" }));
     if (cmd === "list_custom_avatars") return [];
     if (cmd === "select_avatar" || cmd === "get_avatar") return resolve(String(args?.avatarId ?? "miyora.aoi"));
     throw new Error(`mock: ${cmd}`);
