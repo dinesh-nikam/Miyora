@@ -1,9 +1,10 @@
 import { afterEach, describe, expect, it, vi } from "vitest";
-import { cleanup, render, screen, waitFor } from "@testing-library/react";
+import { act, cleanup, render, screen, waitFor } from "@testing-library/react";
 import { invoke } from "@tauri-apps/api/core";
 import { CompanionRenderer } from "../../components/CompanionRenderer";
 import { PetOverlayFrame } from "../PetOverlayFrame";
 import { CompanionControlsPanel } from "../../settings/CompanionControlsPanel";
+import { resetCompanionPreferencesForTests } from "../../settings/companionPreferences";
 
 vi.mock("@tauri-apps/api/core", () => ({ invoke: vi.fn() }));
 vi.mock("@tauri-apps/api/event", () => ({ listen: vi.fn(async () => () => undefined) }));
@@ -13,6 +14,7 @@ const invokeMock = vi.mocked(invoke);
 
 afterEach(() => {
   cleanup();
+  resetCompanionPreferencesForTests();
   invokeMock.mockReset();
 });
 
@@ -62,7 +64,9 @@ describe("companion controls panel", () => {
     invokeMock.mockImplementation(async (command) => (command === "get_companion_shortcuts" ? [] : undefined));
     render(<CompanionControlsPanel />);
 
-    screen.getByRole("button", { name: "Reposition mode" }).click();
+    await act(async () => {
+      screen.getByRole("button", { name: "Reposition mode" }).click();
+    });
 
     await waitFor(() => expect(invokeMock).toHaveBeenCalledWith("run_companion_action", { action: "reposition" }));
   });

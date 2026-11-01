@@ -50,17 +50,19 @@ function renderDeck(providers: ProviderReport[]) {
 }
 
 describe("truthful quota status", () => {
-  it("shows Codex as unavailable with /status guidance and no invented numbers", () => {
+  it("shows Codex as unavailable with /status guidance and no invented numbers", async () => {
     renderDeck([codex]);
-    expect(screen.getByText("Usage is not available locally.")).toBeTruthy();
+    expect(await screen.findByText("Usage is not available locally.")).toBeTruthy();
     expect(screen.getByRole("button", { name: "Copy /status" })).toBeTruthy();
     expect(screen.queryByRole("meter")).toBeNull();
     expect(document.body.textContent).not.toMatch(/\d+%/);
+    expect(await screen.findByText(/Your companion shares one gentle moment a day/i)).toBeTruthy();
   });
 
-  it("shows a meter only for a measured provider value", () => {
+  it("shows a meter only for a measured provider value", async () => {
     renderDeck([claude]);
-    expect(screen.getByRole("meter").getAttribute("aria-valuenow")).toBe("38");
+    expect((await screen.findByRole("meter")).getAttribute("aria-valuenow")).toBe("38");
+    expect(await screen.findByText(/Your companion shares one gentle moment a day/i)).toBeTruthy();
   });
 
   it("summarizes every union variant safely", () => {

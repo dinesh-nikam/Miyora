@@ -79,6 +79,7 @@ dependencies = [
  "agentpet-studio",
  "base64 0.22.1",
  "chrono",
+ "dunce",
  "serde",
  "serde_json",
  "tauri",
@@ -118,6 +119,7 @@ name = "agentpet-pet-pack"
 version = "0.1.0"
 dependencies = [
  "base64 0.22.1",
+ "dunce",
  "ed25519-dalek",
  "flate2",
  "image",

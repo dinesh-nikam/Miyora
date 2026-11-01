@@ -310,12 +310,17 @@ export function CompanionRenderer({
   const stageBoxRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    if (bare) return;
+    let mounted = true;
     void invokeSafe<{ affection: number }>("get_affection").then((res) => {
-      if (res.ok && res.data) {
+      if (mounted && res.ok && res.data) {
         setAffectionScore(res.data.affection);
       }
     });
-  }, []);
+    return () => {
+      mounted = false;
+    };
+  }, [bare]);
 
   const spec = avatar?.spec ?? null;
   const petName = avatar?.name ?? spec?.name ?? animation?.petName ?? "Companion";

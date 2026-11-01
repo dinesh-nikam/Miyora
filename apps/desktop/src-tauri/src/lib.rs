@@ -242,13 +242,8 @@ fn get_selected_pet_animation(
         .assets
         .get(&animation.asset)
         .ok_or_else(|| "PET_ASSET_MISSING: animation asset is missing".to_string())?;
-    let root_canonical =
-        std::fs::canonicalize(&root).map_err(|error| format!("PET_PACK_READ_FAILED: {error}"))?;
-    let asset_path = std::fs::canonicalize(root.join(relative_asset))
-        .map_err(|error| format!("PET_ASSET_READ_FAILED: {error}"))?;
-    if !asset_path.starts_with(&root_canonical) {
-        return Err("PET_ASSET_INVALID: asset path escaped installed pack".into());
-    }
+    let asset_path = agentpet_pet_pack::sanitize_pack_asset_path(&root, relative_asset)
+        .map_err(|error| format!("PET_ASSET_INVALID: {error}"))?;
     let bytes = fs::read(asset_path).map_err(|error| format!("PET_ASSET_READ_FAILED: {error}"))?;
     let mime = match Path::new(relative_asset)
         .extension()

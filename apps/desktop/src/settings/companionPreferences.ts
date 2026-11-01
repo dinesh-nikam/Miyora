@@ -103,7 +103,7 @@ export function loadCompanionPreferences(): Promise<void> {
       // Outside Tauri (tests, plain browser preview) there is no event bus.
     }
     const result = await invokeSafe<CompanionPreferences>("get_companion_preferences");
-    if (result.ok) publish(result.data);
+    if (result.ok && result.data) publish(result.data);
   })();
   return loading;
 }
@@ -115,18 +115,23 @@ export async function saveCompanionPreferences(
   const previous = current;
   publish({ ...current, ...patch });
   const result = await invokeSafe<CompanionPreferences>("save_companion_preferences", { preferences: current });
-  publish(result.ok ? result.data : previous);
+  publish(result.ok && result.data ? result.data : previous);
   return result;
 }
 
 export function useCompanionPreferences(): CompanionPreferences {
   const [preferences, setPreferences] = useState(current);
   useEffect(() => {
-    listeners.add(setPreferences);
+    let mounted = true;
+    const update = (next: CompanionPreferences) => {
+      if (mounted) setPreferences(next);
+    };
+    listeners.add(update);
     setPreferences(current);
     void loadCompanionPreferences();
     return () => {
-      listeners.delete(setPreferences);
+      mounted = false;
+      listeners.delete(update);
     };
   }, []);
   return preferences;

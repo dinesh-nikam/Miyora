@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { listen } from "@tauri-apps/api/event";
 import { invokeSafe } from "../utils/ipc";
 
@@ -52,16 +52,26 @@ export function CompanionControlsPanel() {
   const [entries, setEntries] = useState<ShortcutStatusEntry[]>([]);
   const [drafts, setDrafts] = useState<Partial<Record<ShortcutAction, string>>>({});
   const [message, setMessage] = useState<string | null>(null);
+  const mountedRef = useRef(true);
+
+  useEffect(() => {
+    mountedRef.current = true;
+    return () => {
+      mountedRef.current = false;
+    };
+  }, []);
 
   useEffect(() => {
     let stop: (() => void) | undefined;
     let disposed = false;
     void invokeSafe<ShortcutStatusEntry[]>("get_companion_shortcuts").then((result) => {
-      if (disposed) return;
+      if (disposed || !mountedRef.current) return;
       if (result.ok) setEntries(result.data);
       else setMessage(`Could not load shortcuts: ${result.error}`);
     });
-    listen<ShortcutStatusEntry[]>(SHORTCUT_STATUS_EVENT, (event) => setEntries(event.payload))
+    listen<ShortcutStatusEntry[]>(SHORTCUT_STATUS_EVENT, (event) => {
+      if (!disposed && mountedRef.current) setEntries(event.payload);
+    })
       .then((unlisten) => {
         if (disposed) unlisten();
         else stop = unlisten;
@@ -75,11 +85,13 @@ export function CompanionControlsPanel() {
 
   const runAction = async (action: ShortcutAction) => {
     const result = await invokeSafe("run_companion_action", { action });
+    if (!mountedRef.current) return;
     setMessage(result.ok ? null : `${ACTION_LABELS[action]} failed: ${result.error}`);
   };
 
   const saveShortcut = async (action: ShortcutAction, accelerator: string | null) => {
     const result = await invokeSafe<ShortcutStatusEntry[]>("set_companion_shortcut", { action, accelerator });
+    if (!mountedRef.current) return;
     if (result.ok) {
       setEntries(result.data);
       setDrafts((previous) => ({ ...previous, [action]: undefined }));
