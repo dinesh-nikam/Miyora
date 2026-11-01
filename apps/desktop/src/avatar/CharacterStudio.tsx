@@ -501,7 +501,8 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
             border: "1px solid rgba(255, 255, 255, 0.08)",
           }}
         >
-          {(["library", "customize", "import"] as StudioTab[]).map((name) => {
+          {/* Image sculpts and VRM imports cannot become the active pet in v1, so no Import tab. */}
+          {(["library", "customize"] as StudioTab[]).map((name) => {
             const isSelected = tab === name;
             return (
               <button

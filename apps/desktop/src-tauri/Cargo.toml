@@ -29,7 +29,7 @@ agentpet-adapters = { path = "../../../crates/agentpet-adapters" }
 agentpet-avatar = { path = "../../../crates/avatar" }
 agentpet-pet-engine = { path = "../../../crates/pet-engine" }
 agentpet-pet-pack = { path = "../../../crates/pet-pack" }
-agentpet-studio = { path = "../../../crates/studio" }
+agentpet-studio = { path = "../../../crates/studio", optional = true }
 chrono.workspace = true
 serde.workspace = true
 serde_json.workspace = true
@@ -44,3 +44,5 @@ windows-sys = { version = "0.61", features = ["Win32_Foundation", "Win32_Graphic
 [features]
 default = []
 dev-simulator = ["agentpet-core/dev-simulator"]
+# Hidden generic 3D Studio (cloud model generation); off in v1 builds.
+studio = ["dep:agentpet-studio"]

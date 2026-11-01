@@ -20,12 +20,16 @@ use tauri::{Emitter, Manager, State};
 
 mod companion_host;
 mod overlay_controls;
+// Generic 3D Studio (cloud model generation) is hidden in v1; build with
+// `--features studio` to include its IPC commands.
+#[cfg(feature = "studio")]
 mod studio_commands;
 use companion_host::{get_daily_moments, CompanionHost};
 use overlay_controls::{
     exit_overlay_reposition, get_companion_shortcuts, report_overlay_activity,
     run_companion_action, set_companion_shortcut,
 };
+#[cfg(feature = "studio")]
 use studio_commands::*;
 
 const STATE_TIMER_INTERVAL: Duration = Duration::from_secs(1);
@@ -1195,6 +1199,7 @@ pub fn run() {
                 #[cfg(feature = "dev-simulator")]
                 is_simulated.clone(),
             )?;
+            #[cfg(feature = "studio")]
             app.manage(open_studio(&data_dir)?);
             app.manage(AppRuntime {
                 core,
@@ -1276,25 +1281,45 @@ pub fn run() {
             create_avatar_from_image,
             import_vrm_avatar,
             delete_custom_avatar,
+            #[cfg(feature = "studio")]
             studio_overview,
+            #[cfg(feature = "studio")]
             studio_save_api_key,
+            #[cfg(feature = "studio")]
             studio_delete_api_key,
+            #[cfg(feature = "studio")]
             studio_account_balance,
+            #[cfg(feature = "studio")]
             studio_set_default_model,
+            #[cfg(feature = "studio")]
             studio_set_poll_policy,
+            #[cfg(feature = "studio")]
             studio_build_prompt,
+            #[cfg(feature = "studio")]
             studio_list_projects,
+            #[cfg(feature = "studio")]
             studio_create_project,
+            #[cfg(feature = "studio")]
             studio_list_assets,
+            #[cfg(feature = "studio")]
             studio_asset_detail,
+            #[cfg(feature = "studio")]
             studio_list_tasks,
+            #[cfg(feature = "studio")]
             studio_inspect_image,
+            #[cfg(feature = "studio")]
             studio_submit_text,
+            #[cfg(feature = "studio")]
             studio_submit_image,
+            #[cfg(feature = "studio")]
             studio_regenerate,
+            #[cfg(feature = "studio")]
             studio_resume_task,
+            #[cfg(feature = "studio")]
             studio_read_output,
+            #[cfg(feature = "studio")]
             studio_export_output,
+            #[cfg(feature = "studio")]
             studio_retopologize
         ])
         .run(tauri::generate_context!())

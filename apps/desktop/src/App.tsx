@@ -1,12 +1,10 @@
-import { useCallback, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { invokeSafe } from "./utils/ipc";
 import { open } from "@tauri-apps/plugin-dialog";
 import { CompanionRenderer, PetState, SelectedPetAnimation } from "./components/CompanionRenderer";
 import { CommandDeck, measuredWindow, quotaSummary, type ProviderReport } from "./components/CommandDeck";
-import { CharacterStudio } from "./avatar/CharacterStudio";
 import type { AvatarHud, PetPresentation, ResolvedAvatar } from "./avatar/types";
-import { StudioView } from "./studio/StudioView";
 import { saveCompanionPreferences, useCompanionPreferences, type RenderMode } from "./settings/companionPreferences";
 import { CompanionControlsPanel } from "./settings/CompanionControlsPanel";
 import { PetOverlayFrame } from "./overlay/PetOverlayFrame";
@@ -93,11 +91,24 @@ interface LedgerVerificationResult {
 
 const SNAPSHOT_POLL_INTERVAL_MS = 1_500;
 
+// The Pet Library loads on demand so the overlay and Den start without it.
+const PetLibrary = lazy(() => import("./avatar/CharacterStudio").then((module) => ({ default: module.CharacterStudio })));
+
+type AppTab = "den" | "sessions" | "companions" | "progress" | "settings";
+
+const APP_TABS: readonly { id: AppTab; label: string; icon: string }[] = [
+  { id: "den", label: "Den", icon: "🏛️" },
+  { id: "sessions", label: "Sessions", icon: "📊" },
+  { id: "companions", label: "Pet Library", icon: "✨" },
+  { id: "progress", label: "Progress", icon: "🔒" },
+  { id: "settings", label: "Settings", icon: "⚙️" },
+];
+
 export default function App() {
   const isOverlayWindow = new URLSearchParams(window.location.search).get("overlay") === "1";
 
   // Navigation State
-  const [activeTab, setActiveTab] = useState<"den" | "sessions" | "companions" | "studio" | "progress" | "settings">("den");
+  const [activeTab, setActiveTab] = useState<AppTab>("den");
   const [isCommandDeckOpen, setIsCommandDeckOpen] = useState(false);
 
   // Core Data
@@ -639,16 +650,7 @@ export default function App() {
 
           {/* Navigation Center */}
           <nav style={{ display: "flex", gap: "8px" }}>
-            {(
-              [
-                { id: "den", label: "Den", icon: "🏛️" },
-                { id: "sessions", label: "Sessions", icon: "📊" },
-                { id: "companions", label: "Companions", icon: "✨" },
-                { id: "progress", label: "Progress", icon: "🔒" },
-                { id: "studio", label: "3D Studio", icon: "🧊" },
-                { id: "settings", label: "Settings", icon: "⚙️" },
-              ] as const
-            ).map((tab) => {
+            {APP_TABS.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
                 <button
@@ -875,7 +877,6 @@ export default function App() {
           boxSizing: "border-box",
         }}
       >
-        {activeTab === "studio" && <StudioView />}
 
         {/* =========================================================
             TAB 1: DEN
@@ -1554,13 +1555,15 @@ export default function App() {
             {renderPanelError("avatar")}
             <div>
               <h2 className="display" style={{ fontSize: "clamp(32px, 5vw, 64px)", color: "#0a0a0a", margin: "0 0 8px 0" }}>
-                3D CHARACTER <span className="highlight-magenta">STUDIO</span>
+                PET <span className="highlight-magenta">LIBRARY</span>
               </h2>
               <p className="font-grotesk" style={{ fontSize: "15px", color: "#0a0a0a", fontWeight: 600, margin: "0 0 18px 0" }}>
-                Pick one of the original 3D characters, customize it, sculpt one from your own image, or import a VRM model. 3D mode renders the character you choose here.
+                Browse rigged Miyora pets by category, search by name, species, tag, or personality, preview every state, and pick your desktop companion.
               </p>
               <div className="edge-thick shadow-pop-lg studio-outer" style={{ backgroundColor: "#070c18", padding: "20px" }}>
-                <CharacterStudio liveState={snapshot.petState} hud={avatarHud} activeAvatar={avatar} onAvatarChanged={setAvatar} />
+                <Suspense fallback={<p style={{ color: "#cbd5e1" }}>Loading the Pet Library…</p>}>
+                  <PetLibrary liveState={snapshot.petState} hud={avatarHud} activeAvatar={avatar} onAvatarChanged={setAvatar} />
+                </Suspense>
               </div>
             </div>
 
@@ -2225,10 +2228,10 @@ export default function App() {
               WORKSPACE
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              {["Den", "Sessions", "Companions", "Progress", "Settings"].map((item) => (
+              {APP_TABS.map(({ id, label }) => (
                 <button
-                  key={item}
-                  onClick={() => setActiveTab(item.toLowerCase() as any)}
+                  key={id}
+                  onClick={() => setActiveTab(id)}
                   className="font-grotesk"
                   style={{
                     background: "none",
@@ -2241,7 +2244,7 @@ export default function App() {
                     cursor: "pointer",
                   }}
                 >
-                  {item}
+                  {label}
                 </button>
               ))}
             </div>
