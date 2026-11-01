@@ -1,7 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { invokeSafe } from "./utils/ipc";
-import { getCurrentWindow } from "@tauri-apps/api/window";
 import { open } from "@tauri-apps/plugin-dialog";
 import { CompanionRenderer, PetState, SelectedPetAnimation } from "./components/CompanionRenderer";
 import { CommandDeck, ProviderReport } from "./components/CommandDeck";
@@ -9,6 +8,9 @@ import { CharacterStudio } from "./avatar/CharacterStudio";
 import type { AvatarHud, ResolvedAvatar } from "./avatar/types";
 import { StudioView } from "./studio/StudioView";
 import { saveCompanionPreferences, useCompanionPreferences, type RenderMode } from "./settings/companionPreferences";
+import { CompanionControlsPanel } from "./settings/CompanionControlsPanel";
+import { PetOverlayFrame } from "./overlay/PetOverlayFrame";
+import { listen } from "@tauri-apps/api/event";
 
 interface RuntimeSnapshot {
   petState: PetState;
@@ -125,7 +127,6 @@ export default function App() {
   // UI state
   const [runtimeError, setRuntimeError] = useState<string | null>(null);
   const [panelErrors, setPanelErrors] = useState<Record<string, string | null>>({});
-  const [busy, setBusy] = useState(false);
   const [ledgerVerifying, setLedgerVerifying] = useState(false);
 
   // Poll runtime data
@@ -224,6 +225,23 @@ export default function App() {
       void loadPacksData();
     }
   }, [isOverlayWindow, loadPacksData]);
+
+  // The tray's "Open Command Deck" shows this window, then asks it to open the deck.
+  useEffect(() => {
+    if (isOverlayWindow) return;
+    let stop: (() => void) | undefined;
+    let disposed = false;
+    listen("open-command-deck", () => setIsCommandDeckOpen(true))
+      .then((unlisten) => {
+        if (disposed) unlisten();
+        else stop = unlisten;
+      })
+      .catch((error: unknown) => console.error("[App] command deck listener unavailable:", error));
+    return () => {
+      disposed = true;
+      stop?.();
+    };
+  }, [isOverlayWindow]);
 
   // Load tab-specific data
   const loadSessionsData = useCallback(async () => {
@@ -387,22 +405,6 @@ export default function App() {
     [refreshCoreData]
   );
 
-  const handleTogglePause = useCallback(async () => {
-    setBusy(true);
-    try {
-      const updated = await invokeSafe<RuntimeSnapshot>("toggle_pet_pause");
-      if (updated.ok) {
-        setSnapshot(updated.data);
-      } else {
-        setRuntimeError(`Toggle pause failed: ${updated.error}`);
-      }
-    } catch (err: unknown) {
-      setRuntimeError(String(err));
-    } finally {
-      setBusy(false);
-    }
-  }, []);
-
   const handleImportPack = useCallback(async () => {
     try {
       const selected = await open({
@@ -443,150 +445,13 @@ export default function App() {
     void saveCompanionPreferences({ soundMuted: !soundMuted });
   };
 
-  const handleNextPet = useCallback(async () => {
-    if (installedPacks.length <= 1) return;
-    const currentId = snapshot.selectedPetId;
-    const currentIndex = installedPacks.findIndex(
-      (p) => p.selectionId === currentId || p.id === currentId
-    );
-    const nextIndex = (currentIndex + 1) % installedPacks.length;
-    const nextPack = installedPacks[nextIndex];
-    if (nextPack) {
-      await handleSelectPet(nextPack.selectionId);
-    }
-  }, [installedPacks, snapshot.selectedPetId, handleSelectPet]);
-
-  const handleWakePet = useCallback(async () => {
-    await refreshCoreData();
-  }, [refreshCoreData]);
-
   // -------------------------------------------------------------
   // RENDER: Overlay Window
   // -------------------------------------------------------------
+  // Pet only: controls live in the tray, global shortcuts, and Settings.
   if (isOverlayWindow) {
     return (
-      <main
-        className="agentpet-overlay-window"
-        style={{
-          width: "100vw",
-          height: "100vh",
-          backgroundColor: "transparent",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "6px",
-          boxSizing: "border-box",
-          overflow: "hidden",
-        }}
-      >
-        {/* Overlay Sleek Floating Organic Handle (No square box!) */}
-        <div
-          style={{
-            width: "calc(100% - 12px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            background: "rgba(15, 23, 42, 0.88)",
-            border: "1px solid rgba(255, 255, 255, 0.16)",
-            borderRadius: "20px",
-            padding: "5px 12px",
-            cursor: "grab",
-            fontSize: "10.5px",
-            color: "#f8fafc",
-            boxSizing: "border-box",
-            backdropFilter: "blur(14px)",
-            boxShadow: "0 6px 20px rgba(0, 0, 0, 0.35)",
-            transition: "all 0.2s ease",
-          }}
-          onMouseDown={() => {
-            void getCurrentWindow()
-              .startDragging()
-              .catch((err) => {
-                setRuntimeError(`Failed to drag window: ${err}`);
-              });
-          }}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
-            <span style={{ fontSize: "12px" }}>🐾</span>
-            <span style={{ fontWeight: 800, color: "#f8fafc", letterSpacing: "0.4px" }}>
-              {activePetName} {isSimulated ? "· SIM" : ""}
-            </span>
-          </div>
-          <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
-            <button
-              onClick={toggleSound}
-              aria-label={soundMuted ? "Unmute sounds" : "Mute sounds"}
-              title={soundMuted ? "Unmute Sounds" : "Mute Sounds"}
-              style={{
-                background: soundMuted ? "rgba(255, 255, 255, 0.08)" : "rgba(250, 204, 21, 0.22)",
-                border: "1px solid rgba(255, 255, 255, 0.15)",
-                borderRadius: "12px",
-                color: soundMuted ? "#94a3b8" : "#facc15",
-                fontSize: "11px",
-                padding: "2px 6px",
-                cursor: "pointer",
-                fontWeight: 700,
-              }}
-            >
-              {soundMuted ? "🔇" : "🔊"}
-            </button>
-            <button
-              onClick={() => setIsCommandDeckOpen(true)}
-              aria-label="Open Command Deck"
-              title="Open Command Deck"
-              style={{
-                background: "rgba(56, 189, 248, 0.2)",
-                border: "1px solid rgba(56, 189, 248, 0.4)",
-                borderRadius: "12px",
-                color: "#38bdf8",
-                fontSize: "11px",
-                padding: "2px 7px",
-                cursor: "pointer",
-                fontWeight: 800,
-              }}
-            >
-              ⚡
-            </button>
-            <button
-              onClick={handleTogglePause}
-              disabled={busy}
-              aria-label={snapshot.petState === "paused" ? "Resume companion" : "Pause companion"}
-              title={snapshot.petState === "paused" ? "Resume" : "Pause"}
-              style={{
-                background: "rgba(168, 85, 247, 0.2)",
-                border: "1px solid rgba(168, 85, 247, 0.4)",
-                borderRadius: "12px",
-                color: "#c084fc",
-                fontSize: "10px",
-                padding: "2px 7px",
-                cursor: "pointer",
-                fontWeight: 800,
-              }}
-            >
-              {snapshot.petState === "paused" ? "▶" : "Ⅱ"}
-            </button>
-            <button
-              onClick={() => void getCurrentWindow().hide()}
-              aria-label="Hide overlay window"
-              title="Hide Overlay"
-              style={{
-                background: "rgba(244, 63, 94, 0.2)",
-                border: "1px solid rgba(244, 63, 94, 0.4)",
-                borderRadius: "12px",
-                color: "#fb7185",
-                fontSize: "11px",
-                padding: "2px 7px",
-                cursor: "pointer",
-                fontWeight: 800,
-              }}
-            >
-              ×
-            </button>
-          </div>
-        </div>
-
-        {/* Center Companion Stage with Unified Status & Controls */}
+      <PetOverlayFrame>
         <CompanionRenderer
           state={snapshot.petState}
           animation={selectedAnimation}
@@ -596,30 +461,11 @@ export default function App() {
           quotaProvenance={quotaProvenance}
           size={180}
           mode={renderMode}
-          onModeToggle={setRenderMode}
-          interactive={true}
-          onDoubleClick={() => setIsCommandDeckOpen(true)}
-          onNextPet={handleNextPet}
-          onWakePet={handleWakePet}
+          interactive={false}
+          bare
           onError={setRuntimeError}
         />
-
-        {/* Command Deck Popover */}
-        <CommandDeck
-          isOpen={isCommandDeckOpen}
-          onClose={() => setIsCommandDeckOpen(false)}
-          providers={providers}
-          activePetName={activePetName}
-          activeState={snapshot.petState}
-          isSimulated={isSimulated}
-          onToggleSimulated={handleToggleSimulated}
-          onSelectPet={handleSelectPet}
-          installedPacks={installedPacks}
-          onVerifyLedger={handleVerifyLedger}
-          selectedPetId={snapshot.selectedPetId}
-          ledgerVerification={ledgerVerification}
-        />
-      </main>
+      </PetOverlayFrame>
     );
   }
 
@@ -2079,6 +1925,8 @@ export default function App() {
         {activeTab === "settings" && (
           <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
             {renderPanelError("settings")}
+
+            <CompanionControlsPanel />
 
             {/* Simulation Controls (DEV ONLY) */}
             {import.meta.env.DEV && (

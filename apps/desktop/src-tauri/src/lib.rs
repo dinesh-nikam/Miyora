@@ -8,15 +8,19 @@ use std::{
 use agentpet_avatar::CharacterSpec;
 use agentpet_core::{
     AchievementSummary, AgentSessionSummary, AvatarCatalogEntry, AvatarSource,
-    CompanionPreferences, Core, CustomAvatarSummary, DesktopPosition, EventType,
-    InstalledPetPackSummary, LegacyCompanionSettings, LegacyImportOutcome, OverlayPlacement,
-    PetEvent, ProgressionSnapshot, ResolvedAvatar, RuntimeSnapshot, XpTransaction,
+    CompanionPreferences, Core, CustomAvatarSummary, DesktopPosition, InstalledPetPackSummary,
+    LegacyCompanionSettings, LegacyImportOutcome, OverlayPlacement, ProgressionSnapshot,
+    ResolvedAvatar, RuntimeSnapshot, XpTransaction,
 };
-use agentpet_pet_engine::PetState;
 use agentpet_pet_pack::PetPackManifest;
 use tauri::{Emitter, Manager, State};
 
+mod overlay_controls;
 mod studio_commands;
+use overlay_controls::{
+    exit_overlay_reposition, get_companion_shortcuts, report_overlay_activity,
+    run_companion_action, set_companion_shortcut,
+};
 use studio_commands::*;
 
 const STATE_TIMER_INTERVAL: Duration = Duration::from_secs(1);
@@ -141,27 +145,6 @@ fn require_app_window(window: &tauri::WebviewWindow) -> Result<(), String> {
     } else {
         Err("WINDOW_PERMISSION_DENIED: this action is available only in application windows".into())
     }
-}
-
-#[tauri::command]
-fn toggle_pet_pause(
-    runtime: State<'_, AppRuntime>,
-    window: tauri::WebviewWindow,
-) -> Result<RuntimeSnapshot, String> {
-    require_overlay_window(&window)?;
-    let core = runtime.active_core();
-    let snapshot = core
-        .snapshot()
-        .map_err(|error| format!("RUNTIME_READ_FAILED: {error}"))?;
-    let event_type = if snapshot.pet_state == PetState::Paused {
-        EventType::UserResumed
-    } else {
-        EventType::UserPaused
-    };
-    core.accept_event(&PetEvent::new(event_type, "desktop_overlay"))
-        .map_err(|error| format!("PET_INTERACTION_FAILED: {error}"))?;
-    core.snapshot()
-        .map_err(|error| format!("RUNTIME_READ_FAILED: {error}"))
 }
 
 #[tauri::command]
@@ -948,6 +931,7 @@ fn simulate_agent_event(
     require_main_window(&window)?;
     #[cfg(feature = "dev-simulator")]
     {
+        use agentpet_core::{EventType, PetEvent};
         let parsed_type = match event_type.as_str() {
             "started" => EventType::AgentStarted,
             "working" => EventType::AgentWorking,
@@ -1205,6 +1189,11 @@ pub fn run() {
     let (position_sender, position_receiver) = mpsc::channel();
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
+        .plugin(
+            tauri_plugin_global_shortcut::Builder::new()
+                .with_handler(overlay_controls::handle_shortcut)
+                .build(),
+        )
         .setup(|app| {
             let data_dir = app.path().app_data_dir()?;
             let core = Core::open(&data_dir)?;
@@ -1231,6 +1220,11 @@ pub fn run() {
             .map_err(std::io::Error::other)?;
             run_position_writer(core.clone(), overlay_window.clone(), position_receiver)
                 .map_err(std::io::Error::other)?;
+            app.manage(overlay_controls::OverlayControl::default());
+            overlay_controls::register_saved_shortcuts(app.handle(), &core.shortcut_bindings()?);
+            overlay_controls::build_tray(app.handle())?;
+            overlay_controls::enter_click_through(app.handle()).map_err(std::io::Error::other)?;
+            overlay_controls::spawn_reposition_watcher(app.handle().clone())?;
             run_state_timer(
                 core.clone(),
                 #[cfg(feature = "dev-simulator")]
@@ -1256,14 +1250,22 @@ pub fn run() {
                 .spawn(move || seed_starter_packs(&startup_core, &startup_pet_library))?;
             Ok(())
         })
-        .on_window_event(move |window, event| {
-            if window.label() == "pet-overlay" {
-                if let tauri::WindowEvent::Moved(position) = event {
-                    if position_sender.send(*position).is_err() {
-                        eprintln!("AgentPet position writer is unavailable");
-                    }
+        .on_window_event(move |window, event| match (window.label(), event) {
+            (overlay_controls::OVERLAY_LABEL, tauri::WindowEvent::Moved(position)) => {
+                overlay_controls::record_activity(window.app_handle());
+                if position_sender.send(*position).is_err() {
+                    eprintln!("AgentPet position writer is unavailable");
                 }
             }
+            // The tray keeps the app alive; closing the main window hides it so
+            // "Open Command Deck" can bring it back. Quit lives in the tray.
+            ("main", tauri::WindowEvent::CloseRequested { api, .. }) => {
+                api.prevent_close();
+                if let Err(error) = window.hide() {
+                    eprintln!("AgentPet could not hide the main window: {error}");
+                }
+            }
+            _ => {}
         })
         .invoke_handler(tauri::generate_handler![
             get_runtime_snapshot,
@@ -1278,10 +1280,14 @@ pub fn run() {
             create_pet_from_image,
             select_pet,
             show_pet_overlay,
-            toggle_pet_pause,
             get_companion_preferences,
             save_companion_preferences,
             import_legacy_companion_settings,
+            get_companion_shortcuts,
+            set_companion_shortcut,
+            run_companion_action,
+            report_overlay_activity,
+            exit_overlay_reposition,
             verify_ledger,
             get_real_events,
             get_providers_status,

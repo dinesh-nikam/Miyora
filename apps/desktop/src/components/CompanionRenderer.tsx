@@ -57,6 +57,8 @@ export interface CompanionRendererProps {
   quotaProvenance?: string;
   size?: number;
   interactive?: boolean;
+  /** Pet only, for the desktop overlay: no speech, popovers, reminders, or controls. */
+  bare?: boolean;
   mode?: "3d" | "2d";
   onModeToggle?: (mode: "3d" | "2d") => void;
   onDoubleClick?: () => void;
@@ -228,6 +230,7 @@ export function CompanionRenderer({
   hud = null,
   size = 200,
   interactive = true,
+  bare = false,
   mode,
   onModeToggle,
   onDoubleClick,
@@ -640,6 +643,7 @@ export function CompanionRenderer({
 
   // Periodic wellness check-ins
   useEffect(() => {
+    if (bare) return;
     const timer = setInterval(() => {
       const reminders = [
         "💧 Water Break: Time for a refreshing sip, Chief!",
@@ -651,7 +655,7 @@ export function CompanionRenderer({
       playChime("care");
     }, 180000);
     return () => clearInterval(timer);
-  }, []);
+  }, [bare]);
 
   // User Customization Persistence
   const saveNickname = (name: string) => {
@@ -924,7 +928,7 @@ export function CompanionRenderer({
       }}
     >
       {/* 1. Sleek In-Bounds Floating Speech Bubble with Speech Tail (No square box!) */}
-      {speechVisible && activeSpeech && (
+      {!bare && speechVisible && activeSpeech && (
         <div
           className="companion-speech-bubble"
           onClick={handleCycleThought}
@@ -996,7 +1000,7 @@ export function CompanionRenderer({
       )}
 
       {/* Wellness Human Care Popover */}
-      {wellnessAlert && (
+      {!bare && wellnessAlert && (
         <div
           onClick={(e) => {
             e.stopPropagation();
@@ -1031,11 +1035,11 @@ export function CompanionRenderer({
       {/* 2. Living Companion Character Stage with Pointer Tilt & Organic Floating */}
       <div
         ref={stageBoxRef}
-        onClick={handlePet}
+        onClick={interactive ? handlePet : undefined}
         onPointerMove={interactive ? handleStagePointerMove : undefined}
         onPointerLeave={interactive ? handleStagePointerLeave : undefined}
-        aria-label="Companion stage — click to pet and bond"
-        role="button"
+        aria-label={interactive ? "Companion stage — click to pet and bond" : undefined}
+        role={interactive ? "button" : undefined}
         tabIndex={interactive ? 0 : -1}
         onKeyDown={(e) => { if (interactive && (e.key === 'Enter' || e.key === ' ')) handlePet(); }}
         style={{
@@ -1260,6 +1264,7 @@ export function CompanionRenderer({
       </div>
 
       {/* 3. Living AgentPet Unified Bottom Capsule & Customizer (Rounded & Organic!) */}
+      {!bare && (
       <div
         className="companion-unified-capsule"
         style={{
@@ -1656,6 +1661,7 @@ export function CompanionRenderer({
           )}
         </div>
       </div>
+      )}
 
       {/* Global CSS keyframes for organic companion movements */}
       <style>{`

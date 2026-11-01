@@ -32,8 +32,9 @@ agentpet-pet-pack = { path = "../../../crates/pet-pack" }
 agentpet-studio = { path = "../../../crates/studio" }
 serde.workspace = true
 serde_json.workspace = true
-tauri = { version = "2", features = [] }
+tauri = { version = "2", features = ["tray-icon"] }
 tauri-plugin-dialog = "2"
+tauri-plugin-global-shortcut = "2"
 
 [features]
 default = []

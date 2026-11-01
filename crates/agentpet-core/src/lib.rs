@@ -18,6 +18,7 @@ use uuid::Uuid;
 
 mod avatars;
 mod companion;
+mod overlay_control;
 
 pub use avatars::{
     AvatarCatalogEntry, AvatarKind, AvatarSelection, AvatarSource, CustomAvatarSummary,
@@ -26,6 +27,10 @@ pub use avatars::{
 pub use companion::{
     CompanionPreferences, CompanionVibe, LegacyCompanionSettings, LegacyImportOutcome,
     OverlayPlacement, RenderMode,
+};
+pub use overlay_control::{
+    normalize_accelerator, RepositionSession, ShortcutAction, ShortcutBindings,
+    REPOSITION_HARD_LIMIT, REPOSITION_IDLE_LIMIT,
 };
 
 const DATABASE_FILE: &str = "agentpet.sqlite3";
@@ -452,6 +457,8 @@ pub enum CoreError {
     Backup(String),
     #[error("companion preferences are invalid: {0}")]
     InvalidCompanionPreferences(String),
+    #[error("shortcut is invalid: {0}")]
+    InvalidShortcut(String),
 }
 
 #[derive(Clone)]
