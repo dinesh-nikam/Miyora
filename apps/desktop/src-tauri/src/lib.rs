@@ -197,6 +197,7 @@ struct SelectedPetAnimation {
     frames: Vec<SpriteFrame>,
     image_data_url: String,
     personality: Option<agentpet_pet_pack::PetPersonality>,
+    animation_kind: Option<String>,
 }
 
 #[tauri::command]
@@ -282,6 +283,7 @@ fn get_selected_pet_animation(
             base64::Engine::encode(&base64::engine::general_purpose::STANDARD, bytes)
         ),
         personality: manifest.personality,
+        animation_kind: manifest.animation,
     }))
 }
 

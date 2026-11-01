@@ -41,6 +41,7 @@ export interface SelectedPetAnimation {
   frames: SpriteFrame[];
   imageDataUrl: string;
   personality?: CompanionPersonality;
+  animationKind?: "animated" | "static" | "partial";
 }
 
 export interface QuotaWindow {
@@ -676,7 +677,7 @@ export function CompanionRenderer({
 
   // Frame timing loop
   useEffect(() => {
-    if (!animation || animation.frames.length <= 1) {
+    if (!animation || animation.frames.length <= 1 || animation.animationKind === "static") {
       setFrameIndex(0);
       return;
     }
@@ -1045,6 +1046,18 @@ export function CompanionRenderer({
               animation:
                 isSquishing || isEating
                   ? "none"
+                  : animation?.animationKind === "static"
+                  ? state === "working"
+                    ? "companionPulse 1.8s ease-in-out infinite"
+                    : state === "thinking"
+                    ? "companionSway 2.4s ease-in-out infinite"
+                    : state === "success" || state === "celebrating" || state === "level_up" || state === "achievement"
+                    ? "companionBounce 0.8s ease-in-out infinite"
+                    : state === "error"
+                    ? "companionShake 0.4s ease-in-out"
+                    : state === "sleeping"
+                    ? "companionSleep 4s ease-in-out infinite"
+                    : "companionBreathe 3.8s ease-in-out infinite"
                   : state === "sleeping"
                   ? "companionSleep 4s ease-in-out infinite"
                   : "companionBreathe 3.8s ease-in-out infinite",
@@ -1482,6 +1495,44 @@ export function CompanionRenderer({
           }
           100% {
             transform: translateY(0px) scale(1, 1);
+          }
+        }
+        @keyframes companionPulse {
+          0%, 100% {
+            transform: scale(1, 1);
+          }
+          50% {
+            transform: scale(1.05, 1.05);
+          }
+        }
+        @keyframes companionSway {
+          0%, 100% {
+            transform: rotate(0deg);
+          }
+          25% {
+            transform: rotate(-4deg);
+          }
+          75% {
+            transform: rotate(4deg);
+          }
+        }
+        @keyframes companionBounce {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-14px);
+          }
+        }
+        @keyframes companionShake {
+          0%, 100% {
+            transform: translateX(0);
+          }
+          20%, 60% {
+            transform: translateX(-6px);
+          }
+          40%, 80% {
+            transform: translateX(6px);
           }
         }
         @keyframes companionSleep {
