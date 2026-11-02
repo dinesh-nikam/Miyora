@@ -826,13 +826,18 @@ fn validate_relative_path(value: &str) -> Result<(), PetPackError> {
 /// Guards against parent traversal (`..`), absolute paths, forbidden characters,
 /// and symlink / junction escapes beyond `root`. Normalizes Windows verbatim and drive path
 /// representations using `dunce::canonicalize`.
-pub fn sanitize_pack_asset_path(root: &Path, relative_asset: &str) -> Result<PathBuf, PetPackError> {
+pub fn sanitize_pack_asset_path(
+    root: &Path,
+    relative_asset: &str,
+) -> Result<PathBuf, PetPackError> {
     validate_relative_path(relative_asset)?;
-    let root_canonical = dunce::canonicalize(root)
-        .map_err(|error| PetPackError::Invalid(format!("failed to canonicalize pack root: {error}")))?;
+    let root_canonical = dunce::canonicalize(root).map_err(|error| {
+        PetPackError::Invalid(format!("failed to canonicalize pack root: {error}"))
+    })?;
     let candidate = root.join(relative_asset);
-    let asset_canonical = dunce::canonicalize(&candidate)
-        .map_err(|error| PetPackError::Invalid(format!("asset path not found or invalid: {error}")))?;
+    let asset_canonical = dunce::canonicalize(&candidate).map_err(|error| {
+        PetPackError::Invalid(format!("asset path not found or invalid: {error}"))
+    })?;
 
     if !path_starts_with(&asset_canonical, &root_canonical) {
         return Err(PetPackError::Invalid(

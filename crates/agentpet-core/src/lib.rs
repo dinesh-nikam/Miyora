@@ -2703,43 +2703,63 @@ mod tests {
 
         // PetInteracted triggers Celebrating
         core.pet_interact("desktop").expect("interact succeeds");
-        assert_eq!(core.snapshot().expect("snapshot").pet_state, PetState::Celebrating);
+        assert_eq!(
+            core.snapshot().expect("snapshot").pet_state,
+            PetState::Celebrating
+        );
 
         // PetFed triggers Eating
         core.pet_feed("desktop").expect("feed succeeds");
-        assert_eq!(core.snapshot().expect("snapshot").pet_state, PetState::Eating);
+        assert_eq!(
+            core.snapshot().expect("snapshot").pet_state,
+            PetState::Eating
+        );
 
         // Eating expires to Idle
         let later = Utc::now() + chrono::Duration::seconds(10);
-        assert_eq!(core.advance_state_timers_at(later).expect("timer advances"), Some(PetState::Idle));
+        assert_eq!(
+            core.advance_state_timers_at(later).expect("timer advances"),
+            Some(PetState::Idle)
+        );
 
         // Start session that levels up
         core.set_progression_rules(ProgressionRules {
             xp_per_completed_session: 100,
             base_xp_per_level: 100,
             level_xp_increment: 200,
-        }).expect("rules");
+        })
+        .expect("rules");
         core.start_session("s1", "agent", None).expect("start");
-        core.finish_session("s1", SessionOutcome::Completed, Some(0), 10).expect("finish");
-        assert_eq!(core.snapshot().expect("snapshot").pet_state, PetState::LevelUp);
+        core.finish_session("s1", SessionOutcome::Completed, Some(0), 10)
+            .expect("finish");
+        assert_eq!(
+            core.snapshot().expect("snapshot").pet_state,
+            PetState::LevelUp
+        );
 
         // While LevelUp is active, another session finishes successfully -> queued!
         core.start_session("s2", "agent", None).expect("start s2");
-        core.finish_session("s2", SessionOutcome::Completed, Some(0), 10).expect("finish s2");
+        core.finish_session("s2", SessionOutcome::Completed, Some(0), 10)
+            .expect("finish s2");
         // State remains LevelUp
-        assert_eq!(core.snapshot().expect("snapshot").pet_state, PetState::LevelUp);
+        assert_eq!(
+            core.snapshot().expect("snapshot").pet_state,
+            PetState::LevelUp
+        );
 
         // When LevelUp expires, the queued reaction (Success) plays!
         let later_level_up = Utc::now() + chrono::Duration::seconds(10);
         assert_eq!(
-            core.advance_state_timers_at(later_level_up).expect("level up expires to queued reaction"),
+            core.advance_state_timers_at(later_level_up)
+                .expect("level up expires to queued reaction"),
             Some(PetState::Success)
         );
 
         // Success expires to resting (Idle)
         let later_success = later_level_up + chrono::Duration::seconds(10);
         assert_eq!(
-            core.advance_state_timers_at(later_success).expect("success expires to idle"),
+            core.advance_state_timers_at(later_success)
+                .expect("success expires to idle"),
             Some(PetState::Idle)
         );
     }

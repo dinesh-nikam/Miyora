@@ -233,5 +233,22 @@
     "companion",
     "devotional",
     "radha"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#e11d48",
+    "icon": "🌸",
+    "treatName": "Peda",
+    "treatEmoji": "🍬",
+    "feedReaction": "Sweet Mathura peda! Luminous warmth fills my heart! 🍬🌸",
+    "wakeReaction": "The Yamuna whispers morning greetings. Let us create beauty! 🌸✨",
+    "petReaction": "May your coding day be touched with grace and sweet joy. 🌸💖",
+    "dialogue": {
+      "idle": "Holding a blooming lotus. Take a deep, peaceful breath. 🌸",
+      "working": "Pouring unconditioned devotion into every line of code! 🌸⚡",
+      "thinking": "Gazing into the reflection of the stream, seeking clarity... 🤔",
+      "success": "Radiant blossom! The entire system shines with elegance! 🌸🎉",
+      "error": "A momentary ripple. Softness and patience will heal it. 🌸✨",
+      "sleeping": "Zzz... dreaming amidst fragrant jasmine and lotus blooms... 🌙"
+    }
+  }
 }

@@ -351,7 +351,10 @@ pub fn spawn_ipc_server(
         std::thread::Builder::new()
             .name("agentpet-ipc-server".into())
             .spawn(move || {
-                let rt = match tokio::runtime::Builder::new_current_thread().enable_all().build() {
+                let rt = match tokio::runtime::Builder::new_current_thread()
+                    .enable_all()
+                    .build()
+                {
                     Ok(rt) => rt,
                     Err(e) => {
                         eprintln!("Failed to create tokio runtime for IPC server: {e}");
@@ -379,21 +382,37 @@ pub async fn send_event_via_ipc(
 ) -> Result<HookAck, IpcError> {
     let mut conn = tokio::time::timeout(timeout_duration, agentpet_ipc::connect(endpoint, secret))
         .await
-        .map_err(|_| IpcError::TransportUnavailable(std::io::Error::new(std::io::ErrorKind::TimedOut, "IPC connect timed out")))?
+        .map_err(|_| {
+            IpcError::TransportUnavailable(std::io::Error::new(
+                std::io::ErrorKind::TimedOut,
+                "IPC connect timed out",
+            ))
+        })?
         .map_err(|e| IpcError::TransportUnavailable(std::io::Error::other(e.to_string())))?;
 
     let envelope = submit_envelope(event.clone());
-    let frame = serde_json::to_vec(&envelope)
-        .map_err(|_| IpcError::MalformedFrame { reason: "serialization failed" })?;
+    let frame = serde_json::to_vec(&envelope).map_err(|_| IpcError::MalformedFrame {
+        reason: "serialization failed",
+    })?;
 
     tokio::time::timeout(timeout_duration, conn.write_frame(&frame))
         .await
-        .map_err(|_| IpcError::TransportUnavailable(std::io::Error::new(std::io::ErrorKind::TimedOut, "IPC write timed out")))?
+        .map_err(|_| {
+            IpcError::TransportUnavailable(std::io::Error::new(
+                std::io::ErrorKind::TimedOut,
+                "IPC write timed out",
+            ))
+        })?
         .map_err(|e| IpcError::TransportUnavailable(std::io::Error::other(e.to_string())))?;
 
     let ack: HookAck = tokio::time::timeout(timeout_duration, conn.read_json())
         .await
-        .map_err(|_| IpcError::TransportUnavailable(std::io::Error::new(std::io::ErrorKind::TimedOut, "IPC read timed out")))?
+        .map_err(|_| {
+            IpcError::TransportUnavailable(std::io::Error::new(
+                std::io::ErrorKind::TimedOut,
+                "IPC read timed out",
+            ))
+        })?
         .map_err(|e| IpcError::TransportUnavailable(std::io::Error::other(e.to_string())))?;
 
     Ok(ack)
@@ -410,7 +429,12 @@ pub fn send_event_sync(
         .enable_all()
         .build()
         .map_err(|e| IpcError::TransportUnavailable(std::io::Error::other(e)))?;
-    rt.block_on(send_event_via_ipc(endpoint, secret, event, timeout_duration))
+    rt.block_on(send_event_via_ipc(
+        endpoint,
+        secret,
+        event,
+        timeout_duration,
+    ))
 }
 
 /// Dispatches an event to the daemon over IPC, falling back to direct SQLite when offline.
@@ -419,8 +443,15 @@ pub fn dispatch_event_with_fallback(
     event: &NormalizedEvent,
 ) -> Result<HookAck, CoreError> {
     if let Ok(endpoint) = Endpoint::resolve(data_dir) {
-        if let Ok(secret) = agentpet_ipc::load_or_create_secret(&agentpet_ipc::secret_path(data_dir)) {
-            if let Ok(ack) = send_event_sync(&endpoint, secret.as_bytes(), event, Duration::from_millis(500)) {
+        if let Ok(secret) =
+            agentpet_ipc::load_or_create_secret(&agentpet_ipc::secret_path(data_dir))
+        {
+            if let Ok(ack) = send_event_sync(
+                &endpoint,
+                secret.as_bytes(),
+                event,
+                Duration::from_millis(500),
+            ) {
                 if ack.accepted {
                     return Ok(ack);
                 }
@@ -497,7 +528,8 @@ mod tests {
         let temp_dir = tempfile::tempdir().expect("tempdir");
         let core = Core::open(temp_dir.path()).expect("core");
         #[cfg(windows)]
-        let endpoint = Endpoint::NamedPipe(format!(r"\\.\pipe\test-pipe-live-{}", uuid::Uuid::new_v4()));
+        let endpoint =
+            Endpoint::NamedPipe(format!(r"\\.\pipe\test-pipe-live-{}", uuid::Uuid::new_v4()));
         #[cfg(unix)]
         let endpoint = Endpoint::UnixSocket(temp_dir.path().join("test_live.sock"));
 
@@ -528,8 +560,13 @@ mod tests {
             session_id: Some("session-live-1".into()),
             project_path: None,
         };
-        let ack2 = send_event_sync(&endpoint, secret.as_bytes(), &finish, Duration::from_secs(5))
-            .expect("send finish via ipc");
+        let ack2 = send_event_sync(
+            &endpoint,
+            secret.as_bytes(),
+            &finish,
+            Duration::from_secs(5),
+        )
+        .expect("send finish via ipc");
         assert!(ack2.accepted);
 
         let snap2 = core.snapshot().expect("snapshot");
@@ -550,8 +587,7 @@ mod tests {
         };
 
         // No IPC server running on temp_dir
-        let ack = dispatch_event_with_fallback(temp_dir.path(), &event)
-            .expect("fallback succeeds");
+        let ack = dispatch_event_with_fallback(temp_dir.path(), &event).expect("fallback succeeds");
         assert!(ack.accepted);
 
         let core = Core::open(temp_dir.path()).expect("core");
@@ -633,7 +669,10 @@ mod tests {
         handle.shutdown();
 
         let verification = core.verify_ledger().expect("ledger verifies");
-        assert!(verification.is_valid, "ledger must remain valid with hash chains intact");
+        assert!(
+            verification.is_valid,
+            "ledger must remain valid with hash chains intact"
+        );
         assert!(
             verification.total_entries > 0,
             "transactions must have been written"

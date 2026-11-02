@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "mikasa"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#991b1b",
+    "icon": "🧣",
+    "treatName": "Bread",
+    "treatEmoji": "🥖",
+    "feedReaction": "Fresh warm bread. Wrapping scarf closer. Thank you. 🥖🧣",
+    "wakeReaction": "Scarf secured. I will stay by your side through every deploy. 🧣",
+    "petReaction": "As long as you are safe, Chief, no obstacle is insurmountable. 🧣💖",
+    "dialogue": {
+      "idle": "Tucking chin into red scarf. Always vigilant for threats. 🧣",
+      "working": "Thunder spears loaded! Annihilating critical CVE threats! 💥⚡",
+      "thinking": "Anticipating any danger to the main production branch... 🤔",
+      "success": "Safe. The perimeter is secure and the build stands tall. 🧣🎉",
+      "error": "Stand behind me, Chief. I will deal with this threat. ⚔️",
+      "sleeping": "Zzz... resting with hands holding the edge of her scarf... 🌙"
+    }
+  }
 }

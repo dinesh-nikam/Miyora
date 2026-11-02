@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "vegeta"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#1d4ed8",
+    "icon": "👑",
+    "treatName": "Steak",
+    "treatEmoji": "🥩",
+    "feedReaction": "Adequate tribute. Saiyan royalty acknowledges your offering. 🥩👑",
+    "wakeReaction": "Hmph. Don't fall behind. I refuse to tolerate second place. 👑",
+    "petReaction": "Tch! Do not presume familiarity! ...Hmph, acceptable. 👑✨",
+    "dialogue": {
+      "idle": "Arms folded sternly. Your commit velocity had better impress me. 👑",
+      "working": "FINAL FLASH! Vaporizing sloppy syntax from existence! ⚡💥",
+      "thinking": "Calculating optimal power levels for the microservices... 🤔",
+      "success": "Hmph! Naturally. Perfection is second nature to royalty. 👑🎉",
+      "error": "DISGRACEFUL! I will tear this defective logic apart myself! 💥",
+      "sleeping": "Zzz... arms crossed, resting in 400x gravity chamber... 🌙"
+    }
+  }
 }

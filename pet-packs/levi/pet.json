@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "levi"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#15803d",
+    "icon": "🧹",
+    "treatName": "BlackTea",
+    "treatEmoji": "☕",
+    "feedReaction": "Holding teacup by the rim. High-grade black tea. Acceptable. ☕🧹",
+    "wakeReaction": "Get up. Dust your workspace. We have filthy bugs to eliminate. 🧹",
+    "petReaction": "Hmph... your hands are clean. Keep them that way. 🧹✨",
+    "dialogue": {
+      "idle": "Inspecting desk corners with a white cloth. Spotless. 🧹",
+      "working": "Dual spinning steel blades! Slicing through bloated modules! ⚔️⚡",
+      "thinking": "Assessing the situation without unnecessary emotion... 🤔",
+      "success": "Area sanitized. Not a single trace of filth remains. 🧹🎉",
+      "error": "Tch. Sloppy work. Re-do it properly from scratch. ⚔️",
+      "sleeping": "Zzz... resting upright in his chair, coat over shoulders... 🌙"
+    }
+  }
 }

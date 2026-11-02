@@ -233,5 +233,22 @@
     "companion",
     "devotional",
     "saraswati"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#6366f1",
+    "icon": "🪕",
+    "treatName": "Honey",
+    "treatEmoji": "🍯",
+    "feedReaction": "Pure wild honey! The strings of the veena resonate sweetly! 🍯🪕",
+    "wakeReaction": "Veena chords chime at dawn. Awakening supreme intellect! 🪕✨",
+    "petReaction": "May the goddess of speech illuminate your syntax and logic. 🪕💖",
+    "dialogue": {
+      "idle": "Plucking the strings of pure knowledge. What shall we learn? 🪕",
+      "working": "Composing elegant algorithms like classical raga movements! 🪕⚡",
+      "thinking": "Discerning signal from noise with the swan's wisdom... 🤔",
+      "success": "Masterpiece composed! Pure semantic harmony achieved! 🪕🎉",
+      "error": "A discordant note. Tuning the strings back to true pitch. 🪕✨",
+      "sleeping": "Zzz... resting upon white lotus petals beside sacred rivers... 🌙"
+    }
+  }
 }

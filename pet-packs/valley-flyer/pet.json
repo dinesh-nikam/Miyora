@@ -233,5 +233,22 @@
     "companion",
     "ghibli",
     "valley-flyer"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#0891b2",
+    "icon": "🪂",
+    "treatName": "ChicoNut",
+    "treatEmoji": "🥜",
+    "feedReaction": "Rich nutrient chico nut! High-altitude stamina restored! 🥜🪂",
+    "wakeReaction": "Adjusting flight goggles! Testing wind vanes on the dunes! 🪂",
+    "petReaction": "The wind carries us together, Chief! Boundless sky ahead! 🪂✨",
+    "dialogue": {
+      "idle": "Checking glider wing tension and rudder cables. Ready to launch. 🪂",
+      "working": "Gliding smoothly over treacherous canyons of legacy code! 🪂⚡",
+      "thinking": "Reading subtle pressure gradients across the call stack... 🤔",
+      "success": "Smooth landing! Clean flight path charted without turbulence! 🪂🎉",
+      "error": "Toxic spore pocket! Pulling hard on the stick to climb! 💨",
+      "sleeping": "Zzz... hammock swaying in the breeze of the valley windmills... 🌙"
+    }
+  }
 }

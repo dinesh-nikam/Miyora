@@ -8,7 +8,8 @@ use std::{
 };
 
 use agentpet_adapters::{
-    adapter_by_id, claude_code::InstallReport, AdapterError, HookEventKind, NormalizedEvent, ADAPTERS,
+    adapter_by_id, claude_code::InstallReport, AdapterError, HookEventKind, NormalizedEvent,
+    ADAPTERS,
 };
 use agentpet_core::{default_data_directory, Core, HookInstallRecord, SessionOutcome};
 use uuid::Uuid;
@@ -1184,13 +1185,20 @@ mod tests {
         let temp_dir = tempfile::tempdir().expect("tempdir");
         let core = agentpet_core::Core::open(temp_dir.path()).expect("core");
         #[cfg(windows)]
-        let endpoint = agentpet_ipc::Endpoint::NamedPipe(format!(r"\\.\pipe\test-cli-ipc-{}", uuid::Uuid::new_v4()));
+        let endpoint = agentpet_ipc::Endpoint::NamedPipe(format!(
+            r"\\.\pipe\test-cli-ipc-{}",
+            uuid::Uuid::new_v4()
+        ));
         #[cfg(unix)]
         let endpoint = agentpet_ipc::Endpoint::UnixSocket(temp_dir.path().join("test_cli.sock"));
 
         let secret = agentpet_ipc::LocalSecret::generate().expect("secret");
-        let handle = agentpet_adapters::ipc::spawn_ipc_server(core.clone(), endpoint.clone(), secret.clone())
-            .expect("server spawned");
+        let handle = agentpet_adapters::ipc::spawn_ipc_server(
+            core.clone(),
+            endpoint.clone(),
+            secret.clone(),
+        )
+        .expect("server spawned");
         std::thread::sleep(std::time::Duration::from_millis(50));
 
         let event = agentpet_adapters::NormalizedEvent {
@@ -1201,8 +1209,13 @@ mod tests {
             project_path: None,
         };
 
-        let ack = agentpet_adapters::ipc::send_event_sync(&endpoint, secret.as_bytes(), &event, std::time::Duration::from_secs(5))
-            .expect("send via ipc");
+        let ack = agentpet_adapters::ipc::send_event_sync(
+            &endpoint,
+            secret.as_bytes(),
+            &event,
+            std::time::Duration::from_secs(5),
+        )
+        .expect("send via ipc");
         assert!(ack.accepted);
 
         let snap = core.snapshot().expect("snapshot");

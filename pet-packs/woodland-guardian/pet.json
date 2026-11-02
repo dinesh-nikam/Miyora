@@ -233,5 +233,22 @@
     "companion",
     "ghibli",
     "woodland-guardian"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#15803d",
+    "icon": "🍃",
+    "treatName": "Acorn",
+    "treatEmoji": "🌰",
+    "feedReaction": "Crunchy roasted acorn! Plump belly rumbles with deep joy! 🌰🍃",
+    "wakeReaction": "*huge yawn that shakes the leaves* Good morning, little friend! 🍃",
+    "petReaction": "*rumbling purr like distant thunder* Soft velvety antler nuzzles! 🍃💖",
+    "dialogue": {
+      "idle": "Holding giant leaf umbrella overhead. Cozy and dry under here! 🍃",
+      "working": "Shielding your focus beneath ancient, unbreakable branches! 🌳⚡",
+      "thinking": "Listening to the quiet heartbeat of the subterranean roots... 🤔",
+      "success": "ROAR of celebration! Ancient forest rejoices in full health! 🍃🎉",
+      "error": "A gust of cold rain. Step behind my broad pelt, we're safe. 🛡️",
+      "sleeping": "Zzz... snoozing deeply inside a hollow camphor tree... 🌙"
+    }
+  }
 }

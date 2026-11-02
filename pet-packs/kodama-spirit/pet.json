@@ -233,5 +233,22 @@
     "companion",
     "ghibli",
     "kodama-spirit"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#34d399",
+    "icon": "🌱",
+    "treatName": "Dewdrop",
+    "treatEmoji": "💧",
+    "feedReaction": "Pure morning dewdrop! Porcelain cheeks glow celadon green! 💧🌱",
+    "wakeReaction": "*click-clack* Head rattles with sweet joy as morning light filters down! 🌱",
+    "petReaction": "*gentle rattle* Soft warmth spreads through the moss and leaves. 🌱💖",
+    "dialogue": {
+      "idle": "*click-clack* Tilting head curiously under the lotus leaf umbrella. 🌱",
+      "working": "Gently feeding clean dependencies to tender young modules! 🌱⚡",
+      "thinking": "*head tilts 45 degrees in peaceful wonder* 🤔",
+      "success": "*happy rattle chorus* Green sprout shoots forth in full bloom! 🌿🎉",
+      "error": "Drooping gently... handing you a tiny lucky clover leaf. 🍀",
+      "sleeping": "Zzz... rocking softly on a bed of damp green forest moss... 🌙"
+    }
+  }
 }

@@ -255,24 +255,63 @@ fn sanitize(text: &str, removed: &mut bool) -> String {
 }
 
 pub const COPYRIGHT_REPLACEMENTS: &[(&str, &str)] = &[
-    ("nezuko", "original demon-inspired anime heroine, long dark hair with gradient salmon-pink tips"),
-    ("tanjiro", "original swordsman youth, dark red-tinted hair, haori mantle"),
-    ("zenitsu", "original lightning warrior youth, yellow gradient hair"),
-    ("inosuke", "original dual-wielding wild warrior, animal pelt details"),
-    ("naruto", "original spirited ninja youth, spiky blond hair, orange shinobi outfit"),
+    (
+        "nezuko",
+        "original demon-inspired anime heroine, long dark hair with gradient salmon-pink tips",
+    ),
+    (
+        "tanjiro",
+        "original swordsman youth, dark red-tinted hair, haori mantle",
+    ),
+    (
+        "zenitsu",
+        "original lightning warrior youth, yellow gradient hair",
+    ),
+    (
+        "inosuke",
+        "original dual-wielding wild warrior, animal pelt details",
+    ),
+    (
+        "naruto",
+        "original spirited ninja youth, spiky blond hair, orange shinobi outfit",
+    ),
     ("sasuke", "original cool avenger prodigy, high-collar tunic"),
-    ("goku", "original martial arts champion, wild spiky hair, orange and navy gi"),
-    ("vegeta", "original proud warrior prince, swept-up dark hair, battle armor"),
-    ("pikachu", "original electric mascot creature, golden yellow fur"),
-    ("luffy", "original adventurous sea captain, straw hat, red vest"),
+    (
+        "goku",
+        "original martial arts champion, wild spiky hair, orange and navy gi",
+    ),
+    (
+        "vegeta",
+        "original proud warrior prince, swept-up dark hair, battle armor",
+    ),
+    (
+        "pikachu",
+        "original electric mascot creature, golden yellow fur",
+    ),
+    (
+        "luffy",
+        "original adventurous sea captain, straw hat, red vest",
+    ),
     ("zoro", "original stoic swordsman, cropped moss-green hair"),
     ("sanji", "original culinary martial artist, formal suit"),
-    ("gojo", "original sorcerer, snow-white spiky hair, dark uniform"),
+    (
+        "gojo",
+        "original sorcerer, snow-white spiky hair, dark uniform",
+    ),
     ("itadori", "original athletic brawler youth, spiked hair"),
-    ("levi", "original tactical scout captain, green hooded cloak"),
+    (
+        "levi",
+        "original tactical scout captain, green hooded cloak",
+    ),
     ("mikasa", "original elite scout heroine, dark red scarf"),
-    ("anya", "original cute telepathic child, ornamental hairclips"),
-    ("frieren", "original timeless elven mage, silver twintails, traveling robe"),
+    (
+        "anya",
+        "original cute telepathic child, ornamental hairclips",
+    ),
+    (
+        "frieren",
+        "original timeless elven mage, silver twintails, traveling robe",
+    ),
     ("denji", "original wild devil hunter, relaxed shirt and tie"),
 ];
 
@@ -285,8 +324,10 @@ pub fn sanitize_franchise_names(text: &str) -> String {
         while let Some(pos) = lower[search_from..].find(franchise) {
             let abs_pos = search_from + pos;
             let end_pos = abs_pos + franchise.len();
-            let boundary_before = abs_pos == 0 || !lower.as_bytes()[abs_pos - 1].is_ascii_alphanumeric();
-            let boundary_after = end_pos >= lower.len() || !lower.as_bytes()[end_pos].is_ascii_alphanumeric();
+            let boundary_before =
+                abs_pos == 0 || !lower.as_bytes()[abs_pos - 1].is_ascii_alphanumeric();
+            let boundary_after =
+                end_pos >= lower.len() || !lower.as_bytes()[end_pos].is_ascii_alphanumeric();
             if boundary_before && boundary_after {
                 let mut new_text = String::with_capacity(replaced.len() + description.len());
                 new_text.push_str(&replaced[..abs_pos]);
@@ -487,6 +528,8 @@ mod tests {
         };
         let built = build_prompt(&intent, preset("anime-character"), &WIDE).unwrap();
         assert!(!built.prompt.to_lowercase().contains("nezuko"));
-        assert!(built.prompt.contains("original demon-inspired anime heroine"));
+        assert!(built
+            .prompt
+            .contains("original demon-inspired anime heroine"));
     }
 }

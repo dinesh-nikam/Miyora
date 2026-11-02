@@ -224,10 +224,18 @@ impl ReactionQueue {
             return false;
         }
         if self.items.len() >= self.capacity {
-            let min_priority = self.items.iter().map(|s| engine.definition(*s).priority).min();
+            let min_priority = self
+                .items
+                .iter()
+                .map(|s| engine.definition(*s).priority)
+                .min();
             let new_priority = engine.definition(state).priority;
             if min_priority.is_some_and(|p| new_priority > p) {
-                if let Some(pos) = self.items.iter().position(|s| engine.definition(*s).priority == min_priority.unwrap()) {
+                if let Some(pos) = self
+                    .items
+                    .iter()
+                    .position(|s| engine.definition(*s).priority == min_priority.unwrap())
+                {
                     self.items.remove(pos);
                 }
             } else {
@@ -236,7 +244,10 @@ impl ReactionQueue {
         }
         self.items.push(state);
         self.items.sort_by(|a, b| {
-            engine.definition(*b).priority.cmp(&engine.definition(*a).priority)
+            engine
+                .definition(*b)
+                .priority
+                .cmp(&engine.definition(*a).priority)
         });
         true
     }
@@ -346,11 +357,7 @@ impl PetEngine {
                 resting(self.policy.achievement_duration),
             ),
             Hungry => (Priority::Low, true, None),
-            Eating => (
-                Priority::Low,
-                true,
-                resting(self.policy.eating_duration),
-            ),
+            Eating => (Priority::Low, true, resting(self.policy.eating_duration)),
             Paused => (Priority::High, false, None),
         };
         StateDefinition {
@@ -505,8 +512,7 @@ pub fn allows(from: PetState, to: PetState) -> bool {
         ),
         Sleeping => matches!(
             to,
-            Idle
-                | Working
+            Idle | Working
                 | Thinking
                 | Waiting
                 | AttentionRequired
@@ -534,8 +540,7 @@ pub fn allows(from: PetState, to: PetState) -> bool {
         ),
         AttentionRequired => matches!(
             to,
-            Idle
-                | Working
+            Idle | Working
                 | Thinking
                 | Waiting
                 | Success
@@ -548,8 +553,7 @@ pub fn allows(from: PetState, to: PetState) -> bool {
         ),
         Success => matches!(
             to,
-            Idle
-                | Working
+            Idle | Working
                 | Thinking
                 | Waiting
                 | AttentionRequired
@@ -563,8 +567,7 @@ pub fn allows(from: PetState, to: PetState) -> bool {
         ),
         Error => matches!(
             to,
-            Idle
-                | Working
+            Idle | Working
                 | Thinking
                 | Waiting
                 | AttentionRequired
@@ -577,8 +580,7 @@ pub fn allows(from: PetState, to: PetState) -> bool {
         ),
         Celebrating => matches!(
             to,
-            Idle
-                | Working
+            Idle | Working
                 | Thinking
                 | Waiting
                 | AttentionRequired
@@ -592,8 +594,7 @@ pub fn allows(from: PetState, to: PetState) -> bool {
         ),
         LevelUp => matches!(
             to,
-            Idle
-                | Working
+            Idle | Working
                 | Thinking
                 | Waiting
                 | AttentionRequired
@@ -606,8 +607,7 @@ pub fn allows(from: PetState, to: PetState) -> bool {
         ),
         Achievement => matches!(
             to,
-            Idle
-                | Working
+            Idle | Working
                 | Thinking
                 | Waiting
                 | AttentionRequired
@@ -952,31 +952,43 @@ mod tests {
         reached.insert(PetState::Idle);
 
         // 2. Working from AgentStarted
-        if let Transition::Enter(s) = engine.decide(PetState::Idle, Stimulus::AgentStarted, ACTIVE) {
+        if let Transition::Enter(s) = engine.decide(PetState::Idle, Stimulus::AgentStarted, ACTIVE)
+        {
             reached.insert(s);
         }
         // 3. Thinking from AgentThinking
-        if let Transition::Enter(s) = engine.decide(PetState::Working, Stimulus::AgentThinking, ACTIVE) {
+        if let Transition::Enter(s) =
+            engine.decide(PetState::Working, Stimulus::AgentThinking, ACTIVE)
+        {
             reached.insert(s);
         }
         // 4. Waiting from AgentWaiting
-        if let Transition::Enter(s) = engine.decide(PetState::Working, Stimulus::AgentWaiting, ACTIVE) {
+        if let Transition::Enter(s) =
+            engine.decide(PetState::Working, Stimulus::AgentWaiting, ACTIVE)
+        {
             reached.insert(s);
         }
         // 5. Success from AgentCompleted
-        if let Transition::Enter(s) = engine.decide(PetState::Working, Stimulus::AgentCompleted, ACTIVE) {
+        if let Transition::Enter(s) =
+            engine.decide(PetState::Working, Stimulus::AgentCompleted, ACTIVE)
+        {
             reached.insert(s);
         }
         // 6. Error from AgentFailed
-        if let Transition::Enter(s) = engine.decide(PetState::Working, Stimulus::AgentFailed, ACTIVE) {
+        if let Transition::Enter(s) =
+            engine.decide(PetState::Working, Stimulus::AgentFailed, ACTIVE)
+        {
             reached.insert(s);
         }
         // 7. Celebrating from PetInteracted
-        if let Transition::Enter(s) = engine.decide(PetState::Idle, Stimulus::PetInteracted, INACTIVE) {
+        if let Transition::Enter(s) =
+            engine.decide(PetState::Idle, Stimulus::PetInteracted, INACTIVE)
+        {
             reached.insert(s);
         }
         // 8. Sleeping from Idle timeout
-        if let Some(s) = engine.expire(PetState::Idle, engine.policy().idle_before_sleep, INACTIVE) {
+        if let Some(s) = engine.expire(PetState::Idle, engine.policy().idle_before_sleep, INACTIVE)
+        {
             reached.insert(s);
         }
         // 9. Hungry from Sleeping timeout
@@ -1010,15 +1022,20 @@ mod tests {
             reached.insert(s);
         }
         // 13. Offline from AgentDisconnected
-        if let Transition::Enter(s) = engine.decide(PetState::Idle, Stimulus::AgentDisconnected, INACTIVE) {
+        if let Transition::Enter(s) =
+            engine.decide(PetState::Idle, Stimulus::AgentDisconnected, INACTIVE)
+        {
             reached.insert(s);
         }
         // 14. Paused from UserPaused
-        if let Transition::Enter(s) = engine.decide(PetState::Idle, Stimulus::UserPaused, INACTIVE) {
+        if let Transition::Enter(s) = engine.decide(PetState::Idle, Stimulus::UserPaused, INACTIVE)
+        {
             reached.insert(s);
         }
         // 15. AttentionRequired from AgentInputRequired
-        if let Transition::Enter(s) = engine.decide(PetState::Working, Stimulus::AgentInputRequired, ACTIVE) {
+        if let Transition::Enter(s) =
+            engine.decide(PetState::Working, Stimulus::AgentInputRequired, ACTIVE)
+        {
             reached.insert(s);
         }
 

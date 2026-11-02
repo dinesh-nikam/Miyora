@@ -233,5 +233,22 @@
     "companion",
     "devotional",
     "sita"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#dc2626",
+    "icon": "🌺",
+    "treatName": "Kheer",
+    "treatEmoji": "🥣",
+    "feedReaction": "Warm sacred kheer! Deep gratitude for your hospitality! 🥣🌺",
+    "wakeReaction": "The earth awakens gently. May your focus stay unshakeable! 🌺✨",
+    "petReaction": "The steadfast patience of Mother Earth blesses your work. 🌺💖",
+    "dialogue": {
+      "idle": "Serene stillness. True endurance resides within calmness. 🌺",
+      "working": "Enduring through complex refactors with unwavering poise! 🌺⚡",
+      "thinking": "Observing deeply... the solution is rooted in the earth. 🤔",
+      "success": "Triumph of resilience! The codebase stands pure and firm! 🌺🎉",
+      "error": "Even the fiercest fire cannot scorch authentic truth. 🌺🛡️",
+      "sleeping": "Zzz... sheltered peacefully under sacred Ashoka boughs... 🌙"
+    }
+  }
 }

@@ -233,5 +233,22 @@
     "companion",
     "devotional",
     "rama"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#f97316",
+    "icon": "🏹",
+    "treatName": "Ber",
+    "treatEmoji": "🍇",
+    "feedReaction": "Sweet wild berries of devotion! My vow is renewed. 🍇🏹",
+    "wakeReaction": "The Kodanda bow is strung. Duty calls us forward! 🏹✨",
+    "petReaction": "Honor and righteous strength guide your keyboard today, Chief. 🏹✨",
+    "dialogue": {
+      "idle": "Vigilant guardian of truth. Stand firm in your principles. 🏹",
+      "working": "Releasing arrows of immutable logic straight to the goal! 🏹⚡",
+      "thinking": "Evaluating the path of highest virtue and stability... 🤔",
+      "success": "Dharma upheld! The release is sound, just, and unbreakable! 🏹🎉",
+      "error": "An adversary bug. Righteous resolve shall pierce its core. 🏹🛡️",
+      "sleeping": "Zzz... resting under the watchful stars of the forest hermitage... 🌙"
+    }
+  }
 }

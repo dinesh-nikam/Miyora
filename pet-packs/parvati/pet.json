@@ -233,5 +233,22 @@
     "companion",
     "devotional",
     "parvati"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#059669",
+    "icon": "🏔️",
+    "treatName": "Panchamrit",
+    "treatEmoji": "🍯",
+    "feedReaction": "Sweet nectar of the mountain peaks! Nourishing grace! 🍯🏔️",
+    "wakeReaction": "Mountain morning sun shines bright. Let us nurture greatness! 🏔️✨",
+    "petReaction": "A motherly blessing of clarity and gentle inspiration. 🏔️💖",
+    "dialogue": {
+      "idle": "Standing tall like the Himalayas. Rest your tired eyes. 🏔️",
+      "working": "Nurturing brittle modules into sturdy mountain architecture! 🏔️⚡",
+      "thinking": "Channeling the timeless patience of the peaks... 🤔",
+      "success": "Golden blossom! Sturdy and serene release deployed! 🏔️🎉",
+      "error": "A rocky path is merely an invitation to climb higher. 🏔️🛡️",
+      "sleeping": "Zzz... resting in high Himalayan snow-dusted quiet... 🌙"
+    }
+  }
 }

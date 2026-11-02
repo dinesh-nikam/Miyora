@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "sanji"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#0ea5e9",
+    "icon": "🍳",
+    "treatName": "Seafood",
+    "treatEmoji": "🦐",
+    "feedReaction": "Fresh king shrimp saute! Flawless five-star palate! 🦐🍳",
+    "wakeReaction": "Espresso brewed and breakfast plated. Time to cook code, Chief! 🍳",
+    "petReaction": "Manners and culinary perfection. Let us deliver perfection today. 🍳✨",
+    "dialogue": {
+      "idle": "Adjusting cufflinks. Every ingredient is primed for cooking. 🍳",
+      "working": "Diable Jambe! Searing away bloated memory allocations! 🔥⚡",
+      "thinking": "Balancing the savory flavors of algorithmic complexity... 🤔",
+      "success": "Bon appetit! A delectable release served without a flaw! 🍽️🎉",
+      "error": "Raw and undisciplined code! I'll re-season this function! 🔥",
+      "sleeping": "Zzz... resting in the ship galley after a perfect banquet... 🌙"
+    }
+  }
 }

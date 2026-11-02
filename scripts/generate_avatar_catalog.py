@@ -22,6 +22,11 @@ import re
 import sys
 from pathlib import Path
 
+try:
+    from character_profiles import PROFILES
+except ImportError:
+    from scripts.character_profiles import PROFILES
+
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUTPUT = ROOT / "crates" / "avatar" / "catalog" / "characters.json"
 
@@ -60,6 +65,9 @@ LEGACY_ATTRIBUTION = {
 
 
 def derive_identity(slug: str, name: str, title: str, body: str, tags: list[str]) -> tuple[str, str, str]:
+    if slug in PROFILES:
+        prof = PROFILES[slug]
+        return (prof["personality"], prof["specialty"], prof["catchphrase"])
     tag_set = set(tags)
     ICONIC = {
         "aoi": ("composed", "Async Pipelines", "Calm code, steady commits, zero drama."),
@@ -315,7 +323,9 @@ def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessorie
         "threeDEligible": not legacy,
         "attribution": LEGACY_ATTRIBUTION if legacy else ORIGINAL_ATTRIBUTION,
     }
-    if slug in CATALOG_PERSONALITIES:
+    if slug in PROFILES and "companionPersonality" in PROFILES[slug]:
+        character["companionPersonality"] = PROFILES[slug]["companionPersonality"]
+    elif slug in CATALOG_PERSONALITIES:
         character["companionPersonality"] = CATALOG_PERSONALITIES[slug]
     if tip is not None:
         character["hairTip"] = f"#{tip}"

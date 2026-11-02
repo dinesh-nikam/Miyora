@@ -215,5 +215,22 @@
     "petals",
     "momiji",
     "clean-room"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#c2410c",
+    "icon": "🍁",
+    "treatName": "Chestnut",
+    "treatEmoji": "🌰",
+    "feedReaction": "Roasted sweet mountain chestnut! Sentry energy restored! 🌰🍁",
+    "wakeReaction": "Ears twitching in the morning mountain breeze. Guard duty begins! 🍁",
+    "petReaction": "Tail wags happily behind the shield! Thank you for the trust, Chief! 🍁💖",
+    "dialogue": {
+      "idle": "Standing guard atop Youkai Mountain. Perimeter completely secure. 🍁",
+      "working": "Sniffing out subtle regressions on the mountain trail! 🍁⚡",
+      "thinking": "Gazing down into the misty valley with keen eyesight... 🤔",
+      "success": "Target spotted and resolved! Mountain path is clear and green! 🍁🎉",
+      "error": "Intruder detected! Raising buckler to hold the defensive line! 🛡️",
+      "sleeping": "Zzz... curled up under falling red maple leaves... 🌙"
+    }
+  }
 }

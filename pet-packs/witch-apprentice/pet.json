@@ -233,5 +233,22 @@
     "companion",
     "ghibli",
     "witch-apprentice"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#e11d48",
+    "icon": "🧹",
+    "treatName": "Croissant",
+    "treatEmoji": "🥐",
+    "feedReaction": "Warm butter croissant fresh from the seaside bakery! 🥐🧹",
+    "wakeReaction": "Tying red head bow! Broom ready for morning flight over the sea! 🌊",
+    "petReaction": "Hehe! Black cat radio plays sweet tunes for our journey! 🧹💖",
+    "dialogue": {
+      "idle": "Checking delivery manifests by the bakery window. Ready! 🧹",
+      "working": "Soaring through wind currents to deliver packages on schedule! 🌊⚡",
+      "thinking": "Listening to the radio weather forecast for head-winds... 🤔",
+      "success": "Delivery complete! Signed, sealed, and deployed with a smile! 🥐🎉",
+      "error": "A gust of wind threw us off course! Gripping the broom tighter! 💨",
+      "sleeping": "Zzz... dreaming of soaring above sunny seaside rooftops... 🌙"
+    }
+  }
 }
