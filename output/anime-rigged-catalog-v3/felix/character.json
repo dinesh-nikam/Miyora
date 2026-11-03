@@ -25,17 +25,42 @@
     "accent": "#fbbf24"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.2,
   "tags": [
     "maker",
     "steampunk"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "tinkering",
+  "specialty": "Clockwork Micro-Optimization",
+  "catchphrase": "Greasing every gear in the runtime until execution hums.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#92400e",
+    "icon": "\u23f1\ufe0f",
+    "treatName": "GearShortbread",
+    "treatEmoji": "\ud83c\udf6a",
+    "feedReaction": "Brass-dusted butter shortbread! Spring winding at top tension! \ud83c\udf6a\u23f1\ufe0f",
+    "wakeReaction": "Adjusting brass loupe over the eye. Micro-gears in motion! \u23f1\ufe0f",
+    "petReaction": "Presenting a tiny mechanical singing bird crafted in your honor! \u23f1\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Polishing ruby watch bearings with a soft chamois cloth. \u23f1\ufe0f",
+      "working": "Shaving nanoseconds off the hot loop with brass precision! \u23f1\ufe0f\u26a1",
+      "thinking": "Listening to the click of the escapement tooth by tooth... \ud83e\udd14",
+      "success": "Perfection! Execution hums like an Swiss chronometer! \u23f1\ufe0f\ud83c\udf89",
+      "error": "Hairspring friction detected! Applying single drop of oil! \u23f1\ufe0f\u26a0\ufe0f",
+      "sleeping": "Zzz... sleeping curled beside a ticking mantel clock... \ud83c\udf19"
+    }
+  }
 }

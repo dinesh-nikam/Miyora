@@ -16,7 +16,8 @@ import sys
 import time
 
 import bpy
-from mathutils import Vector, Matrix
+from mathutils import Euler, Vector, Matrix
+import numpy as np
 
 LOG = logging.getLogger("miyora.model-author")
 MAX_TRIANGLES = 100_000
@@ -512,77 +513,106 @@ class Author:
             raise ValueError(f"Triangle budget exceeded: {tri_count}")
         self.triangles = tri_count
 
+    def motion(self, state, w):
+        """One looping pose per state at phase w in [0, 2*pi] (integer frequencies only, so frame 49 == frame 1).
+        Rotations are (pitch forward, yaw, side tilt) radians; arm goals (elbow, wrist, palm) are rest-space points
+        for the left arm that follow the posed chest; arms() mirrors them for the right arm."""
+        s = lambda k, phase=0: math.sin(k * w + phase)
+        ease = (1 - math.cos(w)) / 2
+        p = {"lift": 0, "sway": 0, "hips": (0, .03 * s(1), 0), "spine": (.012 * s(1), 0, 0), "chest": (.015 * s(2), 0, 0),
+             "neck": (0, 0, 0), "head": (.02 * s(1), .10 * s(1), .03 * s(1, 1)), "lie": False, "ground": False,
+             "arms": {sign: ((sign * .21, -.02, .98), (sign * .24, -.04 + .012 * s(1, sign), .78), (0, -.06, -1)) for sign in (1, -1)}}
+        def arms(left):
+            p["arms"] = {1: left, -1: tuple((-v[0], v[1], v[2]) for v in left)}
+        if state == "idle":
+            p.update(lift=-.006 * (1 - math.cos(2 * w)) / 2)
+        elif state == "working":
+            p.update(spine=(.06, 0, 0), chest=(.03 + .01 * s(2), 0, 0), head=(.16 + .02 * s(4), .04 * s(1), 0), hips=(0, 0, 0))
+            p["arms"] = {sign: ((sign * .27, -.08, .98), (sign * .15, -.26, 1.00 + .014 * s(4, 0 if sign > 0 else math.pi)), (0, -1, -.25)) for sign in (1, -1)}
+        elif state == "thinking":
+            p.update(hips=(0, 0, .03 * s(1)), head=(.06, .14 + .05 * s(1), .14), sway=.012 * s(1))
+            p["arms"] = {-1: ((-.30, -.08, 1.00), (-.12, -.16, 1.24 + .008 * s(2)), (.25, -.1, 1)),
+                         1: ((.24, -.06, .98), (-.04, -.19, 1.00), (-1, -.1, .2))}
+        elif state == "waiting":
+            p.update(sway=.022 * s(1), hips=(0, 0, .05 * s(1)), head=(-.02, .28 * s(1), .05 * s(1)), chest=(.01 * s(2), .06 * s(1), 0))
+            arms(((.22, .07, .98), (.10, .13, .86), (-1, .2, -.2)))
+        elif state == "success":
+            pump = (1 - math.cos(2 * w)) / 2
+            p.update(lift=.03 * pump, head=(-.10, 0, .05 * s(2)), chest=(-.05, 0, 0))
+            p["arms"] = {-1: ((-.30, -.06, 1.30), (-.24 - .04 * pump, -.08, 1.48 + .10 * pump), (0, 0, 1)),
+                         1: ((.22, -.02, .98), (.23, -.05, .78), (0, -.06, -1))}
+        elif state == "celebrating":
+            hop = (1 - math.cos(4 * w)) / 2
+            p.update(lift=.05 * hop, hips=(0, 0, .06 * s(2)), head=(-.12, 0, .10 * s(2)), chest=(-.06, 0, .05 * s(2)))
+            p["arms"] = {sign: ((sign * .34, 0, 1.36), (sign * (.40 + .07 * s(2)), -.02, 1.58), (sign * .1, -.1, 1)) for sign in (1, -1)}
+        elif state == "level_up":
+            p.update(lift=.045 * ease, head=(-.22 * ease, 0, 0), chest=(-.10 * ease, 0, 0), spine=(-.04 * ease, 0, 0))
+            p["arms"] = {sign: ((sign * (.21 + .08 * ease), -.02, .98 + .40 * ease), (sign * (.24 - .08 * ease), -.04, .78 + .86 * ease), (0, 0, -1 + 2 * ease)) for sign in (1, -1)}
+        elif state == "achievement":
+            p.update(chest=(-.07, 0, 0), head=(-.10 + .06 * max(0, s(2)), .05 * s(1), 0), hips=(0, .04 * s(1), 0))
+            arms(((.32, .02, 1.00), (.13, -.04, .86 + .006 * s(2)), (-1, 0, -.4)))
+        elif state == "error":
+            p.update(spine=(-.05, 0, 0), head=(-.06, 0, .10 * s(5)), sway=-.01)
+            arms(((.30, -.06, 1.16), (.14, -.10, 1.38 + .01 * s(5)), (-1, 0, .3)))
+        elif state == "sleeping":
+            # ground=True: the lowest vertex is clamped to the floor per key, measured on the evaluated mesh.
+            breath = .025 * s(1)
+            if self.body in ("slime", "bird"):
+                # No foldable legs: settle in place and droop.
+                p.update(ground=True, spine=(.10, 0, 0), chest=(.08 + breath, 0, 0), head=(.30, 0, .18))
+                arms(((.21, -.06, .96), (.10, -.16, .86), (-1, -.1, -.3)))
+            else:
+                # Lie on the right side facing the viewer; garments are skinned rigidly to hips, so sitting would push hems through the floor.
+                p.update(ground=True, lie=True, lift=-.55, hips=(0, 0, 1.45), spine=(.10, 0, 0), chest=(.06 + breath, 0, 0),
+                         neck=(.05, 0, 0), head=(.15 + .02 * s(1), 0, .22))
+                arms(((.22, -.14, 1.06), (.05, -.20, 1.24), (-1, 0, .3)))
+        elif state == "hungry":
+            p.update(spine=(.10, 0, 0), chest=(.04, 0, 0), head=(.14, .06 * s(1), .08), lift=-.015 * (1 - math.cos(2 * w)) / 2)
+            arms(((.22, -.10, 1.00), (.06 + .025 * math.cos(w), -.20, .94 + .025 * s(1)), (-1, -.3, 0)))
+        elif state == "eating":
+            bite = (1 - math.cos(2 * w)) / 2
+            p.update(head=(.10 - .06 * bite + .03 * s(6), 0, 0), chest=(.03, 0, 0))
+            arms(((.24, -.12, 1.00), (.06, -.24 + .04 * bite, 1.10 + .20 * bite), (-1, -.4, .4)))
+        elif state == "offline":
+            p.update(spine=(.14, 0, 0), chest=(.06 + .02 * s(1), 0, 0), neck=(.10, 0, 0), head=(.42 + .03 * s(1), 0, .06 + .04 * s(1)), hips=(0, 0, .03 * s(1)), lift=-.02)
+            arms(((.20, -.07, .97), (.15, -.12, .78), (0, -.2, -1)))
+        elif state == "paused":
+            p.update(head=(.04, .06 * s(1), .10 + .04 * s(1)), hips=(0, 0, .04), sway=.015)
+            p["arms"] = {1: ((.27, -.12, 1.02), (-.06, -.22, 1.07 + .004 * s(2)), (-1, 0, .1)),
+                         -1: ((-.27, -.10, .99), (.08, -.17, 1.03 + .004 * s(2)), (1, 0, -.1))}
+        elif state == "attention_required":
+            hop = (1 - math.cos(2 * w)) / 2
+            p.update(lift=.02 * hop, spine=(-.03, 0, 0), head=(-.04, 0, .08 * s(3)), chest=(-.03, 0, .05 * s(3)))
+            p["arms"] = {-1: ((-.30, -.06, 1.36), (-.32 + .10 * s(3), -.06, 1.56), (0, -.3, 1)),
+                         1: ((.22, -.05, .99), (.18, -.10, .80), (0, -.06, -1))}
+        return p
+
     def animations(self):
+        # Ground the lowest vertex at z=0 so every species stands on the floor instead of hovering.
+        self.rig.location.z = -min(v.co.z for v in self.object.data.vertices) * self.scale
         self.rig.animation_data_create()
+        rig, bones = self.rig, self.rig.data.bones
+        keyed = ["hips", "spine", "chest", "neck", "head"] + [side + part for side in ("left", "right") for part in ("UpperArm", "LowerArm", "Hand", "UpperLeg", "LowerLeg", "Foot")]
+        for name in keyed:
+            rig.pose.bones[name].rotation_mode = "QUATERNION"
         for state in STATES:
             action = bpy.data.actions.new(state)
-            self.rig.animation_data.action = action
-            for f in range(1, 50, 4):
-                t = (f - 1) / FPS
-                w = t * math.pi
-                for pb in self.rig.pose.bones:
-                    pb.matrix_basis = Matrix.Identity(4)
-                pose = {"hips": (0, 0, 0), "spine": (.012 * math.sin(w), 0, 0), "head": (.025 * math.sin(w), 0, .04 * math.sin(w * .5))}
-                if state in ("working", "eating"):
-                    pose.update(head=(.10, 0, 0))
-                elif state in ("success", "celebrating", "level_up", "achievement"):
-                    pose.update(head=(-.06, 0, .04 * math.sin(w * 3)))
-                elif state in ("thinking", "waiting", "attention_required"):
-                    pose.update(head=(.08, .10, .12))
-                elif state in ("sleeping", "offline", "paused"):
-                    pose.update(head=(.18, 0, .10), spine=(.04, 0, 0))
-                elif state == "error":
-                    pose.update(head=(-.1, 0, .08 * math.sin(w * 5)))
-                for name, rotation in pose.items():
-                    pb = self.rig.pose.bones[name]
-                    pb.rotation_mode = "XYZ"
-                    pb.rotation_euler = rotation
-                    pb.keyframe_insert(data_path="rotation_euler", frame=f, group=name)
-                cache = {}
-                def world(name):
-                    if name in cache:
-                        return cache[name]
-                    bone = self.rig.data.bones[name]
-                    basis = self.rig.pose.bones[name].matrix_basis.copy()
-                    m = bone.matrix_local @ basis if bone.parent is None else world(bone.parent.name) @ bone.parent.matrix_local.inverted() @ bone.matrix_local @ basis
-                    cache[name] = m
-                    return m
-                def aim(name, head, target):
-                    bone = self.rig.data.bones[name]
-                    rest = bone.matrix_local
-                    rotation = (bone.tail_local - bone.head_local).normalized().rotation_difference((target-head).normalized()) @ rest.to_quaternion()
-                    desired = Matrix.Translation(head) @ rotation.to_matrix().to_4x4()
-                    base = rest if bone.parent is None else world(bone.parent.name) @ bone.parent.matrix_local.inverted() @ rest
-                    pb = self.rig.pose.bones[name]
-                    pb.rotation_mode = "QUATERNION"
-                    pb.matrix_basis = base.inverted() @ desired
-                    pb.keyframe_insert(data_path="rotation_quaternion", frame=f, group=name)
-                    pb.keyframe_insert(data_path="location", frame=f, group=name)
-                    cache[name] = desired
-                for side, sign in (("left", 1), ("right", -1)):
-                    shoulder = Vector((sign*.18, 0, 1.19))
-                    elbow_goal, wrist_goal = (sign*.21,-.025,.98), (sign*.235,-.03,.78)
-                    palm = Vector((0,-.06,-1))
-                    if state in ("working", "eating"):
-                        elbow_goal, wrist_goal = (sign*.255,-.055,.98), (sign*.16,-.235,1.04+.006*math.sin(w*8))
-                        palm = Vector((0,-1,-.15))
-                    elif state in ("success", "celebrating", "level_up", "achievement"):
-                        elbow_goal, wrist_goal = (sign*.33,0,1.35), (sign*.39,-.01,1.54)
-                        palm = Vector((sign*.1,-.1,1))
-                    elif state == "error":
-                        elbow_goal, wrist_goal = (sign*.31,-.01,1.12), (sign*.28,-.21,1.20)
-                        palm = Vector((0,-.25,1))
-                    elif state in ("waiting", "attention_required", "sleeping", "offline", "paused", "hungry"):
-                        elbow_goal, wrist_goal = (sign*.22,-.04,.98), (sign*.08,-.13,.87)
-                        palm = Vector((-sign,-.1,-.3))
-                    elif state == "thinking" and side == "right":
-                        elbow_goal, wrist_goal = (-.33,-.05,1.04), (-.15,-.14,1.14)
-                        palm = Vector((.25,-.1,1))
-                    elbow = shoulder + (Vector(elbow_goal)-shoulder).normalized()*.22
-                    wrist = elbow + (Vector(wrist_goal)-elbow).normalized()*.20
-                    aim(side+"UpperArm", shoulder, elbow)
-                    aim(side+"LowerArm", elbow, wrist)
-                    aim(side+"Hand", wrist, wrist+palm.normalized()*.08)
+            rig.animation_data.action = action
+            last = {}
+            for f in range(1, 50, 2):
+                p = self.motion(state, (f - 1) / 48 * 2 * math.pi)
+                self.pose(p, last)
+                if p["ground"]:
+                    bpy.context.view_layer.update()
+                    ev = self.object.evaluated_get(bpy.context.evaluated_depsgraph_get())
+                    co = np.empty(len(ev.data.vertices) * 3)
+                    ev.data.vertices.foreach_get("co", co)
+                    low = (np.array(ev.matrix_world)[2, :3] @ co.reshape(-1, 3).T).min() + ev.matrix_world[2][3]
+                    p["lift"] -= low / self.scale
+                    self.pose(p, last)
+                for name in keyed:
+                    rig.pose.bones[name].keyframe_insert(data_path="rotation_quaternion", frame=f, group=name)
+                rig.pose.bones["hips"].keyframe_insert(data_path="location", frame=f, group="hips")
             track = self.rig.animation_data.nla_tracks.new()
             track.name = state
             track.strips.new(state, 1, action)
@@ -593,6 +623,62 @@ class Author:
         for pb in self.rig.pose.bones:
             pb.matrix_basis = Matrix.Identity(4)
         bpy.context.scene.frame_set(1)
+
+    def pose(self, p, last):
+        """Apply one motion() pose to the rig's pose bones (rig-local, rest-space coordinates)."""
+        rig, bones = self.rig, self.rig.data.bones
+        for pb in rig.pose.bones:
+            pb.matrix_basis = Matrix.Identity(4)
+        cache = {}
+        def world(name):
+            if name not in cache:
+                bone, basis = bones[name], rig.pose.bones[name].matrix_basis
+                cache[name] = bone.matrix_local @ basis if bone.parent is None else world(bone.parent.name) @ bone.parent.matrix_local.inverted() @ bone.matrix_local @ basis
+            return cache[name]
+        def rest_world(name):
+            bone = bones[name]
+            return world(bone.parent.name) @ bone.parent.matrix_local.inverted() @ bone.matrix_local
+        def put(name, q, loc=Vector()):
+            if name in last and last[name].dot(q) < 0:
+                q = -q  # keep keys on one hemisphere so interpolation takes the short path
+            last[name] = q
+            pb = rig.pose.bones[name]
+            pb.rotation_quaternion, pb.location = q, loc
+            cache.pop(name, None)
+        def aim(name, target):
+            # Swing relative to the posed parent: no twist about the bone axis, and the head stays on its joint.
+            base = rest_world(name)
+            head, axis = base.translation, base.to_3x3() @ Vector((0, 1, 0))
+            put(name, base.to_quaternion().inverted() @ axis.rotation_difference((target - head).normalized()) @ base.to_quaternion())
+            return head
+        put("hips", Euler(p["hips"]).to_quaternion(), bones["hips"].matrix_local.to_3x3().inverted() @ Vector((p["sway"], 0, p["lift"])))
+        for name in ("spine", "chest", "neck", "head"):
+            put(name, Euler(p[name]).to_quaternion())
+        chest = world("chest") @ bones["chest"].matrix_local.inverted()
+        hips = world("hips") @ bones["hips"].matrix_local.inverted()
+        for side, sign in (("left", 1), ("right", -1)):
+            length = lambda n: (Vector(self.bones[side + n][1]) - Vector(self.bones[side + n][0])).length
+            elbow_goal, wrist_goal, palm = (Vector(v) for v in p["arms"][sign])
+            shoulder = aim(side + "UpperArm", chest @ elbow_goal)
+            elbow = shoulder + (chest @ elbow_goal - shoulder).normalized() * length("UpperArm")
+            aim(side + "LowerArm", chest @ wrist_goal)
+            wrist = elbow + (chest @ wrist_goal - elbow).normalized() * length("LowerArm")
+            aim(side + "Hand", wrist + (chest.to_3x3() @ palm).normalized() * .08)
+            # Two-bone leg IK: ankle stays planted (or rises with a hop); when lying, legs follow the hips with a slight knee bend.
+            hip = rest_world(side + "UpperLeg").translation
+            l1, l2 = length("UpperLeg"), length("LowerLeg")
+            rest_ankle = Vector(self.bones[side + "Foot"][0])
+            ankle = hips @ (rest_ankle + Vector((0, -.06, .06))) if p["lie"] else rest_ankle + Vector((0, 0, max(0, p["lift"])))
+            pole = hips.to_3x3() @ Vector((0, -1, 0)) if p["lie"] else Vector((0, -1, 0))
+            d = ankle - hip
+            dist = min(d.length, l1 + l2 - 1e-4)
+            along = (l1 * l1 + dist * dist - l2 * l2) / (2 * dist)
+            bend = (pole - d.normalized() * pole.dot(d.normalized())).normalized()
+            knee = hip + d.normalized() * along + bend * math.sqrt(max(0, l1 * l1 - along * along))
+            aim(side + "UpperLeg", knee)
+            aim(side + "LowerLeg", knee + (ankle - knee).normalized() * l2)
+            toe = Vector(self.bones[side + "Foot"][1]) - rest_ankle
+            aim(side + "Foot", rest_world(side + "Foot").translation + (hips.to_3x3() @ toe if p["lie"] else toe))
 
     def build(self):
         if self.body != "humanoid":
@@ -679,8 +765,8 @@ def main():
     (output / "character.json").write_text(json.dumps(spec, indent=2), encoding="utf-8")
     if args.render:
         # Show the relaxed pose, while keeping the exported bind pose as T-pose.
-        author.rig.pose.bones["leftUpperArm"].rotation_euler.x = -1.34
-        author.rig.pose.bones["rightUpperArm"].rotation_euler.x = -1.34
+        author.rig.pose.bones["leftUpperArm"].rotation_quaternion = Euler((-1.34, 0, 0)).to_quaternion()
+        author.rig.pose.bones["rightUpperArm"].rotation_quaternion = Euler((-1.34, 0, 0)).to_quaternion()
         bpy.context.scene.render.filepath = str(output / "preview.png")
         bpy.ops.render.render(write_still=True)
     LOG.info("Exported %s: %s triangles, %s bones", spec["id"], author.triangles, len(author.bones))

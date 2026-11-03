@@ -24,17 +24,42 @@
     "accent": "#f472b6"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.8,
   "tags": [
     "nature",
     "calm"
   ],
-  "personality": "zen",
-  "specialty": "Code Cleanliness",
-  "catchphrase": "Patient cultivation builds stable software."
+  "personality": "gentle",
+  "specialty": "Organic Component Cultivation",
+  "catchphrase": "Nurturing healthy UI components like heirloom greenhouse tomatoes.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#84cc16",
+    "icon": "\ud83c\udf3b",
+    "treatName": "HerbalTea",
+    "treatEmoji": "\ud83c\udf75",
+    "feedReaction": "Fragrant chamomile blossom tea! The garden smiles with warmth! \ud83c\udf75\ud83c\udf3b",
+    "wakeReaction": "Morning dew glitters on fresh leaves. Time to nurture code! \ud83c\udf3b",
+    "petReaction": "Placing a fresh fragrant sunflower right by your monitor! \ud83c\udf3b\ud83d\udc96",
+    "dialogue": {
+      "idle": "Watering seedlings in the greenhouse. Peaceful and quiet. \ud83c\udf3b",
+      "working": "Tending components so every UI button blooms with elegance! \ud83c\udf3b\u26a1",
+      "thinking": "Checking soil moisture and sunlight angles for the layout... \ud83e\udd14",
+      "success": "Full harvest! Healthy, accessible components in full bloom! \ud83c\udf3b\ud83c\udf89",
+      "error": "A tiny aphid bug on a petal! Gently removing it with care! \ud83d\udc1e",
+      "sleeping": "Zzz... resting in a greenhouse wicker chair amidst blossoms... \ud83c\udf19"
+    }
+  }
 }

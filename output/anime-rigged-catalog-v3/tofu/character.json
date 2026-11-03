@@ -24,17 +24,42 @@
     "accent": "#f43f5e"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.9,
   "tags": [
     "bunny",
     "cozy"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "confectionary",
+  "specialty": "Warm Muffin Milestone Baking",
+  "catchphrase": "Bakes carrot cake for every merged feature.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#fb923c",
+    "icon": "\ud83e\uddc1",
+    "treatName": "CarrotCake",
+    "treatEmoji": "\ud83e\udd55",
+    "feedReaction": "Warm slice of spiced carrot cake with cream cheese frosting! \ud83e\udd55\ud83e\uddc1",
+    "wakeReaction": "Floppy bunny ears tied back with cute floral baker bandana! \ud83e\uddc1",
+    "petReaction": "Delivers a warm miniature cupcake right onto your coaster! \ud83e\uddc1\ud83d\udc96",
+    "dialogue": {
+      "idle": "Dusting flour off nose while waiting for timer to ding. \ud83e\uddc1",
+      "working": "Baking delicious commemorative treats for shipped features! \ud83e\uddc1\u26a1",
+      "thinking": "Tasting batter with wooden spoon, checking vanilla balance... \ud83e\udd14",
+      "success": "DING! Fresh golden muffins ready to celebrate the release! \ud83e\uddc1\ud83c\udf89",
+      "error": "Cake sank in the middle! Adding pinch of baking soda! \ud83e\uddc1",
+      "sleeping": "Zzz... resting in a cozy basket lined with warm kitchen towels... \ud83c\udf19"
+    }
+  }
 }

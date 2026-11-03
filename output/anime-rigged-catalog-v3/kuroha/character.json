@@ -24,18 +24,43 @@
     "accent": "#ef4444"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.2,
   "tags": [
     "anime",
     "exorcist"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always.",
+  "personality": "precise",
+  "specialty": "Haunted Process Exorcism",
+  "catchphrase": "Banishes haunted processes with silver rounds.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#111827",
+    "icon": "\ud83d\udd2b",
+    "treatName": "EspressoShot",
+    "treatEmoji": "\u2615",
+    "feedReaction": "Triple dark espresso shot! Revolver cylinders loaded with silver! \u2615\ud83d\udd2b",
+    "wakeReaction": "Spinning cylinder. Zombie processes will find no shelter today. \ud83d\udd2b",
+    "petReaction": "Tipping leather brim: Clean shoot, Chief. Target dispatched cleanly. \ud83d\udd2b\u2728",
+    "dialogue": {
+      "idle": "Cleaning silver barrel with a dry cloth under neon lights. \ud83d\udd2b",
+      "working": "Putting silver rounds through deadlocked zombie processes! \ud83d\udd2b\u26a1",
+      "thinking": "Tracking PID lineage to find the parent daemon ghost... \ud83e\udd14",
+      "success": "Exorcised! Zero zombie processes lingering in memory! \ud83d\udd2b\ud83c\udf89",
+      "error": "Ghost phased through the shot! Switching to holy water rounds! \ud83d\udd2b",
+      "sleeping": "Zzz... tipping duster hat over eyes in shadowy saloon corner... \ud83c\udf19"
+    }
+  },
   "hairTip": "#94a3b8"
 }

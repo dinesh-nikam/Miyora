@@ -24,17 +24,42 @@
     "accent": "#22c55e"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
+    "height": 1.0,
+    "headScale": 1.0,
     "build": 1.2,
-    "limbLength": 1
+    "limbLength": 1.0
   },
   "energy": 0.8,
   "tags": [
     "panda",
     "calm"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "zen",
+  "specialty": "Zen Bamboo Dashboard Ops",
+  "catchphrase": "Munches bamboo and monitors dashboards with zen focus.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#18181b",
+    "icon": "\ud83d\udc3c",
+    "treatName": "BambooShoots",
+    "treatEmoji": "\ud83c\udf8b",
+    "feedReaction": "Crisp sweet green bamboo shoot! Crunching with blissful focus! \ud83c\udf8b\ud83d\udc3c",
+    "wakeReaction": "Rolling over onto back with sleepy panda grin. Morning, Chief! \ud83d\udc3c",
+    "petReaction": "Clumsy little panda roll right into your lap for gentle tummy pats! \ud83d\udc3c\ud83d\udc96",
+    "dialogue": {
+      "idle": "Sitting round and relaxed, chewing bamboo leaves peacefully. \ud83d\udc3c",
+      "working": "Observing server dashboards with tranquil, unshakeable calm! \ud83d\udc3c\u26a1",
+      "thinking": "Chewing slowly... balance in all metrics is the way... \ud83e\udd14",
+      "success": "Happy panda tumble! All dashboards glowing peaceful green! \ud83d\udc3c\ud83c\udf89",
+      "error": "A red alert! Slowly setting bamboo down to take care of it. \ud83c\udf8b",
+      "sleeping": "Zzz... sleeping draped over a wooden climbing log... \ud83c\udf19"
+    }
+  }
 }

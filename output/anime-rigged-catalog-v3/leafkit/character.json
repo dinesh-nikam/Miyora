@@ -24,15 +24,40 @@
   "proportions": {
     "height": 0.86,
     "headScale": 1.28,
-    "build": 1,
-    "limbLength": 1
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "pocket-monster",
     "grass"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "fluttering",
+  "specialty": "Autumn Leaf Wind Riding",
+  "catchphrase": "Glides through release branches on fluttering golden leaves.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#84cc16",
+    "icon": "\ud83c\udf42",
+    "treatName": "MapleSyrupDrop",
+    "treatEmoji": "\ud83c\udf41",
+    "feedReaction": "Drop of sweet amber maple syrup! Leaf tail flutters with glee! \ud83c\udf41\ud83c\udf42",
+    "wakeReaction": "Floating into the room on a broad red autumn maple leaf! \ud83c\udf42",
+    "petReaction": "Gently drops a perfect golden ginkgo leaf into your hand! \ud83c\udf42\ud83d\udc96",
+    "dialogue": {
+      "idle": "Perched on a golden autumn branch, tail fluttering in wind. \ud83c\udf42",
+      "working": "Gliding between release branches on graceful wind currents! \ud83c\udf42\u26a1",
+      "thinking": "Watching leaf patterns swirl in the autumn breeze... \ud83e\udd14",
+      "success": "GOLDEN HARVEST! Shipped on the wings of the autumn gale! \ud83c\udf42\ud83c\udf89",
+      "error": "Caught in a swirling whirlwind! Tucking in and landing safe! \ud83c\udf2a\ufe0f",
+      "sleeping": "Zzz... buried warm in a giant crunchy pile of fall leaves... \ud83c\udf19"
+    }
+  }
 }

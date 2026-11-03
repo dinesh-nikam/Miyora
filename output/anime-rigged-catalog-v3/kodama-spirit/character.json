@@ -37,7 +37,32 @@
     "kodama",
     "forest"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "gentle",
+  "specialty": "Environment Provisioning & Nurturing",
+  "catchphrase": "Click-clack! Nurturing gentle green growth under the ancient canopy.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#34d399",
+    "icon": "\ud83c\udf31",
+    "treatName": "Dewdrop",
+    "treatEmoji": "\ud83d\udca7",
+    "feedReaction": "Pure morning dewdrop! Porcelain cheeks glow celadon green! \ud83d\udca7\ud83c\udf31",
+    "wakeReaction": "*click-clack* Head rattles with sweet joy as morning light filters down! \ud83c\udf31",
+    "petReaction": "*gentle rattle* Soft warmth spreads through the moss and leaves. \ud83c\udf31\ud83d\udc96",
+    "dialogue": {
+      "idle": "*click-clack* Tilting head curiously under the lotus leaf umbrella. \ud83c\udf31",
+      "working": "Gently feeding clean dependencies to tender young modules! \ud83c\udf31\u26a1",
+      "thinking": "*head tilts 45 degrees in peaceful wonder* \ud83e\udd14",
+      "success": "*happy rattle chorus* Green sprout shoots forth in full bloom! \ud83c\udf3f\ud83c\udf89",
+      "error": "Drooping gently... handing you a tiny lucky clover leaf. \ud83c\udf40",
+      "sleeping": "Zzz... rocking softly on a bed of damp green forest moss... \ud83c\udf19"
+    }
+  }
 }

@@ -27,7 +27,7 @@
     "height": 0.84,
     "headScale": 1.3,
     "build": 1.15,
-    "limbLength": 1
+    "limbLength": 1.0
   },
   "energy": 0.9,
   "tags": [
@@ -35,7 +35,32 @@
     "water",
     "cute"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "defensive",
+  "specialty": "Shell Armor Defensive Invariants",
+  "catchphrase": "Retreats safely inside an impenetrable shell whenever exceptions strike.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#16a34a",
+    "icon": "\ud83d\udc22",
+    "treatName": "LettuceLeaf",
+    "treatEmoji": "\ud83e\udd6c",
+    "feedReaction": "Crisp sweet romaine lettuce leaf! Shell shines with polished jade! \ud83e\udd6c\ud83d\udc22",
+    "wakeReaction": "Slowly poking head out of shell, blinking with ancient wisdom! \ud83d\udc22",
+    "petReaction": "Gentle chin rub on wrinkled green neck brings a sweet slow smile! \ud83d\udc22\ud83d\udc96",
+    "dialogue": {
+      "idle": "Basking on a warm river log, feet stretched out behind. \ud83d\udc22",
+      "working": "Withstanding torrential exception storms inside titanium shell! \ud83d\udc22\u26a1",
+      "thinking": "Taking all the time in the world to find the right answer... \ud83e\udd14",
+      "success": "Slow and steady! Won the race while the hare crashed! \ud83d\udc22\ud83c\udf89",
+      "error": "*thump* Tucking head and limbs into shell until danger passes! \ud83d\udee1\ufe0f",
+      "sleeping": "Zzz... safe and snug inside impenetrable domed shell... \ud83c\udf19"
+    }
+  }
 }

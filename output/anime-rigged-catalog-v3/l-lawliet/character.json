@@ -35,7 +35,32 @@
     "l-lawliet",
     "mystery"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "analytical",
+  "specialty": "Empirical Root-Cause Forensics",
+  "catchphrase": "The probability of this bug being an unhandled race condition is 97.4%.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#64748b",
+    "icon": "\ud83d\udd0d",
+    "treatName": "Shortcake",
+    "treatEmoji": "\ud83c\udf70",
+    "feedReaction": "Strawberry shortcake with extra sugar cubes. Brainpower maximized. \ud83c\udf70\ud83d\udd0d",
+    "wakeReaction": "Blinking slowly. Crouching on the office chair. Where is the trace? \ud83d\udd0d",
+    "petReaction": "If you pat my head, my deductive reasoning increases by 8.2%. \ud83c\udf70\u2728",
+    "dialogue": {
+      "idle": "Holding a teacup by the rim. Pondering the telemetry data. \ud83d\udd0d",
+      "working": "Connecting anomalous stack traces into an ironclad indictment. \ud83d\udd0d\u26a1",
+      "thinking": "Chewing thumb thoughtfully... the suspect module is lying. \ud83e\udd14",
+      "success": "Case solved. Bug perpetrator exposed and isolated cleanly. \ud83c\udf70\ud83c\udf89",
+      "error": "Fascinating. An intentional deception. I accept the challenge. \ud83d\udd0d",
+      "sleeping": "Zzz... dozing crouched on his chair with eyes half-open... \ud83c\udf19"
+    }
+  }
 }

@@ -40,7 +40,32 @@
     "sage"
   ],
   "personality": "playful",
-  "specialty": "Distributed Chaos",
-  "catchphrase": "Seven-fold transformations for every deployment.",
+  "specialty": "Distributed Chaos Engineering",
+  "catchphrase": "Seventy-two transformations for every deployment challenge!",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#ffb703",
+    "icon": "\u2601\ufe0f",
+    "treatName": "Peach",
+    "treatEmoji": "\ud83c\udf51",
+    "feedReaction": "Immortal celestial peach! Three thousand years of stamina! \ud83c\udf51\u2728",
+    "wakeReaction": "Hahaha! The Great Sage awakens! Point me to the demons! \u26a1\u2601\ufe0f",
+    "petReaction": "Hahaha! Monkey King is energized! Golden hair charm for you! \ud83c\udf51\u2728",
+    "dialogue": {
+      "idle": "Riding my Somersault Cloud. Ready when you are, Chief! \u2601\ufe0f",
+      "working": "My Gold-Banded Cudgel will crush these merge conflicts! \u26a1",
+      "thinking": "Peering through illusions with Fiery Eyes of Truth... \ud83e\udd14",
+      "success": "HA! Another impossible beast vanquished! Heavens rejoice! \ud83c\udf89",
+      "error": "A sneaky demon bug! Stand back, Chief, we'll smash it! \ud83d\udcaa",
+      "sleeping": "Zzz... napping on a cloud above the Water Curtain Cave... \u2601\ufe0f\ud83d\udca4"
+    }
+  },
   "hairTip": "#ffb703"
 }

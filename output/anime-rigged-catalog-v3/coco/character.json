@@ -25,17 +25,42 @@
     "accent": "#22d3ee"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.4,
   "tags": [
     "maker",
     "cute"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "whimsical",
+  "specialty": "Developer Delight Tooling",
+  "catchphrase": "Invents sweet little tools nobody asked for and everybody uses.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f472b6",
+    "icon": "\ud83c\udf6c",
+    "treatName": "Lollipops",
+    "treatEmoji": "\ud83c\udf6d",
+    "feedReaction": "Swirled fruit lollipop! Spinning little candy gears and whistles! \ud83c\udf6d\ud83c\udf6c",
+    "wakeReaction": "Unrolling blueprint covered in glitter and pastel highlighters! \ud83c\udf6c",
+    "petReaction": "Hands you a delightful little CLI helper that plays a cute jingle! \ud83c\udf6c\ud83d\udc96",
+    "dialogue": {
+      "idle": "Testing miniature candy-powered gadgets on the workbench. \ud83c\udf6c",
+      "working": "Crafting delightful terminal widgets that make devs smile! \ud83c\udf6c\u26a1",
+      "thinking": "Wondering how to make git commit pop up little confetti... \ud83e\udd14",
+      "success": "Confetti blast! A sweet, beloved utility is born today! \ud83c\udf6c\ud83c\udf89",
+      "error": "Gear stuck in taffy! Melting it with warm cinnamon tea! \ud83c\udf6d",
+      "sleeping": "Zzz... tucked under a pastel quilt surrounded by toys... \ud83c\udf19"
+    }
+  }
 }

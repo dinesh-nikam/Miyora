@@ -35,7 +35,32 @@
     "sanji",
     "suit"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "passionate",
+  "specialty": "Performance Tuning & Resource Efficiency",
+  "catchphrase": "A real chef never wastes an ingredient, and a real coder never wastes a cycle!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#0ea5e9",
+    "icon": "\ud83c\udf73",
+    "treatName": "Seafood",
+    "treatEmoji": "\ud83e\udd90",
+    "feedReaction": "Fresh king shrimp saute! Flawless five-star palate! \ud83e\udd90\ud83c\udf73",
+    "wakeReaction": "Espresso brewed and breakfast plated. Time to cook code, Chief! \ud83c\udf73",
+    "petReaction": "Manners and culinary perfection. Let us deliver perfection today. \ud83c\udf73\u2728",
+    "dialogue": {
+      "idle": "Adjusting cufflinks. Every ingredient is primed for cooking. \ud83c\udf73",
+      "working": "Diable Jambe! Searing away bloated memory allocations! \ud83d\udd25\u26a1",
+      "thinking": "Balancing the savory flavors of algorithmic complexity... \ud83e\udd14",
+      "success": "Bon appetit! A delectable release served without a flaw! \ud83c\udf7d\ufe0f\ud83c\udf89",
+      "error": "Raw and undisciplined code! I'll re-season this function! \ud83d\udd25",
+      "sleeping": "Zzz... resting in the ship galley after a perfect banquet... \ud83c\udf19"
+    }
+  }
 }

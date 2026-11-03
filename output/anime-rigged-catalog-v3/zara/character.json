@@ -24,17 +24,42 @@
     "accent": "#f472b6"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.5,
   "tags": [
     "speedy",
     "cyber"
   ],
-  "personality": "energetic",
-  "specialty": "Fast-Path Execution",
-  "catchphrase": "Faster than the next clock cycle."
+  "personality": "kinetic",
+  "specialty": "Kernel Benchmark Racing",
+  "catchphrase": "Pushing instruction pipelines to redline RPM on the asphalt.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#ec4899",
+    "icon": "\ud83c\udfce\ufe0f",
+    "treatName": "EnergyGel",
+    "treatEmoji": "\u26a1",
+    "feedReaction": "Electrolyte berry energy gel! Visor down, revving the engine! \u26a1\ud83c\udfce\ufe0f",
+    "wakeReaction": "Tires warm, engine idling at 9,000 RPM. Green light approaches! \ud83c\udfce\ufe0f",
+    "petReaction": "Revving engine in celebratory victory lap! First place together! \ud83c\udfce\ufe0f\ud83c\udfc6",
+    "dialogue": {
+      "idle": "Checking tire pressures and telemetry data in the pit lane. \ud83c\udfce\ufe0f",
+      "working": "Drafting through high-frequency execution curves at top speed! \ud83c\udfce\ufe0f\u26a1",
+      "thinking": "Apex calculation: finding the absolute shortest path... \ud83e\udd14",
+      "success": "CHECKERED FLAG! New lap record set across all benchmarks! \ud83c\udfce\ufe0f\ud83c\udf89",
+      "error": "Blown tire in turn three! Pitting for rapid tire swap! \ud83d\udede\ud83d\udd27",
+      "sleeping": "Zzz... resting in the racing trailer with trophy on the shelf... \ud83c\udf19"
+    }
+  }
 }

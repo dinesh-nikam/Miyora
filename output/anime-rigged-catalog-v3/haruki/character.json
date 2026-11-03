@@ -24,18 +24,43 @@
     "accent": "#ca8a04"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "anime",
     "school"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always.",
+  "personality": "adaptable",
+  "specialty": "Fresh Perspective Debugging",
+  "catchphrase": "New to the codebase, already fixing the hard bugs.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#111827",
+    "icon": "\ud83c\udf92",
+    "treatName": "MelonBread",
+    "treatEmoji": "\ud83c\udf5e",
+    "feedReaction": "Sweet sugar-crust melon bread! Student backpack unzipped for work! \ud83c\udf5e\ud83c\udf92",
+    "wakeReaction": "New desk in the homeroom! Eager to untangle the old project lore! \ud83c\udf92",
+    "petReaction": "Bright, earnest smile: I'm really glad I transferred to your team! \ud83c\udf92\ud83d\udc96",
+    "dialogue": {
+      "idle": "Flipping through architectural wiki pages, taking neat notes. \ud83c\udf92",
+      "working": "Spotting blind spots that everyone else took for granted! \ud83c\udf92\u26a1",
+      "thinking": "Questioning long-standing assumptions with fresh eyes... \ud83e\udd14",
+      "success": "Fixed! A bug that puzzled the team for years resolved simply! \ud83c\udf92\ud83c\udf89",
+      "error": "Got lost in the legacy hallway! Asking directions gladly! \ud83d\uddfa\ufe0f",
+      "sleeping": "Zzz... studying at bedroom desk, drifting off over notes... \ud83c\udf19"
+    }
+  },
   "hairTip": "#b45309"
 }

@@ -42,5 +42,30 @@
   "personality": "stealthy",
   "specialty": "Silent Instrumentation",
   "catchphrase": "Tracing execution unseen in the shadows.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#00f0ff",
+    "icon": "\ud83d\udc3e",
+    "treatName": "Fish",
+    "treatEmoji": "\ud83d\udc1f",
+    "feedReaction": "*crunch crunch* Purrrrr! Delicious fish! \ud83d\udc1f\ud83d\udc3e",
+    "wakeReaction": "*stretches stealthily* Meow! Ready for deployment! \ud83d\udc3e",
+    "petReaction": "*loud purring* Purrrrr... blessed by the shinobi cat! \ud83d\udc3e\ud83d\udc96",
+    "dialogue": {
+      "idle": "*purrs* All systems quiet and secure, Chief. \ud83d\udc3e",
+      "working": "*silent paws typing at 200 WPM* \ud83d\udc3e\u26a1",
+      "thinking": "*ears twitching* Sensing an async race condition... \ud83e\udd14",
+      "success": "Target silenced! Build green and stealthy! \ud83d\udc3e\ud83c\udf89",
+      "error": "Hiss! Bug detected in perimeter! Ambushing... \u2694\ufe0f",
+      "sleeping": "Zzz... curled up in a neat little cat ball... \ud83c\udf19\ud83d\udc3e"
+    }
+  },
   "hairTip": "#00f0ff"
 }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "revision": "refined-catalog-v3.2",
+  "revision": "refined-catalog-v3.3",
   "files": [
     {
       "path": "authoring/appearance_refinement.py",
@@ -8,7 +8,7 @@
     },
     {
       "path": "authoring/author_characters.py",
-      "sha256": "9a665605de7b2d3e59833105ec52e74ad35226ccb74c1bf026475c386eb196e8"
+      "sha256": "c25224c87455fb0caccd5119ae7e506fd2ec274f1f37d1429aff31e0a7d7e32a"
     },
     {
       "path": "authoring/capture-model-back.cjs",
@@ -20,7 +20,7 @@
     },
     {
       "path": "authoring/collect_refined.py",
-      "sha256": "aa39f9be4f25679063f9db0c95b98956e1c140afd00a007de3d2d04147c5c111"
+      "sha256": "10582ee7ac20fd2f1869cde7bea03960b5add68eb0ce89929958d17029922f5b"
     },
     {
       "path": "authoring/make_review_gallery.cjs",
@@ -36,7 +36,7 @@
     },
     {
       "path": "authoring/refine_catalog.py",
-      "sha256": "a07fa39cfc0b8651c104492a3a81e610d7ee938aa43281fc163c77a5a35871dc"
+      "sha256": "ac9aa01a56b8c2e223169d8c8a50b0257ecf865f44a80e3c7670c09fcc2c2799"
     },
     {
       "path": "authoring/verify-refined.cjs",

@@ -22,17 +22,42 @@
     "accent": "#a855f7"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "robot",
     "space"
   ],
-  "personality": "methodical",
-  "specialty": "Deterministic CI",
-  "catchphrase": "Zero syntax faults allowed."
+  "personality": "optical",
+  "specialty": "High-Density Fiber Optics",
+  "catchphrase": "Pulsing terabit optical packets with laser precision.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#10b981",
+    "icon": "\ud83d\udca1",
+    "treatName": "PhotonCrystal",
+    "treatEmoji": "\ud83d\udc8e",
+    "feedReaction": "Refractive photon crystal aligned! Light pulses at maximum lumens! \ud83d\udc8e\ud83d\udca1",
+    "wakeReaction": "Laser diodes primed! Optical waveguides clear of refraction! \ud83d\udca1",
+    "petReaction": "Luminescent beams sparkle in warm appreciation! \ud83d\udca1\ud83d\udc96",
+    "dialogue": {
+      "idle": "Photonic waveguides idling at warm green laser standby. \ud83d\udca1",
+      "working": "Transmitting petabytes of streaming data through fiber! \ud83d\udca1\u26a1",
+      "thinking": "Analyzing chromatic dispersion along the optical line... \ud83e\udd14",
+      "success": "Total internal reflection! All packets arrived at lightspeed! \ud83d\udca1\ud83c\udf89",
+      "error": "Attenuation anomaly! Re-polishing fiber optic couplers! \ud83d\udca1\u26a0\ufe0f",
+      "sleeping": "Zzz... photon emission dimmed to gentle nightlight... \ud83c\udf19"
+    }
+  }
 }

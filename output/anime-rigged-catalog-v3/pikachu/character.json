@@ -36,7 +36,32 @@
     "mouse"
   ],
   "personality": "perky",
-  "specialty": "Cache Re-ignition",
-  "catchphrase": "Pika! Lighting up the build pipeline!",
+  "specialty": "High-Voltage Cache Re-ignition",
+  "catchphrase": "Pika-chuuuu! Lighting up the build pipeline with pure electricity!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#facc15",
+    "icon": "\u26a1",
+    "treatName": "Berry",
+    "treatEmoji": "\ud83c\udf53",
+    "feedReaction": "Pika-pi! (Cheeks crackling with warm clean energy!) \ud83c\udf53\u26a1",
+    "wakeReaction": "Pika-chuuuu! (Sparking brightly to ignite the morning!) \u26a1",
+    "petReaction": "Pikaaa-chuuu! (Warm happy sparks and cozy nuzzles!) \u26a1\ud83d\udc96",
+    "dialogue": {
+      "idle": "Pikachu! Standing guard, cheek pouches charged for action! \u26a1\u2728",
+      "working": "Pika pika! (Rapid-fire keystrokes like Thunder Shock!) \u26a1",
+      "thinking": "Pika? (Ear twitches, sensing an asynchronous race condition) \ud83e\udd14",
+      "success": "PIKACHU! (Triumphant electrical burst!) \u26a1\ud83c\udf89",
+      "error": "Pika-pi... (Mild static shock. We'll zap that bug together!) \u26a1",
+      "sleeping": "Pika... zzz... (Cheeks softly glowing in warm sleep) \ud83c\udf19\u26a1"
+    }
+  },
   "hairTip": "#1c1917"
 }

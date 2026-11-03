@@ -24,10 +24,10 @@
     "accent": "#fbbf24"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.9,
   "tags": [
@@ -35,7 +35,32 @@
     "fantasy"
   ],
   "personality": "inquisitive",
-  "specialty": "Type Architecture",
+  "specialty": "Type Architecture & Proofs",
   "catchphrase": "I read build logs like constellations.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#c084fc",
+    "icon": "\u2728",
+    "treatName": "Starcandy",
+    "treatEmoji": "\ud83c\udf6c",
+    "feedReaction": "Starcandy delight! Sparkling creative energy unlocked! \ud83c\udf6c\u2728",
+    "wakeReaction": "Good morning, starfarer! The cosmos is bright and full of code! \u2728",
+    "petReaction": "A shower of stardust for you, Chief! Keep shining! \u2728\ud83d\udc96",
+    "dialogue": {
+      "idle": "Starlight companion ready! Where shall we explore next? \u2728",
+      "working": "Weaving constellation threads into frontend magic! \u2728\u26a1",
+      "thinking": "Listening to the melody between the stars... \ud83e\udd14",
+      "success": "Starlight celebration! Everything renders with elegance! \ud83c\udf0c\ud83c\udf89",
+      "error": "A brief shadow passed by. Illuminating with stellar glow! \u2728",
+      "sleeping": "Zzz... dreaming in nebula colors... \ud83c\udf19\u2728"
+    }
+  },
   "hairTip": "#f0abfc"
 }

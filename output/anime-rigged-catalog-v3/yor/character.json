@@ -38,7 +38,32 @@
     "yor",
     "thorn"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "polite",
+  "specialty": "Lethal Exception Elimination",
+  "catchphrase": "Excuse me, may I have the pleasure of taking this bug's life?",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#991b1b",
+    "icon": "\ud83c\udf39",
+    "treatName": "WineCake",
+    "treatEmoji": "\ud83c\udf77",
+    "feedReaction": "A delightful confection! My stamina is perfectly replenished. \ud83c\udf77\ud83c\udf39",
+    "wakeReaction": "Golden needles polished. I will clean up any threat to our family. \ud83c\udf39",
+    "petReaction": "Oh my! You are so kind, Chief! (Blushes warmly with sweet smile) \ud83c\udf39\ud83d\udc96",
+    "dialogue": {
+      "idle": "Arranging roses gently. Keeping our home peaceful and secure. \ud83c\udf39",
+      "working": "Silent stiletto thrust! Puncturing memory leaks with lethal grace! \ud83c\udf39\u26a1",
+      "thinking": "Pondering how to cook dinner without burning the kitchen... \ud83e\udd14",
+      "success": "Target eliminated without a sound. Our home remains safe. \ud83c\udf39\ud83c\udf89",
+      "error": "Oh dear! Did I strike too hard? I will patch it up instantly! \ud83e\ude79",
+      "sleeping": "Zzz... resting peacefully dreaming of a quiet family picnic... \ud83c\udf19"
+    }
+  }
 }

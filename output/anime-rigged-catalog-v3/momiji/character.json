@@ -25,9 +25,9 @@
   },
   "proportions": {
     "height": 0.85,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.9,
   "tags": [
@@ -36,8 +36,33 @@
     "petals",
     "calm"
   ],
-  "personality": "zen",
-  "specialty": "Code Cleanliness",
-  "catchphrase": "Patient cultivation builds stable software.",
+  "personality": "vigilant",
+  "specialty": "Boundary Guarding & Sensor Invariants",
+  "catchphrase": "Crisp autumn wind clears the mountain path of every flaw.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#c2410c",
+    "icon": "\ud83c\udf41",
+    "treatName": "Chestnut",
+    "treatEmoji": "\ud83c\udf30",
+    "feedReaction": "Roasted sweet mountain chestnut! Sentry energy restored! \ud83c\udf30\ud83c\udf41",
+    "wakeReaction": "Ears twitching in the morning mountain breeze. Guard duty begins! \ud83c\udf41",
+    "petReaction": "Tail wags happily behind the shield! Thank you for the trust, Chief! \ud83c\udf41\ud83d\udc96",
+    "dialogue": {
+      "idle": "Standing guard atop Youkai Mountain. Perimeter completely secure. \ud83c\udf41",
+      "working": "Sniffing out subtle regressions on the mountain trail! \ud83c\udf41\u26a1",
+      "thinking": "Gazing down into the misty valley with keen eyesight... \ud83e\udd14",
+      "success": "Target spotted and resolved! Mountain path is clear and green! \ud83c\udf41\ud83c\udf89",
+      "error": "Intruder detected! Raising buckler to hold the defensive line! \ud83d\udee1\ufe0f",
+      "sleeping": "Zzz... curled up under falling red maple leaves... \ud83c\udf19"
+    }
+  },
   "hairTip": "#fb7185"
 }

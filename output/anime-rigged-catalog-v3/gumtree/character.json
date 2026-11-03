@@ -24,17 +24,42 @@
     "accent": "#22c55e"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.5,
   "tags": [
     "koala",
     "cozy"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "relaxed",
+  "specialty": "Sleepy Green Wakeups",
+  "catchphrase": "Mostly asleep; wakes for green builds.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#78716c",
+    "icon": "\ud83d\udc28",
+    "treatName": "Eucalyptus",
+    "treatEmoji": "\ud83c\udf3f",
+    "feedReaction": "Fresh fragrant eucalyptus leaves! Chewing with contented slow blinks! \ud83c\udf3f\ud83d\udc28",
+    "wakeReaction": "Yawning an enormous round yawn, hugging his branch tighter! \ud83d\udc28",
+    "petReaction": "Slow, cozy koala hug that clings to you like a warm soft backpack! \ud83d\udc28\ud83d\udc96",
+    "dialogue": {
+      "idle": "Wedged securely in the fork of a gum tree, snoozing happily. \ud83d\udc28",
+      "working": "Waking up specifically to press the deploy button on green builds! \ud83d\udc28\u26a1",
+      "thinking": "Slowly blinking... is this task really worth waking up for? \ud83e\udd14",
+      "success": "BUILD GREEN! Gumtree opens both eyes and smiles broadly! \ud83d\udc28\ud83c\udf89",
+      "error": "Build failed! Frowning gently, waiting for you to fix it. \ud83d\udc28",
+      "sleeping": "Zzz... sound asleep upside down in eucalyptus leaves... \ud83c\udf19"
+    }
+  }
 }

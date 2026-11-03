@@ -24,17 +24,42 @@
     "accent": "#fbbf24"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.5,
   "tags": [
     "monkey",
     "speedy"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "acrobatic",
+  "specialty": "Cloud-Jumping Agility",
+  "catchphrase": "Leaps between clouds and cloud regions alike.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#dc2626",
+    "icon": "\ud83d\udc12",
+    "treatName": "TropicalBanana",
+    "treatEmoji": "\ud83c\udf4c",
+    "feedReaction": "Sweet ripe tropical baby banana! Swinging by tail from the rafters! \ud83c\udf4c\ud83d\udc12",
+    "wakeReaction": "Doing handstands on the back of your office chair with a grin! \ud83d\udc12",
+    "petReaction": "Playfully grooming your hair and offering half a sweet banana! \ud83d\udc12\ud83d\udc96",
+    "dialogue": {
+      "idle": "Hanging upside down by tail, eating nuts with both feet. \ud83d\udc12",
+      "working": "Swinging between cloud providers with acrobatic agility! \ud83d\udc12\u26a1",
+      "thinking": "Scratching chin with toe, evaluating routing hops... \ud83e\udd14",
+      "success": "CHEEKY CHATTER! Stuck the landing on the multi-cloud deploy! \ud83d\udc12\ud83c\udf89",
+      "error": "Slipped on a wet vine! Catching the next branch by the tail! \ud83d\udc12",
+      "sleeping": "Zzz... curled up hugging a stuffed plush monkey in a hammock... \ud83c\udf19"
+    }
+  }
 }

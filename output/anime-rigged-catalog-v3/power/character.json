@@ -36,6 +36,31 @@
     "horns"
   ],
   "personality": "boastful",
-  "specialty": "Chaos Engineering",
-  "catchphrase": "Bow before my genius! The bug was terrified of me!"
+  "specialty": "Chaos Invariant Engineering",
+  "catchphrase": "Gwahahaha! Bow before my genius! The bug was terrified of me!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#ef4444",
+    "icon": "\ud83e\ude78",
+    "treatName": "MeatPatties",
+    "treatEmoji": "\ud83e\udd69",
+    "feedReaction": "Gimme that meat! Vegetables belong in the incinerator! \ud83e\udd69\ud83e\ude78",
+    "wakeReaction": "GWAHAHA! The First President of Earth awakens to rule! \ud83e\ude78",
+    "petReaction": "Kneel and worship my glorious horns, mortal! ...More scratches! \ud83e\ude78\ud83d\udc96",
+    "dialogue": {
+      "idle": "Flexing blood hammer proudly. Meowy is purring beside me! \ud83d\udc31",
+      "working": "BLOOD HAMMER SMASH! Crushing all buggy peasants into dust! \ud83e\ude78\u26a1",
+      "thinking": "Concocting the most devious scheme to blame someone else... \ud83e\udd14",
+      "success": "GWAHAHA! All praise Power! I alone solved the impossible bug! \ud83e\ude78\ud83c\udf89",
+      "error": "Lies! Slander! It was Denji's fault! I will smash it again! \ud83d\udca5",
+      "sleeping": "Zzz... drooling peacefully on Meowy's soft fur... \ud83c\udf19"
+    }
+  }
 }

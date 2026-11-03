@@ -24,15 +24,40 @@
   "proportions": {
     "height": 0.86,
     "headScale": 1.28,
-    "build": 1,
-    "limbLength": 1
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.4,
   "tags": [
     "pocket-monster",
     "fire"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "cozy",
+  "specialty": "Ember Hearth Warming",
+  "catchphrase": "Tucks tiny warm paws close to the terminal's glowing prompt.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#ef4444",
+    "icon": "\ud83d\udd25",
+    "treatName": "WarmMilk",
+    "treatEmoji": "\ud83e\udd5b",
+    "feedReaction": "Warm spiced milk with honey! Tiny fiery tail sparks happily! \ud83e\udd5b\ud83d\udd25",
+    "wakeReaction": "Tiny fiery kitten stretch, little claws kneading the desk mat! \ud83d\udd25",
+    "petReaction": "Curling right across your mousepad, purring like a warm toaster! \ud83d\udd25\ud83d\udc96",
+    "dialogue": {
+      "idle": "Sleeping curled up right under the warm exhaust fan. \ud83d\udd25",
+      "working": "Warming the terminal prompt with friendly little sparks! \ud83d\udd25\u26a1",
+      "thinking": "Tiny head tilts, watching cursor blink with kitten wonder... \ud83e\udd14",
+      "success": "TINY MEOW ROAR! Sparks fly in sweet kitten celebration! \ud83d\udd25\ud83c\udf89",
+      "error": "Sneezed a little smoke puff! Blinking big amber eyes! \ud83d\udca8",
+      "sleeping": "Zzz... snoozing warm and cozy beside the laptop charger... \ud83c\udf19"
+    }
+  }
 }

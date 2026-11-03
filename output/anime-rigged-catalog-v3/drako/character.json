@@ -22,10 +22,10 @@
     "accent": "#fde047"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.3,
   "tags": [
@@ -33,6 +33,31 @@
     "cute"
   ],
   "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "specialty": "Spark-Sneezing Playfulness",
+  "catchphrase": "A tiny dragon who sneezes sparks when tests fail.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#16a34a",
+    "icon": "\ud83d\udc32",
+    "treatName": "CinderBerries",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Smoldering fire berries! Smoke rings puff from tiny nostrils! \ud83e\uded0\ud83d\udc32",
+    "wakeReaction": "Flapping tiny green bat wings, hovering three inches off desk! \ud83d\udc32",
+    "petReaction": "Curling around your mouse hand to keep your fingers warm! \ud83d\udc32\ud83d\udc96",
+    "dialogue": {
+      "idle": "Gnawing playfully on a gold coin, wings fluttering happily. \ud83d\udc32",
+      "working": "Blowing little puffs of green dragon flame to toast stale cache! \ud83d\udc32\u26a1",
+      "thinking": "Sneezing a tiny spark... watching where it lands... \ud83e\udd14",
+      "success": "BABY DRAGON ROAR! Golden flames celebrate the green build! \ud83d\udc32\ud83c\udf89",
+      "error": "*Achoo!* Accidental spark sneeze singed the log! Sorry! \ud83d\udd25",
+      "sleeping": "Zzz... sleeping curled inside a warm velvet lined jewelry box... \ud83c\udf19"
+    }
+  }
 }

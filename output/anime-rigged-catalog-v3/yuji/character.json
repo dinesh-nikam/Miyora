@@ -23,7 +23,7 @@
   },
   "proportions": {
     "height": 1.02,
-    "headScale": 1,
+    "headScale": 1.0,
     "build": 1.12,
     "limbLength": 1.02
   },
@@ -35,8 +35,33 @@
     "yuji",
     "brawler"
   ],
-  "personality": "mystical",
-  "specialty": "AST Transmutation",
-  "catchphrase": "Casting clean checkmarks into the terminal.",
+  "personality": "earnest",
+  "specialty": "Brute-Force Concurrency & Stress Tests",
+  "catchphrase": "I don't know fancy theories, but I'll punch every bug until it stays down!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#ef4444",
+    "icon": "\ud83d\udc4a",
+    "treatName": "Ramen",
+    "treatEmoji": "\ud83c\udf5c",
+    "feedReaction": "Extra pork ramen! Calories loaded, ready to fight! \ud83c\udf5c\ud83d\udd25",
+    "wakeReaction": "OSU! Let's get moving, Chief! What are we taking down? \ud83d\udc4a",
+    "petReaction": "Hehe! Thanks, Chief! We're gonna save everyone today! \ud83d\udc4a\ud83d\udc96",
+    "dialogue": {
+      "idle": "Bouncing on his toes, warming up knuckles. Ready, Chief! \ud83d\udc4a",
+      "working": "Divergent Fist on every broken module! Double impact! \ud83d\udca5\u26a1",
+      "thinking": "Scratching his head... let's find where this bug is hiding. \ud83e\udd14",
+      "success": "Black Flash! Target smashed cleanly in one impact! \u26a1\ud83c\udf89",
+      "error": "Ugh, a tough one! But I never stay down on the mat! \ud83d\udd25",
+      "sleeping": "Zzz... snoring loudly with hands behind his head... \ud83c\udf19"
+    }
+  },
   "hairTip": "#1f2937"
 }

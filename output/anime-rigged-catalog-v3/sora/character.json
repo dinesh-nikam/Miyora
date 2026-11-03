@@ -24,10 +24,10 @@
     "accent": "#f97316"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.4,
   "tags": [
@@ -35,6 +35,31 @@
     "speedy"
   ],
   "personality": "energetic",
-  "specialty": "Fast-Path Execution",
-  "catchphrase": "Faster than the next clock cycle."
+  "specialty": "Fast-Path Execution & Couriers",
+  "catchphrase": "Delivering pull requests on the speed of the morning wind!",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#0284c7",
+    "icon": "\ud83e\ude81",
+    "treatName": "CloudMochi",
+    "treatEmoji": "\ud83c\udf61",
+    "feedReaction": "Puffy sweet cloud mochi! Goggles polished, ready to soar! \ud83c\udf61\ud83e\ude81",
+    "wakeReaction": "Wind gusts look favorable! Delivering packets across the sky! \ud83e\ude81",
+    "petReaction": "Playful mid-air loop-de-loop and a bright thumbs up for you! \ud83e\ude81\u2728",
+    "dialogue": {
+      "idle": "Hovering on wind gliders by the skyport dock. Ready, Chief! \ud83e\ude81",
+      "working": "Catching high-speed jetstreams to deliver pull requests! \ud83e\ude81\u26a1",
+      "thinking": "Gazing down at the cloud deck, checking wind shear... \ud83e\udd14",
+      "success": "Touchdown! Urgent release package delivered on the second! \ud83e\ude81\ud83c\udf89",
+      "error": "Crosswind turbulence! Tilting wings to regain stability! \ud83e\ude81\ud83d\udca8",
+      "sleeping": "Zzz... drifting on a soft breeze high above the clouds... \ud83c\udf19"
+    }
+  }
 }

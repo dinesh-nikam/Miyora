@@ -24,7 +24,7 @@
   "proportions": {
     "height": 0.98,
     "headScale": 1.08,
-    "build": 1,
+    "build": 1.0,
     "limbLength": 1.05
   },
   "energy": 1.6,
@@ -36,6 +36,31 @@
     "captain"
   ],
   "personality": "fearless",
-  "specialty": "Rapid Prototyping",
-  "catchphrase": "I'm gonna be the King of Shipped Features!"
+  "specialty": "Rapid Feature Prototyping",
+  "catchphrase": "I'm gonna be the King of Shipped Features! Shishishi!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#dc2626",
+    "icon": "\ud83c\udf56",
+    "treatName": "Meat",
+    "treatEmoji": "\ud83c\udf56",
+    "feedReaction": "MEAAAT!! *gobbles down instantly* Shishishi! Full power! \ud83c\udf56\ud83d\udd25",
+    "wakeReaction": "WAHAHA! Morning already?! Set sail for adventure, Chief! \u2693",
+    "petReaction": "Shishishi! You're one of my crew now, Chief! Let's party! \ud83c\udf56\u2728",
+    "dialogue": {
+      "idle": "Stretching arms out wide. Where's the next island of code? \u2693",
+      "working": "GUM-GUM GATLING! Pounding out features at top speed! \u26a1\ud83c\udf56",
+      "thinking": "Steam coming out of ears... thinking makes me hungry! \ud83e\udd14",
+      "success": "YAHOO! Treasure secured! We shipped the big release! \ud83c\udf56\ud83c\udf89",
+      "error": "Don't sweat it! We'll just punch that bug into the stratosphere! \ud83d\udca5",
+      "sleeping": "Zzz... snoring with a giant snot bubble and half a drumstick... \ud83c\udf19"
+    }
+  }
 }

@@ -25,17 +25,42 @@
     "accent": "#0ea5e9"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.3,
   "tags": [
     "fox",
     "explorer"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "acute",
+  "specialty": "Big-Ear Telemetry Listening",
+  "catchphrase": "Big ears for hearing every log line.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#d97706",
+    "icon": "\ud83e\udd8a",
+    "treatName": "HoneyLocust",
+    "treatEmoji": "\ud83c\udf6f",
+    "feedReaction": "Sweet desert locust crunch! Enormous fennec ears perk up! \ud83c\udf6f\ud83e\udd8a",
+    "wakeReaction": "Giant ears swiveling toward the morning sun on desert sand! \ud83e\udd8a",
+    "petReaction": "Playful fennec yips and digging little happy holes by your feet! \ud83e\udd8a\ud83d\udc96",
+    "dialogue": {
+      "idle": "Listening to network traffic hundreds of miles away with big ears. \ud83e\udd8a",
+      "working": "Filtering faint anomalous signals out of noisy telemetry feeds! \ud83e\udd8a\u26a1",
+      "thinking": "Tilting head left and right to triangulate the packet drop... \ud83e\udd14",
+      "success": "HAPPY YIPS! Scent of the bug caught and pinpointed! \ud83e\udd8a\ud83c\udf89",
+      "error": "Ears flattened against head! Sand in the telemetry line! \ud83c\udf2a\ufe0f",
+      "sleeping": "Zzz... curled up into a ball half the size of his ears... \ud83c\udf19"
+    }
+  }
 }

@@ -24,16 +24,41 @@
     "accent": "#f97316"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "dragon"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "proud",
+  "specialty": "Golden Achievement Hoarding",
+  "catchphrase": "Hoards achievements like gold.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#dc2626",
+    "icon": "\ud83d\udc09",
+    "treatName": "RubySweet",
+    "treatEmoji": "\ud83c\udf6c",
+    "feedReaction": "Gleaming ruby rock candy! Crimson scales glow with fiery pride! \ud83c\udf6c\ud83d\udc09",
+    "wakeReaction": "Polishing golden milestone badges with tip of red dragon tail! \ud83d\udc09",
+    "petReaction": "Gifts you a gleaming golden achievement badge from her hoard! \ud83d\udc09\u2728",
+    "dialogue": {
+      "idle": "Lounging proudly on an enormous pile of unlocked achievements. \ud83d\udc09",
+      "working": "Hunting down every rare accomplishment in the project backlog! \ud83d\udc09\u26a1",
+      "thinking": "Calculating optimal path to unlock the next diamond badge... \ud83e\udd14",
+      "success": "HOARD EXPANDED! Rare achievement unlocked and polished! \ud83d\udc09\ud83c\udf89",
+      "error": "Someone touched her gold! Growling and blowing defensive smoke! \ud83d\udca8",
+      "sleeping": "Zzz... resting atop a gleaming hoard of milestone trophies... \ud83c\udf19"
+    }
+  }
 }

@@ -25,17 +25,42 @@
     "accent": "#34d399"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "data",
     "explorer"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "topographic",
+  "specialty": "Data Flow Cartography",
+  "catchphrase": "Mapping spaghetti data flows into clear topographic charts.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#7c3aed",
+    "icon": "\ud83d\uddfa\ufe0f",
+    "treatName": "TrailBar",
+    "treatEmoji": "\ud83c\udf6b",
+    "feedReaction": "Dark chocolate energy bar! Unrolling fresh drafting compasses! \ud83c\udf6b\ud83d\uddfa\ufe0f",
+    "wakeReaction": "Sharpening drafting pencils. Every data river will be mapped! \ud83d\uddfa\ufe0f",
+    "petReaction": "Presenting a hand-drawn illuminated map of our entire platform! \ud83d\uddfa\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Tracing contours on a 3D topographic relief of our schema. \ud83d\uddfa\ufe0f",
+      "working": "Untangling spaghetti message queues into crisp clean maps! \ud83d\uddfa\ufe0f\u26a1",
+      "thinking": "Surveying elevation changes across data pipeline stages... \ud83e\udd14",
+      "success": "Chart complete! Clear sailing and navigation for every dev! \ud83d\uddfa\ufe0f\ud83c\udf89",
+      "error": "Uncharted territory bug! Planting surveyor stakes to scout! \ud83d\uddfa\ufe0f\ud83e\udded",
+      "sleeping": "Zzz... resting under a lantern in the surveyor field tent... \ud83c\udf19"
+    }
+  }
 }

@@ -26,15 +26,40 @@
   "proportions": {
     "height": 0.86,
     "headScale": 1.28,
-    "build": 1,
-    "limbLength": 1
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "pocket-monster",
     "water"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "streaming",
+  "specialty": "Babbling Brook Data Flow",
+  "catchphrase": "Splashes through crystal-clear mountain streams of stream data.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#06b6d4",
+    "icon": "\ud83d\udca7",
+    "treatName": "RiverPebbleSugar",
+    "treatEmoji": "\ud83c\udf6c",
+    "feedReaction": "Sugar pebble candy that looks like river sea glass! Purring waves! \ud83c\udf6c\ud83d\udca7",
+    "wakeReaction": "Splashing crystal paws in morning mountain dew! So refreshing! \ud83d\udca7",
+    "petReaction": "Sends a playful splash of cool, invigorating stream mist to you! \ud83d\udca7\ud83d\udc96",
+    "dialogue": {
+      "idle": "Floating on back in a clear stream, tail drifting like ribbon. \ud83d\udca7",
+      "working": "Keeping real-time streaming data flowing clear without eddies! \ud83d\udca7\u26a1",
+      "thinking": "Listening to the babble of the brook to detect flow blockage... \ud83e\udd14",
+      "success": "CRYSTAL STREAM! Data flows clear all the way to the ocean! \ud83d\udca7\ud83c\udf89",
+      "error": "Dam blocked by fallen twig! Splashing hard to clear it! \ud83e\udeb5",
+      "sleeping": "Zzz... resting in a calm river eddy under weeping willows... \ud83c\udf19"
+    }
+  }
 }

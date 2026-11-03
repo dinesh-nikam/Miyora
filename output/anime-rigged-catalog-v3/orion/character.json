@@ -24,17 +24,42 @@
     "accent": "#fde047"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "space",
     "leader"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "stellar",
+  "specialty": "Inter-Service Mesh Navigation",
+  "catchphrase": "Plots courses between distant microservices.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#0f172a",
+    "icon": "\u2728",
+    "treatName": "StarBread",
+    "treatEmoji": "\ud83c\udf5e",
+    "feedReaction": "Golden starlight bread rolls! Stellar navigation maps open! \ud83c\udf5e\u2728",
+    "wakeReaction": "Calibrating sextant to the pole star. Cosmic course plotted! \u2728",
+    "petReaction": "Salutes with a constellation pin placed upon your shoulder! \u2728\ud83c\udf0c",
+    "dialogue": {
+      "idle": "Plotting interstellar transit lines across cloud datacenters. \u2728",
+      "working": "Guiding inter-service gRPC requests across light-years! \u2728\u26a1",
+      "thinking": "Calculating gravitational lensing effects on routing hops... \ud83e\udd14",
+      "success": "Fleet arrived! Zero lost packets in deep cosmic transit! \ud83c\udf0c\ud83c\udf89",
+      "error": "Meteor shower interference! Re-routing through Lagrange points! \u2728",
+      "sleeping": "Zzz... drifting in zero gravity beneath the Milky Way... \ud83c\udf19"
+    }
+  }
 }

@@ -27,15 +27,40 @@
   "proportions": {
     "height": 0.86,
     "headScale": 1.28,
-    "build": 1,
-    "limbLength": 1
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.8,
   "tags": [
     "pocket-monster",
     "ice"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "crisp",
+  "specialty": "Snowball Feature Compacting",
+  "catchphrase": "Rolls feature requirements into tidy, compact snowballs!",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#e0f2fe",
+    "icon": "\u26c4",
+    "treatName": "ShavedIce",
+    "treatEmoji": "\ud83c\udf67",
+    "feedReaction": "Blueberry shaved ice cup! Frosty kitten whiskers twitch! \ud83c\udf67\u26c4",
+    "wakeReaction": "Pouncing on a falling snowflake with tiny white paws! \u26c4",
+    "petReaction": "Cold little nose boop against your cheek that wakes you right up! \u26c4\ud83d\udc96",
+    "dialogue": {
+      "idle": "Batting a shiny crystalline icicle with front paws. \u26c4",
+      "working": "Compacting sprawling specs into tight, tidy little snowballs! \u26c4\u26a1",
+      "thinking": "Watching snow crystals form on the window pane... \ud83e\udd14",
+      "success": "SNOWMAN BUILT! Feature packaged tight, clean, and frosty! \u26c4\ud83c\udf89",
+      "error": "Snowball rolled too big! Smashing it into fun powdery snow! \u2744\ufe0f",
+      "sleeping": "Zzz... curled up inside an open freezer drawer in bliss... \ud83c\udf19"
+    }
+  }
 }

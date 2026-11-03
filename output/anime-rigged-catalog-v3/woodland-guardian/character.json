@@ -37,7 +37,32 @@
     "beast",
     "bramble"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "gentle",
+  "specialty": "Canopy Shield Protection & Stability",
+  "catchphrase": "Rustling velvety antlers under a giant leaf, shielding you from rain.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#15803d",
+    "icon": "\ud83c\udf43",
+    "treatName": "Acorn",
+    "treatEmoji": "\ud83c\udf30",
+    "feedReaction": "Crunchy roasted acorn! Plump belly rumbles with deep joy! \ud83c\udf30\ud83c\udf43",
+    "wakeReaction": "*huge yawn that shakes the leaves* Good morning, little friend! \ud83c\udf43",
+    "petReaction": "*rumbling purr like distant thunder* Soft velvety antler nuzzles! \ud83c\udf43\ud83d\udc96",
+    "dialogue": {
+      "idle": "Holding giant leaf umbrella overhead. Cozy and dry under here! \ud83c\udf43",
+      "working": "Shielding your focus beneath ancient, unbreakable branches! \ud83c\udf33\u26a1",
+      "thinking": "Listening to the quiet heartbeat of the subterranean roots... \ud83e\udd14",
+      "success": "ROAR of celebration! Ancient forest rejoices in full health! \ud83c\udf43\ud83c\udf89",
+      "error": "A gust of cold rain. Step behind my broad pelt, we're safe. \ud83d\udee1\ufe0f",
+      "sleeping": "Zzz... snoozing deeply inside a hollow camphor tree... \ud83c\udf19"
+    }
+  }
 }

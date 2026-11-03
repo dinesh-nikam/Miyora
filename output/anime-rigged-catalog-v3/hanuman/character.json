@@ -3,31 +3,30 @@
   "id": "miyora.hanuman",
   "name": "Hanuman",
   "title": "Mighty Loyal Hero",
-  "description": "Golden-furred hero of boundless courage with curled tail, radiant mukut crown, and fiery saffron armor.",
+  "description": "Golden-furred hero of boundless courage with curled tail, radiant temple crown, red and saffron dhoti, and golden gada.",
   "body": "humanoid",
-  "ears": "cat",
+  "ears": "human",
   "tail": "cat",
   "wings": "none",
   "hair": "spiky",
-  "eyes": "sparkle",
-  "outfit": "armor",
+  "eyes": "round",
+  "outfit": "tunic",
   "accessories": [
     "crown",
-    "headband",
     "gem"
   ],
   "pattern": "none",
   "palette": {
-    "skin": "#e0ac83",
-    "hair": "#78350f",
-    "eyes": "#451a03",
-    "primary": "#ea580c",
-    "secondary": "#ffd700",
-    "accent": "#b91c1c"
+    "skin": "#e8a84c",
+    "hair": "#c27a2c",
+    "eyes": "#6b3e1f",
+    "primary": "#b91c1c",
+    "secondary": "#ea580c",
+    "accent": "#ffd700"
   },
   "proportions": {
     "height": 0.95,
-    "headScale": 1.15,
+    "headScale": 1.18,
     "build": 1.2,
     "limbLength": 0.95
   },
@@ -40,7 +39,31 @@
     "courage"
   ],
   "personality": "loyal",
-  "specialty": "Heavy Infrastructure",
-  "catchphrase": "Leaping across regions with boundless energy.",
-  "hairTip": "#ffd700"
+  "specialty": "High-Availability Infrastructure",
+  "catchphrase": "Jai Bajrangbali! No server shall fall, no deployment falter!",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#ea580c",
+    "icon": "\ud83d\udd31",
+    "treatName": "Laddoo",
+    "treatEmoji": "\ud83d\udfe0",
+    "feedReaction": "Golden motichoor laddoo! Boundless prana surging! \ud83d\udfe0\ud83d\udcaa",
+    "wakeReaction": "Jai Sri Ram! Leaping across servers to clear your path! \u26a1\ud83d\udd31",
+    "petReaction": "Boundless loyalty and invincible courage for your journey! \ud83d\udd31\ud83d\udc96",
+    "dialogue": {
+      "idle": "Gada resting, senses sharp. Ready to leap on command! \ud83d\udd31",
+      "working": "Carrying entire mountain ranges of dependencies effortlessly! \u26a1\ud83d\udcaa",
+      "thinking": "Contemplating the leap across the ocean of complexity... \ud83e\udd14",
+      "success": "VICTORY! All bugs vanquished by the golden mace! \ud83d\udd31\ud83c\udf89",
+      "error": "A demonic deadlock! Smashing it into clean particles! \ud83d\udca5",
+      "sleeping": "Zzz... resting in deep meditation of the sacred name... \ud83c\udf19"
+    }
+  }
 }

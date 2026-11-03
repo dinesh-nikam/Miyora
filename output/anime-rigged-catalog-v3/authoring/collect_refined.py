@@ -8,7 +8,7 @@ from pathlib import Path
 import re
 
 LOG = logging.getLogger("miyora.collect-refined")
-REVISION = "refined-catalog-v3.2"
+REVISION = "refined-catalog-v3.3"
 
 
 def collect(root):

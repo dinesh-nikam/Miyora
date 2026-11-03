@@ -24,17 +24,42 @@
     "accent": "#fde047"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.4,
   "tags": [
     "phoenix",
     "fire"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "resilient",
+  "specialty": "Phoenix Rebirth Resilience",
+  "catchphrase": "Rises from every failed build stronger.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f97316",
+    "icon": "\ud83d\udd25",
+    "treatName": "CinderSparks",
+    "treatEmoji": "\u26a1",
+    "feedReaction": "Sweet cinnamon fire embers! Golden crest bursts into warm flame! \u26a1\ud83d\udd25",
+    "wakeReaction": "Spreading radiant crimson fire wings! Reborn and ready to conquer! \ud83d\udd25",
+    "petReaction": "Envelops you in a warm, protective aura of never-ending resilience! \ud83d\udd25\ud83d\udc96",
+    "dialogue": {
+      "idle": "Resting in a nest of glowing golden branches, radiant and calm. \ud83d\udd25",
+      "working": "Rising from the ashes of failed builds ten times stronger! \ud83d\udd25\u26a1",
+      "thinking": "Channeling the immortal flame of perseverance... \ud83e\udd14",
+      "success": "PHOENIX REBIRTH! Triumphant golden wings blaze across sky! \ud83d\udd25\ud83c\udf89",
+      "error": "Burned down to ashes! Stirring the embers, rising right back up! \ud83d\udca5",
+      "sleeping": "Zzz... glowing peacefully as a radiant golden ember in sleep... \ud83c\udf19"
+    }
+  }
 }

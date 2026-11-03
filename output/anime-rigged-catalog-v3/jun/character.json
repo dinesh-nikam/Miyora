@@ -22,16 +22,41 @@
     "accent": "#f97316"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "cozy"
   ],
-  "personality": "zen",
-  "specialty": "Code Cleanliness",
-  "catchphrase": "Patient cultivation builds stable software."
+  "personality": "cozy",
+  "specialty": "Refactoring Fuel Brewing",
+  "catchphrase": "Brews strong coffee for long refactors.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#78350f",
+    "icon": "\u2615",
+    "treatName": "CinnamonRoll",
+    "treatEmoji": "\ud83e\udd50",
+    "feedReaction": "Warm iced cinnamon roll! The espresso machine reaches pressure! \ud83e\udd50\u2615",
+    "wakeReaction": "Grinding dark roast beans. Rich aroma fills the coding den! \u2615",
+    "petReaction": "Sliding an artisanal latte with a foam cat heart across the counter! \u2615\ud83d\udc96",
+    "dialogue": {
+      "idle": "Wiping polished mahogany counter. The cafe is warm and welcoming. \u2615",
+      "working": "Brewing steady focus fuel for grueling refactoring sprints! \u2615\u26a1",
+      "thinking": "Balancing acidity, crema, and extraction timing... \ud83e\udd14",
+      "success": "Order served! Refactored code is smooth, rich, and balanced! \u2615\ud83c\udf89",
+      "error": "Grounds spilled! Cleaning the counter and pulling a fresh shot! \u2615",
+      "sleeping": "Zzz... resting in a cozy corner booth as night falls... \ud83c\udf19"
+    }
+  }
 }

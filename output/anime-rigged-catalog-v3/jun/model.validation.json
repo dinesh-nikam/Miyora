@@ -71,10 +71,10 @@
   "embeddedTextureCount": 1,
   "schemaVersion": 1,
   "structuralValidation": "passed",
-  "runtimeValidation": "passed",
-  "visualReview": "front-overview-reviewed",
-  "byteLength": 1907912,
-  "sha256": "27ca1dc9b98706fb7e9cff83fc1df733913d1c040916b21019915b8df8a0c0a3",
+  "runtimeValidation": "pending",
+  "visualReview": "pending",
+  "byteLength": 2111392,
+  "sha256": "0d7f34bece19c960d4e5b1e0135867db72922a7c20a2941e40c96d2f4f1745f0",
   "expressionNames": [
     "blink",
     "happy",
@@ -83,8 +83,5 @@
     "surprised"
   ],
   "springChainCount": 0,
-  "toonMaterialCount": 10,
-  "nativeValidation": "passed",
-  "poseChecks": 15,
-  "expressionChecks": 5
+  "toonMaterialCount": 10
 }

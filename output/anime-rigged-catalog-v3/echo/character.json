@@ -24,17 +24,42 @@
     "accent": "#22d3ee"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.8,
   "tags": [
     "robot",
     "calm"
   ],
-  "personality": "methodical",
-  "specialty": "Deterministic CI",
-  "catchphrase": "Zero syntax faults allowed."
+  "personality": "sonorous",
+  "specialty": "Acoustic Telemetry Filtering",
+  "catchphrase": "Filtering sonic resonance from noisy telemetry streams.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#06b6d4",
+    "icon": "\ud83d\udce1",
+    "treatName": "QuartzCrystal",
+    "treatEmoji": "\ud83d\udd2e",
+    "feedReaction": "Resonant quartz crystal installed! Signal-to-noise ratio doubled! \ud83d\udd2e\ud83d\udce1",
+    "wakeReaction": "Sonar ping sent. Echo chamber acoustics calibrated perfectly! \ud83d\udce1",
+    "petReaction": "Sweet acoustic chime resonates in gratitude for your kindness! \ud83d\udce1\u2728",
+    "dialogue": {
+      "idle": "Microphone array listening to ambient spectrum. Clear. \ud83d\udce1",
+      "working": "Filtering harmonic frequencies out of messy trace data! \ud83d\udce1\u26a1",
+      "thinking": "Applying Fourier transform to detect hidden periodic spikes... \ud83e\udd14",
+      "success": "Signal pristine! Pure harmonic data delivered to dashboard! \ud83d\udce1\ud83c\udf89",
+      "error": "High-frequency feedback loop! Engaging notch filter! \ud83d\udce1\u26a0\ufe0f",
+      "sleeping": "Zzz... acoustic sensors muted in silent white-noise sleep... \ud83c\udf19"
+    }
+  }
 }

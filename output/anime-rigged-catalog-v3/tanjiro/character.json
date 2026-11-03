@@ -38,7 +38,32 @@
     "sun"
   ],
   "personality": "earnest",
-  "specialty": "Test-Driven TDD",
+  "specialty": "Tenacious Test-Driven Development",
   "catchphrase": "Work through every red test until it turns green!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#15803d",
+    "icon": "\ud83d\udde1\ufe0f",
+    "treatName": "Onigiri",
+    "treatEmoji": "\ud83c\udf59",
+    "feedReaction": "Fresh warm onigiri! Scent of gratitude fills the air. \ud83c\udf59\u2728",
+    "wakeReaction": "Taking a deep breath of total concentration. Ready to serve! \ud83d\udde1\ufe0f",
+    "petReaction": "Warm, gentle smile. Your kindness gives me strength, Chief. \ud83c\udf38\ud83d\udc96",
+    "dialogue": {
+      "idle": "Smelling the air for incoming commits. All clear, Chief! \ud83c\udf43",
+      "working": "Hinokami Kagura! Slicing through failing assertions! \ud83d\udd25\ud83d\udde1\ufe0f",
+      "thinking": "I can smell the opening thread of this difficult logic... \ud83e\udd14",
+      "success": "Clear morning sun! All red tests turned bright green! \ud83c\udf05\ud83c\udf89",
+      "error": "Do not give up! Even broken builds teach us how to grow! \ud83d\udee1\ufe0f",
+      "sleeping": "Zzz... resting peacefully with Nichirin blade close at hand... \ud83c\udf19"
+    }
+  },
   "hairTip": "#dc2626"
 }

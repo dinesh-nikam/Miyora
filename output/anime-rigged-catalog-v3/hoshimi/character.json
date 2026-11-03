@@ -25,18 +25,43 @@
     "accent": "#fde047"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.5,
   "tags": [
     "anime",
     "magical-girl"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always.",
+  "personality": "radiant",
+  "specialty": "Starlight Test Transmutation",
+  "catchphrase": "Transforms failing tests into shooting stars.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#ec4899",
+    "icon": "\ud83e\ude84",
+    "treatName": "StarCookie",
+    "treatEmoji": "\u2b50",
+    "feedReaction": "Star-shaped frosted sugar cookie! Wand tip sparkles bright! \u2b50\ud83e\ude84",
+    "wakeReaction": "Twirling magical ribbons! Starlight magical girl power active! \ud83e\ude84",
+    "petReaction": "Twirls wand to shower your screen with sparkling lucky stars! \ud83e\ude84\ud83d\udc96",
+    "dialogue": {
+      "idle": "Practicing magical transformation poses in front of mirror. \ud83e\ude84",
+      "working": "Transmuting red failing tests into brilliant shooting stars! \ud83e\ude84\u26a1",
+      "thinking": "Gathering cosmic stardust to power the ultimate test pass... \ud83e\udd14",
+      "success": "STARLIGHT MIRACLE! All red errors turned to shining gold! \u2b50\ud83c\udf89",
+      "error": "Magical wand sputter! Re-charging with courage and hope! \ud83e\ude84",
+      "sleeping": "Zzz... hugging giant plush star pillow in sweet dreamland... \ud83c\udf19"
+    }
+  },
   "hairTip": "#fde047"
 }

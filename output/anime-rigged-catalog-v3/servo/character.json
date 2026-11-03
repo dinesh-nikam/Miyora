@@ -24,17 +24,42 @@
     "accent": "#dc2626"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.7,
   "tags": [
     "robot",
     "butler"
   ],
-  "personality": "methodical",
-  "specialty": "Deterministic CI",
-  "catchphrase": "Zero syntax faults allowed."
+  "personality": "agile",
+  "specialty": "High-Precision Actuation",
+  "catchphrase": "Micro-stepping motor precision down to the nanometer.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#3b82f6",
+    "icon": "\ud83e\uddbe",
+    "treatName": "MachineLube",
+    "treatEmoji": "\ud83e\uddf4",
+    "feedReaction": "Synthetic nanotech lubricant! Actuator friction eliminated! \ud83e\uddf4\ud83e\uddbe",
+    "wakeReaction": "Encoders zeroed! Sub-micron positional accuracy verified! \ud83e\uddbe",
+    "petReaction": "Precision robotic fingers form a graceful origami crane for you! \ud83e\uddbe\u2728",
+    "dialogue": {
+      "idle": "Holding coordinates at absolute zero drift. Ready to move. \ud83e\uddbe",
+      "working": "Micro-stepping across precision robotic task queues! \ud83e\uddbe\u26a1",
+      "thinking": "Calculating inverse kinematics trajectories smoothly... \ud83e\udd14",
+      "success": "Position reached! Zero overshoot, perfect damping applied! \ud83e\uddbe\ud83c\udf89",
+      "error": "Positional deviation! Re-calibrating optical encoder scales! \ud83e\uddbe\u26a0\ufe0f",
+      "sleeping": "Zzz... servo brakes engaged safely in home park position... \ud83c\udf19"
+    }
+  }
 }

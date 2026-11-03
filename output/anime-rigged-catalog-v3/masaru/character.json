@@ -25,17 +25,42 @@
     "accent": "#ca8a04"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
+    "height": 1.0,
+    "headScale": 1.0,
     "build": 1.2,
-    "limbLength": 1
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "anime",
     "samurai"
   ],
-  "personality": "stoic",
-  "specialty": "Branch Guarding",
-  "catchphrase": "Stand between main and bad merges."
+  "personality": "unyielding",
+  "specialty": "Ironclad Pipeline Defense",
+  "catchphrase": "Never retreats from a failing pipeline.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1c1917",
+    "icon": "\u2694\ufe0f",
+    "treatName": "GrilledRice",
+    "treatEmoji": "\ud83c\udf59",
+    "feedReaction": "Charcoal grilled iron rice ball! Heavy armor plates secured! \ud83c\udf59\u2694\ufe0f",
+    "wakeReaction": "Tightening headband. We will hold this deployment line together! \u2694\ufe0f",
+    "petReaction": "Warrior bow of absolute solidarity: Forward until victory, Chief! \u2694\ufe0f\ud83d\udcaa",
+    "dialogue": {
+      "idle": "Sharpening battle blade on water whetstone with firm strokes. \u2694\ufe0f",
+      "working": "Standing ironclad against cascading pipeline test failures! \u2694\ufe0f\u26a1",
+      "thinking": "Rooting stance firmly to withstand the build pressure... \ud83e\udd14",
+      "success": "Pipeline held! Victory won through unbreakable discipline! \u2694\ufe0f\ud83c\udf89",
+      "error": "A frontal breach! Charging forward to meet the challenge! \u2694\ufe0f\ud83d\udd25",
+      "sleeping": "Zzz... resting upright with hands clasped over hilt... \ud83c\udf19"
+    }
+  }
 }

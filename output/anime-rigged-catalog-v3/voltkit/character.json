@@ -24,15 +24,40 @@
   "proportions": {
     "height": 0.86,
     "headScale": 1.28,
-    "build": 1,
-    "limbLength": 1
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.6,
   "tags": [
     "pocket-monster",
     "electric"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "electric",
+  "specialty": "Static Electric Spark Play",
+  "catchphrase": "Builds cheerful static electricity by scuffing paws on the rug!",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#facc15",
+    "icon": "\u26a1",
+    "treatName": "LemonDrop",
+    "treatEmoji": "\ud83c\udf4b",
+    "feedReaction": "Sour lemon pop candy! Tiny yellow kitten ears crackle! \ud83c\udf4b\u26a1",
+    "wakeReaction": "Scuffing paws on the wool rug to build up friendly static! \u26a1",
+    "petReaction": "Zaps you with a tiny, warm static spark of deep friendship! \u26a1\ud83d\udc96",
+    "dialogue": {
+      "idle": "Fur standing on end like a cheerful little yellow dandelion. \u26a1",
+      "working": "Supercharging the build workers with playful static bursts! \u26a1\u26a1",
+      "thinking": "Antenna whiskers twitching as voltage oscillates... \ud83e\udd14",
+      "success": "SPARK SHOWER! Clean 120-volt deployment completed! \u26a1\ud83c\udf89",
+      "error": "Overcharged the rug! Poofing out in all directions with a zap! \u26a1",
+      "sleeping": "Zzz... humming with a gentle 60Hz sleep frequency... \ud83c\udf19"
+    }
+  }
 }

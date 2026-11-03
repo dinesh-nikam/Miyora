@@ -25,9 +25,9 @@
   },
   "proportions": {
     "height": 0.9,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.4,
   "tags": [
@@ -35,8 +35,33 @@
     "mecha",
     "maker"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always.",
+  "personality": "ingenious",
+  "specialty": "Mech Sandbox Prototyping",
+  "catchphrase": "Built a giant robot out of spare build agents.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f97316",
+    "icon": "\ud83e\udd16",
+    "treatName": "SodaCan",
+    "treatEmoji": "\ud83e\udd64",
+    "feedReaction": "Pop of a cold orange soda! Wrench clinking on steel armor plate! \ud83e\udd64\ud83e\udd16",
+    "wakeReaction": "Welding mask down! Sparks flying as giant mech limbs assemble! \ud83e\udd16",
+    "petReaction": "Thumbs up through heavy welder gloves: Mech is 100% operational! \ud83e\udd16\ud83d\udcaa",
+    "dialogue": {
+      "idle": "Sketching giant robot hydraulic joints on graph paper. \ud83e\udd16",
+      "working": "Assembling giant mechanical solutions out of spare workers! \ud83e\udd16\u26a1",
+      "thinking": "Balancing center of gravity on a fifty-foot build bot... \ud83e\udd14",
+      "success": "MECH LAUNCH! Giant robot stomps all build blockers flat! \ud83e\udd16\ud83c\udf89",
+      "error": "Hydraulic hose popped! Wrapping with duct tape in seconds! \ud83e\udd16\ud83d\udd27",
+      "sleeping": "Zzz... curled up inside the mech cockpit surrounded by tools... \ud83c\udf19"
+    }
+  },
   "hairTip": "#1e3a8a"
 }

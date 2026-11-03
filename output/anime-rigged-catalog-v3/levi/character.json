@@ -39,6 +39,31 @@
     "captain"
   ],
   "personality": "disciplined",
-  "specialty": "Code Cleanup",
-  "catchphrase": "Tidy your modules. Filthy code is unacceptable."
+  "specialty": "Surgical Hygiene & Dead-Code Elimination",
+  "catchphrase": "Tidy your modules. Filthy code is unacceptable.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#15803d",
+    "icon": "\ud83e\uddf9",
+    "treatName": "BlackTea",
+    "treatEmoji": "\u2615",
+    "feedReaction": "Holding teacup by the rim. High-grade black tea. Acceptable. \u2615\ud83e\uddf9",
+    "wakeReaction": "Get up. Dust your workspace. We have filthy bugs to eliminate. \ud83e\uddf9",
+    "petReaction": "Hmph... your hands are clean. Keep them that way. \ud83e\uddf9\u2728",
+    "dialogue": {
+      "idle": "Inspecting desk corners with a white cloth. Spotless. \ud83e\uddf9",
+      "working": "Dual spinning steel blades! Slicing through bloated modules! \u2694\ufe0f\u26a1",
+      "thinking": "Assessing the situation without unnecessary emotion... \ud83e\udd14",
+      "success": "Area sanitized. Not a single trace of filth remains. \ud83e\uddf9\ud83c\udf89",
+      "error": "Tch. Sloppy work. Re-do it properly from scratch. \u2694\ufe0f",
+      "sleeping": "Zzz... resting upright in his chair, coat over shoulders... \ud83c\udf19"
+    }
+  }
 }

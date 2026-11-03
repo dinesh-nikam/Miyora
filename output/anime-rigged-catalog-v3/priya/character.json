@@ -24,16 +24,41 @@
     "accent": "#facc15"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "music"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "rhythmic",
+  "specialty": "CI/CD Rhythm Orchestration",
+  "catchphrase": "Conducting continuous integration suites with symphonic tempo.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#be185d",
+    "icon": "\ud83c\udfb5",
+    "treatName": "GulabJamun",
+    "treatEmoji": "\ud83c\udf6f",
+    "feedReaction": "Warm saffron gulab jamun! The metronome ticks in perfect time! \ud83c\udf6f\ud83c\udfb5",
+    "wakeReaction": "Raising conductor baton. The CI pipeline orchestra is tuned! \ud83c\udfb5",
+    "petReaction": "Tapping out a joyous musical rhythm of victory on your desk! \ud83c\udfb5\u2728",
+    "dialogue": {
+      "idle": "Listening to the background hum of test runners in tempo. \ud83c\udfb5",
+      "working": "Conducting parallel test suites like a sweeping symphony! \ud83c\udfb5\u26a1",
+      "thinking": "Balancing stage runtimes to eliminate pipeline pauses... \ud83e\udd14",
+      "success": "Crescendo! Flawless cadence, all test instruments in tune! \ud83c\udfb5\ud83c\udf89",
+      "error": "Discordant flat note! Tuning the failing test runner! \ud83c\udfb5\ud83c\udfbb",
+      "sleeping": "Zzz... resting with sheet music resting across her lap... \ud83c\udf19"
+    }
+  }
 }

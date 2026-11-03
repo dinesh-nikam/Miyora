@@ -23,7 +23,7 @@ from package_vrm import package
 from appearance_refinement import footwear, nezuko_details, texture_material, costume, surface_details
 
 LOG = logging.getLogger("miyora.refine")
-REVISION = "refined-catalog-v3.2"
+REVISION = "refined-catalog-v3.3"
 
 
 class RefinedAuthor(CatalogAuthor):

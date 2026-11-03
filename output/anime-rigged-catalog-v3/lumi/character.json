@@ -25,9 +25,9 @@
   },
   "proportions": {
     "height": 0.85,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.4,
   "tags": [
@@ -35,6 +35,31 @@
     "cute"
   ],
   "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "specialty": "Micro-Notification Dispatch",
+  "catchphrase": "Flutters notifications to exactly the right person.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#6ee7b7",
+    "icon": "\ud83e\uddda",
+    "treatName": "NectarDrops",
+    "treatEmoji": "\ud83c\udf6f",
+    "feedReaction": "Sweet honeydew nectar droplets! Iridescent fairy wings flutter! \ud83c\udf6f\ud83e\uddda",
+    "wakeReaction": "Flitting into the room on sparkling breeze. Delivery time! \ud83e\uddda",
+    "petReaction": "Sprinkles tiny glowing fairy dust over your keyboard with a giggle! \ud83e\uddda\ud83d\udc96",
+    "dialogue": {
+      "idle": "Hovering by the notification bell, checking tiny address tags. \ud83e\uddda",
+      "working": "Fluttering lightweight alerts directly to the right engineer! \ud83e\uddda\u26a1",
+      "thinking": "Finding the path that minimizes alert noise and distraction... \ud83e\udd14",
+      "success": "Ding! Notification delivered cleanly without alert fatigue! \ud83e\uddda\ud83c\udf89",
+      "error": "Caught in a window draft! Recovering with cheerful giggle! \ud83e\uddda",
+      "sleeping": "Zzz... sleeping inside a pink tulip blossom on the sill... \ud83c\udf19"
+    }
+  }
 }

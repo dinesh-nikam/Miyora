@@ -24,16 +24,41 @@
     "accent": "#fde047"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.9,
   "tags": [
     "healer"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "healing",
+  "specialty": "Graceful Degradation & Healing",
+  "catchphrase": "Mending severed network sockets with soothing golden warmth.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f59e0b",
+    "icon": "\u2728",
+    "treatName": "HoneyCake",
+    "treatEmoji": "\ud83c\udf6f",
+    "feedReaction": "Warm honey drizzle cake! Healing light radiates through hands! \ud83c\udf6f\u2728",
+    "wakeReaction": "Sunstone amulet glows warm. Ready to mend weary software! \u2728",
+    "petReaction": "A comforting touch of healing radiance to soothe coding stress! \u2728\ud83d\udc96",
+    "dialogue": {
+      "idle": "Weaving threads of golden light into protective charms. \u2728",
+      "working": "Healing broken network links with resilient graceful fallbacks! \u2728\u26a1",
+      "thinking": "Diagnosing socket degradation with compassionate intuition... \ud83e\udd14",
+      "success": "Whole and healed! The system breathes with restored vitality! \u2728\ud83c\udf89",
+      "error": "A fractured connection! Pouring warm soothing balm on it! \u2728\ud83e\ude79",
+      "sleeping": "Zzz... resting bathed in peaceful amber sunstone glow... \ud83c\udf19"
+    }
+  }
 }

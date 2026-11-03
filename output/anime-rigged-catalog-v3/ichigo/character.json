@@ -37,8 +37,33 @@
     "ichigo",
     "shinigami"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always.",
+  "personality": "resolute",
+  "specialty": "High-Throughput Parallelism",
+  "catchphrase": "Bankai: Tensa Zangetsu! I'll cut down every blocker in your way!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#ea580c",
+    "icon": "\u2694\ufe0f",
+    "treatName": "Chocolate",
+    "treatEmoji": "\ud83c\udf6b",
+    "feedReaction": "Bittersweet chocolate. Enough fuel to maintain Bankai. \ud83c\udf6b\u2694\ufe0f",
+    "wakeReaction": "Zangetsu unslung. Who's threatening our project workspace? \u2694\ufe0f",
+    "petReaction": "Hey, thanks, Chief. I'll make sure nothing breaks on my watch. \u2694\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Broadsword rested over shoulder. Standing guard for the team. \u2694\ufe0f",
+      "working": "GETSUGA TENSHO! Cleaving right through dense legacy debt! \u26a1\ud83d\udca5",
+      "thinking": "Hearing the hollow within whisper hints about this bug... \ud83e\udd14",
+      "success": "BANKAI VICTORY! Blocker obliterated with supreme spiritual pressure! \u2694\ufe0f\ud83c\udf89",
+      "error": "Just a scratch! I won't lose to a pathetic runtime error! \ud83d\udd25",
+      "sleeping": "Zzz... resting in his substitute badge bedroom in peace... \ud83c\udf19"
+    }
+  },
   "hairTip": "#f97316"
 }

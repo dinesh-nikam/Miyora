@@ -24,17 +24,42 @@
     "accent": "#0ea5e9"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.9,
   "tags": [
     "ocean",
     "calm"
   ],
-  "personality": "zen",
-  "specialty": "Code Cleanliness",
-  "catchphrase": "Patient cultivation builds stable software."
+  "personality": "vigilant",
+  "specialty": "Status Page Vigilance",
+  "catchphrase": "Keeps the status page shining through the night.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#b91c1c",
+    "icon": "\ud83c\udfee",
+    "treatName": "HotChowder",
+    "treatEmoji": "\ud83e\udd63",
+    "feedReaction": "Steaming clam chowder bowl! The lighthouse lens rotates steady! \ud83e\udd63\ud83c\udfee",
+    "wakeReaction": "Wiping sea salt from the giant Fresnel prism lens. Bright light! \ud83c\udfee",
+    "petReaction": "Reassuring beam of warm light sweeps across your desk safely! \ud83c\udfee\u2728",
+    "dialogue": {
+      "idle": "Watching waves crash against the lighthouse rock foundation. \ud83c\udfee",
+      "working": "Sweeping bright beams of monitoring across dark seas! \ud83c\udfee\u26a1",
+      "thinking": "Watching the status indicators for the slightest flicker... \ud83e\udd14",
+      "success": "All clear! Status page shines a bright, unbroken green! \ud83c\udfee\ud83c\udf89",
+      "error": "Fog rolling in thick! Sounding the deep brass foghorn! \ud83d\udcef",
+      "sleeping": "Zzz... resting in the lantern keeper chair as light turns... \ud83c\udf19"
+    }
+  }
 }

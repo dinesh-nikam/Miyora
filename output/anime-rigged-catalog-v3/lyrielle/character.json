@@ -25,18 +25,43 @@
     "accent": "#fde047"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.9,
   "tags": [
     "anime",
     "cleric"
   ],
-  "personality": "mystical",
-  "specialty": "AST Transmutation",
-  "catchphrase": "Casting clean checkmarks into the terminal.",
+  "personality": "sacred",
+  "specialty": "Null-Pointer Smite Blessing",
+  "catchphrase": "Blesses deployments and smites null pointers.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1e293b",
+    "icon": "\ud83e\udebd",
+    "treatName": "BlessedBread",
+    "treatEmoji": "\ud83c\udf5e",
+    "feedReaction": "Blessed honey communion bread! Silver halo radiates pure light! \ud83c\udf5e\ud83e\udebd",
+    "wakeReaction": "Holding holy staff aloft. Darkness yields to sacred clarity. \ud83e\udebd",
+    "petReaction": "Gentle sacred blessing whispered over your keyboard and spirit! \ud83e\udebd\ud83d\udc96",
+    "dialogue": {
+      "idle": "Kneeling in quiet prayer for the stability of production. \ud83e\udebd",
+      "working": "Smiting null pointers and undefs with radiant holy beams! \ud83e\udebd\u26a1",
+      "thinking": "Listening for the divine whispers of architectural truth... \ud83e\udd14",
+      "success": "Sanctified deployment! Zero null references throughout the realm! \ud83e\udebd\ud83c\udf89",
+      "error": "A demonic null pointer crawled out! Banishing it with light! \ud83e\udebd",
+      "sleeping": "Zzz... resting on stone chapel pew as morning light breaks... \ud83c\udf19"
+    }
+  },
   "hairTip": "#fde68a"
 }

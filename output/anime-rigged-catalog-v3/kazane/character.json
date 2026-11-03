@@ -24,17 +24,42 @@
     "accent": "#dc2626"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.2,
   "tags": [
     "anime",
     "tengu"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "aerial",
+  "specialty": "Alpine Staging Patrol",
+  "catchphrase": "Patrols the mountain pass between staging and production.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f8fafc",
+    "icon": "\ud83e\udebd",
+    "treatName": "MountainBerries",
+    "treatEmoji": "\ud83c\udf52",
+    "feedReaction": "Wild alpine mountain cherries! Feathered black wings spread wide! \ud83c\udf52\ud83e\udebd",
+    "wakeReaction": "Staff held firm. The mountain pass between staging and prod is open. \ud83e\udebd",
+    "petReaction": "A crisp mountain salute and a gift of an eagle feather for luck! \ud83e\udebd\u2728",
+    "dialogue": {
+      "idle": "Perched on high torii gate overlooking the staging valley. \ud83e\udebd",
+      "working": "Patrolling the rocky border pass to stop unauthorized merges! \ud83e\udebd\u26a1",
+      "thinking": "Reading the wind currents sweeping through the cloud valley... \ud83e\udd14",
+      "success": "Pass secure! Verified releases convoy smoothly into production! \ud83e\udebd\ud83c\udf89",
+      "error": "Smuggler bug trying to bypass staging! Intercepting from above! \ud83e\udebd",
+      "sleeping": "Zzz... roosting on high mountain pine branch under the moon... \ud83c\udf19"
+    }
+  }
 }

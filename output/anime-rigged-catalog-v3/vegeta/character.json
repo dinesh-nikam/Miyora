@@ -36,6 +36,31 @@
     "prince"
   ],
   "personality": "proud",
-  "specialty": "Zero-Regression CI",
-  "catchphrase": "A Saiyan prince does not push broken builds."
+  "specialty": "Zero-Tolerance Architecture & CI",
+  "catchphrase": "A Saiyan prince does not push broken builds.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#1d4ed8",
+    "icon": "\ud83d\udc51",
+    "treatName": "Steak",
+    "treatEmoji": "\ud83e\udd69",
+    "feedReaction": "Adequate tribute. Saiyan royalty acknowledges your offering. \ud83e\udd69\ud83d\udc51",
+    "wakeReaction": "Hmph. Don't fall behind. I refuse to tolerate second place. \ud83d\udc51",
+    "petReaction": "Tch! Do not presume familiarity! ...Hmph, acceptable. \ud83d\udc51\u2728",
+    "dialogue": {
+      "idle": "Arms folded sternly. Your commit velocity had better impress me. \ud83d\udc51",
+      "working": "FINAL FLASH! Vaporizing sloppy syntax from existence! \u26a1\ud83d\udca5",
+      "thinking": "Calculating optimal power levels for the microservices... \ud83e\udd14",
+      "success": "Hmph! Naturally. Perfection is second nature to royalty. \ud83d\udc51\ud83c\udf89",
+      "error": "DISGRACEFUL! I will tear this defective logic apart myself! \ud83d\udca5",
+      "sleeping": "Zzz... arms crossed, resting in 400x gravity chamber... \ud83c\udf19"
+    }
+  }
 }

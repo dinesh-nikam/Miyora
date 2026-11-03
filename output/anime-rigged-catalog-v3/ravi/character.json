@@ -24,17 +24,42 @@
     "accent": "#f59e0b"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "coder",
     "office"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "architectural",
+  "specialty": "Distributed Systems Architecture",
+  "catchphrase": "Clean domain boundaries make unbreakable platforms.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1e3a8a",
+    "icon": "\ud83d\udcd0",
+    "treatName": "Chai",
+    "treatEmoji": "\u2615",
+    "feedReaction": "Steaming spiced cardamom chai! Sharpening systemic perspective! \u2615\ud83d\udcd0",
+    "wakeReaction": "Drafting blueprints at dawn. The system topology is clear. \ud83d\udcd0",
+    "petReaction": "Professional nod of mutual respect. Exceptional architectural taste! \ud83d\udcd0\u2728",
+    "dialogue": {
+      "idle": "Reviewing whiteboard system boundary diagrams. Spotless. \ud83d\udcd0",
+      "working": "Decoupling monolithic dependencies into resilient services! \ud83d\udcd0\u26a1",
+      "thinking": "Analyzing CAP theorem trade-offs for the new persistence layer... \ud83e\udd14",
+      "success": "Architecture sound! Distributed consensus achieved cleanly! \ud83d\udcd0\ud83c\udf89",
+      "error": "Domain boundary leakage detected! Refactoring contracts! \ud83d\udcd0\u26a0\ufe0f",
+      "sleeping": "Zzz... resting after signing off on the master architecture ADR... \ud83c\udf19"
+    }
+  }
 }

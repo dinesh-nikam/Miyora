@@ -24,17 +24,42 @@
     "accent": "#60a5fa"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.6,
   "tags": [
     "sheep",
     "cozy"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "peaceful",
+  "specialty": "Fluffy Dream State Counting",
+  "catchphrase": "Counts builds instead of sheep.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#e7e5e4",
+    "icon": "\ud83d\udc11",
+    "treatName": "SweetHay",
+    "treatEmoji": "\ud83c\udf3e",
+    "feedReaction": "Sweet clover hay biscuit! Woolly fleece bounces like a cloud! \ud83c\udf3e\ud83d\udc11",
+    "wakeReaction": "Gentle soft *baaa*, trotting over with bouncy cloud hooves! \ud83d\udc11",
+    "petReaction": "Snuggling whole fluffy wool body against your knee for naps! \ud83d\udc11\ud83d\udc96",
+    "dialogue": {
+      "idle": "Nibbling fresh grass, fleece looking like a fresh cumulus cloud. \ud83d\udc11",
+      "working": "Counting successful test runs over fences to ensure serenity! \ud83d\udc11\u26a1",
+      "thinking": "Chewing cud peacefully while watching the CI progress bar... \ud83e\udd14",
+      "success": "BAAA OF JOY! 100 sheep jumped the fence, all tests green! \ud83d\udc11\ud83c\udf89",
+      "error": "Stumbled on a stone! Bouncing right back up on cloud wool! \ud83d\udc11",
+      "sleeping": "Zzz... sleeping in an enormous pile of soft warm woolly sheep... \ud83c\udf19"
+    }
+  }
 }

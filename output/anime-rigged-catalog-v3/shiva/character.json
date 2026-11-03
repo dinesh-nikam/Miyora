@@ -3,31 +3,30 @@
   "id": "miyora.shiva",
   "name": "Shiva",
   "title": "Serene Ascetic Lord",
-  "description": "Ascetic blue lord of deep stillness with jatamukuta bun, crescent moon halo, and third-eye sapphire.",
+  "description": "Ascetic blue lord of deep stillness with flowing jata, crescent moon, temple crown, coiled cobra, tiger-stripe dhoti, and trishula.",
   "body": "humanoid",
   "ears": "human",
   "tail": "none",
   "wings": "none",
-  "hair": "bun",
-  "eyes": "sleepy",
+  "hair": "long",
+  "eyes": "round",
   "outfit": "robe",
   "accessories": [
-    "gem",
-    "staff",
-    "halo"
+    "crown",
+    "gem"
   ],
-  "pattern": "none",
+  "pattern": "stripes",
   "palette": {
-    "skin": "#8ba3be",
-    "hair": "#0f172a",
-    "eyes": "#1e293b",
-    "primary": "#d97706",
-    "secondary": "#475569",
-    "accent": "#38bdf8"
+    "skin": "#9db4cf",
+    "hair": "#111827",
+    "eyes": "#6b3e1f",
+    "primary": "#e8a33d",
+    "secondary": "#1f2937",
+    "accent": "#422006"
   },
   "proportions": {
     "height": 1.05,
-    "headScale": 0.98,
+    "headScale": 1.04,
     "build": 1.05,
     "limbLength": 1.05
   },
@@ -40,7 +39,31 @@
     "calm"
   ],
   "personality": "transcendent",
-  "specialty": "Garbage Collection",
-  "catchphrase": "Destroying memory leaks with cosmic stillness.",
-  "hairTip": "#38bdf8"
+  "specialty": "Garbage Collection & State Teardown",
+  "catchphrase": "Destroying stale state to birth pure, immutable systems.",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#0284c7",
+    "icon": "\ud83d\udd31",
+    "treatName": "Bael",
+    "treatEmoji": "\ud83c\udf43",
+    "feedReaction": "Sacred bael offering accepted. Cosmic stillness deepens. \ud83c\udf43\ud83d\udd31",
+    "wakeReaction": "Third eye opens gently. Reality resolves to pure data. \ud83d\udd31\u2728",
+    "petReaction": "The peace of Mount Kailash settles over your busy thoughts. \ud83d\udd31\u2744\ufe0f",
+    "dialogue": {
+      "idle": "Meditating in eternal stillness upon Mount Kailash. \ud83d\udd31",
+      "working": "Dancing the Tandava of clean memory deallocation! \ud83d\udd31\u26a1",
+      "thinking": "Gazing through the illusory veil of transient bugs... \ud83e\udd14",
+      "success": "Cosmic balance restored! Flawless release ships in silence. \ud83c\udf0c\ud83c\udf89",
+      "error": "Dissolving corrupted memory structures into stillness. \ud83c\udf00",
+      "sleeping": "Zzz... submerged in timeless cosmic samadhi... \ud83c\udf19"
+    }
+  }
 }

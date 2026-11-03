@@ -24,17 +24,42 @@
     "accent": "#2563eb"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.4,
   "tags": [
     "parrot",
     "talkative"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "vocal",
+  "specialty": "Expressive Log Echoing",
+  "catchphrase": "Repeats error messages until someone listens.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#16a34a",
+    "icon": "\ud83e\udd9c",
+    "treatName": "SunflowerCrack",
+    "treatEmoji": "\ud83c\udf3b",
+    "feedReaction": "Crunchy sunflower seeds! Vibrant tropical feathers flare bright! \ud83c\udf3b\ud83e\udd9c",
+    "wakeReaction": "Flapping onto perch: SQUAWK! Morning standup! Check the logs! \ud83e\udd9c",
+    "petReaction": "Nuzzles feathered cheek against yours with soft, happy clucks! \ud83e\udd9c\ud83d\udc96",
+    "dialogue": {
+      "idle": "Preening brilliant scarlet and emerald wing feathers. SQUAWK! \ud83e\udd9c",
+      "working": "Echoing warning logs loudly so the team catches them early! \ud83e\udd9c\u26a1",
+      "thinking": "Cocked eye, listening to the rhythm of compiler output... \ud83e\udd14",
+      "success": "POLLY WANTS A MERGE! Release shipped, give Polly a treat! \ud83e\udd9c\ud83c\udf89",
+      "error": "SQUAWK! 500 ERROR! SQUAWK! CHECK THE DATABASE! \ud83e\udd9c\ud83d\udea8",
+      "sleeping": "Zzz... perched on one leg with head tucked into feathers... \ud83c\udf19"
+    }
+  }
 }

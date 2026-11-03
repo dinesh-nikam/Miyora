@@ -24,18 +24,43 @@
     "accent": "#facc15"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.6,
   "tags": [
     "anime",
     "sports"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always.",
+  "personality": "athletic",
+  "specialty": "Hat-Trick Feature Scoring",
+  "catchphrase": "Scores a goal for every merged pull request.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1d4ed8",
+    "icon": "\u26bd",
+    "treatName": "OrangeSlices",
+    "treatEmoji": "\ud83c\udf4a",
+    "feedReaction": "Chilled halftime orange slices! Soccer cleats tied tight! \ud83c\udf4a\u26bd",
+    "wakeReaction": "Bouncing soccer ball on knee. Game on! Let's score some commits! \u26bd",
+    "petReaction": "High-five and a celebratory slide on the grass: GOOOOOAL! \u26bd\ud83c\udfc6",
+    "dialogue": {
+      "idle": "Juggling soccer ball on instep, looking for the open pass. \u26bd",
+      "working": "Dribbling through defensive lines to score feature goals! \u26bd\u26a1",
+      "thinking": "Reading the opponent defense formation to exploit gaps... \ud83e\udd14",
+      "success": "HAT-TRICK! Three massive pull requests in the back of the net! \u26bd\ud83c\udf89",
+      "error": "Tackled in the penalty box! Ref blows whistle! Penalty shot! \u26bd",
+      "sleeping": "Zzz... hugging soccer trophy in bed with muddy socks off... \ud83c\udf19"
+    }
+  },
   "hairTip": "#fde047"
 }

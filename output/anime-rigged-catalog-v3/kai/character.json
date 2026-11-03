@@ -24,17 +24,42 @@
     "accent": "#f97316"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.3,
   "tags": [
     "coder",
     "ocean"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "breezy",
+  "specialty": "Release Wave Surfing",
+  "catchphrase": "Riding massive traffic waves with balance and a grin!",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#0284c7",
+    "icon": "\ud83c\udfc4",
+    "treatName": "Pineapple",
+    "treatEmoji": "\ud83c\udf4d",
+    "feedReaction": "Fresh sweet island pineapple! Waxing surfboard for the big sets! \ud83c\udf4d\ud83c\udfc4",
+    "wakeReaction": "Checking morning ocean swell! High tide brings traffic waves! \ud83c\udfc4",
+    "petReaction": "Hang loose sign with a warm grin! Keep riding the waves, Chief! \ud83c\udfc4\u2728",
+    "dialogue": {
+      "idle": "Sitting on surfboard out past the breakers, soaking in sun. \ud83c\udfc4",
+      "working": "Carving smooth turns across cresting server traffic waves! \ud83c\udfc4\u26a1",
+      "thinking": "Reading the swell period to time our deployment drop-in... \ud83e\udd14",
+      "success": "BARREL RODE! Shipped the massive release right onto the sand! \ud83c\udfc4\ud83c\udf89",
+      "error": "Wipeout on a gnarly wave! Popping right back on the board! \ud83c\udfc4\ud83e\udd19",
+      "sleeping": "Zzz... hammock swaying between two palms by the surf... \ud83c\udf19"
+    }
+  }
 }

@@ -24,18 +24,43 @@
     "accent": "#dc2626"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.8,
   "tags": [
     "anime",
     "vampire"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always.",
+  "personality": "aristocratic",
+  "specialty": "Elegant Midnight Engineering",
+  "catchphrase": "Only works night shifts, and only on elegant code.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#450a0a",
+    "icon": "\ud83c\udf77",
+    "treatName": "BloodOrange",
+    "treatEmoji": "\ud83c\udf4a",
+    "feedReaction": "Ruby blood orange compote. Crystal goblet shines in candlelight. \ud83c\udf4a\ud83c\udf77",
+    "wakeReaction": "Midnight strikes. The hour of refined craftsmanship has arrived. \ud83c\udf77",
+    "petReaction": "Courtly aristocratic bow with hand over heart for your genius. \ud83c\udf77\u2728",
+    "dialogue": {
+      "idle": "Adjusting velvet cravat in the candlelit library manor. \ud83c\udf77",
+      "working": "Sculpting aristocratic abstractions while the world sleeps! \ud83c\udf77\u26a1",
+      "thinking": "Sipping cold brew, contemplating the immortality of good API... \ud83e\udd14",
+      "success": "Magnificent. An architecture of eternal, timeless elegance. \ud83c\udf77\ud83c\udf89",
+      "error": "A vulgar syntax flaw. It shall be cleanly expunged. \ud83c\udf77",
+      "sleeping": "Zzz... resting in a velvet-lined chamber as daylight breaks... \ud83c\udf19"
+    }
+  },
   "hairTip": "#94a3b8"
 }

@@ -25,17 +25,42 @@
     "accent": "#f59e0b"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "music",
     "fantasy"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "melodic",
+  "specialty": "Release Note Balladry",
+  "catchphrase": "Sings release notes from the treetops.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#15803d",
+    "icon": "\ud83e\ude95",
+    "treatName": "SweetPlums",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Sweet sun-ripened forest plums! Strumming gentle wooden harp! \ud83e\uded0\ud83e\ude95",
+    "wakeReaction": "Perched high on an oak branch, breathing in the morning breeze! \ud83e\ude95",
+    "petReaction": "Sings a sweet, bright ballad celebrating your latest code win! \ud83e\ude95\u2728",
+    "dialogue": {
+      "idle": "Tuning silver harp strings while watching songbirds dance. \ud83e\ude95",
+      "working": "Singing poetic release ballads that make dev updates joy! \ud83e\ude95\u26a1",
+      "thinking": "Matching rhymes to complex technical breakthrough terms... \ud83e\udd14",
+      "success": "Sweet chorus! The whole forest echoes with the victory song! \ud83e\ude95\ud83c\udf89",
+      "error": "A snapped string! Replacing it with silver thread swiftly! \ud83e\ude95",
+      "sleeping": "Zzz... curled up in a cradle of green leafy oak branches... \ud83c\udf19"
+    }
+  }
 }

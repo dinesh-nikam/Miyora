@@ -1,6 +1,6 @@
 {
-  "triangleCount": 34400,
-  "vertexCount": 18696,
+  "triangleCount": 34092,
+  "vertexCount": 18516,
   "skeletonJointCount": 51,
   "influencedBoneNames": [
     "chest",
@@ -71,10 +71,10 @@
   "embeddedTextureCount": 1,
   "schemaVersion": 1,
   "structuralValidation": "passed",
-  "runtimeValidation": "passed",
-  "visualReview": "front-overview-reviewed",
-  "byteLength": 2669048,
-  "sha256": "975fadc652f9e71c217f5abc29f901f4deff62121b457cd89d39b36073a7977b",
+  "runtimeValidation": "pending",
+  "visualReview": "pending",
+  "byteLength": 2848844,
+  "sha256": "a63c0abc478dcd41c0962a30bcb499e9d646e86d147057c9653d68b7e5c217da",
   "expressionNames": [
     "blink",
     "happy",
@@ -83,8 +83,5 @@
     "surprised"
   ],
   "springChainCount": 0,
-  "toonMaterialCount": 9,
-  "nativeValidation": "passed",
-  "poseChecks": 15,
-  "expressionChecks": 5
+  "toonMaterialCount": 9
 }

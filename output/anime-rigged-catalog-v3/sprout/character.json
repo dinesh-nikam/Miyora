@@ -24,17 +24,42 @@
     "accent": "#f472b6"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "slime",
     "nature"
   ],
-  "personality": "fluid",
-  "specialty": "Dynamic Elasticity",
-  "catchphrase": "Wobbling through edge cases smoothly."
+  "personality": "botanical",
+  "specialty": "Organic Dependency Pruning",
+  "catchphrase": "Tender green shoots reaching upward toward solar energy!",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#84cc16",
+    "icon": "\ud83c\udf31",
+    "treatName": "SpringWater",
+    "treatEmoji": "\ud83d\udca7",
+    "feedReaction": "Fresh mountain spring water! Leaves perk up tall and bright! \ud83d\udca7\ud83c\udf31",
+    "wakeReaction": "Unfolding a fresh green leaf to catch the morning sunlight! \ud83c\udf31",
+    "petReaction": "Tender little vine wraps gently around your finger with affection! \ud83c\udf31\ud83d\udc96",
+    "dialogue": {
+      "idle": "Resting in a little terra-cotta pot, basking in the sun. \ud83c\udf31",
+      "working": "Pruning dead branches so fresh new features can flourish! \ud83c\udf31\u26a1",
+      "thinking": "Feeling the moisture in the soil, calculating root growth... \ud83e\udd14",
+      "success": "Full bloom! Green blossoms crown the newly shipped code! \ud83c\udf38\ud83c\udf89",
+      "error": "Wilted leaf from a sudden bug frost! Absorbing warm sun! \ud83c\udf31",
+      "sleeping": "Zzz... folding leaves close against the cool night dew... \ud83c\udf19"
+    }
+  }
 }

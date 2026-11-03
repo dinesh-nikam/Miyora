@@ -25,18 +25,43 @@
     "accent": "#a855f7"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.5,
   "tags": [
     "anime",
     "ninja"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always.",
+  "personality": "infiltrative",
+  "specialty": "Callstack Infiltration",
+  "catchphrase": "Moves through the call stack without leaving a trace.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#3b0764",
+    "icon": "\ud83e\udd77",
+    "treatName": "DriedFigs",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Dark sweet dried mountain figs! Shuriken balanced on finger! \ud83e\uded0\ud83e\udd77",
+    "wakeReaction": "Melting out of the shadows. The infiltration mission is go. \ud83e\udd77",
+    "petReaction": "Vanishes in a puff of cherry blossom smoke, leaving a sweet note! \ud83e\udd77\ud83c\udf38",
+    "dialogue": {
+      "idle": "Balancing on one toe atop the server rack frame. Unseen. \ud83e\udd77",
+      "working": "Infiltrating deep callstack layers without triggering alerts! \ud83e\udd77\u26a1",
+      "thinking": "Mapping secret passages through legacy private methods... \ud83e\udd14",
+      "success": "Mission complete. Extracted the bug and vanished unseen. \ud83e\udd77\ud83c\udf89",
+      "error": "Tripwire snagged! Dropping smoke bomb to reset positions! \ud83d\udca8",
+      "sleeping": "Zzz... sleeping suspended in ninja hammock between rafters... \ud83c\udf19"
+    }
+  },
   "hairTip": "#7c3aed"
 }

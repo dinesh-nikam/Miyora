@@ -25,18 +25,43 @@
     "accent": "#ef4444"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.2,
   "tags": [
     "anime",
     "mecha"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always.",
+  "personality": "synchronized",
+  "specialty": "Telemetry Cockpit Sync",
+  "catchphrase": "Syncs with the build machine at one hundred percent.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1e3a8a",
+    "icon": "\ud83c\udf9b\ufe0f",
+    "treatName": "HydrationPack",
+    "treatEmoji": "\ud83e\uddca",
+    "feedReaction": "Chilled electrolyte pouch! Neural sync cables locked at 100%! \ud83e\uddca\ud83c\udf9b\ufe0f",
+    "wakeReaction": "Cockpit canopy sealed! Neural interface linked to build agent! \ud83c\udf9b\ufe0f",
+    "petReaction": "Pilot salute through flight visor: All flight controls are green! \ud83c\udf9b\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Running pre-flight checks on telemetry dials and displays. \ud83c\udf9b\ufe0f",
+      "working": "Piloting heavy build pipelines through supersonic turbulence! \ud83c\udf9b\ufe0f\u26a1",
+      "thinking": "Synchronizing neural wave patterns with compiler throughput... \ud83e\udd14",
+      "success": "Target neutralized! Mission accomplished with 100% sync! \ud83c\udf9b\ufe0f\ud83c\udf89",
+      "error": "Cockpit alarm sounding! Engaging manual override thrusters! \ud83c\udf9b\ufe0f\u26a0\ufe0f",
+      "sleeping": "Zzz... pilot seat reclined in zero-gravity resting pod... \ud83c\udf19"
+    }
+  },
   "hairTip": "#1e3a8a"
 }

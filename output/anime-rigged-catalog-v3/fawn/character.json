@@ -24,17 +24,42 @@
     "accent": "#f9a8d4"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.8,
   "tags": [
     "deer",
     "nature"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "gentle",
+  "specialty": "Gentle Legacy Forest Treading",
+  "catchphrase": "Treads softly through fragile legacy forests.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#65a30d",
+    "icon": "\ud83e\udd8c",
+    "treatName": "SweetApples",
+    "treatEmoji": "\ud83c\udf4e",
+    "feedReaction": "Sweet crisp autumn apples! Spotted velvety ears twitch softly! \ud83c\udf4e\ud83e\udd8c",
+    "wakeReaction": "Stepping delicately into the morning clearing, dew on tiny hooves! \ud83e\udd8c",
+    "petReaction": "Rests warm, velvety spotted snout gently against your elbow! \ud83e\udd8c\ud83d\udc96",
+    "dialogue": {
+      "idle": "Listening to birdsong in the dappled sunlight of the woods. \ud83e\udd8c",
+      "working": "Treading through fragile legacy code without breaking single dependency! \ud83e\udd8c\u26a1",
+      "thinking": "Selecting each step with gentle, mindful precision... \ud83e\udd14",
+      "success": "Safe passage! Fragile legacy systems bridged without incident! \ud83e\udd8c\ud83c\udf89",
+      "error": "Snapped a twig! Freezing in stillness until danger passes! \ud83e\udd8c",
+      "sleeping": "Zzz... bedded down in soft ferns beside mother deer... \ud83c\udf19"
+    }
+  }
 }

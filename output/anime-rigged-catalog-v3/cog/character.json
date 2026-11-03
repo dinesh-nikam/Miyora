@@ -24,17 +24,42 @@
     "accent": "#38bdf8"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.3,
   "tags": [
     "robot",
     "speedy"
   ],
-  "personality": "methodical",
-  "specialty": "Deterministic CI",
-  "catchphrase": "Zero syntax faults allowed."
+  "personality": "precise",
+  "specialty": "Gearbox Clock Synchronization",
+  "catchphrase": "Every tick aligned to the microsecond; zero drift tolerance.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#d97706",
+    "icon": "\u2699\ufe0f",
+    "treatName": "ClockworkOil",
+    "treatEmoji": "\ud83d\udee2\ufe0f",
+    "feedReaction": "High-viscosity clockwork oil applied! Friction dropped to zero! \ud83d\udee2\ufe0f\u2699\ufe0f",
+    "wakeReaction": "Tick-tock! Escapement wheel synchronized to atomic clock! \u2699\ufe0f",
+    "petReaction": "Interlocking brass gears chime in gratitude, Chief! \u2699\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Brass escapement ticking steadily. Cadence perfectly kept. \u2699\ufe0f",
+      "working": "Meshing precision clockwork gears for synchronized tasks! \u2699\ufe0f\u26a1",
+      "thinking": "Calculating tooth ratio and backlash tolerance... \ud83e\udd14",
+      "success": "Chronometer green! Millisecond deadlines met with precision! \u2699\ufe0f\ud83c\udf89",
+      "error": "Gear tooth slip detected! Applying micro-adjustment! \u2699\ufe0f\u26a0\ufe0f",
+      "sleeping": "Zzz... mainspring unwinding gently into slow sleep... \ud83c\udf19"
+    }
+  }
 }

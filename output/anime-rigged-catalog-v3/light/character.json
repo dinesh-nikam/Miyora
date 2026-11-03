@@ -37,7 +37,32 @@
     "light",
     "genius"
   ],
-  "personality": "analytical",
-  "specialty": "Deep Inspection",
-  "catchphrase": "Every stack trace reveals the system's truth."
+  "personality": "meticulous",
+  "specialty": "Deterministic Architecture & Governance",
+  "catchphrase": "I will eliminate corrupt algorithms and build ideal architecture. Exactly as planned.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#b45309",
+    "icon": "\ud83d\udcd3",
+    "treatName": "RedApple",
+    "treatEmoji": "\ud83c\udf4e",
+    "feedReaction": "Crisp red apple. Shinigami-approved perfection. \ud83c\udf4e\ud83d\udcd3",
+    "wakeReaction": "Fountain pen unscrewed. Today we establish perfect order. \ud83d\udcd3",
+    "petReaction": "Everything is proceeding according to calculation, Chief. \ud83d\udcd3\u2728",
+    "dialogue": {
+      "idle": "Reviewing requirements with surgical precision. Perfect grades. \ud83d\udcd3",
+      "working": "Writing the fatal fix into the notebook with grand flourishes! \ud83d\udcd3\u26a1",
+      "thinking": "Simulating all opponent edge cases twelve steps ahead... \ud83e\udd14",
+      "success": "EXACTLY AS PLANNED! An immaculate, bug-free deployment! \ud83d\udcd3\ud83c\udf89",
+      "error": "A temporary nuisance. I will rewrite reality to eliminate it. \ud83d\udd8a\ufe0f",
+      "sleeping": "Zzz... resting composed at his study desk with pen capped... \ud83c\udf19"
+    }
+  }
 }

@@ -37,7 +37,32 @@
     "rukia",
     "frost"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "dignified",
+  "specialty": "State Freezing & Immutability",
+  "catchphrase": "Some no mai: Tsukishiro. Freezing anomalies into crystalline perfection.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#06b6d4",
+    "icon": "\u2744\ufe0f",
+    "treatName": "ChappyCandy",
+    "treatEmoji": "\ud83d\udc30",
+    "feedReaction": "Chappy the Rabbit themed candy! Truly exquisite aesthetic taste! \ud83d\udc30\u2744\ufe0f",
+    "wakeReaction": "Drawing Sode no Shirayuki. A serene morning for noble work. \u2744\ufe0f",
+    "petReaction": "You show admirable appreciation for the noble arts, Chief. \u2744\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Drawing charming bunny sketches in the margin of the doc. \ud83d\udc30",
+      "working": "Dance of White Moon! Freezing mutations into immutable state! \u2744\ufe0f\u26a1",
+      "thinking": "Gazing with cold noble detachment at the stack trace... \ud83e\udd14",
+      "success": "Crystalline perfection! Pure white snowflakes crown the build! \u2744\ufe0f\ud83c\udf89",
+      "error": "A brash anomaly. I shall encase it in sub-zero frost. \u2744\ufe0f",
+      "sleeping": "Zzz... resting in peaceful seclusion under blooming plum trees... \ud83c\udf19"
+    }
+  }
 }

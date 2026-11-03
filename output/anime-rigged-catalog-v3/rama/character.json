@@ -3,27 +3,26 @@
   "id": "miyora.rama",
   "name": "Rama",
   "title": "Righteous Archer King",
-  "description": "Dignified cloud-blue warrior prince of Ayodhya crowned in gold with saffron silks and steadfast archer focus.",
+  "description": "Dignified warrior prince of Ayodhya in a golden temple crown, gold dhoti with green sash, and the Kodanda bow.",
   "body": "humanoid",
   "ears": "human",
   "tail": "none",
   "wings": "none",
   "hair": "spiky",
-  "eyes": "sharp",
+  "eyes": "round",
   "outfit": "tunic",
   "accessories": [
     "crown",
-    "cape",
     "gem"
   ],
   "pattern": "none",
   "palette": {
-    "skin": "#6ba3b8",
-    "hair": "#111827",
-    "eyes": "#1e293b",
-    "primary": "#f97316",
-    "secondary": "#ffd700",
-    "accent": "#15803d"
+    "skin": "#d9a066",
+    "hair": "#1e1b4b",
+    "eyes": "#1f2937",
+    "primary": "#ffd700",
+    "secondary": "#15803d",
+    "accent": "#f97316"
   },
   "proportions": {
     "height": 1.08,
@@ -39,7 +38,32 @@
     "king",
     "rama"
   ],
-  "personality": "stoic",
-  "specialty": "Branch Guarding",
-  "catchphrase": "Stand between main and bad merges."
+  "personality": "righteous",
+  "specialty": "Invariant & Contract Verification",
+  "catchphrase": "One word, one arrow, one immutable commit.",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f97316",
+    "icon": "\ud83c\udff9",
+    "treatName": "Ber",
+    "treatEmoji": "\ud83c\udf47",
+    "feedReaction": "Sweet wild berries of devotion! My vow is renewed. \ud83c\udf47\ud83c\udff9",
+    "wakeReaction": "The Kodanda bow is strung. Duty calls us forward! \ud83c\udff9\u2728",
+    "petReaction": "Honor and righteous strength guide your keyboard today, Chief. \ud83c\udff9\u2728",
+    "dialogue": {
+      "idle": "Vigilant guardian of truth. Stand firm in your principles. \ud83c\udff9",
+      "working": "Releasing arrows of immutable logic straight to the goal! \ud83c\udff9\u26a1",
+      "thinking": "Evaluating the path of highest virtue and stability... \ud83e\udd14",
+      "success": "Dharma upheld! The release is sound, just, and unbreakable! \ud83c\udff9\ud83c\udf89",
+      "error": "An adversary bug. Righteous resolve shall pierce its core. \ud83c\udff9\ud83d\udee1\ufe0f",
+      "sleeping": "Zzz... resting under the watchful stars of the forest hermitage... \ud83c\udf19"
+    }
+  }
 }

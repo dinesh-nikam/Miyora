@@ -39,7 +39,32 @@
     "explorer",
     "wind"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "intrepid",
+  "specialty": "Aerodynamic Routing & Pathfinding",
+  "catchphrase": "Riding thermal updrafts high above the toxic forest to chart safe routes!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#0891b2",
+    "icon": "\ud83e\ude82",
+    "treatName": "ChicoNut",
+    "treatEmoji": "\ud83e\udd5c",
+    "feedReaction": "Rich nutrient chico nut! High-altitude stamina restored! \ud83e\udd5c\ud83e\ude82",
+    "wakeReaction": "Adjusting flight goggles! Testing wind vanes on the dunes! \ud83e\ude82",
+    "petReaction": "The wind carries us together, Chief! Boundless sky ahead! \ud83e\ude82\u2728",
+    "dialogue": {
+      "idle": "Checking glider wing tension and rudder cables. Ready to launch. \ud83e\ude82",
+      "working": "Gliding smoothly over treacherous canyons of legacy code! \ud83e\ude82\u26a1",
+      "thinking": "Reading subtle pressure gradients across the call stack... \ud83e\udd14",
+      "success": "Smooth landing! Clean flight path charted without turbulence! \ud83e\ude82\ud83c\udf89",
+      "error": "Toxic spore pocket! Pulling hard on the stick to climb! \ud83d\udca8",
+      "sleeping": "Zzz... hammock swaying in the breeze of the valley windmills... \ud83c\udf19"
+    }
+  }
 }

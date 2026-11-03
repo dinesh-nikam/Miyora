@@ -24,10 +24,10 @@
     "accent": "#f472b6"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.3,
   "tags": [
@@ -35,7 +35,32 @@
     "cat",
     "cute"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "compact",
+  "specialty": "Spherical Binary Serialization",
+  "catchphrase": "Tucking round and cozy into tight binary serialization formats.",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#84cc16",
+    "icon": "\ud83e\udd5d",
+    "treatName": "KiwiSlice",
+    "treatEmoji": "\ud83e\udd5d",
+    "feedReaction": "Sweet juicy kiwi fruit slice! Fluffy feathered body rumbles! \ud83e\udd5d\ud83d\udc9a",
+    "wakeReaction": "*peck peck* Tapping little beak on the desk, ready to pack data! \ud83e\udd5d",
+    "petReaction": "Tucking close to your keyboard, round and warm like a soft ball! \ud83e\udd5d\ud83d\udc96",
+    "dialogue": {
+      "idle": "Sitting perfectly spherical like a fuzzy little kiwi bird. \ud83e\udd5d",
+      "working": "Packing loose memory structs into ultra-tight binary buffers! \ud83e\udd5d\u26a1",
+      "thinking": "Cocked head, peering at bitwise alignment offsets... \ud83e\udd14",
+      "success": "Zero wasted bytes! Beautiful compact serialization complete! \ud83e\udd5d\ud83c\udf89",
+      "error": "Fuzzy feathers ruffled! Smoothing down and re-aligning! \ud83e\udd5d",
+      "sleeping": "Zzz... beak tucked under tiny wing in cozy spherical sleep... \ud83c\udf19"
+    }
+  }
 }

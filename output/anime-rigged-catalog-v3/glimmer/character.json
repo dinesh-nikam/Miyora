@@ -24,17 +24,42 @@
     "accent": "#fde047"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "slime",
     "magic"
   ],
-  "personality": "mystical",
-  "specialty": "AST Transmutation",
-  "catchphrase": "Casting clean checkmarks into the terminal."
+  "personality": "luminescent",
+  "specialty": "Bioluminescent Bug Highlighting",
+  "catchphrase": "Glowing warmly in the dark to highlight anomalous branches.",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#eab308",
+    "icon": "\u2728",
+    "treatName": "PollenPuff",
+    "treatEmoji": "\ud83c\udf3c",
+    "feedReaction": "Glowing golden pollen puff! Antennae sparkle with bright joy! \ud83c\udf3c\u2728",
+    "wakeReaction": "Spreading tiny luminescent wings to light up the morning! \u2728",
+    "petReaction": "Gently hovering nearby to cast a warm, comforting golden aura! \u2728\ud83d\udc96",
+    "dialogue": {
+      "idle": "Floating softly like a firefly over a peaceful summer meadow. \u2728",
+      "working": "Casting bright phosphor beams onto shadowy edge-case bugs! \u2728\u26a1",
+      "thinking": "Pulsing gentle rhythmic glows while tracing the call graph... \ud83e\udd14",
+      "success": "Radiant beacon! Every bug spotlighted and resolved! \u2728\ud83c\udf89",
+      "error": "Fluttering backwards! Boosting luminous output to reveal all! \ud83d\udca1",
+      "sleeping": "Zzz... resting nestled inside a bellflower petal at dusk... \ud83c\udf19"
+    }
+  }
 }

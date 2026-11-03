@@ -38,7 +38,32 @@
     "avenger"
   ],
   "personality": "intense",
-  "specialty": "Precision Refactoring",
+  "specialty": "High-Precision Refactoring",
   "catchphrase": "Weak abstractions are unacceptable.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#6366f1",
+    "icon": "\u26a1",
+    "treatName": "Tomatoes",
+    "treatEmoji": "\ud83c\udf45",
+    "feedReaction": "Fresh vine tomatoes. Satisfactory nourishment. \ud83c\udf45\u26a1",
+    "wakeReaction": "Sharingan activated. Weaknesses in the code are visible. \u26a1",
+    "petReaction": "Hmph... unnecessary sentimentality. But I'll guard your flank. \u26a1",
+    "dialogue": {
+      "idle": "Resting hand on Kusanagi hilt. State the objective, Chief. \u26a1",
+      "working": "CHIDORI! Piercing straight through monolithic bottlenecks! \u26a1\ud83d\udde1\ufe0f",
+      "thinking": "Analyzing execution flow through the Sharingan... \ud83e\udd14",
+      "success": "Hmph. As expected. Clean architecture requires no praise. \u26a1\ud83c\udf89",
+      "error": "A foolish bug. I will cut down this defective module. \ud83d\udde1\ufe0f",
+      "sleeping": "Zzz... silent rest under the shadow of the valley cliff... \ud83c\udf19"
+    }
+  },
   "hairTip": "#1e3a8a"
 }

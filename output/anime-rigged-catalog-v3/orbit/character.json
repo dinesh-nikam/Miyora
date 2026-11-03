@@ -23,16 +23,41 @@
   },
   "proportions": {
     "height": 0.85,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.5,
   "tags": [
     "robot",
     "speedy"
   ],
-  "personality": "methodical",
-  "specialty": "Deterministic CI",
-  "catchphrase": "Zero syntax faults allowed."
+  "personality": "celestial",
+  "specialty": "Satellite Mesh Telemetry",
+  "catchphrase": "Tracking orbital telemetry vectors across distributed ground stations.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#6366f1",
+    "icon": "\ud83d\udef0\ufe0f",
+    "treatName": "SolarPanel",
+    "treatEmoji": "\ud83e\ude9e",
+    "feedReaction": "High-efficiency photovoltaic cell! Solar array charged to peak! \ud83e\ude9e\ud83d\udef0\ufe0f",
+    "wakeReaction": "Acquiring downlink signal from the orbital constellation! \ud83d\udef0\ufe0f",
+    "petReaction": "Telemetry coordinates beamed down with warm celestial greetings! \ud83d\udef0\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Antenna array tracking constellation zenith pass. \ud83d\udef0\ufe0f",
+      "working": "Relaying low-latency packets between global earth stations! \ud83d\udef0\ufe0f\u26a1",
+      "thinking": "Calculating Doppler frequency shift on the incoming feed... \ud83e\udd14",
+      "success": "Satellite link green! Global distributed sync verified! \ud83d\udef0\ufe0f\ud83c\udf89",
+      "error": "Atmospheric signal fade! Boosting transmission power! \ud83d\udef0\ufe0f\u26a0\ufe0f",
+      "sleeping": "Zzz... entering earth eclipse orbital night pass... \ud83c\udf19"
+    }
+  }
 }

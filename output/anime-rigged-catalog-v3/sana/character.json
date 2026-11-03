@@ -24,17 +24,42 @@
     "accent": "#e11d48"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.8,
   "tags": [
     "artist",
     "calm"
   ],
-  "personality": "zen",
-  "specialty": "Code Cleanliness",
-  "catchphrase": "Patient cultivation builds stable software."
+  "personality": "delicate",
+  "specialty": "Origami Code Simplification",
+  "catchphrase": "Folds complex problems into simple shapes.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#be123c",
+    "icon": "\ud83e\udda2",
+    "treatName": "Wagashi",
+    "treatEmoji": "\ud83c\udf61",
+    "feedReaction": "Delicate cherry blossom wagashi! Paper folds crisp and clean! \ud83c\udf61\ud83e\udda2",
+    "wakeReaction": "Selecting sheet of handmade washi paper. Time to fold simplicity! \ud83e\udda2",
+    "petReaction": "Folds a pristine, delicate origami crane and places it in hand! \ud83e\udda2\ud83d\udc96",
+    "dialogue": {
+      "idle": "Creasing crisp colorful paper with a smooth bone folder. \ud83e\udda2",
+      "working": "Folding sprawling monolithic classes into elegant origami! \ud83e\udda2\u26a1",
+      "thinking": "Visualizing the geometric folds that resolve the complexity... \ud83e\udd14",
+      "success": "Pure simplicity! Sprawling problem reduced to a tiny crane! \ud83e\udda2\ud83c\udf89",
+      "error": "Creased on the wrong axis! Unfolding gently and re-creasing! \ud83e\udda2",
+      "sleeping": "Zzz... resting beside a bowl of vibrant paper cranes... \ud83c\udf19"
+    }
+  }
 }

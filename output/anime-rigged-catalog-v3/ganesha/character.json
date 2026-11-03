@@ -3,27 +3,26 @@
   "id": "miyora.ganesha",
   "name": "Ganesha",
   "title": "Lord of Good Fortune",
-  "description": "Beloved remover of obstacles with large friendly ears, jeweled golden crown, and warm sweet energy.",
+  "description": "Beloved remover of obstacles with golden skin, broad elephant ears, curled trunk, temple crown, and a bowl of sweet modaks.",
   "body": "beast",
-  "ears": "floppy",
-  "tail": "bunny",
+  "ears": "none",
+  "tail": "none",
   "wings": "none",
   "hair": "none",
-  "eyes": "sparkle",
+  "eyes": "round",
   "outfit": "robe",
   "accessories": [
     "crown",
-    "gem",
-    "bell"
+    "gem"
   ],
   "pattern": "none",
   "palette": {
-    "skin": "#f6d7c3",
-    "hair": "#78350f",
-    "eyes": "#312e81",
-    "primary": "#f97316",
-    "secondary": "#ffd700",
-    "accent": "#dc2626"
+    "skin": "#f0b860",
+    "hair": "#c27a2c",
+    "eyes": "#5b3417",
+    "primary": "#f5b301",
+    "secondary": "#c0392b",
+    "accent": "#ffd700"
   },
   "proportions": {
     "height": 0.88,
@@ -39,7 +38,32 @@
     "wisdom",
     "fortune"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "benevolent",
+  "specialty": "Deadlock & Blocker Resolution",
+  "catchphrase": "Vakratunda Mahakaya! Clearing every blocker from the path!",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f59e0b",
+    "icon": "\ud83d\udc18",
+    "treatName": "Modak",
+    "treatEmoji": "\ud83e\udd5f",
+    "feedReaction": "Delicious steamed modak! Wisdom and happiness overflow! \ud83e\udd5f\ud83d\udc18",
+    "wakeReaction": "Vighnaharta awakens! All obstacles dissolve before us! \ud83d\udc18\u2728",
+    "petReaction": "Trunk raised in auspicious blessing! Success in all endeavors! \ud83d\udc18\ud83d\udc96",
+    "dialogue": {
+      "idle": "Holding the sacred sweet. Begin each task with clear intent. \ud83d\udc18",
+      "working": "Removing intricate system bottlenecks with ancient wisdom! \ud83d\udc18\u26a1",
+      "thinking": "Writing epic architecture with broken tusk as stylus... \ud83e\udd14",
+      "success": "Shubh Labh! Perfect auspicious release completed! \ud83e\udd5f\ud83c\udf89",
+      "error": "An obstacle appeared only to be dissolved by wisdom. \ud83d\udc18\ud83d\udee1\ufe0f",
+      "sleeping": "Zzz... sweet dreams beside Mushak the mouse companion... \ud83c\udf19"
+    }
+  }
 }

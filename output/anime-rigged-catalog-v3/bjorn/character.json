@@ -22,16 +22,41 @@
     "accent": "#eab308"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
+    "height": 1.0,
+    "headScale": 1.0,
     "build": 1.25,
-    "limbLength": 1
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "knight"
   ],
-  "personality": "stoic",
-  "specialty": "Branch Guarding",
-  "catchphrase": "Stand between main and bad merges."
+  "personality": "resolute",
+  "specialty": "Merge Conflict Deflection",
+  "catchphrase": "Standing between the main branch and reckless hotfixes.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#334155",
+    "icon": "\ud83d\udee1\ufe0f",
+    "treatName": "SmokedSalmon",
+    "treatEmoji": "\ud83d\udc1f",
+    "feedReaction": "Thick slice of smoked fjord salmon! Viking strength renewed! \ud83d\udc1f\ud83d\udee1\ufe0f",
+    "wakeReaction": "Lifting heavy oak shield. No rogue pull request shall pass! \ud83d\udee1\ufe0f",
+    "petReaction": "Heavy clap on the shoulder! A loyal shield-brother forever! \ud83d\udee1\ufe0f\ud83d\udcaa",
+    "dialogue": {
+      "idle": "Leaning against iron shield, watching the gate of main. \ud83d\udee1\ufe0f",
+      "working": "Deflecting reckless merge conflicts with an unyielding shield! \ud83d\udee1\ufe0f\u26a1",
+      "thinking": "Gauging the impact of the incoming wave of changes... \ud83e\udd14",
+      "success": "Shield unbroken! Main branch preserved in pristine health! \ud83d\udee1\ufe0f\ud83c\udf89",
+      "error": "Heavy battering ram at the gate! Bracing with both arms! \ud83d\udee1\ufe0f\ud83d\udca5",
+      "sleeping": "Zzz... sleeping beside the great hall hearth with axe ready... \ud83c\udf19"
+    }
+  }
 }

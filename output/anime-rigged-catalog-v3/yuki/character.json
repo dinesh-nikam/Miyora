@@ -24,18 +24,43 @@
     "accent": "#f9a8d4"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.7,
   "tags": [
     "spirit",
     "winter"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always.",
+  "personality": "serene",
+  "specialty": "Ephemeral State Cleansing",
+  "catchphrase": "Dissolving stale memory allocations like gentle morning frost.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#38bdf8",
+    "icon": "\ud83c\udf28\ufe0f",
+    "treatName": "SnowDrop",
+    "treatEmoji": "\ud83c\udf6c",
+    "feedReaction": "Crystal sugar snowdrop confection! Melting sweet and cold! \ud83c\udf6c\ud83c\udf28\ufe0f",
+    "wakeReaction": "Drifting barefoot across fresh snow. Purity in every breath. \ud83c\udf28\ufe0f",
+    "petReaction": "A delicate crystalline snowflake falls gently upon your palm. \ud83c\udf28\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Watching silent snowflakes settle on the wooden veranda. \ud83c\udf28\ufe0f",
+      "working": "Dissolving dangling pointers like spring snow on water. \ud83c\udf28\ufe0f\u26a1",
+      "thinking": "Gazing into the quiet white mist of unallocated memory... \ud83e\udd14",
+      "success": "Pure stillness. Zero leaks, zero residue, pristine memory. \ud83c\udf28\ufe0f\ud83c\udf89",
+      "error": "A muddy boot print in the snow. Sweeping it pure again. \ud83c\udf28\ufe0f",
+      "sleeping": "Zzz... resting in a quiet palace of translucent blue ice... \ud83c\udf19"
+    }
+  },
   "hairTip": "#bae6fd"
 }

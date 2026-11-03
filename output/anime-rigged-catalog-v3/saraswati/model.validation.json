@@ -1,23 +1,8 @@
 {
-  "triangleCount": 36840,
-  "vertexCount": 19912,
-  "skeletonJointCount": 71,
+  "triangleCount": 35836,
+  "vertexCount": 19551,
+  "skeletonJointCount": 51,
   "influencedBoneNames": [
-    "Hair.backCenter.0",
-    "Hair.backCenter.1",
-    "Hair.backCenter.2",
-    "Hair.backLeft.0",
-    "Hair.backLeft.1",
-    "Hair.backLeft.2",
-    "Hair.backRight.0",
-    "Hair.backRight.1",
-    "Hair.backRight.2",
-    "Hair.frontLeft.0",
-    "Hair.frontLeft.1",
-    "Hair.frontLeft.2",
-    "Hair.frontRight.0",
-    "Hair.frontRight.1",
-    "Hair.frontRight.2",
     "chest",
     "head",
     "hips",
@@ -86,10 +71,10 @@
   "embeddedTextureCount": 1,
   "schemaVersion": 1,
   "structuralValidation": "passed",
-  "runtimeValidation": "passed",
-  "visualReview": "front-overview-reviewed",
-  "byteLength": 2749680,
-  "sha256": "7203504b7b6ce3d01f38753b419b2c242bdae022163b9e7bb4c03b61ed6cc952",
+  "runtimeValidation": "pending",
+  "visualReview": "pending",
+  "byteLength": 2902388,
+  "sha256": "ff69a4cd9d6b358cbab1cdc6bda38080d162cb0612ce12a7c31af08b29d9412c",
   "expressionNames": [
     "blink",
     "happy",
@@ -97,9 +82,6 @@
     "aa",
     "surprised"
   ],
-  "springChainCount": 5,
-  "toonMaterialCount": 8,
-  "nativeValidation": "passed",
-  "poseChecks": 15,
-  "expressionChecks": 5
+  "springChainCount": 0,
+  "toonMaterialCount": 9
 }

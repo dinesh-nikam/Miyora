@@ -26,16 +26,41 @@
   },
   "proportions": {
     "height": 0.9,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.5,
   "tags": [
     "anime",
     "tamer"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "empathetic",
+  "specialty": "Bug Taming & Befriending",
+  "catchphrase": "Has befriended every bug in the codebase.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#ef4444",
+    "icon": "\ud83d\udc3e",
+    "treatName": "BerryPellets",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Sweet wild berry pellets! Monster tamer pouch rattling full! \ud83e\uded0\ud83d\udc3e",
+    "wakeReaction": "Checking capture net and treat pouch. Time to meet new bugs! \ud83d\udc3e",
+    "petReaction": "Presents a friendly, domesticated bug that brings good luck! \ud83d\udc3e\ud83d\udc96",
+    "dialogue": {
+      "idle": "Feeding breadcrumbs to a domesticated little parser bug. \ud83d\udc3e",
+      "working": "Befriending tricky edge cases until they cooperate sweetly! \ud83d\udc3e\u26a1",
+      "thinking": "Understanding what this frightened little bug wants to say... \ud83e\udd14",
+      "success": "Tamed! The wild edge case is now our loyal test companion! \ud83d\udc3e\ud83c\udf89",
+      "error": "A grumpy wild bug nipped my sleeve! Offering sweet berries! \ud83e\uded0",
+      "sleeping": "Zzz... sleeping with three friendly tamed bugs curled around... \ud83c\udf19"
+    }
+  }
 }

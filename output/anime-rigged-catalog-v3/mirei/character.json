@@ -24,17 +24,42 @@
     "accent": "#dc2626"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 0.9,
   "tags": [
     "anime",
     "school"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "authoritative",
+  "specialty": "Student Council Code Inspection",
+  "catchphrase": "Approves pull requests only after reading every line.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1e3a8a",
+    "icon": "\ud83d\udccb",
+    "treatName": "EarlGrey",
+    "treatEmoji": "\u2615",
+    "feedReaction": "Refined Earl Grey tea with lemon! Red council armband adjusted! \u2615\ud83d\udccb",
+    "wakeReaction": "Pushing up glasses. Every regulation and type invariant must hold. \ud83d\udccb",
+    "petReaction": "Nod of stern approval: Your code meets the student council standards. \ud83d\udccb\u2728",
+    "dialogue": {
+      "idle": "Checking attendance logs and club budget balance sheets. \ud83d\udccb",
+      "working": "Inspecting every single line of diff with unwavering rigor! \ud83d\udccb\u26a1",
+      "thinking": "Verifying regulatory compliance against project bylaws... \ud83e\udd14",
+      "success": "Approved! Certified 100% compliant with project constitution! \ud83d\udccb\ud83c\udf89",
+      "error": "Violation of code standard section 4B! Refactoring required! \ud83d\udccb\u26a0\ufe0f",
+      "sleeping": "Zzz... head resting on council meeting desk with pen capped... \ud83c\udf19"
+    }
+  }
 }

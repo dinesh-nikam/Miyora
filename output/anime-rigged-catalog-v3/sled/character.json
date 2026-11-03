@@ -24,17 +24,42 @@
     "accent": "#f8fafc"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
+    "height": 1.0,
+    "headScale": 1.0,
     "build": 1.15,
-    "limbLength": 1
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "dog",
     "winter"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "tireless",
+  "specialty": "Heavy Database Migration Hauling",
+  "catchphrase": "Hauls heavy migrations through the snow.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#dc2626",
+    "icon": "\ud83d\udc15",
+    "treatName": "DriedMeat",
+    "treatEmoji": "\ud83e\udd69",
+    "feedReaction": "Thick strip of dried beef jerky! Ice blue eyes shining bright! \ud83e\udd69\ud83d\udc15",
+    "wakeReaction": "Harness jingling! Howling with the team to start the heavy pull! \ud83d\udc15",
+    "petReaction": "Leaning whole husky body against your legs with warm, wagging tail! \ud83d\udc15\ud83d\udc96",
+    "dialogue": {
+      "idle": "Curled up in a snow hole, tail wrapped tight over nose. \ud83d\udc15",
+      "working": "Hauling hundred-terabyte database migrations through the blizzard! \ud83d\udc15\u26a1",
+      "thinking": "Leaning into the harness, feeling the traction of the trail... \ud83e\udd14",
+      "success": "FINISH LINE! Heavy migration delivered without a single dropped byte! \ud83d\udc15\ud83c\udf89",
+      "error": "Sled runner stuck in deep snow! Digging out with joyful barks! \ud83d\udc15",
+      "sleeping": "Zzz... sleeping under a blanket of freshly fallen snow... \ud83c\udf19"
+    }
+  }
 }

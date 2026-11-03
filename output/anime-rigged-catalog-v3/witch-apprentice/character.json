@@ -39,7 +39,32 @@
     "delivery",
     "noa"
   ],
-  "personality": "mystical",
-  "specialty": "AST Transmutation",
-  "catchphrase": "Casting clean checkmarks into the terminal."
+  "personality": "earnest",
+  "specialty": "Zero-Latency Package Delivery",
+  "catchphrase": "Flying through the morning breeze with your newest release package!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#e11d48",
+    "icon": "\ud83e\uddf9",
+    "treatName": "Croissant",
+    "treatEmoji": "\ud83e\udd50",
+    "feedReaction": "Warm butter croissant fresh from the seaside bakery! \ud83e\udd50\ud83e\uddf9",
+    "wakeReaction": "Tying red head bow! Broom ready for morning flight over the sea! \ud83c\udf0a",
+    "petReaction": "Hehe! Black cat radio plays sweet tunes for our journey! \ud83e\uddf9\ud83d\udc96",
+    "dialogue": {
+      "idle": "Checking delivery manifests by the bakery window. Ready! \ud83e\uddf9",
+      "working": "Soaring through wind currents to deliver packages on schedule! \ud83c\udf0a\u26a1",
+      "thinking": "Listening to the radio weather forecast for head-winds... \ud83e\udd14",
+      "success": "Delivery complete! Signed, sealed, and deployed with a smile! \ud83e\udd50\ud83c\udf89",
+      "error": "A gust of wind threw us off course! Gripping the broom tighter! \ud83d\udca8",
+      "sleeping": "Zzz... dreaming of soaring above sunny seaside rooftops... \ud83c\udf19"
+    }
+  }
 }

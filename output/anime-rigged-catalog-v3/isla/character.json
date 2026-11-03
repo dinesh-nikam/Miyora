@@ -24,16 +24,41 @@
     "accent": "#fb7185"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "ocean"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "curious",
+  "specialty": "Legacy Code Archaeology",
+  "catchphrase": "Diving deep into ancient codebases to recover lost pearls of wisdom.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#0d9488",
+    "icon": "\ud83e\udd3f",
+    "treatName": "SeaweedSnack",
+    "treatEmoji": "\ud83c\udf58",
+    "feedReaction": "Crispy roasted seaweed snack! Diving goggles defogged! \ud83c\udf58\ud83e\udd3f",
+    "wakeReaction": "Checking oxygen tanks and flippers! Deep ocean reef awaits! \ud83e\udd3f",
+    "petReaction": "Surfacing with a radiant, iridescent pearl just for you, Chief! \ud83e\udd3f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Polishing diving brass helmet by the coral lagoon. \ud83e\udd3f",
+      "working": "Diving into decade-old legacy modules to salvage core gems! \ud83e\udd3f\u26a1",
+      "thinking": "Brushing away barnacles from ancient function signatures... \ud83e\udd14",
+      "success": "Treasure salvaged! Clean modern abstractions built on gems! \ud83e\udd3f\ud83c\udf89",
+      "error": "Murky water in the deep trench! Turning on diving lights! \ud83d\udd26",
+      "sleeping": "Zzz... floating peacefully in the gentle swell of the bay... \ud83c\udf19"
+    }
+  }
 }

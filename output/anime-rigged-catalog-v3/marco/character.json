@@ -24,17 +24,42 @@
     "accent": "#dc2626"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "ocean",
     "leader"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "maritime",
+  "specialty": "Monorepo Release Navigation",
+  "catchphrase": "Steering releases through any storm.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1e3a8a",
+    "icon": "\u2693",
+    "treatName": "SeaBiscuit",
+    "treatEmoji": "\ud83e\udd60",
+    "feedReaction": "Hardtack sea biscuit and strong coffee! Ready for gale-force winds! \ud83e\udd60\u2693",
+    "wakeReaction": "Spinning ship helm! Compass set true for version 1.0! \u2693",
+    "petReaction": "Hearty sea captain laugh! No storm can sink our crew, Chief! \u2693\ud83d\udcaa",
+    "dialogue": {
+      "idle": "Checking barometers and weather glass in the chartroom. \u2693",
+      "working": "Steering massive cargo releases through stormy ocean gales! \u2693\u26a1",
+      "thinking": "Reading navigation buoys and channel markers ahead... \ud83e\udd14",
+      "success": "Docked safely! All containers unloaded in the harbor! \u2693\ud83c\udf89",
+      "error": "Rogue wave breaking over the bow! Heaving to and riding it! \ud83c\udf0a",
+      "sleeping": "Zzz... snoring peacefully in captain quarters hammock... \ud83c\udf19"
+    }
+  }
 }

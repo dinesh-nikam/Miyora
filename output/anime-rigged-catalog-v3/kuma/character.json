@@ -24,17 +24,42 @@
     "accent": "#eab308"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
+    "height": 1.0,
+    "headScale": 1.0,
     "build": 1.3,
-    "limbLength": 1
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "bear",
     "knight"
   ],
-  "personality": "stoic",
-  "specialty": "Branch Guarding",
-  "catchphrase": "Stand between main and bad merges."
+  "personality": "guardian",
+  "specialty": "Vault Guardian Duty",
+  "catchphrase": "Guards the vault of production secrets.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#78716c",
+    "icon": "\ud83d\udc3b",
+    "treatName": "SalmonFillet",
+    "treatEmoji": "\ud83d\udc1f",
+    "feedReaction": "Fresh wild river salmon! Massive grizzly claws click in joy! \ud83d\udc1f\ud83d\udc3b",
+    "wakeReaction": "Rising to full height on hind legs to inspect the vault perimeter! \ud83d\udc3b",
+    "petReaction": "Gentle forehead bump that feels like a warm, supportive boulder! \ud83d\udc3b\ud83d\udc96",
+    "dialogue": {
+      "idle": "Sitting massive and immovable before the credentials safe. \ud83d\udc3b",
+      "working": "Standing heavy cryptographic guard over production signing keys! \ud83d\udc3b\u26a1",
+      "thinking": "Sniffing key exchange signatures for cryptographic tampering... \ud83e\udd14",
+      "success": "VAULT SECURE! Keys protected, zero leakage, release signed! \ud83d\udc3b\ud83c\udf89",
+      "error": "Loud warning roar! Unauthorized access attempt repelled! \ud83d\udc3b\ud83d\udca5",
+      "sleeping": "Zzz... snoozing heavily across the threshold of the vault... \ud83c\udf19"
+    }
+  }
 }

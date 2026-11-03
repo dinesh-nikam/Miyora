@@ -24,17 +24,42 @@
     "accent": "#22c55e"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.2,
   "tags": [
     "raccoon",
     "coder"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "clever",
+  "specialty": "Memory Dump Scavenging",
+  "catchphrase": "Rummages through dumps for treasure.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1c1917",
+    "icon": "\ud83e\udd9d",
+    "treatName": "ShinySnack",
+    "treatEmoji": "\ud83e\udd60",
+    "feedReaction": "Crunchy sweet shiny snack! Black mask eyes gleam with mischief! \ud83e\udd60\ud83e\udd9d",
+    "wakeReaction": "Chittering cheerfully, washing little black paws in water bowl! \ud83e\udd9d",
+    "petReaction": "Hands you a shiny, valuable lost variable extracted from a dump! \ud83e\udd9d\u2728",
+    "dialogue": {
+      "idle": "Examining a shiny metallic USB stick with clever little hands. \ud83e\udd9d",
+      "working": "Rummaging through gigabyte core dumps to find the smoking gun! \ud83e\udd9d\u26a1",
+      "thinking": "Feeling around in the dark for where the pointer fell... \ud83e\udd14",
+      "success": "TREASURE FOUND! Missing data recovered from the garbage bin! \ud83e\udd9d\ud83c\udf89",
+      "error": "Stuck in the trash can! Wiggling out with comical chitter! \ud83e\udd9d",
+      "sleeping": "Zzz... curled up in a hollow tree trunk hugging his shiny loot... \ud83c\udf19"
+    }
+  }
 }

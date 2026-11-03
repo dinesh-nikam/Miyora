@@ -22,17 +22,42 @@
     "accent": "#facc15"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
+    "height": 1.0,
+    "headScale": 1.0,
     "build": 1.3,
-    "limbLength": 1
+    "limbLength": 1.0
   },
   "energy": 0.7,
   "tags": [
     "robot",
     "strong"
   ],
-  "personality": "methodical",
-  "specialty": "Deterministic CI",
-  "catchphrase": "Zero syntax faults allowed."
+  "personality": "sturdy",
+  "specialty": "Heavy-Load Cluster Sharding",
+  "catchphrase": "Holding the weight of the cluster upon titanium shoulders.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#475569",
+    "icon": "\ud83d\udee1\ufe0f",
+    "treatName": "GraphiteBar",
+    "treatEmoji": "\ud83d\udd29",
+    "feedReaction": "Heavy graphite fuel rod slotted! Hydraulic pressure at max! \ud83d\udd29\ud83d\udee1\ufe0f",
+    "wakeReaction": "Titanium servos engaged! No payload is too heavy to bear! \ud83d\udee1\ufe0f",
+    "petReaction": "Heavy metallic salute! I stand ready to bear your burdens! \ud83d\udee1\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Piston hydraulics hum in steady standby. Stability 100%. \ud83d\udee1\ufe0f",
+      "working": "Sharding petabyte workloads across distributed nodes! \ud83d\udee1\ufe0f\u26a1",
+      "thinking": "Calculating structural load distribution across clusters... \ud83e\udd14",
+      "success": "Payload delivered safely! Foundation unblemished! \ud83d\udee1\ufe0f\ud83c\udf89",
+      "error": "Stress threshold warning! Reinforcing hydraulic supports! \ud83d\udee1\ufe0f\u26a0\ufe0f",
+      "sleeping": "Zzz... titanium frame resting safely on locking struts... \ud83c\udf19"
+    }
+  }
 }

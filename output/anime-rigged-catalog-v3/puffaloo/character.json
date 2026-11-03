@@ -25,18 +25,43 @@
     "accent": "#2dd4bf"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "pocket-monster",
     "normal",
     "cute"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "fluffy",
+  "specialty": "Memory Buffer Cushioning",
+  "catchphrase": "Fluffing soft marshmallow buffers around sensitive memory spikes!",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f472b6",
+    "icon": "\u2601\ufe0f",
+    "treatName": "Marshmallow",
+    "treatEmoji": "\ud83c\udf61",
+    "feedReaction": "Fluffy sweet marshmallow! Bouncing high with cloud energy! \ud83c\udf61\u2601\ufe0f",
+    "wakeReaction": "*poof* Cloud puff expands cheerfully into a cozy morning! \u2601\ufe0f",
+    "petReaction": "*soft squish* Enveloping you in warm, weightless cloud fluff! \u2601\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Floating gently an inch above the floor like a cotton ball. \u2601\ufe0f",
+      "working": "Cushioning high-pressure server spikes in soft cloud foam! \u2601\ufe0f\u26a1",
+      "thinking": "Drifting lazily in the air, contemplating the breeze... \ud83e\udd14",
+      "success": "SUPER POOF! The softest release lands like a feather! \u2601\ufe0f\ud83c\udf89",
+      "error": "Squished flat! Poofing back up into shape with a bounce! \u2601\ufe0f",
+      "sleeping": "Zzz... snoozing like a fluffy cumulus cloud at sunset... \ud83c\udf19"
+    }
+  }
 }

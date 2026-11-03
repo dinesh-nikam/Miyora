@@ -24,17 +24,42 @@
     "accent": "#fef08a"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "maker",
     "winter"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "chilled",
+  "specialty": "Zero-Allocation High Performance",
+  "catchphrase": "Keeping execution paths chilled to absolute zero allocations.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#0ea5e9",
+    "icon": "\ud83e\uddca",
+    "treatName": "GlacierWater",
+    "treatEmoji": "\ud83d\udca7",
+    "feedReaction": "Pure arctic glacier meltwater! Sub-zero execution active! \ud83d\udca7\ud83e\uddca",
+    "wakeReaction": "Frost goggles down. Measuring heap allocations with cold eyes. \ud83e\uddca",
+    "petReaction": "Carving a sparkling ice crystal pendant in your honor, Chief! \ud83e\uddca\u2728",
+    "dialogue": {
+      "idle": "Sitting on an iceberg, inspecting assembly disassembly. \ud83e\uddca",
+      "working": "Freezing heap allocations to achieve pure stack performance! \ud83e\uddca\u26a1",
+      "thinking": "Eliminating dynamic boxing from the inner loop... \ud83e\udd14",
+      "success": "Sub-zero perfection! Zero allocations, blazing throughput! \ud83e\uddca\ud83c\udf89",
+      "error": "Heap allocation detected on hot path! Chilling it instantly! \ud83e\uddca\u26a0\ufe0f",
+      "sleeping": "Zzz... sleeping soundly inside a cozy, sculpted igloo... \ud83c\udf19"
+    }
+  }
 }

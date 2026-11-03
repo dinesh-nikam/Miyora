@@ -26,8 +26,8 @@
   "proportions": {
     "height": 0.84,
     "headScale": 1.32,
-    "build": 1,
-    "limbLength": 1
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.1,
   "tags": [
@@ -35,7 +35,32 @@
     "psychic",
     "cute"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "bioluminescent",
+  "specialty": "Bioluminescent Night Purring",
+  "catchphrase": "Purrs with a soft neon glow to illuminate midnight code reviews.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#06b6d4",
+    "icon": "\ud83d\udca1",
+    "treatName": "NeonJelly",
+    "treatEmoji": "\ud83e\udebc",
+    "feedReaction": "Bioluminescent ocean jelly! Cyan stripes glow brightly in dark! \ud83e\udebc\ud83d\udca1",
+    "wakeReaction": "Padding silently through dark room, casting neon cyan path! \ud83d\udca1",
+    "petReaction": "Purrs like a gentle neon nightlight right beside your mouse! \ud83d\udca1\ud83d\udc96",
+    "dialogue": {
+      "idle": "Curled up glowing soft aqua like a neon sign in the window. \ud83d\udca1",
+      "working": "Illuminating difficult diffs in midnight code reviews with cyan light! \ud83d\udca1\u26a1",
+      "thinking": "Pulsing rhythmic light waves while deciphering tricky logic... \ud83e\udd14",
+      "success": "NEON GLOW! Everything illuminated with crystal-clear clarity! \ud83d\udca1\ud83c\udf89",
+      "error": "Light flickered off! Nudging with head to turn glow back on! \ud83d\udca1",
+      "sleeping": "Zzz... soft neon breathing glow pulsing slowly in sleep... \ud83c\udf19"
+    }
+  }
 }

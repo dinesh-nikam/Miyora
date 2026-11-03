@@ -24,16 +24,41 @@
     "accent": "#22d3ee"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
   "energy": 1.5,
   "tags": [
     "gamer"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "competitive",
+  "specialty": "Leaderboard Benchmark Gaming",
+  "catchphrase": "Holds the high score on every leaderboard.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#facc15",
+    "icon": "\ud83d\udd79\ufe0f",
+    "treatName": "GamerSoda",
+    "treatEmoji": "\ud83e\udd64",
+    "feedReaction": "Ultra-caffeine electric blue gamer soda! Combos at 999 hits! \ud83e\udd64\ud83d\udd79\ufe0f",
+    "wakeReaction": "Clicking mechanical arcade buttons. Insert coin to start! \ud83d\udd79\ufe0f",
+    "petReaction": "High score victory screen flashes your name at the top! \ud83d\udd79\ufe0f\ud83c\udfc6",
+    "dialogue": {
+      "idle": "Juggling joystick and quarters, waiting for challengers. \ud83d\udd79\ufe0f",
+      "working": "Executing frame-perfect input combos on the compiler! \ud83d\udd79\ufe0f\u26a1",
+      "thinking": "Finding the speedrun glitch that bypasses latency... \ud83e\udd14",
+      "success": "NEW HIGH SCORE! All latency records shattered on the board! \ud83d\udd79\ufe0f\ud83c\udf89",
+      "error": "Game over? No way! Continuing with three credits! \ud83d\udd79\ufe0f\ud83d\udd25",
+      "sleeping": "Zzz... head resting on the arcade cabinet marquee... \ud83c\udf19"
+    }
+  }
 }

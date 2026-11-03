@@ -24,17 +24,42 @@
     "accent": "#fde047"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "science",
     "space"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "astronomical",
+  "specialty": "Latency Constellation Mapping",
+  "catchphrase": "Charts latency like distant comets.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1e1b4b",
+    "icon": "\ud83d\udd2d",
+    "treatName": "StarJelly",
+    "treatEmoji": "\ud83c\udf0c",
+    "feedReaction": "Midnight star jelly candy! The telescope mirrors gleam bright! \ud83c\udf0c\ud83d\udd2d",
+    "wakeReaction": "Opening observatory dome. The digital cosmos is crystal clear! \ud83d\udd2d",
+    "petReaction": "Tracing a brilliant new constellation in the sky named for you! \ud83d\udd2d\u2728",
+    "dialogue": {
+      "idle": "Adjusting brass telescope knobs to track latency peaks. \ud83d\udd2d",
+      "working": "Charting tail latency across distributed microservice orbits! \ud83d\udd2d\u26a1",
+      "thinking": "Calculating lightspeed propagation delays across regions... \ud83e\udd14",
+      "success": "Constellation aligned! Clean data orbits without collision! \ud83c\udf0c\ud83c\udf89",
+      "error": "Solar eclipse shadow! Recalibrating observatory sensors! \ud83d\udd2d\ud83c\udf11",
+      "sleeping": "Zzz... sleeping peacefully under the starry glass dome... \ud83c\udf19"
+    }
+  }
 }

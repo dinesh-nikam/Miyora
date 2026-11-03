@@ -24,16 +24,41 @@
     "accent": "#14b8a6"
   },
   "proportions": {
-    "height": 1,
-    "headScale": 1,
-    "build": 1,
-    "limbLength": 1
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
   },
-  "energy": 1,
+  "energy": 1.0,
   "tags": [
     "science"
   ],
-  "personality": "focused",
-  "specialty": "Full-Stack Engineering",
-  "catchphrase": "Ship clean, verify always."
+  "personality": "methodical",
+  "specialty": "Empirical A/B Benchmarking",
+  "catchphrase": "Measure twice, verify the variance, then optimize the hot path.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#0e7490",
+    "icon": "\ud83d\udd2c",
+    "treatName": "LabBiscuits",
+    "treatEmoji": "\ud83c\udf6a",
+    "feedReaction": "Crunchy lab technician biscuits! Re-filling pipettes and coffee! \ud83c\udf6a\ud83d\udd2c",
+    "wakeReaction": "Calibrating optical microscope. Ready to inspect runtime spikes! \ud83d\udd2c",
+    "petReaction": "Adjusting lab safety goggles with an approving bright smile! \ud83d\udd2c\u2728",
+    "dialogue": {
+      "idle": "Logging benchmark baseline metrics into lab notebooks. \ud83d\udd2c",
+      "working": "Running ten thousand trials to verify statistical significance! \ud83d\udd2c\u26a1",
+      "thinking": "Checking standard deviation and eliminating outlier runs... \ud83e\udd14",
+      "success": "Hypothesis confirmed! 42% latency reduction proven empirically! \ud83d\udd2c\ud83c\udf89",
+      "error": "Variance anomaly detected! Re-checking measurement instrumentation! \ud83d\udd2c\u26a0\ufe0f",
+      "sleeping": "Zzz... resting head on lab bench beside humming centrifuges... \ud83c\udf19"
+    }
+  }
 }

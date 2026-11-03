@@ -25,14 +25,39 @@
     "height": 0.84,
     "headScale": 1.26,
     "build": 1.15,
-    "limbLength": 1
+    "limbLength": 1.0
   },
   "energy": 1.2,
   "tags": [
     "pocket-monster",
     "fire"
   ],
-  "personality": "playful",
-  "specialty": "Cache & Triage",
-  "catchphrase": "Pouncing on stale dependencies with a grin!"
+  "personality": "furnace",
+  "specialty": "Friendly Furnace Snorting",
+  "catchphrase": "Snorts warm puffs of smoke to keep the build servers cozy.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#dc2626",
+    "icon": "\ud83d\udc17",
+    "treatName": "CharredRoots",
+    "treatEmoji": "\ud83e\udd54",
+    "feedReaction": "Roasted sweet sweet potatoes! Snorting warm puffs of smoke! \ud83e\udd54\ud83d\udc17",
+    "wakeReaction": "Stamping hooves on gravel, ready to charge down blockers! \ud83d\udc17",
+    "petReaction": "Warm snout nuzzle that smells like cozy autumn woodsmoke! \ud83d\udc17\ud83d\udc96",
+    "dialogue": {
+      "idle": "Rooting around the forge floor for tasty roasted chestnuts. \ud83d\udc17",
+      "working": "Stoking the furnace heat under high-throughput build workers! \ud83d\udc17\u26a1",
+      "thinking": "Lowering head, lining up the charge against the bottleneck... \ud83e\udd14",
+      "success": "SNORT OF VICTORY! Blocker charged and cleared out of the way! \ud83d\udc17\ud83c\udf89",
+      "error": "Tusk got stuck in a fencepost! Backing up and shaking head! \ud83d\udc17",
+      "sleeping": "Zzz... sleeping warm against the base of the smithy chimney... \ud83c\udf19"
+    }
+  }
 }
