@@ -1,15 +1,16 @@
 {
   "schemaVersion": 1,
-  "clientDate": "2026-10-30",
-  "revision": "refined-catalog-v3.2",
+  "clientDate": "2026-11-03",
+  "revision": "refined-catalog-v3.3",
   "nativeValidated": 213,
-  "nativeImported": 213,
-  "uniqueImportedAvatars": 213,
+  "nativeImported": 85,
+  "uniqueImportedAvatars": 85,
+  "importBlockedBy": "custom avatar library limit (512 entries) reached; 128 more slots required",
   "verifiedExistingModelsReused": true,
-  "selectedCharacter": "miyora.nezuko",
-  "selectedModelSha256": "72606e033377db18fc29c91da0505612ed88c77c2b0caa73ddcb3e8c53616a87",
-  "nativeStudioRender": "observed",
-  "nativeOverlayVerification": "verified-visible-3d-mode",
+  "selectedCharacter": null,
+  "selectedModelSha256": null,
+  "nativeStudioRender": "not-run",
+  "nativeOverlayVerification": "not-run",
   "renderMode": "3d",
-  "selectedDisplayName": "Nezuko · Refined"
+  "selectedDisplayName": null
 }
