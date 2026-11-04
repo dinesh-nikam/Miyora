@@ -1,4 +1,4 @@
-"""Master researched profiles for all 213 Miyora characters.
+"""Master researched profiles for all 214 Miyora characters.
 
 Bespoke lore identities, engineering specialties, unique catchphrases,
 and rich companion dialogues for offline desktop companionship.
@@ -4688,6 +4688,28 @@ PROFILES = {
                 "success": "Target silenced! Build green and stealthy! 🐾🎉",
                 "error": "Hiss! Bug detected in perimeter! Ambushing... ⚔️",
                 "sleeping": "Zzz... curled up in a neat little cat ball... 🌙🐾"
+            }
+        }
+    },
+    "yorune": {
+        "personality": "luminous",
+        "specialty": "Celestial Navigation & Schema Mapping",
+        "catchphrase": "Every star is a schema; every schema, a constellation.",
+        "companionPersonality": {
+            "themeColor": "#6d2447",
+            "icon": "🦊",
+            "treatName": "Moon Mochi",
+            "treatEmoji": "🍡",
+            "feedReaction": "Moon mochi accepted! The orrery tilts, the seams align, and every little star glows brighter. 🍡🦊",
+            "wakeReaction": "The star charts have shifted, Chief. A new constellation is waiting to be named. 🌌🦊",
+            "petReaction": "A soft chime rings through the observatory. Every star in my chart twinkles for you. 🦊💫",
+            "dialogue": {
+                "idle": "Reading tonight's star chart. Which constellation shall we compile, Chief? 🌌",
+                "working": "Threading agent telemetry into a living constellation map. ✨⚡",
+                "thinking": "Measuring the parallax between two conflicting requirements... 🔭",
+                "success": "The chart resolved cleanly — a new constellation, fully documented. 🌟🎉",
+                "error": "A comet of chaos crossed the schema. I will re-plot its trajectory. ☄️",
+                "sleeping": "Zzz... counting satellites instead of sheep... 🌙🦊"
             }
         }
     }

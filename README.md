@@ -46,7 +46,7 @@ Session evidence, progression metrics, and XP transactions are committed to an i
 | **🖥️ Native Desktop Shell** | Powered by **Tauri 2** and React strict TypeScript. Features an interactive main management window and a transparent, non-intrusive, always-on-top pet overlay with persistent screen coordinates. |
 | **👁️ Real Agent Observation** | Real-time observation through zero-overhead native hooks (**Claude Code**, **Codex**) or the universal process wrapper (`agentpet run -- <command>`) for any agent (Aider, OpenCode, Gemini CLI). No synthetic or mock activity. |
 | **🧠 Deterministic Finite State Machine** | 15-state priority-based reactive engine (`pet-engine`) enforcing strict transition allow-lists. Distinguishes active execution, deep reasoning, human attention requests, errors, and task victories. |
-| **🎭 3D Studio & 2D PetPacks** | Includes **213 procedural 3D characters** across 5 body archetypes with customizable rigs (ears, tails, auras, props, gradient hair), local silhouette-inflation sculpting from 2D images, VRM imports, and **47 PetPacks** (6 multi-frame animated/distinct state packs, 41 static packs with expressive transform-based motion). |
+| **🎭 3D Studio & 2D PetPacks** | Includes **214 procedural 3D characters** across 5 body archetypes with customizable rigs (ears, tails, auras, props, gradient hair), local silhouette-inflation sculpting from 2D images, VRM imports, and **47 PetPacks** (6 multi-frame animated/distinct state packs, 41 static packs with expressive transform-based motion). |
 | **🛡️ Tamper-Safe Progression** | Idempotent local XP ledger awarding XP strictly on verified child process completion. Session XP, level scaling, and milestone achievements are committed together in atomic SQLite transactions. |
 | **🔒 Air-Gapped Privacy** | No cloud account required. Zero background telemetry. Prompts, raw tool outputs, API keys, and sensitive filesystem paths are scrubbed before persistence. |
 
@@ -195,7 +195,8 @@ Miyora ships with 47 built-in PetPacks and a comprehensive procedural 3D avatar 
 
 ### 3D Character Studio Capabilities
 
-- **213 Procedural Characters**: 5 body types, 30 popular archetypes, and pocket chibi creatures.
+- **214 Procedural Characters**: 5 body types, 30 popular archetypes, and pocket chibi creatures.
+- **Character Card V2 Profiles**: Identity cards under `crates/avatar/catalog/cards/` add scenario, greetings, example dialogue, lorebook entries, and a structured render prompt, validated against the 3D catalog.
 - **Parametric Customization**: 12 ear types, 10 dynamic tails (flame, star, leaf), 12 gradient hairstyles, 15 outfits, 20 accessories, and energy aura customization.
 - **Geometric Image-to-3D Sculpting**: Local silhouette-inflation sculpts flat images into watertight textured GLB models without sending photos to cloud APIs.
 - **VRM 1.0 Import**: Safe avatar loading with polygon-budget guardrails, metadata inspector, and humanoid retargeting.

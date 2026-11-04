@@ -10,6 +10,11 @@
       "name": "Aoi",
       "title": "Streetwear Coder",
       "description": "The default companion: a calm coder in a teal tech hoodie who hums along while your agents work.",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none",
       "body": "humanoid",
       "ears": "human",
       "tail": "none",
@@ -67,7 +72,11 @@
           "success": "Pipeline green. Elegant commits landed with zero drama. 🍵🎉",
           "error": "A race condition whispered by. Let us calmly trace its steps. 🔍",
           "sleeping": "Zzz... resting peacefully with ambient rain sounds playing... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       }
     },
     {
@@ -132,8 +141,17 @@
           "success": "Type soundness verified. Zero unsafe operations detected. 👓🎉",
           "error": "Syntax anomaly isolated. Refactoring for invariants. 🔍",
           "sleeping": "Zzz... running background GC cycles... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -197,9 +215,18 @@
           "success": "Starlight celebration! Everything renders with elegance! 🌌🎉",
           "error": "A brief shadow passed by. Illuminating with stellar glow! ✨",
           "sleeping": "Zzz... dreaming in nebula colors... 🌙✨"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#f0abfc"
+      "hairTip": "#f0abfc",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "architecture",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -263,8 +290,17 @@
           "success": "Canopy thriving! The repository forest stands tall and green! 🌲🎉",
           "error": "Tangled underbrush detected! Clearing the trail with care! 🪓",
           "sleeping": "Zzz... hammock swaying between two ancient cedar boughs... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "nature",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -328,8 +364,17 @@
           "success": "Touchdown! Urgent release package delivered on the second! 🪁🎉",
           "error": "Crosswind turbulence! Tilting wings to regain stability! 🪁💨",
           "sleeping": "Zzz... drifting on a soft breeze high above the clouds... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " light-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "light",
+      "spiritual_domain": "deployment",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -393,8 +438,17 @@
           "success": "Full harvest! Healthy, accessible components in full bloom! 🌻🎉",
           "error": "A tiny aphid bug on a petal! Gently removing it with care! 🐞",
           "sleeping": "Zzz... resting in a greenhouse wicker chair amidst blossoms... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -458,8 +512,17 @@
           "success": "Architecture sound! Distributed consensus achieved cleanly! 📐🎉",
           "error": "Domain boundary leakage detected! Refactoring contracts! 📐⚠️",
           "sleeping": "Zzz... resting after signing off on the master architecture ADR... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "architecture",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -522,8 +585,17 @@
           "success": "Hypothesis confirmed! 42% latency reduction proven empirically! 🔬🎉",
           "error": "Variance anomaly detected! Re-checking measurement instrumentation! 🔬⚠️",
           "sleeping": "Zzz... resting head on lab bench beside humming centrifuges... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "testing",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -588,8 +660,17 @@
           "success": "Blizzard conquered! Zero-millisecond cold starts achieved! ❄️🎉",
           "error": "Frozen socket! Lighting kerosene heaters to thaw the pipe! ❄️🔥",
           "sleeping": "Zzz... sleeping warm beneath heavy reindeer pelts... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "ice",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -653,9 +734,18 @@
           "success": "Pure stillness. Zero leaks, zero residue, pristine memory. 🌨️🎉",
           "error": "A muddy boot print in the snow. Sweeping it pure again. 🌨️",
           "sleeping": "Zzz... resting in a quiet palace of translucent blue ice... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " ice-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#bae6fd"
+      "hairTip": "#bae6fd",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "ice",
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -719,8 +809,17 @@
           "success": "Oasis reached! Cool fresh water springs for all services! 🌴🎉",
           "error": "Shifting sands obscured the path! Trusting the compass needle! 🧭",
           "sleeping": "Zzz... resting beneath a woven tent under clear desert stars... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -783,8 +882,17 @@
           "success": "Treasure salvaged! Clean modern abstractions built on gems! 🤿🎉",
           "error": "Murky water in the deep trench! Turning on diving lights! 🔦",
           "sleeping": "Zzz... floating peacefully in the gentle swell of the bay... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -849,8 +957,17 @@
           "success": "Perfection! Execution hums like an Swiss chronometer! ⏱️🎉",
           "error": "Hairspring friction detected! Applying single drop of oil! ⏱️⚠️",
           "sleeping": "Zzz... sleeping curled beside a ticking mantel clock... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -915,8 +1032,17 @@
           "success": "Codified! Pure semantic documentation that outlasts years! 📜🎉",
           "error": "Ambiguous clause found in spec! Clarifying immediately! 📜🔍",
           "sleeping": "Zzz... resting cheek on a heavy bound leather tome at dawn... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -977,8 +1103,17 @@
           "success": "Shield unbroken! Main branch preserved in pristine health! 🛡️🎉",
           "error": "Heavy battering ram at the gate! Bracing with both arms! 🛡️💥",
           "sleeping": "Zzz... sleeping beside the great hall hearth with axe ready... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1042,8 +1177,17 @@
           "success": "Timeless harmony! Commit genealogy preserved for eternity! 🌿🎉",
           "error": "History branch detached! Re-threading the lineage tapestry! 🌿",
           "sleeping": "Zzz... sleeping under the canopy of ancient silver trees... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1107,8 +1251,17 @@
           "success": "BARREL RODE! Shipped the massive release right onto the sand! 🏄🎉",
           "error": "Wipeout on a gnarly wave! Popping right back on the board! 🏄🤙",
           "sleeping": "Zzz... hammock swaying between two palms by the surf... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " light-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "light",
+      "spiritual_domain": "deployment",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1173,8 +1326,17 @@
           "success": "Chart complete! Clear sailing and navigation for every dev! 🗺️🎉",
           "error": "Uncharted territory bug! Planting surveyor stakes to scout! 🗺️🧭",
           "sleeping": "Zzz... resting under a lantern in the surveyor field tent... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1237,8 +1399,17 @@
           "success": "Masterpiece! Visual design renders with museum-grade grace! 🎨🎉",
           "error": "Ugly pixel misalignment! Nudging with subpixel precision! 🎨🔍",
           "sleeping": "Zzz... paintbrushes resting in a jar of clean water... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1302,8 +1473,17 @@
           "success": "CHECKERED FLAG! New lap record set across all benchmarks! 🏎️🎉",
           "error": "Blown tire in turn three! Pitting for rapid tire swap! 🛞🔧",
           "sleeping": "Zzz... resting in the racing trailer with trophy on the shelf... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " void-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "void",
+      "spiritual_domain": "testing",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1368,8 +1548,17 @@
           "success": "Dependency diet complete! Lean, fast, and audit-clean! 📚🎉",
           "error": "Bloated dependency detected! Replacing with bespoke helper! 📚✂️",
           "sleeping": "Zzz... dozing softly in a leather wingback library armchair... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1432,8 +1621,17 @@
           "success": "Crescendo! Flawless cadence, all test instruments in tune! 🎵🎉",
           "error": "Discordant flat note! Tuning the failing test runner! 🎵🎻",
           "sleeping": "Zzz... resting with sheet music resting across her lap... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1496,8 +1694,17 @@
           "success": "Glorious triumph! The sprint goal conquered with valor! ☀️🎉",
           "error": "Rally to me! No obstacle can dim our collective resolve! ☀️🛡️",
           "sleeping": "Zzz... resting upright beneath the golden paladin banner... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "water",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1561,8 +1768,17 @@
           "success": "Target eliminated. The build is 100% deterministic now. 🗡️🎉",
           "error": "Flaky test slipped the net! Slipping back into the dark! 🗡️",
           "sleeping": "Zzz... perched silent and still high in the castle eaves... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "testing",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1625,8 +1841,17 @@
           "success": "Whole and healed! The system breathes with restored vitality! ✨🎉",
           "error": "A fractured connection! Pouring warm soothing balm on it! ✨🩹",
           "sleeping": "Zzz... resting bathed in peaceful amber sunstone glow... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " light-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "light",
+      "spiritual_domain": "healing",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1690,8 +1915,17 @@
           "success": "Sub-zero perfection! Zero allocations, blazing throughput! 🧊🎉",
           "error": "Heap allocation detected on hot path! Chilling it instantly! 🧊⚠️",
           "sleeping": "Zzz... sleeping soundly inside a cozy, sculpted igloo... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " ice-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "ice",
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1754,8 +1988,17 @@
           "success": "Harmonious release! Green tea served, all suites pass green! 🍵🎉",
           "error": "Spilled drop on the tatami! Tidying gently with a smile. 🍵",
           "sleeping": "Zzz... resting peacefully on tatami beside a warm kettle... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1819,8 +2062,17 @@
           "success": "Docked safely! All containers unloaded in the harbor! ⚓🎉",
           "error": "Rogue wave breaking over the bow! Heaving to and riding it! 🌊",
           "sleeping": "Zzz... snoring peacefully in captain quarters hammock... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "deployment",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1884,8 +2136,17 @@
           "success": "Constellation aligned! Clean data orbits without collision! 🌌🎉",
           "error": "Solar eclipse shadow! Recalibrating observatory sensors! 🔭🌑",
           "sleeping": "Zzz... sleeping peacefully under the starry glass dome... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -1946,8 +2207,17 @@
           "success": "Order served! Refactored code is smooth, rich, and balanced! ☕🎉",
           "error": "Grounds spilled! Cleaning the counter and pulling a fresh shot! ☕",
           "sleeping": "Zzz... resting in a cozy corner booth as night falls... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2010,9 +2280,18 @@
           "success": "Banishment complete! The build is pure and regression-free! 🧙‍♀️🎉",
           "error": "A rogue imp caused mischief! Sprinkling banishing salt! 🧂",
           "sleeping": "Zzz... snoozing upside down with black cat on her feet... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#dc2626"
+      "hairTip": "#dc2626",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "magic",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2075,8 +2354,17 @@
           "success": "Legend immortalized! The release story will be sung for ages! 📖🎉",
           "error": "A plot twist in chapter three! The hero shall overcome! 📖⚔️",
           "sleeping": "Zzz... resting head against a bundle of story scrolls... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "deployment",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2140,8 +2428,17 @@
           "success": "Infiltration solved! Perimeter locked, packet trace verified! 💻🎉",
           "error": "Dropped packet! Injecting custom probe to trace the leak! 🔍",
           "sleeping": "Zzz... sleeping with headset on, neon green lights dim... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2205,8 +2502,17 @@
           "success": "Anchored in port! Cargo delivered without spilling a drop! 🧭🎉",
           "error": "Coral reef ahead! Hard to port! Navigating the channel! 🌊",
           "sleeping": "Zzz... resting in the captain cabin as the tide rocks... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2270,8 +2576,17 @@
           "success": "Vigil complete! Northern servers green, steady, and secure! 🛡️🎉",
           "error": "Ice storm on the antennas! De-icing with thermal spears! ❄️",
           "sleeping": "Zzz... resting upright against carved rune stones in peace... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2334,8 +2649,17 @@
           "success": "Golden brown! Shipped crispy outside and tender within! 🥖🎉",
           "error": "Dough deflated! Adding fresh yeast and giving it more time! 🍞",
           "sleeping": "Zzz... resting on flour sacks as the wood oven cools... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2399,8 +2723,17 @@
           "success": "Pure simplicity! Sprawling problem reduced to a tiny crane! 🦢🎉",
           "error": "Creased on the wrong axis! Unfolding gently and re-creasing! 🦢",
           "sleeping": "Zzz... resting beside a bowl of vibrant paper cranes... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2463,8 +2796,17 @@
           "success": "NEW HIGH SCORE! All latency records shattered on the board! 🕹️🎉",
           "error": "Game over? No way! Continuing with three credits! 🕹️🔥",
           "sleeping": "Zzz... head resting on the arcade cabinet marquee... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "testing",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2529,8 +2871,17 @@
           "success": "Sweet chorus! The whole forest echoes with the victory song! 🪕🎉",
           "error": "A snapped string! Replacing it with silver thread swiftly! 🪕",
           "sleeping": "Zzz... curled up in a cradle of green leafy oak branches... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "deployment",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2594,8 +2945,17 @@
           "success": "SUMMIT REACHED! Flag planted on the peak of version 1.0! 🧗🎉",
           "error": "Loose scree on the ledge! Anchoring firmly into solid rock! 🧗⛏️",
           "sleeping": "Zzz... suspended in a cliffside portaledge under stars... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2659,8 +3019,17 @@
           "success": "All clear! Status page shines a bright, unbroken green! 🏮🎉",
           "error": "Fog rolling in thick! Sounding the deep brass foghorn! 📯",
           "sleeping": "Zzz... resting in the lantern keeper chair as light turns... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2723,8 +3092,17 @@
           "success": "THUNDER VICTORY! Blocker shattered in one clean strike! ⚡🎉",
           "error": "Static dissipated harmlessly! Grounding and re-centering! ⚡",
           "sleeping": "Zzz... meditating in stillness as lightning dances above... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2789,8 +3167,17 @@
           "success": "Confetti blast! A sweet, beloved utility is born today! 🍬🎉",
           "error": "Gear stuck in taffy! Melting it with warm cinnamon tea! 🍭",
           "sleeping": "Zzz... tucked under a pastel quilt surrounded by toys... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2854,8 +3241,17 @@
           "success": "Fleet arrived! Zero lost packets in deep cosmic transit! 🌌🎉",
           "error": "Meteor shower interference! Re-routing through Lagrange points! ✨",
           "sleeping": "Zzz... drifting in zero gravity beneath the Milky Way... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "ice",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -2917,8 +3313,17 @@
           "success": "Forged! Unbreakable binary that will never bend or crack! 🔥🎉",
           "error": "Slag inclusion in the blade! Hammering it out on the anvil! 🔨",
           "sleeping": "Zzz... curled around the warm coals of the smithy forge... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle fire essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "fire",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -2982,8 +3387,17 @@
           "success": "Ding! Notification delivered cleanly without alert fatigue! 🧚🎉",
           "error": "Caught in a window draft! Recovering with cheerful giggle! 🧚",
           "sleeping": "Zzz... sleeping inside a pink tulip blossom on the sill... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3047,8 +3461,17 @@
           "success": "Published! A changelog worthy of immortal literary renown! 🦇🎉",
           "error": "A clumsy cadence! Striking the line with crimson ink! ✒️",
           "sleeping": "Zzz... resting in peaceful midnight shadows upside down... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3111,8 +3534,17 @@
           "success": "Sanctified! 99.999% uptime achieved with divine grace! 🪽🎉",
           "error": "Dark anomaly approached! Rebuking it with radiant light! 🪽✨",
           "sleeping": "Zzz... resting upon radiant clouds of peaceful golden dawn... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3177,9 +3609,18 @@
           "success": "Iaijutsu strike! Regression cleaved cleanly before staging! 🗡️🎉",
           "error": "Glancing parry! Re-sheathing and adopting low water stance! 🗡️",
           "sleeping": "Zzz... resting with back against cedar trunk, hand on hilt... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#b91c1c"
+      "hairTip": "#b91c1c",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3244,8 +3685,17 @@
           "success": "Another abandoned village of code restored to prosperity! 🌾🎉",
           "error": "A rusted lock on an old module! Forcing the rusted hinge! 🌾",
           "sleeping": "Zzz... sleeping under a straw mat beside the mountain road... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3310,9 +3760,18 @@
           "success": "Mission complete. Extracted the bug and vanished unseen. 🥷🎉",
           "error": "Tripwire snagged! Dropping smoke bomb to reset positions! 💨",
           "sleeping": "Zzz... sleeping suspended in ninja hammock between rafters... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#7c3aed"
+      "hairTip": "#7c3aed",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3376,8 +3835,17 @@
           "success": "Purified! A pristine release enters the world with blessings! ⛩️🎉",
           "error": "A lingering hungry spirit in the logs! Chanting holy verse! ⛩️📜",
           "sleeping": "Zzz... resting in miko quarters as temple bells chime... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "deployment",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3442,9 +3910,18 @@
           "success": "STARLIGHT MIRACLE! All red errors turned to shining gold! ⭐🎉",
           "error": "Magical wand sputter! Re-charging with courage and hope! 🪄",
           "sleeping": "Zzz... hugging giant plush star pillow in sweet dreamland... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#fde047"
+      "hairTip": "#fde047",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "testing",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3509,9 +3986,18 @@
           "success": "Target neutralized! Mission accomplished with 100% sync! 🎛️🎉",
           "error": "Cockpit alarm sounding! Engaging manual override thrusters! 🎛️⚠️",
           "sleeping": "Zzz... pilot seat reclined in zero-gravity resting pod... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#1e3a8a"
+      "hairTip": "#1e3a8a",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3576,8 +4062,17 @@
           "success": "YO-HO-HO! Chest full of golden reusable components secured! 🏴‍☠️🎉",
           "error": "Broadside cannon fire! Returning fire with dual cutlasses! 🏴‍☠️💥",
           "sleeping": "Zzz... snoozing in captain quarters with parrot on perch... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3642,9 +4137,18 @@
           "success": "ENCORE TIME! Confetti and glowsticks wave across the arena! 🎤🎉",
           "error": "Voice cracked! Sipping honey tea and smiling right back! 🍯",
           "sleeping": "Zzz... resting backstage wrapped in cozy fleece jacket... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#f0abfc"
+      "hairTip": "#f0abfc",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "water",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3708,9 +4212,18 @@
           "success": "Tch. It's done. Don't go breaking it again, knucklehead. 🧥🎉",
           "error": "Who wrote this garbage?! Out of my way, I'll fix it myself! 💢",
           "sleeping": "Zzz... arms crossed, napping on school rooftop in the sun... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#f97316"
+      "hairTip": "#f97316",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3774,9 +4287,18 @@
           "success": "Fox fire celebration! The sacred shrine of code stands pure! 🦊🎉",
           "error": "A foolish trickster bug! Outsmarting it with nine-fold cunning! 🦊",
           "sleeping": "Zzz... curled up into an enormous cloud of nine white tails... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#f97316"
+      "hairTip": "#f97316",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3840,9 +4362,18 @@
           "success": "Magnificent. An architecture of eternal, timeless elegance. 🍷🎉",
           "error": "A vulgar syntax flaw. It shall be cleanly expunged. 🍷",
           "sleeping": "Zzz... resting in a velvet-lined chamber as daylight breaks... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#94a3b8"
+      "hairTip": "#94a3b8",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -3908,9 +4439,18 @@
           "success": "Kingdom secured! The sovereign release reigns supreme! 🐉🎉",
           "error": "Siege engines at the moat! Raising dragonfire shields! 🛡️🔥",
           "sleeping": "Zzz... resting helmet on knee beside the guardhouse fire... 🌙"
-        }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
       },
-      "hairTip": "#22c55e"
+      "hairTip": "#22c55e",
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -3975,8 +4515,17 @@
           "success": "Magnum Opus! Pure, pristine relational tables crystallized! ⚗️🎉",
           "error": "Unstable reaction in retort! Adding stabilizing solvent! ⚗️",
           "sleeping": "Zzz... dozing surrounded by bubbling brass alchemical tubes... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4040,9 +4589,18 @@
           "success": "Sealed and harmonized! Rogue processes bound in stillness! 📜🎉",
           "error": "Spiritual disruption! Chanting the purification mantra! 📜⛩️",
           "sleeping": "Zzz... resting in onmyoji robes beside smoking incense... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#7c3aed"
+      "hairTip": "#7c3aed",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "water",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4107,8 +4665,17 @@
           "success": "Pipeline held! Victory won through unbreakable discipline! ⚔️🎉",
           "error": "A frontal breach! Charging forward to meet the challenge! ⚔️🔥",
           "sleeping": "Zzz... resting upright with hands clasped over hilt... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4173,9 +4740,18 @@
           "success": "Sanctified deployment! Zero null references throughout the realm! 🪽🎉",
           "error": "A demonic null pointer crawled out! Banishing it with light! 🪽",
           "sleeping": "Zzz... resting on stone chapel pew as morning light breaks... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#fde68a"
+      "hairTip": "#fde68a",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4240,8 +4816,17 @@
           "success": "Tamed! The wild edge case is now our loyal test companion! 🐾🎉",
           "error": "A grumpy wild bug nipped my sleeve! Offering sweet berries! 🫐",
           "sleeping": "Zzz... sleeping with three friendly tamed bugs curled around... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4305,9 +4890,18 @@
           "success": "Hah! Merged! Your turn to beat my benchmark score, Chief! ⚡🎉",
           "error": "Tch! Missed the turn! I'll catch right back up to you! ⚡",
           "sleeping": "Zzz... sleeping light with wooden sword beside the pillow... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#38bdf8"
+      "hairTip": "#38bdf8",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "testing",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4372,9 +4966,18 @@
           "success": "Spell woven! Pristine high-contrast dark theme delivered! 🔮🎉",
           "error": "A blinding white flash! Shielding eyes and re-casting dark ward! 🕶️",
           "sleeping": "Zzz... resting in a velvet shadow cocoon by moonlight... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " void-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#a855f7"
+      "hairTip": "#a855f7",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "void",
+      "spiritual_domain": "magic",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4438,9 +5041,18 @@
           "success": "Path found! The lost root cause illuminated for all to see! 🏮🎉",
           "error": "Lantern flickered in the cold wind! Cupping hands around it! 🏮",
           "sleeping": "Zzz... fading to a soft, comforting pale blue night glow... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#93c5fd"
+      "hairTip": "#93c5fd",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4504,9 +5116,18 @@
           "success": "WALL SMASHED! Path completely clear for the release convoy! 👹🎉",
           "error": "Iron club bounced off titanium door! Hahaha! Getting bigger club! 🔨",
           "sleeping": "Zzz... snoring loudly on a bear pelt like rolling thunder... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#f97316"
+      "hairTip": "#f97316",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4570,8 +5191,17 @@
           "success": "Pass secure! Verified releases convoy smoothly into production! 🪽🎉",
           "error": "Smuggler bug trying to bypass staging! Intercepting from above! 🪽",
           "sleeping": "Zzz... roosting on high mountain pine branch under the moon... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4635,8 +5265,17 @@
           "success": "Moe moe kyun! Flawless release served with ultimate sweetness! 🎀🎉",
           "error": "A spilled glass of ice water! Wiping clean in a flash with smile! 🎀",
           "sleeping": "Zzz... resting in cafe breakroom hugging a fluffy cat cushion... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "deployment",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4700,9 +5339,18 @@
           "success": "HAT-TRICK! Three massive pull requests in the back of the net! ⚽🎉",
           "error": "Tackled in the penalty box! Ref blows whistle! Penalty shot! ⚽",
           "sleeping": "Zzz... hugging soccer trophy in bed with muddy socks off... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#fde047"
+      "hairTip": "#fde047",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4766,8 +5414,17 @@
           "success": "Approved! Certified 100% compliant with project constitution! 📋🎉",
           "error": "Violation of code standard section 4B! Refactoring required! 📋⚠️",
           "sleeping": "Zzz... head resting on council meeting desk with pen capped... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4831,9 +5488,18 @@
           "success": "Fixed! A bug that puzzled the team for years resolved simply! 🎒🎉",
           "error": "Got lost in the legacy hallway! Asking directions gladly! 🗺️",
           "sleeping": "Zzz... studying at bedroom desk, drifting off over notes... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#b45309"
+      "hairTip": "#b45309",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4898,9 +5564,18 @@
           "success": "Moonlight triumph! The realm rests under a peaceful green sky! 🌙🎉",
           "error": "A shadow across the moon! Restoring lunar light with a wave! 🌙",
           "sleeping": "Zzz... resting on a silver crescent moon suspended in stars... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#818cf8"
+      "hairTip": "#818cf8",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -4964,9 +5639,18 @@
           "success": "Exorcised! Zero zombie processes lingering in memory! 🔫🎉",
           "error": "Ghost phased through the shot! Switching to holy water rounds! 🔫",
           "sleeping": "Zzz... tipping duster hat over eyes in shadowy saloon corner... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#94a3b8"
+      "hairTip": "#94a3b8",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5031,9 +5715,18 @@
           "success": "MECH LAUNCH! Giant robot stomps all build blockers flat! 🤖🎉",
           "error": "Hydraulic hose popped! Wrapping with duct tape in seconds! 🤖🔧",
           "sleeping": "Zzz... curled up inside the mech cockpit surrounded by tools... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#1e3a8a"
+      "hairTip": "#1e3a8a",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5097,8 +5790,17 @@
           "success": "Masterpiece inscribed! Git log reads like imperial poetry! 🖌️🎉",
           "error": "Ink drop splashed on parchment! Turning it into a cherry blossom! 🌸",
           "sleeping": "Zzz... resting cheek on arm beside the drying ink scroll... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5164,9 +5866,18 @@
           "success": "Target spotted and resolved! Mountain path is clear and green! 🍁🎉",
           "error": "Intruder detected! Raising buckler to hold the defensive line! 🛡️",
           "sleeping": "Zzz... curled up under falling red maple leaves... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#fb7185"
+      "hairTip": "#fb7185",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5231,8 +5942,17 @@
           "success": "YIPPEE! Message delivered before the sender even blinked! 🦊🎉",
           "error": "Tripped over a mossy root! Rolling back to feet with grin! 🦊",
           "sleeping": "Zzz... nose tucked under big fluffy tail... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5296,8 +6016,17 @@
           "success": "POUNCED! Bug pinned under two front paws! Purrrr! 🐱🎉",
           "error": "Hiss! It skittered under the couch! Peeking under to swat! 🐾",
           "sleeping": "Zzz... loaf of warm tabby bread sleeping on keyboard... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5359,8 +6088,17 @@
           "success": "BINKY! Jumping and twisting in the air with pure joy! 🐰🎉",
           "error": "Thumping hind foot on the floor! Watch out for that bug! 🐰💥",
           "sleeping": "Zzz... tiny furry sphere dreaming of endless clover hills... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5424,8 +6162,17 @@
           "success": "ROAR of contentment! Everything backed up with three copies! 🐻🎉",
           "error": "A jar tipped! Catching it with huge paw before it spills! 🍯",
           "sleeping": "Zzz... hibernating peacefully inside a warm cozy den... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5489,8 +6236,17 @@
           "success": "Happy panda tumble! All dashboards glowing peaceful green! 🐼🎉",
           "error": "A red alert! Slowly setting bamboo down to take care of it. 🎋",
           "sleeping": "Zzz... sleeping draped over a wooden climbing log... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " earth-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "earth",
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5554,8 +6310,17 @@
           "success": "AWOOOO! Triumphant howl echoes as nightly build turns green! 🐺🎉",
           "error": "Low defensive growl! Guarding the perimeter from intrusions! 🐺",
           "sleeping": "Zzz... curled with the pack beneath ancient pine canopy... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5617,8 +6382,17 @@
           "success": "FETCH SUCCESS! Dropped the clean passing test at your feet! 🐶🎉",
           "error": "Whining softly at a stuck tennis ball! Digging it out! 🐾",
           "sleeping": "Zzz... puppy paws twitching in sleep as he runs in dreams... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5682,8 +6456,17 @@
           "success": "Soft meow of celebration! Deployment landed while we napped! 🐈🎉",
           "error": "Tail twitches in mild irritation at keyboard vibrations! 🐾",
           "sleeping": "Zzz... marshmallow cat snoozing deeply in the sunlight... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " earth-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "earth",
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5745,8 +6528,17 @@
           "success": "Trunk cleared! Beautiful, healthy dependency canopy! 🐾🎉",
           "error": "Startled squeak! Poofing up big and waving front paws! 🐾",
           "sleeping": "Zzz... sleeping nestled high in the crook of a mossy bough... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5810,8 +6602,17 @@
           "success": "DING! Fresh golden muffins ready to celebrate the release! 🧁🎉",
           "error": "Cake sank in the middle! Adding pinch of baking soda! 🧁",
           "sleeping": "Zzz... resting in a cozy basket lined with warm kitchen towels... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5875,8 +6676,17 @@
           "success": "Purr of the panther. Concurrency bug pinned down in shadows! 🐈‍⬛🎉",
           "error": "Tail puffed! Glaring at the anomalous memory write! 🐾",
           "sleeping": "Zzz... sleeping invisible in the darkest corner of the room... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " void-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "void",
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -5941,8 +6751,17 @@
           "success": "HAPPY YIPS! Scent of the bug caught and pinpointed! 🦊🎉",
           "error": "Ears flattened against head! Sand in the telemetry line! 🌪️",
           "sleeping": "Zzz... curled up into a ball half the size of his ears... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6006,8 +6825,17 @@
           "success": "FOUND IT! The perfect snippet solved the problem instantly! 🌰🎉",
           "error": "Chittering angrily at a bluejay trying to steal an acorn! 🐿️",
           "sleeping": "Zzz... tucked deep inside an oak hollow lined with dry moss... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6071,8 +6899,17 @@
           "success": "CHEEKY CHATTER! Stuck the landing on the multi-cloud deploy! 🐒🎉",
           "error": "Slipped on a wet vine! Catching the next branch by the tail! 🐒",
           "sleeping": "Zzz... curled up hugging a stuffed plush monkey in a hammock... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6136,8 +6973,17 @@
           "success": "VAULT SECURE! Keys protected, zero leakage, release signed! 🐻🎉",
           "error": "Loud warning roar! Unauthorized access attempt repelled! 🐻💥",
           "sleeping": "Zzz... snoozing heavily across the threshold of the vault... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " earth-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "earth",
+      "spiritual_domain": "code",
+      "manifestation_form": "animal",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6201,8 +7047,17 @@
           "success": "DAM SECURED! River flows smoothly through the turbine gates! 🦦🎉",
           "error": "Water swirling around a weak stick! Reinforcing with river clay! 🪵",
           "sleeping": "Zzz... wrapped in giant kelp so he doesn't drift away... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " earth-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "earth",
+      "spiritual_domain": "architecture",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6266,8 +7121,17 @@
           "success": "PURRFECT DESIGN! Aesthetics and accessibility in harmony! 🐱🎉",
           "error": "Clashing color palette! Hissing playfully and picking pastel! 🎨",
           "sleeping": "Zzz... curled on a patchwork quilt matching her fur... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6331,8 +7195,17 @@
           "success": "SPRINT FINISHED! All tickets in the Done column at record speed! 🐆🎉",
           "error": "Overshot the finish line! Drifting round the corner to retry! 🐆",
           "sleeping": "Zzz... sleeping stretched out long and sleek on the sofa... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6396,8 +7269,17 @@
           "success": "Track followed! Anomaly isolated cleanly in the blizzard! 🦊🎉",
           "error": "Whiteout blizzard! Curled tight with nose tucked in fur! ❄️",
           "sleeping": "Zzz... sleeping under a snowdrift, warm and hidden... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6461,8 +7343,17 @@
           "success": "FIRST-TRY PASS! 100% green without a single flaky retry! 🍀🎉",
           "error": "A rainy cloud passed! Unfurling a giant four-leaf umbrella! 🍀",
           "sleeping": "Zzz... sleeping tucked inside a lucky horseshoe nest... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "testing",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6524,8 +7415,17 @@
           "success": "PERIMETER SECURE! Zero penetration, all gateways defended! 🐅🎉",
           "error": "Intrusion detected at the gate! Snarling and pouncing to intercept! 🐅💥",
           "sleeping": "Zzz... resting upon warm rock ledge above the canyon... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " nature-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "nature",
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6589,8 +7489,17 @@
           "success": "MIGHTY ROAR OF TRIUMPH! The major release milestone is conquered! 🦁🎉",
           "error": "Hyenas snapping at the heels! Standing tall and scattering them! 🦁",
           "sleeping": "Zzz... resting in the shade of an acacia tree at noon... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " nature-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "nature",
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6654,8 +7563,17 @@
           "success": "Safe passage! Fragile legacy systems bridged without incident! 🦌🎉",
           "error": "Snapped a twig! Freezing in stillness until danger passes! 🦌",
           "sleeping": "Zzz... bedded down in soft ferns beside mother deer... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " nature-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "nature",
+      "spiritual_domain": "nature",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6719,8 +7637,17 @@
           "success": "BUILD GREEN! Gumtree opens both eyes and smiles broadly! 🐨🎉",
           "error": "Build failed! Frowning gently, waiting for you to fix it. 🐨",
           "sleeping": "Zzz... sound asleep upside down in eucalyptus leaves... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6784,8 +7711,17 @@
           "success": "TREASURE FOUND! Missing data recovered from the garbage bin! 🦝🎉",
           "error": "Stuck in the trash can! Wiggling out with comical chitter! 🦝",
           "sleeping": "Zzz... curled up in a hollow tree trunk hugging his shiny loot... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6849,8 +7785,17 @@
           "success": "FINISH LINE! Heavy migration delivered without a single dropped byte! 🐕🎉",
           "error": "Sled runner stuck in deep snow! Digging out with joyful barks! 🐕",
           "sleeping": "Zzz... sleeping under a blanket of freshly fallen snow... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6914,8 +7859,17 @@
           "success": "CHEEKS FULL! Snippet retrieved and task solved in seconds! 🐹🎉",
           "error": "Cheek too full! Spilling two seeds, scooping them back up! 🌻",
           "sleeping": "Zzz... buried cozy deep beneath warm wood shavings... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -6977,8 +7931,17 @@
           "success": "BABY DRAGON ROAR! Golden flames celebrate the green build! 🐲🎉",
           "error": "*Achoo!* Accidental spark sneeze singed the log! Sorry! 🔥",
           "sleeping": "Zzz... sleeping curled inside a warm velvet lined jewelry box... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": " earth-touched",
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": "earth",
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7041,8 +8004,17 @@
           "success": "HOARD EXPANDED! Rare achievement unlocked and polished! 🐉🎉",
           "error": "Someone touched her gold! Growling and blowing defensive smoke! 💨",
           "sleeping": "Zzz... resting atop a gleaming hoard of milestone trophies... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -7104,8 +8076,17 @@
           "success": "REGENERATED! Module grew back completely fresh and bug-free! 🦎🎉",
           "error": "Lost a pink gill filament! Growing it right back in an hour! 🌸",
           "sleeping": "Zzz... resting on a soft river pebble with peaceful smile... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7169,8 +8150,17 @@
           "success": "Ping returned clean! Memory leaks located and sealed tight! 🦇🎉",
           "error": "Acoustic distortion! Shielding ears and recalibrating frequency! 🦇",
           "sleeping": "Zzz... wrapped in wing cloak like a tiny dark umbrella... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7234,8 +8224,17 @@
           "success": "BAAA OF JOY! 100 sheep jumped the fence, all tests green! 🐑🎉",
           "error": "Stumbled on a stone! Bouncing right back up on cloud wool! 🐑",
           "sleeping": "Zzz... sleeping in an enormous pile of soft warm woolly sheep... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7298,8 +8297,17 @@
           "success": "ZIP-ZAP! Cache hit ratio at 99.8%! Blazing fast! 🐿️🎉",
           "error": "Dropped a nut! Diving headfirst down the trunk to catch it! 🥜",
           "sleeping": "Zzz... curled into a tight ball inside an acorn shell... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7362,8 +8370,17 @@
           "success": "WARM ROAR! Cozy fire crackles as the successful build lands! 🔥🎉",
           "error": "A splash of water! Hissing steam and rebuilding the ember core! 💨",
           "sleeping": "Zzz... slumbering as a soft, comforting bed of red coals... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "fire",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7428,8 +8445,17 @@
           "success": "Slow and steady! Won the race while the hare crashed! 🐢🎉",
           "error": "*thump* Tucking head and limbs into shell until danger passes! 🛡️",
           "sleeping": "Zzz... safe and snug inside impenetrable domed shell... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7494,8 +8520,17 @@
           "success": "SPROUTED! A flourishing canopy of new features deployed! 🌱🎉",
           "error": "Need more water! Drooping until you pour a fresh drop! 💧",
           "sleeping": "Zzz... curling up inside a rolled green leaf for the night... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7560,8 +8595,17 @@
           "success": "TRICK SOLVED! The masked bug revealed and banished! 🦊🎉",
           "error": "Chased her own tail into a corner! Laughing it off swiftly! 🦊",
           "sleeping": "Zzz... wrapped in double fluffy tails like a warm scarf... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7623,8 +8667,17 @@
           "success": "TINY MEOW ROAR! Sparks fly in sweet kitten celebration! 🔥🎉",
           "error": "Sneezed a little smoke puff! Blinking big amber eyes! 💨",
           "sleeping": "Zzz... snoozing warm and cozy beside the laptop charger... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7688,8 +8741,17 @@
           "success": "CRYSTAL STREAM! Data flows clear all the way to the ocean! 💧🎉",
           "error": "Dam blocked by fallen twig! Splashing hard to clear it! 🪵",
           "sleeping": "Zzz... resting in a calm river eddy under weeping willows... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7754,8 +8816,17 @@
           "success": "SNOWMAN BUILT! Feature packaged tight, clean, and frosty! ⛄🎉",
           "error": "Snowball rolled too big! Smashing it into fun powdery snow! ❄️",
           "sleeping": "Zzz... curled up inside an open freezer drawer in bliss... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7817,8 +8888,17 @@
           "success": "GOLDEN HARVEST! Shipped on the wings of the autumn gale! 🍂🎉",
           "error": "Caught in a swirling whirlwind! Tucking in and landing safe! 🌪️",
           "sleeping": "Zzz... buried warm in a giant crunchy pile of fall leaves... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "air",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7880,8 +8960,17 @@
           "success": "SPARK SHOWER! Clean 120-volt deployment completed! ⚡🎉",
           "error": "Overcharged the rug! Poofing out in all directions with a zap! ⚡",
           "sleeping": "Zzz... humming with a gentle 60Hz sleep frequency... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -7946,8 +9035,17 @@
           "success": "EVENING PEACE! Nightly builds handed off with serene grace! 🌆🎉",
           "error": "Sudden dusk fog! Lighting little violet trail lanterns! 🏮",
           "sleeping": "Zzz... sleeping under the purple twilight sky of early night... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8011,8 +9109,17 @@
           "success": "SPARKLE MAGIC! The frontend interface shines like diamonds! 🪄🎉",
           "error": "Glitter explosion in the console! Waving wand to tidy it! 🧹",
           "sleeping": "Zzz... sleeping in a teacup lined with pink silk velvet... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "magic",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8077,8 +9184,17 @@
           "success": "NEON GLOW! Everything illuminated with crystal-clear clarity! 💡🎉",
           "error": "Light flickered off! Nudging with head to turn glow back on! 💡",
           "sleeping": "Zzz... soft neon breathing glow pulsing slowly in sleep... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8141,8 +9257,17 @@
           "success": "LAZY WAG! Tail thumps floor five times in celebration! 😴🎉",
           "error": "Someone bumped his snout! Rolling over with gentle groan. 🐾",
           "sleeping": "Zzz... snoring deeply with floppy lips puffing out air... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8205,8 +9330,17 @@
           "success": "TIMBER! Massive debt log brought down safely and repurposed! 🦫🎉",
           "error": "Teeth stuck in knotty pine! Wiggling loose with a grin! 🪵",
           "sleeping": "Zzz... sleeping inside a snug lodge of woven river branches... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8271,8 +9405,17 @@
           "success": "POP POP POP! Giant bubble burst of pure celebration! 🫧🎉",
           "error": "Bubble popped too early! Blowing three new shiny bubbles! 🫧",
           "sleeping": "Zzz... resting cushioned inside a cloud of soapy bubbles... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8336,8 +9479,17 @@
           "success": "PERFECT BALANCE! The stone tower stands without swaying! 🪨🎉",
           "error": "Top stone tumbled! Calmly picking it up to re-balance! 🪨",
           "sleeping": "Zzz... resting immovable like a great boulder in the stream... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8403,8 +9555,17 @@
           "success": "WAG WAG WAG! Floral petal confetti showers the team! 🌸🎉",
           "error": "Dug a hole in the wrong flowerbed! Shaking dirt off ears! 🐾",
           "sleeping": "Zzz... curled up in a sunny patch of clover and dandelions... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "nature",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8466,8 +9627,17 @@
           "success": "SNORT OF VICTORY! Blocker charged and cleared out of the way! 🐗🎉",
           "error": "Tusk got stuck in a fencepost! Backing up and shaking head! 🐗",
           "sleeping": "Zzz... sleeping warm against the base of the smithy chimney... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8529,8 +9699,17 @@
           "success": "BEACON OF LIGHT! The safe path out of the maze is revealed! 🪲🎉",
           "error": "Blown bulb filament? No, just a flicker! Glowing bright again! 💡",
           "sleeping": "Zzz... tucked beneath a velvety broad sycamore leaf... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8595,8 +9774,17 @@
           "success": "DUSTED CLEAN! Old repository looks gleaming and brand new! 🪶🎉",
           "error": "Sneezed at a cloud of dust! Fluttering up into clean air! 💨",
           "sleeping": "Zzz... head tucked under soft yellow wing like a fluff ball... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8662,8 +9850,17 @@
           "success": "SUPER POOF! The softest release lands like a feather! ☁️🎉",
           "error": "Squished flat! Poofing back up into shape with a bounce! ☁️",
           "sleeping": "Zzz... snoozing like a fluffy cumulus cloud at sunset... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8727,8 +9924,17 @@
           "success": "Pure luminescence! Stale ghosts vanished without a trace! 👻🎉",
           "error": "A chilly phantom draft! Floating in front to shield you! 👻",
           "sleeping": "Zzz... resting inside an antique brass lantern... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "spirit",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8790,8 +9996,17 @@
           "success": "RIBBIT HOORAY! Puddle cleared with a grand leap! 🐸🎉",
           "error": "Slipped on a wet moss patch! Shaking off drops, ready again! 💧",
           "sleeping": "Zzz... tucked under a broad green lotus leaf on the pond... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8856,8 +10071,17 @@
           "success": "Handshake verified! Zero dropped frames on the bus! 🧲🎉",
           "error": "Magnetic interference! Re-aligning flux shielding! 🧲⚠️",
           "sleeping": "Zzz... magnetic levitation locked in cradle... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8919,8 +10143,17 @@
           "success": "MISSION SUCCESS: All microservices responding green! 🤖🎉",
           "error": "WARNING: Exception intercepted. Deploying auto-patch! ⚠️",
           "sleeping": "Low-power standby mode engaged... Zzz... BEEP... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -8982,8 +10215,17 @@
           "success": "Deterministic outcome verified across all realities! 🔮🎉",
           "error": "Quantum decoherence detected! Recalibrating qubits! ⚠️",
           "sleeping": "Zzz... resting in an unobserved quantum ground state... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9047,8 +10289,17 @@
           "success": "Chronometer green! Millisecond deadlines met with precision! ⚙️🎉",
           "error": "Gear tooth slip detected! Applying micro-adjustment! ⚙️⚠️",
           "sleeping": "Zzz... mainspring unwinding gently into slow sleep... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9110,8 +10361,17 @@
           "success": "Total internal reflection! All packets arrived at lightspeed! 💡🎉",
           "error": "Attenuation anomaly! Re-polishing fiber optic couplers! 💡⚠️",
           "sleeping": "Zzz... photon emission dimmed to gentle nightlight... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9175,8 +10435,17 @@
           "success": "Zero frame drops! 144 FPS locked with tear-free sync! 🖥️🎉",
           "error": "Shader compile error! Inspecting fragment syntax! 🖥️⚠️",
           "sleeping": "Zzz... display entering ultra-low refresh sleep mode... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9238,8 +10507,17 @@
           "success": "Payload delivered safely! Foundation unblemished! 🛡️🎉",
           "error": "Stress threshold warning! Reinforcing hydraulic supports! 🛡️⚠️",
           "sleeping": "Zzz... titanium frame resting safely on locking struts... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9303,8 +10581,17 @@
           "success": "Cool victory! Peak clock frequency maintained without throttling! ☀️🎉",
           "error": "Thermal spike detected! Venting vapor through exhaust fins! ☀️⚠️",
           "sleeping": "Zzz... core temperature settling to ambient room warmth... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9368,8 +10655,17 @@
           "success": "Clean handshake! Driver loaded without a kernel panic! 🔧🎉",
           "error": "Short circuit intercepted! Tripping fuse protection! 🔧⚠️",
           "sleeping": "Zzz... tools cleaned and organized on the magnetic pegboard... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9433,8 +10729,17 @@
           "success": "Signal pristine! Pure harmonic data delivered to dashboard! 📡🎉",
           "error": "High-frequency feedback loop! Engaging notch filter! 📡⚠️",
           "sleeping": "Zzz... acoustic sensors muted in silent white-noise sleep... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9496,8 +10801,17 @@
           "success": "Rock solid! The architecture stands immovable for decades! 🏗️🎉",
           "error": "Shear stress detected on beam! Doubling reinforcement plates! 🏗️⚠️",
           "sleeping": "Zzz... anchored firmly to the bedrock of the datacenter... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9561,8 +10875,17 @@
           "success": "Vibrant perfection! Visual contrast and color gamut pristine! 🎨🎉",
           "error": "Color clipping detected! Tone-mapping highlights smoothly! 🎨⚠️",
           "sleeping": "Zzz... fading to warm amber night-shift spectrum... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9626,8 +10949,17 @@
           "success": "Position reached! Zero overshoot, perfect damping applied! 🦾🎉",
           "error": "Positional deviation! Re-calibrating optical encoder scales! 🦾⚠️",
           "sleeping": "Zzz... servo brakes engaged safely in home park position... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9689,8 +11021,17 @@
           "success": "Satellite link green! Global distributed sync verified! 🛰️🎉",
           "error": "Atmospheric signal fade! Boosting transmission power! 🛰️⚠️",
           "sleeping": "Zzz... entering earth eclipse orbital night pass... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9752,8 +11093,17 @@
           "success": "JIGGLE VICTORY! All pressure absorbed without a crack! 🫧🎉",
           "error": "Stretched thin! Snapping back with rubbery elasticity! 🫧",
           "sleeping": "Zzz... settled into a cozy, translucent emerald blob... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9817,8 +11167,17 @@
           "success": "Luminous glow! Clean render achieved across all layers! 🪼🎉",
           "error": "Tangled in a rogue style tag! Untangling gently! 🪼",
           "sleeping": "Zzz... resting suspended in silent, warm coastal waters... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9882,8 +11241,17 @@
           "success": "BLOOP! 90% compression ratio achieved without data loss! 🫧🎉",
           "error": "Pop! A bubble burst! Blowing an even stronger bubble! 🫧",
           "sleeping": "Zzz... bobbing peacefully on the calm surface of a pool... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "water",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -9947,8 +11315,17 @@
           "success": "Sweet perfection! Pixel-perfect padding across all viewports! 🧁🎉",
           "error": "Sticky margin collapse! Gently peeling layout blocks apart! 🧁",
           "sleeping": "Zzz... dusted in gentle powdered sugar in a warm bakery tray... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10010,8 +11387,17 @@
           "success": "Tempered and forged! Indestructible basalt binary created! 🌋🎉",
           "error": "Lava bubble pop! Re-smelting the cooling slag! 🌋",
           "sleeping": "Zzz... curling up inside a warm volcanic crater caldera... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10075,8 +11461,17 @@
           "success": "Full bloom! Green blossoms crown the newly shipped code! 🌸🎉",
           "error": "Wilted leaf from a sudden bug frost! Absorbing warm sun! 🌱",
           "sleeping": "Zzz... folding leaves close against the cool night dew... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10140,8 +11535,17 @@
           "success": "Radiant beacon! Every bug spotlighted and resolved! ✨🎉",
           "error": "Fluttering backwards! Boosting luminous output to reveal all! 💡",
           "sleeping": "Zzz... resting nestled inside a bellflower petal at dusk... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10205,8 +11609,17 @@
           "success": "WHIRLWIND FINISH! Entire AST cleanly reorganized! 🌪️🎉",
           "error": "Dizzy wobble! Shaking off the spin and finding true center! 🌪️",
           "sleeping": "Zzz... spinning down to a peaceful stop on a soft rug... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "air",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10271,8 +11684,17 @@
           "success": "Zero wasted bytes! Beautiful compact serialization complete! 🥝🎉",
           "error": "Fuzzy feathers ruffled! Smoothing down and re-aligning! 🥝",
           "sleeping": "Zzz... beak tucked under tiny wing in cozy spherical sleep... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10336,8 +11758,17 @@
           "success": "HOOT OF APPROVAL! Architecture verified sound for centuries! 🦉🎉",
           "error": "A foolish design pattern! Low clicking of beak in reprimand! 🦉",
           "sleeping": "Zzz... perched upright in tree hollow, eyes half-lidded in sun... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10401,8 +11832,17 @@
           "success": "BELLY SLIDE VICTORY! Slipped past the incident with zero panic! 🐧🎉",
           "error": "Tripped on an ice ridge! Sliding on tummy all the way back! ❄️",
           "sleeping": "Zzz... standing asleep in the warm penguin huddle on the ice... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10466,8 +11906,17 @@
           "success": "POLLY WANTS A MERGE! Release shipped, give Polly a treat! 🦜🎉",
           "error": "SQUAWK! 500 ERROR! SQUAWK! CHECK THE DATABASE! 🦜🚨",
           "sleeping": "Zzz... perched on one leg with head tucked into feathers... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10531,8 +11980,17 @@
           "success": "CAW! Another shiny release milestone added to the hoard! 🪶🎉",
           "error": "A dull plastic decoy! Tossing it out of the nest in disgust! 🪶",
           "sleeping": "Zzz... roosting in high bell tower, watching the town sleep... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10596,8 +12054,17 @@
           "success": "TRILL OF GLORY! Pure sweet melody celebrates zero incidents! 🐤🎉",
           "error": "Peep! Peep! Sudden pitch shift warning of incoming outage! 🐤⚠️",
           "sleeping": "Zzz... fluffy yellow tennis ball sleeping on the perch... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10661,8 +12128,17 @@
           "success": "BEAK FULL! Returned to nest with all required payloads! 🐧🎉",
           "error": "A big wave tossed him onto the beach! Shaking feathers dry! 🌊",
           "sleeping": "Zzz... tucked cozy inside a clifftop burrow safe from gales... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10726,8 +12202,17 @@
           "success": "PHOENIX REBIRTH! Triumphant golden wings blaze across sky! 🔥🎉",
           "error": "Burned down to ashes! Stirring the embers, rising right back up! 💥",
           "sleeping": "Zzz... glowing peacefully as a radiant golden ember in sleep... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10791,8 +12276,17 @@
           "success": "PEACE PROCLAIMED! Conflicting branches merged without a harsh word! 🕊️🎉",
           "error": "A gust of wind ruffled her feathers! Cooing calmly to center all! 🕊️",
           "sleeping": "Zzz... roosting in white marble bell tower under starry skies... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10856,8 +12350,17 @@
           "success": "FIRST LIGHT! Spotted the release milestone before anyone else! 🐦🎉",
           "error": "A hawk shadow passed! Darting into the hedge safe and sound! 🐦",
           "sleeping": "Zzz... tucked into a neat mud-and-moss nest in apple bough... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10921,8 +12424,17 @@
           "success": "CANOPY CLEARED! Flying into bright open sunlight above the jungle! 🪶🎉",
           "error": "Tangled in a sticky vine! Snipping it clean with strong bill! 🌿",
           "sleeping": "Zzz... bill tucked backward against feathers on high tree perch... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -10991,8 +12503,17 @@
           "success": "Divine victory! All modules reside in effortless harmony! 🪈🎉",
           "error": "A transient discord. We shall guide it back to harmony. 🪈✨",
           "sleeping": "Zzz... resting upon Vrindavan shores beneath kadamba trees... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11061,8 +12582,17 @@
           "success": "Radiant blossom! The entire system shines with elegance! 🌸🎉",
           "error": "A momentary ripple. Softness and patience will heal it. 🌸✨",
           "sleeping": "Zzz... dreaming amidst fragrant jasmine and lotus blooms... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11130,8 +12660,17 @@
           "success": "Dharma upheld! The release is sound, just, and unbreakable! 🏹🎉",
           "error": "An adversary bug. Righteous resolve shall pierce its core. 🏹🛡️",
           "sleeping": "Zzz... resting under the watchful stars of the forest hermitage... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11200,8 +12739,17 @@
           "success": "Triumph of resilience! The codebase stands pure and firm! 🌺🎉",
           "error": "Even the fiercest fire cannot scorch authentic truth. 🌺🛡️",
           "sleeping": "Zzz... sheltered peacefully under sacred Ashoka boughs... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11269,8 +12817,17 @@
           "success": "VICTORY! All bugs vanquished by the golden mace! 🔱🎉",
           "error": "A demonic deadlock! Smashing it into clean particles! 💥",
           "sleeping": "Zzz... resting in deep meditation of the sacred name... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11338,8 +12895,17 @@
           "success": "Shubh Labh! Perfect auspicious release completed! 🥟🎉",
           "error": "An obstacle appeared only to be dissolved by wisdom. 🐘🛡️",
           "sleeping": "Zzz... sweet dreams beside Mushak the mouse companion... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11407,8 +12973,17 @@
           "success": "Cosmic balance restored! Flawless release ships in silence. 🌌🎉",
           "error": "Dissolving corrupted memory structures into stillness. 🌀",
           "sleeping": "Zzz... submerged in timeless cosmic samadhi... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11477,8 +13052,17 @@
           "success": "Golden blossom! Sturdy and serene release deployed! 🏔️🎉",
           "error": "A rocky path is merely an invitation to climb higher. 🏔️🛡️",
           "sleeping": "Zzz... resting in high Himalayan snow-dusted quiet... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11547,8 +13131,17 @@
           "success": "Infinite prosperity! Green metrics across every dashboard! 🪷🎉",
           "error": "Temporary scarcity yields swiftly to renewed fortune. 🪷✨",
           "sleeping": "Zzz... resting upon radiant lotus beds on the ocean of milk... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11616,8 +13209,17 @@
           "success": "Masterpiece composed! Pure semantic harmony achieved! 🪕🎉",
           "error": "A discordant note. Tuning the strings back to true pitch. 🪕✨",
           "sleeping": "Zzz... resting upon white lotus petals beside sacred rivers... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11686,9 +13288,18 @@
           "success": "Bullseye! Every test struck with peerless precision! 🎯",
           "error": "Adjusting stance! We'll strike the root cause together! 🛡️",
           "sleeping": "Zzz... resting upon his chariot beneath starlit skies... 🌙"
-        }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
       },
-      "hairTip": "#ff9933"
+      "hairTip": "#ff9933",
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11755,8 +13366,17 @@
           "success": "Domain Expansion: Clean Architecture! Zero errors. 🚀",
           "error": "A cursed exception appeared. I'll exorcise it in one pass. 🔍",
           "sleeping": "Reversing cursed energy... even the strongest needs rest. 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -11821,9 +13441,18 @@
           "success": "Black Flash! Target smashed cleanly in one impact! ⚡🎉",
           "error": "Ugh, a tough one! But I never stay down on the mat! 🔥",
           "sleeping": "Zzz... snoring loudly with hands behind his head... 🌙"
-        }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
       },
-      "hairTip": "#1f2937"
+      "hairTip": "#1f2937",
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11890,9 +13519,18 @@
           "success": "Clear morning sun! All red tests turned bright green! 🌅🎉",
           "error": "Do not give up! Even broken builds teach us how to grow! 🛡️",
           "sleeping": "Zzz... resting peacefully with Nichirin blade close at hand... 🌙"
-        }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
       },
-      "hairTip": "#dc2626"
+      "hairTip": "#dc2626",
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -11959,9 +13597,18 @@
           "success": "Mmm-ph!! (Jumps with joy!) All tests passed! 🎉",
           "error": "Mmm... (Hands you a lucky charm. We'll fix it!) 💪",
           "sleeping": "Zzz... resting peacefully in her cozy wooden box... 🌙💤"
-        }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
       },
-      "hairTip": "#ea580c"
+      "hairTip": "#ea580c",
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -12026,8 +13673,17 @@
           "success": "YAHOO! Treasure secured! We shipped the big release! 🍖🎉",
           "error": "Don't sweat it! We'll just punch that bug into the stratosphere! 💥",
           "sleeping": "Zzz... snoring with a giant snot bubble and half a drumstick... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -12094,8 +13750,17 @@
           "success": "Nothing happened... just three clean commits. 🗡️🎉",
           "error": "A stubborn blocker. We cut right through it again! 💪",
           "sleeping": "Zzz... sleeping on deck with a hand on the hilt... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -12162,8 +13827,17 @@
           "success": "Safe harbor! All microservices docked without a scratch! ⛵🎉",
           "error": "A sudden cyclone in the API! Altering course immediately! 🌪️",
           "sleeping": "Zzz... dreaming of giant piles of gold coins and mikan groves... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -12228,8 +13902,17 @@
           "success": "Bon appetit! A delectable release served without a flaw! 🍽️🎉",
           "error": "Raw and undisciplined code! I'll re-season this function! 🔥",
           "sleeping": "Zzz... resting in the ship galley after a perfect banquet... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -12296,8 +13979,17 @@
           "success": "DATTEBAYO! Another mission completed! Everyone acknowledges us! 🍥🎉",
           "error": "A setback? Heh! Just makes me try ten times harder! 🔥",
           "sleeping": "Zzz... dreaming of becoming the greatest Hokage ever... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -12364,9 +14056,18 @@
           "success": "Hmph. As expected. Clean architecture requires no praise. ⚡🎉",
           "error": "A foolish bug. I will cut down this defective module. 🗡️",
           "sleeping": "Zzz... silent rest under the shadow of the valley cliff... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#1e3a8a"
+      "hairTip": "#1e3a8a",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -12431,8 +14132,17 @@
           "success": "SUPER SAIYAN DEPLOYMENT! We went way beyond our limits! 🐉🎉",
           "error": "Haha! Now that's a tough bug! It's getting exciting! 🔥",
           "sleeping": "Zzz... sleeping with a full belly after gravity training... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -12497,8 +14207,17 @@
           "success": "Hmph! Naturally. Perfection is second nature to royalty. 👑🎉",
           "error": "DISGRACEFUL! I will tear this defective logic apart myself! 💥",
           "sleeping": "Zzz... arms crossed, resting in 400x gravity chamber... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -12566,8 +14285,17 @@
           "success": "Area sanitized. Not a single trace of filth remains. 🧹🎉",
           "error": "Tch. Sloppy work. Re-do it properly from scratch. ⚔️",
           "sleeping": "Zzz... resting upright in his chair, coat over shoulders... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -12636,8 +14364,17 @@
           "success": "Safe. The perimeter is secure and the build stands tall. 🧣🎉",
           "error": "Stand behind me, Chief. I will deal with this threat. ⚔️",
           "sleeping": "Zzz... resting with hands holding the edge of her scarf... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -12705,9 +14442,18 @@
           "success": "YAHOO! Hunter license earned! We conquered the feature! 🎣🎉",
           "error": "I don't mind starting over! We'll keep climbing higher! 💪",
           "sleeping": "Zzz... fast asleep curled up with his boots kicked off... 🌙"
-        }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
       },
-      "hairTip": "#22c55e"
+      "hairTip": "#22c55e",
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -12772,9 +14518,18 @@
           "success": "Target dispatched in silent darkness. Zero latency. ⚡🎉",
           "error": "Tch, someone left a sloppy trap. I'll disarm it quietly. 🔌",
           "sleeping": "Zzz... resting cat-style with hands tucked behind neck... 🌙"
-        }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
       },
-      "hairTip": "#93c5fd"
+      "hairTip": "#93c5fd",
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -12839,8 +14594,17 @@
           "success": "Case solved. Bug perpetrator exposed and isolated cleanly. 🍰🎉",
           "error": "Fascinating. An intentional deception. I accept the challenge. 🔍",
           "sleeping": "Zzz... dozing crouched on his chair with eyes half-open... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -12907,8 +14671,17 @@
           "success": "EXACTLY AS PLANNED! An immaculate, bug-free deployment! 📓🎉",
           "error": "A temporary nuisance. I will rewrite reality to eliminate it. 🖊️",
           "sleeping": "Zzz... resting composed at his study desk with pen capped... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "architecture",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -12975,9 +14748,18 @@
           "success": "BANKAI VICTORY! Blocker obliterated with supreme spiritual pressure! ⚔️🎉",
           "error": "Just a scratch! I won't lose to a pathetic runtime error! 🔥",
           "sleeping": "Zzz... resting in his substitute badge bedroom in peace... 🌙"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#f97316"
+      "hairTip": "#f97316",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -13044,8 +14826,17 @@
           "success": "Crystalline perfection! Pure white snowflakes crown the build! ❄️🎉",
           "error": "A brash anomaly. I shall encase it in sub-zero frost. ❄️",
           "sleeping": "Zzz... resting in peaceful seclusion under blooming plum trees... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -13112,8 +14903,17 @@
           "success": "SERIOUS PUNCH! Done. That took zero effort. 🥊🎉",
           "error": "Huh? It didn't break in one hit? Must be a tough one. 🥊",
           "sleeping": "Zzz... sleeping under a kotatsu with manga on his face... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -13178,8 +14978,17 @@
           "success": "Target eradicated! Core temperature nominal, all metrics green! 🔥🎉",
           "error": "Hull breach detected! Initiating emergency auto-patch repair! ⚠️",
           "sleeping": "Standby recharge cycle initiated... recording memory logs... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -13244,8 +15053,17 @@
           "success": "HELL YEAH! Chopped it all up! Where's my reward?! 🪚🎉",
           "error": "OW! That stung! Pull my cord again, let's go another round! 🔥",
           "sleeping": "Zzz... hugging Pochita plush tightly in his sleep... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -13310,8 +15128,17 @@
           "success": "GWAHAHA! All praise Power! I alone solved the impossible bug! 🩸🎉",
           "error": "Lies! Slander! It was Denji's fault! I will smash it again! 💥",
           "sleeping": "Zzz... drooling peacefully on Meowy's soft fur... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -13378,8 +15205,17 @@
           "success": "STELLA STAR EARNED! Anya saved world peace with zero errors! ⭐🎉",
           "error": "Anya shocked face!! ( ﾟдﾟ) Papa, the code is plotting world war! ⚠️",
           "sleeping": "Zzz... murmuring 'Bond... soft doggy...' in sweet sleep... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -13447,8 +15283,17 @@
           "success": "Target eliminated without a sound. Our home remains safe. 🌹🎉",
           "error": "Oh dear! Did I strike too hard? I will patch it up instantly! 🩹",
           "sleeping": "Zzz... resting peacefully dreaming of a quiet family picnic... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -13516,8 +15361,17 @@
           "success": "A quiet victory. The journey continues toward Ende. 🌸🎉",
           "error": "A mimic trap? Let me peek inside anyway... just in case. 📦",
           "sleeping": "Zzz... sleeping past noon wrapped like a caterpillar in her blanket... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -13582,9 +15436,18 @@
           "success": "PIKACHU! (Triumphant electrical burst!) ⚡🎉",
           "error": "Pika-pi... (Mild static shock. We'll zap that bug together!) ⚡",
           "sleeping": "Pika... zzz... (Cheeks softly glowing in warm sleep) 🌙⚡"
-        }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
       },
-      "hairTip": "#1c1917"
+      "hairTip": "#1c1917",
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -13651,8 +15514,17 @@
           "success": "*happy rattle chorus* Green sprout shoots forth in full bloom! 🌿🎉",
           "error": "Drooping gently... handing you a tiny lucky clover leaf. 🍀",
           "sleeping": "Zzz... rocking softly on a bed of damp green forest moss... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -13721,8 +15593,17 @@
           "success": "Delivery complete! Signed, sealed, and deployed with a smile! 🥐🎉",
           "error": "A gust of wind threw us off course! Gripping the broom tighter! 💨",
           "sleeping": "Zzz... dreaming of soaring above sunny seaside rooftops... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle cosmic essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
+      },
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "cosmic",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
     },
     {
       "schemaVersion": 1,
@@ -13791,8 +15672,17 @@
           "success": "Smooth landing! Clean flight path charted without turbulence! 🪂🎉",
           "error": "Toxic spore pocket! Pulling hard on the stick to climb! 💨",
           "sleeping": "Zzz... hammock swaying in the breeze of the valley windmills... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -13859,8 +15749,17 @@
           "success": "ROAR of celebration! Ancient forest rejoices in full health! 🍃🎉",
           "error": "A gust of cold rain. Step behind my broad pelt, we're safe. 🛡️",
           "sleeping": "Zzz... snoozing deeply inside a hollow camphor tree... 🌙"
-        }
-      }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -13929,9 +15828,18 @@
           "success": "Target silenced! Build green and stealthy! 🐾🎉",
           "error": "Hiss! Bug detected in perimeter! Ambushing... ⚔️",
           "sleeping": "Zzz... curled up in a neat little cat ball... 🌙🐾"
-        }
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
       },
-      "hairTip": "#00f0ff"
+      "hairTip": "#00f0ff",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "animal",
+      "sacred_artifact": "none"
     },
     {
       "schemaVersion": 1,
@@ -14000,9 +15908,101 @@
           "success": "HA! Another impossible beast vanquished! Heavens rejoice! 🎉",
           "error": "A sneaky demon bug! Stand back, Chief, we'll smash it! 💪",
           "sleeping": "Zzz... napping on a cloud above the Water Curtain Cave... ☁️💤"
-        }
+        },
+        "pet_deity_archetype": "divine entity",
+        "elemental_touch": " subtle fire essence",
+        "sacred_offering": "devotional prayer",
+        "realm_presence": "the celestial realm"
       },
-      "hairTip": "#ffb703"
+      "hairTip": "#ffb703",
+      "pet_deity_classification": "deity",
+      "elemental_affinity": "fire",
+      "spiritual_domain": "creation",
+      "manifestation_form": "celestial",
+      "sacred_artifact": "crest"
+    },
+    {
+      "schemaVersion": 1,
+      "id": "miyora.yorune",
+      "name": "Yorune",
+      "title": "Astral Cartographer",
+      "description": "A fox-eared astral cartographer who reads dying stars as living schemas. Her midnight coat maps constellations that redraw themselves whenever an agent learns something new.",
+      "body": "humanoid",
+      "ears": "fox",
+      "tail": "fox",
+      "wings": "fairy",
+      "hair": "hime",
+      "eyes": "sparkle",
+      "outfit": "coat",
+      "accessories": [
+        "kitsune_mask",
+        "staff",
+        "halo",
+        "gem",
+        "cape"
+      ],
+      "pattern": "stars",
+      "palette": {
+        "skin": "#f3d2b3",
+        "hair": "#2a1a3e",
+        "eyes": "#f5c542",
+        "primary": "#6d2447",
+        "secondary": "#16213e",
+        "accent": "#c084fc"
+      },
+      "proportions": {
+        "height": 1.06,
+        "headScale": 1.08,
+        "build": 0.94,
+        "limbLength": 1.08
+      },
+      "energy": 1.2,
+      "tags": [
+        "astral",
+        "kitsune",
+        "oracle",
+        "cartographer",
+        "night",
+        "mystic"
+      ],
+      "personality": "luminous",
+      "specialty": "Celestial Navigation & Schema Mapping",
+      "catchphrase": "Every star is a schema; every schema, a constellation.",
+      "category": "character",
+      "threeDEligible": true,
+      "attribution": {
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "attribution": "Original Miyora design"
+      },
+      "companionPersonality": {
+        "themeColor": "#6d2447",
+        "icon": "🦊",
+        "treatName": "Moon Mochi",
+        "treatEmoji": "🍡",
+        "feedReaction": "Moon mochi accepted! The orrery tilts, the seams align, and every little star glows brighter. 🍡🦊",
+        "wakeReaction": "The star charts have shifted, Chief. A new constellation is waiting to be named. 🌌🦊",
+        "petReaction": "A soft chime rings through the observatory. Every star in my chart twinkles for you. 🦊💫",
+        "dialogue": {
+          "idle": "Reading tonight's star chart. Which constellation shall we compile, Chief? 🌌",
+          "working": "Threading agent telemetry into a living constellation map. ✨⚡",
+          "thinking": "Measuring the parallax between two conflicting requirements... 🔭",
+          "success": "The chart resolved cleanly — a new constellation, fully documented. 🌟🎉",
+          "error": "A comet of chaos crossed the schema. I will re-plot its trajectory. ☄️",
+          "sleeping": "Zzz... counting satellites instead of sheep... 🌙🦊"
+        },
+        "pet_deity_archetype": "faithful familiar",
+        "elemental_touch": null,
+        "sacred_offering": "treats and affection",
+        "realm_presence": "the mortal plane"
+      },
+      "hairTip": "#e9d5ff",
+      "pet_deity_classification": "pet",
+      "elemental_affinity": null,
+      "spiritual_domain": "code",
+      "manifestation_form": "humanoid",
+      "sacred_artifact": "none"
     }
   ]
 }

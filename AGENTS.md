@@ -122,6 +122,9 @@ npm run tauri dev
 # Verify avatar catalog is up to date (fails if characters.json is stale)
 python scripts/generate_avatar_catalog.py --check
 
+# Validate bundled Character Card V2 profiles against the avatar catalog
+python scripts/validate_character_cards.py
+
 # Validate all bundled PetPacks under pet-packs/
 python scripts/validate_pet_packs.py
 ```

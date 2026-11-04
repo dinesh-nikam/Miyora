@@ -2143,4 +2143,72 @@ function buildAccessories(kit: Kit, spec: CharacterSpec, a: AccessoryAnchors): v
       kit.mesh(cylinder(0.01, 0.01, 0.1, 8), kit.toon("#111927"), ninjato, [0, 0.12, 0]);
     }
   }
+
+  // Yorune: a personal armillary orrery, drifting starlight, and a crescent moon.
+  if (id.endsWith("yorune")) {
+    const gold = kit.toon("#f5c542", { emissive: 0.55 });
+    const paleGold = kit.toon("#fff3c4", { emissive: 1.1 });
+    const starlight = kit.toon("#e9d5ff", { emissive: 1.6 });
+    const astral = kit.toon("#c084fc", { emissive: 1.0 });
+
+    const orrery = joint(chest, "astralOrrery", 0, d.torsoH * 0.68, -d.torsoR * 1.08);
+    const rings: Array<{ radius: number; rotation: [number, number, number]; stars: number }> = [
+      { radius: R * 1.82, rotation: [0.08, 0.22, 0.1], stars: 5 },
+      { radius: R * 1.56, rotation: [0.18, -0.55, 0.55], stars: 4 },
+      { radius: R * 1.3, rotation: [0.3, 0.62, 1.15], stars: 3 },
+    ];
+    for (const [ringIndex, ring] of rings.entries()) {
+      const ringJoint = joint(orrery, `astralRing${ringIndex}`, 0, 0, 0);
+      ringJoint.rotation.set(...ring.rotation);
+      kit.mesh(torus(ring.radius, 0.0075), gold, ringJoint, [0, 0, 0], { outline: OUTLINE * 0.3 });
+      for (let star = 0; star < ring.stars; star += 1) {
+        const angle = (star / ring.stars) * Math.PI * 2 + ringIndex * 0.7;
+        kit.mesh(
+          new THREE.OctahedronGeometry(R * 0.045),
+          star % 2 === 0 ? starlight : astral,
+          ringJoint,
+          [Math.cos(angle) * ring.radius, Math.sin(angle) * ring.radius, 0],
+          { scale: [1, 1, 0.55] },
+        );
+      }
+    }
+    // Free-floating motes use a golden-angle spiral so renders stay reproducible.
+    for (let mote = 0; mote < 9; mote += 1) {
+      const angle = mote * 2.399963;
+      const radius = R * (0.42 + (((mote * 37) % 100) / 100) * 1.35);
+      kit.mesh(
+        new THREE.OctahedronGeometry(R * 0.028),
+        mote % 3 === 0 ? paleGold : starlight,
+        orrery,
+        [Math.cos(angle) * radius, Math.sin(angle) * radius, -R * (0.1 + (mote % 4) * 0.06)],
+        { scale: [1, 1, 0.5] },
+      );
+    }
+
+    const crescent = joint(headCenter, "astralCrescent", R * 1.22, R * 0.82, -R * 0.55);
+    crescent.rotation.set(0.18, -0.42, 0.55);
+    kit.mesh(torus(R * 0.2, 0.03, Math.PI * 1.35), gold, crescent, [0, 0, 0], { outline: OUTLINE * 0.35 });
+    kit.mesh(sphere(R * 0.06), paleGold, crescent, [R * 0.1, -R * 0.07, 0]);
+
+    // A constellation stitched across the front of the coat.
+    const seam: Array<[number, number]> = [
+      [-0.34, 0.58],
+      [-0.16, 0.46],
+      [0.02, 0.56],
+      [0.18, 0.43],
+      [0.3, 0.52],
+    ];
+    const points = seam.map(([x, y]) => new THREE.Vector3(x * d.torsoR, y * d.torsoH, d.torsoR * 0.79));
+    points.forEach((point, index) => {
+      kit.mesh(new THREE.OctahedronGeometry(R * 0.028), index === 2 ? paleGold : starlight, spine, [point.x, point.y, point.z], {
+        scale: [1, 1, 0.5],
+      });
+      const next = points[index + 1];
+      if (!next) return;
+      const direction = next.clone().sub(point);
+      const middle = point.clone().add(next).multiplyScalar(0.5);
+      const thread = kit.mesh(cylinder(0.0016, 0.0016, direction.length(), 6), gold, spine, [middle.x, middle.y, middle.z]);
+      thread.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.clone().normalize());
+    });
+  }
 }

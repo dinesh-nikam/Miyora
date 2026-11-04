@@ -817,6 +817,13 @@ CHARACTERS = [
     c("sun-wukong", "Sun Wukong", "Great Sage Equal to Heaven", "beast", "human", "cat", "none", "spiky", "sparkle", "armor", "headband staff cape",
       "fad7b9 d7965f ffb703 e63946 ffb703 232832", "The Monkey King crowned with the golden fillet, clad in crimson and gold armor, wielding the Ruyi Jingu Bang.", "mythology avatar wukong monkey sage",
       energy=1.6, height=0.98, head=1.14, build=1.1, limbs=1.02, pattern="none", tip="ffb703"),
+    # 6. Starlit Originals
+    c("yorune", "Yorune", "Astral Cartographer", "humanoid", "fox", "fox", "fairy", "hime", "sparkle", "coat",
+      "kitsune_mask staff halo gem cape",
+      "f3d2b3 2a1a3e f5c542 6d2447 16213e c084fc",
+      "A fox-eared astral cartographer who reads dying stars as living schemas. Her midnight coat maps constellations that redraw themselves whenever an agent learns something new.",
+      "astral kitsune oracle cartographer night mystic",
+      energy=1.2, height=1.06, head=1.08, build=0.94, limbs=1.08, pattern="stars", tip="e9d5ff"),
 ]
 
 

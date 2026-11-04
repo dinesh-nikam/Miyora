@@ -77,7 +77,7 @@ crates/
                                # deterministic hunger/eating, bounded reaction queue (cap 4)
   pet-pack/                    # PetPack manifest v1/v2 parser, Ed25519 signature checks,
                                # asset honesty quality gates, path sanitization against escape
-  avatar/                      # Procedural 3D character catalog (213 specs), silhouette sculpting, GLB export
+  avatar/                      # Procedural 3D character catalog (214 specs), silhouette sculpting, GLB export
   agentpet-adapters/           # Claude Code / Codex hooks & universal process wrapper
   agentpet-ipc/                # Authenticated local IPC transport (pipes/sockets, HMAC-SHA256 handshake)
   agentpet-cli/                # Diagnostic CLI (`agentpet`) for headless execution and doctor checks
@@ -175,6 +175,8 @@ AI `Provider` configuration is separate from agent integration. Providers descri
 The runtime consumes generic, validated PetPacks. Character names and artwork do not appear in business logic. The starter character is selected through initial settings and is replaceable immediately.
 
 React and presentation components contain zero hardcoded franchise string matching (`isWukong`, `isNezuko`, etc.) or hardcoded character dialogue. All personality traits, treat names, feed reactions, wake reactions, and dialogue lines are strictly data-driven via the `personality` block in PetPack manifests (`pet.json`) and `companionPersonality` in 3D character specs (`characters.json`).
+
+Original characters may also carry a Character Card V2 profile under `crates/avatar/catalog/cards/`. Cards add scenario, opening messages, example dialogue, lorebook entries, and a structured render prompt. They are data-only and size-budgeted, and `scripts/validate_character_cards.py` cross-checks name, palette, specialty, catchphrase, and tags against the 3D catalog so identity data cannot drift.
 
 Cosmetic companion affection (+3 pet, +5 feed, daily cap 50) is completely decoupled from authoritative ledger XP. Affection is persisted in SQLite via migration 12 (`companion_affection`) and written exclusively through typed Tauri commands calling `agentpet-core`. It never awards levels, XP, or milestones.
 
