@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.velis",
+  "name": "Velis",
+  "title": "Shadow Sorcerer",
+  "description": "Casts spells only in the dark theme.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "robe",
+  "accessories": [
+    "witch_hat",
+    "wand"
+  ],
+  "pattern": "stars",
+  "palette": {
+    "skin": "#f5ece8",
+    "hair": "#1e1b4b",
+    "eyes": "#a855f7",
+    "primary": "#1e1b4b",
+    "secondary": "#312e81",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "anime",
+    "sorcerer"
+  ],
+  "personality": "mystical",
+  "specialty": "AST Transmutation",
+  "catchphrase": "Casting clean checkmarks into the terminal.",
+  "hairTip": "#a855f7"
+}

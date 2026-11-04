@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.pikachu",
+  "name": "Pikachu",
+  "title": "Electric Mouse Companion",
+  "description": "Chubby electric companion with tall black-tipped ears, lightning tail, rosy red spark cheeks, and cheerful bounce.",
+  "body": "beast",
+  "ears": "bunny",
+  "tail": "star",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#facc15",
+    "hair": "#facc15",
+    "eyes": "#1e293b",
+    "primary": "#facc15",
+    "secondary": "#dc2626",
+    "accent": "#78350f"
+  },
+  "proportions": {
+    "height": 0.82,
+    "headScale": 1.34,
+    "build": 1.28,
+    "limbLength": 0.85
+  },
+  "energy": 1.5,
+  "tags": [
+    "anime",
+    "avatar",
+    "electric",
+    "pikachu",
+    "mouse"
+  ],
+  "personality": "perky",
+  "specialty": "Cache Re-ignition",
+  "catchphrase": "Pika! Lighting up the build pipeline!",
+  "hairTip": "#1c1917"
+}

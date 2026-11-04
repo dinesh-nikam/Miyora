@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.gon",
+  "name": "Gon",
+  "title": "Whale Island Green Hunter",
+  "description": "Whale Island youth with tall green spikes, emerald adventure jacket, fishing rod, and pure hunter resolve.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sparkle",
+  "outfit": "jacket",
+  "accessories": [
+    "staff",
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#14532d",
+    "eyes": "#78350f",
+    "primary": "#16a34a",
+    "secondary": "#f97316",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 0.9,
+    "headScale": 1.18,
+    "build": 0.98,
+    "limbLength": 0.95
+  },
+  "energy": 1.5,
+  "tags": [
+    "anime",
+    "avatar",
+    "hunter",
+    "gon",
+    "green"
+  ],
+  "personality": "determined",
+  "specialty": "Limitless Exploratory Testing",
+  "catchphrase": "First comes rock! Jajanken! Let's see what's waiting at the end!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#16a34a",
+    "icon": "\ud83c\udfa3",
+    "treatName": "Fish",
+    "treatEmoji": "\ud83d\udc1f",
+    "feedReaction": "Grilled island fish! Caught fresh from Whale Island! \ud83d\udc1f\ud83c\udfa3",
+    "wakeReaction": "OSSU! Sniffing the morning breeze! Adventure time, Chief! \ud83c\udfa3",
+    "petReaction": "Ehehe! Big bright smile! You're the best teammate, Chief! \ud83c\udfa3\ud83d\udc96",
+    "dialogue": {
+      "idle": "Swinging fishing rod playfully. What are we hunting next? \ud83c\udfa3",
+      "working": "JAJANKEN ROCK! Smashing right through broken test suites! \ud83d\udca5\u26a1",
+      "thinking": "Sniffing the air... I can smell an undocumented feature! \ud83e\udd14",
+      "success": "YAHOO! Hunter license earned! We conquered the feature! \ud83c\udfa3\ud83c\udf89",
+      "error": "I don't mind starting over! We'll keep climbing higher! \ud83d\udcaa",
+      "sleeping": "Zzz... fast asleep curled up with his boots kicked off... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#22c55e"
+}

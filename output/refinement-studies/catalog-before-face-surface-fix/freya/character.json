@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.freya",
+  "name": "Freya",
+  "title": "Aurora Knight",
+  "description": "Guards the northern servers under shifting lights.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#fef3c7",
+    "eyes": "#22d3ee",
+    "primary": "#94a3b8",
+    "secondary": "#0f766e",
+    "accent": "#a78bfa"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "knight",
+    "winter"
+  ],
+  "personality": "stoic",
+  "specialty": "Branch Guarding",
+  "catchphrase": "Stand between main and bad merges."
+}

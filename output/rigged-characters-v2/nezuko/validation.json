@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "characterId": "miyora.nezuko",
+  "status": "mesh-exported-pending-runtime-validation",
+  "triangleCount": 32280,
+  "boneCount": 51,
+  "skinWeightsChecked": true,
+  "animationNames": [
+    "idle",
+    "working",
+    "thinking",
+    "waiting",
+    "success",
+    "error",
+    "celebrating",
+    "sleeping",
+    "hungry",
+    "eating",
+    "level_up",
+    "achievement",
+    "offline",
+    "paused",
+    "attention_required"
+  ],
+  "sha256": "3f70910e19816f1a268b09ee5f43208a8c08cd6e0239e9b3ac3bfbd9c7b81e43",
+  "elapsedSeconds": 20.92,
+  "designRights": "Character identity rights are not asserted by this generated mesh",
+  "generator": "local Blender surface authoring"
+}

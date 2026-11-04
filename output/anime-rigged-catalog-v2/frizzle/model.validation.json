@@ -1,0 +1,43 @@
+{
+  "triangleCount": 21480,
+  "vertexCount": 11540,
+  "skeletonJointCount": 51,
+  "influencedBoneNames": [
+    "chest",
+    "head",
+    "hips",
+    "leftFoot",
+    "leftLowerArm",
+    "leftLowerLeg",
+    "leftUpperArm",
+    "rightFoot",
+    "rightLowerArm",
+    "rightLowerLeg",
+    "rightUpperArm",
+    "spine"
+  ],
+  "animationNames": [
+    "achievement",
+    "attention_required",
+    "celebrating",
+    "eating",
+    "error",
+    "hungry",
+    "idle",
+    "level_up",
+    "offline",
+    "paused",
+    "sleeping",
+    "success",
+    "thinking",
+    "waiting",
+    "working"
+  ],
+  "embeddedTextureCount": 0,
+  "schemaVersion": 1,
+  "structuralValidation": "passed",
+  "runtimeValidation": "pending",
+  "visualReview": "pending",
+  "byteLength": 1137224,
+  "sha256": "6d70f73e437c16c7ce8aa82d60a8675ae3f71b3bddfcaf517b6b2c957cc0e1d6"
+}

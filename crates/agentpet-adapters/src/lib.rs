@@ -10,6 +10,7 @@
 pub mod claude_code;
 pub mod codex;
 pub mod ipc;
+pub mod quota;
 
 use serde::{Deserialize, Serialize};
 use thiserror::Error;

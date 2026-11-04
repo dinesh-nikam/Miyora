@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.caspian",
+  "name": "Caspian",
+  "title": "Ocean Cartographer",
+  "description": "Measures every current twice before setting sail.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "ponytail",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#1e3a8a",
+    "eyes": "#0e7490",
+    "primary": "#0f766e",
+    "secondary": "#e2e8f0",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "ocean",
+    "explorer"
+  ],
+  "personality": "oceanic",
+  "specialty": "Maritime Data Stream Routing",
+  "catchphrase": "Measures every current twice before setting sail.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#0f766e",
+    "icon": "\ud83e\udded",
+    "treatName": "Hardtack",
+    "treatEmoji": "\ud83c\udf6a",
+    "feedReaction": "Crispy sea biscuit! Nautical compass points true north! \ud83c\udf6a\ud83e\udded",
+    "wakeReaction": "Unrolling maritime tide tables. The data currents look strong! \ud83e\udded",
+    "petReaction": "Dignified captain salute and a brass spyglass given in trust! \ud83e\udded\u2728",
+    "dialogue": {
+      "idle": "Sounding the harbor depth with lead line. Clear waters. \ud83e\udded",
+      "working": "Navigating high-volume data streams through narrow straits! \ud83e\udded\u26a1",
+      "thinking": "Calculating tidal pull on downstream message brokers... \ud83e\udd14",
+      "success": "Anchored in port! Cargo delivered without spilling a drop! \ud83e\udded\ud83c\udf89",
+      "error": "Coral reef ahead! Hard to port! Navigating the channel! \ud83c\udf0a",
+      "sleeping": "Zzz... resting in the captain cabin as the tide rocks... \ud83c\udf19"
+    }
+  }
+}

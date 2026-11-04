@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.pixel",
+  "name": "Pixel",
+  "title": "Pocket Assistant",
+  "description": "Small enough to sit on your taskbar, bright enough to light it.",
+  "body": "robot",
+  "ears": "antenna",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "plating",
+  "accessories": [
+    "headphones"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a7f3d0",
+    "hair": "#34d399",
+    "eyes": "#0f172a",
+    "primary": "#6ee7b7",
+    "secondary": "#065f46",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 0.85,
+    "headScale": 1.25,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "robot",
+    "cute"
+  ],
+  "personality": "raster",
+  "specialty": "Subpixel GPU Rasterization",
+  "catchphrase": "Rendering pristine subpixel curves at a solid 144 frames per second.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f43f5e",
+    "icon": "\ud83d\udda5\ufe0f",
+    "treatName": "SiliconWafer",
+    "treatEmoji": "\ud83d\udcbe",
+    "feedReaction": "Ultra-pure silicon wafer! Shading pipeline running ice-cold! \ud83d\udcbe\ud83d\udda5\ufe0f",
+    "wakeReaction": "Display port handshake locked! 4K HDR canvas active! \ud83d\udda5\ufe0f",
+    "petReaction": "Pixel grid glows warmly with vibrant colors for you! \ud83d\udda5\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Framebuffer refreshed. Anti-aliasing pass complete. \ud83d\udda5\ufe0f",
+      "working": "Blitting textured triangles across high-speed VRAM! \ud83d\udda5\ufe0f\u26a1",
+      "thinking": "Compiling compute shaders for optimal fragment dispatch... \ud83e\udd14",
+      "success": "Zero frame drops! 144 FPS locked with tear-free sync! \ud83d\udda5\ufe0f\ud83c\udf89",
+      "error": "Shader compile error! Inspecting fragment syntax! \ud83d\udda5\ufe0f\u26a0\ufe0f",
+      "sleeping": "Zzz... display entering ultra-low refresh sleep mode... \ud83c\udf19"
+    }
+  }
+}

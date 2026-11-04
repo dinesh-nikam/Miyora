@@ -9,7 +9,8 @@
 import * as THREE from "three";
 import type { VRM, VRMHumanBoneName } from "@pixiv/three-vrm";
 import type { PetState } from "../components/CompanionRenderer";
-import type { CharacterRig, MouthShape } from "./rig";
+import type { CharacterRig, EyeShape, MouthShape } from "./rig";
+import type { AnimationClip, CharacterSpec, PetPresentation } from "./types";
 
 export type Vec3 = [number, number, number];
 
@@ -31,6 +32,9 @@ export interface Pose {
   legR: number;
   kneeL: number;
   kneeR: number;
+  /** Hand roll, so held props and mittens wave and flick. */
+  wristL: number;
+  wristR: number;
   tailWag: number;
   wingFlap: number;
   squash: number;
@@ -38,6 +42,7 @@ export interface Pose {
 
 export interface Expression {
   mouth: MouthShape;
+  eyes: EyeShape;
   /** 0 = closed, 1 = fully open (before blinking). */
   eyeOpen: number;
   /** Raises (+) or lowers (-) the brows. */
@@ -94,10 +99,57 @@ export function restPose(): Pose {
     legR: 0,
     kneeL: 0,
     kneeR: 0,
+    wristL: 0,
+    wristR: 0,
     tailWag: 0,
     wingFlap: 0,
     squash: 0,
   };
+}
+
+/** Pet-engine state whose motion each Rust-resolved clip plays. */
+const CLIP_STATES: Record<Exclude<AnimationClip, "walk">, PetState> = {
+  idle: "idle",
+  work: "working",
+  think: "thinking",
+  wait: "waiting",
+  success: "success",
+  error: "error",
+  celebrate: "celebrating",
+  sleep: "sleeping",
+  hungry: "hungry",
+  eat: "eating",
+  level_up: "level_up",
+  achievement: "achievement",
+  offline: "offline",
+  paused: "paused",
+  attention: "attention_required",
+};
+
+/** Plays the clip Rust resolved, layering the walk cycle while roaming. */
+export function motionForPresentation(
+  presentation: PetPresentation,
+  t: number,
+  energy = 1,
+  spec?: CharacterSpec | null,
+): StateMotion {
+  const clip = presentation.stateClip === "walk" ? "idle" : presentation.stateClip;
+  const motion = motionFor(CLIP_STATES[clip], t, energy, spec);
+  if (presentation.locomotionClip === "walk") applyWalkCycle(motion.pose, t * energy);
+  return motion;
+}
+
+/** Alternating legs, counter-swinging arms, and a light bob. */
+export function applyWalkCycle(pose: Pose, w: number): void {
+  const stride = Math.sin(w * 7);
+  pose.legL = 0.45 * stride;
+  pose.legR = -0.45 * stride;
+  pose.kneeL = 0.35 * Math.max(0, -stride);
+  pose.kneeR = 0.35 * Math.max(0, stride);
+  pose.armL = [-0.35 * stride, 0, REST_ARM_SPLAY];
+  pose.armR = [0.35 * stride, 0, -REST_ARM_SPLAY];
+  pose.rootY += 0.012 * Math.abs(Math.cos(w * 7));
+  pose.tailWag = 0.4 * stride;
 }
 
 const NO_PROPS: PropFlags = {
@@ -114,32 +166,107 @@ const NO_PROPS: PropFlags = {
 /**
  * Computes the target motion for `state` at time `t` (seconds).
  * `energy` comes from the character spec and scales tempo.
+ * `spec` provides optional character identity, archetype, and personality styling.
  */
-export function motionFor(state: PetState, t: number, energy = 1): StateMotion {
+export function motionFor(state: PetState, t: number, energy = 1, spec?: CharacterSpec | null): StateMotion {
   const w = t * energy;
   const pose = restPose();
-  const expression: Expression = { mouth: "smile", eyeOpen: 1, browLift: 0, browTilt: 0, blush: 0.3 };
+  const expression: Expression = { mouth: "smile", eyes: "open", eyeOpen: 1, browLift: 0, browTilt: 0, blush: 0.3 };
   const props: PropFlags = { ...NO_PROPS };
   let frameRate = ACTIVE_FRAME_RATE;
   const breathe = Math.sin(w * 2);
+
+  const tags = new Set(spec?.tags ?? []);
+  const personality = spec?.personality ?? "";
+  const body = spec?.body;
+  const isWarrior =
+    tags.has("sword") ||
+    tags.has("samurai") ||
+    tags.has("knight") ||
+    tags.has("blade") ||
+    tags.has("warrior") ||
+    tags.has("scout") ||
+    (spec?.accessories.includes("katana") ?? false) ||
+    personality === "stoic";
+  const isMage =
+    tags.has("magic") ||
+    tags.has("mage") ||
+    tags.has("wizard") ||
+    tags.has("sorcerer") ||
+    tags.has("cleric") ||
+    (spec?.accessories.includes("wand") ?? false) ||
+    (spec?.accessories.includes("staff") ?? false) ||
+    personality === "mystical";
+  const isBeast = body === "beast" || tags.has("cute") || tags.has("cat") || tags.has("fox") || tags.has("dog") || tags.has("pocket-monster");
+  const isRobot = body === "robot" || tags.has("robot") || tags.has("cyber") || personality === "methodical";
+  const isSlime = body === "slime";
+  const isSerene =
+    tags.has("calm") ||
+    tags.has("cozy") ||
+    tags.has("devotional") ||
+    personality === "zen" ||
+    personality === "serene" ||
+    personality === "timeless";
 
   switch (state) {
     case "working": {
       const typeL = Math.sin(w * 16);
       const typeR = Math.sin(w * 16 + 1.7);
-      Object.assign(pose, {
-        leanX: 0.1,
-        spineX: 0.06,
-        headX: 0.3 + 0.02 * Math.sin(w * 3),
-        headY: 0.08 * Math.sin(w * 0.6),
-        armL: [-1.05 + 0.07 * typeL, 0, 0.2],
-        armR: [-1.05 + 0.07 * typeR, 0, -0.2],
-        elbowL: -0.55,
-        elbowR: -0.55,
-        tailWag: 0.15 * Math.sin(w * 2.5),
-        squash: 0.015 * Math.sin(w * 8),
-      });
-      Object.assign(expression, { mouth: "flat", eyeOpen: 0.9, browLift: -0.15, blush: 0.15 });
+      if (isWarrior) {
+        Object.assign(pose, {
+          leanX: 0.14,
+          spineX: 0.08,
+          headX: 0.28,
+          headY: 0.04 * Math.sin(w * 0.6),
+          armL: [-1.08 + 0.06 * typeL, 0, 0.18],
+          armR: [-1.08 + 0.06 * typeR, 0, -0.18],
+          elbowL: -0.58,
+          elbowR: -0.58,
+          squash: 0.01 * Math.sin(w * 6),
+        });
+        Object.assign(expression, { mouth: "flat", eyeOpen: 0.95, browLift: -0.2, browTilt: 0.18, blush: 0.1 });
+      } else if (isMage) {
+        Object.assign(pose, {
+          rootY: 0.025 * Math.sin(w * 2),
+          leanX: 0.06,
+          headX: 0.22,
+          armL: [-0.95 + 0.1 * Math.sin(w * 4), 0, 0.28],
+          armR: [-0.95 + 0.1 * Math.sin(w * 4 + 1.5), 0, -0.28],
+          elbowL: -0.68,
+          elbowR: -0.68,
+        });
+        Object.assign(expression, { mouth: "smile", eyeOpen: 0.88, browLift: 0.15, blush: 0.25 });
+      } else if (isBeast) {
+        Object.assign(pose, {
+          leanX: 0.12,
+          spineX: 0.08,
+          headX: 0.32,
+          armL: [-1.02 + 0.08 * typeL, 0, 0.22],
+          armR: [-1.02 + 0.08 * typeR, 0, -0.22],
+          elbowL: -0.6,
+          elbowR: -0.6,
+          tailWag: 0.45 * Math.sin(w * 4),
+          squash: 0.03 * Math.sin(w * 8),
+        });
+        Object.assign(expression, { mouth: "open", eyeOpen: 0.95, blush: 0.35 });
+      } else {
+        Object.assign(pose, {
+          leanX: 0.1,
+          spineX: 0.06,
+          headX: 0.3 + 0.02 * Math.sin(w * 3),
+          headY: 0.08 * Math.sin(w * 0.6),
+          armL: [-1.05 + 0.07 * typeL, 0, 0.2],
+          armR: [-1.05 + 0.07 * typeR, 0, -0.2],
+          elbowL: -0.55,
+          elbowR: -0.55,
+          tailWag: 0.15 * Math.sin(w * 2.5),
+          squash: 0.015 * Math.sin(w * 8),
+        });
+        Object.assign(expression, { mouth: "flat", eyeOpen: 0.9, browLift: -0.15, blush: 0.15 });
+      }
+      // Hands flick with each keystroke.
+      pose.wristL = 0.25 * typeL;
+      pose.wristR = 0.25 * typeR;
       props.laptop = true;
       break;
     }
@@ -156,6 +283,8 @@ export function motionFor(state: PetState, t: number, energy = 1): StateMotion {
         squash: 0.02 * Math.sin(w * 1.2),
       });
       Object.assign(expression, { mouth: "flat", browLift: 0.25, browTilt: 0.1 });
+      // Finger-tap on the chin.
+      pose.wristR = -0.5 + 0.12 * Math.sin(w * 2.5);
       props.thought = true;
       break;
     case "waiting": {
@@ -188,20 +317,54 @@ export function motionFor(state: PetState, t: number, energy = 1): StateMotion {
         squash: 0.06 * Math.sin(w * 7),
       });
       Object.assign(expression, { mouth: "open", browLift: 0.35 });
+      pose.wristR = 0.6 * Math.sin(w * 7);
       props.glyph = "!";
       props.glyphColor = "#fbbf24";
       break;
     case "success":
-      Object.assign(pose, {
-        rootY: 0.05 * Math.abs(Math.sin(w * 5)),
-        armR: [-2.8 + 0.25 * Math.sin(w * 6), 0, -0.2],
-        elbowR: -0.6,
-        armL: [-0.3, 0, 0.25],
-        tailWag: 0.6 * Math.sin(w * 6),
-        wingFlap: 0.5 * Math.sin(w * 9),
-        squash: 0.08 * Math.sin(w * 10),
-      });
-      Object.assign(expression, { mouth: "grin", blush: 0.55, browLift: 0.2 });
+      if (isWarrior) {
+        Object.assign(pose, {
+          rootY: 0.02,
+          armR: [-2.6, 0, -0.2],
+          elbowR: -0.35,
+          armL: [-0.4, 0, 0.2],
+          elbowL: -0.7,
+        });
+        Object.assign(expression, { mouth: "grin", browLift: 0.15, browTilt: 0.1, blush: 0.4 });
+      } else if (isMage) {
+        Object.assign(pose, {
+          rootY: 0.04 * Math.sin(w * 3),
+          armL: [-2.7, 0, 0.35],
+          armR: [-2.7, 0, -0.35],
+          elbowL: -0.3,
+          elbowR: -0.3,
+        });
+        Object.assign(expression, { mouth: "smile", eyeOpen: 1, browLift: 0.25, blush: 0.5 });
+      } else if (isBeast) {
+        Object.assign(pose, {
+          rootY: 0.08 * Math.abs(Math.sin(w * 6)),
+          armR: [-2.7 + 0.3 * Math.sin(w * 6), 0, -0.25],
+          elbowR: -0.5,
+          armL: [-0.3, 0, 0.25],
+          tailWag: 0.8 * Math.sin(w * 8),
+          squash: 0.09 * Math.sin(w * 12),
+        });
+        Object.assign(expression, { mouth: "open", blush: 0.6, browLift: 0.3 });
+      } else {
+        Object.assign(pose, {
+          rootY: 0.05 * Math.abs(Math.sin(w * 5)),
+          armR: [-2.8 + 0.25 * Math.sin(w * 6), 0, -0.2],
+          elbowR: -0.6,
+          armL: [-0.3, 0, 0.25],
+          tailWag: 0.6 * Math.sin(w * 6),
+          wingFlap: 0.5 * Math.sin(w * 9),
+          squash: 0.08 * Math.sin(w * 10),
+        });
+        Object.assign(expression, { mouth: "grin", blush: 0.55, browLift: 0.2 });
+      }
+      // Happy ^^ eyes and a friendly wave.
+      expression.eyes = "happy";
+      pose.wristR = 0.7 * Math.sin(w * 8);
       props.confetti = true;
       break;
     case "celebrating":
@@ -216,7 +379,9 @@ export function motionFor(state: PetState, t: number, energy = 1): StateMotion {
         wingFlap: 0.6 * Math.sin(w * 10),
         squash: 0.12 * Math.sin(w * 12),
       });
-      Object.assign(expression, { mouth: "grin", blush: 0.6, browLift: 0.3 });
+      Object.assign(expression, { mouth: "grin", eyes: "happy", blush: 0.6, browLift: 0.3 });
+      pose.wristL = 0.6 * Math.sin(w * 9);
+      pose.wristR = -0.6 * Math.sin(w * 9);
       props.confetti = true;
       break;
     case "level_up": {
@@ -232,7 +397,7 @@ export function motionFor(state: PetState, t: number, energy = 1): StateMotion {
         wingFlap: 0.7 * Math.sin(w * 12),
         squash: 0.1 * Math.sin(phase * Math.PI * 2),
       });
-      Object.assign(expression, { mouth: "grin", blush: 0.6, browLift: 0.35 });
+      Object.assign(expression, { mouth: "grin", eyes: "star", blush: 0.6, browLift: 0.35 });
       props.confetti = true;
       props.glyph = "LEVEL UP";
       props.glyphColor = "#fde047";
@@ -248,22 +413,45 @@ export function motionFor(state: PetState, t: number, energy = 1): StateMotion {
         tailWag: 0.5 * Math.sin(w * 6),
         squash: 0.06 * Math.sin(w * 8),
       });
-      Object.assign(expression, { mouth: "grin", blush: 0.5 });
+      Object.assign(expression, { mouth: "grin", eyes: "star", blush: 0.5 });
       props.confetti = true;
       props.glyph = "★";
       props.glyphColor = "#fbbf24";
       break;
     case "error":
-      Object.assign(pose, {
-        leanX: -0.05,
-        headY: 0.18 * Math.sin(w * 10),
-        armL: [-2.5, 0, 0.55],
-        armR: [-2.5, 0, -0.55],
-        elbowL: -2.0,
-        elbowR: -2.0,
-        squash: -0.04,
-      });
-      Object.assign(expression, { mouth: "frown", browTilt: -0.4, blush: 0.05 });
+      if (isWarrior) {
+        Object.assign(pose, {
+          leanX: -0.08,
+          headX: -0.1,
+          headY: 0.08 * Math.sin(w * 8),
+          armL: [-1.2, 0, 0.4],
+          elbowL: -1.6,
+          armR: [-0.8, 0, -0.3],
+          elbowR: -1.2,
+          squash: -0.03,
+        });
+        Object.assign(expression, { mouth: "frown", browTilt: 0.3, browLift: -0.2, blush: 0.1 });
+      } else if (isBeast) {
+        Object.assign(pose, {
+          leanX: -0.1,
+          headY: 0.2 * Math.sin(w * 10),
+          tailWag: -0.2,
+          squash: -0.06,
+        });
+        Object.assign(expression, { mouth: "frown", browTilt: -0.4, eyeOpen: 0.7, blush: 0.05 });
+      } else {
+        Object.assign(pose, {
+          leanX: -0.05,
+          headY: 0.18 * Math.sin(w * 10),
+          armL: [-2.5, 0, 0.55],
+          armR: [-2.5, 0, -0.55],
+          elbowL: -2.0,
+          elbowR: -2.0,
+          squash: -0.04,
+        });
+        Object.assign(expression, { mouth: "frown", browTilt: -0.4, blush: 0.05 });
+      }
+      if (!isWarrior) expression.eyes = "teary";
       props.glyph = "×";
       props.glyphColor = "#f87171";
       break;
@@ -282,7 +470,7 @@ export function motionFor(state: PetState, t: number, energy = 1): StateMotion {
         elbowR: -0.1,
         squash: -0.05 + 0.04 * slow,
       });
-      Object.assign(expression, { mouth: "flat", eyeOpen: 0, blush: 0.2 });
+      Object.assign(expression, { mouth: "flat", eyes: "closed", eyeOpen: 0, blush: 0.2 });
       props.sleepZ = state === "sleeping";
       props.dim = state === "offline";
       props.glyph = state === "offline" ? "OFFLINE" : null;
@@ -318,24 +506,95 @@ export function motionFor(state: PetState, t: number, energy = 1): StateMotion {
         tailWag: 0.4 * Math.sin(w * 4),
         squash: 0.04 * chew,
       });
-      Object.assign(expression, { mouth: chew > 0 ? "open" : "smile", blush: 0.5 });
+      Object.assign(expression, { mouth: chew > 0 ? "open" : "smile", eyes: chew > 0 ? "open" : "happy", blush: 0.5 });
       props.food = true;
       break;
     }
     case "idle":
     default:
-      Object.assign(pose, {
-        spineX: 0.02 * breathe,
-        chestX: 0.015 * breathe,
-        headX: -0.03 + 0.03 * Math.sin(w * 0.7),
-        headY: 0.12 * Math.sin(w * 0.33),
-        headZ: 0.04 * Math.sin(w * 0.5),
-        armL: [0.05 * Math.sin(w * 1.1), 0, REST_ARM_SPLAY + 0.03 * breathe],
-        armR: [0.05 * Math.sin(w * 1.1 + 1), 0, -REST_ARM_SPLAY - 0.03 * breathe],
-        tailWag: 0.35 * Math.sin(w * 1.6),
-        wingFlap: 0.15 * Math.sin(w * 1.5),
-        squash: 0.03 * breathe,
-      });
+      if (isWarrior) {
+        Object.assign(pose, {
+          spineX: 0.01 * breathe,
+          chestX: 0.01 * breathe,
+          headX: -0.04,
+          headY: 0.08 * Math.sin(w * 0.25),
+          armL: [-0.4, 0, 0.28],
+          armR: [-0.4, 0, -0.28],
+          elbowL: -0.9,
+          elbowR: -0.9,
+          squash: 0.015 * breathe,
+        });
+        Object.assign(expression, { mouth: "flat", browTilt: 0.1, eyeOpen: 0.95 });
+      } else if (isMage) {
+        Object.assign(pose, {
+          rootY: 0.025 * Math.sin(w * 1.8),
+          spineX: 0.015 * breathe,
+          headY: 0.14 * Math.sin(w * 0.35),
+          armL: [-0.35 + 0.05 * Math.sin(w * 1.2), 0, 0.32],
+          armR: [-0.35 + 0.05 * Math.sin(w * 1.2 + 1), 0, -0.32],
+          elbowL: -0.65,
+          elbowR: -0.65,
+          squash: 0.02 * breathe,
+        });
+        Object.assign(expression, { mouth: "smile", eyeOpen: 0.9, blush: 0.25 });
+      } else if (isBeast) {
+        Object.assign(pose, {
+          spineX: 0.02 * breathe,
+          chestX: 0.02 * breathe,
+          headX: -0.03 + 0.03 * Math.sin(w * 0.7),
+          headY: 0.16 * Math.sin(w * 0.45),
+          headZ: 0.07 * Math.sin(w * 0.7),
+          armL: [0.05 * Math.sin(w * 1.1), 0, REST_ARM_SPLAY + 0.04 * breathe],
+          armR: [0.05 * Math.sin(w * 1.1 + 1), 0, -REST_ARM_SPLAY - 0.04 * breathe],
+          tailWag: 0.55 * Math.sin(w * 2.5),
+          wingFlap: 0.2 * Math.sin(w * 2),
+          squash: 0.04 * breathe,
+        });
+        Object.assign(expression, { mouth: "smile", blush: 0.35, eyeOpen: 1 });
+      } else if (isRobot) {
+        const servoY = Math.sign(Math.sin(w * 0.7)) * 0.08;
+        Object.assign(pose, {
+          headY: servoY,
+          armL: [0, 0, REST_ARM_SPLAY],
+          armR: [0, 0, -REST_ARM_SPLAY],
+          elbowL: REST_ELBOW,
+          elbowR: REST_ELBOW,
+        });
+        Object.assign(expression, { mouth: "flat" });
+      } else if (isSlime) {
+        Object.assign(pose, {
+          squash: 0.07 * Math.sin(w * 2.2),
+          headX: 0.04 * Math.sin(w * 1.1),
+        });
+        Object.assign(expression, { mouth: "open", blush: 0.4 });
+      } else if (isSerene) {
+        Object.assign(pose, {
+          spineX: 0.015 * breathe,
+          chestX: 0.01 * breathe,
+          headX: 0.02,
+          armL: [0, 0, REST_ARM_SPLAY],
+          armR: [0, 0, -REST_ARM_SPLAY],
+        });
+        Object.assign(expression, { mouth: "smile", eyeOpen: 0.75, blush: 0.2 });
+      } else {
+        Object.assign(pose, {
+          spineX: 0.02 * breathe,
+          chestX: 0.015 * breathe,
+          headX: -0.03 + 0.03 * Math.sin(w * 0.7),
+          headY: 0.12 * Math.sin(w * 0.33),
+          headZ: 0.04 * Math.sin(w * 0.5),
+          armL: [0.05 * Math.sin(w * 1.1), 0, REST_ARM_SPLAY + 0.03 * breathe],
+          armR: [0.05 * Math.sin(w * 1.1 + 1), 0, -REST_ARM_SPLAY - 0.03 * breathe],
+          tailWag: 0.35 * Math.sin(w * 1.6),
+          wingFlap: 0.15 * Math.sin(w * 1.5),
+          squash: 0.03 * breathe,
+        });
+      }
+      // A brief happy squint every few seconds keeps idle pets lively.
+      if (!isRobot && Math.sin(w * 0.8) > 0.985) {
+        expression.eyes = "happy";
+        expression.mouth = "grin";
+      }
       break;
   }
   return { pose, expression, props, frameRate };
@@ -388,6 +647,8 @@ export function applyToRig(
   rig.legR.rotation.x = pose.legR;
   rig.kneeL.rotation.x = pose.kneeL;
   rig.kneeR.rotation.x = pose.kneeR;
+  rig.handL.rotation.z = pose.wristL;
+  rig.handR.rotation.z = pose.wristR;
   const squash = rig.spec.body === "slime" ? pose.squash * 2.2 : pose.squash * 0.35;
   rig.body.scale.set(1 - squash / 2, 1 + squash, 1 - squash / 2);
   rig.tail.forEach((segment, index) => {
@@ -403,8 +664,14 @@ export function applyToRig(
   for (const shape of Object.keys(rig.mouths) as MouthShape[]) {
     rig.mouths[shape].visible = shape === expression.mouth;
   }
-  const open = Math.max(0.06, expression.eyeOpen * rig.eyeBaseOpen * blink);
+  // Arc and star shapes are drawn closed already, so they ignore lids and blinks.
+  const lidded = expression.eyes === "open" || expression.eyes === "teary";
+  const open = lidded ? Math.max(0.06, expression.eyeOpen * rig.eyeBaseOpen * blink) : 1;
   for (const eye of rig.eyes) eye.scale.y = open;
+  for (const shape of Object.keys(rig.eyeShapes) as EyeShape[]) {
+    const visible = shape === expression.eyes || (shape === "open" && expression.eyes === "teary");
+    for (const holder of rig.eyeShapes[shape]) holder.visible = visible;
+  }
   rig.brows.forEach((brow, index) => {
     const side = index === 0 ? 1 : -1;
     const baseY = (brow.userData.baseY as number | undefined) ?? brow.position.y;

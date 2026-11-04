@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sol",
+  "name": "Sol",
+  "title": "Mane Captain",
+  "description": "Leads the team with a roar and a roadmap.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "crown"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fbbf24",
+    "hair": "#b45309",
+    "eyes": "#92400e",
+    "primary": "#7f1d1d",
+    "secondary": "#fef3c7",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1.15,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "lion",
+    "leader"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.seven",
+  "name": "Seven",
+  "title": "QA Droid",
+  "description": "Inspects every pixel with one unblinking eye.",
+  "body": "robot",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "mono",
+  "outfit": "plating",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e2e8f0",
+    "hair": "#94a3b8",
+    "eyes": "#ef4444",
+    "primary": "#94a3b8",
+    "secondary": "#1e293b",
+    "accent": "#ef4444"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "robot",
+    "tester"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

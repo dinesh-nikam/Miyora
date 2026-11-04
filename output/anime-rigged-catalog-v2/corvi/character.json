@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.corvi",
+  "name": "Corvi",
+  "title": "Crow Collector",
+  "description": "Collects shiny artifacts from every build.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#27272a",
+    "hair": "#18181b",
+    "eyes": "#a855f7",
+    "primary": "#27272a",
+    "secondary": "#3f3f46",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "crow",
+    "night"
+  ],
+  "personality": "analytical",
+  "specialty": "Deep Inspection",
+  "catchphrase": "Every stack trace reveals the system's truth."
+}

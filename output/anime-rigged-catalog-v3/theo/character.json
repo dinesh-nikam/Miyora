@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.theo",
+  "name": "Theo",
+  "title": "Pixel Painter",
+  "description": "Pushes pixels until the interface sings.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "round",
+  "outfit": "overalls",
+  "accessories": [
+    "beanie"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#92400e",
+    "eyes": "#16a34a",
+    "primary": "#2563eb",
+    "secondary": "#fef3c7",
+    "accent": "#ef4444"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "artist"
+  ],
+  "personality": "artistic",
+  "specialty": "Subpixel Canvas Typography",
+  "catchphrase": "Nudging vector beziers until the design sings in harmony.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#2563eb",
+    "icon": "\ud83c\udfa8",
+    "treatName": "Macarons",
+    "treatEmoji": "\ud83e\uddc1",
+    "feedReaction": "Pastel almond macarons! Visual creativity flowing freely! \ud83e\uddc1\ud83c\udfa8",
+    "wakeReaction": "Testing color swatches in morning sunlight. Design time! \ud83c\udfa8",
+    "petReaction": "Splashing a cheerful vibrant pastel gradient across your day! \ud83c\udfa8\ud83d\udc96",
+    "dialogue": {
+      "idle": "Tuning bezier control points on a custom variable font. \ud83c\udfa8",
+      "working": "Polishing kerning and layout rhythm until UI looks like art! \ud83c\udfa8\u26a1",
+      "thinking": "Gazing at letterform spacing with an artist eye... \ud83e\udd14",
+      "success": "Masterpiece! Visual design renders with museum-grade grace! \ud83c\udfa8\ud83c\udf89",
+      "error": "Ugly pixel misalignment! Nudging with subpixel precision! \ud83c\udfa8\ud83d\udd0d",
+      "sleeping": "Zzz... paintbrushes resting in a jar of clean water... \ud83c\udf19"
+    }
+  }
+}

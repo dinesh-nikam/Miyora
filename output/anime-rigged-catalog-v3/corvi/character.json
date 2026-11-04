@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.corvi",
+  "name": "Corvi",
+  "title": "Crow Collector",
+  "description": "Collects shiny artifacts from every build.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#27272a",
+    "hair": "#18181b",
+    "eyes": "#a855f7",
+    "primary": "#27272a",
+    "secondary": "#3f3f46",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "crow",
+    "night"
+  ],
+  "personality": "observant",
+  "specialty": "Shiny Artifact Collection",
+  "catchphrase": "Collects shiny artifacts from every build.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#27272a",
+    "icon": "\ud83e\udeb6",
+    "treatName": "BlackberryTreat",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Juicy dark wild blackberry! Sleek iridescent blue-black feathers! \ud83e\uded0\ud83e\udeb6",
+    "wakeReaction": "Tapping beak on the window glass, holding a shiny brass thumbtack! \ud83e\udeb6",
+    "petReaction": "Drops a gleaming polished silver build hash coin right into palm! \ud83e\udeb6\u2728",
+    "dialogue": {
+      "idle": "Arranging a collection of shiny build artifacts in high nest. \ud83e\udeb6",
+      "working": "Retrieving gleaming cryptographic signing artifacts swiftly! \ud83e\udeb6\u26a1",
+      "thinking": "Gazing with brilliant black eye at an intriguing shiny byte... \ud83e\udd14",
+      "success": "CAW! Another shiny release milestone added to the hoard! \ud83e\udeb6\ud83c\udf89",
+      "error": "A dull plastic decoy! Tossing it out of the nest in disgust! \ud83e\udeb6",
+      "sleeping": "Zzz... roosting in high bell tower, watching the town sleep... \ud83c\udf19"
+    }
+  }
+}

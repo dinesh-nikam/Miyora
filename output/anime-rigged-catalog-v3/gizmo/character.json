@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.gizmo",
+  "name": "Gizmo",
+  "title": "Fix-It Bot",
+  "description": "Carries a wrench for every warning.",
+  "body": "robot",
+  "ears": "antenna",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "mono",
+  "outfit": "plating",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#84cc16",
+    "hair": "#3f6212",
+    "eyes": "#facc15",
+    "primary": "#65a30d",
+    "secondary": "#1a2e05",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.2,
+  "tags": [
+    "robot",
+    "maker"
+  ],
+  "personality": "inventive",
+  "specialty": "Modular Hardware Drivers",
+  "catchphrase": "Soldering clean peripheral adapters into the kernel bus.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#eab308",
+    "icon": "\ud83d\udd27",
+    "treatName": "SolderWire",
+    "treatEmoji": "\ud83e\uddf5",
+    "feedReaction": "Fresh spool of silver solder wire! Circuit pathways gleaming! \ud83e\uddf5\ud83d\udd27",
+    "wakeReaction": "Soldering iron heated to temperature! Ready to wire new drivers! \ud83d\udd27",
+    "petReaction": "Sparks fly in happy celebration! Modular upgrade complete! \ud83d\udd27\ud83d\udc96",
+    "dialogue": {
+      "idle": "Testing pin voltages on the breadboard. Ready to wire! \ud83d\udd27",
+      "working": "Hot-plugging device tree overlays into the runtime! \ud83d\udd27\u26a1",
+      "thinking": "Tracing PCB routing traces to prevent crosstalk... \ud83e\udd14",
+      "success": "Clean handshake! Driver loaded without a kernel panic! \ud83d\udd27\ud83c\udf89",
+      "error": "Short circuit intercepted! Tripping fuse protection! \ud83d\udd27\u26a0\ufe0f",
+      "sleeping": "Zzz... tools cleaned and organized on the magnetic pegboard... \ud83c\udf19"
+    }
+  }
+}

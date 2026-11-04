@@ -15,7 +15,7 @@ pub mod signature;
 pub mod vrm;
 
 pub const MANIFEST_FILE: &str = "pet.json";
-pub const CURRENT_SCHEMA_VERSION: u32 = 1;
+pub const CURRENT_SCHEMA_VERSION: u32 = 2;
 const MAX_MANIFEST_BYTES: u64 = 256 * 1024;
 const MAX_PACK_ID_BYTES: usize = 128;
 const MAX_NAME_BYTES: usize = 120;
@@ -30,6 +30,27 @@ const MAX_IMAGE_ALLOCATION: u64 = 64 * 1024 * 1024;
 const PREVIEW_FILE: &str = "generated/preview.png";
 /// Maximum frames packed from an animated user image into one sprite sheet.
 const MAX_IMPORTED_ANIMATION_FRAMES: usize = 64;
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Default)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct PetPersonality {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub theme_color: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub icon: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub treat_name: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub treat_emoji: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub feed_reaction: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub wake_reaction: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pet_reaction: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub dialogue: Option<BTreeMap<String, String>>,
+}
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
@@ -52,6 +73,10 @@ pub struct PetPackManifest {
     pub state_mappings: BTreeMap<String, String>,
     #[serde(default)]
     pub tags: Vec<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub personality: Option<PetPersonality>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub animation: Option<String>,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
@@ -379,6 +404,8 @@ impl PetPackManifest {
                 animations: BTreeMap::from([("idle".into(), frames)]),
                 state_mappings,
                 tags: vec!["custom".into(), "user-created".into()],
+                personality: None,
+                animation: Some("static".into()),
             };
             manifest.validate()?;
             fs::write(
@@ -408,7 +435,7 @@ impl PetPackManifest {
     }
 
     pub fn validate(&self) -> Result<(), PetPackError> {
-        if self.schema_version != CURRENT_SCHEMA_VERSION {
+        if self.schema_version != 1 && self.schema_version != CURRENT_SCHEMA_VERSION {
             return Err(PetPackError::UnsupportedSchema(self.schema_version));
         }
         validate_text("id", &self.id, MAX_PACK_ID_BYTES)?;
@@ -511,6 +538,36 @@ impl PetPackManifest {
         }
         for tag in &self.tags {
             validate_text("tag", tag, 48)?;
+        }
+        if let Some(personality) = &self.personality {
+            if let Some(color) = &personality.theme_color {
+                if !valid_hex_color(color) {
+                    return Err(PetPackError::Invalid(
+                        "themeColor must be a 6-digit hex color like #rrggbb".into(),
+                    ));
+                }
+            }
+            if let Some(feed) = &personality.feed_reaction {
+                validate_text("feedReaction", feed, 512)?;
+            }
+            if let Some(wake) = &personality.wake_reaction {
+                validate_text("wakeReaction", wake, 512)?;
+            }
+            if let Some(pet) = &personality.pet_reaction {
+                validate_text("petReaction", pet, 512)?;
+            }
+            if let Some(dialogue) = &personality.dialogue {
+                for (state, line) in dialogue {
+                    validate_text(&format!("dialogue.{state}"), line, 512)?;
+                }
+            }
+        }
+        if let Some(animation) = &self.animation {
+            if !matches!(animation.as_str(), "animated" | "static" | "partial") {
+                return Err(PetPackError::Invalid(
+                    "animation must be 'animated', 'static', or 'partial'".into(),
+                ));
+            }
         }
         Ok(())
     }
@@ -709,6 +766,11 @@ fn valid_identifiers(value: &str, reject_numeric_leading_zero: bool) -> bool {
         })
 }
 
+fn valid_hex_color(color: &str) -> bool {
+    let bytes = color.as_bytes();
+    bytes.len() == 7 && bytes[0] == b'#' && bytes[1..].iter().all(|b| b.is_ascii_hexdigit())
+}
+
 fn validate_asset_id(value: &str) -> Result<(), PetPackError> {
     if value.is_empty()
         || value.len() > 64
@@ -757,6 +819,54 @@ fn validate_relative_path(value: &str) -> Result<(), PetPackError> {
         )));
     }
     Ok(())
+}
+
+/// Sanitizes and canonicalizes a relative asset path against an installed pack's root.
+///
+/// Guards against parent traversal (`..`), absolute paths, forbidden characters,
+/// and symlink / junction escapes beyond `root`. Normalizes Windows verbatim and drive path
+/// representations using `dunce::canonicalize`.
+pub fn sanitize_pack_asset_path(
+    root: &Path,
+    relative_asset: &str,
+) -> Result<PathBuf, PetPackError> {
+    validate_relative_path(relative_asset)?;
+    let root_canonical = dunce::canonicalize(root).map_err(|error| {
+        PetPackError::Invalid(format!("failed to canonicalize pack root: {error}"))
+    })?;
+    let candidate = root.join(relative_asset);
+    let asset_canonical = dunce::canonicalize(&candidate).map_err(|error| {
+        PetPackError::Invalid(format!("asset path not found or invalid: {error}"))
+    })?;
+
+    if !path_starts_with(&asset_canonical, &root_canonical) {
+        return Err(PetPackError::Invalid(
+            "asset path escaped installed pack".into(),
+        ));
+    }
+    Ok(asset_canonical)
+}
+
+#[cfg(windows)]
+fn path_starts_with(path: &Path, base: &Path) -> bool {
+    let path_comps: Vec<_> = path.components().collect();
+    let base_comps: Vec<_> = base.components().collect();
+    if path_comps.len() < base_comps.len() {
+        return false;
+    }
+    for (a, b) in path_comps.iter().zip(base_comps.iter()) {
+        let a_str = a.as_os_str().to_string_lossy().to_ascii_lowercase();
+        let b_str = b.as_os_str().to_string_lossy().to_ascii_lowercase();
+        if a_str != b_str {
+            return false;
+        }
+    }
+    true
+}
+
+#[cfg(not(windows))]
+fn path_starts_with(path: &Path, base: &Path) -> bool {
+    path.starts_with(base)
 }
 
 pub(crate) fn has_supported_extension(value: &str) -> bool {
@@ -819,6 +929,8 @@ mod tests {
             )]),
             state_mappings: BTreeMap::from([("Idle".into(), "idle".into())]),
             tags: vec!["original".into()],
+            personality: None,
+            animation: None,
         }
     }
 
@@ -843,6 +955,33 @@ mod tests {
         // larger than the asset table.
         assert_eq!(manifest.animations.len(), 10);
         assert!(manifest.state_mappings.contains_key("offline"));
+    }
+
+    #[test]
+    fn custom_pack_with_and_without_personality_block_works() {
+        let mut manifest = valid_manifest();
+        assert!(manifest.personality.is_none());
+        assert!(manifest.validate().is_ok());
+
+        manifest.personality = Some(PetPersonality {
+            theme_color: Some("#ffb703".into()),
+            icon: Some("☁️".into()),
+            treat_name: Some("Peach".into()),
+            treat_emoji: Some("🍑".into()),
+            feed_reaction: Some("Mmm! Celestial peach!".into()),
+            wake_reaction: Some("The Sage awakens!".into()),
+            pet_reaction: Some("Thanks Chief!".into()),
+            dialogue: Some(BTreeMap::from([
+                ("idle".into(), "Ready when you are!".into()),
+                ("working".into(), "Smashing bugs!".into()),
+            ])),
+        });
+        assert!(manifest.validate().is_ok());
+
+        // Invalid hex color is rejected
+        let mut bad_manifest = manifest.clone();
+        bad_manifest.personality.as_mut().unwrap().theme_color = Some("not-a-color".into());
+        assert!(bad_manifest.validate().is_err());
     }
 
     #[test]
@@ -1167,5 +1306,69 @@ mod tests {
         PetPackManifest::load_and_validate(&installed.directory, ValidationLimits::default())
             .expect("animated pack validates");
         fs::remove_dir_all(temporary).expect("temporary files removed");
+    }
+
+    #[test]
+    fn test_sanitize_pack_asset_path_valid() {
+        let temporary = tempfile::tempdir().expect("temporary directory created");
+        let assets_dir = temporary.path().join("assets");
+        fs::create_dir(&assets_dir).expect("assets dir created");
+        let image_file = assets_dir.join("idle.png");
+        fs::write(&image_file, b"fake png bytes").expect("file written");
+
+        let resolved = sanitize_pack_asset_path(temporary.path(), "assets/idle.png")
+            .expect("valid path resolves safely");
+        assert_eq!(resolved, dunce::canonicalize(&image_file).unwrap());
+    }
+
+    #[test]
+    fn test_sanitize_pack_asset_path_rejects_parent_traversal() {
+        let temporary = tempfile::tempdir().expect("temporary directory created");
+        let err = sanitize_pack_asset_path(temporary.path(), "../secret.txt")
+            .expect_err("parent traversal must be rejected");
+        assert!(matches!(err, PetPackError::Invalid(_)));
+
+        let err2 = sanitize_pack_asset_path(temporary.path(), "assets/../../secret.txt")
+            .expect_err("embedded parent traversal must be rejected");
+        assert!(matches!(err2, PetPackError::Invalid(_)));
+    }
+
+    #[test]
+    fn test_sanitize_pack_asset_path_rejects_absolute_path() {
+        let temporary = tempfile::tempdir().expect("temporary directory created");
+        let err = sanitize_pack_asset_path(temporary.path(), "/etc/passwd")
+            .expect_err("absolute path must be rejected");
+        assert!(matches!(err, PetPackError::Invalid(_)));
+
+        #[cfg(windows)]
+        {
+            let err_win = sanitize_pack_asset_path(temporary.path(), "C:/Windows/win.ini")
+                .expect_err("drive path must be rejected");
+            assert!(matches!(err_win, PetPackError::Invalid(_)));
+        }
+    }
+
+    #[test]
+    fn test_sanitize_pack_asset_path_rejects_symlink_escape() {
+        let temporary = tempfile::tempdir().expect("temporary directory created");
+        let pack_root = temporary.path().join("pack");
+        let outside_dir = temporary.path().join("outside");
+        fs::create_dir(&pack_root).expect("pack dir created");
+        fs::create_dir(&outside_dir).expect("outside dir created");
+
+        let outside_file = outside_dir.join("secret.png");
+        fs::write(&outside_file, b"secret").expect("outside file written");
+
+        let symlink_path = pack_root.join("leak.png");
+        #[cfg(unix)]
+        let symlink_res = std::os::unix::fs::symlink(&outside_file, &symlink_path);
+        #[cfg(windows)]
+        let symlink_res = std::os::windows::fs::symlink_file(&outside_file, &symlink_path);
+
+        if symlink_res.is_ok() {
+            let err = sanitize_pack_asset_path(&pack_root, "leak.png")
+                .expect_err("symlink pointing outside pack must be rejected");
+            assert!(matches!(err, PetPackError::Invalid(_)));
+        }
     }
 }

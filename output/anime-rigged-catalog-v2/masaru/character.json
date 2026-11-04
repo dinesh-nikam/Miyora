@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.masaru",
+  "name": "Masaru",
+  "title": "Iron Samurai",
+  "description": "Never retreats from a failing pipeline.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [
+    "katana",
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#0c0a09",
+    "eyes": "#92400e",
+    "primary": "#b91c1c",
+    "secondary": "#1c1917",
+    "accent": "#ca8a04"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.2,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "anime",
+    "samurai"
+  ],
+  "personality": "stoic",
+  "specialty": "Branch Guarding",
+  "catchphrase": "Stand between main and bad merges."
+}

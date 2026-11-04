@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.gojo",
+  "name": "Gojo",
+  "title": "The Strongest Sorcerer",
+  "description": "The invincible sorcerer with snow-white spiky hair, sleek high-collar dark uniform, and infinite cyan Six Eyes.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sparkle",
+  "outfit": "suit",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fce7f3",
+    "hair": "#f8fafc",
+    "eyes": "#38bdf8",
+    "primary": "#0f172a",
+    "secondary": "#1e1b4b",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 1.12,
+    "headScale": 0.95,
+    "build": 1.02,
+    "limbLength": 1.1
+  },
+  "energy": 1.4,
+  "tags": [
+    "anime",
+    "avatar",
+    "sorcerer",
+    "gojo",
+    "strongest"
+  ],
+  "personality": "confident",
+  "specialty": "Fault Tolerance",
+  "catchphrase": "Don't sweat the compiler. I'm the strongest."
+}

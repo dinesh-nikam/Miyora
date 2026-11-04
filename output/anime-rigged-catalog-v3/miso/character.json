@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.miso",
+  "name": "Miso",
+  "title": "Tabby Debugger",
+  "description": "Pounces on bugs the moment they twitch.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "hoodie",
+  "accessories": [
+    "bell"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f59e0b",
+    "hair": "#92400e",
+    "eyes": "#16a34a",
+    "primary": "#0f766e",
+    "secondary": "#134e4a",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "cat",
+    "coder"
+  ],
+  "personality": "curious",
+  "specialty": "Tabby Bug Pouncing",
+  "catchphrase": "Pounces on bugs the moment they twitch.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f59e0b",
+    "icon": "\ud83d\udc31",
+    "treatName": "TunaFlakes",
+    "treatEmoji": "\ud83d\udc1f",
+    "feedReaction": "Crispy bonito tuna flakes! Purring at maximum volume! \ud83d\udc1f\ud83d\udc31",
+    "wakeReaction": "Stretching front paws out, yawning a big kitty yawn! \ud83d\udc31",
+    "petReaction": "Rubbing warm tabby cheeks against your knuckles with loud purrs! \ud83d\udc31\ud83d\udc96",
+    "dialogue": {
+      "idle": "Watching the terminal cursor flicker like a little moth. \ud83d\udc31",
+      "working": "Wiggling butt, preparing to pounce on rogue exceptions! \ud83d\udc31\u26a1",
+      "thinking": "Paws hovering over spacebar... calculating the jump... \ud83e\udd14",
+      "success": "POUNCED! Bug pinned under two front paws! Purrrr! \ud83d\udc31\ud83c\udf89",
+      "error": "Hiss! It skittered under the couch! Peeking under to swat! \ud83d\udc3e",
+      "sleeping": "Zzz... loaf of warm tabby bread sleeping on keyboard... \ud83c\udf19"
+    }
+  }
+}

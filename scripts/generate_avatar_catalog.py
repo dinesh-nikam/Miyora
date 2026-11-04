@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
 """Generate the bundled 3D character catalog.
 
-Every row below is an original, hand-authored character design for the
-procedural renderer. The script only formats and checks the rows; it does not
-randomize anything, so running it twice produces byte-identical output.
+Rows are hand-authored character designs for the procedural renderer. Most are
+original; rows in LEGACY_FRANCHISE imitate third-party franchise characters the
+project holds no license for, so they are marked `legacy` and are never offered
+as 3D pets. The script only formats and checks the rows; it does not randomize
+anything, so running it twice produces byte-identical output.
 
 Usage:
     python scripts/generate_avatar_catalog.py [--output PATH] [--check]
@@ -20,6 +22,11 @@ import re
 import sys
 from pathlib import Path
 
+try:
+    from character_profiles import PROFILES
+except ImportError:
+    from scripts.character_profiles import PROFILES
+
 ROOT = Path(__file__).resolve().parent.parent
 DEFAULT_OUTPUT = ROOT / "crates" / "avatar" / "catalog" / "characters.json"
 
@@ -34,10 +41,243 @@ PATTERNS = {"none", "dots", "stripes", "waves", "petals", "stars", "diamonds"}
 ACCESSORIES = {"glasses", "headphones", "scarf", "beanie", "witch_hat", "crown", "halo", "cape", "backpack", "headband", "bow", "flower", "goggles", "bell", "katana", "wand", "staff", "kitsune_mask", "shell", "gem"}
 PALETTE_KEYS = ("skin", "hair", "eyes", "primary", "secondary", "accent")
 HEX = re.compile(r"^[0-9a-f]{6}$")
+BODY_CATEGORY = {"humanoid": "character", "beast": "animal", "bird": "animal", "slime": "creature", "robot": "robot"}
+LEGACY_FRANCHISE = frozenset(
+    "anya denji frieren genos gojo goku gon ichigo killua kodama-spirit l-lawliet levi light luffy mikasa momiji "
+    "nami naruto nezuko pikachu power rukia saitama sanji sasuke tanjiro valley-flyer vegeta witch-apprentice "
+    "woodland-guardian yor yuji zoro".split()
+)
+DEITY_INSPIRED = frozenset(
+    "arjuna ganesha hanuman krishna lakshmi parvati radha rama saraswati shiva sita sun-wukong".split()
+)
+ORIGINAL_ATTRIBUTION = {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design",
+}
+LEGACY_ATTRIBUTION = {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only.",
+}
+
+
+def derive_identity(slug: str, name: str, title: str, body: str, tags: list[str]) -> tuple[str, str, str]:
+    if slug in PROFILES:
+        prof = PROFILES[slug]
+        return (prof["personality"], prof["specialty"], prof["catchphrase"])
+    tag_set = set(tags)
+    ICONIC = {
+        "aoi": ("composed", "Async Pipelines", "Calm code, steady commits, zero drama."),
+        "kenji": ("relentless", "Root Cause Debugging", "Stack traces at 3 a.m. are the truest truth."),
+        "mira": ("inquisitive", "Type Architecture", "I read build logs like constellations."),
+        "gojo": ("confident", "Fault Tolerance", "Don't sweat the compiler. I'm the strongest."),
+        "tanjiro": ("earnest", "Test-Driven TDD", "Work through every red test until it turns green!"),
+        "nezuko": ("protective", "Workspace Security", "Guarding your project workspace with gentle ferocity."),
+        "zoro": ("stoic", "Dead-Code Elimination", "Nothing happened... just three clean commits."),
+        "luffy": ("fearless", "Rapid Prototyping", "I'm gonna be the King of Shipped Features!"),
+        "saitama": ("deadpan", "Single-Pass Optimization", "One punch. One test. Done."),
+        "frieren": ("timeless", "Legacy Maintenance", "Take your time. A century of maintenance is nothing."),
+        "anya": ("cheerful", "Telepathic Linting", "Waku waku! All tests passed!"),
+        "krishna": ("serene", "Divine Orchestration", "Action without attachment ships the finest code."),
+        "hanuman": ("loyal", "Heavy Infrastructure", "Leaping across regions with boundless energy."),
+        "naruto": ("spirited", "Continuous Delivery", "Believe it! I never back down from a failing build."),
+        "sasuke": ("intense", "Precision Refactoring", "Weak abstractions are unacceptable."),
+        "goku": ("cheerful", "Stress Testing", "This benchmark looks strong! Let's push it higher!"),
+        "vegeta": ("proud", "Zero-Regression CI", "A Saiyan prince does not push broken builds."),
+        "levi": ("disciplined", "Code Cleanup", "Tidy your modules. Filthy code is unacceptable."),
+        "mikasa": ("steadfast", "Branch Protection", "I will protect this repository at all costs."),
+        "denji": ("chaotic", "Brute-Force Patching", "If it runs, I get jam on my toast!"),
+        "power": ("boastful", "Chaos Engineering", "Bow before my genius! The bug was terrified of me!"),
+        "pikachu": ("perky", "Cache Re-ignition", "Pika! Lighting up the build pipeline!"),
+        "shiva": ("transcendent", "Garbage Collection", "Destroying memory leaks with cosmic stillness."),
+        "arjuna": ("focused", "Targeted Unit Tests", "My focus never wavers from the target assertion."),
+        "sun-wukong": ("playful", "Distributed Chaos", "Seven-fold transformations for every deployment."),
+        "ninja-cat": ("stealthy", "Silent Instrumentation", "Tracing execution unseen in the shadows."),
+    }
+    if slug in ICONIC:
+        return ICONIC[slug]
+    if any(k in tag_set for k in ("sword", "samurai", "knight", "warrior", "archer", "blade")):
+        return ("stoic", "Branch Guarding", "Stand between main and bad merges.")
+    if any(k in tag_set for k in ("magic", "witch", "mage", "sorcerer", "cleric")):
+        return ("mystical", "AST Transmutation", "Casting clean checkmarks into the terminal.")
+    if body == "robot" or "robot" in tag_set:
+        return ("methodical", "Deterministic CI", "Zero syntax faults allowed.")
+    if body == "beast" or any(k in tag_set for k in ("cat", "fox", "dog", "cute", "pocket-monster")):
+        return ("playful", "Cache & Triage", "Pouncing on stale dependencies with a grin!")
+    if body == "slime":
+        return ("fluid", "Dynamic Elasticity", "Wobbling through edge cases smoothly.")
+    if "night" in tag_set or "scholar" in tag_set:
+        return ("analytical", "Deep Inspection", "Every stack trace reveals the system's truth.")
+    if "speedy" in tag_set:
+        return ("energetic", "Fast-Path Execution", "Faster than the next clock cycle.")
+    if any(k in tag_set for k in ("calm", "nature", "cozy", "devotional")):
+        return ("zen", "Code Cleanliness", "Patient cultivation builds stable software.")
+    return ("focused", "Full-Stack Engineering", "Ship clean, verify always.")
+
+
+CATALOG_PERSONALITIES = {
+    "kenji": {
+        "themeColor": "#818cf8",
+        "icon": "👓",
+        "treatName": "Espresso",
+        "treatEmoji": "☕",
+        "feedReaction": "Double espresso. Cognitive throughput restored to peak. ☕👓",
+        "wakeReaction": "Adjusting spectacles. Commencing static analysis session. 👓",
+        "petReaction": "Appreciated. Professional synergy increased by 15%. 👓✨",
+        "dialogue": {
+            "idle": "Analysis ready. What is our target module today? 👓",
+            "working": "Applying formal verification across all edge cases. 👓⚡",
+            "thinking": "Evaluating algorithmic complexity and memory layouts... 🤔",
+            "success": "Type soundness verified. Zero unsafe operations detected. 👓🎉",
+            "error": "Syntax anomaly isolated. Refactoring for invariants. 🔍",
+            "sleeping": "Zzz... running background GC cycles... 🌙"
+        }
+    },
+    "mira": {
+        "themeColor": "#c084fc",
+        "icon": "✨",
+        "treatName": "Starcandy",
+        "treatEmoji": "🍬",
+        "feedReaction": "Starcandy delight! Sparkling creative energy unlocked! 🍬✨",
+        "wakeReaction": "Good morning, starfarer! The cosmos is bright and full of code! ✨",
+        "petReaction": "A shower of stardust for you, Chief! Keep shining! ✨💖",
+        "dialogue": {
+            "idle": "Starlight companion ready! Where shall we explore next? ✨",
+            "working": "Weaving constellation threads into frontend magic! ✨⚡",
+            "thinking": "Listening to the melody between the stars... 🤔",
+            "success": "Starlight celebration! Everything renders with elegance! 🌌🎉",
+            "error": "A brief shadow passed by. Illuminating with stellar glow! ✨",
+            "sleeping": "Zzz... dreaming in nebula colors... 🌙✨"
+        }
+    },
+    "bolt": {
+        "themeColor": "#06b6d4",
+        "icon": "🤖",
+        "treatName": "Battery",
+        "treatEmoji": "🔋",
+        "feedReaction": "Supercharger connected! Battery cells at 100%! 🔋⚡",
+        "wakeReaction": "BEEP BOOP! Core diagnostics nominal! Ready to compile! 🤖",
+        "petReaction": "Haptic sensors tickled! Gratitude subroutine executed! 🤖💖",
+        "dialogue": {
+            "idle": "Unit online. Standby for operational directives, Chief! 🤖",
+            "working": "Overclocking CPU cores! Parallel pipeline processing active! 🤖⚡",
+            "thinking": "Running diagnostic simulations across 1,024 test cases... 🤔",
+            "success": "MISSION SUCCESS: All microservices responding green! 🤖🎉",
+            "error": "WARNING: Exception intercepted. Deploying auto-patch! ⚠️",
+            "sleeping": "Low-power standby mode engaged... Zzz... BEEP... 🌙"
+        }
+    },
+    "sun-wukong": {
+        "themeColor": "#ffb703",
+        "icon": "☁️",
+        "treatName": "Peach",
+        "treatEmoji": "🍑",
+        "feedReaction": "Mmm! Celestial peach! Power level rising, Chief! 🍑✨",
+        "wakeReaction": "Hahaha! The Great Sage awakens! Point me to the bugs! ⚡☁️",
+        "petReaction": "Hahaha! The Monkey King is energized! Celestial blessing for your keyboard! 🍑✨",
+        "dialogue": {
+            "idle": "Riding my Somersault Cloud. Ready when you are, Chief! ☁️",
+            "working": "My Gold-Banded Cudgel will crush these merge conflicts! ⚡",
+            "thinking": "Pondering the Dao of clean code... 🤔",
+            "success": "HA! Another feature vanquished! The heavens rejoice! 🎉",
+            "error": "A minor bug demon! Stand back, Chief, we'll smash it! 💪",
+            "sleeping": "Zzz... napping on my Somersault Cloud... ☁️💤"
+        }
+    },
+    "nezuko": {
+        "themeColor": "#ff69b4",
+        "icon": "🌸",
+        "treatName": "Tea",
+        "treatEmoji": "🍵",
+        "feedReaction": "Mmm-ph! (Nezuko sips warm tea happily!) (◕‿◕)🍵",
+        "wakeReaction": "Mmm-ph! (Rubs her eyes and smiles warmly!) 🌸✨",
+        "petReaction": "Mmm-ph! (Nezuko smiles warmly and leans into your hand) 🌸💖",
+        "dialogue": {
+            "idle": "Keeping watch by your side. Hydrate when ready, Chief! 🍵",
+            "working": "Mmm! (Guarding your focus while you code!) ⚡🌸",
+            "thinking": "Mmm? (Tilts head curiously at the algorithm) 🤔",
+            "success": "Mmm-ph!! (Jumps with joy!) All tests passed! 🎉",
+            "error": "Mmm... (Hands you a lucky charm. We'll fix it!) 💪",
+            "sleeping": "Zzz... resting peacefully in her cozy box... 🌙💤"
+        }
+    },
+    "gojo": {
+        "themeColor": "#38bdf8",
+        "icon": "♾️",
+        "treatName": "Kikufuku",
+        "treatEmoji": "🍡",
+        "feedReaction": "Sweet Kikufuku mochi! Cursed energy at maximum. 🍡✨",
+        "wakeReaction": "Back from the void. Ready to show them what real code looks like. ♾️",
+        "petReaction": "Infinity won't stop a good high-five from you, Chief! ♾️✨",
+        "dialogue": {
+            "idle": "Don't worry, Chief. I'm the strongest companion you've got. ♾️✨",
+            "working": "Unlimited Void deployed. Compiling at the speed of light. ♾️⚡",
+            "thinking": "Six Eyes analyzing every branch and memory allocation... 🤔",
+            "success": "Domain Expansion: Clean Architecture! Zero errors. 🚀",
+            "error": "A cursed exception appeared. I'll exorcise it in one pass. 🔍",
+            "sleeping": "Reversing cursed energy... even the strongest needs rest. 🌙"
+        }
+    },
+    "zoro": {
+        "themeColor": "#22c55e",
+        "icon": "⚔️",
+        "treatName": "Onigiri",
+        "treatEmoji": "🍙",
+        "feedReaction": "Onigiri consumed. Swords are sharpened. 🍙⚔️",
+        "wakeReaction": "Yawn... Which file needs cutting down, Chief? ⚔️",
+        "petReaction": "Hmph... don't slack off. Let's get these commits in. ⚔️",
+        "dialogue": {
+            "idle": "Swords sharpened. Give me the next pull request, Chief. ⚔️",
+            "working": "Three-sword syntax check. Slicing through technical debt! ⚔️",
+            "thinking": "I'm not lost... just inspecting an unexplored submodule. 🤔",
+            "success": "Nothing happened... just three clean commits. 🗡️🎉",
+            "error": "A stubborn blocker. We cut right through it again! 💪",
+            "sleeping": "Zzz... sleeping on deck with a hand on the hilt... 🌙"
+        }
+    },
+    "arjuna": {
+        "themeColor": "#ff9933",
+        "icon": "🏹",
+        "treatName": "Honey",
+        "treatEmoji": "🍯",
+        "feedReaction": "Saffron nectar! My archery focus is refreshed. 🍯🏹",
+        "wakeReaction": "Awake and vigilant. The Gandiva bow stands ready! 🏹",
+        "petReaction": "Honor and gratitude, Chief. Together our aim is true! 🏹✨",
+        "dialogue": {
+            "idle": "Gandiva bow strung. Focus unbroken, Chief. 🏹",
+            "working": "Arrows of logic flying true to the target! ⚡🏹",
+            "thinking": "Surveying the battlefield of code... finding the clean route. 🤔",
+            "success": "Bullseye! Every test struck with precision! 🎯",
+            "error": "Adjusting stance! We'll strike the root cause together! 🛡️",
+            "sleeping": "Zzz... resting upon his chariot beneath the stars... 🌙"
+        }
+    },
+    "ninja-cat": {
+        "themeColor": "#00f0ff",
+        "icon": "🐾",
+        "treatName": "Fish",
+        "treatEmoji": "🐟",
+        "feedReaction": "*crunch crunch* Purrrrr! Delicious fish! 🐟🐾",
+        "wakeReaction": "*stretches stealthily* Meow! Ready for deployment! 🐾",
+        "petReaction": "*loud purring* Purrrrr... blessed by the shinobi cat! 🐾💖",
+        "dialogue": {
+            "idle": "*purrs* All systems quiet and secure, Chief. 🐾",
+            "working": "*silent paws typing at 200 WPM* 🐾⚡",
+            "thinking": "*ears twitching* Sensing an async race condition... 🤔",
+            "success": "Target silenced! Build green and stealthy! 🐾🎉",
+            "error": "Hiss! Bug detected in perimeter! Ambushing... ⚔️",
+            "sleeping": "Zzz... curled up in a neat little cat ball... 🌙🐾"
+        }
+    }
+}
 
 
 def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessories, palette, description, tags,
-      energy=1.0, height=1.0, head=1.0, build=1.0, limbs=1.0, pattern="none", tip=None):
+      energy=1.0, height=1.0, head=1.0, build=1.0, limbs=1.0, pattern="none", tip=None,
+      catchphrase=None, specialty=None, personality=None):
     colors = palette.split()
     if len(colors) != len(PALETTE_KEYS) or not all(HEX.match(color) for color in colors):
         raise ValueError(f"{slug}: palette must contain six lowercase hex colors")
@@ -53,6 +293,10 @@ def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessorie
     for accessory in accessory_list:
         if accessory not in ACCESSORIES:
             raise ValueError(f"{slug}: unknown accessory `{accessory}`")
+    tag_list = tags.split()
+    default_p, default_s, default_cp = derive_identity(slug, name, title, body, tag_list)
+    legacy = slug in LEGACY_FRANCHISE
+    category = "legacy" if legacy else "deity_inspired" if slug in DEITY_INSPIRED else BODY_CATEGORY[body]
     character = {
         "schemaVersion": 1,
         "id": f"miyora.{slug}",
@@ -71,8 +315,18 @@ def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessorie
         "palette": {key: f"#{color}" for key, color in zip(PALETTE_KEYS, colors)},
         "proportions": {"height": height, "headScale": head, "build": build, "limbLength": limbs},
         "energy": energy,
-        "tags": tags.split(),
+        "tags": tag_list,
+        "personality": personality or default_p,
+        "specialty": specialty or default_s,
+        "catchphrase": catchphrase or default_cp,
+        "category": category,
+        "threeDEligible": not legacy,
+        "attribution": LEGACY_ATTRIBUTION if legacy else ORIGINAL_ATTRIBUTION,
     }
+    if slug in PROFILES and "companionPersonality" in PROFILES[slug]:
+        character["companionPersonality"] = PROFILES[slug]["companionPersonality"]
+    elif slug in CATALOG_PERSONALITIES:
+        character["companionPersonality"] = CATALOG_PERSONALITIES[slug]
     if tip is not None:
         character["hairTip"] = f"#{tip}"
     return character
@@ -424,35 +678,35 @@ CHARACTERS = [
       "1c1917 fef3c7 0ea5e9 1c1917 fef3c7 f97316", "Navigates jungles of nested callbacks.", "toucan explorer"),
     # ---- Companion Universe Pet Packs (3D Procedural Roster) -----------
     # 1. Indian Epic & Devotional
-    c("krishna", "Krishna", "Divine Flute Avatar", "humanoid", "human", "none", "none", "curly", "sparkle", "robe", "crown flower gem",
-      "7da4d4 1a2238 231f20 ffd700 f59e0b 38bdf8", "Sky-blue Krishna with dark curly locks, glowing golden pitambara silk, peacock feather crown, and gentle sparkle eyes.", "devotional avatar flute divine krishna",
-      energy=1.2, height=1.0, head=1.08, build=0.95, pattern="none", tip="38bdf8"),
+    c("krishna", "Krishna", "Divine Flute Avatar", "humanoid", "human", "none", "none", "curly", "round", "robe", "crown flower gem",
+      "8fb6e8 1a2238 6b3e1f ffd700 b91c1c 0d9488", "Sky-blue Krishna with dark curly locks, golden pitambara silk, crimson sash, peacock feather in a temple crown, and a golden flute.", "devotional avatar flute divine krishna",
+      energy=1.2, height=1.0, head=1.12, build=0.95, pattern="none"),
     c("radha", "Radha", "Graceful Vrindavan Queen", "humanoid", "human", "none", "none", "long", "sparkle", "dress", "crown flower gem",
-      "f6d7c3 1e1b18 451a03 e11d48 f59e0b fbcfe8", "Graceful Vrindavan beloved in radiant crimson and saffron silks with golden floral tiara and luminous lotus eyes.", "devotional avatar grace radha vrindavan",
+      "f6d7c3 1e1b18 6b3e1f e11d48 f59e0b fbcfe8", "Graceful Vrindavan beloved in radiant crimson and saffron silks with golden floral tiara and luminous lotus eyes.", "devotional avatar grace radha vrindavan",
       energy=1.0, height=0.98, head=1.05, build=0.92, pattern="none"),
-    c("rama", "Rama", "Righteous Archer King", "humanoid", "human", "none", "none", "spiky", "sharp", "tunic", "crown cape gem",
-      "6ba3b8 111827 1e293b f97316 ffd700 15803d", "Dignified cloud-blue warrior prince of Ayodhya crowned in gold with saffron silks and steadfast archer focus.", "devotional avatar archer king rama",
+    c("rama", "Rama", "Righteous Archer King", "humanoid", "human", "none", "none", "spiky", "round", "tunic", "crown gem",
+      "d9a066 1e1b4b 1f2937 ffd700 15803d f97316", "Dignified warrior prince of Ayodhya in a golden temple crown, gold dhoti with green sash, and the Kodanda bow.", "devotional avatar archer king rama",
       energy=1.1, height=1.08, head=0.98, build=1.1, limbs=1.05, pattern="none"),
     c("sita", "Sita", "Mithila Princess of Grace", "humanoid", "human", "none", "none", "long", "round", "dress", "crown flower gem",
-      "f8dfd0 1c1917 292524 dc2626 ffd700 fef08a", "Serene princess of Mithila draped in auspicious vermilion and woven gold silk, crowned with lotus grace.", "devotional avatar princess sita grace",
+      "f8dfd0 1c1917 6b3e1f dc2626 ffd700 fef08a", "Serene princess of Mithila draped in auspicious vermilion and woven gold silk, crowned with lotus grace.", "devotional avatar princess sita grace",
       energy=0.9, height=0.97, head=1.05, build=0.92, pattern="none"),
-    c("hanuman", "Hanuman", "Mighty Loyal Hero", "humanoid", "cat", "cat", "none", "spiky", "sparkle", "armor", "crown headband gem",
-      "e0ac83 78350f 451a03 ea580c ffd700 b91c1c", "Golden-furred hero of boundless courage with curled tail, radiant mukut crown, and fiery saffron armor.", "devotional avatar hero hanuman courage",
-      energy=1.5, height=0.95, head=1.15, build=1.2, limbs=0.95, pattern="none", tip="ffd700"),
-    c("ganesha", "Ganesha", "Lord of Good Fortune", "beast", "floppy", "bunny", "none", "none", "sparkle", "robe", "crown gem bell",
-      "f6d7c3 78350f 312e81 f97316 ffd700 dc2626", "Beloved remover of obstacles with large friendly ears, jeweled golden crown, and warm sweet energy.", "devotional avatar ganesha wisdom fortune",
+    c("hanuman", "Hanuman", "Mighty Loyal Hero", "humanoid", "human", "cat", "none", "spiky", "round", "tunic", "crown gem",
+      "e8a84c c27a2c 6b3e1f b91c1c ea580c ffd700", "Golden-furred hero of boundless courage with curled tail, radiant temple crown, red and saffron dhoti, and golden gada.", "devotional avatar hero hanuman courage",
+      energy=1.5, height=0.95, head=1.18, build=1.2, limbs=0.95, pattern="none"),
+    c("ganesha", "Ganesha", "Lord of Good Fortune", "beast", "none", "none", "none", "none", "round", "robe", "crown gem",
+      "f0b860 c27a2c 5b3417 f5b301 c0392b ffd700", "Beloved remover of obstacles with golden skin, broad elephant ears, curled trunk, temple crown, and a bowl of sweet modaks.", "devotional avatar ganesha wisdom fortune",
       energy=1.2, height=0.88, head=1.28, build=1.28, limbs=0.88, pattern="none"),
-    c("shiva", "Shiva", "Serene Ascetic Lord", "humanoid", "human", "none", "none", "bun", "sleepy", "robe", "gem staff halo",
-      "8ba3be 0f172a 1e293b d97706 475569 38bdf8", "Ascetic blue lord of deep stillness with jatamukuta bun, crescent moon halo, and third-eye sapphire.", "devotional avatar shiva ascetic calm",
-      energy=0.7, height=1.05, head=0.98, build=1.05, limbs=1.05, pattern="none", tip="38bdf8"),
+    c("shiva", "Shiva", "Serene Ascetic Lord", "humanoid", "human", "none", "none", "long", "round", "robe", "crown gem",
+      "9db4cf 111827 6b3e1f e8a33d 1f2937 422006", "Ascetic blue lord of deep stillness with flowing jata, crescent moon, temple crown, coiled cobra, tiger-stripe dhoti, and trishula.", "devotional avatar shiva ascetic calm",
+      energy=0.7, height=1.05, head=1.04, build=1.05, limbs=1.05, pattern="stripes"),
     c("parvati", "Parvati", "Goddess of Devotion", "humanoid", "human", "none", "none", "long", "round", "dress", "crown flower gem",
-      "f8dfd0 18181b 3b0764 059669 ffd700 e11d48", "Loving mother of mountains draped in rich emerald silk and gold, crowned with floral blossoms.", "devotional avatar goddess parvati devotion",
+      "f8dfd0 18181b 6b3e1f 059669 ffd700 e11d48", "Loving mother of mountains draped in rich emerald silk and gold, crowned with floral blossoms.", "devotional avatar goddess parvati devotion",
       energy=1.0, height=0.98, head=1.05, build=0.92, pattern="none"),
     c("lakshmi", "Lakshmi", "Goddess of Prosperity", "humanoid", "human", "none", "none", "long", "sparkle", "dress", "crown flower gem",
-      "fbe3d4 1c1917 451a03 be123c ffd700 fda4af", "Radiant goddess of abundance surrounded by blooming pink lotuses, draped in magenta and shower of gold.", "devotional avatar goddess lakshmi prosperity",
+      "f2c38f 1c1917 6b3e1f be123c ffd700 fda4af", "Radiant goddess of abundance holding a pink lotus, draped in crimson silk with gold borders under a golden temple crown.", "devotional avatar goddess lakshmi prosperity",
       energy=1.1, height=0.98, head=1.04, build=0.92, pattern="none"),
-    c("saraswati", "Saraswati", "Goddess of Arts and Wisdom", "humanoid", "human", "none", "none", "long", "sleepy", "dress", "crown staff gem",
-      "fdf2f8 1e293b 0284c7 f8fafc ca8a04 67e8f9", "Serene embodiment of music and wisdom in pure white silks with carved veena staff and tranquil azure eyes.", "devotional avatar wisdom saraswati arts",
+    c("saraswati", "Saraswati", "Goddess of Arts and Wisdom", "humanoid", "human", "none", "none", "bun", "round", "dress", "flower gem",
+      "f6d2b8 1e293b 3f3f46 f8fafc ca8a04 fde68a", "Serene embodiment of music and wisdom in white and gold silks with a pearl tiara, white lotus blossoms, and a carved veena.", "devotional avatar wisdom saraswati arts",
       energy=0.8, height=0.98, head=1.02, build=0.90, limbs=1.02, pattern="none"),
     c("arjuna", "Arjuna", "Peerless Gandiva Archer", "humanoid", "human", "none", "none", "ponytail", "sharp", "armor", "crown cape gem",
       "f5d2b9 0a0a20 00f0ff 191c41 ff9933 ffd700", "Epic Pandava archer in midnight indigo armor with saffron cape, golden crest, and pinpoint cyan focus.", "warrior avatar archer arjuna epic",
@@ -563,6 +817,13 @@ CHARACTERS = [
     c("sun-wukong", "Sun Wukong", "Great Sage Equal to Heaven", "beast", "human", "cat", "none", "spiky", "sparkle", "armor", "headband staff cape",
       "fad7b9 d7965f ffb703 e63946 ffb703 232832", "The Monkey King crowned with the golden fillet, clad in crimson and gold armor, wielding the Ruyi Jingu Bang.", "mythology avatar wukong monkey sage",
       energy=1.6, height=0.98, head=1.14, build=1.1, limbs=1.02, pattern="none", tip="ffb703"),
+    # 6. Starlit Originals
+    c("yorune", "Yorune", "Astral Cartographer", "humanoid", "fox", "fox", "fairy", "hime", "sparkle", "coat",
+      "kitsune_mask staff halo gem cape",
+      "f3d2b3 2a1a3e f5c542 6d2447 16213e c084fc",
+      "A fox-eared astral cartographer who reads dying stars as living schemas. Her midnight coat maps constellations that redraw themselves whenever an agent learns something new.",
+      "astral kitsune oracle cartographer night mystic",
+      energy=1.2, height=1.06, head=1.08, build=0.94, limbs=1.08, pattern="stars", tip="e9d5ff"),
 ]
 
 
@@ -583,6 +844,9 @@ def build_catalog() -> dict:
         names.add(character["name"])
     if len(CHARACTERS) < 100:
         raise ValueError(f"catalog has only {len(CHARACTERS)} characters")
+    unknown = (LEGACY_FRANCHISE | DEITY_INSPIRED) - {character["id"].removeprefix("miyora.") for character in CHARACTERS}
+    if unknown:
+        raise ValueError(f"category sets name unknown slugs: {sorted(unknown)}")
     return {
         "schemaVersion": 1,
         "creator": "Miyora contributors",

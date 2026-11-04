@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.ravi",
+  "name": "Ravi",
+  "title": "Systems Architect",
+  "description": "Sketches clean boundaries before a single line is written.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "suit",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a86b4c",
+    "hair": "#0f172a",
+    "eyes": "#92400e",
+    "primary": "#1e3a8a",
+    "secondary": "#e2e8f0",
+    "accent": "#f59e0b"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "coder",
+    "office"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

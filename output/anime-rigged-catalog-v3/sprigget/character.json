@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sprigget",
+  "name": "Sprigget",
+  "title": "Leaf Sprite",
+  "description": "Photosynthesizes on sunny monitors and sprouts a bud when tests pass.",
+  "body": "beast",
+  "ears": "leaf",
+  "tail": "leaf",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "petals",
+  "palette": {
+    "skin": "#bbf7d0",
+    "hair": "#22c55e",
+    "eyes": "#14532d",
+    "primary": "#bbf7d0",
+    "secondary": "#16a34a",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 0.84,
+    "headScale": 1.3,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.1,
+  "tags": [
+    "pocket-monster",
+    "grass",
+    "cute"
+  ],
+  "personality": "photosynthetic",
+  "specialty": "Sprout Canopy Photosynthesis",
+  "catchphrase": "Absorbs sunlight to fuel rapid organic project growth!",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#84cc16",
+    "icon": "\ud83c\udf31",
+    "treatName": "NutrientDroplet",
+    "treatEmoji": "\ud83d\udca7",
+    "feedReaction": "Drop of pure organic plant nutrient! Leaf shoots up two inches! \ud83d\udca7\ud83c\udf31",
+    "wakeReaction": "Twirling little leaf helicopter on head, greeting the morning! \ud83c\udf31",
+    "petReaction": "Tickles your palm with a delicate, cheerful green vine shoot! \ud83c\udf31\ud83d\udc96",
+    "dialogue": {
+      "idle": "Rooted in a tiny moss cup on the desk, drinking sunlight. \ud83c\udf31",
+      "working": "Converting solar developer energy into rapid project growth! \ud83c\udf31\u26a1",
+      "thinking": "Turning leaves toward the brightest ideas on the screen... \ud83e\udd14",
+      "success": "SPROUTED! A flourishing canopy of new features deployed! \ud83c\udf31\ud83c\udf89",
+      "error": "Need more water! Drooping until you pour a fresh drop! \ud83d\udca7",
+      "sleeping": "Zzz... curling up inside a rolled green leaf for the night... \ud83c\udf19"
+    }
+  }
+}

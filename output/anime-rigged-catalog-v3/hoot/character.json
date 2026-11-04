@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hoot",
+  "name": "Hoot",
+  "title": "Night Owl Reviewer",
+  "description": "Reviews pull requests long after midnight.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#92400e",
+    "hair": "#fef3c7",
+    "eyes": "#f59e0b",
+    "primary": "#78350f",
+    "secondary": "#fef3c7",
+    "accent": "#f59e0b"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "owl",
+    "night"
+  ],
+  "personality": "nocturnal",
+  "specialty": "Midnight Wisdom Surveillance",
+  "catchphrase": "Rotates owl eyes with solemn wisdom over late-night architecture reviews.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#92400e",
+    "icon": "\ud83e\udd89",
+    "treatName": "FieldBerries",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Midnight mountain berries! Large golden owl eyes blink slow! \ud83e\uded0\ud83e\udd89",
+    "wakeReaction": "Head rotates 270 degrees in majestic, silent greeting. Whoo. \ud83e\udd89",
+    "petReaction": "Extends a soft feathered wing over your shoulders with quiet wisdom! \ud83e\udd89\ud83d\udc96",
+    "dialogue": {
+      "idle": "Perched on high bookshelf, observing the room with solemn eyes. \ud83e\udd89",
+      "working": "Overseeing complex architectural refactors with ancient wisdom! \ud83e\udd89\u26a1",
+      "thinking": "Gazing unblinkingly through superficial syntax into the core... \ud83e\udd14",
+      "success": "HOOT OF APPROVAL! Architecture verified sound for centuries! \ud83e\udd89\ud83c\udf89",
+      "error": "A foolish design pattern! Low clicking of beak in reprimand! \ud83e\udd89",
+      "sleeping": "Zzz... perched upright in tree hollow, eyes half-lidded in sun... \ud83c\udf19"
+    }
+  }
+}

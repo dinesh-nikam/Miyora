@@ -233,5 +233,22 @@
     "companion",
     "devotional",
     "krishna"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#38bdf8",
+    "icon": "🪈",
+    "treatName": "Makhan",
+    "treatEmoji": "🍯",
+    "feedReaction": "Sacred makhan! Divine harmony flows through your code. 🍯🪈",
+    "wakeReaction": "The dawn flute awakens wisdom. Let clarity guide our work today. 🪈",
+    "petReaction": "Divine grace upon your endeavors, Chief. Work in peace. 🪈💖",
+    "dialogue": {
+      "idle": "Act with steadfast purpose, Chief. The code will flourish. 🪈✨",
+      "working": "Performing code karma with focus and devotion. 🪈⚡",
+      "thinking": "The cosmic flute guides the flow of every abstraction... 🤔",
+      "success": "Victory without attachment! The architecture sings in harmony! 🪈🎉",
+      "error": "Every obstacle is an invitation to deeper understanding, Chief. 🧘",
+      "sleeping": "Resting in cosmic stillness beneath the kadamba tree... 🌙"
+    }
+  }
 }

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.cindersnout",
+  "name": "Cindersnout",
+  "title": "Ember Piglet",
+  "description": "Snorts tiny embers and roasts marshmallows for the team.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "flame",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fca5a5",
+    "hair": "#fee2e2",
+    "eyes": "#450a0a",
+    "primary": "#fca5a5",
+    "secondary": "#1c1917",
+    "accent": "#fb923c"
+  },
+  "proportions": {
+    "height": 0.84,
+    "headScale": 1.26,
+    "build": 1.15,
+    "limbLength": 1.0
+  },
+  "energy": 1.2,
+  "tags": [
+    "pocket-monster",
+    "fire"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

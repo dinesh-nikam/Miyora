@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "engine": "Chrome WebGL + three-vrm",
+  "vrm": true,
+  "triangles": 34380,
+  "bones": 51,
+  "skinned": 27,
+  "clips": [
+    "achievement",
+    "attention_required",
+    "celebrating",
+    "eating",
+    "error",
+    "hungry",
+    "idle",
+    "level_up",
+    "offline",
+    "paused",
+    "sleeping",
+    "success",
+    "thinking",
+    "waiting",
+    "working"
+  ],
+  "errors": [],
+  "captures": [
+    "runtime-idle.png",
+    "runtime-working.png",
+    "runtime-success.png",
+    "runtime-sleeping.png"
+  ]
+}

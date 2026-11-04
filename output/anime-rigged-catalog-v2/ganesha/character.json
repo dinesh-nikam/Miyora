@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.ganesha",
+  "name": "Ganesha",
+  "title": "Lord of Good Fortune",
+  "description": "Beloved remover of obstacles with large friendly ears, jeweled golden crown, and warm sweet energy.",
+  "body": "beast",
+  "ears": "floppy",
+  "tail": "bunny",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "robe",
+  "accessories": [
+    "crown",
+    "gem",
+    "bell"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#78350f",
+    "eyes": "#312e81",
+    "primary": "#f97316",
+    "secondary": "#ffd700",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 0.88,
+    "headScale": 1.28,
+    "build": 1.28,
+    "limbLength": 0.88
+  },
+  "energy": 1.2,
+  "tags": [
+    "devotional",
+    "avatar",
+    "ganesha",
+    "wisdom",
+    "fortune"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

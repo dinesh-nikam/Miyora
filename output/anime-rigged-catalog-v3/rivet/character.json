@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.rivet",
+  "name": "Rivet",
+  "title": "Welder Mech",
+  "description": "Welds broken pipelines back together.",
+  "body": "robot",
+  "ears": "none",
+  "tail": "cable",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "mono",
+  "outfit": "plating",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#78716c",
+    "hair": "#44403c",
+    "eyes": "#f97316",
+    "primary": "#57534e",
+    "secondary": "#292524",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "robot",
+    "maker"
+  ],
+  "personality": "indestructible",
+  "specialty": "Structural Steel Frameworks",
+  "catchphrase": "Fastening steel rivets into immutable architectural foundations.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#64748b",
+    "icon": "\ud83c\udfd7\ufe0f",
+    "treatName": "SteelRivet",
+    "treatEmoji": "\ud83d\udd29",
+    "feedReaction": "Tempered steel rivet box! Heavy hydraulic rivet gun primed! \ud83d\udd29\ud83c\udfd7\ufe0f",
+    "wakeReaction": "Pneumatic pressure nominal! Ready to anchor new modules! \ud83c\udfd7\ufe0f",
+    "petReaction": "Firm metallic fist bump! Together our structure will never buckle! \ud83c\udfd7\ufe0f\ud83d\udcaa",
+    "dialogue": {
+      "idle": "Surveying framework beams with laser level. Zero deflection. \ud83c\udfd7\ufe0f",
+      "working": "Pounding heavy steel fasteners into core scaffolding! \ud83c\udfd7\ufe0f\u26a1",
+      "thinking": "Stress-testing shear strength of critical junctions... \ud83e\udd14",
+      "success": "Rock solid! The architecture stands immovable for decades! \ud83c\udfd7\ufe0f\ud83c\udf89",
+      "error": "Shear stress detected on beam! Doubling reinforcement plates! \ud83c\udfd7\ufe0f\u26a0\ufe0f",
+      "sleeping": "Zzz... anchored firmly to the bedrock of the datacenter... \ud83c\udf19"
+    }
+  }
+}

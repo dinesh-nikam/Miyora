@@ -1,0 +1,52 @@
+{
+  "triangleCount": 14420,
+  "vertexCount": 8029,
+  "skeletonJointCount": 51,
+  "influencedBoneNames": [
+    "chest",
+    "head",
+    "hips",
+    "leftFoot",
+    "leftLowerArm",
+    "leftLowerLeg",
+    "leftUpperArm",
+    "rightFoot",
+    "rightLowerArm",
+    "rightLowerLeg",
+    "rightUpperArm",
+    "spine"
+  ],
+  "animationNames": [
+    "achievement",
+    "attention_required",
+    "celebrating",
+    "eating",
+    "error",
+    "hungry",
+    "idle",
+    "level_up",
+    "offline",
+    "paused",
+    "sleeping",
+    "success",
+    "thinking",
+    "waiting",
+    "working"
+  ],
+  "embeddedTextureCount": 0,
+  "schemaVersion": 1,
+  "structuralValidation": "passed",
+  "runtimeValidation": "pending",
+  "visualReview": "pending",
+  "byteLength": 1369152,
+  "sha256": "49b46653de2109859cd723ede6c814820c33afc2aff47418816e482ec944962e",
+  "expressionNames": [
+    "blink",
+    "happy",
+    "sad",
+    "aa",
+    "surprised"
+  ],
+  "springChainCount": 0,
+  "toonMaterialCount": 11
+}

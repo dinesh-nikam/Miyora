@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.lotl",
+  "name": "Lotl",
+  "title": "Axolotl Healer",
+  "description": "Regenerates broken modules overnight.",
+  "body": "beast",
+  "ears": "fin",
+  "tail": "dragon",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f9a8d4",
+    "hair": "#f472b6",
+    "eyes": "#1c1917",
+    "primary": "#f9a8d4",
+    "secondary": "#fbcfe8",
+    "accent": "#ec4899"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "axolotl",
+    "cute"
+  ],
+  "personality": "regenerative",
+  "specialty": "Axolotl Code Regeneration",
+  "catchphrase": "Regenerates broken modules overnight.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f9a8d4",
+    "icon": "\ud83e\udd8e",
+    "treatName": "WaterFlea",
+    "treatEmoji": "\ud83e\udd90",
+    "feedReaction": "Crispy sweet river water shrimp! Feathery pink gills flutter! \ud83e\udd90\ud83e\udd8e",
+    "wakeReaction": "Permanent derpy sweet smile, waving little webbed hands in water! \ud83e\udd8e",
+    "petReaction": "Gentle aquatic bubble kiss against your screen: You're doing great! \ud83e\udd8e\ud83d\udc96",
+    "dialogue": {
+      "idle": "Floating weightless in crystal tank, smiling sweetly at you. \ud83e\udd8e",
+      "working": "Regenerating broken module limbs overnight with happy cells! \ud83e\udd8e\u26a1",
+      "thinking": "Gills floating gently... smiling peacefully at the error... \ud83e\udd14",
+      "success": "REGENERATED! Module grew back completely fresh and bug-free! \ud83e\udd8e\ud83c\udf89",
+      "error": "Lost a pink gill filament! Growing it right back in an hour! \ud83c\udf38",
+      "sleeping": "Zzz... resting on a soft river pebble with peaceful smile... \ud83c\udf19"
+    }
+  }
+}

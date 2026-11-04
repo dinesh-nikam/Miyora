@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tuko",
+  "name": "Tuko",
+  "title": "Toucan Navigator",
+  "description": "Navigates jungles of nested callbacks.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#1c1917",
+    "hair": "#fef3c7",
+    "eyes": "#0ea5e9",
+    "primary": "#1c1917",
+    "secondary": "#fef3c7",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "toucan",
+    "explorer"
+  ],
+  "personality": "vibrant",
+  "specialty": "Vibrant Jungle Route Tracing",
+  "catchphrase": "Navigates jungles of nested callbacks.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1c1917",
+    "icon": "\ud83e\udeb6",
+    "treatName": "PapayaBite",
+    "treatEmoji": "\ud83e\udd6d",
+    "feedReaction": "Ripe sweet golden papaya slice! Massive colorful beak clacks in joy! \ud83e\udd6d\ud83e\udeb6",
+    "wakeReaction": "Flapping through tropical canopy, bright rainbow beak gleaming! \ud83e\udeb6",
+    "petReaction": "Playfully taps your keyboard keys with giant colorful bill! \ud83e\udeb6\ud83d\udc96",
+    "dialogue": {
+      "idle": "Perched on a high rainforest liana vine, surveying the canopy. \ud83e\udeb6",
+      "working": "Guiding teams through thick, tangled jungles of nested callbacks! \ud83e\udeb6\u26a1",
+      "thinking": "Peering through dense foliage of async promises to find the light... \ud83e\udd14",
+      "success": "CANOPY CLEARED! Flying into bright open sunlight above the jungle! \ud83e\udeb6\ud83c\udf89",
+      "error": "Tangled in a sticky vine! Snipping it clean with strong bill! \ud83c\udf3f",
+      "sleeping": "Zzz... bill tucked backward against feathers on high tree perch... \ud83c\udf19"
+    }
+  }
+}

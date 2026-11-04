@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hanae",
+  "name": "Hanae",
+  "title": "Lantern Ghost Girl",
+  "description": "Drifts through old logs carrying a paper lantern.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "hime",
+  "eyes": "sleepy",
+  "outfit": "kimono",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "waves",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#0c0a09",
+    "eyes": "#60a5fa",
+    "primary": "#e0f2fe",
+    "secondary": "#93c5fd",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.6,
+  "tags": [
+    "anime",
+    "ghost"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#93c5fd"
+}

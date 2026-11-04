@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.pebbluff",
+  "name": "Pebbluff",
+  "title": "Pebble Pup",
+  "description": "Sturdy as bedrock; fetches stones and stack traces.",
+  "body": "beast",
+  "ears": "floppy",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a8a29e",
+    "hair": "#e7e5e4",
+    "eyes": "#292524",
+    "primary": "#a8a29e",
+    "secondary": "#78716c",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 0.86,
+    "headScale": 1.25,
+    "build": 1.15,
+    "limbLength": 1
+  },
+  "energy": 1.1,
+  "tags": [
+    "pocket-monster",
+    "rock"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

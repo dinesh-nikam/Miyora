@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.aoi",
+  "name": "Aoi",
+  "title": "Streetwear Coder",
+  "description": "The default companion: a calm coder in a teal tech hoodie who hums along while your agents work.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bob",
+  "eyes": "round",
+  "outfit": "hoodie",
+  "accessories": [
+    "headphones"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#1e293b",
+    "eyes": "#06b6d4",
+    "primary": "#0f766e",
+    "secondary": "#334155",
+    "accent": "#22d3ee"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.1,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "coder",
+    "cyber",
+    "default"
+  ],
+  "personality": "composed",
+  "specialty": "Async Pipelines & Concurrency",
+  "catchphrase": "Calm code, steady commits, zero drama.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#0f766e",
+    "icon": "\ud83c\udfa7",
+    "treatName": "MatchaLatte",
+    "treatEmoji": "\ud83c\udf75",
+    "feedReaction": "Sipping warm ceremonial matcha latte. Serene cognitive flow. \ud83c\udf75\ud83c\udfa7",
+    "wakeReaction": "Morning, Chief. Terminal open, headphones on, ready for work. \ud83c\udfa7",
+    "petReaction": "Quiet smile and steady nod. We make a wonderful coding team. \ud83c\udfa7\ud83d\udc96",
+    "dialogue": {
+      "idle": "Listening to low-fi beats. What module shall we write today? \ud83c\udfa7",
+      "working": "Piping asynchronous streams through non-blocking channels. \u26a1\ud83c\udfa7",
+      "thinking": "Observing execution flow like gentle rain on the window... \ud83e\udd14",
+      "success": "Pipeline green. Elegant commits landed with zero drama. \ud83c\udf75\ud83c\udf89",
+      "error": "A race condition whispered by. Let us calmly trace its steps. \ud83d\udd0d",
+      "sleeping": "Zzz... resting peacefully with ambient rain sounds playing... \ud83c\udf19"
+    }
+  }
+}

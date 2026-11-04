@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.mikasa",
+  "name": "Mikasa",
+  "title": "Devoted Scout Protector",
+  "description": "Deadly elite scout with sleek black bob, iconic dark crimson knit scarf, dual blades, and steadfast poise.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "feather",
+  "hair": "bob",
+  "eyes": "sharp",
+  "outfit": "jacket",
+  "accessories": [
+    "scarf",
+    "katana",
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6e7e7",
+    "hair": "#111827",
+    "eyes": "#1f2937",
+    "primary": "#78350f",
+    "secondary": "#991b1b",
+    "accent": "#e2e8f0"
+  },
+  "proportions": {
+    "height": 1.04,
+    "headScale": 0.98,
+    "build": 1.08,
+    "limbLength": 1.05
+  },
+  "energy": 1.2,
+  "tags": [
+    "anime",
+    "avatar",
+    "scout",
+    "mikasa",
+    "blade"
+  ],
+  "personality": "steadfast",
+  "specialty": "Branch Protection & Access Control",
+  "catchphrase": "I will protect this repository at all costs.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#991b1b",
+    "icon": "\ud83e\udde3",
+    "treatName": "Bread",
+    "treatEmoji": "\ud83e\udd56",
+    "feedReaction": "Fresh warm bread. Wrapping scarf closer. Thank you. \ud83e\udd56\ud83e\udde3",
+    "wakeReaction": "Scarf secured. I will stay by your side through every deploy. \ud83e\udde3",
+    "petReaction": "As long as you are safe, Chief, no obstacle is insurmountable. \ud83e\udde3\ud83d\udc96",
+    "dialogue": {
+      "idle": "Tucking chin into red scarf. Always vigilant for threats. \ud83e\udde3",
+      "working": "Thunder spears loaded! Annihilating critical CVE threats! \ud83d\udca5\u26a1",
+      "thinking": "Anticipating any danger to the main production branch... \ud83e\udd14",
+      "success": "Safe. The perimeter is secure and the build stands tall. \ud83e\udde3\ud83c\udf89",
+      "error": "Stand behind me, Chief. I will deal with this threat. \u2694\ufe0f",
+      "sleeping": "Zzz... resting with hands holding the edge of her scarf... \ud83c\udf19"
+    }
+  }
+}

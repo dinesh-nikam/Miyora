@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.amara",
+  "name": "Amara",
+  "title": "Sunstone Healer",
+  "description": "Mends broken builds with a warm glow.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "round",
+  "outfit": "robe",
+  "accessories": [
+    "halo"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#6b4430",
+    "hair": "#1c1917",
+    "eyes": "#f59e0b",
+    "primary": "#fef3c7",
+    "secondary": "#f59e0b",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 0.9,
+  "tags": [
+    "healer"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

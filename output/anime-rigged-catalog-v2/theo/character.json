@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.theo",
+  "name": "Theo",
+  "title": "Pixel Painter",
+  "description": "Pushes pixels until the interface sings.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "round",
+  "outfit": "overalls",
+  "accessories": [
+    "beanie"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#92400e",
+    "eyes": "#16a34a",
+    "primary": "#2563eb",
+    "secondary": "#fef3c7",
+    "accent": "#ef4444"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "artist"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

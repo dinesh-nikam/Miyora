@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.ignis",
+  "name": "Ignis",
+  "title": "Dragonkin Smith",
+  "description": "Forges sturdy binaries in dragonfire.",
+  "body": "humanoid",
+  "ears": "horns",
+  "tail": "dragon",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#7f1d1d",
+    "eyes": "#f97316",
+    "primary": "#431407",
+    "secondary": "#7c2d12",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.2,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "dragon",
+    "maker"
+  ],
+  "personality": "volcanic",
+  "specialty": "Dragonfire Binary Compaction",
+  "catchphrase": "Forges sturdy binaries in dragonfire.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#431407",
+    "icon": "\ud83d\udd25",
+    "treatName": "SpicyBuns",
+    "treatEmoji": "\ud83e\udd5f",
+    "feedReaction": "Fire-pepper steamed meat buns! Dragon horns warm with red glow! \ud83e\udd5f\ud83d\udd25",
+    "wakeReaction": "Blowing white-hot breath onto the forge anvil. Steel is ready! \ud83d\udd25",
+    "petReaction": "Warm dragon-scale handshake that warms your heart and hands! \ud83d\udd25\ud83d\udcaa",
+    "dialogue": {
+      "idle": "Inspecting newly forged titanium ingots by the forge bed. \ud83d\udd25",
+      "working": "Tempering binary executables in dragonfire until unbreakable! \ud83d\udd25\u26a1",
+      "thinking": "Evaluating carbon content and grain structure of the build... \ud83e\udd14",
+      "success": "Forged! Unbreakable binary that will never bend or crack! \ud83d\udd25\ud83c\udf89",
+      "error": "Slag inclusion in the blade! Hammering it out on the anvil! \ud83d\udd28",
+      "sleeping": "Zzz... curled around the warm coals of the smithy forge... \ud83c\udf19"
+    }
+  }
+}

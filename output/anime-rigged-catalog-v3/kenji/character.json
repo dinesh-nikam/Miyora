@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.kenji",
+  "name": "Kenji",
+  "title": "Night-Shift Debugger",
+  "description": "Lives for stack traces at 3 a.m. and never loses a breakpoint.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "jacket",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#111827",
+    "eyes": "#6366f1",
+    "primary": "#1f2937",
+    "secondary": "#4b5563",
+    "accent": "#818cf8"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "coder",
+    "night"
+  ],
+  "personality": "relentless",
+  "specialty": "Root Cause Debugging & Forensics",
+  "catchphrase": "Stack traces at 3 a.m. are the truest truth.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#818cf8",
+    "icon": "\ud83d\udc53",
+    "treatName": "Espresso",
+    "treatEmoji": "\u2615",
+    "feedReaction": "Double espresso. Cognitive throughput restored to peak. \u2615\ud83d\udc53",
+    "wakeReaction": "Adjusting spectacles. Commencing static analysis session. \ud83d\udc53",
+    "petReaction": "Appreciated. Professional synergy increased by 15%. \ud83d\udc53\u2728",
+    "dialogue": {
+      "idle": "Analysis ready. What is our target module today? \ud83d\udc53",
+      "working": "Applying formal verification across all edge cases. \ud83d\udc53\u26a1",
+      "thinking": "Evaluating algorithmic complexity and memory layouts... \ud83e\udd14",
+      "success": "Type soundness verified. Zero unsafe operations detected. \ud83d\udc53\ud83c\udf89",
+      "error": "Syntax anomaly isolated. Refactoring for invariants. \ud83d\udd0d",
+      "sleeping": "Zzz... running background GC cycles... \ud83c\udf19"
+    }
+  }
+}

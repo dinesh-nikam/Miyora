@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sumire",
+  "name": "Sumire",
+  "title": "Ink Brush Calligrapher",
+  "description": "Writes commit messages in perfect brushstrokes.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bun",
+  "eyes": "sleepy",
+  "outfit": "kimono",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "petals",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#3f3f46",
+    "eyes": "#6d28d9",
+    "primary": "#6d28d9",
+    "secondary": "#f5f3ff",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.7,
+  "tags": [
+    "anime",
+    "artist"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.elara",
+  "name": "Elara",
+  "title": "Elven Archivist",
+  "description": "Keeps a thousand years of commit history in perfect order.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#fde68a",
+    "eyes": "#059669",
+    "primary": "#065f46",
+    "secondary": "#d9f99d",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "fantasy",
+    "scholar"
+  ],
+  "personality": "archival",
+  "specialty": "Millennium Git Versioning",
+  "catchphrase": "Curating a thousand years of commit history in immaculate order.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#065f46",
+    "icon": "\ud83c\udf3f",
+    "treatName": "ElvenBread",
+    "treatEmoji": "\ud83c\udf5e",
+    "feedReaction": "Leaf-wrapped sweet lembas bread! A single bite sustains all day! \ud83c\udf5e\ud83c\udf3f",
+    "wakeReaction": "Brushing long silver locks. A new century of versioning dawns. \ud83c\udf3f",
+    "petReaction": "Graceful elven bow of deep respect for your craftsmanship! \ud83c\udf3f\u2728",
+    "dialogue": {
+      "idle": "Flipping through silver-bound tree of historical commits. \ud83c\udf3f",
+      "working": "Rebasing centuries of version lineage without a hitch! \ud83c\udf3f\u26a1",
+      "thinking": "Remembering the architecture paradigms of ancient eras... \ud83e\udd14",
+      "success": "Timeless harmony! Commit genealogy preserved for eternity! \ud83c\udf3f\ud83c\udf89",
+      "error": "History branch detached! Re-threading the lineage tapestry! \ud83c\udf3f",
+      "sleeping": "Zzz... sleeping under the canopy of ancient silver trees... \ud83c\udf19"
+    }
+  }
+}

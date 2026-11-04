@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.denji",
+  "name": "Denji",
+  "title": "Chainsaw Devil Fiend",
+  "description": "Wild-eyed devil hunter with scruffy blond hair, rumpled white shirt, black tie, and chest pull cord.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "suit",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fcd5be",
+    "hair": "#f59e0b",
+    "eyes": "#b45309",
+    "primary": "#f8fafc",
+    "secondary": "#111827",
+    "accent": "#111827"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.04,
+    "build": 1.05,
+    "limbLength": 1.02
+  },
+  "energy": 1.6,
+  "tags": [
+    "anime",
+    "avatar",
+    "devil",
+    "denji",
+    "chainsaw"
+  ],
+  "personality": "chaotic",
+  "specialty": "Brute-Force Patching & Recovery",
+  "catchphrase": "Vroom vroom! If this runs, I get toast with three kinds of jam!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#f59e0b",
+    "icon": "\ud83e\ude9a",
+    "treatName": "ToastJam",
+    "treatEmoji": "\ud83c\udf5e",
+    "feedReaction": "TOAST WITH THREE JAMS! Best day of my life!! \ud83c\udf5e\ud83e\ude9a",
+    "wakeReaction": "Pulling chest cord! VROOOOOM! Time to rip stuff up! \ud83e\ude9a",
+    "petReaction": "Hehe! Treat me nice and I'll chop down whatever you want, Chief! \ud83e\ude9a\ud83d\udc96",
+    "dialogue": {
+      "idle": "Staring blankly, dreaming of headpats and tasty snacks. \ud83e\ude9a",
+      "working": "VROOOOM!! Revving chainsaws straight through merge conflicts! \ud83e\ude9a\u26a1",
+      "thinking": "Uhhh... thinking makes my head hurt. Let's just slice it! \ud83e\udd14",
+      "success": "HELL YEAH! Chopped it all up! Where's my reward?! \ud83e\ude9a\ud83c\udf89",
+      "error": "OW! That stung! Pull my cord again, let's go another round! \ud83d\udd25",
+      "sleeping": "Zzz... hugging Pochita plush tightly in his sleep... \ud83c\udf19"
+    }
+  }
+}

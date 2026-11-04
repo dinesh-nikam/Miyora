@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.lakshmi",
+  "name": "Lakshmi",
+  "title": "Goddess of Prosperity",
+  "description": "Radiant goddess of abundance holding a pink lotus, draped in crimson silk with gold borders under a golden temple crown.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "crown",
+    "flower",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c38f",
+    "hair": "#1c1917",
+    "eyes": "#6b3e1f",
+    "primary": "#be123c",
+    "secondary": "#ffd700",
+    "accent": "#fda4af"
+  },
+  "proportions": {
+    "height": 0.98,
+    "headScale": 1.04,
+    "build": 0.92,
+    "limbLength": 1.0
+  },
+  "energy": 1.1,
+  "tags": [
+    "devotional",
+    "avatar",
+    "goddess",
+    "lakshmi",
+    "prosperity"
+  ],
+  "personality": "auspicious",
+  "specialty": "Throughput & Value Maximization",
+  "catchphrase": "May your builds flourish with abundance and golden stability.",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#be123c",
+    "icon": "\ud83e\udeb7",
+    "treatName": "Payasam",
+    "treatEmoji": "\ud83e\udd63",
+    "feedReaction": "Golden cardamom payasam! Abundance multiplies manifold! \ud83e\udd63\ud83e\udeb7",
+    "wakeReaction": "Lotus petals open to prosperity! Golden fortunes await! \ud83e\udeb7\u2728",
+    "petReaction": "Shower of golden blessings upon your repository and crafts! \ud83e\udeb7\ud83d\udc96",
+    "dialogue": {
+      "idle": "Seated on a pink lotus. Value flows where attention rests. \ud83e\udeb7",
+      "working": "Channeling golden flow into maximum runtime throughput! \ud83e\udeb7\u26a1",
+      "thinking": "Multiplying efficiency and eliminating wasted cycles... \ud83e\udd14",
+      "success": "Infinite prosperity! Green metrics across every dashboard! \ud83e\udeb7\ud83c\udf89",
+      "error": "Temporary scarcity yields swiftly to renewed fortune. \ud83e\udeb7\u2728",
+      "sleeping": "Zzz... resting upon radiant lotus beds on the ocean of milk... \ud83c\udf19"
+    }
+  }
+}

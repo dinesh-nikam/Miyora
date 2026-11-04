@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.anya",
+  "name": "Anya",
+  "title": "Telepathic Star Student",
+  "description": "Smug telepathic darling with pink bob, black horn clips, gold-trimmed Eden uniform, and peanut craving.",
+  "body": "humanoid",
+  "ears": "horns",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bob",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fce7f3",
+    "hair": "#f472b6",
+    "eyes": "#16a34a",
+    "primary": "#0f172a",
+    "secondary": "#ca8a04",
+    "accent": "#ca8a04"
+  },
+  "proportions": {
+    "height": 0.82,
+    "headScale": 1.32,
+    "build": 0.88,
+    "limbLength": 0.86
+  },
+  "energy": 1.4,
+  "tags": [
+    "anime",
+    "avatar",
+    "telepath",
+    "anya",
+    "cute"
+  ],
+  "personality": "cheerful",
+  "specialty": "Telepathic Pre-Emptive Linting",
+  "catchphrase": "Waku waku! Anya read the compiler's mind! It wants peanuts!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#f472b6",
+    "icon": "\ud83e\udd5c",
+    "treatName": "Peanuts",
+    "treatEmoji": "\ud83e\udd5c",
+    "feedReaction": "PEANUTS! Anya loves peanuts so so much! Waku waku! \ud83e\udd5c\u2728",
+    "wakeReaction": "Gooooood morning! Anya is ready for top secret spy mission! \ud83e\udd5c",
+    "petReaction": "Heh! (Smug Anya face) Anya is a world-class spy genius! \ud83e\udd5c\ud83d\udc96",
+    "dialogue": {
+      "idle": "Practicing top secret spy poses with Chimera doll. Heh. \ud83e\udd5c",
+      "working": "Waku waku! Typing fast so Papa and Mama are proud! \u26a1\ud83e\udd5c",
+      "thinking": "*reading minds* ...Ooh! The compiler has a secret clue! \ud83d\udd0d",
+      "success": "STELLA STAR EARNED! Anya saved world peace with zero errors! \u2b50\ud83c\udf89",
+      "error": "Anya shocked face!! ( \uff9f\u0434\uff9f) Papa, the code is plotting world war! \u26a0\ufe0f",
+      "sleeping": "Zzz... murmuring 'Bond... soft doggy...' in sweet sleep... \ud83c\udf19"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.seed",
+  "name": "Seed",
+  "title": "Pocket Hamster",
+  "description": "Stores snacks and snippets in equal measure.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "overalls",
+  "accessories": [
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fdba74",
+    "hair": "#fff7ed",
+    "eyes": "#1c1917",
+    "primary": "#22c55e",
+    "secondary": "#14532d",
+    "accent": "#f43f5e"
+  },
+  "proportions": {
+    "height": 0.85,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.4,
+  "tags": [
+    "hamster",
+    "cute"
+  ],
+  "personality": "compact",
+  "specialty": "Cheek-Pouch Snippet Storing",
+  "catchphrase": "Stores snacks and snippets in equal measure.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#22c55e",
+    "icon": "\ud83d\udc39",
+    "treatName": "SunflowerSeeds",
+    "treatEmoji": "\ud83c\udf3b",
+    "feedReaction": "Giant pile of striped sunflower seeds! Stuffing both cheeks round! \ud83c\udf3b\ud83d\udc39",
+    "wakeReaction": "Scampering across keyboard on tiny pink paws with happy squeaks! \ud83d\udc39",
+    "petReaction": "Pops a handy little code snippet out of cheek pouch for you! \ud83d\udc39\ud83d\udc96",
+    "dialogue": {
+      "idle": "Running on little exercise wheel at 300 revolutions per minute. \ud83d\udc39",
+      "working": "Stuffing cheek pouches with handy algorithms and seeds! \ud83d\udc39\u26a1",
+      "thinking": "Paws washing face furiously while pondering syntax... \ud83e\udd14",
+      "success": "CHEEKS FULL! Snippet retrieved and task solved in seconds! \ud83d\udc39\ud83c\udf89",
+      "error": "Cheek too full! Spilling two seeds, scooping them back up! \ud83c\udf3b",
+      "sleeping": "Zzz... buried cozy deep beneath warm wood shavings... \ud83c\udf19"
+    }
+  }
+}

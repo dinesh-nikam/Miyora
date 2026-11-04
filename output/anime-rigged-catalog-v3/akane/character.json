@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.akane",
+  "name": "Akane",
+  "title": "Crimson Blade Hunter",
+  "description": "Hunts down regressions after dark with a single clean cut.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "ponytail",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "katana",
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#2b1d1d",
+    "eyes": "#dc2626",
+    "primary": "#f8fafc",
+    "secondary": "#1f2937",
+    "accent": "#b91c1c"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "anime",
+    "swordswoman"
+  ],
+  "personality": "fierce",
+  "specialty": "Single-Cut Regression Hunting",
+  "catchphrase": "Hunts down regressions after dark with a single clean cut.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#b91c1c",
+    "icon": "\ud83d\udde1\ufe0f",
+    "treatName": "RiceCracker",
+    "treatEmoji": "\ud83c\udf58",
+    "feedReaction": "Fiery red pepper rice cracker! Katana blade gleams in moonlight! \ud83c\udf58\ud83d\udde1\ufe0f",
+    "wakeReaction": "Binding scarlet hair into ponytail. The hunting grounds are open. \ud83d\udde1\ufe0f",
+    "petReaction": "Points sheath forward in warrior respect: We strike as one! \ud83d\udde1\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Testing edge sharpness on a falling scarlet autumn leaf. \ud83d\udde1\ufe0f",
+      "working": "Hunting elusive regressions in the dark with one clean cut! \ud83d\udde1\ufe0f\u26a1",
+      "thinking": "Detecting the faint footstep of a masked regression... \ud83e\udd14",
+      "success": "Iaijutsu strike! Regression cleaved cleanly before staging! \ud83d\udde1\ufe0f\ud83c\udf89",
+      "error": "Glancing parry! Re-sheathing and adopting low water stance! \ud83d\udde1\ufe0f",
+      "sleeping": "Zzz... resting with back against cedar trunk, hand on hilt... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#b91c1c"
+}

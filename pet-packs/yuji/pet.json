@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "yuji"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#ef4444",
+    "icon": "👊",
+    "treatName": "Ramen",
+    "treatEmoji": "🍜",
+    "feedReaction": "Extra pork ramen! Calories loaded, ready to fight! 🍜🔥",
+    "wakeReaction": "OSU! Let's get moving, Chief! What are we taking down? 👊",
+    "petReaction": "Hehe! Thanks, Chief! We're gonna save everyone today! 👊💖",
+    "dialogue": {
+      "idle": "Bouncing on his toes, warming up knuckles. Ready, Chief! 👊",
+      "working": "Divergent Fist on every broken module! Double impact! 💥⚡",
+      "thinking": "Scratching his head... let's find where this bug is hiding. 🤔",
+      "success": "Black Flash! Target smashed cleanly in one impact! ⚡🎉",
+      "error": "Ugh, a tough one! But I never stay down on the mat! 🔥",
+      "sleeping": "Zzz... snoring loudly with hands behind his head... 🌙"
+    }
+  }
 }

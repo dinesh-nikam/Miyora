@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "l-lawliet"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#64748b",
+    "icon": "🔍",
+    "treatName": "Shortcake",
+    "treatEmoji": "🍰",
+    "feedReaction": "Strawberry shortcake with extra sugar cubes. Brainpower maximized. 🍰🔍",
+    "wakeReaction": "Blinking slowly. Crouching on the office chair. Where is the trace? 🔍",
+    "petReaction": "If you pat my head, my deductive reasoning increases by 8.2%. 🍰✨",
+    "dialogue": {
+      "idle": "Holding a teacup by the rim. Pondering the telemetry data. 🔍",
+      "working": "Connecting anomalous stack traces into an ironclad indictment. 🔍⚡",
+      "thinking": "Chewing thumb thoughtfully... the suspect module is lying. 🤔",
+      "success": "Case solved. Bug perpetrator exposed and isolated cleanly. 🍰🎉",
+      "error": "Fascinating. An intentional deception. I accept the challenge. 🔍",
+      "sleeping": "Zzz... dozing crouched on his chair with eyes half-open... 🌙"
+    }
+  }
 }

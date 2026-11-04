@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.witch-apprentice",
+  "name": "Noa",
+  "title": "Little Broom Delivery Witch",
+  "description": "Earnest young delivery witch in dark navy smock with giant red head bow, courier satchel, and broom staff.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bob",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "bow",
+    "backpack",
+    "staff"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fbe3d4",
+    "hair": "#3f2b1d",
+    "eyes": "#451a03",
+    "primary": "#1e1b4b",
+    "secondary": "#dc2626",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 0.9,
+    "headScale": 1.18,
+    "build": 0.92,
+    "limbLength": 0.95
+  },
+  "energy": 1.4,
+  "tags": [
+    "ghibli",
+    "avatar",
+    "witch",
+    "delivery",
+    "noa"
+  ],
+  "personality": "earnest",
+  "specialty": "Zero-Latency Package Delivery",
+  "catchphrase": "Flying through the morning breeze with your newest release package!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#e11d48",
+    "icon": "\ud83e\uddf9",
+    "treatName": "Croissant",
+    "treatEmoji": "\ud83e\udd50",
+    "feedReaction": "Warm butter croissant fresh from the seaside bakery! \ud83e\udd50\ud83e\uddf9",
+    "wakeReaction": "Tying red head bow! Broom ready for morning flight over the sea! \ud83c\udf0a",
+    "petReaction": "Hehe! Black cat radio plays sweet tunes for our journey! \ud83e\uddf9\ud83d\udc96",
+    "dialogue": {
+      "idle": "Checking delivery manifests by the bakery window. Ready! \ud83e\uddf9",
+      "working": "Soaring through wind currents to deliver packages on schedule! \ud83c\udf0a\u26a1",
+      "thinking": "Listening to the radio weather forecast for head-winds... \ud83e\udd14",
+      "success": "Delivery complete! Signed, sealed, and deployed with a smile! \ud83e\udd50\ud83c\udf89",
+      "error": "A gust of wind threw us off course! Gripping the broom tighter! \ud83d\udca8",
+      "sleeping": "Zzz... dreaming of soaring above sunny seaside rooftops... \ud83c\udf19"
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.kuma",
+  "name": "Kuma",
+  "title": "Grizzly Guardian",
+  "description": "Guards the vault of production secrets.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#57534e",
+    "hair": "#44403c",
+    "eyes": "#451a03",
+    "primary": "#78716c",
+    "secondary": "#292524",
+    "accent": "#eab308"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1.3,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "bear",
+    "knight"
+  ],
+  "personality": "stoic",
+  "specialty": "Branch Guarding",
+  "catchphrase": "Stand between main and bad merges."
+}

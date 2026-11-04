@@ -5,7 +5,7 @@ use std::{
 };
 
 use agentpet_pet_engine::{
-    EngineContext, PetEngine, PetState, SessionReaction, Stimulus, Transition,
+    EngineContext, PetEngine, ReactionQueue, SessionReaction, Stimulus, Transition,
 };
 use agentpet_pet_pack::{
     signature::TrustedSigner, PetPackError, PetPackManifest, ValidationLimits,
@@ -17,17 +17,38 @@ use thiserror::Error;
 use uuid::Uuid;
 
 mod avatars;
+mod companion;
+mod daily;
+mod overlay_control;
+mod roaming;
 
+pub use agentpet_pet_engine::{PetPresentation, PetState};
 pub use avatars::{
     AvatarCatalogEntry, AvatarKind, AvatarSelection, AvatarSource, CustomAvatarSummary,
     ResolvedAvatar,
+};
+pub use companion::{
+    CompanionPreferences, CompanionVibe, LegacyCompanionSettings, LegacyImportOutcome,
+    OverlayPlacement, RenderMode,
+};
+pub use daily::DailyMoment;
+pub use overlay_control::{
+    normalize_accelerator, RepositionSession, ShortcutAction, ShortcutBindings,
+    REPOSITION_HARD_LIMIT, REPOSITION_IDLE_LIMIT,
+};
+pub use roaming::{
+    LogicalRect, RoamInput, RoamOutput, Roamer, ROAM_EDGE_MARGIN_DIPS, ROAM_IDLE_BEFORE_WALK,
+    ROAM_MAX_WALK, ROAM_SPEED_DIPS, ROAM_TICK,
 };
 
 const DATABASE_FILE: &str = "agentpet.sqlite3";
 #[cfg(feature = "dev-simulator")]
 pub const SIMULATED_DATABASE_FILE: &str = "agentpet_simulated.sqlite3";
-const SCHEMA_VERSION: i64 = 10;
+const SCHEMA_VERSION: i64 = 12;
 const SQLITE_BUSY_TIMEOUT: Duration = Duration::from_secs(5);
+pub const DAILY_AFFECTION_CAP: u32 = 50;
+pub const AFFECTION_PET_GAIN: u32 = 3;
+pub const AFFECTION_FEED_GAIN: u32 = 5;
 const DEFAULT_SESSION_XP: i64 = 10;
 const DEFAULT_LEVEL_XP: i64 = 100;
 const DEFAULT_LEVEL_XP_INCREMENT: i64 = 50;
@@ -51,6 +72,10 @@ pub enum EventType {
     AgentFailed,
     UserPaused,
     UserResumed,
+    PetInteracted,
+    PetFed,
+    AgentDisconnected,
+    AgentReconnected,
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
@@ -96,6 +121,10 @@ impl EventType {
             Self::AgentFailed => "AGENT_FAILED",
             Self::UserPaused => "USER_PAUSED",
             Self::UserResumed => "USER_RESUMED",
+            Self::PetInteracted => "PET_INTERACTED",
+            Self::PetFed => "PET_FED",
+            Self::AgentDisconnected => "AGENT_DISCONNECTED",
+            Self::AgentReconnected => "AGENT_RECONNECTED",
         }
     }
 
@@ -110,6 +139,10 @@ impl EventType {
             Self::AgentFailed => Stimulus::AgentFailed,
             Self::UserPaused => Stimulus::UserPaused,
             Self::UserResumed => Stimulus::UserResumed,
+            Self::PetInteracted => Stimulus::PetInteracted,
+            Self::PetFed => Stimulus::PetFed,
+            Self::AgentDisconnected => Stimulus::AgentDisconnected,
+            Self::AgentReconnected => Stimulus::AgentReconnected,
         }
     }
 }
@@ -163,6 +196,18 @@ pub struct RuntimeSnapshot {
     pub last_event_at: Option<DateTime<Utc>>,
     #[serde(default)]
     pub is_simulated: bool,
+    /// Clip the renderer plays; the desktop host sets locomotion while roaming.
+    #[serde(default)]
+    pub presentation: PetPresentation,
+}
+
+#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+pub struct AffectionStatus {
+    pub affection: u32,
+    pub daily_gain: u32,
+    pub daily_cap: u32,
+    pub updated_at: DateTime<Utc>,
 }
 
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq)]
@@ -443,12 +488,21 @@ pub enum CoreError {
     AvatarNotFound(String),
     #[error("avatar file operation failed: {0}")]
     AvatarStorage(String),
+    #[error("database backup failed: {0}")]
+    Backup(String),
+    #[error("companion preferences are invalid: {0}")]
+    InvalidCompanionPreferences(String),
+    #[error("shortcut is invalid: {0}")]
+    InvalidShortcut(String),
+    #[error("daily message pack is invalid: {0}")]
+    InvalidDailyPack(String),
 }
 
 #[derive(Clone)]
 pub struct Core {
     connection: Arc<Mutex<Connection>>,
     engine: PetEngine,
+    reaction_queue: Arc<Mutex<ReactionQueue>>,
     /// Local application data directory used for non-database configuration
     /// such as trusted signing keys. `None` for in-memory test databases.
     #[allow(dead_code)]
@@ -466,10 +520,15 @@ impl Core {
         connection.busy_timeout(SQLITE_BUSY_TIMEOUT)?;
         connection.pragma_update(None, "foreign_keys", "ON")?;
         connection.pragma_update(None, "journal_mode", "WAL")?;
+        let current = companion::stored_schema_version(&connection)?;
+        if current > 0 && current < SCHEMA_VERSION {
+            companion::backup_before_migration(&connection, data_dir, current)?;
+        }
         Self::migrate(&connection)?;
         Ok(Self {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            reaction_queue: Arc::new(Mutex::new(ReactionQueue::default())),
             data_dir: Some(data_dir.to_path_buf()),
         })
     }
@@ -486,6 +545,7 @@ impl Core {
         Ok(Self {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            reaction_queue: Arc::new(Mutex::new(ReactionQueue::default())),
             data_dir: None,
         })
     }
@@ -818,6 +878,43 @@ impl Core {
             )?;
             transaction.commit()?;
         }
+        if current < 11 && target >= 11 {
+            let now = Utc::now().to_rfc3339();
+            let transaction = connection.unchecked_transaction()?;
+            transaction.execute_batch(companion::COMPANION_SCHEMA_V11)?;
+            transaction.execute(
+                "INSERT INTO companion_preferences(singleton, updated_at) VALUES (1, ?1)",
+                [&now],
+            )?;
+            transaction.execute(
+                "INSERT INTO schema_versions(version, applied_at) VALUES (?1, ?2)",
+                params![11, now],
+            )?;
+            transaction.commit()?;
+        }
+        if current < 12 && target >= 12 {
+            let now = Utc::now().to_rfc3339();
+            let today = Utc::now().date_naive().to_string();
+            let transaction = connection.unchecked_transaction()?;
+            transaction.execute_batch(
+                "CREATE TABLE companion_affection (
+                    singleton INTEGER PRIMARY KEY CHECK (singleton = 1),
+                    affection INTEGER NOT NULL DEFAULT 0,
+                    daily_date TEXT NOT NULL,
+                    daily_gain INTEGER NOT NULL DEFAULT 0,
+                    updated_at TEXT NOT NULL
+                 );",
+            )?;
+            transaction.execute(
+                "INSERT INTO companion_affection(singleton, affection, daily_date, daily_gain, updated_at) VALUES (1, 0, ?1, 0, ?2)",
+                params![today, now],
+            )?;
+            transaction.execute(
+                "INSERT INTO schema_versions(version, applied_at) VALUES (?1, ?2)",
+                params![12, now],
+            )?;
+            transaction.commit()?;
+        }
         Ok(())
     }
 
@@ -832,11 +929,13 @@ impl Core {
                 [],
                 |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?)),
             )?;
+        let pet_state = parse_state(&state)?;
         Ok(RuntimeSnapshot {
-            pet_state: parse_state(&state)?,
+            pet_state,
             selected_pet_id,
             last_event_at: parse_timestamp(last_event_at)?,
             is_simulated: false,
+            presentation: PetPresentation::procedural(pet_state, false),
         })
     }
 
@@ -850,18 +949,23 @@ impl Core {
             .connection
             .lock()
             .map_err(|_| CoreError::LockPoisoned)?;
+        let mut queue = self
+            .reaction_queue
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
         let (current, entered_at) = read_pet_state(&connection)?;
-        let due = self
-            .engine
-            .definition(current)
-            .timeout
-            .is_some_and(|timeout| elapsed_since(entered_at, now) >= timeout.after);
+        let due = !queue.is_empty()
+            || self
+                .engine
+                .definition(current)
+                .timeout
+                .is_some_and(|timeout| elapsed_since(entered_at, now) >= timeout.after);
         if !due {
             return Ok(None);
         }
         let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
         let (before, _) = read_pet_state(&transaction)?;
-        let after = settle_state(&transaction, &self.engine, now)?;
+        let after = settle_state(&transaction, &self.engine, now, &mut queue)?;
         transaction.commit()?;
         Ok((after != before).then_some(after))
     }
@@ -1238,16 +1342,66 @@ impl Core {
             .connection
             .lock()
             .map_err(|_| CoreError::LockPoisoned)?;
+        let mut queue = self
+            .reaction_queue
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
         let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
         let accepted = record_event(
             &transaction,
             &self.engine,
+            &mut queue,
             event,
             event.event_type.stimulus(),
             OnRejectedTransition::Fail,
         )?;
         transaction.commit()?;
         Ok(accepted)
+    }
+
+    pub fn get_affection(&self) -> Result<AffectionStatus, CoreError> {
+        let connection = self
+            .connection
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
+        let today = Utc::now().date_naive().to_string();
+        let (affection, daily_date, daily_gain, updated_at): (u32, String, u32, String) = connection.query_row(
+            "SELECT affection, daily_date, daily_gain, updated_at FROM companion_affection WHERE singleton = 1",
+            [],
+            |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?, row.get(3)?)),
+        )?;
+        let current_daily_gain = if daily_date == today { daily_gain } else { 0 };
+        let parsed_time = parse_timestamp(Some(updated_at))?.unwrap_or_else(Utc::now);
+        Ok(AffectionStatus {
+            affection,
+            daily_gain: current_daily_gain,
+            daily_cap: DAILY_AFFECTION_CAP,
+            updated_at: parsed_time,
+        })
+    }
+
+    pub fn record_affection_gain(&self, amount: u32) -> Result<AffectionStatus, CoreError> {
+        let mut connection = self
+            .connection
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
+        let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
+        let now = Utc::now();
+        let status = record_affection_gain_in_tx(&transaction, amount, now)?;
+        transaction.commit()?;
+        Ok(status)
+    }
+
+    pub fn pet_interact(&self, source: impl Into<String>) -> Result<AffectionStatus, CoreError> {
+        let event = PetEvent::new(EventType::PetInteracted, source);
+        self.accept_event(&event)?;
+        self.record_affection_gain(AFFECTION_PET_GAIN)
+    }
+
+    pub fn pet_feed(&self, source: impl Into<String>) -> Result<AffectionStatus, CoreError> {
+        let event = PetEvent::new(EventType::PetFed, source);
+        self.accept_event(&event)?;
+        self.record_affection_gain(AFFECTION_FEED_GAIN)
     }
 
     /// Ingests a normalized hook event from a local agent adapter.
@@ -1294,9 +1448,18 @@ impl Core {
             .connection
             .lock()
             .map_err(|_| CoreError::LockPoisoned)?;
+        let mut queue = self
+            .reaction_queue
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
         let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
-        let outcome =
-            record_hook_event_in_transaction(&transaction, &self.engine, hook_event, session_id)?;
+        let outcome = record_hook_event_in_transaction(
+            &transaction,
+            &self.engine,
+            &mut queue,
+            hook_event,
+            session_id,
+        )?;
         transaction.commit()?;
         Ok(outcome)
     }
@@ -1377,6 +1540,10 @@ impl Core {
             .connection
             .lock()
             .map_err(|_| CoreError::LockPoisoned)?;
+        let mut queue = self
+            .reaction_queue
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
         let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
         let selected_pet: Option<String> = transaction.query_row(
             "SELECT selected_pet_id FROM pet_state WHERE singleton = 1",
@@ -1394,6 +1561,7 @@ impl Core {
         record_event(
             &transaction,
             &self.engine,
+            &mut queue,
             &event,
             Stimulus::AgentStarted,
             OnRejectedTransition::KeepState,
@@ -1412,6 +1580,10 @@ impl Core {
         let duration_ms = i64::try_from(duration_ms).map_err(|_| CoreError::InvalidDuration)?;
         let mut connection = self
             .connection
+            .lock()
+            .map_err(|_| CoreError::LockPoisoned)?;
+        let mut queue = self
+            .reaction_queue
             .lock()
             .map_err(|_| CoreError::LockPoisoned)?;
         let transaction = connection.transaction_with_behavior(TransactionBehavior::Immediate)?;
@@ -1455,6 +1627,7 @@ impl Core {
         record_event(
             &transaction,
             &self.engine,
+            &mut queue,
             &event,
             Stimulus::SessionFinished(reaction),
             OnRejectedTransition::KeepState,
@@ -1951,12 +2124,14 @@ fn settle_state(
     connection: &Connection,
     engine: &PetEngine,
     now: DateTime<Utc>,
+    queue: &mut ReactionQueue,
 ) -> Result<PetState, CoreError> {
     let (current, entered_at) = read_pet_state(connection)?;
-    let Some(next) = engine.expire(
+    let Some(next) = engine.expire_with_queue(
         current,
         elapsed_since(entered_at, now),
         engine_context(connection)?,
+        queue,
     ) else {
         return Ok(current);
     };
@@ -1967,9 +2142,41 @@ fn settle_state(
     Ok(next)
 }
 
+fn record_affection_gain_in_tx(
+    transaction: &rusqlite::Transaction<'_>,
+    amount: u32,
+    now: DateTime<Utc>,
+) -> Result<AffectionStatus, CoreError> {
+    let today = now.date_naive().to_string();
+    let (mut affection, daily_date, mut daily_gain): (u32, String, u32) = transaction.query_row(
+        "SELECT affection, daily_date, daily_gain FROM companion_affection WHERE singleton = 1",
+        [],
+        |row| Ok((row.get(0)?, row.get(1)?, row.get(2)?)),
+    )?;
+    if daily_date != today {
+        daily_gain = 0;
+    }
+    let allowed = DAILY_AFFECTION_CAP.saturating_sub(daily_gain);
+    let to_add = amount.min(allowed);
+    affection = affection.saturating_add(to_add);
+    daily_gain = daily_gain.saturating_add(to_add);
+    let now_str = now.to_rfc3339();
+    transaction.execute(
+        "UPDATE companion_affection SET affection = ?1, daily_date = ?2, daily_gain = ?3, updated_at = ?4 WHERE singleton = 1",
+        params![affection, today, daily_gain, now_str],
+    )?;
+    Ok(AffectionStatus {
+        affection,
+        daily_gain,
+        daily_cap: DAILY_AFFECTION_CAP,
+        updated_at: now,
+    })
+}
+
 fn record_event(
     transaction: &rusqlite::Transaction<'_>,
     engine: &PetEngine,
+    queue: &mut ReactionQueue,
     event: &PetEvent,
     stimulus: Stimulus,
     on_rejected: OnRejectedTransition,
@@ -1985,9 +2192,9 @@ fn record_event(
         return Ok(false);
     }
     let now = Utc::now();
-    let current = settle_state(transaction, engine, now)?;
+    let current = settle_state(transaction, engine, now, queue)?;
     let occurred_at = event.occurred_at.to_rfc3339();
-    match engine.decide(current, stimulus, engine_context(transaction)?) {
+    match engine.decide_with_queue(current, stimulus, engine_context(transaction)?, queue) {
         Transition::Enter(next) => {
             transaction.execute(
                 "UPDATE pet_state SET state = ?1, state_entered_at = ?2, last_event_at = ?3 WHERE singleton = 1",
@@ -1997,7 +2204,7 @@ fn record_event(
         Transition::Rejected { from, to } if on_rejected == OnRejectedTransition::Fail => {
             return Err(CoreError::InvalidTransition { from, to });
         }
-        Transition::Remain | Transition::Rejected { .. } => {
+        Transition::Remain | Transition::Queued(_) | Transition::Rejected { .. } => {
             transaction.execute(
                 "UPDATE pet_state SET last_event_at = ?1 WHERE singleton = 1",
                 [&occurred_at],
@@ -2039,6 +2246,7 @@ fn rollback_pack_install(directory: &Path, primary: CoreError) -> CoreError {
 fn record_hook_event_in_transaction(
     transaction: &rusqlite::Transaction<'_>,
     engine: &PetEngine,
+    queue: &mut ReactionQueue,
     hook_event: &HookEvent,
     session_id: Option<&str>,
 ) -> Result<HookEventOutcome, CoreError> {
@@ -2051,6 +2259,7 @@ fn record_hook_event_in_transaction(
     let accepted = record_event(
         transaction,
         engine,
+        queue,
         &event,
         hook_event.event_type.stimulus(),
         OnRejectedTransition::KeepState,
@@ -2254,6 +2463,8 @@ mod tests {
             )]),
             state_mappings: BTreeMap::new(),
             tags: vec![],
+            personality: None,
+            animation: None,
         };
         std::fs::write(
             source.join("pet.json"),
@@ -2487,6 +2698,108 @@ mod tests {
     }
 
     #[test]
+    fn pet_interaction_feeding_and_reaction_queue_in_core() {
+        let core = Core::in_memory().expect("database initializes");
+
+        // PetInteracted triggers Celebrating
+        core.pet_interact("desktop").expect("interact succeeds");
+        assert_eq!(
+            core.snapshot().expect("snapshot").pet_state,
+            PetState::Celebrating
+        );
+
+        // PetFed triggers Eating
+        core.pet_feed("desktop").expect("feed succeeds");
+        assert_eq!(
+            core.snapshot().expect("snapshot").pet_state,
+            PetState::Eating
+        );
+
+        // Eating expires to Idle
+        let later = Utc::now() + chrono::Duration::seconds(10);
+        assert_eq!(
+            core.advance_state_timers_at(later).expect("timer advances"),
+            Some(PetState::Idle)
+        );
+
+        // Start session that levels up
+        core.set_progression_rules(ProgressionRules {
+            xp_per_completed_session: 100,
+            base_xp_per_level: 100,
+            level_xp_increment: 200,
+        })
+        .expect("rules");
+        core.start_session("s1", "agent", None).expect("start");
+        core.finish_session("s1", SessionOutcome::Completed, Some(0), 10)
+            .expect("finish");
+        assert_eq!(
+            core.snapshot().expect("snapshot").pet_state,
+            PetState::LevelUp
+        );
+
+        // While LevelUp is active, another session finishes successfully -> queued!
+        core.start_session("s2", "agent", None).expect("start s2");
+        core.finish_session("s2", SessionOutcome::Completed, Some(0), 10)
+            .expect("finish s2");
+        // State remains LevelUp
+        assert_eq!(
+            core.snapshot().expect("snapshot").pet_state,
+            PetState::LevelUp
+        );
+
+        // When LevelUp expires, the queued reaction (Success) plays!
+        let later_level_up = Utc::now() + chrono::Duration::seconds(10);
+        assert_eq!(
+            core.advance_state_timers_at(later_level_up)
+                .expect("level up expires to queued reaction"),
+            Some(PetState::Success)
+        );
+
+        // Success expires to resting (Idle)
+        let later_success = later_level_up + chrono::Duration::seconds(10);
+        assert_eq!(
+            core.advance_state_timers_at(later_success)
+                .expect("success expires to idle"),
+            Some(PetState::Idle)
+        );
+    }
+
+    #[test]
+    fn affection_persists_in_sqlite_and_respects_daily_cap() {
+        let core = Core::in_memory().expect("database initializes");
+        let initial = core.get_affection().expect("initial affection");
+        assert_eq!(initial.affection, 0);
+        assert_eq!(initial.daily_gain, 0);
+        assert_eq!(initial.daily_cap, 50);
+
+        let after_pet = core.pet_interact("desktop").expect("pet succeeds");
+        assert_eq!(after_pet.affection, 3);
+        assert_eq!(after_pet.daily_gain, 3);
+
+        let after_feed = core.pet_feed("desktop").expect("feed succeeds");
+        assert_eq!(after_feed.affection, 8);
+        assert_eq!(after_feed.daily_gain, 8);
+
+        // Cap is 50. Feed 9 more times (9 * 5 = 45 -> 8 + 45 = 53 -> capped at 50)
+        for _ in 0..9 {
+            core.pet_feed("desktop").expect("feed succeeds");
+        }
+        let capped = core.get_affection().expect("get affection");
+        assert_eq!(capped.affection, 50);
+        assert_eq!(capped.daily_gain, 50);
+
+        // Further interaction today yields no additional affection
+        let extra = core.pet_interact("desktop").expect("pet succeeds");
+        assert_eq!(extra.affection, 50);
+        assert_eq!(extra.daily_gain, 50);
+
+        // Ledger XP is completely untouched
+        let progression = core.progression().expect("progression");
+        assert_eq!(progression.total_xp, 0);
+        assert_eq!(progression.level, 1);
+    }
+
+    #[test]
     fn pause_holds_through_activity_until_the_user_resumes() {
         let core = Core::in_memory().expect("database initializes");
         assert!(core
@@ -2528,6 +2841,7 @@ mod tests {
         let core = Core {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            reaction_queue: Arc::new(Mutex::new(ReactionQueue::default())),
             data_dir: None,
         };
         assert_eq!(
@@ -2891,6 +3205,7 @@ mod tests {
         let core = Core {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            reaction_queue: Arc::new(Mutex::new(ReactionQueue::default())),
             data_dir: None,
         };
         let verification = core.verify_ledger().expect("ledger verifies");

@@ -1,0 +1,1067 @@
+[
+  {
+    "catalogId": "miyora.aoi",
+    "avatarId": "user.vrm-36aab5e4301f45cb",
+    "sha256": "6f71153d8f07e448a7703809fd5266a50db2b1a881a7fdb4339b7855dab15a6d"
+  },
+  {
+    "catalogId": "miyora.kenji",
+    "avatarId": "user.vrm-118d759b353b4fd8",
+    "sha256": "0a813d51034efe6496c5ea21b16a29f42b8ce7c6921b5c23d0f5109dfe2933f0"
+  },
+  {
+    "catalogId": "miyora.mira",
+    "avatarId": "user.vrm-6505f449c33a425a",
+    "sha256": "68025ceece4407f0962f5176f1aa62bad2b699516625549fe7c2a4f3897c8599"
+  },
+  {
+    "catalogId": "miyora.rowan",
+    "avatarId": "user.vrm-d22e798865064e7c",
+    "sha256": "f5cd948ef6bd6f975f9bd03172349c6ae848fa6a6ec8a3254954472bdffd8fbb"
+  },
+  {
+    "catalogId": "miyora.sora",
+    "avatarId": "user.vrm-cc2aac8fd2f44293",
+    "sha256": "46e112a0ac3a9d35218f7e95f937edd7a2ccb7b6b8ba0eae6b57dbdd8d563d5b"
+  },
+  {
+    "catalogId": "miyora.hana",
+    "avatarId": "user.vrm-bd18384909d347a1",
+    "sha256": "b54d2f9571f737d1467ce1b9f6f75d892a4befa404fa6006514c0cf20fd4eb75"
+  },
+  {
+    "catalogId": "miyora.ravi",
+    "avatarId": "user.vrm-5d5e9b5e3c654a9f",
+    "sha256": "1096d335e91ac2b9cb1b402cab19b2a945ea5ed821d7bc6bf72ee676771409ad"
+  },
+  {
+    "catalogId": "miyora.lina",
+    "avatarId": "user.vrm-0e40ab2dbea74177",
+    "sha256": "9490e03824049bfa1cffcac3ab5d1295cb51ce44104b5ec83fc251c74be4615f"
+  },
+  {
+    "catalogId": "miyora.dmitri",
+    "avatarId": "user.vrm-fb8803ccc8b1497c",
+    "sha256": "e0ac1195a399776c3d2f4642cf766e00cebe6682679b9beb15d43498e42e088e"
+  },
+  {
+    "catalogId": "miyora.yuki",
+    "avatarId": "user.vrm-fe292df214224208",
+    "sha256": "725caf401a8c145077edc3076371240e0310c2e28d8ca1a12cae6bab895d67a0"
+  },
+  {
+    "catalogId": "miyora.tariq",
+    "avatarId": "user.vrm-5699bf3f4a284e1b",
+    "sha256": "e684af879c0e79c5bbeebb2d3300a84e209939cee87ebb46f2059be85df1b959"
+  },
+  {
+    "catalogId": "miyora.isla",
+    "avatarId": "user.vrm-3b7a75d0355940b9",
+    "sha256": "63802ed510ebd4e504b414b8171cf4ef9cc45ee47ff068e897fab91f53b10215"
+  },
+  {
+    "catalogId": "miyora.felix",
+    "avatarId": "user.vrm-12c21d35271c492f",
+    "sha256": "9694e5ce0a200086c7fde09b52571be4270d46d299353dbac08deaae23dfa7bf"
+  },
+  {
+    "catalogId": "miyora.noor",
+    "avatarId": "user.vrm-ad8539510fe24903",
+    "sha256": "7c7defd2544bac2e96cd9efcce8778df490db910dad1234b2a7bfb4b663bff91"
+  },
+  {
+    "catalogId": "miyora.bjorn",
+    "avatarId": "user.vrm-15dd59b5f0d04c01",
+    "sha256": "276ffc3699c201502dce86a4495288a8a5291747b4f7fe81cd61149fcee4beb5"
+  },
+  {
+    "catalogId": "miyora.elara",
+    "avatarId": "user.vrm-6cf0b2def8af4e04",
+    "sha256": "e59b6da7c1c415a5de819d4562eb817ee01a4f2dd88bc747829146ffa62146db"
+  },
+  {
+    "catalogId": "miyora.kai",
+    "avatarId": "user.vrm-0531774ae23445af",
+    "sha256": "5f29c835e3c6da2a9cbc75e65ca7bc676897f843573a2a9e4bbdd3c5d29f40bd"
+  },
+  {
+    "catalogId": "miyora.maya",
+    "avatarId": "user.vrm-96a516f820fc4919",
+    "sha256": "ce3e1e1b74f1501ac86ef48cebc1e754c3bc99eeab96e1ad8294b271c1687d6b"
+  },
+  {
+    "catalogId": "miyora.theo",
+    "avatarId": "user.vrm-586d7a8493714e6e",
+    "sha256": "5be204b6393b42fc8704e3af679389d235cd0ee8402b7ba92da4799d6ab0c149"
+  },
+  {
+    "catalogId": "miyora.zara",
+    "avatarId": "user.vrm-00d9d57bde684be4",
+    "sha256": "9e29faaffa5907b8e42c79e209146e78c1c3b212146ee8b5c456178f392d5d80"
+  },
+  {
+    "catalogId": "miyora.oren",
+    "avatarId": "user.vrm-50526042c8264f06",
+    "sha256": "9669a45ad9837c13173307983c9172888f091e24f4a7eb72a7df6fb6f726bc76"
+  },
+  {
+    "catalogId": "miyora.priya",
+    "avatarId": "user.vrm-3f387ab4df2d4f4d",
+    "sha256": "629a9765ca3260b60d12a43daa1c7e68583df2f3bfffc5fb31b008791ba70b5c"
+  },
+  {
+    "catalogId": "miyora.leo",
+    "avatarId": "user.vrm-066a32c46eb84866",
+    "sha256": "e15d310855b4de96708f584e92af8622ac23915165874f83bd205dbbb058b543"
+  },
+  {
+    "catalogId": "miyora.nyx",
+    "avatarId": "user.vrm-7cc7eef765414376",
+    "sha256": "adf2ae12200ef6b26cf2315f67e7607cd8bd5aa9c304fe7df70ede297b728c30"
+  },
+  {
+    "catalogId": "miyora.amara",
+    "avatarId": "user.vrm-a721ee32d30b477f",
+    "sha256": "9ef0d3ca8d26cb893d92eabf9bcf781ad47b74e81555e56239acdf6c790e5528"
+  },
+  {
+    "catalogId": "miyora.ivo",
+    "avatarId": "user.vrm-a577821d9c414688",
+    "sha256": "1cf20e958b24107618b9bfaa0c4e697da1004ad0d98dd4710f7e30bd7013e3ec"
+  },
+  {
+    "catalogId": "miyora.suki",
+    "avatarId": "user.vrm-dde05b53fab34841",
+    "sha256": "93e8f852e4ef5bf8b949585515c3c2f94225b6a8afe96da00c2620110b4ec5e8"
+  },
+  {
+    "catalogId": "miyora.marco",
+    "avatarId": "user.vrm-22f9b7268b8d4f2a",
+    "sha256": "25c529a402f23a4922b1833441f9f03ad8f417489644958e7e690ca39bed6926"
+  },
+  {
+    "catalogId": "miyora.lyra",
+    "avatarId": "user.vrm-611deee3f31b4f88",
+    "sha256": "699a01ab3c32308f944e60cc11963c5275b523269d39d55a1c1a8383fd580e86"
+  },
+  {
+    "catalogId": "miyora.jun",
+    "avatarId": "user.vrm-d2bb5a2751184abf",
+    "sha256": "dad7110752bb5d47d03a0836156e056a8fabaa898654dd3973578fcaec03d930"
+  },
+  {
+    "catalogId": "miyora.esme",
+    "avatarId": "user.vrm-8c9727b9c1004872",
+    "sha256": "e96a31f2878215f8752a937f6ca5160d82e94f305f09e3890e19815eda9d36c0"
+  },
+  {
+    "catalogId": "miyora.obi",
+    "avatarId": "user.vrm-9f6e3768282e4406",
+    "sha256": "efb45afa55bd687125f1d3fffcbc2f838e236c523e4e0634f512499681d6b414"
+  },
+  {
+    "catalogId": "miyora.rin",
+    "avatarId": "user.vrm-fbad14ce67004311",
+    "sha256": "5a6f685a40a16552fc24b11e3476bf33e758a3d6d247fe342451e0cd4b28fbe1"
+  },
+  {
+    "catalogId": "miyora.caspian",
+    "avatarId": "user.vrm-8d1cee7385874cb9",
+    "sha256": "e0531ef7f62f43a97a9b7fd352321b417163440edbbcc860d59d61b77e998ccf"
+  },
+  {
+    "catalogId": "miyora.freya",
+    "avatarId": "user.vrm-78351e1987014ea4",
+    "sha256": "024423ddb8f48b9c29b4f316e8dd5d89c9e5dedaad930091deac9ae92502089a"
+  },
+  {
+    "catalogId": "miyora.hugo",
+    "avatarId": "user.vrm-b23a1bd076d549e5",
+    "sha256": "5f1a7551cec3a0e67dc2beae2c08bc10659bf1c6e7dfd9e48de12beaf057ddc8"
+  },
+  {
+    "catalogId": "miyora.sana",
+    "avatarId": "user.vrm-7ef081ae98d04b37",
+    "sha256": "301ae73bf3d59a7c034f3e4bfef66743fbbffa44092eb51f03cf220fcfe09c03"
+  },
+  {
+    "catalogId": "miyora.dex",
+    "avatarId": "user.vrm-848798a23c5a43e8",
+    "sha256": "619182abc7a9fcd57172368bd15fb0831afbcd43b2f1b62fe295af77ae3b9bdf"
+  },
+  {
+    "catalogId": "miyora.aria",
+    "avatarId": "user.vrm-a4bd134ed62f452f",
+    "sha256": "6dc5df4d33b146231d7f5d91b234194b9e5a1a64c2f3cac3f9f1ef6b6f7c59a8"
+  },
+  {
+    "catalogId": "miyora.tomas",
+    "avatarId": "user.vrm-3fe3a9cfa6a8452b",
+    "sha256": "45337895261fdcbf033192e0eaa10262cfe70ce1128d4ce684b0563975cfee7d"
+  },
+  {
+    "catalogId": "miyora.ines",
+    "avatarId": "user.vrm-c2a77424b03c47ed",
+    "sha256": "de3915f9b9534aa4d4850500f1cada23e1eb15d7e8cce4daa759b4309bf2688c"
+  },
+  {
+    "catalogId": "miyora.vale",
+    "avatarId": "user.vrm-1743c58f06cc40ff",
+    "sha256": "9e8a06558a29fae52739e2fe089116e518fe9ae72e33c926fb97691daf8d52d7"
+  },
+  {
+    "catalogId": "miyora.coco",
+    "avatarId": "user.vrm-80d03b3da6ff436f",
+    "sha256": "9d5063a1b8d738335ec572e4edb6481f649db365b451983f05bc67aed578cdcd"
+  },
+  {
+    "catalogId": "miyora.orion",
+    "avatarId": "user.vrm-c2cf80c041454dd8",
+    "sha256": "926513e24aceed8487d47eab3bdfbdc3c46059dcf3b2700e5451885433792125"
+  },
+  {
+    "catalogId": "miyora.ignis",
+    "avatarId": "user.vrm-95a7ba40a1c9454a",
+    "sha256": "0621894daa66789f423396ffc31fc07901fbfaeb56261b2edabe21ee8d2a924e"
+  },
+  {
+    "catalogId": "miyora.lumi",
+    "avatarId": "user.vrm-9d76b9a603e24bc3",
+    "sha256": "eabc4eb630bb55fb1c1838174aef0502c514b4d7d8788171dea773390093a2b7"
+  },
+  {
+    "catalogId": "miyora.vesper",
+    "avatarId": "user.vrm-87d5e72535c642e4",
+    "sha256": "80b421ad5a6cc796d2f1d7ac279d673e80e201364a0b694257c91513d287fde9"
+  },
+  {
+    "catalogId": "miyora.seraph",
+    "avatarId": "user.vrm-736acdbb4b7846d3",
+    "sha256": "08a1bd81312455311781dd8db8648f081e24eefb94662ff2d9effd140ebf2830"
+  },
+  {
+    "catalogId": "miyora.akane",
+    "avatarId": "user.vrm-4dbf11ea427740e9",
+    "sha256": "4701d5528bdf3ae78e2f6a22d7aff2665b245266e15880176f8402209d657df4"
+  },
+  {
+    "catalogId": "miyora.tsukasa",
+    "avatarId": "user.vrm-f176be2711594a13",
+    "sha256": "6f6979a8d34a40892f6613d4a95049da4af7543a88689368ed041e1bff1dd18e"
+  },
+  {
+    "catalogId": "miyora.kaede",
+    "avatarId": "user.vrm-beaf7eea35b54b8b",
+    "sha256": "5f17c226ebc9d98d8a4d2366f18b7cab87d7672dead18c54680c410efe7e1c7e"
+  },
+  {
+    "catalogId": "miyora.sayuri",
+    "avatarId": "user.vrm-98018d8db4c2423e",
+    "sha256": "0049a2dd8d1de980c886a17db2541744330163cb97dd622f2b985cd56a2508c0"
+  },
+  {
+    "catalogId": "miyora.hoshimi",
+    "avatarId": "user.vrm-1e7cff06df5e4986",
+    "sha256": "0efc080e7a7c8582921d535855fd91056cfcec1dbf5651af4d19fcf6e1d7790a"
+  },
+  {
+    "catalogId": "miyora.nagi",
+    "avatarId": "user.vrm-ddb13691a8b64890",
+    "sha256": "da4875d236a85399bdd7ca40c71670d804f1098dd99fd317b94f61e78642ebbd"
+  },
+  {
+    "catalogId": "miyora.marlo",
+    "avatarId": "user.vrm-229deab9e6624192",
+    "sha256": "9645e953348dcaa30c2611657f99e729e15e9fabaa6127d4765e1fb18b21e751"
+  },
+  {
+    "catalogId": "miyora.kiyomi",
+    "avatarId": "user.vrm-7d68c9f6da074c61",
+    "sha256": "8db3b7fedee483588a257fdd8157099ac589611e217821f4236167eca2d7d089"
+  },
+  {
+    "catalogId": "miyora.daichi",
+    "avatarId": "user.vrm-f9207dee1eb74e10",
+    "sha256": "46ac534666c20f0cbcb28591baebc5305a6739a0a442bc1e03440d74970b5c78"
+  },
+  {
+    "catalogId": "miyora.sorako",
+    "avatarId": "user.vrm-c58c26f8ca4c413d",
+    "sha256": "27e2d966915a3465c7fe07f8654c03b28a99fbd5b2cf4e9176201ed1716486d0"
+  },
+  {
+    "catalogId": "miyora.valen",
+    "avatarId": "user.vrm-16d496c2fcb84626",
+    "sha256": "4a9e05301b865d54422b912b30e86a84bd754bda21752be21f07c31fc0419c3b"
+  },
+  {
+    "catalogId": "miyora.draga",
+    "avatarId": "user.vrm-c785167d28164e7c",
+    "sha256": "c82e037cdcf6b96ad85dffd3f14f6be9eeb39399028e299f4acc8d6d1b3742d2"
+  },
+  {
+    "catalogId": "miyora.alma",
+    "avatarId": "user.vrm-d6efe0fd157d49e9",
+    "sha256": "f2e14b4c16ba9895129074988fb21d3d53f2ee418dbc01def5acae9abf008279"
+  },
+  {
+    "catalogId": "miyora.seiji",
+    "avatarId": "user.vrm-dae2dc0d85d54bbd",
+    "sha256": "550dee1b51be677d48a59e95547c065728b1b31c1eca6195a1e2f4a1a054b9b9"
+  },
+  {
+    "catalogId": "miyora.masaru",
+    "avatarId": "user.vrm-b019a16835964c65",
+    "sha256": "177cd43bd0afbe356eb31f862c3aebfe7356f52dfada7f2f1195846d53d39eef"
+  },
+  {
+    "catalogId": "miyora.lyrielle",
+    "avatarId": "user.vrm-73bdb44dfa6e4553",
+    "sha256": "00c06fcc43a66478889cb1a94a9cfac83cad6e32f79e3728683a705548351f51"
+  },
+  {
+    "catalogId": "miyora.pico",
+    "avatarId": "user.vrm-574ff67e7ef04279",
+    "sha256": "6e9c592ce5ec609d04695e1f2c1dc6dd31ebc652a7b9b3859c13b98bfe4f67a3"
+  },
+  {
+    "catalogId": "miyora.hayato",
+    "avatarId": "user.vrm-2070001939b346f9",
+    "sha256": "a057625a632fa433234280eb30fbc848f190cdc839c930c058d16684648c3fb4"
+  },
+  {
+    "catalogId": "miyora.velis",
+    "avatarId": "user.vrm-bc75597879ab4b2b",
+    "sha256": "cd058568983c6798f639f6b23e4642e58c60aac7ca96e5bc868367c9e1743529"
+  },
+  {
+    "catalogId": "miyora.hanae",
+    "avatarId": "user.vrm-893466594ac14ad4",
+    "sha256": "296ef476ec76046499cad9be87d34b5143674a984723e7b3487e2ffcfc6b448f"
+  },
+  {
+    "catalogId": "miyora.benika",
+    "avatarId": "user.vrm-c1b9f25d900345f3",
+    "sha256": "dbbfb7a6fb37837df61effa894b92b31868a71fa05c1f6ef31749d6139fac307"
+  },
+  {
+    "catalogId": "miyora.kazane",
+    "avatarId": "user.vrm-1bc2cea9200b4749",
+    "sha256": "d3d72e20fab630f54b5748e19a6c33ced90612d927193be59cac5c8d4dc7f65a"
+  },
+  {
+    "catalogId": "miyora.akiho",
+    "avatarId": "user.vrm-c421fd5ee5074d77",
+    "sha256": "20c586e5bea30bed6d428a706d8102ccf4e5ded394edd2d46533ec261b5996fa"
+  },
+  {
+    "catalogId": "miyora.kenta",
+    "avatarId": "user.vrm-4fff4635b83f4a2f",
+    "sha256": "612fd2dda50d88e84029f45d795794a6c4c1c895192a94db2bed778f3785ae85"
+  },
+  {
+    "catalogId": "miyora.mirei",
+    "avatarId": "user.vrm-050f98caa1864bdb",
+    "sha256": "9e53901e7f9061d8680abcbb8d37cd8b53ae9facf083562a25d459f2dec7952e"
+  },
+  {
+    "catalogId": "miyora.haruki",
+    "avatarId": "user.vrm-7a6b680c4f664952",
+    "sha256": "d25d0b215e0b22ff11902dc93fd23cd5a46c3c9ec045918b03d7ce849584dce7"
+  },
+  {
+    "catalogId": "miyora.lunaria",
+    "avatarId": "user.vrm-de2de7f92a9a42db",
+    "sha256": "4711fda4aa1db10b8915df0f403088ccdf6fe72b47c3c72040b46c7d636edf70"
+  },
+  {
+    "catalogId": "miyora.kuroha",
+    "avatarId": "user.vrm-e5fd56143cf342a6",
+    "sha256": "1c5961a0f42636cd1b90a370e094d0e8c3a5732b71777ec9214cb195b4ffbe7f"
+  },
+  {
+    "catalogId": "miyora.tetsu",
+    "avatarId": "user.vrm-061fd5f636754572",
+    "sha256": "6b379df214e1fe8cd8aef8cf05e3f532c7edf478aae592166f1b56835d6b5299"
+  },
+  {
+    "catalogId": "miyora.sumire",
+    "avatarId": "user.vrm-bb53021452eb4fee",
+    "sha256": "af4e20d15000a635744d31c5aebcf4aa09e342ba7d2f1ea734ab754986e66f16"
+  },
+  {
+    "catalogId": "miyora.momiji",
+    "avatarId": "user.vrm-4da8307e6d574d50",
+    "sha256": "9ed22b105b7cd9f792898fbd2a5fb7d80a98870d60207af8f4894a45e77496d2"
+  },
+  {
+    "catalogId": "miyora.ember",
+    "avatarId": "user.vrm-d1becd07c6484e35",
+    "sha256": "2d285c3ab4ba670b052415f5b6cbc5d1d789a9b9ad31adccbf46959478ce9a24"
+  },
+  {
+    "catalogId": "miyora.miso",
+    "avatarId": "user.vrm-1bf76ac316dc4502",
+    "sha256": "1ffc187597af443cb3de6924097c4729d253cf96def743916d5226e8984fab9e"
+  },
+  {
+    "catalogId": "miyora.pip",
+    "avatarId": "user.vrm-a210849faa944593",
+    "sha256": "5c3007c0a027262281cc7c40520e72674c6171f78e78920221bbd3bc76c0b81b"
+  },
+  {
+    "catalogId": "miyora.bruno",
+    "avatarId": "user.vrm-4d51d06a302d4e5d",
+    "sha256": "b099df7c7173b6413c43a412d46a9718cfc8cf23f5460ace5e09941f94506384"
+  },
+  {
+    "catalogId": "miyora.bao",
+    "avatarId": "user.vrm-f38e83c37591465d",
+    "sha256": "8c6c81f320a93f55fb02618aeab08b719a2f97ca4f250f3dd2bb611d12cce3ae"
+  },
+  {
+    "catalogId": "miyora.luna",
+    "avatarId": "user.vrm-adeba5e655a64d4d",
+    "sha256": "be602ad1fafe9a6b2a4f8bb00b9ea576b5848f4b0c9e8dde6f1e03ff78418c84"
+  },
+  {
+    "catalogId": "miyora.biscuit",
+    "avatarId": "user.vrm-ceb67fc388644648",
+    "sha256": "7912e761f64b2280166874a1645212222a160d785bd24993d4ea5a4deff9ebea"
+  },
+  {
+    "catalogId": "miyora.mochi",
+    "avatarId": "user.vrm-06d4b025689547b2",
+    "sha256": "8cba8f8e3f1d2edb000ec672561492c39f600b84c10e5080741ebeda5516d1b9"
+  },
+  {
+    "catalogId": "miyora.rusty",
+    "avatarId": "user.vrm-3b933d539224431d",
+    "sha256": "2dcfc496a2da394b38e60a2158882eae25757ab0d35359994425b8ba31243a8a"
+  },
+  {
+    "catalogId": "miyora.tofu",
+    "avatarId": "user.vrm-f78bc99f9dce4c02",
+    "sha256": "4502c3382f76090b202aa9801a663517ff14d9a977210901dc84070ec29fd75f"
+  },
+  {
+    "catalogId": "miyora.shadow",
+    "avatarId": "user.vrm-9f387885ddb3454f",
+    "sha256": "b32f21591181c9352a9f77fbbb82a91004cd9235e6493d63677fc0775e268d5d"
+  },
+  {
+    "catalogId": "miyora.sunny",
+    "avatarId": "user.vrm-2396ecc151c4459a",
+    "sha256": "2a81b2e231460deb6368063519ed8278c7aa3c9b53800a82109d5744ea6c1a69"
+  },
+  {
+    "catalogId": "miyora.hazel",
+    "avatarId": "user.vrm-19694c630bd445b4",
+    "sha256": "160d8e325d927b36d3fc94aaa75f6ebb60778fb32f35ffb647848cea3aa465dd"
+  },
+  {
+    "catalogId": "miyora.mako",
+    "avatarId": "user.vrm-c9187cdb616248e4",
+    "sha256": "da775f68ba3f231742bf3106eec70d80b837593eb3a0e7f78de59764e71b4321"
+  },
+  {
+    "catalogId": "miyora.kuma",
+    "avatarId": "user.vrm-e8642e81b620440c",
+    "sha256": "72fb6cd60ef219770a7063cb50101c32bcfc8ed4d60538dccca1c6e4280eea0e"
+  },
+  {
+    "catalogId": "miyora.nori",
+    "avatarId": "user.vrm-7577553907f04388",
+    "sha256": "7bdd3d03f3262ae5b85661ee6cbc7b427343c82eda8d9265adbb4bb421a4f320"
+  },
+  {
+    "catalogId": "miyora.pepper",
+    "avatarId": "user.vrm-719da00845a24c61",
+    "sha256": "a0e93b8a9fe882280c895028190afd72bf73e2c47ec3bf14ba0275a5102281f8"
+  },
+  {
+    "catalogId": "miyora.dash",
+    "avatarId": "user.vrm-5efcdacf859e4d9c",
+    "sha256": "2a08ec1ccc81408e12ba97e2b7f35e99863583de26346b1c5384e7e64ac524e0"
+  },
+  {
+    "catalogId": "miyora.frost",
+    "avatarId": "user.vrm-923a7be701c34a19",
+    "sha256": "195e7cb483745440000e76b12eeab2313a8bec72dae815caf4bc88bc03f7fbc5"
+  },
+  {
+    "catalogId": "miyora.clover",
+    "avatarId": "user.vrm-310cceb99c804e51",
+    "sha256": "dc72246c5eeba7ecfc4111b85db21e475b8542215e6a2701253f1b269944b220"
+  },
+  {
+    "catalogId": "miyora.tora",
+    "avatarId": "user.vrm-4e7e4c4580964dd3",
+    "sha256": "864bcb3f271dbafde1c8abb1c3ce9a6a109b40ad088bfb7afe7b5ad9f546ff30"
+  },
+  {
+    "catalogId": "miyora.sol",
+    "avatarId": "user.vrm-f311845ecf124a08",
+    "sha256": "681b3e9f2a082ba3a20054a2936ffb85f4f1db81957963ad1f4bc9c2dc39a2c1"
+  },
+  {
+    "catalogId": "miyora.fawn",
+    "avatarId": "user.vrm-4fe6ad811eb347ae",
+    "sha256": "c1f0a60f09fc2ca2f8c0ccbcf073ca5dd91855db0e2a01dd55d5981f1203a543"
+  },
+  {
+    "catalogId": "miyora.gumtree",
+    "avatarId": "user.vrm-fa16e47400e4416d",
+    "sha256": "b6cf2b271b94793e51821423ac0e6cc3f5703d59b1c8208a6701e977c1c478ad"
+  },
+  {
+    "catalogId": "miyora.bandit",
+    "avatarId": "user.vrm-6b9e3f13a5294074",
+    "sha256": "52bc8adbce4d9915fd35902b34d12842f4cfaaeecd09c73fb315d9134ce79fa9"
+  },
+  {
+    "catalogId": "miyora.sled",
+    "avatarId": "user.vrm-9c3bbde4892949b3",
+    "sha256": "ae435e1bd2404bea5333a60f9846f750aaa6aad338c331311245d79b0e67af21"
+  },
+  {
+    "catalogId": "miyora.seed",
+    "avatarId": "user.vrm-a82a16059f584f01",
+    "sha256": "d7385c52a196367dc1fa4c50bb4e4eecf08db15c3140eddc011885acffe2ddd8"
+  },
+  {
+    "catalogId": "miyora.drako",
+    "avatarId": "user.vrm-2e197f2080fe4654",
+    "sha256": "3007f96e86e5761be021c04c173cbf17b779b3f1c94b9cef2d46aa8bd6ffebbd"
+  },
+  {
+    "catalogId": "miyora.saffi",
+    "avatarId": "user.vrm-7fe7e8eb432b4d43",
+    "sha256": "68e85d484d73a7a477f9edc97ac31aab85519456d95761afc9eee82501722cc3"
+  },
+  {
+    "catalogId": "miyora.lotl",
+    "avatarId": "user.vrm-3fbfbb062e804fb8",
+    "sha256": "0b7e8edaae90249e3fc5c36daebe168e421112ad70c6d177927af11328144783"
+  },
+  {
+    "catalogId": "miyora.vamp",
+    "avatarId": "user.vrm-2a1a82c561b546b7",
+    "sha256": "1960c2fa417bc5a5afa9af41814dfeea40ba55f841985a5ff7b333695b37a070"
+  },
+  {
+    "catalogId": "miyora.woolly",
+    "avatarId": "user.vrm-5185727723ef4816",
+    "sha256": "b3a392a7ec3583dd12867b75508faf8cf60b894db56cafd78dc883fddc0f727d"
+  },
+  {
+    "catalogId": "miyora.zippa",
+    "avatarId": "user.vrm-fcb50bf1e496457e",
+    "sha256": "c20ee2dd29041aa8f8bf1ebc33b00316517f7c7f06b14853ca37c294050027b1"
+  },
+  {
+    "catalogId": "miyora.cindle",
+    "avatarId": "user.vrm-854b5d9a56b545e6",
+    "sha256": "5c8145a458313837e2e6180ad6716420ef7b857c1f816cb4fa6dcfdc226f6a2c"
+  },
+  {
+    "catalogId": "miyora.shelloo",
+    "avatarId": "user.vrm-58a1ece0ead542d4",
+    "sha256": "721c1b7aef825ad78bf560f20cba4e5e22ecca80c8570c92dd93f07af2307815"
+  },
+  {
+    "catalogId": "miyora.sprigget",
+    "avatarId": "user.vrm-e0727495358e44e2",
+    "sha256": "dced9db273b0bb9085a9ec6ab5d99031e57d3643c1c4dd27cef099f09f99e531"
+  },
+  {
+    "catalogId": "miyora.vixi",
+    "avatarId": "user.vrm-dc5005e0de4f44a8",
+    "sha256": "2d099fd8584e235cbf357070f8b2e3d2b5ef29e79b7f561b67b48d40c2c7c04e"
+  },
+  {
+    "catalogId": "miyora.emberkit",
+    "avatarId": "user.vrm-06df0864c09349a7",
+    "sha256": "0f7c1b4266ca73a6bfc9835b256d77f1654fae41661dd5d2eb1b6748cc0e8b9b"
+  },
+  {
+    "catalogId": "miyora.brookit",
+    "avatarId": "user.vrm-05dc07a819894e92",
+    "sha256": "5e808819ac49ee214a87dbd4e994ee013187990e6e87cd3c62e1b8dfb590a714"
+  },
+  {
+    "catalogId": "miyora.frostkit",
+    "avatarId": "user.vrm-8305b053ad7c4357",
+    "sha256": "47cac58f164c0ef46d0533329d1ac961e501d0ce68972b9fc67cc90598bef242"
+  },
+  {
+    "catalogId": "miyora.leafkit",
+    "avatarId": "user.vrm-82dbd0df955444e4",
+    "sha256": "47379e8668a4ffecb198d9381aced5d20561d32b02926a67d3ee908692612f98"
+  },
+  {
+    "catalogId": "miyora.voltkit",
+    "avatarId": "user.vrm-5887718bf4d64715",
+    "sha256": "72f6e9b4ecb79d745b32cd9f5023bf4da3275ef785c8fc0c823bce22ba0c19ad"
+  },
+  {
+    "catalogId": "miyora.duskit",
+    "avatarId": "user.vrm-b251d531c16348a7",
+    "sha256": "f5c5238c2317e5fc39b07c9c674aa68e551681057acc0956b35144ba138187cb"
+  },
+  {
+    "catalogId": "miyora.pixkit",
+    "avatarId": "user.vrm-19ba0fb8aded426a",
+    "sha256": "bb1ea15eda3ecda1b6483706e0f18e8066d8bc34bfd2e5b215eb61394bf9eb8b"
+  },
+  {
+    "catalogId": "miyora.lumeow",
+    "avatarId": "user.vrm-ac11379d8b0f407c",
+    "sha256": "f30af2083cce4d879e082fca55c7370c1e4ebb2e322829543e4b9fb40947dfb5"
+  },
+  {
+    "catalogId": "miyora.dozzle",
+    "avatarId": "user.vrm-098e3a743c244d3a",
+    "sha256": "3c57fc1b11340f9b69b3862cfe671f157d3f9d6f2a7df1953ae4ec8e225f01e7"
+  },
+  {
+    "catalogId": "miyora.nibbly",
+    "avatarId": "user.vrm-23231302d7ee40fa",
+    "sha256": "4255cd59860262c91680bf423499ed04d83b44415de42c5e215da8a84e7fcb5f"
+  },
+  {
+    "catalogId": "miyora.bubbit",
+    "avatarId": "user.vrm-ff5c2a284d9349c7",
+    "sha256": "2cb8f4fd94d1337b2f04f1f9109a2c8eff4d79eedc4efd554a7c149a4399bbcb"
+  },
+  {
+    "catalogId": "miyora.pebbluff",
+    "avatarId": "user.vrm-6aeb935e5bd646f5",
+    "sha256": "08087d0be2191821f0bffa506a304dd6f0e8138a67921c58df921f7b70ef65f9"
+  },
+  {
+    "catalogId": "miyora.petalpup",
+    "avatarId": "user.vrm-72517f585ca1438d",
+    "sha256": "065a357cc1908a7e57cf43c9c70b23cf7ff4488cc2a31e5ee465c1f49b417f24"
+  },
+  {
+    "catalogId": "miyora.cindersnout",
+    "avatarId": "user.vrm-a7ed4bbd2dbe41a7",
+    "sha256": "0318c4065c69cae7f6d4d7542d4951187dfc8fcfeb6b607e2a43dd2481406a11"
+  },
+  {
+    "catalogId": "miyora.lumibug",
+    "avatarId": "user.vrm-36ecef0827bf4ae7",
+    "sha256": "5a7d02e5ed87f02bfb0219fcbbda3c46f5c64bf11264b33fd32644cf96f413f5"
+  },
+  {
+    "catalogId": "miyora.frizzle",
+    "avatarId": "user.vrm-2e7ec6c71f124a25",
+    "sha256": "6d70f73e437c16c7ce8aa82d60a8675ae3f71b3bddfcaf517b6b2c957cc0e1d6"
+  },
+  {
+    "catalogId": "miyora.puffaloo",
+    "avatarId": "user.vrm-0cfe92e77fe54b65",
+    "sha256": "6feb3b5bd338d01dc543474e4aff253558583c11b73f82d91c7f83a5011c25d6"
+  },
+  {
+    "catalogId": "miyora.wispet",
+    "avatarId": "user.vrm-c82326e81a714dee",
+    "sha256": "3d5f473c709301c2095dc2cd2d4d0bf1e4fa5dd124da8cc073d13e370a49595c"
+  },
+  {
+    "catalogId": "miyora.tadpip",
+    "avatarId": "user.vrm-707ffff410fc40d1",
+    "sha256": "c3ba79136cab21d79ef35ecf758d4ed24e10679877fbc620873363db286e4238"
+  },
+  {
+    "catalogId": "miyora.magnebit",
+    "avatarId": "user.vrm-932197701e334075",
+    "sha256": "55fd93ee84197d277124816c967baaf01d9c1168964aa423103efe05553a8c47"
+  },
+  {
+    "catalogId": "miyora.bolt",
+    "avatarId": "user.vrm-5924c8e997454ddb",
+    "sha256": "9c677a08d0b2304b862df5dc30517d7d12cccd1b4cc6611f3d4aec207a900170"
+  },
+  {
+    "catalogId": "miyora.seven",
+    "avatarId": "user.vrm-ce8e2bf27b6b4c87",
+    "sha256": "673f22a20dbf19a74876df95f013fb8bf114e31722667ef50b77c7281a4108b0"
+  },
+  {
+    "catalogId": "miyora.cog",
+    "avatarId": "user.vrm-78cec5c7f75f446f",
+    "sha256": "a44cd4c923b43a728c206c2358f22f4afb9f5161b545ca63e6c7402a3e4303d5"
+  },
+  {
+    "catalogId": "miyora.vega",
+    "avatarId": "user.vrm-bf4a8ab435e24317",
+    "sha256": "b3fd4f156ea5aa844499267751fcdff163609f04ff38e6f1c0cd9389e145524d"
+  },
+  {
+    "catalogId": "miyora.pixel",
+    "avatarId": "user.vrm-685017da89e947a5",
+    "sha256": "716da7236be3f7cd758b7bc836f75541e3d0f50fc2d1b43104fcf153596076c3"
+  },
+  {
+    "catalogId": "miyora.atlas",
+    "avatarId": "user.vrm-86a46ae7b63e423d",
+    "sha256": "2fa1d3ee832029b858259bcbebc64125e30285709097c713d19e5f716131d3f2"
+  },
+  {
+    "catalogId": "miyora.nova",
+    "avatarId": "user.vrm-c11f8f4c23c04263",
+    "sha256": "667e26e39184cbcee485c0624ae0df2206aa797565c19c850b8346f3e2ad5e1a"
+  },
+  {
+    "catalogId": "miyora.gizmo",
+    "avatarId": "user.vrm-82d81c418a644beb",
+    "sha256": "009a3dd0c845fbb7c385ad91fec5ca2117d6e13af119285adff63f3850d955f8"
+  },
+  {
+    "catalogId": "miyora.echo",
+    "avatarId": "user.vrm-186fe669c602427d",
+    "sha256": "a79c9cc9130a7f8819d01685bcec27a1cb8b795da503d3f248812d6e15087235"
+  },
+  {
+    "catalogId": "miyora.rivet",
+    "avatarId": "user.vrm-e702c99e60394e14",
+    "sha256": "caf10f1c57e6424055d746dee061ae712d418166fc2797aeb5d11ad7c7bb3d55"
+  },
+  {
+    "catalogId": "miyora.chroma",
+    "avatarId": "user.vrm-ad73455614144f66",
+    "sha256": "af92daf4219e552a3e327162378358b42896a9ca2ec46946f3745f2a344c0b3a"
+  },
+  {
+    "catalogId": "miyora.servo",
+    "avatarId": "user.vrm-c68148e48bd24582",
+    "sha256": "48e427ce704b21799f50db13d8182e04f58430957d4270c95e644b1d513d5b6e"
+  },
+  {
+    "catalogId": "miyora.orbit",
+    "avatarId": "user.vrm-bc1aa255b6a644ff",
+    "sha256": "97af4cc4d143ac9044df037b539e88113c5b180bb27e7241c690fb0a323a5cc8"
+  },
+  {
+    "catalogId": "miyora.gloop",
+    "avatarId": "user.vrm-4c941d49671a47a8",
+    "sha256": "2f9e05d54effc0356a497752615415a57a6c99c6e9ace9514f92813bf48b4822"
+  },
+  {
+    "catalogId": "miyora.jelly",
+    "avatarId": "user.vrm-f19e81ef325a45db",
+    "sha256": "aabfbde5508cf769fc41dadee24274309feb4975b3494e7e0f06abcf19b4a758"
+  },
+  {
+    "catalogId": "miyora.blub",
+    "avatarId": "user.vrm-99c8638075a24bdc",
+    "sha256": "af1e4e680c89bf21933e411a5147d4d235fe7dd728c54047974fb75d0de45fe8"
+  },
+  {
+    "catalogId": "miyora.mallow",
+    "avatarId": "user.vrm-3a5195da96234eb5",
+    "sha256": "1353d6b406db66d89a284a8c6c4a00bc6f3435bae31e484848a09e0559a1eab9"
+  },
+  {
+    "catalogId": "miyora.magma",
+    "avatarId": "user.vrm-e1d40e462cdb439d",
+    "sha256": "60e92e9964405b84885559aa56912f0ec008057b399e2558d4cbca02732b70ef"
+  },
+  {
+    "catalogId": "miyora.sprout",
+    "avatarId": "user.vrm-00ef7749e0de44a3",
+    "sha256": "f8c581898a0312ee325ad22a5ced6c56ecc979b2c1761da457e1dc879a2a1a7c"
+  },
+  {
+    "catalogId": "miyora.glimmer",
+    "avatarId": "user.vrm-cd13cc5a0d58467d",
+    "sha256": "fe0de9a3a06f91f3877b0333dfd6c884e80c187c4b74f92d66a3de96b891c160"
+  },
+  {
+    "catalogId": "miyora.wizzle",
+    "avatarId": "user.vrm-a2aa9d89146d41ae",
+    "sha256": "5df476831c629ded2073030e4c7d466de9787c95cc56f316fc528c4640adc799"
+  },
+  {
+    "catalogId": "miyora.kiwi",
+    "avatarId": "user.vrm-e3c10be2fb004231",
+    "sha256": "92f21250856fbdc0f6be09c477c7c032f97777ca1926c7714636185588fd086f"
+  },
+  {
+    "catalogId": "miyora.hoot",
+    "avatarId": "user.vrm-3914c6d866884b11",
+    "sha256": "f5b603a6a99550a1e3efa5b125a2e4de0dcf2189319bff46dd8008f0f7bd621e"
+  },
+  {
+    "catalogId": "miyora.pengu",
+    "avatarId": "user.vrm-e85250b493544cae",
+    "sha256": "69b78cc27f915babe6497e347692bca5ab755e558399c275702ffd3cc112048f"
+  },
+  {
+    "catalogId": "miyora.polly",
+    "avatarId": "user.vrm-55f222037bac4283",
+    "sha256": "847bf73f07ce5cc97dc9f8b6ac02d3a97379a6ddaf298ddd47f6f5ab18dd6a79"
+  },
+  {
+    "catalogId": "miyora.corvi",
+    "avatarId": "user.vrm-ccdb2f6ad78b43d1",
+    "sha256": "3f1c1441f8c055eeb1baf37f47b815c3ab6169c4086d27ef57aabc98f9a0b2ac"
+  },
+  {
+    "catalogId": "miyora.chirp",
+    "avatarId": "user.vrm-28d13446b4ec433e",
+    "sha256": "b07d8f7a693f16532910b83a3bc9a18a130edd169ff24a35a0908712bdef38b7"
+  },
+  {
+    "catalogId": "miyora.puff",
+    "avatarId": "user.vrm-1390b60d452b4871",
+    "sha256": "c36f50fee78c9af0483c9123cc2daa16acb9d80bd040b0e6fae331425d0ad8cb"
+  },
+  {
+    "catalogId": "miyora.flare",
+    "avatarId": "user.vrm-6b9cb1138e7a4343",
+    "sha256": "d2689b7879e142388f7d55f91af620bbc0d48f695829dd0d2f622862f3daf6d7"
+  },
+  {
+    "catalogId": "miyora.dove",
+    "avatarId": "user.vrm-5e91cddd79924407",
+    "sha256": "bb966e362883f91b78af65c0f5a34cce6d36d35d89b94de64e4b8e23671f2db2"
+  },
+  {
+    "catalogId": "miyora.robin",
+    "avatarId": "user.vrm-c1718c429c7545de",
+    "sha256": "07d6b4928669676b0ae30aa71f068adde529726bdd1e5b8fb1d0fe1602118c66"
+  },
+  {
+    "catalogId": "miyora.tuko",
+    "avatarId": "user.vrm-9b68616199a542ed",
+    "sha256": "4ccbf674c50b716e141edef6ba59705f6605d319eb94b218dee8e9791d603027"
+  },
+  {
+    "catalogId": "miyora.krishna",
+    "avatarId": "user.vrm-18fcbd36f0df40c6",
+    "sha256": "10fbde686facb4275549584c107e0d7f30afa66f4112f86da83d190e2fbe8b28"
+  },
+  {
+    "catalogId": "miyora.radha",
+    "avatarId": "user.vrm-6355fe73932a46af",
+    "sha256": "63d3afb0ac9f15dfb326734291ada4a38a8b599c642721b20b1a5a26d12183b0"
+  },
+  {
+    "catalogId": "miyora.rama",
+    "avatarId": "user.vrm-83e10f91fa0d4972",
+    "sha256": "83dd422a539efe4253951ac3be8a2952292bd66ad29c96a2a81c9c09d09dc302"
+  },
+  {
+    "catalogId": "miyora.sita",
+    "avatarId": "user.vrm-75e0550b82de4e76",
+    "sha256": "87b06cbd4a82ba373933d85a7dc447941905670a586b9c8e5497ab7756086dc5"
+  },
+  {
+    "catalogId": "miyora.hanuman",
+    "avatarId": "user.vrm-13e1c2d559ac47f7",
+    "sha256": "de15a5edeb88f8cd5953c74a52bbd1c8c5b2d298ebc69f1edb336f5c384cb03d"
+  },
+  {
+    "catalogId": "miyora.ganesha",
+    "avatarId": "user.vrm-14e78152a7f04c64",
+    "sha256": "459fb2d3e1b606ea0ddc9861801cb04730e753f5470310a83818f55e64982673"
+  },
+  {
+    "catalogId": "miyora.shiva",
+    "avatarId": "user.vrm-389f04cef029433f",
+    "sha256": "2465c0f09d828b674b0651ace8d20273cecbe936aaf3e614b0bb4fbe36d5a5b9"
+  },
+  {
+    "catalogId": "miyora.parvati",
+    "avatarId": "user.vrm-8bf4f605df1f488a",
+    "sha256": "cc80008cb07f4e0699eaac3db28038a8188580cb3c35f892c5f8d7ab7268bea3"
+  },
+  {
+    "catalogId": "miyora.lakshmi",
+    "avatarId": "user.vrm-b009dc0447a1447d",
+    "sha256": "6fbe2969b55caecd99d5a3cd1eb68b8bddbde613eaa733af815c3db78991ef53"
+  },
+  {
+    "catalogId": "miyora.saraswati",
+    "avatarId": "user.vrm-67ec9495c8dd4e22",
+    "sha256": "43fe0cb672e24ffe13b1fe63de13a3ac30f416320bc491fb1d7984799f11bb80"
+  },
+  {
+    "catalogId": "miyora.arjuna",
+    "avatarId": "user.vrm-5f1e1955e194410d",
+    "sha256": "a205ef6dc644d541f48ec62ee5fa20cb5e02893498123d80a8e7bed18dffa2d3"
+  },
+  {
+    "catalogId": "miyora.gojo",
+    "avatarId": "user.vrm-afad035c6e654d6e",
+    "sha256": "7d6d81a45ee391e762bec7539e6012a4387883e15db2269c95d35521471ecee4"
+  },
+  {
+    "catalogId": "miyora.yuji",
+    "avatarId": "user.vrm-0a217ded71f4493f",
+    "sha256": "79150266965eba8394937dc61e794d435785efbd1363088e8a6e80c23a96bcc0"
+  },
+  {
+    "catalogId": "miyora.tanjiro",
+    "avatarId": "user.vrm-3c7f73e7b3b8488b",
+    "sha256": "dfb27763a4da2e818f1b79798c90ef29bf6942edc108ec58247c6305c6c8fe96"
+  },
+  {
+    "catalogId": "miyora.nezuko",
+    "avatarId": "user.vrm-1b4d543c2ce244a9",
+    "sha256": "a02ef2e8c4e31c0b4b696843b91ef098abd77c7ec3a14c576c4277bb44da19d9"
+  },
+  {
+    "catalogId": "miyora.luffy",
+    "avatarId": "user.vrm-1f5d19e0332f49d3",
+    "sha256": "d8c4340fcc4808b7518ba1c0c26ac7361c0a8167e097bdf200d27552b83ebc1e"
+  },
+  {
+    "catalogId": "miyora.zoro",
+    "avatarId": "user.vrm-d7f0d45cf73b4fa5",
+    "sha256": "bc403dd52cab08bd090cf3e895f4489c2f9907a380d5cf61c21514cbe1fef062"
+  },
+  {
+    "catalogId": "miyora.nami",
+    "avatarId": "user.vrm-a51017cc83544ab5",
+    "sha256": "4dca61c040b703e81e34fe5c4d4de1056bc5c661c4c68c247b507989074fc280"
+  },
+  {
+    "catalogId": "miyora.sanji",
+    "avatarId": "user.vrm-29b247fe46f04b08",
+    "sha256": "e020484578b561d5bcf0aa2a6171aa9f4a7b41245367d3281b4ceeffd61b5139"
+  },
+  {
+    "catalogId": "miyora.naruto",
+    "avatarId": "user.vrm-ef889eaf328e44c0",
+    "sha256": "a27c69625de153d4a760b9de5f48d5be603870a3148d0abbbcd5b6cfb28b37d8"
+  },
+  {
+    "catalogId": "miyora.sasuke",
+    "avatarId": "user.vrm-1a82bd77e76c441e",
+    "sha256": "5af716d0f800ec3fb0ae96a43f9c8c4009350141ae263a2a25f58e371cd95efa"
+  },
+  {
+    "catalogId": "miyora.goku",
+    "avatarId": "user.vrm-47e09fb80aba4995",
+    "sha256": "12dd63ff65dec2d21c5c221dc2645f23a0347b6b53e2d225ec3a52024e022684"
+  },
+  {
+    "catalogId": "miyora.vegeta",
+    "avatarId": "user.vrm-72a94b1bcd5d4316",
+    "sha256": "c0e31606a8b2a5863a7fff5f899371b44d5130b948e25a9b8379bd58279cc8b3"
+  },
+  {
+    "catalogId": "miyora.levi",
+    "avatarId": "user.vrm-2610183a2c774410",
+    "sha256": "f1e1b1045c1974ad4456a701a133b725ed85ec6fb5381601bd13237daff958ba"
+  },
+  {
+    "catalogId": "miyora.mikasa",
+    "avatarId": "user.vrm-1d11c73a8b8842f1",
+    "sha256": "10afd374712acd1a4719a2a49b51db27fec8be94546c3ed55669223f5643cc4c"
+  },
+  {
+    "catalogId": "miyora.gon",
+    "avatarId": "user.vrm-9c7ef424b89a4f9f",
+    "sha256": "d2b2d2a6adfb8e5bd7dbb89e74d7bc28761749c2d04c36c7acd7bf258e61caa3"
+  },
+  {
+    "catalogId": "miyora.killua",
+    "avatarId": "user.vrm-199b7e3ddfdd41f0",
+    "sha256": "7ee38f000bdd2998f4a54234526f0cd2dbe4dad45b15921ac2a118b5b53aca0a"
+  },
+  {
+    "catalogId": "miyora.l-lawliet",
+    "avatarId": "user.vrm-c88e691d09614713",
+    "sha256": "f0f56f1c1479cee0e8b7475c1cba48904db16a3f08f692d798da9231714fb32d"
+  },
+  {
+    "catalogId": "miyora.light",
+    "avatarId": "user.vrm-0526556403dc4805",
+    "sha256": "5786c4b5ed4083c5bf5f86e58a9102ede5511995be237b3bdd84f0c26033a758"
+  },
+  {
+    "catalogId": "miyora.ichigo",
+    "avatarId": "user.vrm-2fb3dbd655344ed5",
+    "sha256": "39e79af0b4426c2894180e70ec8f4c9a8f0002fc1a88fd9107b9bdc5b3847597"
+  },
+  {
+    "catalogId": "miyora.rukia",
+    "avatarId": "user.vrm-93dca479c1ae4ce7",
+    "sha256": "8a1daa66251e23242bd6986954dda93d3a09cd2963292a60f8c43aceedefb12a"
+  },
+  {
+    "catalogId": "miyora.saitama",
+    "avatarId": "user.vrm-efbe0f87510546de",
+    "sha256": "4444f6816ee328836458e9b30dadf7364b6e4e1b9a35466f1c7e9e48a0d813e3"
+  },
+  {
+    "catalogId": "miyora.genos",
+    "avatarId": "user.vrm-63ea6e33e2b4453c",
+    "sha256": "4d63f8c83ca09cf0d400884bb4ca680bda1e8fbbfbcbd0ff0f8e1b1ba2e8e8f1"
+  },
+  {
+    "catalogId": "miyora.denji",
+    "avatarId": "user.vrm-cc002d5a348e430c",
+    "sha256": "8771343c19c5708cb50581b856caf56674fa94dc9605d8b74f89a0bf5c17af88"
+  },
+  {
+    "catalogId": "miyora.power",
+    "avatarId": "user.vrm-337ba95528f94889",
+    "sha256": "b875d2a60bf24fee2a4c1641dfe39cb100d3bdae7310e4d5da901cbabea1b3ae"
+  },
+  {
+    "catalogId": "miyora.anya",
+    "avatarId": "user.vrm-30f6c3d8ea944f70",
+    "sha256": "347fc737250dc96e8e50208dbd6d2568562aeacf08320978f8cb00ebff0fe05a"
+  },
+  {
+    "catalogId": "miyora.yor",
+    "avatarId": "user.vrm-cea5cce4ea8c4cbb",
+    "sha256": "069aa91113c8d64f33425385b474fe9d2baa4140fdd3d4161153d62f646e3306"
+  },
+  {
+    "catalogId": "miyora.frieren",
+    "avatarId": "user.vrm-c336192c90124318",
+    "sha256": "89bc5e5177f47ad613535d68e46100c53860b45545caaf07e827addae5d9ece2"
+  },
+  {
+    "catalogId": "miyora.pikachu",
+    "avatarId": "user.vrm-8c92ea54915a4d77",
+    "sha256": "be028e951acf497d4d698cad7e754eff58964a2077d2a9e5ff5cfc9822431ddd"
+  },
+  {
+    "catalogId": "miyora.kodama-spirit",
+    "avatarId": "user.vrm-b11146bc1ce540ea",
+    "sha256": "a7588eb29bfa9fa6eded53eab87f09d31aa46bfb12d47a54333608a82e301065"
+  },
+  {
+    "catalogId": "miyora.witch-apprentice",
+    "avatarId": "user.vrm-cfb2545c29d546a3",
+    "sha256": "a79a1ede7b88990e175e03ab3ec4ae79b8d56f09af5addabcfe18a4abb44643e"
+  },
+  {
+    "catalogId": "miyora.valley-flyer",
+    "avatarId": "user.vrm-1a331f33f9104633",
+    "sha256": "4fdf0e6fcfec1b4afd6fbd4e3dce667b2fb65b19cc2f2b7cea34e6f1e102ea53"
+  },
+  {
+    "catalogId": "miyora.woodland-guardian",
+    "avatarId": "user.vrm-84282112c93e43e8",
+    "sha256": "62d86672c72b00750a1d636c52efe5d27c12dc2327b8f992afc082220f7f2beb"
+  },
+  {
+    "catalogId": "miyora.ninja-cat",
+    "avatarId": "user.vrm-f9095f940c0e4801",
+    "sha256": "e1f0cfbe788070957e9d0bf07ce269aae5a2442847d9da51efffb2fbf8ae127f"
+  },
+  {
+    "catalogId": "miyora.sun-wukong",
+    "avatarId": "user.vrm-39b9b5e99c2e4492",
+    "sha256": "b25626aaea840b2ea0adb9937c2d561872164f2a9c2b917ebd09a8a68cb6e695"
+  }
+]

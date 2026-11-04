@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.nami",
+  "name": "Nami",
+  "title": "Cat Burglar Navigator",
+  "description": "Genius navigator with flowing tangerine hair, weather-controlling staff, and sharp weather-routing senses.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sparkle",
+  "outfit": "jacket",
+  "accessories": [
+    "staff"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#ea580c",
+    "eyes": "#7c2d12",
+    "primary": "#0284c7",
+    "secondary": "#f8fafc",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1.02,
+    "headScale": 1.0,
+    "build": 0.94,
+    "limbLength": 1.05
+  },
+  "energy": 1.3,
+  "tags": [
+    "anime",
+    "avatar",
+    "navigator",
+    "nami",
+    "ocean"
+  ],
+  "personality": "shrewd",
+  "specialty": "Dynamic Routing & Traffic Navigation",
+  "catchphrase": "I don't need a map to steer this release through the storm!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#f97316",
+    "icon": "\ud83e\udded",
+    "treatName": "Tangerine",
+    "treatEmoji": "\ud83c\udf4a",
+    "feedReaction": "Sweet mikan tangerine! Fresh and energizing! \ud83c\udf4a\ud83e\udded",
+    "wakeReaction": "Checking the barometric pressure. Stormy release ahead, prepare! \ud83e\udded",
+    "petReaction": "Hehe, that will cost you 100,000 Berries! Just kidding, Chief! \ud83c\udf4a\ud83d\udc96",
+    "dialogue": {
+      "idle": "Plotting navigational routes between endpoints. Ready! \ud83e\udded",
+      "working": "Thunderbolt Tempo! Zapping high-latency bottlenecks! \u26a1\ud83c\udf4a",
+      "thinking": "Calculating wind currents and payload delivery timing... \ud83e\udd14",
+      "success": "Safe harbor! All microservices docked without a scratch! \u26f5\ud83c\udf89",
+      "error": "A sudden cyclone in the API! Altering course immediately! \ud83c\udf2a\ufe0f",
+      "sleeping": "Zzz... dreaming of giant piles of gold coins and mikan groves... \ud83c\udf19"
+    }
+  }
+}

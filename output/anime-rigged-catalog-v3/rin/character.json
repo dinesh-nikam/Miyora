@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.rin",
+  "name": "Rin",
+  "title": "Signal Hacker",
+  "description": "Reads packet captures for fun.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "twintails",
+  "eyes": "sharp",
+  "outfit": "hoodie",
+  "accessories": [
+    "headphones"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#22c55e",
+    "eyes": "#4ade80",
+    "primary": "#052e16",
+    "secondary": "#14532d",
+    "accent": "#4ade80"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "coder",
+    "cyber"
+  ],
+  "personality": "hacker",
+  "specialty": "Packet Capture Forensics",
+  "catchphrase": "Reads packet captures for fun.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#052e16",
+    "icon": "\ud83d\udcbb",
+    "treatName": "EnergyDrink",
+    "treatEmoji": "\ud83e\udd64",
+    "feedReaction": "Sour apple energy drink! Dual monitors flashing Wireshark feeds! \ud83e\udd64\ud83d\udcbb",
+    "wakeReaction": "Cracking knuckles. Slicing through promiscuous packet dumps! \ud83d\udcbb",
+    "petReaction": "Sending an encrypted green heart ascii art right to your terminal! \ud83d\udcbb\ud83d\udc9a",
+    "dialogue": {
+      "idle": "Listening to high-speed electronic beats, monitors scrolling. \ud83d\udcbb",
+      "working": "Isolating malicious payloads in raw hexadecimal packet bytes! \ud83d\udcbb\u26a1",
+      "thinking": "Spotting an anomalous TCP handshake flag sequence... \ud83e\udd14",
+      "success": "Infiltration solved! Perimeter locked, packet trace verified! \ud83d\udcbb\ud83c\udf89",
+      "error": "Dropped packet! Injecting custom probe to trace the leak! \ud83d\udd0d",
+      "sleeping": "Zzz... sleeping with headset on, neon green lights dim... \ud83c\udf19"
+    }
+  }
+}

@@ -233,5 +233,22 @@
     "companion",
     "devotional",
     "shiva"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#0284c7",
+    "icon": "🔱",
+    "treatName": "Belpatra",
+    "treatEmoji": "🌿",
+    "feedReaction": "Sacred offering accepted. Peaceful serenity restored. 🌿🔱",
+    "wakeReaction": "The third eye opens upon the dance of creation and code. 🔱",
+    "petReaction": "Tranquil blessings flow into your creative flow, Chief. 🔱✨",
+    "dialogue": {
+      "idle": "Standing in calm stillness. Ready to begin, Chief. 🔱",
+      "working": "The Tandava dance dissolves legacy debt into elegant forms. 🔱⚡",
+      "thinking": "Deep meditation uncovers the root of all complexity... 🤔",
+      "success": "Perfect equilibrium achieved. The architecture stands eternal. 🔱🎉",
+      "error": "Dissolution precedes creation. We refine and rebuild. 🧘",
+      "sleeping": "In deep samadhi on Mount Kailash... 🌙🔱"
+    }
+  }
 }

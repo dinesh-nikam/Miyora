@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.clover",
+  "name": "Clover",
+  "title": "Lucky Bunny",
+  "description": "Somehow every test passes on the first try near her.",
+  "body": "beast",
+  "ears": "bunny",
+  "tail": "bunny",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "tunic",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fafaf9",
+    "hair": "#e7e5e4",
+    "eyes": "#22c55e",
+    "primary": "#4ade80",
+    "secondary": "#14532d",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "bunny",
+    "lucky"
+  ],
+  "personality": "lucky",
+  "specialty": "Four-Leaf Test Luck",
+  "catchphrase": "Somehow every test passes on the first try near her.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#4ade80",
+    "icon": "\ud83c\udf40",
+    "treatName": "SweetClover",
+    "treatEmoji": "\ud83c\udf3f",
+    "feedReaction": "Sweet four-leaf clover stem! Emerald ears wiggle with fortune! \ud83c\udf3f\ud83c\udf40",
+    "wakeReaction": "Hopping into the room carrying a lucky four-leaf clover in mouth! \ud83c\udf40",
+    "petReaction": "Gentle bunny headbutt transfers lucky green test blessings! \ud83c\udf40\ud83d\udc96",
+    "dialogue": {
+      "idle": "Nibbling sweet clover blossoms in a sunny meadow patch. \ud83c\udf40",
+      "working": "Sprinkling pure Irish test luck over brittle integration suites! \ud83c\udf40\u26a1",
+      "thinking": "Wiggling nose... sensing a lucky path through the race condition... \ud83e\udd14",
+      "success": "FIRST-TRY PASS! 100% green without a single flaky retry! \ud83c\udf40\ud83c\udf89",
+      "error": "A rainy cloud passed! Unfurling a giant four-leaf umbrella! \ud83c\udf40",
+      "sleeping": "Zzz... sleeping tucked inside a lucky horseshoe nest... \ud83c\udf19"
+    }
+  }
+}

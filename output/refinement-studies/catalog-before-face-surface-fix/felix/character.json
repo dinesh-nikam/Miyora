@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.felix",
+  "name": "Felix",
+  "title": "Clockwork Tinkerer",
+  "description": "Cannot leave a gear un-greased or a test un-run.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "round",
+  "outfit": "overalls",
+  "accessories": [
+    "goggles",
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#c2410c",
+    "eyes": "#92400e",
+    "primary": "#92400e",
+    "secondary": "#44403c",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.2,
+  "tags": [
+    "maker",
+    "steampunk"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

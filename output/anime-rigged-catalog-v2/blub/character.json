@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.blub",
+  "name": "Blub",
+  "title": "Ocean Slime",
+  "description": "Splashes into deep dives.",
+  "body": "slime",
+  "ears": "fin",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#38bdf8",
+    "hair": "#0ea5e9",
+    "eyes": "#082f49",
+    "primary": "#38bdf8",
+    "secondary": "#0284c7",
+    "accent": "#f0f9ff"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "slime",
+    "ocean"
+  ],
+  "personality": "fluid",
+  "specialty": "Dynamic Elasticity",
+  "catchphrase": "Wobbling through edge cases smoothly."
+}

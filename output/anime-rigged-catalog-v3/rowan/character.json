@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.rowan",
+  "name": "Rowan",
+  "title": "Forest Ranger",
+  "description": "Tracks every branch in the repository forest.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "ponytail",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#c68863",
+    "hair": "#7c2d12",
+    "eyes": "#15803d",
+    "primary": "#166534",
+    "secondary": "#78350f",
+    "accent": "#a3e635"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "nature",
+    "fantasy"
+  ],
+  "personality": "patient",
+  "specialty": "Forest Branch Management & Pruning",
+  "catchphrase": "Pruning overgrown git trees with forest ranger patience.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#166534",
+    "icon": "\ud83c\udf32",
+    "treatName": "TrailMix",
+    "treatEmoji": "\ud83e\udd5c",
+    "feedReaction": "Nutrient-dense mountain trail mix! Ready to trek through repos! \ud83e\udd5c\ud83c\udf32",
+    "wakeReaction": "Dawn filters through the pine needles. Ranger patrol begins! \ud83c\udf32",
+    "petReaction": "Warm handshake and a pine cone token of enduring friendship! \ud83c\udf32\u2728",
+    "dialogue": {
+      "idle": "Checking topographic maps of our branch topology. Clear. \ud83c\udf32",
+      "working": "Pruning dead dangling branches and tending healthy roots! \ud83c\udf32\u26a1",
+      "thinking": "Listening to the rustle of leaves to identify deadwood... \ud83e\udd14",
+      "success": "Canopy thriving! The repository forest stands tall and green! \ud83c\udf32\ud83c\udf89",
+      "error": "Tangled underbrush detected! Clearing the trail with care! \ud83e\ude93",
+      "sleeping": "Zzz... hammock swaying between two ancient cedar boughs... \ud83c\udf19"
+    }
+  }
+}

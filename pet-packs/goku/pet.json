@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "goku"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#f97316",
+    "icon": "🐉",
+    "treatName": "Feast",
+    "treatEmoji": "🍚",
+    "feedReaction": "WAHOO! Thirty bowls of rice devoured in seconds! Full Ki! 🍚🔥",
+    "wakeReaction": "Hey! It's me, Goku! Let's train hard and write awesome code! 🐉",
+    "petReaction": "Hahaha! You're strong, Chief! I love sparring with you! 🐉💖",
+    "dialogue": {
+      "idle": "Stretching out hamstrings. Ready to test our limits, Chief! 🐉",
+      "working": "KAMEHAMEHA! Blasting through high-load server stress tests! 💥⚡",
+      "thinking": "Sense someone strong in the call stack... who is it? 🤔",
+      "success": "SUPER SAIYAN DEPLOYMENT! We went way beyond our limits! 🐉🎉",
+      "error": "Haha! Now that's a tough bug! It's getting exciting! 🔥",
+      "sleeping": "Zzz... sleeping with a full belly after gravity training... 🌙"
+    }
+  }
 }

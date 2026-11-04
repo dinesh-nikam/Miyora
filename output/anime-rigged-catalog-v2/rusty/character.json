@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.rusty",
+  "name": "Rusty",
+  "title": "Red Panda Ranger",
+  "description": "Patrols the treetops of your dependency graph.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#c2410c",
+    "hair": "#fef3c7",
+    "eyes": "#451a03",
+    "primary": "#166534",
+    "secondary": "#78350f",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "red-panda",
+    "nature"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

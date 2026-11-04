@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.mallow",
+  "name": "Mallow",
+  "title": "Marshmallow Slime",
+  "description": "Soft, slow, and impossibly cozy.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [
+    "beanie"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fef3c7",
+    "hair": "#fde68a",
+    "eyes": "#78350f",
+    "primary": "#fef3c7",
+    "secondary": "#fde68a",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.6,
+  "tags": [
+    "slime",
+    "cozy"
+  ],
+  "personality": "fluid",
+  "specialty": "Dynamic Elasticity",
+  "catchphrase": "Wobbling through edge cases smoothly."
+}

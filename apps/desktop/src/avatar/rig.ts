@@ -17,6 +17,9 @@ import type { CharacterSpec, Pattern } from "./types";
 
 export type MouthShape = "smile" | "grin" | "open" | "flat" | "frown";
 export const MOUTH_SHAPES: readonly MouthShape[] = ["smile", "grin", "open", "flat", "frown"];
+/** `happy` = closed ^^ arcs, `closed` = sleeping curves, `star` = sparkle, `teary` = open with a tear. */
+export type EyeShape = "open" | "happy" | "closed" | "star" | "teary";
+export const EYE_SHAPES: readonly EyeShape[] = ["open", "happy", "closed", "star", "teary"];
 
 export interface CharacterRig {
   spec: CharacterSpec;
@@ -36,6 +39,7 @@ export interface CharacterRig {
   kneeL: THREE.Object3D;
   kneeR: THREE.Object3D;
   handR: THREE.Object3D;
+  handL: THREE.Object3D;
   tail: THREE.Object3D[];
   wingL: THREE.Object3D | null;
   wingR: THREE.Object3D | null;
@@ -45,6 +49,8 @@ export interface CharacterRig {
   eyes: THREE.Object3D[];
   /** Resting eye openness (sleepy eyes rest half closed). */
   eyeBaseOpen: number;
+  /** Per-shape holders, one per eye; empty for visors and spirit eyes. */
+  eyeShapes: Record<EyeShape, THREE.Object3D[]>;
   mouths: Record<MouthShape, THREE.Object3D>;
   brows: THREE.Object3D[];
   blush: THREE.MeshBasicMaterial[];
@@ -657,54 +663,79 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
   const scleraMat = isGenos ? kit.flat("#0f172a") : kit.flat("#fbfbff");
   const irisDarkMat = isGenos ? kit.flat("#020617") : kit.flat(shade(p.eyes, BLACK, 0.5));
   const irisLightMat = isGenos ? kit.flat("#fef08a") : kit.flat(shade(p.eyes, WHITE, 0.4));
+  const eyeShapes = Object.fromEntries(EYE_SHAPES.map((shape) => [shape, [] as THREE.Object3D[]])) as Record<EyeShape, THREE.Object3D[]>;
+  const starMat = kit.flat("#fde047");
+  const tearMat = kit.flat("#7dd3fc", 0.85);
+  /** Expression variants share the eye anchor; `applyToRig` shows one at a time. */
+  const addEyeShapes = (group: THREE.Object3D, open: THREE.Object3D, size: number, side: number, arcMat: THREE.Material) => {
+    const happy = joint(group, "eye:happy");
+    kit.mesh(torus(size * 0.72, size * 0.15, Math.PI), arcMat, happy, [0, -size * 0.28, 0.004]);
+    const closed = joint(group, "eye:closed");
+    kit.mesh(torus(size * 0.72, size * 0.12, Math.PI), arcMat, closed, [0, size * 0.18, 0.004], { rotation: [0, 0, Math.PI] });
+    const star = joint(group, "eye:star");
+    kit.mesh(disc(size * 0.98), starMat, star, [0, 0, 0.004], { scale: [0.3, 1, 1] });
+    kit.mesh(disc(size * 0.98), starMat, star, [0, 0, 0.004], { scale: [1, 0.3, 1] });
+    kit.mesh(disc(size * 0.3), shineMat, star, [0, 0, 0.005]);
+    const teary = joint(group, "eye:teary");
+    kit.mesh(disc(size * 0.22), tearMat, teary, [side * size * 0.6, -size * 1.08, 0.006], { scale: [0.75, 1.3, 1] });
+    for (const holder of [happy, closed, star, teary]) holder.visible = false;
+    eyeShapes.open.push(open);
+    eyeShapes.happy.push(happy);
+    eyeShapes.closed.push(closed);
+    eyeShapes.star.push(star);
+    eyeShapes.teary.push(teary);
+  };
   const buildEye = (x: number, size: number, tilt: number) => {
     const group = joint(headCenter, "eye", x, eyeY, faceZ(x, eyeY));
     group.rotation.y = Math.asin(Math.max(-0.9, Math.min(0.9, x / R))) * 0.9;
     group.rotation.z = tilt;
+    const open = joint(group, "eye:open");
     const squash = spec.eyes === "sharp" ? 0.72 : spec.eyes === "sleepy" ? 1.0 : 1.2;
+    const side = x === 0 ? 1 : Math.sign(x);
     if (isRobot) {
-      kit.mesh(disc(size * 1.12), rimMat, group, [0, 0, -0.001], { scale: [0.86, squash, 1] });
-      kit.mesh(disc(size), irisMat, group, [0, 0, 0], { scale: [0.8, squash, 1] });
-      kit.mesh(disc(size * 0.48), pupilMat, group, [0, -size * 0.08, 0.001], { scale: [0.85, squash, 1] });
-      kit.mesh(disc(size * 0.27), shineMat, group, [-size * 0.28, size * 0.36 * squash, 0.002]);
+      kit.mesh(disc(size * 1.12), rimMat, open, [0, 0, -0.001], { scale: [0.86, squash, 1] });
+      kit.mesh(disc(size), irisMat, open, [0, 0, 0], { scale: [0.8, squash, 1] });
+      kit.mesh(disc(size * 0.48), pupilMat, open, [0, -size * 0.08, 0.001], { scale: [0.85, squash, 1] });
+      kit.mesh(disc(size * 0.27), shineMat, open, [-size * 0.28, size * 0.36 * squash, 0.002]);
+      addEyeShapes(group, open, size, side, kit.toon(p.eyes, { emissive: 1 }));
       eyes.push(group);
       return;
     }
-    const side = x === 0 ? 1 : Math.sign(x);
     // Layered anime eye, back to front.
-    kit.mesh(disc(size * 1.06), scleraMat, group, [0, 0, -0.003], { scale: [1, squash * 0.94, 1] });
-    kit.mesh(disc(size * 0.88), irisDarkMat, group, [0, -size * 0.04, -0.002], { scale: [0.8, squash, 1] });
-    kit.mesh(disc(size * 0.74), irisMat, group, [0, -size * 0.07, -0.001], { scale: [0.8, squash * 0.98, 1] });
-    kit.mesh(disc(size * 0.56, Math.PI, Math.PI), irisLightMat, group, [0, -size * 0.12, 0], { scale: [0.8, squash * 0.95, 1] });
+    kit.mesh(disc(size * 1.06), scleraMat, open, [0, 0, -0.003], { scale: [1, squash * 0.94, 1] });
+    kit.mesh(disc(size * 0.88), irisDarkMat, open, [0, -size * 0.04, -0.002], { scale: [0.8, squash, 1] });
+    kit.mesh(disc(size * 0.74), irisMat, open, [0, -size * 0.07, -0.001], { scale: [0.8, squash * 0.98, 1] });
+    kit.mesh(disc(size * 0.56, Math.PI, Math.PI), irisLightMat, open, [0, -size * 0.12, 0], { scale: [0.8, squash * 0.95, 1] });
     if (isPower) {
-      kit.mesh(roundedBox(size * 0.42, size * 0.1, 0.005, 0.002), kit.flat("#ef4444"), group, [0, -size * 0.03, 0.002]);
-      kit.mesh(roundedBox(size * 0.1, size * 0.42, 0.005, 0.002), kit.flat("#ef4444"), group, [0, -size * 0.03, 0.002]);
-      kit.mesh(disc(size * 0.12), kit.flat("#fbbf24"), group, [0, -size * 0.03, 0.0025]);
+      kit.mesh(roundedBox(size * 0.42, size * 0.1, 0.005, 0.002), kit.flat("#ef4444"), open, [0, -size * 0.03, 0.002]);
+      kit.mesh(roundedBox(size * 0.1, size * 0.42, 0.005, 0.002), kit.flat("#ef4444"), open, [0, -size * 0.03, 0.002]);
+      kit.mesh(disc(size * 0.12), kit.flat("#fbbf24"), open, [0, -size * 0.03, 0.0025]);
     } else {
-      kit.mesh(disc(size * 0.34), pupilMat, group, [0, -size * 0.03, 0.001], { scale: [0.6, squash * 1.05, 1] });
+      kit.mesh(disc(size * 0.34), pupilMat, open, [0, -size * 0.03, 0.001], { scale: [0.6, squash * 1.05, 1] });
     }
-    kit.mesh(disc(size * 0.24), shineMat, group, [-side * size * 0.24, size * 0.3 * squash, 0.002]);
-    kit.mesh(disc(size * 0.1), shineMat, group, [side * size * 0.22, -size * 0.34 * squash, 0.002]);
+    kit.mesh(disc(size * 0.24), shineMat, open, [-side * size * 0.24, size * 0.3 * squash, 0.002]);
+    kit.mesh(disc(size * 0.1), shineMat, open, [side * size * 0.22, -size * 0.34 * squash, 0.002]);
     if (spec.eyes === "sparkle") {
-      kit.mesh(disc(size * 0.16), shineMat, group, [side * size * 0.3, size * 0.4, 0.003], { scale: [0.35, 1.5, 1] });
-      kit.mesh(disc(size * 0.16), shineMat, group, [side * size * 0.3, size * 0.4, 0.003], { scale: [1.5, 0.35, 1] });
+      kit.mesh(disc(size * 0.16), shineMat, open, [side * size * 0.3, size * 0.4, 0.003], { scale: [0.35, 1.5, 1] });
+      kit.mesh(disc(size * 0.16), shineMat, open, [side * size * 0.3, size * 0.4, 0.003], { scale: [1.5, 0.35, 1] });
     }
     // Upper lash line with an outer flick, and a short lower lash.
-    kit.mesh(torus(size * 0.98, size * 0.13, Math.PI * 0.86), lashMat, group, [0, 0, 0.003], {
+    kit.mesh(torus(size * 0.98, size * 0.13, Math.PI * 0.86), lashMat, open, [0, 0, 0.003], {
       rotation: [0, 0, Math.PI * 0.07],
       scale: [1.05, squash * 0.95, 0.35],
     });
-    kit.mesh(cone(size * 0.11, size * 0.34, 6), lashMat, group, [side * size * 1.0, size * 0.22 * squash, 0.003], {
+    kit.mesh(cone(size * 0.11, size * 0.34, 6), lashMat, open, [side * size * 1.0, size * 0.22 * squash, 0.003], {
       rotation: [0, 0, -side * 1.15],
       scale: [1, 1, 0.3],
     });
-    kit.mesh(torus(size * 0.92, size * 0.035, Math.PI * 0.3), lashMat, group, [0, 0, 0.003], {
+    kit.mesh(torus(size * 0.92, size * 0.035, Math.PI * 0.3), lashMat, open, [0, 0, 0.003], {
       rotation: [0, 0, side > 0 ? -Math.PI * 0.45 : -Math.PI * 0.85],
       scale: [1, squash * 0.95, 0.35],
     });
     if (spec.eyes === "sleepy") {
-      kit.mesh(disc(size * 1.12, 0, Math.PI), kit.flat(p.skin), group, [0, size * 0.12, 0.004], { scale: [1.02, 0.7, 1] });
+      kit.mesh(disc(size * 1.12, 0, Math.PI), kit.flat(p.skin), open, [0, size * 0.12, 0.004], { scale: [1.02, 0.7, 1] });
     }
+    addEyeShapes(group, open, size, side, lashMat);
     eyes.push(group);
   };
   if (spec.eyes === "visor") {
@@ -814,6 +845,7 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
     kneeL: leftLeg.knee,
     kneeR: rightLeg.knee,
     handR: right.hand,
+    handL: left.hand,
     tail,
     wingL,
     wingR,
@@ -822,6 +854,7 @@ export function buildCharacter(spec: CharacterSpec): CharacterRig {
     hairSway,
     eyes,
     eyeBaseOpen: spec.eyes === "sleepy" && isRobot ? 0.6 : 1,
+    eyeShapes,
     mouths,
     brows,
     blush,
@@ -1465,6 +1498,39 @@ interface AccessoryAnchors {
   furred: boolean;
 }
 
+/**
+ * Tall tiered temple crown (mukuta) with a sunburst halo behind the head, as
+ * worn throughout the deity-inspired pack art.
+ */
+function buildTempleCrown(kit: Kit, headCenter: THREE.Object3D, R: number, topY: number, accent: string): void {
+  const gold = kit.toon(GOLD_COLOR, { emissive: 0.3 });
+  const deepGold = kit.toon(shade(GOLD_COLOR, BLACK, 0.18), { emissive: 0.15 });
+  const crown = joint(headCenter, "templeCrown", 0, topY - R * 0.08, 0);
+  kit.mesh(cylinder(R * 0.66, R * 0.7, R * 0.22, 28), gold, crown, [0, 0, 0], { outline: OUTLINE });
+  kit.mesh(cylinder(R * 0.5, R * 0.64, R * 0.34, 24), deepGold, crown, [0, R * 0.27, -R * 0.02], { outline: OUTLINE * 0.6 });
+  kit.mesh(cylinder(R * 0.3, R * 0.5, R * 0.32, 20), gold, crown, [0, R * 0.58, -R * 0.03], { outline: OUTLINE * 0.6 });
+  kit.mesh(cone(R * 0.2, R * 0.5, 16), gold, crown, [0, R * 0.98, -R * 0.03], { outline: OUTLINE * 0.6 });
+  kit.mesh(sphere(R * 0.08), gold, crown, [0, R * 1.26, -R * 0.03]);
+  // Ornate front crest with two jewels.
+  kit.mesh(sphere(R * 0.36), gold, crown, [0, R * 0.34, R * 0.5], { scale: [1, 1.15, 0.22], outline: OUTLINE * 0.5 });
+  kit.mesh(sphere(R * 0.09), kit.toon(accent, { emissive: 0.7 }), crown, [0, R * 0.42, R * 0.59], { scale: [0.8, 1.1, 0.5] });
+  kit.mesh(sphere(R * 0.07), kit.toon("#dc2626", { emissive: 0.5 }), crown, [0, R * 0.05, R * 0.7], { scale: [1, 1, 0.5] });
+  for (const side of [1, -1]) {
+    kit.mesh(sphere(R * 0.16), gold, crown, [side * R * 0.5, R * 0.2, R * 0.36], { scale: [0.6, 1, 0.25], outline: OUTLINE * 0.4 });
+  }
+  // Sunburst halo behind the head.
+  const halo = joint(headCenter, "halo", 0, R * 0.25, -R * 0.75);
+  kit.mesh(torus(R * 1.28, R * 0.08), gold, halo, [0, 0, 0], { outline: OUTLINE * 0.4 });
+  kit.mesh(torus(R * 1.12, R * 0.035), deepGold, halo, [0, 0, 0.002]);
+  const rays = 18;
+  for (let i = 0; i < rays; i += 1) {
+    const angle = (i / rays) * Math.PI * 2;
+    kit.mesh(cone(R * 0.07, R * 0.2, 4), gold, halo, [Math.cos(angle) * R * 1.42, Math.sin(angle) * R * 1.42, 0], {
+      rotation: [0, 0, angle - Math.PI / 2],
+    });
+  }
+}
+
 function buildAccessories(kit: Kit, spec: CharacterSpec, a: AccessoryAnchors): void {
   const p = spec.palette;
   const { headCenter, chest, neck, spine, handR, handL, R, d } = a;
@@ -1545,6 +1611,10 @@ function buildAccessories(kit: Kit, spec: CharacterSpec, a: AccessoryAnchors): v
       }
       case "crown": {
         const gold = kit.toon(GOLD_COLOR, { emissive: 0.25 });
+        if (spec.category === "deity_inspired") {
+          buildTempleCrown(kit, headCenter, R, topY, p.accent);
+          break;
+        }
         kit.mesh(cylinder(R * 0.5, R * 0.45, R * 0.22, 24, ), gold, headCenter, [0, topY + R * 0.05, 0], { outline: OUTLINE });
         for (let i = 0; i < 5; i += 1) {
           const angle = (i / 5) * Math.PI * 2;
@@ -1891,30 +1961,127 @@ function buildAccessories(kit: Kit, spec: CharacterSpec, a: AccessoryAnchors): v
     kit.mesh(cylinder(0.016, 0.016, 0.12, 12), kit.toon("#ffd700", { emissive: 0.4 }), wukongStaff, [0, -wsLen * 0.26, 0]);
   }
 
-  // Krishna: Peacock feather in golden crown + golden Bansuri flute
+  // Devotional regalia from the pack art: red tilak and a gold necklace.
+  if (spec.tags.includes("devotional")) {
+    const tilakY = eyeY + R * 0.42;
+    const tilak = joint(headCenter, "tilak", 0, tilakY, faceZ(0, tilakY));
+    if (isShiva) {
+      for (const row of [-1, 0, 1]) {
+        kit.mesh(roundedBox(R * 0.42, R * 0.035, 0.004, 0.002), kit.flat("#f8fafc"), tilak, [0, row * R * 0.065, 0.001]);
+      }
+      kit.mesh(disc(R * 0.05), kit.flat("#dc2626"), tilak, [0, 0, 0.003], { scale: [0.7, 1.2, 1] });
+    } else {
+      kit.mesh(roundedBox(R * 0.05, R * 0.2, 0.004, 0.002), kit.flat("#dc2626"), tilak, [0, 0, 0.002]);
+      kit.mesh(disc(R * 0.04), kit.flat("#facc15"), tilak, [0, -R * 0.12, 0.003]);
+    }
+    if (hasHands) {
+      const gold = kit.toon(GOLD_COLOR, { emissive: 0.25 });
+      kit.mesh(torus(d.torsoR * 0.78, 0.008), gold, chest, [0, d.torsoH * 0.82, d.torsoR * 0.18], { rotation: [Math.PI / 2 + 0.55, 0, 0] });
+      kit.mesh(torus(d.torsoR * 0.92, 0.006), gold, chest, [0, d.torsoH * 0.72, d.torsoR * 0.26], { rotation: [Math.PI / 2 + 0.75, 0, 0] });
+      kit.mesh(sphere(0.016), kit.toon("#dc2626", { emissive: 0.4 }), chest, [0, d.torsoH * 0.6, d.torsoR * 0.95], { scale: [1, 1.2, 0.6] });
+    }
+  }
+
+  // Krishna: Peacock feather tucked into the temple crown + golden Bansuri flute
   if (isKrishna) {
-    const kCrown = joint(headCenter, "krishnaCrown", 0, topY + R * 0.08, 0);
-    kit.mesh(cylinder(R * 0.55, R * 0.48, R * 0.28, 20), kit.toon("#ffd700", { emissive: 0.3 }), kCrown, [0, 0, 0], { outline: OUTLINE * 0.4 });
-    const feather = joint(kCrown, "peacockFeather", R * 0.18, R * 0.22, -R * 0.05);
-    feather.rotation.set(-0.2, 0.3, 0.4);
-    kit.mesh(sphere(R * 0.22), kit.toon("#059669"), feather, [0, R * 0.18, 0], { scale: [0.55, 1.4, 0.2], outline: OUTLINE * 0.3 });
-    kit.mesh(sphere(R * 0.1), kit.toon("#0284c7"), feather, [0, R * 0.24, 0.01], { scale: [0.6, 1.1, 0.2] });
+    const feather = joint(headCenter, "peacockFeather", R * 0.42, topY + R * 0.7, -R * 0.05);
+    feather.rotation.set(-0.15, 0.3, -0.35);
+    kit.mesh(sphere(R * 0.26), kit.toon("#059669"), feather, [0, R * 0.2, 0], { scale: [0.55, 1.45, 0.2], outline: OUTLINE * 0.3 });
+    kit.mesh(sphere(R * 0.13), kit.toon("#0284c7"), feather, [0, R * 0.3, 0.012], { scale: [0.65, 1, 0.2] });
+    kit.mesh(sphere(R * 0.06), kit.toon("#1e3a8a"), feather, [0, R * 0.3, 0.02], { scale: [0.7, 1, 0.2] });
     const flute = joint(chest, "flute", 0, d.torsoH * 0.48, d.torsoR * 0.85);
     flute.rotation.set(0.15, 0, 0.35);
     kit.mesh(cylinder(0.007, 0.007, 0.38, 8), kit.toon("#ffd700", { emissive: 0.4 }), flute, [0, 0, 0], { rotation: [0, 0, Math.PI / 2], outline: OUTLINE * 0.3 });
   }
 
-  // Ganesha: Elephant trunk + golden modak sweet
+  // Ganesha: broad flared elephant ears, single tusk, curled trunk, modak bowl
   if (isGanesha) {
-    const trunk = joint(headCenter, "ganeshaTrunk", 0, eyeY - R * 0.25, faceFront);
-    kit.mesh(cylinder(R * 0.14, R * 0.08, R * 0.48, 12), kit.toon(p.skin), trunk, [0, -R * 0.16, R * 0.08], { rotation: [0.4, 0, 0], outline: OUTLINE * 0.4 });
-    kit.mesh(sphere(R * 0.09), kit.toon(p.skin), trunk, [0, -R * 0.32, R * 0.22], { scale: [0.9, 0.8, 1.2] });
+    const skin = kit.toon(p.skin);
+    for (const side of [1, -1]) {
+      const ear = joint(headCenter, `elephantEar${side}`, side * R * 0.98, R * 0.02, -R * 0.08);
+      ear.rotation.set(0, side * 0.42, side * -0.12);
+      kit.mesh(sphere(R * 0.7), skin, ear, [side * R * 0.18, 0, 0], { scale: [0.2, 1.0, 0.9], outline: OUTLINE * 0.5 });
+      kit.mesh(sphere(R * 0.52), kit.toon(shade(p.skin, new THREE.Color("#f472b6"), 0.35)), ear, [side * R * 0.21, -R * 0.02, R * 0.06], { scale: [0.12, 0.85, 0.75] });
+    }
+    const trunk = joint(headCenter, "ganeshaTrunk", 0, eyeY - R * 0.22, faceFront);
+    // Hangs down from between the eyes, then curls outward and to the side.
+    const segments = [
+      { radius: R * 0.17, length: R * 0.42, bend: -0.15, swing: -0.1 },
+      { radius: R * 0.14, length: R * 0.38, bend: -0.45, swing: -0.35 },
+      { radius: R * 0.11, length: R * 0.3, bend: -0.85, swing: -0.45 },
+    ];
+    let parent = trunk;
+    for (const segment of segments) {
+      const link = joint(parent, "trunkLink", 0, 0, 0);
+      link.rotation.set(segment.bend, 0, segment.swing);
+      kit.mesh(cylinder(segment.radius, segment.radius * 0.82, segment.length, 12), skin, link, [0, -segment.length / 2, 0], { outline: OUTLINE * 0.4 });
+      parent = joint(link, "trunkEnd", 0, -segment.length, 0);
+    }
+    kit.mesh(sphere(R * 0.08), skin, parent, [0, 0, 0]);
+    kit.mesh(cone(R * 0.05, R * 0.26, 8), kit.toon("#fff7ed"), headCenter, [R * 0.24, eyeY - R * 0.36, faceFront - R * 0.02], {
+      rotation: [1.9, 0, 0.35],
+      outline: OUTLINE * 0.3,
+    });
     const modak = joint(handR, "modak", 0, 0.02, 0.01);
     kit.mesh(cone(0.028, 0.055, 8), kit.toon("#ffd700", { emissive: 0.3 }), modak, [0, 0.02, 0]);
+    if (handL) {
+      const bowl = joint(handL, "modakBowl", 0, 0.025, 0.02);
+      kit.mesh(new THREE.SphereGeometry(0.055, 18, 8, 0, Math.PI * 2, Math.PI / 2, Math.PI / 2), kit.toon(GOLD_COLOR, { emissive: 0.3 }), bowl, [0, 0.03, 0], { outline: OUTLINE * 0.3 });
+      for (const offset of [-0.022, 0, 0.022]) {
+        kit.mesh(cone(0.016, 0.03, 8), kit.toon("#fde68a"), bowl, [offset, 0.045, 0]);
+      }
+    }
   }
 
-  // Hanuman: Golden gada mace
+  // Shiva: crescent moon in the jata, cobra at the neck, damaru on the trishula
+  if (isShiva) {
+    const moon = joint(headCenter, "crescentMoon", -R * 0.42, topY + R * 0.42, R * 0.2);
+    kit.mesh(torus(R * 0.16, R * 0.045, Math.PI * 1.2), kit.toon("#f1f5f9", { emissive: 0.6 }), moon, [0, 0, 0], { rotation: [0, 0, 0.4] });
+    const cobra = joint(neck, "cobra", 0, 0, 0);
+    const scales = kit.toon("#0d9488");
+    kit.mesh(torus(d.torsoR * 0.72, 0.012), scales, cobra, [0, 0, 0], { rotation: [Math.PI / 2, 0, 0], outline: OUTLINE * 0.3 });
+    kit.mesh(sphere(0.022), scales, cobra, [d.torsoR * 0.6, 0.04, d.torsoR * 0.45], { scale: [1.3, 1, 0.6], outline: OUTLINE * 0.3 });
+  }
+
+  // Lakshmi: pink lotus held in the left hand
+  if (id.endsWith("lakshmi") && handL) {
+    const lotus = joint(handL, "lotus", 0, 0.03, 0.01);
+    kit.mesh(cylinder(0.004, 0.004, 0.12, 6), kit.toon("#15803d"), lotus, [0, -0.04, 0]);
+    for (let i = 0; i < 6; i += 1) {
+      const angle = (i / 6) * Math.PI * 2;
+      kit.mesh(sphere(0.022), kit.toon("#f9a8d4"), lotus, [Math.cos(angle) * 0.018, 0.035, Math.sin(angle) * 0.018], {
+        scale: [0.5, 1.1, 0.5],
+        rotation: [Math.sin(angle) * 0.5, 0, -Math.cos(angle) * 0.5],
+      });
+    }
+    kit.mesh(sphere(0.012), kit.toon("#fde047"), lotus, [0, 0.04, 0]);
+  }
+
+  // Saraswati: pearl tiara and a carved veena held across the body
+  if (id.endsWith("saraswati")) {
+    const pearl = kit.toon("#f8fafc", { emissive: 0.2 });
+    // Pearls sit on a ring just outside the head, above the bangs.
+    const ring = R * 1.17;
+    const elevation = 0.62;
+    for (let i = -5; i <= 5; i += 1) {
+      const angle = i * 0.16;
+      const lift = elevation - Math.abs(i) * 0.03;
+      kit.mesh(sphere(R * 0.06), pearl, headCenter, [ring * Math.sin(angle) * Math.cos(lift), ring * Math.sin(lift), ring * Math.cos(angle) * Math.cos(lift)]);
+    }
+    kit.mesh(sphere(R * 0.1), kit.toon("#e2e8f0", { emissive: 0.4 }), headCenter, [0, ring * Math.sin(elevation) - R * 0.12, ring * Math.cos(elevation) + R * 0.04], {
+      scale: [0.8, 1.2, 0.5],
+    });
+    const veena = joint(chest, "veena", 0, d.torsoH * 0.25, d.torsoR * 1.05);
+    veena.rotation.set(0, 0, -0.7);
+    const wood = kit.toon("#92400e");
+    kit.mesh(sphere(0.07), wood, veena, [0, -0.1, 0], { scale: [1, 0.85, 0.5], outline: OUTLINE * 0.3 });
+    kit.mesh(cylinder(0.012, 0.014, 0.34, 8), wood, veena, [0, 0.08, 0], { outline: OUTLINE * 0.3 });
+    kit.mesh(sphere(0.04), kit.toon("#b45309"), veena, [0, 0.27, 0], { outline: OUTLINE * 0.3 });
+  }
+
+  // Hanuman: lighter muzzle and golden gada mace
   if (isHanuman) {
+    kit.mesh(sphere(R * 0.36), kit.toon(shade(p.skin, WHITE, 0.35)), headCenter, [0, eyeY - R * 0.36, faceFront - R * 0.16], { scale: [1, 0.72, 0.55] });
     const hMace = joint(handR, "hanumanGada", 0, 0, 0.01);
     kit.mesh(cylinder(0.011, 0.013, 0.45, 8), kit.toon("#ffd700"), hMace, [0, 0.12, 0], { outline: OUTLINE });
     kit.mesh(sphere(0.065), kit.toon("#ffd700", { emissive: 0.3 }), hMace, [0, 0.36, 0], { outline: OUTLINE * 0.4 });
@@ -1975,5 +2142,73 @@ function buildAccessories(kit: Kit, spec: CharacterSpec, a: AccessoryAnchors): v
       kit.mesh(cylinder(0.008, 0.008, 0.38, 8), kit.toon("#00f0ff", { emissive: 0.8 }), ninjato, [0, -0.1, 0], { outline: OUTLINE * 0.3 });
       kit.mesh(cylinder(0.01, 0.01, 0.1, 8), kit.toon("#111927"), ninjato, [0, 0.12, 0]);
     }
+  }
+
+  // Yorune: a personal armillary orrery, drifting starlight, and a crescent moon.
+  if (id.endsWith("yorune")) {
+    const gold = kit.toon("#f5c542", { emissive: 0.55 });
+    const paleGold = kit.toon("#fff3c4", { emissive: 1.1 });
+    const starlight = kit.toon("#e9d5ff", { emissive: 1.6 });
+    const astral = kit.toon("#c084fc", { emissive: 1.0 });
+
+    const orrery = joint(chest, "astralOrrery", 0, d.torsoH * 0.68, -d.torsoR * 1.08);
+    const rings: Array<{ radius: number; rotation: [number, number, number]; stars: number }> = [
+      { radius: R * 1.82, rotation: [0.08, 0.22, 0.1], stars: 5 },
+      { radius: R * 1.56, rotation: [0.18, -0.55, 0.55], stars: 4 },
+      { radius: R * 1.3, rotation: [0.3, 0.62, 1.15], stars: 3 },
+    ];
+    for (const [ringIndex, ring] of rings.entries()) {
+      const ringJoint = joint(orrery, `astralRing${ringIndex}`, 0, 0, 0);
+      ringJoint.rotation.set(...ring.rotation);
+      kit.mesh(torus(ring.radius, 0.0075), gold, ringJoint, [0, 0, 0], { outline: OUTLINE * 0.3 });
+      for (let star = 0; star < ring.stars; star += 1) {
+        const angle = (star / ring.stars) * Math.PI * 2 + ringIndex * 0.7;
+        kit.mesh(
+          new THREE.OctahedronGeometry(R * 0.045),
+          star % 2 === 0 ? starlight : astral,
+          ringJoint,
+          [Math.cos(angle) * ring.radius, Math.sin(angle) * ring.radius, 0],
+          { scale: [1, 1, 0.55] },
+        );
+      }
+    }
+    // Free-floating motes use a golden-angle spiral so renders stay reproducible.
+    for (let mote = 0; mote < 9; mote += 1) {
+      const angle = mote * 2.399963;
+      const radius = R * (0.42 + (((mote * 37) % 100) / 100) * 1.35);
+      kit.mesh(
+        new THREE.OctahedronGeometry(R * 0.028),
+        mote % 3 === 0 ? paleGold : starlight,
+        orrery,
+        [Math.cos(angle) * radius, Math.sin(angle) * radius, -R * (0.1 + (mote % 4) * 0.06)],
+        { scale: [1, 1, 0.5] },
+      );
+    }
+
+    const crescent = joint(headCenter, "astralCrescent", R * 1.22, R * 0.82, -R * 0.55);
+    crescent.rotation.set(0.18, -0.42, 0.55);
+    kit.mesh(torus(R * 0.2, 0.03, Math.PI * 1.35), gold, crescent, [0, 0, 0], { outline: OUTLINE * 0.35 });
+    kit.mesh(sphere(R * 0.06), paleGold, crescent, [R * 0.1, -R * 0.07, 0]);
+
+    // A constellation stitched across the front of the coat.
+    const seam: Array<[number, number]> = [
+      [-0.34, 0.58],
+      [-0.16, 0.46],
+      [0.02, 0.56],
+      [0.18, 0.43],
+      [0.3, 0.52],
+    ];
+    const points = seam.map(([x, y]) => new THREE.Vector3(x * d.torsoR, y * d.torsoH, d.torsoR * 0.79));
+    points.forEach((point, index) => {
+      kit.mesh(new THREE.OctahedronGeometry(R * 0.028), index === 2 ? paleGold : starlight, spine, [point.x, point.y, point.z], {
+        scale: [1, 1, 0.5],
+      });
+      const next = points[index + 1];
+      if (!next) return;
+      const direction = next.clone().sub(point);
+      const middle = point.clone().add(next).multiplyScalar(0.5);
+      const thread = kit.mesh(cylinder(0.0016, 0.0016, direction.length(), 6), gold, spine, [middle.x, middle.y, middle.z]);
+      thread.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), direction.clone().normalize());
+    });
   }
 }

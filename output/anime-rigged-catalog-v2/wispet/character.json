@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.wispet",
+  "name": "Wispet",
+  "title": "Lantern Wisp",
+  "description": "A friendly ghost that haunts only the idle terminals.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#c7d2fe",
+    "hair": "#e0e7ff",
+    "eyes": "#312e81",
+    "primary": "#c7d2fe",
+    "secondary": "#a5b4fc",
+    "accent": "#22d3ee"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.7,
+  "tags": [
+    "pocket-monster",
+    "ghost"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

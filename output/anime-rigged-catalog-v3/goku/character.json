@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.goku",
+  "name": "Goku",
+  "title": "Earth-Raised Saiyan Hero",
+  "description": "Cheerful martial artist with wild black spikes, bright orange gi, navy wristbands, and limitless ki reserves.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fcd5be",
+    "hair": "#0c0a09",
+    "eyes": "#1e293b",
+    "primary": "#ea580c",
+    "secondary": "#1d4ed8",
+    "accent": "#ffd700"
+  },
+  "proportions": {
+    "height": 1.04,
+    "headScale": 1.02,
+    "build": 1.22,
+    "limbLength": 1.04
+  },
+  "energy": 1.5,
+  "tags": [
+    "anime",
+    "avatar",
+    "saiyan",
+    "goku",
+    "warrior"
+  ],
+  "personality": "cheerful",
+  "specialty": "Hyper-Scale Stress Testing",
+  "catchphrase": "This benchmark looks strong! Let's push it higher!",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#f97316",
+    "icon": "\ud83d\udc09",
+    "treatName": "Feast",
+    "treatEmoji": "\ud83c\udf5a",
+    "feedReaction": "WAHOO! Thirty bowls of rice devoured in seconds! Full Ki! \ud83c\udf5a\ud83d\udd25",
+    "wakeReaction": "Hey! It's me, Goku! Let's train hard and write awesome code! \ud83d\udc09",
+    "petReaction": "Hahaha! You're strong, Chief! I love sparring with you! \ud83d\udc09\ud83d\udc96",
+    "dialogue": {
+      "idle": "Stretching out hamstrings. Ready to test our limits, Chief! \ud83d\udc09",
+      "working": "KAMEHAMEHA! Blasting through high-load server stress tests! \ud83d\udca5\u26a1",
+      "thinking": "Sense someone strong in the call stack... who is it? \ud83e\udd14",
+      "success": "SUPER SAIYAN DEPLOYMENT! We went way beyond our limits! \ud83d\udc09\ud83c\udf89",
+      "error": "Haha! Now that's a tough bug! It's getting exciting! \ud83d\udd25",
+      "sleeping": "Zzz... sleeping with a full belly after gravity training... \ud83c\udf19"
+    }
+  }
+}

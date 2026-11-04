@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "yor"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#991b1b",
+    "icon": "🌹",
+    "treatName": "WineCake",
+    "treatEmoji": "🍷",
+    "feedReaction": "A delightful confection! My stamina is perfectly replenished. 🍷🌹",
+    "wakeReaction": "Golden needles polished. I will clean up any threat to our family. 🌹",
+    "petReaction": "Oh my! You are so kind, Chief! (Blushes warmly with sweet smile) 🌹💖",
+    "dialogue": {
+      "idle": "Arranging roses gently. Keeping our home peaceful and secure. 🌹",
+      "working": "Silent stiletto thrust! Puncturing memory leaks with lethal grace! 🌹⚡",
+      "thinking": "Pondering how to cook dinner without burning the kitchen... 🤔",
+      "success": "Target eliminated without a sound. Our home remains safe. 🌹🎉",
+      "error": "Oh dear! Did I strike too hard? I will patch it up instantly! 🩹",
+      "sleeping": "Zzz... resting peacefully dreaming of a quiet family picnic... 🌙"
+    }
+  }
 }

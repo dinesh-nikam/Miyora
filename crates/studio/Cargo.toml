@@ -1,0 +1,25 @@
+[package]
+name = "agentpet-studio"
+version = "0.1.0"
+description = "Miyora 3D Studio: provider-neutral AI 3D generation, task tracking, and local asset library."
+edition.workspace = true
+license.workspace = true
+rust-version.workspace = true
+
+[dependencies]
+agentpet-avatar = { path = "../avatar" }
+base64.workspace = true
+chrono.workspace = true
+image = { version = "0.25.10", default-features = false, features = ["png", "jpeg", "webp"] }
+keyring = { version = "3", features = ["windows-native", "apple-native", "linux-native"] }
+reqwest = { version = "0.13", features = ["blocking", "json", "multipart"] }
+rusqlite = { version = "0.32", features = ["bundled"] }
+serde.workspace = true
+serde_json.workspace = true
+sha2.workspace = true
+thiserror.workspace = true
+uuid.workspace = true
+zip.workspace = true
+
+[dev-dependencies]
+tempfile.workspace = true

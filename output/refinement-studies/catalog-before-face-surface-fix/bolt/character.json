@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.bolt",
+  "name": "Bolt",
+  "title": "Build Bot",
+  "description": "Compiles, links, and blinks happily.",
+  "body": "robot",
+  "ears": "antenna",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "visor",
+  "outfit": "plating",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#cbd5e1",
+    "hair": "#64748b",
+    "eyes": "#22d3ee",
+    "primary": "#64748b",
+    "secondary": "#334155",
+    "accent": "#22d3ee"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "robot",
+    "builder"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

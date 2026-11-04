@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.frieren",
+  "name": "Frieren",
+  "title": "Mage of the Journey",
+  "description": "Ancient elven mage with long pointed ears, white twintails, golden crescent staff, and quiet timeless patience.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "none",
+  "hair": "twintails",
+  "eyes": "sleepy",
+  "outfit": "coat",
+  "accessories": [
+    "staff",
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#e2e8f0",
+    "eyes": "#10b981",
+    "primary": "#f8fafc",
+    "secondary": "#1e293b",
+    "accent": "#f59e0b"
+  },
+  "proportions": {
+    "height": 0.92,
+    "headScale": 1.1,
+    "build": 0.9,
+    "limbLength": 0.96
+  },
+  "energy": 0.7,
+  "tags": [
+    "anime",
+    "avatar",
+    "elf",
+    "frieren",
+    "mage"
+  ],
+  "personality": "timeless",
+  "specialty": "Legacy Maintenance",
+  "catchphrase": "Take your time. A century of maintenance is nothing."
+}

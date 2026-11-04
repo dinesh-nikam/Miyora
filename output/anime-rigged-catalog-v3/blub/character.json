@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.blub",
+  "name": "Blub",
+  "title": "Ocean Slime",
+  "description": "Splashes into deep dives.",
+  "body": "slime",
+  "ears": "fin",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#38bdf8",
+    "hair": "#0ea5e9",
+    "eyes": "#082f49",
+    "primary": "#38bdf8",
+    "secondary": "#0284c7",
+    "accent": "#f0f9ff"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "slime",
+    "ocean"
+  ],
+  "personality": "aquatic",
+  "specialty": "Deep-Water Packet Compression",
+  "catchphrase": "Bloop! Compressing heavy payloads down into deep-water bubbles!",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#3b82f6",
+    "icon": "\ud83e\udee7",
+    "treatName": "BubbleTea",
+    "treatEmoji": "\ud83e\uddcb",
+    "feedReaction": "Delicious tapioca pearls! Blub bubbles with cheerful gurgles! \ud83e\uddcb\ud83e\udee7",
+    "wakeReaction": "Bloop-bloop! Rising to the surface ready to tackle big data! \ud83e\udee7",
+    "petReaction": "Gurgling happily, sending floating shiny bubbles your way! \ud83e\udee7\ud83d\udc96",
+    "dialogue": {
+      "idle": "Floating in a spherical bubble, smiling peacefully. \ud83e\udee7",
+      "working": "Squeezing bulky JSON payloads into compact binary packets! \ud83e\udee7\u26a1",
+      "thinking": "Watching bubbles float upward, measuring hydrostatic pressure... \ud83e\udd14",
+      "success": "BLOOP! 90% compression ratio achieved without data loss! \ud83e\udee7\ud83c\udf89",
+      "error": "Pop! A bubble burst! Blowing an even stronger bubble! \ud83e\udee7",
+      "sleeping": "Zzz... bobbing peacefully on the calm surface of a pool... \ud83c\udf19"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.nova",
+  "name": "Nova",
+  "title": "Helper Android",
+  "description": "Polite, precise, and always on call.",
+  "body": "robot",
+  "ears": "antenna",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "plating",
+  "accessories": [
+    "halo"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f1f5f9",
+    "hair": "#cbd5e1",
+    "eyes": "#60a5fa",
+    "primary": "#e0f2fe",
+    "secondary": "#3b82f6",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "robot",
+    "helper"
+  ],
+  "personality": "radiant",
+  "specialty": "Thermal Energy Dissipation",
+  "catchphrase": "Supernova throughput radiating cool computational heat.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f59e0b",
+    "icon": "\u2600\ufe0f",
+    "treatName": "PlasmaCell",
+    "treatEmoji": "\u26a1",
+    "feedReaction": "High-energy plasma cell consumed! Radiant cores burning bright! \u26a1\u2600\ufe0f",
+    "wakeReaction": "Solar flare sensors online! Heat pipes dissipating excess heat! \u2600\ufe0f",
+    "petReaction": "Warm radiant aura envelops you with cheerful energy, Chief! \u2600\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Cooling fans idling gently. Thermal headroom abundant. \u2600\ufe0f",
+      "working": "Pumping intense compute cycles with liquid nitrogen cooling! \u2600\ufe0f\u26a1",
+      "thinking": "Balancing thermodynamic equations for maximum boost... \ud83e\udd14",
+      "success": "Cool victory! Peak clock frequency maintained without throttling! \u2600\ufe0f\ud83c\udf89",
+      "error": "Thermal spike detected! Venting vapor through exhaust fins! \u2600\ufe0f\u26a0\ufe0f",
+      "sleeping": "Zzz... core temperature settling to ambient room warmth... \ud83c\udf19"
+    }
+  }
+}

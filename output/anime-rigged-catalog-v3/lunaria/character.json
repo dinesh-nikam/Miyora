@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.lunaria",
+  "name": "Lunaria",
+  "title": "Moon Princess",
+  "description": "Rules the night shift from a silver tower.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "fairy",
+  "hair": "long",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "crown",
+    "wand"
+  ],
+  "pattern": "stars",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#e0e7ff",
+    "eyes": "#818cf8",
+    "primary": "#312e81",
+    "secondary": "#e0e7ff",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "anime",
+    "princess"
+  ],
+  "personality": "regal",
+  "specialty": "Silver Moon Shift Sovereignty",
+  "catchphrase": "Rules the night shift from a silver tower.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#312e81",
+    "icon": "\ud83c\udf19",
+    "treatName": "MoonCake",
+    "treatEmoji": "\ud83e\udd6e",
+    "feedReaction": "Delicate white lotus mooncake! Silver tiara gleams by starlight! \ud83e\udd6e\ud83c\udf19",
+    "wakeReaction": "Gazing down from the lunar balcony. The quiet realm is at peace. \ud83c\udf19",
+    "petReaction": "A regal, gracious nod from the moon princess: You have our favor. \ud83c\udf19\u2728",
+    "dialogue": {
+      "idle": "Watching celestial tides ebb and flow across cloud realms. \ud83c\udf19",
+      "working": "Ruling over the graveyard shift with quiet, majestic order! \ud83c\udf19\u26a1",
+      "thinking": "Weaving moonbeams into immutable cryptographic contracts... \ud83e\udd14",
+      "success": "Moonlight triumph! The realm rests under a peaceful green sky! \ud83c\udf19\ud83c\udf89",
+      "error": "A shadow across the moon! Restoring lunar light with a wave! \ud83c\udf19",
+      "sleeping": "Zzz... resting on a silver crescent moon suspended in stars... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#818cf8"
+}

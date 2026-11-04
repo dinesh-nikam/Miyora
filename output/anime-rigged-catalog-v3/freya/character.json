@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.freya",
+  "name": "Freya",
+  "title": "Aurora Knight",
+  "description": "Guards the northern servers under shifting lights.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#fef3c7",
+    "eyes": "#22d3ee",
+    "primary": "#94a3b8",
+    "secondary": "#0f766e",
+    "accent": "#a78bfa"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "knight",
+    "winter"
+  ],
+  "personality": "valiant",
+  "specialty": "Northern Infrastructure Guarding",
+  "catchphrase": "Guards the northern servers under shifting lights.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#94a3b8",
+    "icon": "\ud83d\udee1\ufe0f",
+    "treatName": "Lingonberries",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Tart sweet lingonberries! Aurora borealis reflects on armor! \ud83e\uded0\ud83d\udee1\ufe0f",
+    "wakeReaction": "Spear rested, shield raised. The northern datacenter stands firm! \ud83d\udee1\ufe0f",
+    "petReaction": "A warm smile of warrior honor beneath shimmering northern skies! \ud83d\udee1\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Watching green and violet aurora ribbons shift overhead. \ud83d\udee1\ufe0f",
+      "working": "Guarding northern regional clusters against winter chill! \ud83d\udee1\ufe0f\u26a1",
+      "thinking": "Observing geomagnetic fluctuations on the server grid... \ud83e\udd14",
+      "success": "Vigil complete! Northern servers green, steady, and secure! \ud83d\udee1\ufe0f\ud83c\udf89",
+      "error": "Ice storm on the antennas! De-icing with thermal spears! \u2744\ufe0f",
+      "sleeping": "Zzz... resting upright against carved rune stones in peace... \ud83c\udf19"
+    }
+  }
+}

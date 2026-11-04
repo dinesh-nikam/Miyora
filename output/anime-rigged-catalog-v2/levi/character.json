@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.levi",
+  "name": "Levi",
+  "title": "Humanitys Strongest Captain",
+  "description": "Scout captain with crisp black undercut, white cravat, green cape, dual steel blades, and deadpan discipline.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "feather",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "jacket",
+  "accessories": [
+    "katana",
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f5ece8",
+    "hair": "#111827",
+    "eyes": "#334155",
+    "primary": "#78350f",
+    "secondary": "#15803d",
+    "accent": "#f8fafc"
+  },
+  "proportions": {
+    "height": 0.92,
+    "headScale": 1.04,
+    "build": 1.1,
+    "limbLength": 0.98
+  },
+  "energy": 1.2,
+  "tags": [
+    "anime",
+    "avatar",
+    "scout",
+    "levi",
+    "captain"
+  ],
+  "personality": "disciplined",
+  "specialty": "Code Cleanup",
+  "catchphrase": "Tidy your modules. Filthy code is unacceptable."
+}

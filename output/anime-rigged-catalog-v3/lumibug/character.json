@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.lumibug",
+  "name": "Lumibug",
+  "title": "Lantern Firefly",
+  "description": "Lights the way through long-running sessions.",
+  "body": "bird",
+  "ears": "antenna",
+  "tail": "star",
+  "wings": "fairy",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fde68a",
+    "hair": "#fef9c3",
+    "eyes": "#1c1917",
+    "primary": "#fde68a",
+    "secondary": "#84cc16",
+    "accent": "#bef264"
+  },
+  "proportions": {
+    "height": 0.82,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "pocket-monster",
+    "bug"
+  ],
+  "personality": "illuminating",
+  "specialty": "Gentle Night Light Guiding",
+  "catchphrase": "Emits a warm emerald glow to guide developers through dark logs.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#22c55e",
+    "icon": "\ud83e\udeb2",
+    "treatName": "DewSugar",
+    "treatEmoji": "\ud83d\udca7",
+    "feedReaction": "Sweet honeydew nectar! Emerald shell glows bright and warm! \ud83d\udca7\ud83e\udeb2",
+    "wakeReaction": "Opening shiny iridescent elytra wings, illuminating the desk! \ud83e\udeb2",
+    "petReaction": "Settles gently on your laptop bezel, casting soft emerald light! \ud83e\udeb2\ud83d\udc96",
+    "dialogue": {
+      "idle": "Pulsing a rhythmic, soothing emerald glow in the quiet office. \ud83e\udeb2",
+      "working": "Lighting up confusing error codes with clear emerald rays! \ud83e\udeb2\u26a1",
+      "thinking": "Adjusting focal angle of the bioluminescent lantern... \ud83e\udd14",
+      "success": "BEACON OF LIGHT! The safe path out of the maze is revealed! \ud83e\udeb2\ud83c\udf89",
+      "error": "Blown bulb filament? No, just a flicker! Glowing bright again! \ud83d\udca1",
+      "sleeping": "Zzz... tucked beneath a velvety broad sycamore leaf... \ud83c\udf19"
+    }
+  }
+}

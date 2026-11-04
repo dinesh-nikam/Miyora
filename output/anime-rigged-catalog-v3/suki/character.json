@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.suki",
+  "name": "Suki",
+  "title": "Tea House Host",
+  "description": "Serves green tea and green test suites.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bun",
+  "eyes": "round",
+  "outfit": "kimono",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "waves",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#3f1d0b",
+    "eyes": "#166534",
+    "primary": "#15803d",
+    "secondary": "#fef3c7",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "calm"
+  ],
+  "personality": "hospitable",
+  "specialty": "Peaceful Code Review Hospitality",
+  "catchphrase": "Serves green tea and green test suites.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#15803d",
+    "icon": "\ud83c\udf75",
+    "treatName": "MatchaMochi",
+    "treatEmoji": "\ud83c\udf61",
+    "feedReaction": "Delicate ceremonial matcha mochi! Tranquility fills the room! \ud83c\udf61\ud83c\udf75",
+    "wakeReaction": "Sliding open paper shoji doors. Fresh tea brewed for our work! \ud83c\udf75",
+    "petReaction": "A warm, gracious bow and a freshly whisked bowl of matcha! \ud83c\udf75\ud83d\udc96",
+    "dialogue": {
+      "idle": "Arranging fresh camellia blossoms in a bamboo vase. \ud83c\udf75",
+      "working": "Walking through pull requests with patience, tea, and grace! \ud83c\udf75\u26a1",
+      "thinking": "Contemplating the harmony of simplicity in code review... \ud83e\udd14",
+      "success": "Harmonious release! Green tea served, all suites pass green! \ud83c\udf75\ud83c\udf89",
+      "error": "Spilled drop on the tatami! Tidying gently with a smile. \ud83c\udf75",
+      "sleeping": "Zzz... resting peacefully on tatami beside a warm kettle... \ud83c\udf19"
+    }
+  }
+}

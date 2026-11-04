@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.obi",
+  "name": "Obi",
+  "title": "Market Storyteller",
+  "description": "Turns commit messages into legends.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#6b4430",
+    "hair": "#0c0a09",
+    "eyes": "#92400e",
+    "primary": "#ea580c",
+    "secondary": "#166534",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "storyteller"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

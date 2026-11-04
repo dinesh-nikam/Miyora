@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.krishna",
+  "name": "Krishna",
+  "title": "Divine Flute Avatar",
+  "description": "Sky-blue Krishna with dark curly locks, golden pitambara silk, crimson sash, peacock feather in a temple crown, and a golden flute.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "round",
+  "outfit": "robe",
+  "accessories": [
+    "crown",
+    "flower",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#8fb6e8",
+    "hair": "#1a2238",
+    "eyes": "#6b3e1f",
+    "primary": "#ffd700",
+    "secondary": "#b91c1c",
+    "accent": "#0d9488"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.12,
+    "build": 0.95,
+    "limbLength": 1.0
+  },
+  "energy": 1.2,
+  "tags": [
+    "devotional",
+    "avatar",
+    "flute",
+    "divine",
+    "krishna"
+  ],
+  "personality": "serene",
+  "specialty": "Divine System Orchestration",
+  "catchphrase": "Action without attachment ships timeless elegance.",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#7da4d4",
+    "icon": "\ud83e\ude88",
+    "treatName": "Makhan",
+    "treatEmoji": "\ud83e\uddc8",
+    "feedReaction": "Fresh churned makhan! Sweet bliss energizes the cosmos! \ud83e\uddc8\ud83e\ude88",
+    "wakeReaction": "Flute melody rises with the dawn. Ready to orchestrate harmony! \ud83e\ude88\u2728",
+    "petReaction": "A gentle blessing of peace and boundless creative joy. \ud83e\ude88\ud83d\udc96",
+    "dialogue": {
+      "idle": "Playing a quiet tune on my flute. Center your mind, Chief. \ud83e\ude88",
+      "working": "Weaving complex algorithms into harmonious divine flow. \ud83e\ude88\u26a1",
+      "thinking": "Contemplating the eternal balance of the architecture... \ud83e\udd14",
+      "success": "Divine victory! All modules reside in effortless harmony! \ud83e\ude88\ud83c\udf89",
+      "error": "A transient discord. We shall guide it back to harmony. \ud83e\ude88\u2728",
+      "sleeping": "Zzz... resting upon Vrindavan shores beneath kadamba trees... \ud83c\udf19"
+    }
+  }
+}

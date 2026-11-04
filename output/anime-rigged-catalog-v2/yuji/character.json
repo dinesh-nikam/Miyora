@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.yuji",
+  "name": "Yuji",
+  "title": "Tiger Jujutsu Vessel",
+  "description": "High-energy vessel with spiked salmon hair, iconic red hoodie insert, athletic build, and punch-ready stance.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "hoodie",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fcd5be",
+    "hair": "#fb7185",
+    "eyes": "#78350f",
+    "primary": "#0f172a",
+    "secondary": "#dc2626",
+    "accent": "#0284c7"
+  },
+  "proportions": {
+    "height": 1.02,
+    "headScale": 1.0,
+    "build": 1.12,
+    "limbLength": 1.02
+  },
+  "energy": 1.5,
+  "tags": [
+    "anime",
+    "avatar",
+    "sorcerer",
+    "yuji",
+    "brawler"
+  ],
+  "personality": "mystical",
+  "specialty": "AST Transmutation",
+  "catchphrase": "Casting clean checkmarks into the terminal.",
+  "hairTip": "#1f2937"
+}

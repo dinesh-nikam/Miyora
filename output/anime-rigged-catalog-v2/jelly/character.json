@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.jelly",
+  "name": "Jelly",
+  "title": "Berry Royal",
+  "description": "Rules the task queue from a gelatinous throne.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "crown"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#c084fc",
+    "hair": "#a855f7",
+    "eyes": "#3b0764",
+    "primary": "#c084fc",
+    "secondary": "#a855f7",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "slime",
+    "royal"
+  ],
+  "personality": "fluid",
+  "specialty": "Dynamic Elasticity",
+  "catchphrase": "Wobbling through edge cases smoothly."
+}

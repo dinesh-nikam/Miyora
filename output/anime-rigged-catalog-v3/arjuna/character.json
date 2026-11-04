@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.arjuna",
+  "name": "Arjuna",
+  "title": "Peerless Gandiva Archer",
+  "description": "Epic Pandava archer in midnight indigo armor with saffron cape, golden crest, and pinpoint cyan focus.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "ponytail",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [
+    "crown",
+    "cape",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f5d2b9",
+    "hair": "#0a0a20",
+    "eyes": "#00f0ff",
+    "primary": "#191c41",
+    "secondary": "#ff9933",
+    "accent": "#ffd700"
+  },
+  "proportions": {
+    "height": 1.05,
+    "headScale": 0.98,
+    "build": 1.12,
+    "limbLength": 1.05
+  },
+  "energy": 1.3,
+  "tags": [
+    "warrior",
+    "avatar",
+    "archer",
+    "arjuna",
+    "epic"
+  ],
+  "personality": "focused",
+  "specialty": "Targeted Unit Tests & Assertions",
+  "catchphrase": "Nothing exists between my gaze and the bullseye assertion.",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#ff9933",
+    "icon": "\ud83c\udff9",
+    "treatName": "Nectar",
+    "treatEmoji": "\ud83c\udf6f",
+    "feedReaction": "Saffron nectar! My archery focus is refreshed and lethal. \ud83c\udf6f\ud83c\udff9",
+    "wakeReaction": "Awake and vigilant. The Gandiva bow stands strung and ready! \ud83c\udff9",
+    "petReaction": "Honor and warrior brotherhood, Chief. Our aim never misses. \ud83c\udff9\u2728",
+    "dialogue": {
+      "idle": "Gandiva bow strung. Focus unbroken on the horizon, Chief. \ud83c\udff9",
+      "working": "Arrows of pinpoint logic flying directly into the bullseye! \u26a1\ud83c\udff9",
+      "thinking": "Surveying the battlefield of code... finding the clean line. \ud83e\udd14",
+      "success": "Bullseye! Every test struck with peerless precision! \ud83c\udfaf",
+      "error": "Adjusting stance! We'll strike the root cause together! \ud83d\udee1\ufe0f",
+      "sleeping": "Zzz... resting upon his chariot beneath starlit skies... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#ff9933"
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.ember",
+  "name": "Ember",
+  "title": "Fox Courier",
+  "description": "A quick-pawed fox who carries messages between your agents.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "scarf",
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e07a2f",
+    "hair": "#fff7ed",
+    "eyes": "#1e3a8a",
+    "primary": "#1f2937",
+    "secondary": "#374151",
+    "accent": "#f59e0b"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.3,
+  "tags": [
+    "fox",
+    "speedy"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

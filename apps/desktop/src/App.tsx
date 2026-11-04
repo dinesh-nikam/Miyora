@@ -1,18 +1,21 @@
-import { useCallback, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { invoke } from "@tauri-apps/api/core";
 import { invokeSafe } from "./utils/ipc";
-import { getCurrentWindow } from "@tauri-apps/api/window";
 import { open } from "@tauri-apps/plugin-dialog";
 import { CompanionRenderer, PetState, SelectedPetAnimation } from "./components/CompanionRenderer";
-import { CommandDeck, ProviderReport } from "./components/CommandDeck";
-import { CharacterStudio } from "./avatar/CharacterStudio";
-import type { AvatarHud, ResolvedAvatar } from "./avatar/types";
+import { CommandDeck, measuredWindow, quotaSummary, type ProviderReport } from "./components/CommandDeck";
+import type { AvatarHud, PetPresentation, ResolvedAvatar } from "./avatar/types";
+import { saveCompanionPreferences, useCompanionPreferences, type RenderMode } from "./settings/companionPreferences";
+import { CompanionControlsPanel } from "./settings/CompanionControlsPanel";
+import { PetOverlayFrame } from "./overlay/PetOverlayFrame";
+import { listen } from "@tauri-apps/api/event";
 
 interface RuntimeSnapshot {
   petState: PetState;
   selectedPetId: string | null;
   lastEventAt: string | null;
   isSimulated?: boolean;
+  presentation?: PetPresentation;
 }
 
 interface ProgressionSnapshot {
@@ -88,23 +91,32 @@ interface LedgerVerificationResult {
 
 const SNAPSHOT_POLL_INTERVAL_MS = 1_500;
 
+// The Pet Library loads on demand so the overlay and Den start without it.
+const PetLibrary = lazy(() => import("./avatar/CharacterStudio").then((module) => ({ default: module.CharacterStudio })));
+
+type AppTab = "den" | "sessions" | "companions" | "progress" | "settings";
+
+const APP_TABS: readonly { id: AppTab; label: string; icon: string }[] = [
+  { id: "den", label: "Den", icon: "🏛️" },
+  { id: "sessions", label: "Sessions", icon: "📊" },
+  { id: "companions", label: "Pet Library", icon: "✨" },
+  { id: "progress", label: "Progress", icon: "🔒" },
+  { id: "settings", label: "Settings", icon: "⚙️" },
+];
+
 export default function App() {
   const isOverlayWindow = new URLSearchParams(window.location.search).get("overlay") === "1";
 
   // Navigation State
-  const [activeTab, setActiveTab] = useState<"den" | "sessions" | "companions" | "progress" | "settings">("den");
+  const [activeTab, setActiveTab] = useState<AppTab>("den");
   const [isCommandDeckOpen, setIsCommandDeckOpen] = useState(false);
 
   // Core Data
-  const [renderMode, setRenderMode] = useState<"3d" | "2d">(() => {
-    try {
-      const saved = localStorage.getItem("agentpet_render_mode");
-      if (saved === "2d" || saved === "3d") return saved;
-    } catch {
-      // ignore
-    }
-    return "3d";
-  });
+  const companionPreferences = useCompanionPreferences();
+  const renderMode = companionPreferences.renderMode;
+  const setRenderMode = (mode: RenderMode) => {
+    void saveCompanionPreferences({ renderMode: mode });
+  };
   const [snapshot, setSnapshot] = useState<RuntimeSnapshot>({
     petState: "idle",
     selectedPetId: null,
@@ -127,7 +139,6 @@ export default function App() {
   // UI state
   const [runtimeError, setRuntimeError] = useState<string | null>(null);
   const [panelErrors, setPanelErrors] = useState<Record<string, string | null>>({});
-  const [busy, setBusy] = useState(false);
   const [ledgerVerifying, setLedgerVerifying] = useState(false);
 
   // Poll runtime data
@@ -226,6 +237,23 @@ export default function App() {
       void loadPacksData();
     }
   }, [isOverlayWindow, loadPacksData]);
+
+  // The tray's "Open Command Deck" shows this window, then asks it to open the deck.
+  useEffect(() => {
+    if (isOverlayWindow) return;
+    let stop: (() => void) | undefined;
+    let disposed = false;
+    listen("open-command-deck", () => setIsCommandDeckOpen(true))
+      .then((unlisten) => {
+        if (disposed) unlisten();
+        else stop = unlisten;
+      })
+      .catch((error: unknown) => console.error("[App] command deck listener unavailable:", error));
+    return () => {
+      disposed = true;
+      stop?.();
+    };
+  }, [isOverlayWindow]);
 
   // Load tab-specific data
   const loadSessionsData = useCallback(async () => {
@@ -389,22 +417,6 @@ export default function App() {
     [refreshCoreData]
   );
 
-  const handleTogglePause = useCallback(async () => {
-    setBusy(true);
-    try {
-      const updated = await invokeSafe<RuntimeSnapshot>("toggle_pet_pause");
-      if (updated.ok) {
-        setSnapshot(updated.data);
-      } else {
-        setRuntimeError(`Toggle pause failed: ${updated.error}`);
-      }
-    } catch (err: unknown) {
-      setRuntimeError(String(err));
-    } finally {
-      setBusy(false);
-    }
-  }, []);
-
   const handleImportPack = useCallback(async () => {
     try {
       const selected = await open({
@@ -427,8 +439,9 @@ export default function App() {
 
   const activePetName = selectedAnimation?.petName ?? "Aoi";
   const claudeProvider = providers.find((p) => p.providerId === "claude_code");
-  const quotaWindow = claudeProvider?.quotaStatus?.fiveHour;
-  const quotaProvenance = claudeProvider?.quotaProvenance ?? "N/A";
+  const fiveHour = claudeProvider ? measuredWindow(claudeProvider.quota, "five_hour") : null;
+  const quotaWindow = fiveHour ? { usedPercentage: 100 - fiveHour.remainingPercent, resetsAt: fiveHour.resetAt ?? undefined } : null;
+  const quotaProvenance = claudeProvider?.quota.kind === "measured" ? claudeProvider.quota.provenance : "N/A";
 
   // Real today metrics computed from real local evidence
   const totalCostToday = claudeProvider?.costUsd ?? null;
@@ -439,154 +452,19 @@ export default function App() {
       ? (totalInTokensToday ?? 0) + (totalOutTokensToday ?? 0)
       : null;
 
-  const [soundMuted, setSoundMuted] = useState<boolean>(() => {
-    return localStorage.getItem("agentpet_sound_muted") === "true";
-  });
+  const soundMuted = companionPreferences.soundMuted;
 
   const toggleSound = () => {
-    const next = !soundMuted;
-    setSoundMuted(next);
-    localStorage.setItem("agentpet_sound_muted", String(next));
+    void saveCompanionPreferences({ soundMuted: !soundMuted });
   };
-
-  const handleNextPet = useCallback(async () => {
-    if (installedPacks.length <= 1) return;
-    const currentId = snapshot.selectedPetId;
-    const currentIndex = installedPacks.findIndex(
-      (p) => p.selectionId === currentId || p.id === currentId
-    );
-    const nextIndex = (currentIndex + 1) % installedPacks.length;
-    const nextPack = installedPacks[nextIndex];
-    if (nextPack) {
-      await handleSelectPet(nextPack.selectionId);
-    }
-  }, [installedPacks, snapshot.selectedPetId, handleSelectPet]);
-
-  const handleWakePet = useCallback(async () => {
-    await refreshCoreData();
-  }, [refreshCoreData]);
 
   // -------------------------------------------------------------
   // RENDER: Overlay Window
   // -------------------------------------------------------------
+  // Pet only: controls live in the tray, global shortcuts, and Settings.
   if (isOverlayWindow) {
     return (
-      <main
-        className="agentpet-overlay-window"
-        style={{
-          width: "100vw",
-          height: "100vh",
-          backgroundColor: "transparent",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "space-between",
-          padding: "6px",
-          boxSizing: "border-box",
-          overflow: "hidden",
-        }}
-      >
-        {/* Overlay Draggable Titlebar */}
-        <div
-          className="edge shadow-pop-sm"
-          style={{
-            width: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            background: "#ffffff",
-            padding: "6px 10px",
-            cursor: "grab",
-            fontSize: "11px",
-            color: "#0a0a0a",
-            boxSizing: "border-box",
-            fontFamily: "'Space Grotesk', sans-serif",
-          }}
-          onMouseDown={() => {
-            void getCurrentWindow()
-              .startDragging()
-              .catch((err) => {
-                setRuntimeError(`Failed to drag window: ${err}`);
-              });
-          }}
-        >
-          <span style={{ fontWeight: 900, color: "#0a0a0a", letterSpacing: "0.5px" }}>
-            AGENTPET {isSimulated ? "· SIMULATED" : ""}
-          </span>
-          <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
-            <button
-              onClick={toggleSound}
-              aria-label={soundMuted ? "Unmute sounds" : "Mute sounds"}
-              title={soundMuted ? "Unmute Sounds" : "Mute Sounds"}
-              style={{
-                background: soundMuted ? "#ffffff" : "#ffd000",
-                border: "2px solid #0a0a0a",
-                borderRadius: "4px",
-                color: "#0a0a0a",
-                fontSize: "11px",
-                padding: "2px 5px",
-                cursor: "pointer",
-                fontWeight: 800,
-              }}
-            >
-              {soundMuted ? "🔇" : "🔊"}
-            </button>
-            <button
-              onClick={() => setIsCommandDeckOpen(true)}
-              aria-label="Open Command Deck"
-              title="Open Command Deck"
-              style={{
-                background: "#ffd000",
-                border: "2px solid #0a0a0a",
-                borderRadius: "4px",
-                color: "#0a0a0a",
-                fontSize: "11px",
-                padding: "2px 5px",
-                cursor: "pointer",
-                fontWeight: 900,
-              }}
-            >
-              ⚡
-            </button>
-            <button
-              onClick={handleTogglePause}
-              disabled={busy}
-              aria-label={snapshot.petState === "paused" ? "Resume companion" : "Pause companion"}
-              title={snapshot.petState === "paused" ? "Resume" : "Pause"}
-              style={{
-                background: "#00d4ff",
-                border: "2px solid #0a0a0a",
-                borderRadius: "4px",
-                color: "#0a0a0a",
-                fontSize: "10px",
-                padding: "2px 6px",
-                cursor: "pointer",
-                fontWeight: 900,
-              }}
-            >
-              {snapshot.petState === "paused" ? "▶" : "Ⅱ"}
-            </button>
-            <button
-              onClick={() => void getCurrentWindow().hide()}
-              aria-label="Hide overlay window"
-              title="Hide Overlay"
-              style={{
-                background: "#ff2db7",
-                border: "2px solid #0a0a0a",
-                borderRadius: "4px",
-                color: "#ffffff",
-                fontSize: "11px",
-                padding: "2px 6px",
-                cursor: "pointer",
-                fontWeight: 900,
-              }}
-            >
-              ×
-            </button>
-          </div>
-        </div>
-
-        {/* Center Companion Stage with Unified Status & Controls */}
+      <PetOverlayFrame>
         <CompanionRenderer
           state={snapshot.petState}
           animation={selectedAnimation}
@@ -596,30 +474,12 @@ export default function App() {
           quotaProvenance={quotaProvenance}
           size={180}
           mode={renderMode}
-          onModeToggle={setRenderMode}
-          interactive={true}
-          onDoubleClick={() => setIsCommandDeckOpen(true)}
-          onNextPet={handleNextPet}
-          onWakePet={handleWakePet}
+          presentation={snapshot.presentation}
+          interactive={false}
+          bare
           onError={setRuntimeError}
         />
-
-        {/* Command Deck Popover */}
-        <CommandDeck
-          isOpen={isCommandDeckOpen}
-          onClose={() => setIsCommandDeckOpen(false)}
-          providers={providers}
-          activePetName={activePetName}
-          activeState={snapshot.petState}
-          isSimulated={isSimulated}
-          onToggleSimulated={handleToggleSimulated}
-          onSelectPet={handleSelectPet}
-          installedPacks={installedPacks}
-          onVerifyLedger={handleVerifyLedger}
-          selectedPetId={snapshot.selectedPetId}
-          ledgerVerification={ledgerVerification}
-        />
-      </main>
+      </PetOverlayFrame>
     );
   }
 
@@ -790,15 +650,7 @@ export default function App() {
 
           {/* Navigation Center */}
           <nav style={{ display: "flex", gap: "8px" }}>
-            {(
-              [
-                { id: "den", label: "Den", icon: "🏛️" },
-                { id: "sessions", label: "Sessions", icon: "📊" },
-                { id: "companions", label: "Companions", icon: "✨" },
-                { id: "progress", label: "Progress", icon: "🔒" },
-                { id: "settings", label: "Settings", icon: "⚙️" },
-              ] as const
-            ).map((tab) => {
+            {APP_TABS.map((tab) => {
               const isActive = activeTab === tab.id;
               return (
                 <button
@@ -1025,6 +877,7 @@ export default function App() {
           boxSizing: "border-box",
         }}
       >
+
         {/* =========================================================
             TAB 1: DEN
            ========================================================= */}
@@ -1141,54 +994,54 @@ export default function App() {
               </div>
             </div>
 
-            {/* Stage Showcase Card */}
+            {/* Living Companion Sanctuary Pod (Replaces harsh square brutalist box) */}
             <div
-              className="edge-thick shadow-pop-lg"
+              className="companion-sanctuary-pod"
               style={{
-                backgroundColor: "#ffffff",
-                padding: "40px 24px",
+                background: "radial-gradient(ellipse at 50% 25%, rgba(255, 182, 193, 0.1) 0%, rgba(255, 255, 255, 0.98) 55%, rgba(241, 245, 249, 0.95) 100%)",
+                borderRadius: "36px",
+                padding: "44px 28px",
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
                 position: "relative",
+                boxShadow: "0 24px 65px -15px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(0, 0, 0, 0.04)",
+                overflow: "hidden",
+                border: "1px solid rgba(255, 255, 255, 0.9)",
               }}
             >
               {/* Top-Right Stage Mode Toggle */}
               <div style={{ position: "absolute", top: "20px", right: "20px", zIndex: 10 }}>
                 <button
                   type="button"
-                  onClick={() => {
-                    const next = renderMode === "3d" ? "2d" : "3d";
-                    setRenderMode(next);
-                    try {
-                      localStorage.setItem("agentpet_render_mode", next);
-                    } catch {}
-                  }}
-                  className="font-grotesk shadow-pop-sm shadow-pop-hover"
+                  onClick={() => setRenderMode(renderMode === "3d" ? "2d" : "3d")}
                   style={{
-                    backgroundColor: renderMode === "3d" ? "#ffd000" : "#ffffff",
-                    color: "#0a0a0a",
-                    border: "3px solid #0a0a0a",
+                    backgroundColor: renderMode === "3d" ? "rgba(250, 204, 21, 0.22)" : "rgba(15, 23, 42, 0.06)",
+                    color: renderMode === "3d" ? "#854d0e" : "#475569",
+                    border: renderMode === "3d" ? "1.5px solid #facc15" : "1.5px solid rgba(148, 163, 184, 0.3)",
                     borderRadius: "999px",
                     padding: "8px 18px",
                     fontSize: "12px",
-                    fontWeight: 900,
-                    letterSpacing: "0.05em",
+                    fontWeight: 800,
+                    letterSpacing: "0.04em",
                     cursor: "pointer",
                     display: "flex",
                     alignItems: "center",
                     gap: "8px",
+                    backdropFilter: "blur(10px)",
+                    transition: "all 0.15s ease",
                   }}
                 >
-                  <span>{renderMode === "3d" ? "🎮 3D AVATAR ACTIVE" : "🖼️ 2D SPRITE ACTIVE"}</span>
-                  <span style={{ opacity: 0.6 }}>⇄ Toggle</span>
+                  <span>{renderMode === "3d" ? "🎮 3D LIVING PET" : "🖼️ 2D SPRITE PET"}</span>
+                  <span style={{ opacity: 0.6 }}>⇄ Switch</span>
                 </button>
               </div>
 
               {/* Pet Renderer Stage */}
               <CompanionRenderer
                 state={snapshot.petState}
+                presentation={snapshot.presentation}
                 animation={selectedAnimation}
                 avatar={avatar}
                 hud={avatarHud}
@@ -1217,22 +1070,22 @@ export default function App() {
                 </div>
                 <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap", justifyContent: "center" }}>
                   <span
-                    className="font-grotesk shadow-pop-sm"
                     style={{
-                      backgroundColor: "#00d4ff",
-                      color: "#0a0a0a",
-                      border: "3px solid #0a0a0a",
+                      backgroundColor: "rgba(56, 189, 248, 0.18)",
+                      color: "#0369a1",
+                      border: "1.5px solid rgba(56, 189, 248, 0.5)",
                       borderRadius: "999px",
                       padding: "4px 18px",
-                      fontSize: "13px",
-                      fontWeight: 900,
+                      fontSize: "12px",
+                      fontWeight: 800,
                       letterSpacing: "0.08em",
                       textTransform: "uppercase",
+                      boxShadow: "0 4px 12px rgba(56, 189, 248, 0.15)",
                     }}
                   >
                     STATE: {snapshot.petState.toUpperCase().replaceAll("_", " ")}
                   </span>
-                  <span className="font-grotesk" style={{ fontSize: "12px", color: "#0a0a0a", fontWeight: 700 }}>
+                  <span style={{ fontSize: "12px", color: "#475569", fontWeight: 700 }}>
                     ⚡ Double-click companion to summon Command Deck
                   </span>
                 </div>
@@ -1399,10 +1252,7 @@ export default function App() {
                     : "N/A"}
                 </div>
                 <div className="font-grotesk" style={{ fontSize: "11px", color: "rgba(255,255,255,0.7)" }}>
-                  {claudeProvider?.quotaUpdatedSecondsAgo !== undefined &&
-                  claudeProvider?.quotaUpdatedSecondsAgo !== null
-                    ? `Updated ${claudeProvider.quotaUpdatedSecondsAgo}s ago`
-                    : "No statusline hook payload received"}
+                  {claudeProvider ? quotaSummary(claudeProvider.quota) : "Claude Code not detected"}
                 </div>
               </div>
             </div>
@@ -1705,13 +1555,15 @@ export default function App() {
             {renderPanelError("avatar")}
             <div>
               <h2 className="display" style={{ fontSize: "clamp(32px, 5vw, 64px)", color: "#0a0a0a", margin: "0 0 8px 0" }}>
-                3D CHARACTER <span className="highlight-magenta">STUDIO</span>
+                PET <span className="highlight-magenta">LIBRARY</span>
               </h2>
               <p className="font-grotesk" style={{ fontSize: "15px", color: "#0a0a0a", fontWeight: 600, margin: "0 0 18px 0" }}>
-                Pick one of the original 3D characters, customize it, sculpt one from your own image, or import a VRM model. 3D mode renders the character you choose here.
+                Browse rigged Miyora pets by category, search by name, species, tag, or personality, preview every state, and pick your desktop companion.
               </p>
               <div className="edge-thick shadow-pop-lg studio-outer" style={{ backgroundColor: "#070c18", padding: "20px" }}>
-                <CharacterStudio liveState={snapshot.petState} hud={avatarHud} activeAvatar={avatar} onAvatarChanged={setAvatar} />
+                <Suspense fallback={<p style={{ color: "#cbd5e1" }}>Loading the Pet Library…</p>}>
+                  <PetLibrary liveState={snapshot.petState} hud={avatarHud} activeAvatar={avatar} onAvatarChanged={setAvatar} />
+                </Suspense>
               </div>
             </div>
 
@@ -1813,13 +1665,7 @@ export default function App() {
                         />
                       ) : (
                         <span style={{ fontSize: "56px", filter: "drop-shadow(4px 4px 0 #ff2db7)" }}>
-                          {pack.name.includes("Arjuna")
-                            ? "🏹"
-                            : pack.name.includes("Wukong")
-                            ? "👑"
-                            : pack.name.includes("Ninja")
-                            ? "🐱"
-                            : "⚡"}
+                          ⚡
                         </span>
                       )}
                     </div>
@@ -2078,6 +1924,8 @@ export default function App() {
           <div style={{ display: "flex", flexDirection: "column", gap: "28px" }}>
             {renderPanelError("settings")}
 
+            <CompanionControlsPanel />
+
             {/* Simulation Controls (DEV ONLY) */}
             {import.meta.env.DEV && (
               <div
@@ -2194,7 +2042,7 @@ export default function App() {
                         {p.displayName}
                       </div>
                       <div className="font-grotesk" style={{ fontSize: "11px", color: "rgba(10,10,10,0.6)", marginTop: "2px", fontWeight: 600 }}>
-                        Config: {p.configPath ?? "Default directory"}
+                        Usage: {quotaSummary(p.quota)}
                       </div>
                     </div>
                     <span
@@ -2374,10 +2222,10 @@ export default function App() {
               WORKSPACE
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
-              {["Den", "Sessions", "Companions", "Progress", "Settings"].map((item) => (
+              {APP_TABS.map(({ id, label }) => (
                 <button
-                  key={item}
-                  onClick={() => setActiveTab(item.toLowerCase() as any)}
+                  key={id}
+                  onClick={() => setActiveTab(id)}
                   className="font-grotesk"
                   style={{
                     background: "none",
@@ -2390,7 +2238,7 @@ export default function App() {
                     cursor: "pointer",
                   }}
                 >
-                  {item}
+                  {label}
                 </button>
               ))}
             </div>

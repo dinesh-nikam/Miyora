@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 1,
+  "requested": 213,
+  "structurallyValidated": 213,
+  "missing": [],
+  "bodyCounts": {
+    "humanoid": 119,
+    "beast": 56,
+    "bird": 12,
+    "slime": 12,
+    "robot": 14
+  },
+  "runtimeValidated": 213,
+  "artReview": "refined-assets-with-per-model-review-images",
+  "style": "full-anime",
+  "refinementRevision": "refined-catalog-v3.3",
+  "paidServicesUsed": false,
+  "poseChecks": 3195,
+  "expressionChecks": 1065
+}

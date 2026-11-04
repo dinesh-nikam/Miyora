@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.vesper",
+  "name": "Vesper",
+  "title": "Midnight Poet",
+  "description": "Writes commit messages in perfect verse.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "bat",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "suit",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6e7e7",
+    "hair": "#1c1917",
+    "eyes": "#dc2626",
+    "primary": "#1c1917",
+    "secondary": "#7f1d1d",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "night",
+    "poet"
+  ],
+  "personality": "poetic",
+  "specialty": "Midnight Commit Poetry",
+  "catchphrase": "Writes commit messages in perfect verse.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1c1917",
+    "icon": "\ud83e\udd87",
+    "treatName": "BlackPlum",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Sweet dark night plums! Bat wings fold neatly over velvet suit. \ud83e\uded0\ud83e\udd87",
+    "wakeReaction": "Uncapping crimson fountain pen. The witching hour inspires verse. \ud83e\udd87",
+    "petReaction": "Composes an elegant, witty sonnet dedicated to your persistence! \ud83e\udd87\ud83d\udcdc",
+    "dialogue": {
+      "idle": "Perched on velvet sofa, polishing sonnet stanzas by candlelight. \ud83e\udd87",
+      "working": "Inscribing commit logs in flawless iambic pentameter! \ud83e\udd87\u26a1",
+      "thinking": "Finding the sublime rhyme for asynchronous architecture... \ud83e\udd14",
+      "success": "Published! A changelog worthy of immortal literary renown! \ud83e\udd87\ud83c\udf89",
+      "error": "A clumsy cadence! Striking the line with crimson ink! \u2712\ufe0f",
+      "sleeping": "Zzz... resting in peaceful midnight shadows upside down... \ud83c\udf19"
+    }
+  }
+}

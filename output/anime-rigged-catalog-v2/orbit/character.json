@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.orbit",
+  "name": "Orbit",
+  "title": "Scout Drone",
+  "description": "Flies ahead to scout failing tests.",
+  "body": "robot",
+  "ears": "antenna",
+  "tail": "none",
+  "wings": "jet",
+  "hair": "none",
+  "eyes": "mono",
+  "outfit": "plating",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#38bdf8",
+    "hair": "#0369a1",
+    "eyes": "#facc15",
+    "primary": "#0ea5e9",
+    "secondary": "#0c4a6e",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 0.85,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.5,
+  "tags": [
+    "robot",
+    "speedy"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

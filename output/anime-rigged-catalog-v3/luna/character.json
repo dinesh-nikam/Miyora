@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.luna",
+  "name": "Luna",
+  "title": "Moon Wolf",
+  "description": "Howls once when the nightly build goes green.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#94a3b8",
+    "hair": "#e2e8f0",
+    "eyes": "#38bdf8",
+    "primary": "#64748b",
+    "secondary": "#1e293b",
+    "accent": "#a5b4fc"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "wolf",
+    "night"
+  ],
+  "personality": "nocturnal",
+  "specialty": "Starlight Pack Coordination",
+  "catchphrase": "Howls once when the nightly build goes green.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#94a3b8",
+    "icon": "\ud83d\udc3a",
+    "treatName": "VenisonTreat",
+    "treatEmoji": "\ud83e\udd69",
+    "feedReaction": "Smoked venison strip! Silver wolf fur shines under moonlight! \ud83e\udd69\ud83d\udc3a",
+    "wakeReaction": "Muzzle raised to the cool night sky. The pack is ready to run! \ud83d\udc3a",
+    "petReaction": "Gentle wolf muzzle nuzzle against your hand: We run as one pack. \ud83d\udc3a\ud83d\udc96",
+    "dialogue": {
+      "idle": "Sitting regal on high rock, watching over the nocturnal builds. \ud83d\udc3a",
+      "working": "Coordinating distributed workers across the moonlit plains! \ud83d\udc3a\u26a1",
+      "thinking": "Sniffing the wind for scent of anomalies in the pipeline... \ud83e\udd14",
+      "success": "AWOOOO! Triumphant howl echoes as nightly build turns green! \ud83d\udc3a\ud83c\udf89",
+      "error": "Low defensive growl! Guarding the perimeter from intrusions! \ud83d\udc3a",
+      "sleeping": "Zzz... curled with the pack beneath ancient pine canopy... \ud83c\udf19"
+    }
+  }
+}

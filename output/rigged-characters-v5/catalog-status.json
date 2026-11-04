@@ -1,0 +1,1511 @@
+{
+  "schemaVersion": 1,
+  "requestedCharacters": 213,
+  "finalCharacters": 0,
+  "prototypeCharacters": 1,
+  "notStartedCharacters": 212,
+  "localOnly": true,
+  "paidGenerationUsed": false,
+  "proportionsDecision": "awaiting-user-full-anime-or-detailed-chibi",
+  "catalogSha256": "de1560f6bce44ba2263854b489396c00048a0ce09937d8c63e9d0b640409820f",
+  "bodyCounts": {
+    "humanoid": 119,
+    "beast": 56,
+    "bird": 12,
+    "slime": 12,
+    "robot": 14
+  },
+  "characters": [
+    {
+      "id": "miyora.aoi",
+      "name": "Aoi",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.kenji",
+      "name": "Kenji",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.mira",
+      "name": "Mira",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.rowan",
+      "name": "Rowan",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sora",
+      "name": "Sora",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.hana",
+      "name": "Hana",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.ravi",
+      "name": "Ravi",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.lina",
+      "name": "Lina",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.dmitri",
+      "name": "Dmitri",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.yuki",
+      "name": "Yuki",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.tariq",
+      "name": "Tariq",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.isla",
+      "name": "Isla",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.felix",
+      "name": "Felix",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.noor",
+      "name": "Noor",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.bjorn",
+      "name": "Bjorn",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.elara",
+      "name": "Elara",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.kai",
+      "name": "Kai",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.maya",
+      "name": "Maya",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.theo",
+      "name": "Theo",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.zara",
+      "name": "Zara",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.oren",
+      "name": "Oren",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.priya",
+      "name": "Priya",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.leo",
+      "name": "Leo",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.nyx",
+      "name": "Nyx",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.amara",
+      "name": "Amara",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.ivo",
+      "name": "Ivo",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.suki",
+      "name": "Suki",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.marco",
+      "name": "Marco",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.lyra",
+      "name": "Lyra",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.jun",
+      "name": "Jun",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.esme",
+      "name": "Esme",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.obi",
+      "name": "Obi",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.rin",
+      "name": "Rin",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.caspian",
+      "name": "Caspian",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.freya",
+      "name": "Freya",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.hugo",
+      "name": "Hugo",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sana",
+      "name": "Sana",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.dex",
+      "name": "Dex",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.aria",
+      "name": "Aria",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.tomas",
+      "name": "Tomas",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.ines",
+      "name": "Ines",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.vale",
+      "name": "Vale",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.coco",
+      "name": "Coco",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.orion",
+      "name": "Orion",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.ignis",
+      "name": "Ignis",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.lumi",
+      "name": "Lumi",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.vesper",
+      "name": "Vesper",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.seraph",
+      "name": "Seraph",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.akane",
+      "name": "Akane",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.tsukasa",
+      "name": "Tsukasa",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.kaede",
+      "name": "Kaede",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sayuri",
+      "name": "Sayuri",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.hoshimi",
+      "name": "Hoshimi",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.nagi",
+      "name": "Nagi",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.marlo",
+      "name": "Marlo",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.kiyomi",
+      "name": "Kiyomi",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.daichi",
+      "name": "Daichi",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sorako",
+      "name": "Sorako",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.valen",
+      "name": "Valen",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.draga",
+      "name": "Draga",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.alma",
+      "name": "Alma",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.seiji",
+      "name": "Seiji",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.masaru",
+      "name": "Masaru",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.lyrielle",
+      "name": "Lyrielle",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.pico",
+      "name": "Pico",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.hayato",
+      "name": "Hayato",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.velis",
+      "name": "Velis",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.hanae",
+      "name": "Hanae",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.benika",
+      "name": "Benika",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.kazane",
+      "name": "Kazane",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.akiho",
+      "name": "Akiho",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.kenta",
+      "name": "Kenta",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.mirei",
+      "name": "Mirei",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.haruki",
+      "name": "Haruki",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.lunaria",
+      "name": "Lunaria",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.kuroha",
+      "name": "Kuroha",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.tetsu",
+      "name": "Tetsu",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sumire",
+      "name": "Sumire",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.momiji",
+      "name": "Momiji",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.ember",
+      "name": "Ember",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.miso",
+      "name": "Miso",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.pip",
+      "name": "Pip",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.bruno",
+      "name": "Bruno",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.bao",
+      "name": "Bao",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.luna",
+      "name": "Luna",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.biscuit",
+      "name": "Biscuit",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.mochi",
+      "name": "Mochi",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.rusty",
+      "name": "Rusty",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.tofu",
+      "name": "Tofu",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.shadow",
+      "name": "Shadow",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sunny",
+      "name": "Sunny",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.hazel",
+      "name": "Hazel",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.mako",
+      "name": "Mako",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.kuma",
+      "name": "Kuma",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.nori",
+      "name": "Nori",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.pepper",
+      "name": "Pepper",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.dash",
+      "name": "Dash",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.frost",
+      "name": "Frost",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.clover",
+      "name": "Clover",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.tora",
+      "name": "Tora",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sol",
+      "name": "Sol",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.fawn",
+      "name": "Fawn",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.gumtree",
+      "name": "Gumtree",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.bandit",
+      "name": "Bandit",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sled",
+      "name": "Sled",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.seed",
+      "name": "Seed",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.drako",
+      "name": "Drako",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.saffi",
+      "name": "Saffi",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.lotl",
+      "name": "Lotl",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.vamp",
+      "name": "Vamp",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.woolly",
+      "name": "Woolly",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.zippa",
+      "name": "Zippa",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.cindle",
+      "name": "Cindle",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.shelloo",
+      "name": "Shelloo",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sprigget",
+      "name": "Sprigget",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.vixi",
+      "name": "Vixi",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.emberkit",
+      "name": "Emberkit",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.brookit",
+      "name": "Brookit",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.frostkit",
+      "name": "Frostkit",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.leafkit",
+      "name": "Leafkit",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.voltkit",
+      "name": "Voltkit",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.duskit",
+      "name": "Duskit",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.pixkit",
+      "name": "Pixkit",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.lumeow",
+      "name": "Lumeow",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.dozzle",
+      "name": "Dozzle",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.nibbly",
+      "name": "Nibbly",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.bubbit",
+      "name": "Bubbit",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.pebbluff",
+      "name": "Pebbluff",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.petalpup",
+      "name": "Petalpup",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.cindersnout",
+      "name": "Cindersnout",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.lumibug",
+      "name": "Lumibug",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.frizzle",
+      "name": "Frizzle",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.puffaloo",
+      "name": "Puffaloo",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.wispet",
+      "name": "Wispet",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.tadpip",
+      "name": "Tadpip",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.magnebit",
+      "name": "Magnebit",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.bolt",
+      "name": "Bolt",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.seven",
+      "name": "Seven",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.cog",
+      "name": "Cog",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.vega",
+      "name": "Vega",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.pixel",
+      "name": "Pixel",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.atlas",
+      "name": "Atlas",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.nova",
+      "name": "Nova",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.gizmo",
+      "name": "Gizmo",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.echo",
+      "name": "Echo",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.rivet",
+      "name": "Rivet",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.chroma",
+      "name": "Chroma",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.servo",
+      "name": "Servo",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.orbit",
+      "name": "Orbit",
+      "body": "robot",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.gloop",
+      "name": "Gloop",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.jelly",
+      "name": "Jelly",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.blub",
+      "name": "Blub",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.mallow",
+      "name": "Mallow",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.magma",
+      "name": "Magma",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sprout",
+      "name": "Sprout",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.glimmer",
+      "name": "Glimmer",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.wizzle",
+      "name": "Wizzle",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.kiwi",
+      "name": "Kiwi",
+      "body": "slime",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.hoot",
+      "name": "Hoot",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.pengu",
+      "name": "Pengu",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.polly",
+      "name": "Polly",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.corvi",
+      "name": "Corvi",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.chirp",
+      "name": "Chirp",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.puff",
+      "name": "Puff",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.flare",
+      "name": "Flare",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.dove",
+      "name": "Dove",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.robin",
+      "name": "Robin",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.tuko",
+      "name": "Tuko",
+      "body": "bird",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.krishna",
+      "name": "Krishna",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.radha",
+      "name": "Radha",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.rama",
+      "name": "Rama",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sita",
+      "name": "Sita",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.hanuman",
+      "name": "Hanuman",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.ganesha",
+      "name": "Ganesha",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.shiva",
+      "name": "Shiva",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.parvati",
+      "name": "Parvati",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.lakshmi",
+      "name": "Lakshmi",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.saraswati",
+      "name": "Saraswati",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.arjuna",
+      "name": "Arjuna",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.gojo",
+      "name": "Gojo",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.yuji",
+      "name": "Yuji",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.tanjiro",
+      "name": "Tanjiro",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.nezuko",
+      "name": "Nezuko",
+      "body": "humanoid",
+      "status": "prototype-needs-refinement",
+      "model": "nezuko/nezuko.vrm"
+    },
+    {
+      "id": "miyora.luffy",
+      "name": "Luffy",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.zoro",
+      "name": "Zoro",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.nami",
+      "name": "Nami",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sanji",
+      "name": "Sanji",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.naruto",
+      "name": "Naruto",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sasuke",
+      "name": "Sasuke",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.goku",
+      "name": "Goku",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.vegeta",
+      "name": "Vegeta",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.levi",
+      "name": "Levi",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.mikasa",
+      "name": "Mikasa",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.gon",
+      "name": "Gon",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.killua",
+      "name": "Killua",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.l-lawliet",
+      "name": "L Lawliet",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.light",
+      "name": "Light",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.ichigo",
+      "name": "Ichigo",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.rukia",
+      "name": "Rukia",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.saitama",
+      "name": "Saitama",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.genos",
+      "name": "Genos",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.denji",
+      "name": "Denji",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.power",
+      "name": "Power",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.anya",
+      "name": "Anya",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.yor",
+      "name": "Yor",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.frieren",
+      "name": "Frieren",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.pikachu",
+      "name": "Pikachu",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.kodama-spirit",
+      "name": "Suzu",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.witch-apprentice",
+      "name": "Noa",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.valley-flyer",
+      "name": "Ren",
+      "body": "humanoid",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.woodland-guardian",
+      "name": "Bramble",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.ninja-cat",
+      "name": "Ninja Cat",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    },
+    {
+      "id": "miyora.sun-wukong",
+      "name": "Sun Wukong",
+      "body": "beast",
+      "status": "not-started",
+      "model": null
+    }
+  ]
+}

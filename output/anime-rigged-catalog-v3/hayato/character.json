@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hayato",
+  "name": "Hayato",
+  "title": "Rival Swordsman",
+  "description": "Always one benchmark behind you, and determined to win.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "katana"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#1e3a8a",
+    "eyes": "#0284c7",
+    "primary": "#1e293b",
+    "secondary": "#64748b",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.4,
+  "tags": [
+    "anime",
+    "rival"
+  ],
+  "personality": "ambitious",
+  "specialty": "Rivalry Benchmark Sprints",
+  "catchphrase": "Always one benchmark behind you, and determined to win.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1e293b",
+    "icon": "\u26a1",
+    "treatName": "EnergyChew",
+    "treatEmoji": "\ud83c\udf6c",
+    "feedReaction": "Sour lemon energy chew! Katana drawn with lightning speed! \ud83c\udf6c\u26a1",
+    "wakeReaction": "Smirking with crossed arms: Don't think you can slack off today! \u26a1",
+    "petReaction": "Grudging nod of respect: That was an impressive commit... I'll top it! \u26a1\ud83d\udcaa",
+    "dialogue": {
+      "idle": "Practicing sword draw over and over in the courtyard. \u26a1",
+      "working": "Pushing compiler optimizations to stay ahead of the rival! \u26a1\ud83d\udde1\ufe0f",
+      "thinking": "Studying your commit diff to see how you shaved those cycles... \ud83e\udd14",
+      "success": "Hah! Merged! Your turn to beat my benchmark score, Chief! \u26a1\ud83c\udf89",
+      "error": "Tch! Missed the turn! I'll catch right back up to you! \u26a1",
+      "sleeping": "Zzz... sleeping light with wooden sword beside the pillow... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#38bdf8"
+}

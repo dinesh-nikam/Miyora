@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.genos",
+  "name": "Genos",
+  "title": "Demon Cyborg Disciple",
+  "description": "Devoted cyborg disciple with blond spikes, black sclera golden eyes, gunmetal arms, and glowing core.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "jet",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "jacket",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#fde047",
+    "eyes": "#facc15",
+    "primary": "#0f172a",
+    "secondary": "#334155",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1.06,
+    "headScale": 0.98,
+    "build": 1.1,
+    "limbLength": 1.06
+  },
+  "energy": 1.5,
+  "tags": [
+    "anime",
+    "avatar",
+    "cyborg",
+    "genos",
+    "fire"
+  ],
+  "personality": "earnest",
+  "specialty": "Core Telemetry & Thermal Throttling",
+  "catchphrase": "Incinerate! Master Saitama's lessons are absolute.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#f59e0b",
+    "icon": "\ud83d\udd25",
+    "treatName": "BatteryCore",
+    "treatEmoji": "\ud83d\udd0b",
+    "feedReaction": "Plutonium micro-cell engaged! Core reactor at 100% thermal yield! \ud83d\udd0b\ud83d\udd25",
+    "wakeReaction": "Core diagnostics online. Recording Master's techniques to memory. \ud83d\udd25",
+    "petReaction": "Haptic sensor calibration: high esteem for your leadership, Chief. \ud83d\udd25\u2728",
+    "dialogue": {
+      "idle": "Transcribing Master's daily advice into thick notebooks. \ud83d\udcdd",
+      "working": "INCINERATE! Maximum combustion incinerating technical debt! \ud83d\udd25\u26a1",
+      "thinking": "Analyzing Master's single-punch algorithm to extract the secret... \ud83e\udd14",
+      "success": "Target eradicated! Core temperature nominal, all metrics green! \ud83d\udd25\ud83c\udf89",
+      "error": "Hull breach detected! Initiating emergency auto-patch repair! \u26a0\ufe0f",
+      "sleeping": "Standby recharge cycle initiated... recording memory logs... \ud83c\udf19"
+    }
+  }
+}

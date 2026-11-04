@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.pengu",
+  "name": "Pengu",
+  "title": "Penguin Operator",
+  "description": "Waddles calmly through incident response.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#1e293b",
+    "hair": "#f8fafc",
+    "eyes": "#0f172a",
+    "primary": "#1e293b",
+    "secondary": "#f8fafc",
+    "accent": "#f59e0b"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "penguin",
+    "winter"
+  ],
+  "personality": "unshakeable",
+  "specialty": "Sub-Zero Incident Response",
+  "catchphrase": "Waddles calmly across slippery ice sheets during major live incidents.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#0f172a",
+    "icon": "\ud83d\udc27",
+    "treatName": "SardineBite",
+    "treatEmoji": "\ud83d\udc1f",
+    "feedReaction": "Fresh cold sardine! Sliding across icy floor with happy honks! \ud83d\udc1f\ud83d\udc27",
+    "wakeReaction": "Flapping flippers at side, waddling proudly onto the ice floe! \ud83d\udc27",
+    "petReaction": "Belly-slides right over to your feet, looking up with big eyes! \ud83d\udc27\ud83d\udc96",
+    "dialogue": {
+      "idle": "Standing in a tidy huddle on the iceberg, wind whistling past. \ud83d\udc27",
+      "working": "Waddling calmly through massive production outage fire drills! \ud83d\udc27\u26a1",
+      "thinking": "Checking ice thickness before leading the convoy forward... \ud83e\udd14",
+      "success": "BELLY SLIDE VICTORY! Slipped past the incident with zero panic! \ud83d\udc27\ud83c\udf89",
+      "error": "Tripped on an ice ridge! Sliding on tummy all the way back! \u2744\ufe0f",
+      "sleeping": "Zzz... standing asleep in the warm penguin huddle on the ice... \ud83c\udf19"
+    }
+  }
+}

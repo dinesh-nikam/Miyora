@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sasuke",
+  "name": "Sasuke",
+  "title": "Shadow Uchiha Avenger",
+  "description": "Cool Uchiha prodigy in high-collar dark tunic with purple rope sash, kusanagi blade, and chidori sparks.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "tunic",
+  "accessories": [
+    "katana"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fce7f3",
+    "hair": "#0f172a",
+    "eyes": "#1e1b4b",
+    "primary": "#1e293b",
+    "secondary": "#e2e8f0",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1.04,
+    "headScale": 0.98,
+    "build": 1.02,
+    "limbLength": 1.04
+  },
+  "energy": 1.2,
+  "tags": [
+    "anime",
+    "avatar",
+    "ninja",
+    "sasuke",
+    "avenger"
+  ],
+  "personality": "intense",
+  "specialty": "Precision Refactoring",
+  "catchphrase": "Weak abstractions are unacceptable.",
+  "hairTip": "#1e3a8a"
+}

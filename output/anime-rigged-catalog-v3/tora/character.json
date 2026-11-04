@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tora",
+  "name": "Tora",
+  "title": "Stripe Sentinel",
+  "description": "Prowls the perimeter of your API.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f97316",
+    "hair": "#1c1917",
+    "eyes": "#16a34a",
+    "primary": "#334155",
+    "secondary": "#1c1917",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.2,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "tiger",
+    "knight"
+  ],
+  "personality": "vigilant",
+  "specialty": "Stripe-Coated Perimeter Prowl",
+  "catchphrase": "Prowls the perimeter of your API.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#334155",
+    "icon": "\ud83d\udc05",
+    "treatName": "PrimeCut",
+    "treatEmoji": "\ud83e\udd69",
+    "feedReaction": "Juicy prime rib cut! Gold and black tiger stripes ripple with power! \ud83e\udd69\ud83d\udc05",
+    "wakeReaction": "Low rumble of greeting. The API boundary perimeter is secure. \ud83d\udc05",
+    "petReaction": "Massive tiger head nuzzle that leans all his heavy warmth into you! \ud83d\udc05\ud83d\udc96",
+    "dialogue": {
+      "idle": "Prowling silently along the border fence of public endpoints. \ud83d\udc05",
+      "working": "Repelling unauthorized intrusion vectors with lethal claws! \ud83d\udc05\u26a1",
+      "thinking": "Scenting unauthorized tokens in the incoming request headers... \ud83e\udd14",
+      "success": "PERIMETER SECURE! Zero penetration, all gateways defended! \ud83d\udc05\ud83c\udf89",
+      "error": "Intrusion detected at the gate! Snarling and pouncing to intercept! \ud83d\udc05\ud83d\udca5",
+      "sleeping": "Zzz... resting upon warm rock ledge above the canyon... \ud83c\udf19"
+    }
+  }
+}

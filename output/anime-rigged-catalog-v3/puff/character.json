@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.puff",
+  "name": "Puff",
+  "title": "Puffin Sailor",
+  "description": "Sails small boats through big data lakes.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "beanie"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#1c1917",
+    "hair": "#f8fafc",
+    "eyes": "#1c1917",
+    "primary": "#1c1917",
+    "secondary": "#f8fafc",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "puffin",
+    "ocean"
+  ],
+  "personality": "hardy",
+  "specialty": "Atlantic Puffin Navigation",
+  "catchphrase": "Sails small boats through big data lakes.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1c1917",
+    "icon": "\ud83d\udc27",
+    "treatName": "CapelinFish",
+    "treatEmoji": "\ud83d\udc1f",
+    "feedReaction": "Six shiny little capelin fish in beak all at once! Proud honk! \ud83d\udc1f\ud83d\udc27",
+    "wakeReaction": "Flapping colorful beak and orange webbed feet on the cliff edge! \ud83d\udc27",
+    "petReaction": "Clumsy affectionate waddle and a gentle colorful beak tap! \ud83d\udc27\ud83d\udc96",
+    "dialogue": {
+      "idle": "Standing on grassy cliff ledge above crashing Atlantic surf. \ud83d\udc27",
+      "working": "Diving into rough stormy data lakes and surfacing with results! \ud83d\udc27\u26a1",
+      "thinking": "Watching wave crests to time the deep foraging dive... \ud83e\udd14",
+      "success": "BEAK FULL! Returned to nest with all required payloads! \ud83d\udc27\ud83c\udf89",
+      "error": "A big wave tossed him onto the beach! Shaking feathers dry! \ud83c\udf0a",
+      "sleeping": "Zzz... tucked cozy inside a clifftop burrow safe from gales... \ud83c\udf19"
+    }
+  }
+}

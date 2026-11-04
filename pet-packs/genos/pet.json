@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "genos"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#f59e0b",
+    "icon": "🔥",
+    "treatName": "BatteryCore",
+    "treatEmoji": "🔋",
+    "feedReaction": "Plutonium micro-cell engaged! Core reactor at 100% thermal yield! 🔋🔥",
+    "wakeReaction": "Core diagnostics online. Recording Master's techniques to memory. 🔥",
+    "petReaction": "Haptic sensor calibration: high esteem for your leadership, Chief. 🔥✨",
+    "dialogue": {
+      "idle": "Transcribing Master's daily advice into thick notebooks. 📝",
+      "working": "INCINERATE! Maximum combustion incinerating technical debt! 🔥⚡",
+      "thinking": "Analyzing Master's single-punch algorithm to extract the secret... 🤔",
+      "success": "Target eradicated! Core temperature nominal, all metrics green! 🔥🎉",
+      "error": "Hull breach detected! Initiating emergency auto-patch repair! ⚠️",
+      "sleeping": "Standby recharge cycle initiated... recording memory logs... 🌙"
+    }
+  }
 }

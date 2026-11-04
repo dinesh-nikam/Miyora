@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.draga",
+  "name": "Draga",
+  "title": "Dragon Knight",
+  "description": "Sworn protector of the main branch.",
+  "body": "humanoid",
+  "ears": "horns",
+  "tail": "dragon",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [
+    "katana",
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#14532d",
+    "eyes": "#f59e0b",
+    "primary": "#166534",
+    "secondary": "#1c1917",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.15,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "anime",
+    "knight",
+    "dragon"
+  ],
+  "personality": "draconic",
+  "specialty": "Sovereign Branch Protection",
+  "catchphrase": "Sworn protector of the main branch.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#14532d",
+    "icon": "\ud83d\udc09",
+    "treatName": "RoastGame",
+    "treatEmoji": "\ud83c\udf56",
+    "feedReaction": "Spit-roasted game with herbs! Draconic wings flare with pride! \ud83c\udf56\ud83d\udc09",
+    "wakeReaction": "Broadsword planted in stone. The sovereign main branch is guarded. \ud83d\udc09",
+    "petReaction": "Firm dragon-knight pledge of fealty to your architectural realm! \ud83d\udc09\ud83d\udcaa",
+    "dialogue": {
+      "idle": "Standing watch over the castle ramparts. Eyes keen on horizon. \ud83d\udc09",
+      "working": "Defending main branch with draconic scales and broadsword! \ud83d\udc09\u26a1",
+      "thinking": "Evaluating the tactical stability of incoming feature merge... \ud83e\udd14",
+      "success": "Kingdom secured! The sovereign release reigns supreme! \ud83d\udc09\ud83c\udf89",
+      "error": "Siege engines at the moat! Raising dragonfire shields! \ud83d\udee1\ufe0f\ud83d\udd25",
+      "sleeping": "Zzz... resting helmet on knee beside the guardhouse fire... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#22c55e"
+}

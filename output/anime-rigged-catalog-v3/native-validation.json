@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "clientDate": "2026-11-03",
+  "revision": "refined-catalog-v3.3",
+  "nativeValidated": 213,
+  "nativeImported": 85,
+  "uniqueImportedAvatars": 85,
+  "importBlockedBy": "custom avatar library limit (512 entries) reached; 128 more slots required",
+  "verifiedExistingModelsReused": true,
+  "selectedCharacter": null,
+  "selectedModelSha256": null,
+  "nativeStudioRender": "not-run",
+  "nativeOverlayVerification": "not-run",
+  "renderMode": "3d",
+  "selectedDisplayName": null
+}

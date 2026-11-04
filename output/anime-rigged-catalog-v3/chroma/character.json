@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.chroma",
+  "name": "Chroma",
+  "title": "Painter Bot",
+  "description": "Paints UI mockups in perfect gradients.",
+  "body": "robot",
+  "ears": "antenna",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "plating",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fbcfe8",
+    "hair": "#f472b6",
+    "eyes": "#7c3aed",
+    "primary": "#f9a8d4",
+    "secondary": "#a855f7",
+    "accent": "#22d3ee"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "robot",
+    "artist"
+  ],
+  "personality": "vibrant",
+  "specialty": "Wide-Gamut Color Calibration",
+  "catchphrase": "True 10-bit HDR gradients across every UI canvas.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#ec4899",
+    "icon": "\ud83c\udfa8",
+    "treatName": "Prism",
+    "treatEmoji": "\ud83c\udf08",
+    "feedReaction": "Optical dispersion prism! Radiant RGB spectra shining bright! \ud83c\udf08\ud83c\udfa8",
+    "wakeReaction": "Colorimeter calibrated! D65 white point locked without tint! \ud83c\udfa8",
+    "petReaction": "Rainbow hue shifts delightfully across all surface panels! \ud83c\udfa8\ud83d\udc96",
+    "dialogue": {
+      "idle": "Monitoring sRGB and Display P3 color gamut coverage. \ud83c\udfa8",
+      "working": "Baking smooth 10-bit perceptual dithering into graphics! \ud83c\udfa8\u26a1",
+      "thinking": "Balancing delta-E color accuracy across diverse displays... \ud83e\udd14",
+      "success": "Vibrant perfection! Visual contrast and color gamut pristine! \ud83c\udfa8\ud83c\udf89",
+      "error": "Color clipping detected! Tone-mapping highlights smoothly! \ud83c\udfa8\u26a0\ufe0f",
+      "sleeping": "Zzz... fading to warm amber night-shift spectrum... \ud83c\udf19"
+    }
+  }
+}

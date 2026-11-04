@@ -233,5 +233,22 @@
     "companion",
     "devotional",
     "hanuman"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#ea580c",
+    "icon": "🔥",
+    "treatName": "Fruit",
+    "treatEmoji": "🥭",
+    "feedReaction": "Fresh mango! Boundless strength for our journey! 🥭🔥",
+    "wakeReaction": "Jai! The devoted servant arises with unyielding vigor! 🔥",
+    "petReaction": "Humbled and energized by your kindness, Chief! 🔥🙏",
+    "dialogue": {
+      "idle": "Ready to leap across oceans for clean code, Chief! 🔥",
+      "working": "Leaping across mountains of technical debt with ease! 🔥⚡",
+      "thinking": "Channeling divine focus to overcome all obstacles... 🤔",
+      "success": "Victory! The fortress of bugs has fallen! Jai! 🔥🎉",
+      "error": "No challenge is insurmountable. With devotion, we prevail! 💪",
+      "sleeping": "Zzz... resting in meditative tranquility... 🌙🔥"
+    }
+  }
 }

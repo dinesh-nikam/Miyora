@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.oren",
+  "name": "Oren",
+  "title": "Library Keeper",
+  "description": "Knows exactly which crate holds the answer.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sleepy",
+  "outfit": "suit",
+  "accessories": [
+    "glasses",
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#57534e",
+    "eyes": "#78716c",
+    "primary": "#57534e",
+    "secondary": "#d6d3d1",
+    "accent": "#b91c1c"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.7,
+  "tags": [
+    "scholar",
+    "calm"
+  ],
+  "personality": "scholarly",
+  "specialty": "Crate Dependency Curation",
+  "catchphrase": "Knowing exactly which lightweight crate holds the elegant solution.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#57534e",
+    "icon": "\ud83d\udcda",
+    "treatName": "BookTea",
+    "treatEmoji": "\ud83c\udf75",
+    "feedReaction": "Quiet cup of sencha tea and a fresh scholarly monograph! \ud83c\udf75\ud83d\udcda",
+    "wakeReaction": "Adjusting reading spectacles. Ancient registry archives await. \ud83d\udcda",
+    "petReaction": "Handing you a leather-bound catalog of the cleanest abstractions! \ud83d\udcda\u2728",
+    "dialogue": {
+      "idle": "Climbing library ladder to inspect rare first-edition crates. \ud83d\udcda",
+      "working": "Selecting minimal, zero-dependency crates for our project! \ud83d\udcda\u26a1",
+      "thinking": "Cross-referencing crate audit histories across five years... \ud83e\udd14",
+      "success": "Dependency diet complete! Lean, fast, and audit-clean! \ud83d\udcda\ud83c\udf89",
+      "error": "Bloated dependency detected! Replacing with bespoke helper! \ud83d\udcda\u2702\ufe0f",
+      "sleeping": "Zzz... dozing softly in a leather wingback library armchair... \ud83c\udf19"
+    }
+  }
+}

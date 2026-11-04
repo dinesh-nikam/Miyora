@@ -1,6 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { AvatarStage } from "../avatar/AvatarStage";
-import { subjectFromAvatar, type AvatarHud, type ResolvedAvatar } from "../avatar/types";
+import { subjectFromAvatar, type AvatarHud, type CompanionPersonality, type PetPresentation, type ResolvedAvatar } from "../avatar/types";
+import { invokeSafe } from "../utils/ipc";
+import {
+  currentCompanionPreferences,
+  saveCompanionPreferences,
+  useCompanionPreferences,
+  type CompanionVibe,
+} from "../settings/companionPreferences";
 
 export type PetState =
   | "idle"
@@ -33,6 +40,8 @@ export interface SelectedPetAnimation {
   loopAnimation: boolean;
   frames: SpriteFrame[];
   imageDataUrl: string;
+  personality?: CompanionPersonality;
+  animationKind?: "animated" | "static" | "partial";
 }
 
 export interface QuotaWindow {
@@ -51,6 +60,10 @@ export interface CompanionRendererProps {
   quotaProvenance?: string;
   size?: number;
   interactive?: boolean;
+  /** Pet only, for the desktop overlay: no speech, popovers, reminders, or controls. */
+  bare?: boolean;
+  /** Rust-resolved animation clip for the 3D stage. */
+  presentation?: PetPresentation | null;
   mode?: "3d" | "2d";
   onModeToggle?: (mode: "3d" | "2d") => void;
   onDoubleClick?: () => void;
@@ -72,12 +85,20 @@ export type ChimeType = "pet" | "success" | "bubble" | "care" | "eat" | "wake";
 export class AudioManager {
   private static instance: AudioManager | null = null;
   private ctx: AudioContext | null = null;
+  private hasUserGesture = false;
 
   public static getInstance(): AudioManager {
     if (!AudioManager.instance) {
       AudioManager.instance = new AudioManager();
     }
     return AudioManager.instance;
+  }
+
+  public markUserGesture(): void {
+    this.hasUserGesture = true;
+    if (this.ctx && this.ctx.state === "suspended") {
+      this.ctx.resume().catch(() => {});
+    }
   }
 
   public getContext(): AudioContext | null {
@@ -98,11 +119,21 @@ export class AudioManager {
 
   public playChime(type: ChimeType): void {
     try {
-      const isMuted = localStorage.getItem("agentpet_sound_muted") === "true";
-      if (isMuted) return;
+      if (currentCompanionPreferences().soundMuted) return;
+
+      // User initiated sounds mark gesture; automatic background sounds are suppressed before initial user interaction
+      if (type === "pet" || type === "eat" || type === "wake" || type === "bubble") {
+        this.hasUserGesture = true;
+      } else if (!this.hasUserGesture) {
+        return;
+      }
 
       const ctx = this.getContext();
       if (!ctx) return;
+      if (ctx.state === "suspended") {
+        ctx.resume().catch(() => {});
+        if (ctx.state === "suspended") return;
+      }
 
       if (type === "pet") {
         // Warm major arpeggio
@@ -223,6 +254,8 @@ export function CompanionRenderer({
   hud = null,
   size = 200,
   interactive = true,
+  bare = false,
+  presentation = null,
   mode,
   onModeToggle,
   onDoubleClick,
@@ -230,22 +263,8 @@ export function CompanionRenderer({
   onWakePet,
   onError,
 }: CompanionRendererProps) {
-  const [renderMode, setRenderMode] = useState<"3d" | "2d">(() => {
-    if (mode) return mode;
-    try {
-      const saved = localStorage.getItem("agentpet_render_mode");
-      if (saved === "2d" || saved === "3d") return saved;
-    } catch {
-      // ignore
-    }
-    return "3d";
-  });
-
-  useEffect(() => {
-    if (mode && mode !== renderMode) {
-      setRenderMode(mode);
-    }
-  }, [mode]);
+  const preferences = useCompanionPreferences();
+  const renderMode = mode ?? preferences.renderMode;
 
   useEffect(() => {
     return () => {
@@ -256,14 +275,11 @@ export function CompanionRenderer({
   const handleToggleRenderMode = (e: React.MouseEvent) => {
     e.stopPropagation();
     const nextMode = renderMode === "3d" ? "2d" : "3d";
-    setRenderMode(nextMode);
-    try {
-      localStorage.setItem("agentpet_render_mode", nextMode);
-    } catch {
-      // ignore
-    }
+    // A parent that controls `mode` owns persistence; otherwise save here.
     if (onModeToggle) {
       onModeToggle(nextMode);
+    } else {
+      void saveCompanionPreferences({ renderMode: nextMode });
     }
   };
 
@@ -273,235 +289,136 @@ export function CompanionRenderer({
   const imgRef = useRef<HTMLImageElement | null>(null);
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-  // Human Touch States
+  // Human Touch & Cuteness States
   const [particles, setParticles] = useState<FloatingParticle[]>([]);
   const [isSquishing, setIsSquishing] = useState(false);
   const [isEating, setIsEating] = useState(false);
+  const [isBlushing, setIsBlushing] = useState(false);
   const [activeSpeech, setActiveSpeech] = useState<string>("");
   const [speechVisible, setSpeechVisible] = useState(true);
-  const [bondXp, setBondXp] = useState<number>(() => {
-    const saved = localStorage.getItem("agentpet_companion_bond_xp");
-    return saved ? parseInt(saved, 10) || 15 : 15;
-  });
+  // Session affection state synced with SQLite
+  const [affectionScore, setAffectionScore] = useState<number>(0);
   const [wellnessAlert, setWellnessAlert] = useState<string | null>(null);
 
-  const awardBondXp = (amount: number) => {
-    setBondXp((prev) => {
-      const next = prev + amount;
-      try {
-        localStorage.setItem("agentpet_companion_bond_xp", String(next));
-      } catch {
-        // ignore
+  // User In-Place Customizations (persisted by Rust)
+  const customNickname = preferences.nickname;
+  const customAccessory = preferences.accessory;
+  const customAura = preferences.aura;
+  const customVibe = preferences.vibe;
+  const [isCustomizerOpen, setIsCustomizerOpen] = useState(false);
+  const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
+  const stageBoxRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (bare) return;
+    let mounted = true;
+    void invokeSafe<{ affection: number }>("get_affection").then((res) => {
+      if (mounted && res.ok && res.data) {
+        setAffectionScore(res.data.affection);
       }
-      return next;
     });
+    return () => {
+      mounted = false;
+    };
+  }, [bare]);
+
+  const spec = avatar?.spec ?? null;
+  const petName = avatar?.name ?? spec?.name ?? animation?.petName ?? "Companion";
+  const specCatchphrase = spec?.catchphrase;
+  const specSpecialty = spec?.specialty;
+
+  const personality: CompanionPersonality | undefined =
+    animation?.personality ?? spec?.companionPersonality;
+
+  const companionInfo = {
+    icon:
+      personality?.icon ??
+      (spec?.body === "beast"
+        ? "🐾"
+        : spec?.body === "slime"
+        ? "💧"
+        : spec?.body === "robot"
+        ? "🤖"
+        : "✨"),
+    themeColor: personality?.themeColor ?? spec?.palette?.accent ?? "#a855f7",
+    glow: `radial-gradient(circle, ${personality?.themeColor ?? spec?.palette?.accent ?? "#a855f7"} 0%, rgba(168, 85, 247, 0.45) 60%, transparent 80%)`,
+    treatName:
+      personality?.treatName ??
+      (spec?.body === "beast"
+        ? "Treat"
+        : spec?.body === "slime"
+        ? "Syrup"
+        : spec?.body === "robot"
+        ? "Battery"
+        : "Cupcake"),
+    treatEmoji:
+      personality?.treatEmoji ??
+      (spec?.body === "beast"
+        ? "🦴"
+        : spec?.body === "slime"
+        ? "🍯"
+        : spec?.body === "robot"
+        ? "🔋"
+        : "🧁"),
   };
 
-  const petName = animation?.petName ?? "Companion";
-  const nameLower = petName.toLowerCase();
-  const isWukong = nameLower.includes("wukong") || nameLower.includes("monkey");
-  const isNezuko = nameLower.includes("nezuko");
-  const isArjuna = nameLower.includes("arjuna");
-  const isAoi = nameLower.includes("aoi");
-  const isNinjaCat = nameLower.includes("cat") || nameLower.includes("ninja");
-
-  // Character metadata & favorites
-  const companionInfo = isWukong
-    ? {
-        icon: "☁️",
-        themeColor: "#ffb703",
-        glow: "radial-gradient(circle, #ffb703 0%, rgba(230, 57, 70, 0.45) 60%, transparent 80%)",
-        treatName: "Peach",
-        treatEmoji: "🍑",
-      }
-    : isNezuko
-    ? {
-        icon: "🌸",
-        themeColor: "#ff69b4",
-        glow: "radial-gradient(circle, #ff6b8b 0%, rgba(255, 105, 180, 0.45) 60%, transparent 80%)",
-        treatName: "Tea",
-        treatEmoji: "🍵",
-      }
-    : isArjuna
-    ? {
-        icon: "🏹",
-        themeColor: "#ff9933",
-        glow: "radial-gradient(circle, #ff9933 0%, rgba(255, 215, 0, 0.45) 60%, transparent 80%)",
-        treatName: "Honey",
-        treatEmoji: "🍯",
-      }
-    : isNinjaCat
-    ? {
-        icon: "🐾",
-        themeColor: "#00f0ff",
-        glow: "radial-gradient(circle, #00f0ff 0%, rgba(13, 148, 136, 0.45) 60%, transparent 80%)",
-        treatName: "Fish",
-        treatEmoji: "🐟",
-      }
-    : isAoi
-    ? {
-        icon: "🎧",
-        themeColor: "#38bdf8",
-        glow: "radial-gradient(circle, #38bdf8 0%, rgba(14, 165, 233, 0.45) 60%, transparent 80%)",
-        treatName: "Coffee",
-        treatEmoji: "☕",
-      }
-    : {
-        icon: "✨",
-        themeColor: "#a855f7",
-        glow: "radial-gradient(circle, #a855f7 0%, rgba(168, 85, 247, 0.45) 60%, transparent 80%)",
-        treatName: "Cupcake",
-        treatEmoji: "🧁",
-      };
-
-  // Bond Level
-  const bondLevel = Math.max(1, Math.floor(bondXp / 15) + 1);
-  const bondTitle =
-    bondLevel >= 10
-      ? "Legendary Partner"
-      : bondLevel >= 6
-      ? "Devoted Companion"
-      : bondLevel >= 3
-      ? "Close Friend"
-      : "Coding Buddy";
+  const displayName = customNickname.trim() || (renderMode === "3d" && avatar ? avatar.name : petName);
+  const activeThemeColor = customAura || companionInfo.themeColor;
+  const activeGlow = customAura
+    ? `radial-gradient(circle, ${customAura} 0%, rgba(255, 105, 180, 0.45) 60%, transparent 80%)`
+    : companionInfo.glow;
 
   // Authentic Human & Character Dialogue
   const getSpeechForState = useCallback(
     (currentState: PetState, trigger: "auto" | "pet" | "feed" | "wake"): string => {
-      // 1. Feeding Response
       if (trigger === "feed") {
-        if (isWukong) return "Mmm! Celestial peach! Power level rising, Chief! 🍑✨";
-        if (isNezuko) return "Mmm-ph! (Nezuko sips the warm tea happily!) (◕‿◕)🍵";
-        if (isArjuna) return "Saffron nectar! My archery focus is refreshed. 🍯🏹";
-        if (isNinjaCat) return "*crunch crunch* Purrrrr! Delicious fish! 🐟🐾";
-        return "Mmm, warm coffee! Ready for the next sprint, Chief! ☕⚡";
+        return (
+          personality?.feedReaction ??
+          (spec
+            ? `Mmm, ${companionInfo.treatName}! ${petName} is energized for the next sprint, Chief! ⚡`
+            : "Mmm, warm coffee! Ready for the next sprint, Chief! ☕⚡")
+        );
       }
-
-      // 2. Wake-up Response
       if (trigger === "wake") {
-        if (isWukong) return "Hahaha! The Great Sage awakens! Point me to the bugs! ⚡☁️";
-        if (isNezuko) return "Mmm-ph! (Rubs her eyes and smiles warmly!) 🌸✨";
-        if (isArjuna) return "Awake and vigilant. The Gandiva bow stands ready! 🏹";
-        if (isNinjaCat) return "*stretches stealthily* Meow! Ready for deployment! 🐾";
-        return "Systems online! Let's conquer this codebase together! ⚡";
+        return (
+          personality?.wakeReaction ??
+          (specCatchphrase
+            ? `${petName} awakens: "${specCatchphrase}" ⚡`
+            : "Systems online! Let's conquer this codebase together! ⚡")
+        );
       }
-
-      // 3. Petting / Affection Response
       if (trigger === "pet") {
-        if (isWukong) {
-          const wukongPats = [
-            "Hahaha! That tickles, Chief! The Monkey King is energized! 🍑✨",
-            "My Somersault Cloud glides smoother with your support! ☁️",
-            "A celestial blessing for your keyboard, Chief! 💖",
-          ];
-          return wukongPats[Math.floor(Math.random() * wukongPats.length)];
-        }
-        if (isNezuko) {
-          const nezukoPats = [
-            "Mmm-ph! (Nezuko smiles warmly and leans into your hand) ✨",
-            "Nezuko gently pats your head back! (◕‿◕)♡",
-            "A warm energy fills your workspace! Bond increased! 🌸💖",
-          ];
-          return nezukoPats[Math.floor(Math.random() * nezukoPats.length)];
-        }
-        if (isArjuna) {
-          const arjunaPats = [
-            "Honor and gratitude, Chief. Together our aim is true! 🏹",
-            "Your leadership inspires the archer's soul. Let's build! ✨",
-          ];
-          return arjunaPats[Math.floor(Math.random() * arjunaPats.length)];
-        }
-        if (isNinjaCat) {
-          const catPats = [
-            "*loud purring* Purrrrr... blessed by the shinobi cat! 🐾💖",
-            "*headbutts your cursor* Meow! You're doing great, Chief!",
-          ];
-          return catPats[Math.floor(Math.random() * catPats.length)];
-        }
-        const aoiPats = [
-          "Aw, thanks for the pats, Chief! (◕‿◕)♡ In the zone!",
-          "Bond level up! We're an unbeatable coding duo! 💖",
-          "Chief, you're doing great today. Let's keep building! 🎧✨",
-        ];
-        return aoiPats[Math.floor(Math.random() * aoiPats.length)];
+        return (
+          personality?.petReaction ??
+          (spec
+            ? `${petName}: "Thanks for the support, Chief! Let's build!" ✨`
+            : "Aw, thanks for the pats, Chief! We're an unbeatable coding duo! 🎧💖")
+        );
       }
-
-      // 4. Automatic Contextual State Dialogue
-      if (isWukong) {
+      if (personality?.dialogue?.[currentState]) {
+        return personality.dialogue[currentState];
+      }
+      if (specCatchphrase) {
         switch (currentState) {
           case "working":
-            return "My Gold-Banded Cudgel will crush these merge conflicts! ⚡";
+            return specSpecialty
+              ? `${petName} deploying ${specSpecialty}: "${specCatchphrase}" ⚡`
+              : `${petName}: "${specCatchphrase}" ⚡`;
           case "thinking":
-            return "Pondering the Dao of clean code... 🤔";
+            return `${petName} analyzing the architecture... 🤔`;
           case "success":
-            return "HA! Another feature vanquished! The heavens rejoice! 🎉";
+            return `${petName}: "Verification complete! ${specCatchphrase}" 🚀🎉`;
           case "error":
-            return "A minor bug demon! Stand back, Chief, we'll smash it! 💪";
+            return `${petName}: "Compiler warning detected. Engaging ${specSpecialty ?? "triage"}." 🔍`;
           case "sleeping":
-            return "Zzz... napping on my Somersault Cloud... ☁️💤";
+            return `Zzz... ${petName} is resting. Codebase is secure. 🌙`;
           case "waiting":
           case "attention_required":
-            return "Awaiting your command, Chief! Staff is ready! 🐒";
+            return `${petName} needs your input, Chief! 📋`;
           default:
-            return "Riding my Somersault Cloud. Ready when you are, Chief! ☁️";
+            return `${petName}: "${specCatchphrase}" ✨`;
         }
       }
-
-      if (isNezuko) {
-        switch (currentState) {
-          case "working":
-            return "Mmm! (Guarding your focus while you code!) ⚡🌸";
-          case "thinking":
-            return "Mmm? (Tilts head curiously at the algorithm) 🤔";
-          case "success":
-            return "Mmm-ph!! (Jumps with joy!) All tests passed! 🎉";
-          case "error":
-            return "Mmm... (Hands you a lucky charm. We'll fix it!) 💪";
-          case "sleeping":
-            return "Zzz... resting peacefully in her cozy box... 🌙💤";
-          case "waiting":
-          case "attention_required":
-            return "Mmm-ph! (Waiting for your command, Chief!) 🌸";
-          default:
-            return "Keeping watch by your side. Hydrate when ready, Chief! 🍵";
-        }
-      }
-
-      if (isArjuna) {
-        switch (currentState) {
-          case "working":
-            return "Arrows of logic flying true to the target! ⚡🏹";
-          case "thinking":
-            return "Surveying the battlefield of code... finding the clean route. 🤔";
-          case "success":
-            return "Bullseye! Every test struck with precision! 🎯";
-          case "error":
-            return "Adjusting stance! We'll strike the root cause together! 🛡️";
-          case "sleeping":
-            return "Zzz... resting upon his chariot beneath the stars... 🌙";
-          default:
-            return "Gandiva bow strung. Focus unbroken, Chief. 🏹";
-        }
-      }
-
-      if (isNinjaCat) {
-        switch (currentState) {
-          case "working":
-            return "*silent paws typing at 200 WPM* 🐾⚡";
-          case "thinking":
-            return "*ears twitching* Sensing an async race condition... 🤔";
-          case "success":
-            return "Target silenced! Build green and stealthy! 🐾🎉";
-          case "error":
-            return "Hiss! Bug detected in perimeter! Ambushing... ⚔️";
-          case "sleeping":
-            return "Zzz... curled up in a neat little cat ball... 🌙🐾";
-          default:
-            return "*purrs* All systems quiet and secure, Chief. 🐾";
-        }
-      }
-
-      // Aoi / Default
       switch (currentState) {
         case "working":
           return "In the zone! Writing clean, beautiful code! ⚡";
@@ -520,7 +437,7 @@ export function CompanionRenderer({
           return "Hey Chief! Ready to build something awesome? 🎧✨";
       }
     },
-    [isArjuna, isNezuko, isNinjaCat, isWukong]
+    [companionInfo.treatName, personality, petName, spec, specCatchphrase, specSpecialty]
   );
 
   // Sync speech on state changes
@@ -534,6 +451,7 @@ export function CompanionRenderer({
 
   // Periodic wellness check-ins
   useEffect(() => {
+    if (bare) return;
     const timer = setInterval(() => {
       const reminders = [
         "💧 Water Break: Time for a refreshing sip, Chief!",
@@ -545,34 +463,126 @@ export function CompanionRenderer({
       playChime("care");
     }, 180000);
     return () => clearInterval(timer);
-  }, []);
+  }, [bare]);
 
-  // Petting Action
+  // User Customization Persistence
+  const saveNickname = (name: string) => {
+    void saveCompanionPreferences({ nickname: name });
+  };
+
+  const saveAccessory = (acc: string) => {
+    void saveCompanionPreferences({ accessory: acc });
+    playChime("bubble");
+  };
+
+  const saveAura = (color: string) => {
+    void saveCompanionPreferences({ aura: color });
+    playChime("bubble");
+  };
+
+  const saveVibe = (vibe: CompanionVibe) => {
+    void saveCompanionPreferences({ vibe });
+    playChime("bubble");
+  };
+
+  // Living Gaze Tracking
+  const handleStagePointerMove = (e: React.PointerEvent) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+    setPointerOffset({ x: nx, y: ny });
+  };
+
+  const handleStagePointerLeave = () => {
+    setPointerOffset({ x: 0, y: 0 });
+  };
+
+  // Heart-to-Heart Human Touch Check-in
+  const handleHeartToHeart = (e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
+    playChime("care");
+    setIsBlushing(true);
+    setTimeout(() => setIsBlushing(false), 2400);
+
+    const warmSpeeches: Record<"sweet" | "playful" | "loyal" | "calm", string[]> = {
+      sweet: [
+        "Chief, remember to breathe deeply. I'm always cheering for you! 🌸",
+        "Have a sip of water, okay? Your health comes first! 💧",
+        "Even tough bugs dissolve with patience. You got this, friend! ✨",
+        "Your posture looks a bit tense — drop your shoulders and relax! 🌿",
+        "I'm right here beside you. You're never coding alone! 💕",
+      ],
+      playful: [
+        "High-paw, Chief! We're crushing these bugs today! 🐾",
+        "Whoa, super clean code! Can we celebrate with a snack? 🍰",
+        "Refactoring time? Let's make it look magical! 🪄",
+        "You're my absolute favorite developer in the world! 🚀",
+        "Zooming through tasks! You're on fire today! ⚡",
+      ],
+      loyal: [
+        "Standing guard over your workspace, Chief. Ready for anything! 🛡️",
+        "Every error is just another clue. I trust your judgment completely! ⚡",
+        "Focus level: maximum. I'm right here holding the line with you! 🦾",
+        "We're making solid, reliable progress. Keep marching forward! 🌟",
+      ],
+      calm: [
+        "Let your thoughts settle like clear water. The logic will flow. 🍵",
+        "Step by step, line by line. Great craft takes gentle time. 🌿",
+        "A peaceful mind writes the most elegant architecture. 🌸",
+        "Take a breath of fresh air. Everything is under control. ✨",
+      ],
+    };
+
+    const deck = warmSpeeches[customVibe] || warmSpeeches.sweet;
+    const choice = deck[Math.floor(Math.random() * deck.length)];
+    setActiveSpeech(choice);
+    setSpeechVisible(true);
+  };
+
+  // Petting Action (Warm Touch & Heart Fountain)
   const handlePet = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     setIsSquishing(true);
-    setTimeout(() => setIsSquishing(false), 240);
+    setTimeout(() => setIsSquishing(false), 260);
+    setIsBlushing(true);
+    setTimeout(() => setIsBlushing(false), 2200);
 
     playChime("pet");
 
-    // Spawn floating heart particle
-    const rect = canvasRef.current?.getBoundingClientRect();
-    const x = rect ? rect.width / 2 + (Math.random() * 40 - 20) : size / 2;
-    const y = rect ? rect.height / 2 + (Math.random() * 30 - 15) : size / 2;
-    const symbols = ["💖", "✨", "🌸", "⭐", "♡"];
-    const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+    // Spawn floating heart particle fountain
+    const rect = stageBoxRef.current?.getBoundingClientRect();
+    const cx = rect ? rect.width / 2 : size / 2;
+    const cy = rect ? rect.height / 2 : size / 2;
+    const symbols = ["💖", "✨", "🌸", "💕", "🐾", "⭐"];
 
-    const id = Date.now() + Math.random();
-    setParticles((prev) => [...prev, { id, x, y, symbol }]);
-    setTimeout(() => {
-      setParticles((prev) => prev.filter((p) => p.id !== id));
-    }, 1200);
+    for (let i = 0; i < 3; i++) {
+      const id = Date.now() + Math.random() + i;
+      const x = cx + (Math.random() * 50 - 25);
+      const y = cy + (Math.random() * 30 - 15);
+      const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+      setTimeout(() => {
+        setParticles((prev) => [...prev, { id, x, y, symbol }]);
+        setTimeout(() => {
+          setParticles((prev) => prev.filter((p) => p.id !== id));
+        }, 1200);
+      }, i * 90);
+    }
 
-    // Increase Bond XP
-    awardBondXp(1);
+    // Increase Affection in SQLite & trigger engine reaction
+    void invokeSafe<{ affection: number }>("pet_interact").then((res) => {
+      if (res.ok && res.data) {
+        setAffectionScore(res.data.affection);
+      }
+    });
 
-    const response = getSpeechForState(state, "pet");
-    setActiveSpeech(response);
+    const petLines = [
+      "Aww, thank you! I love pets! (˶ᵔ ᵕ ᵔ˶)💕",
+      "*Happy tail wiggles and purrs* 💖",
+      "You're the sweetest, Chief! (◕‿◕✿)",
+      "Yay! That tickles so good! ✨",
+      "Hehe, that gives me +100 coding energy! 🌸",
+    ];
+    setActiveSpeech(petLines[Math.floor(Math.random() * petLines.length)]);
     setSpeechVisible(true);
   };
 
@@ -580,29 +590,39 @@ export function CompanionRenderer({
   const handleFeed = (e?: React.MouseEvent) => {
     if (e) e.stopPropagation();
     setIsEating(true);
-    setTimeout(() => setIsEating(false), 450);
+    setTimeout(() => setIsEating(false), 480);
+    setIsBlushing(true);
+    setTimeout(() => setIsBlushing(false), 2200);
 
     playChime("eat");
 
     // Spawn treat drop particle
-    const rect = canvasRef.current?.getBoundingClientRect();
-    const x = rect ? rect.width / 2 : size / 2;
-    const y = rect ? rect.height / 2 - 20 : size / 2 - 20;
+    const rect = stageBoxRef.current?.getBoundingClientRect();
+    const cx = rect ? rect.width / 2 : size / 2;
+    const cy = rect ? rect.height / 2 - 20 : size / 2 - 20;
 
     const id = Date.now() + Math.random();
     setParticles((prev) => [
       ...prev,
-      { id, x, y, symbol: companionInfo.treatEmoji, isTreat: true },
+      { id, x: cx, y: cy, symbol: companionInfo.treatEmoji, isTreat: true },
     ]);
     setTimeout(() => {
       setParticles((prev) => prev.filter((p) => p.id !== id));
     }, 1200);
 
-    // Increase Bond XP
-    awardBondXp(2);
+    // Increase Affection in SQLite & trigger engine reaction
+    void invokeSafe<{ affection: number }>("pet_feed").then((res) => {
+      if (res.ok && res.data) {
+        setAffectionScore(res.data.affection);
+      }
+    });
 
-    const response = getSpeechForState(state, "feed");
-    setActiveSpeech(response);
+    const feedLines = [
+      `*Nom nom nom* Delicious ${companionInfo.treatName}! Thank you, Chief! 😋`,
+      `So yummy! My heart and energy are happy! 🌟`,
+      `Mmm, ${companionInfo.treatName} gives me super developer focus! 💖`,
+    ];
+    setActiveSpeech(feedLines[Math.floor(Math.random() * feedLines.length)]);
     setSpeechVisible(true);
   };
 
@@ -662,7 +682,7 @@ export function CompanionRenderer({
 
   // Frame timing loop
   useEffect(() => {
-    if (!animation || animation.frames.length <= 1) {
+    if (!animation || animation.frames.length <= 1 || animation.animationKind === "static") {
       setFrameIndex(0);
       return;
     }
@@ -721,36 +741,36 @@ export function CompanionRenderer({
         boxSizing: "border-box",
       }}
     >
-      {/* 1. Sleek In-Bounds Speech Bubble with Speech Tail */}
-      {speechVisible && activeSpeech && (
+      {/* 1. Sleek In-Bounds Floating Speech Bubble with Speech Tail (No square box!) */}
+      {!bare && speechVisible && activeSpeech && (
         <div
           className="companion-speech-bubble"
           onClick={handleCycleThought}
-          title="Click to cycle thoughts"
+          title="Click to hear another thought"
           style={{
             position: "relative",
             width: "calc(100% - 16px)",
-            maxWidth: "240px",
-            background: "rgba(10, 15, 28, 0.94)",
-            border: `1px solid ${companionInfo.themeColor}55`,
-            borderRadius: "10px",
-            padding: "6px 10px",
+            maxWidth: "248px",
+            background: "rgba(15, 23, 42, 0.94)",
+            border: `1px solid ${activeThemeColor}55`,
+            borderRadius: "18px",
+            padding: "7px 12px",
             color: "#f8fafc",
             fontSize: "10.5px",
-            lineHeight: "1.35",
+            lineHeight: "1.38",
             fontWeight: 500,
-            boxShadow: `0 4px 16px ${companionInfo.themeColor}25`,
-            backdropFilter: "blur(10px)",
+            boxShadow: `0 6px 20px ${activeThemeColor}28`,
+            backdropFilter: "blur(12px)",
             zIndex: 10,
             display: "flex",
             alignItems: "center",
-            gap: "6px",
-            marginBottom: "6px",
+            gap: "7px",
+            marginBottom: "8px",
             animation: "bubbleFloatIn 0.25s cubic-bezier(0.34, 1.56, 0.64, 1)",
             cursor: "pointer",
           }}
         >
-          <span style={{ fontSize: "12px", flexShrink: 0 }}>{companionInfo.icon}</span>
+          <span style={{ fontSize: "13px", flexShrink: 0 }}>{companionInfo.icon}</span>
           <span style={{ flex: 1, letterSpacing: "0.2px" }}>{activeSpeech}</span>
           <button
             type="button"
@@ -760,29 +780,48 @@ export function CompanionRenderer({
             }}
             title="Dismiss speech"
             style={{
-              background: "transparent",
+              background: "rgba(255, 255, 255, 0.08)",
               border: "none",
+              borderRadius: "50%",
               color: "#94a3b8",
               cursor: "pointer",
-              fontSize: "11px",
-              padding: "0 2px",
+              fontSize: "10px",
+              width: "16px",
+              height: "16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              flexShrink: 0,
             }}
           >
             ×
           </button>
+          {/* Manga-style downward speech bubble tail */}
+          <div
+            style={{
+              position: "absolute",
+              bottom: "-6px",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: 0,
+              height: 0,
+              borderLeft: "6px solid transparent",
+              borderRight: "6px solid transparent",
+              borderTop: `6px solid ${activeThemeColor}66`,
+            }}
+          />
         </div>
       )}
 
       {/* Wellness Human Care Popover */}
-      {wellnessAlert && (
+      {!bare && wellnessAlert && (
         <div
           onClick={(e) => {
             e.stopPropagation();
             setWellnessAlert(null);
-            awardBondXp(5);
             playChime("pet");
           }}
-          title="Click to acknowledge: +5 Bond XP!"
+          title="Click to acknowledge"
           style={{
             position: "absolute",
             top: "2px",
@@ -790,12 +829,12 @@ export function CompanionRenderer({
             transform: "translateX(-50%)",
             background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
             color: "#ffffff",
-            padding: "4px 10px",
-            borderRadius: "16px",
+            padding: "5px 12px",
+            borderRadius: "20px",
             fontSize: "9.5px",
             fontWeight: 700,
             letterSpacing: "0.3px",
-            boxShadow: "0 4px 12px rgba(16, 185, 129, 0.4)",
+            boxShadow: "0 6px 18px rgba(16, 185, 129, 0.4)",
             zIndex: 20,
             whiteSpace: "nowrap",
             cursor: "pointer",
@@ -806,11 +845,14 @@ export function CompanionRenderer({
         </div>
       )}
 
-      {/* 2. Companion Character Stage */}
+      {/* 2. Living Companion Character Stage with Pointer Tilt & Organic Floating */}
       <div
-        onClick={handlePet}
-        aria-label="Companion stage — click to pet and bond"
-        role="button"
+        ref={stageBoxRef}
+        onClick={interactive ? handlePet : undefined}
+        onPointerMove={interactive ? handleStagePointerMove : undefined}
+        onPointerLeave={interactive ? handleStagePointerLeave : undefined}
+        aria-label={interactive ? "Companion stage — click to pet and bond" : undefined}
+        role={interactive ? "button" : undefined}
         tabIndex={interactive ? 0 : -1}
         onKeyDown={(e) => { if (interactive && (e.key === 'Enter' || e.key === ' ')) handlePet(); }}
         style={{
@@ -821,6 +863,10 @@ export function CompanionRenderer({
           alignItems: "center",
           justifyContent: "center",
           cursor: interactive ? "pointer" : "default",
+          transform: interactive
+            ? `perspective(600px) rotateY(${pointerOffset.x * 7}deg) rotateX(${-pointerOffset.y * 5}deg)`
+            : undefined,
+          transition: "transform 0.15s cubic-bezier(0.2, 0, 0.2, 1)",
         }}
       >
         {/* Dynamic Character Aura Glow */}
@@ -832,8 +878,8 @@ export function CompanionRenderer({
             borderRadius: "50%",
             pointerEvents: "none",
             filter: "blur(20px)",
-            opacity: state === "idle" ? 0.35 : state === "sleeping" ? 0.15 : 0.7,
-            background: companionInfo.glow,
+            opacity: state === "idle" ? 0.4 : state === "sleeping" ? 0.18 : 0.75,
+            background: activeGlow,
             transition: "all 0.6s ease-in-out",
           }}
         />
@@ -851,6 +897,70 @@ export function CompanionRenderer({
             animation: "companionShadow 3.8s ease-in-out infinite",
           }}
         />
+
+        {/* Cheerful Blushing Cheeks Overlay */}
+        {isBlushing && (
+          <div
+            style={{
+              position: "absolute",
+              top: "43%",
+              left: "50%",
+              transform: "translateX(-50%)",
+              width: `${size * 0.48}px`,
+              display: "flex",
+              justifyContent: "space-between",
+              pointerEvents: "none",
+              zIndex: 7,
+              animation: "blushPulse 1.8s ease-in-out infinite",
+            }}
+          >
+            <div style={{ width: `${size * 0.1}px`, height: `${size * 0.05}px`, borderRadius: "50%", background: "radial-gradient(circle, rgba(255, 105, 180, 0.95) 0%, rgba(255, 182, 193, 0.4) 60%, transparent 100%)", filter: "blur(2px)" }} />
+            <div style={{ width: `${size * 0.1}px`, height: `${size * 0.05}px`, borderRadius: "50%", background: "radial-gradient(circle, rgba(255, 105, 180, 0.95) 0%, rgba(255, 182, 193, 0.4) 60%, transparent 100%)", filter: "blur(2px)" }} />
+          </div>
+        )}
+
+        {/* Cute Accessories Layer */}
+        {customAccessory === "ribbon" && (
+          <div style={{ position: "absolute", top: "14%", left: "50%", transform: "translateX(-50%)", fontSize: `${size * 0.16}px`, zIndex: 8, pointerEvents: "none", filter: "drop-shadow(0 2px 5px rgba(0,0,0,0.4))" }}>
+            🎀
+          </div>
+        )}
+        {customAccessory === "flower" && (
+          <div style={{ position: "absolute", top: "15%", right: "26%", fontSize: `${size * 0.16}px`, zIndex: 8, pointerEvents: "none", filter: "drop-shadow(0 2px 5px rgba(0,0,0,0.4))" }}>
+            🌸
+          </div>
+        )}
+        {customAccessory === "crown" && (
+          <div style={{ position: "absolute", top: "4%", left: "50%", transform: "translateX(-50%)", fontSize: `${size * 0.18}px`, zIndex: 8, pointerEvents: "none", animation: "crownFloat 2.4s ease-in-out infinite", filter: "drop-shadow(0 4px 10px rgba(250,204,21,0.6))" }}>
+            👑
+          </div>
+        )}
+        {customAccessory === "glasses" && (
+          <div style={{ position: "absolute", top: "34%", left: "50%", transform: "translateX(-50%)", fontSize: `${size * 0.18}px`, zIndex: 8, pointerEvents: "none", filter: "drop-shadow(0 2px 6px rgba(0,0,0,0.5))" }}>
+            👓
+          </div>
+        )}
+        {customAccessory === "halo" && (
+          <div
+            style={{
+              position: "absolute",
+              top: "6%",
+              left: "50%",
+              width: `${size * 0.32}px`,
+              height: `${size * 0.1}px`,
+              borderRadius: "50%",
+              border: "3px solid #fde047",
+              zIndex: 8,
+              pointerEvents: "none",
+              animation: "haloGlow 2.5s ease-in-out infinite",
+            }}
+          />
+        )}
+        {customAccessory === "bell" && (
+          <div style={{ position: "absolute", top: "55%", left: "50%", transform: "translateX(-50%)", fontSize: `${size * 0.14}px`, zIndex: 8, pointerEvents: "none", filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.4))" }}>
+            🔔
+          </div>
+        )}
 
         {/* Floating Particles (Hearts & Treats) */}
         {particles.map((p) => (
@@ -886,6 +996,7 @@ export function CompanionRenderer({
             <AvatarStage
               subject={subjectFromAvatar(avatar)}
               state={state}
+              presentation={presentation}
               hud={hud}
               size={size}
               interactive={interactive}
@@ -905,7 +1016,7 @@ export function CompanionRenderer({
               justifyContent: "center",
               background: "rgba(30, 10, 15, 0.9)",
               border: "2px dashed #ff4757",
-              borderRadius: "8px",
+              borderRadius: "16px",
               color: "#ff6b81",
               padding: "16px",
               textAlign: "center",
@@ -940,6 +1051,18 @@ export function CompanionRenderer({
               animation:
                 isSquishing || isEating
                   ? "none"
+                  : animation?.animationKind === "static"
+                  ? state === "working"
+                    ? "companionPulse 1.8s ease-in-out infinite"
+                    : state === "thinking"
+                    ? "companionSway 2.4s ease-in-out infinite"
+                    : state === "success" || state === "celebrating" || state === "level_up" || state === "achievement"
+                    ? "companionBounce 0.8s ease-in-out infinite"
+                    : state === "error"
+                    ? "companionShake 0.4s ease-in-out"
+                    : state === "sleeping"
+                    ? "companionSleep 4s ease-in-out infinite"
+                    : "companionBreathe 3.8s ease-in-out infinite"
                   : state === "sleeping"
                   ? "companionSleep 4s ease-in-out infinite"
                   : "companionBreathe 3.8s ease-in-out infinite",
@@ -966,25 +1089,26 @@ export function CompanionRenderer({
         )}
       </div>
 
-      {/* 3. Unified Bottom Status & Action Capsule (Replaces colliding pills) */}
+      {/* 3. Living AgentPet Unified Bottom Capsule & Customizer (Rounded & Organic!) */}
+      {!bare && (
       <div
         className="companion-unified-capsule"
         style={{
           width: "calc(100% - 12px)",
-          background: "rgba(10, 16, 30, 0.92)",
-          border: `1px solid ${companionInfo.themeColor}44`,
-          borderRadius: "12px",
-          padding: "5px 8px",
+          background: "rgba(15, 23, 42, 0.9)",
+          border: `1px solid ${activeThemeColor}44`,
+          borderRadius: "20px",
+          padding: "6px 10px",
           display: "flex",
           flexDirection: "column",
-          gap: "4px",
+          gap: "5px",
           zIndex: 8,
-          backdropFilter: "blur(10px)",
-          boxShadow: "0 4px 16px rgba(0, 0, 0, 0.4)",
+          backdropFilter: "blur(14px)",
+          boxShadow: `0 8px 24px rgba(0, 0, 0, 0.35), 0 0 0 1px ${activeThemeColor}22`,
           boxSizing: "border-box",
         }}
       >
-        {/* Row 1: Character identity, 3D/2D toggle, state, and bond level */}
+        {/* Row 1: Identity, Affection Heart Meter, Mode & Style Toggle */}
         <div
           style={{
             display: "flex",
@@ -994,11 +1118,50 @@ export function CompanionRenderer({
             color: "#e2e8f0",
           }}
         >
-          <div style={{ display: "flex", alignItems: "center", gap: "4px", fontWeight: 700 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "5px", fontWeight: 700 }}>
             <span>{companionInfo.icon}</span>
-            <span style={{ color: companionInfo.themeColor }}>{renderMode === "3d" && avatar ? avatar.name : petName}</span>
+            <span style={{ color: activeThemeColor, fontWeight: 800 }}>{displayName}</span>
+            {/* Cute Affection Heart Meter */}
+            <span
+              title={`Affection: ${affectionScore} — pet and treat to increase!`}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "2px",
+                fontSize: "8.5px",
+                background: "rgba(255, 105, 180, 0.15)",
+                border: "1px solid rgba(255, 105, 180, 0.3)",
+                borderRadius: "999px",
+                padding: "1px 5px",
+                color: "#ff69b4",
+                fontWeight: 800,
+              }}
+            >
+              ❤️ {affectionScore}
+            </span>
           </div>
-          <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+            {/* Quick Customizer Toggle Button */}
+            <button
+              type="button"
+              onClick={() => setIsCustomizerOpen((prev) => !prev)}
+              title="Customize pet nickname, accessory, aura and personality"
+              style={{
+                fontSize: "8.5px",
+                fontWeight: 800,
+                color: isCustomizerOpen ? "#facc15" : "#cbd5e1",
+                background: isCustomizerOpen ? "rgba(250, 204, 21, 0.2)" : "rgba(255, 255, 255, 0.08)",
+                border: `1px solid ${isCustomizerOpen ? "#facc15" : "rgba(255, 255, 255, 0.15)"}`,
+                borderRadius: "999px",
+                padding: "2px 7px",
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                gap: "2px",
+              }}
+            >
+              <span>🎨 Style</span>
+            </button>
             <button
               type="button"
               onClick={handleToggleRenderMode}
@@ -1009,8 +1172,8 @@ export function CompanionRenderer({
                 color: renderMode === "3d" ? "#38bdf8" : "#94a3b8",
                 background: renderMode === "3d" ? "rgba(56, 189, 248, 0.2)" : "rgba(255, 255, 255, 0.08)",
                 border: `1px solid ${renderMode === "3d" ? "#38bdf8" : "rgba(255, 255, 255, 0.15)"}`,
-                borderRadius: "4px",
-                padding: "1px 6px",
+                borderRadius: "999px",
+                padding: "2px 6px",
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
@@ -1025,74 +1188,234 @@ export function CompanionRenderer({
                 fontWeight: 700,
                 color: state === "working" ? "#38bdf8" : state === "error" ? "#ff4757" : "#a855f7",
                 background: "rgba(255, 255, 255, 0.06)",
-                padding: "1px 5px",
-                borderRadius: "4px",
+                padding: "1px 6px",
+                borderRadius: "999px",
               }}
             >
               {state.toUpperCase()}
             </span>
             <span style={{ color: "#94a3b8", fontSize: "8.5px" }}>
-              LVL {bondLevel} {bondTitle}
+              Affection {affectionScore}
             </span>
           </div>
         </div>
 
-        {/* Row 2: Tactile Quick Action Controls */}
+        {/* In-Place Pet Customizer Drawer (Slides open on clicking Style) */}
+        {isCustomizerOpen && (
+          <div
+            style={{
+              background: "rgba(2, 6, 23, 0.8)",
+              border: `1px solid ${activeThemeColor}33`,
+              borderRadius: "14px",
+              padding: "7px 8px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "6px",
+              marginTop: "3px",
+              animation: "bubbleFloatIn 0.2s ease-out",
+            }}
+          >
+            {/* Nickname Editor */}
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <span style={{ fontSize: "9px", color: "#94a3b8", minWidth: "55px", fontWeight: 700 }}>Nickname:</span>
+              <input
+                type="text"
+                placeholder={avatar?.name ?? petName}
+                value={customNickname}
+                onChange={(e) => saveNickname(e.target.value)}
+                maxLength={18}
+                style={{
+                  flex: 1,
+                  background: "rgba(15, 23, 42, 0.9)",
+                  border: "1px solid rgba(148, 163, 184, 0.3)",
+                  borderRadius: "8px",
+                  color: "#f8fafc",
+                  fontSize: "9.5px",
+                  padding: "3px 7px",
+                  outline: "none",
+                }}
+              />
+            </div>
+
+            {/* Accessory Selector */}
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <span style={{ fontSize: "9px", color: "#94a3b8", minWidth: "55px", fontWeight: 700 }}>Accessory:</span>
+              <div style={{ display: "flex", gap: "4px", flexWrap: "wrap", flex: 1 }}>
+                {[
+                  { id: "none", label: "❌" },
+                  { id: "ribbon", label: "🎀" },
+                  { id: "flower", label: "🌸" },
+                  { id: "crown", label: "👑" },
+                  { id: "glasses", label: "👓" },
+                  { id: "halo", label: "😇" },
+                  { id: "bell", label: "🔔" },
+                ].map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => saveAccessory(item.id)}
+                    style={{
+                      background: customAccessory === item.id ? "rgba(56, 189, 248, 0.3)" : "rgba(255, 255, 255, 0.07)",
+                      border: `1px solid ${customAccessory === item.id ? "#38bdf8" : "rgba(255, 255, 255, 0.12)"}`,
+                      borderRadius: "6px",
+                      padding: "2px 5px",
+                      fontSize: "11px",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Aura Glow Color Presets */}
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <span style={{ fontSize: "9px", color: "#94a3b8", minWidth: "55px", fontWeight: 700 }}>Aura Glow:</span>
+              <div style={{ display: "flex", gap: "5px", alignItems: "center" }}>
+                {[
+                  { color: "#ff69b4", label: "Sakura" },
+                  { color: "#38bdf8", label: "Sky" },
+                  { color: "#facc15", label: "Honey" },
+                  { color: "#c084fc", label: "Violet" },
+                  { color: "#34d399", label: "Mint" },
+                ].map((item) => (
+                  <button
+                    key={item.color}
+                    type="button"
+                    onClick={() => saveAura(item.color)}
+                    title={item.label}
+                    style={{
+                      width: "14px",
+                      height: "14px",
+                      borderRadius: "50%",
+                      backgroundColor: item.color,
+                      border: customAura === item.color ? "2px solid #ffffff" : "1px solid rgba(0,0,0,0.4)",
+                      boxShadow: customAura === item.color ? `0 0 8px ${item.color}` : "none",
+                      cursor: "pointer",
+                      padding: 0,
+                    }}
+                  />
+                ))}
+              </div>
+            </div>
+
+            {/* Personality Vibe */}
+            <div style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+              <span style={{ fontSize: "9px", color: "#94a3b8", minWidth: "55px", fontWeight: 700 }}>Vibe:</span>
+              <div style={{ display: "flex", gap: "4px" }}>
+                {[
+                  { id: "sweet", label: "💖 Sweet" },
+                  { id: "playful", label: "⚡ Playful" },
+                  { id: "loyal", label: "🛡️ Loyal" },
+                  { id: "calm", label: "🌿 Calm" },
+                ].map((item) => (
+                  <button
+                    key={item.id}
+                    type="button"
+                    onClick={() => saveVibe(item.id as "sweet" | "playful" | "loyal" | "calm")}
+                    style={{
+                      background: customVibe === item.id ? "rgba(168, 85, 247, 0.25)" : "rgba(255, 255, 255, 0.06)",
+                      border: `1px solid ${customVibe === item.id ? "#c084fc" : "rgba(255, 255, 255, 0.1)"}`,
+                      borderRadius: "6px",
+                      padding: "2px 6px",
+                      fontSize: "8.5px",
+                      fontWeight: 700,
+                      color: customVibe === item.id ? "#f3e8ff" : "#94a3b8",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {item.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Row 2: Tactile Living Controls (Pet, Feed, Heart-to-Heart, Wake) */}
         <div
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             gap: "4px",
-            marginTop: "2px",
+            marginTop: "1px",
           }}
         >
           <button
             type="button"
             onClick={handlePet}
-            title="Pet companion (+1 Bond XP)"
+            title="Pet companion (Purrs, blush, +Affection, +1 XP)"
             style={{
               flex: 1,
-              background: "rgba(255, 255, 255, 0.08)",
-              border: "1px solid rgba(255, 255, 255, 0.12)",
-              borderRadius: "6px",
-              color: "#ffffff",
-              padding: "3px 4px",
+              background: "rgba(255, 105, 180, 0.15)",
+              border: "1px solid rgba(255, 105, 180, 0.35)",
+              borderRadius: "14px",
+              color: "#ff80bf",
+              padding: "4px 6px",
               fontSize: "9.5px",
-              fontWeight: 600,
+              fontWeight: 700,
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "3px",
+              transition: "all 0.15s ease",
             }}
           >
-            <span>👋</span>
+            <span>💖</span>
             <span>Pet</span>
           </button>
 
           <button
             type="button"
             onClick={handleFeed}
-            title={`Feed ${companionInfo.treatName} (+2 Bond XP)`}
+            title={`Feed ${companionInfo.treatName} (+Affection, +2 XP)`}
             style={{
               flex: 1,
-              background: "rgba(255, 255, 255, 0.08)",
-              border: "1px solid rgba(255, 255, 255, 0.12)",
-              borderRadius: "6px",
-              color: "#ffffff",
-              padding: "3px 4px",
+              background: "rgba(250, 204, 21, 0.15)",
+              border: "1px solid rgba(250, 204, 21, 0.35)",
+              borderRadius: "14px",
+              color: "#fde047",
+              padding: "4px 6px",
               fontSize: "9.5px",
-              fontWeight: 600,
+              fontWeight: 700,
               cursor: "pointer",
               display: "flex",
               alignItems: "center",
               justifyContent: "center",
               gap: "3px",
+              transition: "all 0.15s ease",
             }}
           >
             <span>{companionInfo.treatEmoji}</span>
             <span>{companionInfo.treatName}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={handleHeartToHeart}
+            title="Heart-to-Heart: hear warm, encouraging words"
+            style={{
+              flex: 1,
+              background: "rgba(56, 189, 248, 0.15)",
+              border: "1px solid rgba(56, 189, 248, 0.35)",
+              borderRadius: "14px",
+              color: "#7dd3fc",
+              padding: "4px 6px",
+              fontSize: "9.5px",
+              fontWeight: 700,
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "3px",
+              transition: "all 0.15s ease",
+            }}
+          >
+            <span>💬</span>
+            <span>Talk</span>
           </button>
 
           {state === "sleeping" ? (
@@ -1104,9 +1427,9 @@ export function CompanionRenderer({
                 flex: 1,
                 background: "linear-gradient(135deg, #f59e0b 0%, #d97706 100%)",
                 border: "none",
-                borderRadius: "6px",
+                borderRadius: "14px",
                 color: "#ffffff",
-                padding: "3px 4px",
+                padding: "4px 6px",
                 fontSize: "9.5px",
                 fontWeight: 700,
                 cursor: "pointer",
@@ -1123,25 +1446,23 @@ export function CompanionRenderer({
             <button
               type="button"
               onClick={handleCycleThought}
-              title="Hear companion's thought"
+              title="Hear companion's current thought"
               style={{
-                flex: 1,
                 background: "rgba(255, 255, 255, 0.08)",
-                border: "1px solid rgba(255, 255, 255, 0.12)",
-                borderRadius: "6px",
-                color: "#ffffff",
-                padding: "3px 4px",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
+                borderRadius: "14px",
+                color: "#cbd5e1",
+                padding: "4px 8px",
                 fontSize: "9.5px",
                 fontWeight: 600,
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "3px",
+                gap: "2px",
               }}
             >
               <span>💭</span>
-              <span>Talk</span>
             </button>
           )}
 
@@ -1152,10 +1473,10 @@ export function CompanionRenderer({
               title="Cycle to next companion pack"
               style={{
                 background: "rgba(255, 255, 255, 0.08)",
-                border: "1px solid rgba(255, 255, 255, 0.12)",
-                borderRadius: "6px",
+                border: "1px solid rgba(255, 255, 255, 0.15)",
+                borderRadius: "14px",
                 color: "#38bdf8",
-                padding: "3px 7px",
+                padding: "4px 8px",
                 fontSize: "9.5px",
                 fontWeight: 700,
                 cursor: "pointer",
@@ -1166,6 +1487,7 @@ export function CompanionRenderer({
           )}
         </div>
       </div>
+      )}
 
       {/* Global CSS keyframes for organic companion movements */}
       <style>{`
@@ -1178,6 +1500,44 @@ export function CompanionRenderer({
           }
           100% {
             transform: translateY(0px) scale(1, 1);
+          }
+        }
+        @keyframes companionPulse {
+          0%, 100% {
+            transform: scale(1, 1);
+          }
+          50% {
+            transform: scale(1.05, 1.05);
+          }
+        }
+        @keyframes companionSway {
+          0%, 100% {
+            transform: rotate(0deg);
+          }
+          25% {
+            transform: rotate(-4deg);
+          }
+          75% {
+            transform: rotate(4deg);
+          }
+        }
+        @keyframes companionBounce {
+          0%, 100% {
+            transform: translateY(0);
+          }
+          50% {
+            transform: translateY(-14px);
+          }
+        }
+        @keyframes companionShake {
+          0%, 100% {
+            transform: translateX(0);
+          }
+          20%, 60% {
+            transform: translateX(-6px);
+          }
+          40%, 80% {
+            transform: translateX(6px);
           }
         }
         @keyframes companionSleep {

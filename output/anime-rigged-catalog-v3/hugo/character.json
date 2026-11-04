@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hugo",
+  "name": "Hugo",
+  "title": "Bakery Apprentice",
+  "description": "Proofs dough and pull requests with equal care.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "round",
+  "outfit": "overalls",
+  "accessories": [
+    "beanie"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#b45309",
+    "eyes": "#78350f",
+    "primary": "#fef3c7",
+    "secondary": "#d97706",
+    "accent": "#f43f5e"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.1,
+  "tags": [
+    "cozy"
+  ],
+  "personality": "warm",
+  "specialty": "Proofing Pull Requests",
+  "catchphrase": "Proofs dough and pull requests with equal care.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#d97706",
+    "icon": "\ud83e\udd56",
+    "treatName": "Brioche",
+    "treatEmoji": "\ud83e\udd50",
+    "feedReaction": "Warm golden butter brioche! Flour dusted on nose and apron! \ud83e\udd50\ud83e\udd56",
+    "wakeReaction": "Checking the proving drawer. Dough rising to double volume! \ud83e\udd56",
+    "petReaction": "Hands you a hot, fresh pastry straight from the bakery oven! \ud83e\udd50\ud83d\udc96",
+    "dialogue": {
+      "idle": "Kneading sourdough on a wooden baker block with steady rhythm. \ud83e\udd56",
+      "working": "Letting complex PRs rise slowly and proof to perfection! \ud83e\udd56\u26a1",
+      "thinking": "Checking fermentation bubbles in the code structure... \ud83e\udd14",
+      "success": "Golden brown! Shipped crispy outside and tender within! \ud83e\udd56\ud83c\udf89",
+      "error": "Dough deflated! Adding fresh yeast and giving it more time! \ud83c\udf5e",
+      "sleeping": "Zzz... resting on flour sacks as the wood oven cools... \ud83c\udf19"
+    }
+  }
+}

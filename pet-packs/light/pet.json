@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "light"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#b45309",
+    "icon": "📓",
+    "treatName": "RedApple",
+    "treatEmoji": "🍎",
+    "feedReaction": "Crisp red apple. Shinigami-approved perfection. 🍎📓",
+    "wakeReaction": "Fountain pen unscrewed. Today we establish perfect order. 📓",
+    "petReaction": "Everything is proceeding according to calculation, Chief. 📓✨",
+    "dialogue": {
+      "idle": "Reviewing requirements with surgical precision. Perfect grades. 📓",
+      "working": "Writing the fatal fix into the notebook with grand flourishes! 📓⚡",
+      "thinking": "Simulating all opponent edge cases twelve steps ahead... 🤔",
+      "success": "EXACTLY AS PLANNED! An immaculate, bug-free deployment! 📓🎉",
+      "error": "A temporary nuisance. I will rewrite reality to eliminate it. 🖊️",
+      "sleeping": "Zzz... resting composed at his study desk with pen capped... 🌙"
+    }
+  }
 }

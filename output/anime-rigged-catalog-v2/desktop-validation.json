@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "verifiedAt": "2026-10-29T12:51:35.6746070+05:30",
+  "application": "Miyora / AgentPet",
+  "platform": "Windows x86_64",
+  "nativeBuild": "passed",
+  "desktopClippy": "passed -D warnings",
+  "frontendTests": 288,
+  "coreAndImporterTests": 31,
+  "collectionModels": 213,
+  "browserValidatedModels": 213,
+  "nativeValidatedModels": 213,
+  "selectedCharacter": "miyora.nezuko",
+  "nativeOverlay": "visible with rendered skinned 3D Nezuko model",
+  "modelTransport": "binary and validated JSON byte-array fallback",
+  "artwork": "procedural first pass; individual art refinement remains",
+  "paidServicesUsed": false
+}

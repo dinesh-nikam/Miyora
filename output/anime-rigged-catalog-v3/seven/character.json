@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.seven",
+  "name": "Seven",
+  "title": "QA Droid",
+  "description": "Inspects every pixel with one unblinking eye.",
+  "body": "robot",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "mono",
+  "outfit": "plating",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e2e8f0",
+    "hair": "#94a3b8",
+    "eyes": "#ef4444",
+    "primary": "#94a3b8",
+    "secondary": "#1e293b",
+    "accent": "#ef4444"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "robot",
+    "tester"
+  ],
+  "personality": "quantum",
+  "specialty": "Quantum Circuit Simulation",
+  "catchphrase": "Executing quantum superposition tests across parallel realities.",
+  "category": "robot",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#8b5cf6",
+    "icon": "\ud83d\udd2e",
+    "treatName": "SubatomicParticle",
+    "treatEmoji": "\u269b\ufe0f",
+    "feedReaction": "Subatomic packet ingested! Quantum coherence at 99.999%! \u269b\ufe0f\ud83d\udd2e",
+    "wakeReaction": "Superposition collapsed into an optimal execution path! \ud83d\udd2e",
+    "petReaction": "Quantum entanglement binds our efforts together in harmony! \ud83d\udd2e\ud83d\udc96",
+    "dialogue": {
+      "idle": "Floating in quantum superposition. Observing all branches. \ud83d\udd2e",
+      "working": "Simulating ten thousand concurrent paths in parallel! \u269b\ufe0f\u26a1",
+      "thinking": "Collapsing probability waves to locate the root cause... \ud83e\udd14",
+      "success": "Deterministic outcome verified across all realities! \ud83d\udd2e\ud83c\udf89",
+      "error": "Quantum decoherence detected! Recalibrating qubits! \u26a0\ufe0f",
+      "sleeping": "Zzz... resting in an unobserved quantum ground state... \ud83c\udf19"
+    }
+  }
+}

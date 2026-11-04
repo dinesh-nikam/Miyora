@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.wizzle",
+  "name": "Wizzle",
+  "title": "Wizard Slime",
+  "description": "Knows exactly one spell: retry.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "witch_hat"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#818cf8",
+    "hair": "#6366f1",
+    "eyes": "#1e1b4b",
+    "primary": "#818cf8",
+    "secondary": "#4f46e5",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "slime",
+    "magic"
+  ],
+  "personality": "whimsical",
+  "specialty": "Whirlwind AST Transformations",
+  "catchphrase": "Spinning like a joyous vortex through AST syntax nodes!",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#8b5cf6",
+    "icon": "\ud83c\udf2a\ufe0f",
+    "treatName": "CottonCandy",
+    "treatEmoji": "\ud83c\udf6d",
+    "feedReaction": "Spun sugar vortex cotton candy! Spinning faster with glee! \ud83c\udf6d\ud83c\udf2a\ufe0f",
+    "wakeReaction": "*whoosh* Spinning into the room like a tiny cheerful dust devil! \ud83c\udf2a\ufe0f",
+    "petReaction": "Twirling playful breezes around you to blow away fatigue! \ud83c\udf2a\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Spinning gently on one tip like a colorful spinning top. \ud83c\udf2a\ufe0f",
+      "working": "Whirling through syntax trees and transforming nodes in seconds! \ud83c\udf2a\ufe0f\u26a1",
+      "thinking": "Slowing down rotation to inspect a tangled branch... \ud83e\udd14",
+      "success": "WHIRLWIND FINISH! Entire AST cleanly reorganized! \ud83c\udf2a\ufe0f\ud83c\udf89",
+      "error": "Dizzy wobble! Shaking off the spin and finding true center! \ud83c\udf2a\ufe0f",
+      "sleeping": "Zzz... spinning down to a peaceful stop on a soft rug... \ud83c\udf19"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.robin",
+  "name": "Robin",
+  "title": "Trail Scout",
+  "description": "First to spot a new release on the horizon.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#78350f",
+    "hair": "#fef3c7",
+    "eyes": "#1c1917",
+    "primary": "#ea580c",
+    "secondary": "#78350f",
+    "accent": "#22c55e"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.2,
+  "tags": [
+    "robin",
+    "explorer"
+  ],
+  "personality": "observant",
+  "specialty": "Early Horizon Scouting",
+  "catchphrase": "First to spot a new release on the horizon.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#78350f",
+    "icon": "\ud83d\udc26",
+    "treatName": "RedBerries",
+    "treatEmoji": "\ud83c\udf52",
+    "feedReaction": "Sweet autumn red hawthorn berries! Bright red breast puffed proud! \ud83c\udf52\ud83d\udc26",
+    "wakeReaction": "Singing the dawn chorus from the garden fence post before anyone's awake! \ud83d\udc26",
+    "petReaction": "Hops onto the edge of your coffee cup with a bright, friendly chirp! \ud83d\udc26\ud83d\udc96",
+    "dialogue": {
+      "idle": "Cocked head, scanning the grass for the first sign of release worms. \ud83d\udc26",
+      "working": "Scouting early horizon trends before dependencies go stale! \ud83d\udc26\u26a1",
+      "thinking": "Observing the shifting winds of industry standards... \ud83e\udd14",
+      "success": "FIRST LIGHT! Spotted the release milestone before anyone else! \ud83d\udc26\ud83c\udf89",
+      "error": "A hawk shadow passed! Darting into the hedge safe and sound! \ud83d\udc26",
+      "sleeping": "Zzz... tucked into a neat mud-and-moss nest in apple bough... \ud83c\udf19"
+    }
+  }
+}

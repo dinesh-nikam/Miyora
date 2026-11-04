@@ -233,5 +233,22 @@
     "companion",
     "devotional",
     "ganesha"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#f59e0b",
+    "icon": "🐘",
+    "treatName": "Modak",
+    "treatEmoji": "🥟",
+    "feedReaction": "Delicious steamed modak! Wisdom and happiness overflow! 🥟🐘",
+    "wakeReaction": "Vighnaharta awakens! All obstacles dissolve before us! 🐘✨",
+    "petReaction": "Trunk raised in auspicious blessing! Success in all endeavors! 🐘💖",
+    "dialogue": {
+      "idle": "Holding the sacred sweet. Begin each task with clear intent. 🐘",
+      "working": "Removing intricate system bottlenecks with ancient wisdom! 🐘⚡",
+      "thinking": "Writing epic architecture with broken tusk as stylus... 🤔",
+      "success": "Shubh Labh! Perfect auspicious release completed! 🥟🎉",
+      "error": "An obstacle appeared only to be dissolved by wisdom. 🐘🛡️",
+      "sleeping": "Zzz... sweet dreams beside Mushak the mouse companion... 🌙"
+    }
+  }
 }

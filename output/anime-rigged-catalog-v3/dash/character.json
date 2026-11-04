@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.dash",
+  "name": "Dash",
+  "title": "Sprint Cat",
+  "description": "Finishes the sprint before planning ends.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "jacket",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#facc15",
+    "hair": "#1c1917",
+    "eyes": "#f97316",
+    "primary": "#dc2626",
+    "secondary": "#1c1917",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.6,
+  "tags": [
+    "cat",
+    "speedy"
+  ],
+  "personality": "rapid",
+  "specialty": "Lightning Sprint Completion",
+  "catchphrase": "Finishes the sprint before planning ends.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#dc2626",
+    "icon": "\ud83d\udc06",
+    "treatName": "RawSteakBite",
+    "treatEmoji": "\ud83e\udd69",
+    "feedReaction": "Tender steak bite! Yellow cheetah coat crackles with speed! \ud83e\udd69\ud83d\udc06",
+    "wakeReaction": "Paws already blurring in a sprint before the morning standup starts! \ud83d\udc06",
+    "petReaction": "Dashes around your chair at Mach 2, then gives warm nose nuzzles! \ud83d\udc06\ud83d\udc96",
+    "dialogue": {
+      "idle": "Stretching long athletic legs, pacing impatiently for work. \ud83d\udc06",
+      "working": "Blazing through the entire sprint backlog before lunch break! \ud83d\udc06\u26a1",
+      "thinking": "Calculating the fastest line through the sprint tasks... \ud83e\udd14",
+      "success": "SPRINT FINISHED! All tickets in the Done column at record speed! \ud83d\udc06\ud83c\udf89",
+      "error": "Overshot the finish line! Drifting round the corner to retry! \ud83d\udc06",
+      "sleeping": "Zzz... sleeping stretched out long and sleek on the sofa... \ud83c\udf19"
+    }
+  }
+}

@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "gon"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#16a34a",
+    "icon": "🎣",
+    "treatName": "Fish",
+    "treatEmoji": "🐟",
+    "feedReaction": "Grilled island fish! Caught fresh from Whale Island! 🐟🎣",
+    "wakeReaction": "OSSU! Sniffing the morning breeze! Adventure time, Chief! 🎣",
+    "petReaction": "Ehehe! Big bright smile! You're the best teammate, Chief! 🎣💖",
+    "dialogue": {
+      "idle": "Swinging fishing rod playfully. What are we hunting next? 🎣",
+      "working": "JAJANKEN ROCK! Smashing right through broken test suites! 💥⚡",
+      "thinking": "Sniffing the air... I can smell an undocumented feature! 🤔",
+      "success": "YAHOO! Hunter license earned! We conquered the feature! 🎣🎉",
+      "error": "I don't mind starting over! We'll keep climbing higher! 💪",
+      "sleeping": "Zzz... fast asleep curled up with his boots kicked off... 🌙"
+    }
+  }
 }

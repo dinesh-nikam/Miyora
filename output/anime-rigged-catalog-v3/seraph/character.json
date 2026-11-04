@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.seraph",
+  "name": "Seraph",
+  "title": "Halo Guardian",
+  "description": "Watches over production with endless patience.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "feather",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "robe",
+  "accessories": [
+    "halo"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#fef3c7",
+    "eyes": "#facc15",
+    "primary": "#f8fafc",
+    "secondary": "#fde68a",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "guardian"
+  ],
+  "personality": "celestial",
+  "specialty": "Uptime Angelic Protection",
+  "catchphrase": "Watches over production with endless patience.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f8fafc",
+    "icon": "\ud83e\udebd",
+    "treatName": "Ambrosia",
+    "treatEmoji": "\ud83c\udf6f",
+    "feedReaction": "Golden celestial ambrosia! Angelic halo glows with pure peace! \ud83c\udf6f\ud83e\udebd",
+    "wakeReaction": "Spreading six feathered wings wide. The sanctuary is guarded. \ud83e\udebd",
+    "petReaction": "A serene, comforting embrace of angelic calm and safety, Chief. \ud83e\udebd\ud83d\udc96",
+    "dialogue": {
+      "idle": "Hovering silent and majestic above the server sanctuary. \ud83e\udebd",
+      "working": "Shielding critical production clusters under celestial wings! \ud83e\udebd\u26a1",
+      "thinking": "Seeing past, present, and future states in timeless clarity... \ud83e\udd14",
+      "success": "Sanctified! 99.999% uptime achieved with divine grace! \ud83e\udebd\ud83c\udf89",
+      "error": "Dark anomaly approached! Rebuking it with radiant light! \ud83e\udebd\u2728",
+      "sleeping": "Zzz... resting upon radiant clouds of peaceful golden dawn... \ud83c\udf19"
+    }
+  }
+}

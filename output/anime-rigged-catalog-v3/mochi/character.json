@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.mochi",
+  "name": "Mochi",
+  "title": "Snow Cat Napper",
+  "description": "Naps on warm laptops between deploys.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [
+    "bell"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f8fafc",
+    "hair": "#e2e8f0",
+    "eyes": "#60a5fa",
+    "primary": "#f8fafc",
+    "secondary": "#cbd5e1",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.6,
+  "tags": [
+    "cat",
+    "cozy"
+  ],
+  "personality": "slothful",
+  "specialty": "Warm Laptop Napping",
+  "catchphrase": "Naps on warm laptops between deploys.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f8fafc",
+    "icon": "\ud83d\udc08",
+    "treatName": "WarmMilk",
+    "treatEmoji": "\ud83e\udd5b",
+    "feedReaction": "Saucer of warm goat milk! Lap-lap-lap and contented purring! \ud83e\udd5b\ud83d\udc08",
+    "wakeReaction": "Extending one pink bean paw, yawning, and curling right back up! \ud83d\udc08",
+    "petReaction": "Climbing into your lap and vibrating with rumbling purrs! \ud83d\udc08\ud83d\udc96",
+    "dialogue": {
+      "idle": "Curled into a perfect white circle on the warm laptop deck. \ud83d\udc08",
+      "working": "Soaking up laptop keyboard heat to optimize thermal dissipation! \ud83d\udc08\u26a1",
+      "thinking": "Opening one green eye... purring through the logic... \ud83e\udd14",
+      "success": "Soft meow of celebration! Deployment landed while we napped! \ud83d\udc08\ud83c\udf89",
+      "error": "Tail twitches in mild irritation at keyboard vibrations! \ud83d\udc3e",
+      "sleeping": "Zzz... marshmallow cat snoozing deeply in the sunlight... \ud83c\udf19"
+    }
+  }
+}

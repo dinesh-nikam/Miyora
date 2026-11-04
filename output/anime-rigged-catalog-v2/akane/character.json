@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.akane",
+  "name": "Akane",
+  "title": "Crimson Blade Hunter",
+  "description": "Hunts down regressions after dark with a single clean cut.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "ponytail",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "katana",
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#2b1d1d",
+    "eyes": "#dc2626",
+    "primary": "#f8fafc",
+    "secondary": "#1f2937",
+    "accent": "#b91c1c"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "anime",
+    "swordswoman"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#b91c1c"
+}

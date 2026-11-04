@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.maya",
+  "name": "Maya",
+  "title": "Data Cartographer",
+  "description": "Maps tangled data flows into clean charts.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bob",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "backpack",
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#8a5a3c",
+    "hair": "#1c1917",
+    "eyes": "#7c3aed",
+    "primary": "#7c3aed",
+    "secondary": "#1f2937",
+    "accent": "#34d399"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "data",
+    "explorer"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

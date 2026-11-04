@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.vixi",
+  "name": "Vixi",
+  "title": "Fluffy Change Kit",
+  "description": "Could grow into anything; for now it just wants head pats.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#cbd5e1",
+    "hair": "#f8fafc",
+    "eyes": "#4c1d95",
+    "primary": "#cbd5e1",
+    "secondary": "#94a3b8",
+    "accent": "#c084fc"
+  },
+  "proportions": {
+    "height": 0.84,
+    "headScale": 1.32,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "pocket-monster",
+    "normal",
+    "cute"
+  ],
+  "personality": "mischievous",
+  "specialty": "Playful Fox Illusion Clearing",
+  "catchphrase": "Dispels confusing bug illusions with a mischievous swish of her brush.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f97316",
+    "icon": "\ud83e\udd8a",
+    "treatName": "HoneyBerries",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Sweet wild mountain honeyberries! Two white tail-tips swish! \ud83e\uded0\ud83e\udd8a",
+    "wakeReaction": "Peeking around the monitor with a clever, playful fox grin! \ud83e\udd8a",
+    "petReaction": "Swishes twin bushy tails over your keyboard for good luck! \ud83e\udd8a\ud83d\udc96",
+    "dialogue": {
+      "idle": "Grooming fluffy white ruff with paw, ears twitching alertly. \ud83e\udd8a",
+      "working": "Dispelling confusing bug illusions with clever mirror tricks! \ud83e\udd8a\u26a1",
+      "thinking": "Seeing through the false exception to find the true culprit... \ud83e\udd14",
+      "success": "TRICK SOLVED! The masked bug revealed and banished! \ud83e\udd8a\ud83c\udf89",
+      "error": "Chased her own tail into a corner! Laughing it off swiftly! \ud83e\udd8a",
+      "sleeping": "Zzz... wrapped in double fluffy tails like a warm scarf... \ud83c\udf19"
+    }
+  }
+}

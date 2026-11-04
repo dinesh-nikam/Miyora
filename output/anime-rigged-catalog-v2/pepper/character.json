@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.pepper",
+  "name": "Pepper",
+  "title": "Calico Designer",
+  "description": "Patches together layouts as lovely as her coat.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "bow"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fbbf24",
+    "hair": "#1c1917",
+    "eyes": "#16a34a",
+    "primary": "#f472b6",
+    "secondary": "#fdf2f8",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "cat",
+    "artist"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

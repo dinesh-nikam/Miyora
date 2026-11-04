@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.nova",
+  "name": "Nova",
+  "title": "Helper Android",
+  "description": "Polite, precise, and always on call.",
+  "body": "robot",
+  "ears": "antenna",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "plating",
+  "accessories": [
+    "halo"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f1f5f9",
+    "hair": "#cbd5e1",
+    "eyes": "#60a5fa",
+    "primary": "#e0f2fe",
+    "secondary": "#3b82f6",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "robot",
+    "helper"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

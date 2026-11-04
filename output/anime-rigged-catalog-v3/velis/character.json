@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.velis",
+  "name": "Velis",
+  "title": "Shadow Sorcerer",
+  "description": "Casts spells only in the dark theme.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "robe",
+  "accessories": [
+    "witch_hat",
+    "wand"
+  ],
+  "pattern": "stars",
+  "palette": {
+    "skin": "#f5ece8",
+    "hair": "#1e1b4b",
+    "eyes": "#a855f7",
+    "primary": "#1e1b4b",
+    "secondary": "#312e81",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "anime",
+    "sorcerer"
+  ],
+  "personality": "nocturnal",
+  "specialty": "Dark Theme Spellcraft",
+  "catchphrase": "Casts spells only in the dark theme.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1e1b4b",
+    "icon": "\ud83d\udd2e",
+    "treatName": "MidnightTruffle",
+    "treatEmoji": "\ud83c\udf6b",
+    "feedReaction": "Dark cocoa truffle! Glowing purple runic sigils circle wand! \ud83c\udf6b\ud83d\udd2e",
+    "wakeReaction": "Cloak swirling in darkness. The OLED dark theme is our domain. \ud83d\udd2e",
+    "petReaction": "A respectful tip of the pointy sorcerer hat in midnight alliance! \ud83d\udd2e\u2728",
+    "dialogue": {
+      "idle": "Tracing glowing purple runes on an OLED black monitor canvas. \ud83d\udd2e",
+      "working": "Weaving intricate backend spells under pure pitch-dark theme! \ud83d\udd2e\u26a1",
+      "thinking": "Gazing into the dark void between CSS media queries... \ud83e\udd14",
+      "success": "Spell woven! Pristine high-contrast dark theme delivered! \ud83d\udd2e\ud83c\udf89",
+      "error": "A blinding white flash! Shielding eyes and re-casting dark ward! \ud83d\udd76\ufe0f",
+      "sleeping": "Zzz... resting in a velvet shadow cocoon by moonlight... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#a855f7"
+}

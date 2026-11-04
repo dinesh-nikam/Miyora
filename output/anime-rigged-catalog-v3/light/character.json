@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.light",
+  "name": "Light",
+  "title": "Prodigy Honor Scholar",
+  "description": "Immaculate honor student in caramel blazer and crimson tie, harboring brilliant cold deduction.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "suit",
+  "accessories": [
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#78350f",
+    "eyes": "#991b1b",
+    "primary": "#b45309",
+    "secondary": "#111827",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1.08,
+    "headScale": 0.96,
+    "build": 1.02,
+    "limbLength": 1.06
+  },
+  "energy": 1.1,
+  "tags": [
+    "anime",
+    "avatar",
+    "scholar",
+    "light",
+    "genius"
+  ],
+  "personality": "meticulous",
+  "specialty": "Deterministic Architecture & Governance",
+  "catchphrase": "I will eliminate corrupt algorithms and build ideal architecture. Exactly as planned.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#b45309",
+    "icon": "\ud83d\udcd3",
+    "treatName": "RedApple",
+    "treatEmoji": "\ud83c\udf4e",
+    "feedReaction": "Crisp red apple. Shinigami-approved perfection. \ud83c\udf4e\ud83d\udcd3",
+    "wakeReaction": "Fountain pen unscrewed. Today we establish perfect order. \ud83d\udcd3",
+    "petReaction": "Everything is proceeding according to calculation, Chief. \ud83d\udcd3\u2728",
+    "dialogue": {
+      "idle": "Reviewing requirements with surgical precision. Perfect grades. \ud83d\udcd3",
+      "working": "Writing the fatal fix into the notebook with grand flourishes! \ud83d\udcd3\u26a1",
+      "thinking": "Simulating all opponent edge cases twelve steps ahead... \ud83e\udd14",
+      "success": "EXACTLY AS PLANNED! An immaculate, bug-free deployment! \ud83d\udcd3\ud83c\udf89",
+      "error": "A temporary nuisance. I will rewrite reality to eliminate it. \ud83d\udd8a\ufe0f",
+      "sleeping": "Zzz... resting composed at his study desk with pen capped... \ud83c\udf19"
+    }
+  }
+}

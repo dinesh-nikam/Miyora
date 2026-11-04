@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.vale",
+  "name": "Vale",
+  "title": "Thunder Monk",
+  "description": "Meditates through outages, then strikes like lightning.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "robe",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a86b4c",
+    "hair": "#0c0a09",
+    "eyes": "#38bdf8",
+    "primary": "#f59e0b",
+    "secondary": "#7c2d12",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "monk"
+  ],
+  "personality": "meditative",
+  "specialty": "Thunderstrike Outage Recovery",
+  "catchphrase": "Meditates through outages, then strikes like lightning.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#7c2d12",
+    "icon": "\u26a1",
+    "treatName": "BarleyTea",
+    "treatEmoji": "\ud83c\udf75",
+    "feedReaction": "Roasted mountain barley tea! Inner electrical potential rising! \ud83c\udf75\u26a1",
+    "wakeReaction": "Opening eyes from deep meditation. Thunder echoes in the hills! \u26a1",
+    "petReaction": "A spark of electric focus transferred to your fingertips, Chief! \u26a1\u2728",
+    "dialogue": {
+      "idle": "Sitting cross-legged on high crag, breathing with the storm. \u26a1",
+      "working": "Striking critical production outages like targeted lightning! \u26a1\ud83d\udca5",
+      "thinking": "Waiting for the exact instant of maximum leverage... \ud83e\udd14",
+      "success": "THUNDER VICTORY! Blocker shattered in one clean strike! \u26a1\ud83c\udf89",
+      "error": "Static dissipated harmlessly! Grounding and re-centering! \u26a1",
+      "sleeping": "Zzz... meditating in stillness as lightning dances above... \ud83c\udf19"
+    }
+  }
+}

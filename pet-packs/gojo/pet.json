@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "gojo"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#38bdf8",
+    "icon": "♾️",
+    "treatName": "Kikufuku",
+    "treatEmoji": "🍡",
+    "feedReaction": "Sweet Kikufuku mochi! Cursed energy at maximum. 🍡✨",
+    "wakeReaction": "Back from the void. Ready to show them what real code looks like. ♾️",
+    "petReaction": "Infinity won't stop a good high-five from you, Chief! ♾️✨",
+    "dialogue": {
+      "idle": "Don't worry, Chief. I'm the strongest companion you've got. ♾️✨",
+      "working": "Unlimited Void deployed. Compiling at the speed of light. ♾️⚡",
+      "thinking": "Six Eyes analyzing every branch and memory allocation... 🤔",
+      "success": "Domain Expansion: Clean Architecture! Zero errors. 🚀",
+      "error": "A cursed exception appeared. I'll exorcise it in one pass. 🔍",
+      "sleeping": "Reversing cursed energy... even the strongest needs rest. 🌙"
+    }
+  }
 }

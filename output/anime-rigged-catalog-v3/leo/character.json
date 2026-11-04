@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.leo",
+  "name": "Leo",
+  "title": "Sunrise Paladin",
+  "description": "Greets every morning standup with unreasonable optimism.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "armor",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#facc15",
+    "eyes": "#2563eb",
+    "primary": "#e5e7eb",
+    "secondary": "#1d4ed8",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.15,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "knight"
+  ],
+  "personality": "chivalrous",
+  "specialty": "Optimistic Standup Leadership",
+  "catchphrase": "Greeting every sprint obstacle with radiant courage and clarity.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1d4ed8",
+    "icon": "\u2600\ufe0f",
+    "treatName": "GoldenApple",
+    "treatEmoji": "\ud83c\udf4f",
+    "feedReaction": "Crisp golden honey apple! Shining armor reflects bright light! \ud83c\udf4f\u2600\ufe0f",
+    "wakeReaction": "Morning standup begins! Chin high, shield ready, morale high! \u2600\ufe0f",
+    "petReaction": "Broad noble smile and an encouraging salute to your brilliance! \u2600\ufe0f\ud83d\udee1\ufe0f",
+    "dialogue": {
+      "idle": "Polishing sun crest on polished breastplate with pride. \u2600\ufe0f",
+      "working": "Leading the sprint charge straight into challenging obstacles! \u2600\ufe0f\u26a1",
+      "thinking": "Inspiring the team through clear, optimistic priorities... \ud83e\udd14",
+      "success": "Glorious triumph! The sprint goal conquered with valor! \u2600\ufe0f\ud83c\udf89",
+      "error": "Rally to me! No obstacle can dim our collective resolve! \u2600\ufe0f\ud83d\udee1\ufe0f",
+      "sleeping": "Zzz... resting upright beneath the golden paladin banner... \ud83c\udf19"
+    }
+  }
+}

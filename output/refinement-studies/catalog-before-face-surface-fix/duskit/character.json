@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.duskit",
+  "name": "Duskit",
+  "title": "Dusk Kit",
+  "description": "The moonlit form of Vixi; its gem glows on the night shift.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "gem"
+  ],
+  "pattern": "stars",
+  "palette": {
+    "skin": "#334155",
+    "hair": "#1e293b",
+    "eyes": "#fbbf24",
+    "primary": "#334155",
+    "secondary": "#0f172a",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 0.86,
+    "headScale": 1.28,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "pocket-monster",
+    "dark",
+    "night"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

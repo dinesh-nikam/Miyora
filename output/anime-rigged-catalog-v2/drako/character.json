@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.drako",
+  "name": "Drako",
+  "title": "Dragon Pup",
+  "description": "A tiny dragon who sneezes sparks when tests fail.",
+  "body": "beast",
+  "ears": "horns",
+  "tail": "dragon",
+  "wings": "bat",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#16a34a",
+    "hair": "#14532d",
+    "eyes": "#facc15",
+    "primary": "#16a34a",
+    "secondary": "#052e16",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "dragon",
+    "cute"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

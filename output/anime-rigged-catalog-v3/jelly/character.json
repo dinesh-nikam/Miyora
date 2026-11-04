@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.jelly",
+  "name": "Jelly",
+  "title": "Berry Royal",
+  "description": "Rules the task queue from a gelatinous throne.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "crown"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#c084fc",
+    "hair": "#a855f7",
+    "eyes": "#3b0764",
+    "primary": "#c084fc",
+    "secondary": "#a855f7",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "slime",
+    "royal"
+  ],
+  "personality": "translucent",
+  "specialty": "DOM Shadow Tree Traversal",
+  "catchphrase": "Wobbling softly through layered shadow DOM trees with clear view.",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#06b6d4",
+    "icon": "\ud83e\udebc",
+    "treatName": "SeaSaltCandy",
+    "treatEmoji": "\ud83c\udf6c",
+    "feedReaction": "Glow-in-the-dark sea salt candy! Crystal tentacles sparkle! \ud83c\udf6c\ud83e\udebc",
+    "wakeReaction": "Drifting upward like a bioluminescent jellyfish in clean water! \ud83e\udebc",
+    "petReaction": "Translucent bell pulses with a warm, comforting ocean glow! \ud83e\udebc\ud83d\udc96",
+    "dialogue": {
+      "idle": "Hovering weightless in mid-air, bell bell pulsing softly. \ud83e\udebc",
+      "working": "Weaving through deep shadow DOM nodes with transparent ease! \ud83e\udebc\u26a1",
+      "thinking": "Gazing through multiple translucent layers of data... \ud83e\udd14",
+      "success": "Luminous glow! Clean render achieved across all layers! \ud83e\udebc\ud83c\udf89",
+      "error": "Tangled in a rogue style tag! Untangling gently! \ud83e\udebc",
+      "sleeping": "Zzz... resting suspended in silent, warm coastal waters... \ud83c\udf19"
+    }
+  }
+}

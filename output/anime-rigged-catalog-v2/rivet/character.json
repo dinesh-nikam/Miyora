@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.rivet",
+  "name": "Rivet",
+  "title": "Welder Mech",
+  "description": "Welds broken pipelines back together.",
+  "body": "robot",
+  "ears": "none",
+  "tail": "cable",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "mono",
+  "outfit": "plating",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#78716c",
+    "hair": "#44403c",
+    "eyes": "#f97316",
+    "primary": "#57534e",
+    "secondary": "#292524",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "robot",
+    "maker"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

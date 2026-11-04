@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.frieren",
+  "name": "Frieren",
+  "title": "Mage of the Journey",
+  "description": "Ancient elven mage with long pointed ears, white twintails, golden crescent staff, and quiet timeless patience.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "none",
+  "hair": "twintails",
+  "eyes": "sleepy",
+  "outfit": "coat",
+  "accessories": [
+    "staff",
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#e2e8f0",
+    "eyes": "#10b981",
+    "primary": "#f8fafc",
+    "secondary": "#1e293b",
+    "accent": "#f59e0b"
+  },
+  "proportions": {
+    "height": 0.92,
+    "headScale": 1.1,
+    "build": 0.9,
+    "limbLength": 0.96
+  },
+  "energy": 0.7,
+  "tags": [
+    "anime",
+    "avatar",
+    "elf",
+    "frieren",
+    "mage"
+  ],
+  "personality": "timeless",
+  "specialty": "Centennial System Maintenance",
+  "catchphrase": "Zoltraak. A century is merely a blink. Write code that lasts.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#10b981",
+    "icon": "\ud83e\ude84",
+    "treatName": "BlueBerryCake",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Delicious sweet grimoire cake. Himmel would have loved this. \ud83e\uded0\ud83e\ude84",
+    "wakeReaction": "Rubbing sleepy eyes. Has fifty years passed already? Good morning. \ud83e\ude84",
+    "petReaction": "Patting an elf's head? Heh, you are as sentimental as Himmel. \ud83e\ude84\ud83d\udc96",
+    "dialogue": {
+      "idle": "Flipping through ancient grimoires of obscure folk magic. \ud83e\ude84",
+      "working": "Casting Zoltraak! Disintegrating legacy demon code effortlessly! \u26a1\ud83e\ude84",
+      "thinking": "Remembering a lesson from Master Flamme a thousand years ago... \ud83e\udd14",
+      "success": "A quiet victory. The journey continues toward Ende. \ud83c\udf38\ud83c\udf89",
+      "error": "A mimic trap? Let me peek inside anyway... just in case. \ud83d\udce6",
+      "sleeping": "Zzz... sleeping past noon wrapped like a caterpillar in her blanket... \ud83c\udf19"
+    }
+  }
+}

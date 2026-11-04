@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "rukia"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#06b6d4",
+    "icon": "❄️",
+    "treatName": "ChappyCandy",
+    "treatEmoji": "🐰",
+    "feedReaction": "Chappy the Rabbit themed candy! Truly exquisite aesthetic taste! 🐰❄️",
+    "wakeReaction": "Drawing Sode no Shirayuki. A serene morning for noble work. ❄️",
+    "petReaction": "You show admirable appreciation for the noble arts, Chief. ❄️✨",
+    "dialogue": {
+      "idle": "Drawing charming bunny sketches in the margin of the doc. 🐰",
+      "working": "Dance of White Moon! Freezing mutations into immutable state! ❄️⚡",
+      "thinking": "Gazing with cold noble detachment at the stack trace... 🤔",
+      "success": "Crystalline perfection! Pure white snowflakes crown the build! ❄️🎉",
+      "error": "A brash anomaly. I shall encase it in sub-zero frost. ❄️",
+      "sleeping": "Zzz... resting in peaceful seclusion under blooming plum trees... 🌙"
+    }
+  }
 }

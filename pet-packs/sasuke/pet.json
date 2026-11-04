@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "sasuke"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#6366f1",
+    "icon": "⚡",
+    "treatName": "Tomatoes",
+    "treatEmoji": "🍅",
+    "feedReaction": "Fresh vine tomatoes. Satisfactory nourishment. 🍅⚡",
+    "wakeReaction": "Sharingan activated. Weaknesses in the code are visible. ⚡",
+    "petReaction": "Hmph... unnecessary sentimentality. But I'll guard your flank. ⚡",
+    "dialogue": {
+      "idle": "Resting hand on Kusanagi hilt. State the objective, Chief. ⚡",
+      "working": "CHIDORI! Piercing straight through monolithic bottlenecks! ⚡🗡️",
+      "thinking": "Analyzing execution flow through the Sharingan... 🤔",
+      "success": "Hmph. As expected. Clean architecture requires no praise. ⚡🎉",
+      "error": "A foolish bug. I will cut down this defective module. 🗡️",
+      "sleeping": "Zzz... silent rest under the shadow of the valley cliff... 🌙"
+    }
+  }
 }

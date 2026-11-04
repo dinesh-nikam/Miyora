@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.noor",
+  "name": "Noor",
+  "title": "Moonlit Scholar",
+  "description": "Annotates documentation by lamplight.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sleepy",
+  "outfit": "robe",
+  "accessories": [
+    "glasses",
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a86b4c",
+    "hair": "#0f172a",
+    "eyes": "#a78bfa",
+    "primary": "#1e1b4b",
+    "secondary": "#6d28d9",
+    "accent": "#e9d5ff"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "scholar",
+    "night"
+  ],
+  "personality": "erudite",
+  "specialty": "Late-Night Documentation & RFCs",
+  "catchphrase": "Annotating complex architectural specs by soothing candlelight.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#6d28d9",
+    "icon": "\ud83d\udcdc",
+    "treatName": "Pistachio",
+    "treatEmoji": "\ud83e\udd5c",
+    "feedReaction": "Roasted saffron pistachios! The quill writes smoothly! \ud83e\udd5c\ud83d\udcdc",
+    "wakeReaction": "Trimming candle wick. The quiet midnight hours are best for study. \ud83d\udcdc",
+    "petReaction": "Gift of an illuminated manuscript documenting your greatest win! \ud83d\udcdc\ud83d\udc96",
+    "dialogue": {
+      "idle": "Dipping quill into dark sepia ink. Documenting contracts. \ud83d\udcdc",
+      "working": "Writing exhaustive, crystal-clear RFCs and interface specs! \ud83d\udcdc\u26a1",
+      "thinking": "Selecting the exact word that prevents future confusion... \ud83e\udd14",
+      "success": "Codified! Pure semantic documentation that outlasts years! \ud83d\udcdc\ud83c\udf89",
+      "error": "Ambiguous clause found in spec! Clarifying immediately! \ud83d\udcdc\ud83d\udd0d",
+      "sleeping": "Zzz... resting cheek on a heavy bound leather tome at dawn... \ud83c\udf19"
+    }
+  }
+}

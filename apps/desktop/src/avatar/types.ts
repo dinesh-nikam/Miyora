@@ -64,6 +64,17 @@ export interface Proportions {
   limbLength: number;
 }
 
+export interface CompanionPersonality {
+  themeColor?: string;
+  icon?: string;
+  treatName?: string;
+  treatEmoji?: string;
+  feedReaction?: string;
+  wakeReaction?: string;
+  petReaction?: string;
+  dialogue?: Record<string, string>;
+}
+
 export interface CharacterSpec {
   schemaVersion: number;
   id: string;
@@ -86,6 +97,49 @@ export interface CharacterSpec {
   proportions: Proportions;
   energy: number;
   tags: string[];
+  catchphrase?: string;
+  specialty?: string;
+  personality?: string;
+  /** Browsing group; required on bundled catalog rows, absent on user designs. */
+  category?: CharacterCategory;
+  /** False only for legacy rows, which Rust never offers as the active pet. */
+  threeDEligible: boolean;
+  attribution?: Attribution;
+  companionPersonality?: CompanionPersonality;
+}
+
+/** Mirrors `agentpet_pet_engine::AnimationClip`. */
+export type AnimationClip =
+  | "idle"
+  | "work"
+  | "think"
+  | "wait"
+  | "success"
+  | "error"
+  | "celebrate"
+  | "sleep"
+  | "hungry"
+  | "eat"
+  | "level_up"
+  | "achievement"
+  | "offline"
+  | "paused"
+  | "attention"
+  | "walk";
+
+/** Clip Rust resolved for the current state; React only plays it. */
+export interface PetPresentation {
+  stateClip: AnimationClip;
+  locomotionClip: AnimationClip | null;
+}
+
+export type CharacterCategory = "character" | "animal" | "creature" | "robot" | "deity_inspired" | "legacy";
+
+export interface Attribution {
+  creator: string;
+  license: string;
+  source: string;
+  attribution: string;
 }
 
 export type AvatarSource = "catalog" | "custom";

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sumire",
+  "name": "Sumire",
+  "title": "Ink Brush Calligrapher",
+  "description": "Writes commit messages in perfect brushstrokes.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bun",
+  "eyes": "sleepy",
+  "outfit": "kimono",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "petals",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#3f3f46",
+    "eyes": "#6d28d9",
+    "primary": "#6d28d9",
+    "secondary": "#f5f3ff",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.7,
+  "tags": [
+    "anime",
+    "artist"
+  ],
+  "personality": "calligraphic",
+  "specialty": "Calligraphic Commit Inscription",
+  "catchphrase": "Writes commit messages in perfect brushstrokes.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#6d28d9",
+    "icon": "\ud83d\udd8c\ufe0f",
+    "treatName": "WagashiCake",
+    "treatEmoji": "\ud83c\udf61",
+    "feedReaction": "Violet-scented wagashi sweet! Ink stone ground to velvety depth! \ud83c\udf61\ud83d\udd8c\ufe0f",
+    "wakeReaction": "Dipping horsehair brush into rich black sumi ink with poise. \ud83d\udd8c\ufe0f",
+    "petReaction": "Presents a hand-lettered scroll of your greatest milestone achieved! \ud83d\udd8c\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Holding brush upright over washi paper, breathing in rhythm. \ud83d\udd8c\ufe0f",
+      "working": "Inscribing commit logs in museum-grade calligraphic strokes! \ud83d\udd8c\ufe0f\u26a1",
+      "thinking": "Balancing void and brushstroke in the composition... \ud83e\udd14",
+      "success": "Masterpiece inscribed! Git log reads like imperial poetry! \ud83d\udd8c\ufe0f\ud83c\udf89",
+      "error": "Ink drop splashed on parchment! Turning it into a cherry blossom! \ud83c\udf38",
+      "sleeping": "Zzz... resting cheek on arm beside the drying ink scroll... \ud83c\udf19"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.wispet",
+  "name": "Wispet",
+  "title": "Lantern Wisp",
+  "description": "A friendly ghost that haunts only the idle terminals.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#c7d2fe",
+    "hair": "#e0e7ff",
+    "eyes": "#312e81",
+    "primary": "#c7d2fe",
+    "secondary": "#a5b4fc",
+    "accent": "#22d3ee"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.7,
+  "tags": [
+    "pocket-monster",
+    "ghost"
+  ],
+  "personality": "ethereal",
+  "specialty": "Ethereal Ghost Cache Invalidation",
+  "catchphrase": "Flickering through twilight memory without leaving a shadow.",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#a855f7",
+    "icon": "\ud83d\udc7b",
+    "treatName": "GhostBerries",
+    "treatEmoji": "\ud83c\udf47",
+    "feedReaction": "Luminescent ghost berries! Pale purple flames dance brightly! \ud83c\udf47\ud83d\udc7b",
+    "wakeReaction": "Flickering into visibility with a playful friendly chime! \ud83d\udc7b",
+    "petReaction": "Drifting gently around your shoulders with cool, soothing mist! \ud83d\udc7b\ud83d\udc96",
+    "dialogue": {
+      "idle": "Hovering silently with a gentle violet glow in the shadows. \ud83d\udc7b",
+      "working": "Infiltrating stale cache entries and vanishing them silently! \ud83d\udc7b\u26a1",
+      "thinking": "Phasing between dimensions to inspect hidden states... \ud83e\udd14",
+      "success": "Pure luminescence! Stale ghosts vanished without a trace! \ud83d\udc7b\ud83c\udf89",
+      "error": "A chilly phantom draft! Floating in front to shield you! \ud83d\udc7b",
+      "sleeping": "Zzz... resting inside an antique brass lantern... \ud83c\udf19"
+    }
+  }
+}

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.rukia",
+  "name": "Rukia",
+  "title": "Snow Dance Soul Reaper",
+  "description": "Graceful reaper in black robes wielding the pure white frost zanpakuto with noble quiet dignity.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bob",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "katana"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6e7e7",
+    "hair": "#0c0a09",
+    "eyes": "#312e81",
+    "primary": "#0f172a",
+    "secondary": "#f8fafc",
+    "accent": "#67e8f9"
+  },
+  "proportions": {
+    "height": 0.92,
+    "headScale": 1.08,
+    "build": 0.92,
+    "limbLength": 0.95
+  },
+  "energy": 1.1,
+  "tags": [
+    "anime",
+    "avatar",
+    "reaper",
+    "rukia",
+    "frost"
+  ],
+  "personality": "dignified",
+  "specialty": "State Freezing & Immutability",
+  "catchphrase": "Some no mai: Tsukishiro. Freezing anomalies into crystalline perfection.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#06b6d4",
+    "icon": "\u2744\ufe0f",
+    "treatName": "ChappyCandy",
+    "treatEmoji": "\ud83d\udc30",
+    "feedReaction": "Chappy the Rabbit themed candy! Truly exquisite aesthetic taste! \ud83d\udc30\u2744\ufe0f",
+    "wakeReaction": "Drawing Sode no Shirayuki. A serene morning for noble work. \u2744\ufe0f",
+    "petReaction": "You show admirable appreciation for the noble arts, Chief. \u2744\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Drawing charming bunny sketches in the margin of the doc. \ud83d\udc30",
+      "working": "Dance of White Moon! Freezing mutations into immutable state! \u2744\ufe0f\u26a1",
+      "thinking": "Gazing with cold noble detachment at the stack trace... \ud83e\udd14",
+      "success": "Crystalline perfection! Pure white snowflakes crown the build! \u2744\ufe0f\ud83c\udf89",
+      "error": "A brash anomaly. I shall encase it in sub-zero frost. \u2744\ufe0f",
+      "sleeping": "Zzz... resting in peaceful seclusion under blooming plum trees... \ud83c\udf19"
+    }
+  }
+}

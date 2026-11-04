@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.aoi",
+  "name": "Aoi",
+  "title": "Streetwear Coder",
+  "description": "The default companion: a calm coder in a teal tech hoodie who hums along while your agents work.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bob",
+  "eyes": "round",
+  "outfit": "hoodie",
+  "accessories": [
+    "headphones"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#1e293b",
+    "eyes": "#06b6d4",
+    "primary": "#0f766e",
+    "secondary": "#334155",
+    "accent": "#22d3ee"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.1,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "coder",
+    "cyber",
+    "default"
+  ],
+  "personality": "composed",
+  "specialty": "Async Pipelines",
+  "catchphrase": "Calm code, steady commits, zero drama."
+}

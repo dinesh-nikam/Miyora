@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "frieren"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#a7f3d0",
+    "icon": "🪄",
+    "treatName": "Grimoire",
+    "treatEmoji": "📖",
+    "feedReaction": "A peaceful sweet before diving into old grimoires. 📖☕",
+    "wakeReaction": "Awake. Another century, another stable release. 🪄",
+    "petReaction": "Headpats? Himmel used to do that. It is pleasant. 🪄",
+    "dialogue": {
+      "idle": "Take your time, Chief. Good code, like journeying, cannot be rushed. 📖",
+      "working": "Transmuting ancient modules into elegant modern functions... 🪄",
+      "thinking": "Pondering the spell for automatic memory deallocation... 🤔",
+      "success": "Zoltraak pierced the bug cleanly. 100 years of stability assured. ✨",
+      "error": "A mimic chest? No, just an unhandled Promise rejection. 🔍",
+      "sleeping": "Zzz... wake me up in thirty years... or when the build finishes. 🌙"
+    }
+  }
 }

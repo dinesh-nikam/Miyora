@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.pebbluff",
+  "name": "Pebbluff",
+  "title": "Pebble Pup",
+  "description": "Sturdy as bedrock; fetches stones and stack traces.",
+  "body": "beast",
+  "ears": "floppy",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a8a29e",
+    "hair": "#e7e5e4",
+    "eyes": "#292524",
+    "primary": "#a8a29e",
+    "secondary": "#78716c",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 0.86,
+    "headScale": 1.25,
+    "build": 1.15,
+    "limbLength": 1.0
+  },
+  "energy": 1.1,
+  "tags": [
+    "pocket-monster",
+    "rock"
+  ],
+  "personality": "grounded",
+  "specialty": "River Stone Balance Stacking",
+  "catchphrase": "Stacks smooth river stones in serene, perfectly balanced zen towers.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#64748b",
+    "icon": "\ud83e\udea8",
+    "treatName": "RiverMoss",
+    "treatEmoji": "\ud83c\udf3f",
+    "feedReaction": "Fresh green river stone moss! Smooth stone body warms with sun! \ud83c\udf3f\ud83e\udea8",
+    "wakeReaction": "Slow, peaceful blink. Centering the stone tower for the day. \ud83e\udea8",
+    "petReaction": "Gently rolls a perfectly smooth, warm skipping stone to your feet! \ud83e\udea8\ud83d\udc96",
+    "dialogue": {
+      "idle": "Balancing seven smooth stones one atop another in stillness. \ud83e\udea8",
+      "working": "Balancing complex competing priorities with zen equilibrium! \ud83e\udea8\u26a1",
+      "thinking": "Feeling the exact center of gravity in the data schema... \ud83e\udd14",
+      "success": "PERFECT BALANCE! The stone tower stands without swaying! \ud83e\udea8\ud83c\udf89",
+      "error": "Top stone tumbled! Calmly picking it up to re-balance! \ud83e\udea8",
+      "sleeping": "Zzz... resting immovable like a great boulder in the stream... \ud83c\udf19"
+    }
+  }
+}

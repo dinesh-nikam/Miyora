@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.clover",
+  "name": "Clover",
+  "title": "Lucky Bunny",
+  "description": "Somehow every test passes on the first try near her.",
+  "body": "beast",
+  "ears": "bunny",
+  "tail": "bunny",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "tunic",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fafaf9",
+    "hair": "#e7e5e4",
+    "eyes": "#22c55e",
+    "primary": "#4ade80",
+    "secondary": "#14532d",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "bunny",
+    "lucky"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

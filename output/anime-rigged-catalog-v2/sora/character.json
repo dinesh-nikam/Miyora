@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sora",
+  "name": "Sora",
+  "title": "Sky Courier",
+  "description": "Delivers pull requests faster than the wind.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "twintails",
+  "eyes": "sparkle",
+  "outfit": "jacket",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#38bdf8",
+    "eyes": "#0ea5e9",
+    "primary": "#f8fafc",
+    "secondary": "#0369a1",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.4,
+  "tags": [
+    "sky",
+    "speedy"
+  ],
+  "personality": "energetic",
+  "specialty": "Fast-Path Execution",
+  "catchphrase": "Faster than the next clock cycle."
+}

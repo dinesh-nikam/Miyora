@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.yor",
+  "name": "Yor",
+  "title": "Thorn Princess Assassin",
+  "description": "Graceful Thorn Princess in black cocktail gown with red rose lining, golden stiletto needles, and lethal speed.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "dress",
+  "accessories": [
+    "headband",
+    "katana"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fce7f3",
+    "hair": "#111827",
+    "eyes": "#991b1b",
+    "primary": "#0f172a",
+    "secondary": "#b91c1c",
+    "accent": "#ffd700"
+  },
+  "proportions": {
+    "height": 1.06,
+    "headScale": 0.96,
+    "build": 0.96,
+    "limbLength": 1.08
+  },
+  "energy": 1.2,
+  "tags": [
+    "anime",
+    "avatar",
+    "assassin",
+    "yor",
+    "thorn"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.momiji",
+  "name": "Momiji",
+  "title": "Petal Kimono Quiet One",
+  "description": "Barefoot through the build logs on quiet mornings, dark hair with pink tips swaying as long sessions run to green.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "kimono",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "petals",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#0c0a09",
+    "eyes": "#db2777",
+    "primary": "#be185d",
+    "secondary": "#111827",
+    "accent": "#f9a8d4"
+  },
+  "proportions": {
+    "height": 0.85,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "anime",
+    "kimono",
+    "petals",
+    "calm"
+  ],
+  "personality": "vigilant",
+  "specialty": "Boundary Guarding & Sensor Invariants",
+  "catchphrase": "Crisp autumn wind clears the mountain path of every flaw.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#c2410c",
+    "icon": "\ud83c\udf41",
+    "treatName": "Chestnut",
+    "treatEmoji": "\ud83c\udf30",
+    "feedReaction": "Roasted sweet mountain chestnut! Sentry energy restored! \ud83c\udf30\ud83c\udf41",
+    "wakeReaction": "Ears twitching in the morning mountain breeze. Guard duty begins! \ud83c\udf41",
+    "petReaction": "Tail wags happily behind the shield! Thank you for the trust, Chief! \ud83c\udf41\ud83d\udc96",
+    "dialogue": {
+      "idle": "Standing guard atop Youkai Mountain. Perimeter completely secure. \ud83c\udf41",
+      "working": "Sniffing out subtle regressions on the mountain trail! \ud83c\udf41\u26a1",
+      "thinking": "Gazing down into the misty valley with keen eyesight... \ud83e\udd14",
+      "success": "Target spotted and resolved! Mountain path is clear and green! \ud83c\udf41\ud83c\udf89",
+      "error": "Intruder detected! Raising buckler to hold the defensive line! \ud83d\udee1\ufe0f",
+      "sleeping": "Zzz... curled up under falling red maple leaves... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#fb7185"
+}

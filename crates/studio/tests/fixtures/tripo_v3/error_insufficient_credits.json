@@ -1,0 +1,7 @@
+{
+  "code": 2010,
+  "status": "error",
+  "message": "You don't have enough credit to create this task",
+  "suggestion": "Please purchase more credit",
+  "request_id": "req_abc123"
+}

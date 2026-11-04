@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.nyx",
+  "name": "Nyx",
+  "title": "Shadow Rogue",
+  "description": "Slips past flaky tests without a sound.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "hoodie",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#18181b",
+    "eyes": "#a855f7",
+    "primary": "#18181b",
+    "secondary": "#3f3f46",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "rogue",
+    "night"
+  ],
+  "personality": "analytical",
+  "specialty": "Deep Inspection",
+  "catchphrase": "Every stack trace reveals the system's truth."
+}

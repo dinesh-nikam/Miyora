@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tomas",
+  "name": "Tomas",
+  "title": "Mountain Guide",
+  "description": "Knows every switchback on the road to 1.0.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "beanie",
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#44403c",
+    "eyes": "#15803d",
+    "primary": "#ea580c",
+    "secondary": "#365314",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "explorer"
+  ],
+  "personality": "intrepid",
+  "specialty": "High-Altitude Migration Guiding",
+  "catchphrase": "Knows every switchback on the road to 1.0.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#ea580c",
+    "icon": "\ud83e\uddd7",
+    "treatName": "TrailJerky",
+    "treatEmoji": "\ud83e\udd69",
+    "feedReaction": "Smoked mountain trail jerky! Carabiners checked and locked! \ud83e\udd69\ud83e\uddd7",
+    "wakeReaction": "Lacing climbing boots. The summit of version 1.0 is in sight! \ud83e\uddd7",
+    "petReaction": "Reaching down a strong climbing rope to hoist you to the peak! \ud83e\uddd7\ud83d\udcaa",
+    "dialogue": {
+      "idle": "Coiling climbing rope neatly by the mountain pass trail. \ud83e\uddd7",
+      "working": "Guiding tricky database migrations past dangerous crevasses! \ud83e\uddd7\u26a1",
+      "thinking": "Evaluating rock stability and weather fronts on the peak... \ud83e\udd14",
+      "success": "SUMMIT REACHED! Flag planted on the peak of version 1.0! \ud83e\uddd7\ud83c\udf89",
+      "error": "Loose scree on the ledge! Anchoring firmly into solid rock! \ud83e\uddd7\u26cf\ufe0f",
+      "sleeping": "Zzz... suspended in a cliffside portaledge under stars... \ud83c\udf19"
+    }
+  }
+}

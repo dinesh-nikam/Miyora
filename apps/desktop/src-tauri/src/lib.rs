@@ -5,21 +5,39 @@ use std::{
     time::Duration,
 };
 
+use agentpet_adapters::quota::{
+    claude_quota_status, codex_quota_status, unsupported_quota_status, QuotaStatus,
+};
 use agentpet_avatar::CharacterSpec;
 use agentpet_core::{
-    AchievementSummary, AgentSessionSummary, AvatarCatalogEntry, AvatarSource, Core,
-    CustomAvatarSummary, DesktopPosition, EventType, InstalledPetPackSummary, PetEvent,
-    ProgressionSnapshot, ResolvedAvatar, RuntimeSnapshot, XpTransaction,
+    AchievementSummary, AffectionStatus, AgentSessionSummary, AvatarCatalogEntry, AvatarSource,
+    CompanionPreferences, Core, CustomAvatarSummary, DesktopPosition, InstalledPetPackSummary,
+    LegacyCompanionSettings, LegacyImportOutcome, OverlayPlacement, ProgressionSnapshot,
+    ResolvedAvatar, RuntimeSnapshot, XpTransaction,
 };
-use agentpet_pet_engine::PetState;
 use agentpet_pet_pack::PetPackManifest;
-use tauri::{Manager, State};
+use tauri::{Emitter, Manager, State};
+
+mod companion_host;
+mod overlay_controls;
+// Generic 3D Studio (cloud model generation) is hidden in v1; build with
+// `--features studio` to include its IPC commands.
+#[cfg(feature = "studio")]
+mod studio_commands;
+use companion_host::{get_daily_moments, CompanionHost};
+use overlay_controls::{
+    exit_overlay_reposition, get_companion_shortcuts, report_overlay_activity,
+    run_companion_action, set_companion_shortcut,
+};
+#[cfg(feature = "studio")]
+use studio_commands::*;
 
 const STATE_TIMER_INTERVAL: Duration = Duration::from_secs(1);
 const POSITION_WRITE_DEBOUNCE: Duration = Duration::from_millis(400);
 const AVATAR_LIBRARY_DIR: &str = "avatars";
-const QUOTA_FRESHNESS_LIMIT_SECS: u64 = 300;
 const MAX_COSTS_FILE_BYTES: u64 = 2 * 1024 * 1024;
+/// Broadcast to every window so main and overlay share one preference state.
+const COMPANION_PREFERENCES_EVENT: &str = "companion-preferences-changed";
 
 struct AppRuntime {
     core: Core,
@@ -45,12 +63,15 @@ impl AppRuntime {
 }
 
 #[tauri::command]
-fn get_runtime_snapshot(runtime: State<'_, AppRuntime>) -> Result<RuntimeSnapshot, String> {
-    #[allow(unused_mut)]
+fn get_runtime_snapshot(
+    runtime: State<'_, AppRuntime>,
+    host: State<'_, CompanionHost>,
+) -> Result<RuntimeSnapshot, String> {
     let mut snapshot = runtime
         .active_core()
         .snapshot()
         .map_err(|error| format!("RUNTIME_READ_FAILED: {error}"))?;
+    snapshot.presentation = host.presentation(snapshot.pet_state);
     #[cfg(feature = "dev-simulator")]
     {
         snapshot.is_simulated = runtime
@@ -138,27 +159,6 @@ fn require_app_window(window: &tauri::WebviewWindow) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn toggle_pet_pause(
-    runtime: State<'_, AppRuntime>,
-    window: tauri::WebviewWindow,
-) -> Result<RuntimeSnapshot, String> {
-    require_overlay_window(&window)?;
-    let core = runtime.active_core();
-    let snapshot = core
-        .snapshot()
-        .map_err(|error| format!("RUNTIME_READ_FAILED: {error}"))?;
-    let event_type = if snapshot.pet_state == PetState::Paused {
-        EventType::UserResumed
-    } else {
-        EventType::UserPaused
-    };
-    core.accept_event(&PetEvent::new(event_type, "desktop_overlay"))
-        .map_err(|error| format!("PET_INTERACTION_FAILED: {error}"))?;
-    core.snapshot()
-        .map_err(|error| format!("RUNTIME_READ_FAILED: {error}"))
-}
-
-#[tauri::command]
 fn list_installed_packs(
     runtime: State<'_, AppRuntime>,
     window: tauri::WebviewWindow,
@@ -196,6 +196,8 @@ struct SelectedPetAnimation {
     loop_animation: bool,
     frames: Vec<SpriteFrame>,
     image_data_url: String,
+    personality: Option<agentpet_pet_pack::PetPersonality>,
+    animation_kind: Option<String>,
 }
 
 #[tauri::command]
@@ -240,13 +242,8 @@ fn get_selected_pet_animation(
         .assets
         .get(&animation.asset)
         .ok_or_else(|| "PET_ASSET_MISSING: animation asset is missing".to_string())?;
-    let root_canonical =
-        std::fs::canonicalize(&root).map_err(|error| format!("PET_PACK_READ_FAILED: {error}"))?;
-    let asset_path = std::fs::canonicalize(root.join(relative_asset))
-        .map_err(|error| format!("PET_ASSET_READ_FAILED: {error}"))?;
-    if !asset_path.starts_with(&root_canonical) {
-        return Err("PET_ASSET_INVALID: asset path escaped installed pack".into());
-    }
+    let asset_path = agentpet_pet_pack::sanitize_pack_asset_path(&root, relative_asset)
+        .map_err(|error| format!("PET_ASSET_INVALID: {error}"))?;
     let bytes = fs::read(asset_path).map_err(|error| format!("PET_ASSET_READ_FAILED: {error}"))?;
     let mime = match Path::new(relative_asset)
         .extension()
@@ -280,6 +277,8 @@ fn get_selected_pet_animation(
             "data:{mime};base64,{}",
             base64::Engine::encode(&base64::engine::general_purpose::STANDARD, bytes)
         ),
+        personality: manifest.personality,
+        animation_kind: manifest.animation,
     }))
 }
 
@@ -572,6 +571,30 @@ async fn import_vrm_avatar(
     .map_err(|error| format!("AVATAR_VRM_IMPORT_FAILED: {error}"))
 }
 
+#[cfg(feature = "studio")]
+#[tauri::command]
+async fn studio_import_as_avatar(
+    output_id: i64,
+    studio: State<'_, agentpet_studio::service::StudioService>,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<CustomAvatarSummary, String> {
+    require_main_window(&window)?;
+    let service = studio.inner().clone();
+    let core = runtime.core.clone();
+    let avatars_root = runtime.avatars_root.clone();
+    drop(window);
+    tauri::async_runtime::spawn_blocking(move || {
+        let path = service
+            .output_path(output_id)
+            .map_err(|error| format!("STUDIO_OUTPUT_NOT_FOUND: {error}"))?;
+        core.import_vrm_avatar(&path, &avatars_root)
+            .map_err(|error| format!("AVATAR_VRM_IMPORT_FAILED: {error}"))
+    })
+    .await
+    .map_err(|error| format!("STUDIO_IMPORT_WORKER_FAILED: {error}"))?
+}
+
 #[tauri::command]
 fn delete_custom_avatar(
     avatar_id: String,
@@ -594,6 +617,82 @@ fn show_pet_overlay(app: tauri::AppHandle, window: tauri::WebviewWindow) -> Resu
     window
         .show()
         .map_err(|error| format!("PET_OVERLAY_SHOW_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn get_companion_preferences(
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<CompanionPreferences, String> {
+    require_app_window(&window)?;
+    runtime
+        .core
+        .companion_preferences()
+        .map_err(|error| format!("COMPANION_PREFERENCES_READ_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn save_companion_preferences(
+    app: tauri::AppHandle,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+    preferences: CompanionPreferences,
+) -> Result<CompanionPreferences, String> {
+    require_app_window(&window)?;
+    let saved = runtime
+        .core
+        .save_companion_preferences(&preferences)
+        .map_err(|error| format!("COMPANION_PREFERENCES_SAVE_FAILED: {error}"))?;
+    broadcast_companion_preferences(&app, &saved);
+    Ok(saved)
+}
+
+#[tauri::command]
+fn import_legacy_companion_settings(
+    app: tauri::AppHandle,
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+    legacy: LegacyCompanionSettings,
+) -> Result<LegacyImportOutcome, String> {
+    require_app_window(&window)?;
+    let outcome = runtime
+        .core
+        .import_legacy_companion_settings(&legacy)
+        .map_err(|error| format!("COMPANION_LEGACY_IMPORT_FAILED: {error}"))?;
+    if outcome.imported {
+        broadcast_companion_preferences(&app, &outcome.preferences);
+    }
+    Ok(outcome)
+}
+
+#[tauri::command]
+fn pet_interact(runtime: State<'_, AppRuntime>) -> Result<AffectionStatus, String> {
+    runtime
+        .active_core()
+        .pet_interact("desktop")
+        .map_err(|error| format!("PET_INTERACT_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn pet_feed(runtime: State<'_, AppRuntime>) -> Result<AffectionStatus, String> {
+    runtime
+        .active_core()
+        .pet_feed("desktop")
+        .map_err(|error| format!("PET_FEED_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn get_affection(runtime: State<'_, AppRuntime>) -> Result<AffectionStatus, String> {
+    runtime
+        .active_core()
+        .get_affection()
+        .map_err(|error| format!("AFFECTION_READ_FAILED: {error}"))
+}
+
+fn broadcast_companion_preferences(app: &tauri::AppHandle, preferences: &CompanionPreferences) {
+    if let Err(error) = app.emit(COMPANION_PREFERENCES_EVENT, preferences) {
+        eprintln!("AgentPet could not broadcast companion preferences: {error}");
+    }
 }
 
 #[tauri::command]
@@ -628,64 +727,50 @@ struct ProviderStatusReport {
     display_name: String,
     detected: bool,
     hook_status: String,
-    quota_status: Option<agentpet_adapters::claude_code::ClaudeQuotaReport>,
-    quota_provenance: String,
-    quota_updated_seconds_ago: Option<u64>,
+    /// Measured only from a provider-reported value; never estimated.
+    quota: QuotaStatus,
     cost_usd: Option<f64>,
     cost_provenance: String,
     input_tokens: Option<i64>,
     output_tokens: Option<i64>,
     tokens_provenance: String,
-    config_path: Option<String>,
 }
 
-#[tauri::command]
-fn get_providers_status(
-    runtime: State<'_, AppRuntime>,
-    window: tauri::WebviewWindow,
-) -> Result<Vec<ProviderStatusReport>, String> {
-    require_app_window(&window)?;
-    let home = std::env::var_os("HOME")
-        .or_else(|| std::env::var_os("USERPROFILE"))
-        .map(PathBuf::from);
+impl ProviderStatusReport {
+    /// A provider with no local cost or token evidence.
+    fn without_usage(
+        provider_id: &str,
+        display_name: &str,
+        detected: bool,
+        hook_status: &str,
+        quota: QuotaStatus,
+    ) -> Self {
+        Self {
+            provider_id: provider_id.into(),
+            display_name: display_name.into(),
+            detected,
+            hook_status: hook_status.into(),
+            quota,
+            cost_usd: None,
+            cost_provenance: "N/A".into(),
+            input_tokens: None,
+            output_tokens: None,
+            tokens_provenance: "N/A".into(),
+        }
+    }
+}
 
-    let mut reports = Vec::new();
-
-    // 1. Claude Code
-    let claude_dir = home.as_ref().map(|h| h.join(".claude"));
-    let claude_detected = claude_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
-    let settings_path = claude_dir.as_ref().map(|d| d.join("settings.json"));
-    let claude_hook_installed = settings_path
-        .as_ref()
-        .and_then(|p| fs::read_to_string(p).ok())
-        .map(|s| s.contains("agentpet hook"))
-        .unwrap_or(false);
-
-    let statusline_file = runtime.app_data_dir.join("claude_statusline.json");
-    let (quota_report, quota_updated_secs) = if let Ok(bytes) = fs::read(&statusline_file) {
-        let meta = fs::metadata(&statusline_file).ok();
-        let secs = meta
-            .and_then(|m| m.modified().ok())
-            .and_then(|m| std::time::SystemTime::now().duration_since(m).ok())
-            .map(|d| d.as_secs());
-        (
-            agentpet_adapters::claude_code::parse_statusline_payload(&bytes).ok(),
-            secs,
-        )
-    } else {
-        (None, None)
-    };
-
-    let (claude_cost, claude_in_tokens, claude_out_tokens) = claude_dir
-        .as_ref()
-        .map(|d| d.join("metrics").join("costs.jsonl"))
-        .filter(|p| p.is_file())
-        .and_then(|p| {
-            let meta = fs::metadata(&p).ok()?;
+/// Sums cost and token fields from Claude Code's local cost log.
+fn claude_local_usage(claude_dir: Option<&Path>) -> (Option<f64>, Option<i64>, Option<i64>) {
+    claude_dir
+        .map(|dir| dir.join("metrics").join("costs.jsonl"))
+        .filter(|path| path.is_file())
+        .and_then(|path| {
+            let meta = fs::metadata(&path).ok()?;
             if meta.len() > MAX_COSTS_FILE_BYTES {
                 return None;
             }
-            fs::read_to_string(&p).ok()
+            fs::read_to_string(&path).ok()
         })
         .map(|content| {
             let mut cost_sum = 0.0f64;
@@ -706,61 +791,82 @@ fn get_providers_status(
             }
             (Some(cost_sum), Some(in_sum), Some(out_sum))
         })
-        .unwrap_or((None, None, None));
+        .unwrap_or((None, None, None))
+}
 
-    let claude_cost_prov = if claude_cost.is_some() {
-        "ESTIMATED".to_string()
-    } else {
-        "N/A".to_string()
+#[tauri::command]
+fn get_providers_status(
+    runtime: State<'_, AppRuntime>,
+    window: tauri::WebviewWindow,
+) -> Result<Vec<ProviderStatusReport>, String> {
+    require_app_window(&window)?;
+    let home = std::env::var_os("HOME")
+        .or_else(|| std::env::var_os("USERPROFILE"))
+        .map(PathBuf::from);
+    let detected_dir = |parts: &[&str]| {
+        home.as_ref()
+            .map(|h| parts.iter().fold(h.clone(), |path, part| path.join(part)))
+            .is_some_and(|path| path.is_dir())
     };
-    let claude_tokens_prov = if claude_in_tokens.is_some() {
-        "LOCAL".to_string()
-    } else {
-        "N/A".to_string()
-    };
-    let claude_quota_prov = if let Some(ref report) = quota_report {
-        if quota_updated_secs.map_or(false, |secs| secs > QUOTA_FRESHNESS_LIMIT_SECS) {
-            "STALE".to_string()
-        } else {
-            report.provenance.clone()
+    let hook_or_missing = |detected: bool| if detected { "unsupported" } else { "missing" };
+
+    // 1. Claude Code: quota comes only from the status line AgentPet records.
+    let claude_dir = home.as_ref().map(|h| h.join(".claude"));
+    let claude_detected = claude_dir.as_ref().is_some_and(|p| p.is_dir());
+    let claude_hook_installed = claude_dir
+        .as_ref()
+        .map(|d| d.join("settings.json"))
+        .and_then(|p| fs::read_to_string(p).ok())
+        .is_some_and(|s| s.contains("agentpet hook"));
+    let statusline_file = runtime.app_data_dir.join("claude_statusline.json");
+    let (quota_record, quota_age_secs) = match fs::read(&statusline_file) {
+        Ok(bytes) => {
+            let age = fs::metadata(&statusline_file)
+                .ok()
+                .and_then(|m| m.modified().ok())
+                .and_then(|m| std::time::SystemTime::now().duration_since(m).ok())
+                .map(|d| d.as_secs());
+            (
+                Some(agentpet_adapters::claude_code::parse_statusline_payload(
+                    &bytes,
+                )),
+                age,
+            )
         }
-    } else {
-        "N/A".to_string()
+        Err(_) => (None, None),
     };
-
-    reports.push(ProviderStatusReport {
-        provider_id: "claude_code".into(),
-        display_name: "Claude Code".into(),
-        detected: claude_detected,
-        hook_status: if claude_hook_installed {
-            "installed".into()
+    let (cost_usd, input_tokens, output_tokens) = claude_local_usage(claude_dir.as_deref());
+    let mut claude = ProviderStatusReport::without_usage(
+        "claude_code",
+        "Claude Code",
+        claude_detected,
+        if claude_hook_installed {
+            "installed"
         } else {
-            "not_installed".into()
+            "not_installed"
         },
-        quota_status: quota_report,
-        quota_provenance: claude_quota_prov,
-        quota_updated_seconds_ago: quota_updated_secs,
-        cost_usd: claude_cost,
-        cost_provenance: claude_cost_prov,
-        input_tokens: claude_in_tokens,
-        output_tokens: claude_out_tokens,
-        tokens_provenance: claude_tokens_prov,
-        config_path: settings_path.map(|p| p.to_string_lossy().to_string()),
-    });
+        claude_quota_status(claude_detected, quota_record, quota_age_secs),
+    );
+    if cost_usd.is_some() {
+        claude.cost_usd = cost_usd;
+        claude.cost_provenance = "ESTIMATED".into();
+    }
+    if input_tokens.is_some() {
+        claude.input_tokens = input_tokens;
+        claude.output_tokens = output_tokens;
+        claude.tokens_provenance = "LOCAL".into();
+    }
 
-    // 2. OpenAI Codex CLI
+    // 2. OpenAI Codex CLI: remaining allowance lives in Codex itself.
     let codex_hooks_file = agentpet_adapters::codex::default_hooks_path();
     let codex_detected = codex_hooks_file
         .as_ref()
         .and_then(|p| p.parent())
         .is_some_and(|dir| dir.is_dir());
-    let codex_hooks_installed = codex_hooks_file
-        .as_ref()
-        .map(|p| {
-            agentpet_adapters::codex::is_installed(p, agentpet_adapters::codex::HOOK_COMMAND)
-                .unwrap_or(false)
-        })
-        .unwrap_or(false);
+    let codex_hooks_installed = codex_hooks_file.as_ref().is_some_and(|p| {
+        agentpet_adapters::codex::is_installed(p, agentpet_adapters::codex::HOOK_COMMAND)
+            .unwrap_or(false)
+    });
     let codex_hook_status = if codex_hooks_installed {
         "installed"
     } else if codex_detected {
@@ -768,92 +874,41 @@ fn get_providers_status(
     } else {
         "missing"
     };
-    reports.push(ProviderStatusReport {
-        provider_id: "codex".into(),
-        display_name: "OpenAI Codex CLI".into(),
-        detected: codex_detected,
-        hook_status: codex_hook_status.into(),
-        quota_status: None,
-        quota_provenance: "N/A".into(),
-        quota_updated_seconds_ago: None,
-        cost_usd: None,
-        cost_provenance: "N/A".into(),
-        input_tokens: None,
-        output_tokens: None,
-        tokens_provenance: "N/A".into(),
-        config_path: codex_hooks_file.map(|p| p.to_string_lossy().to_string()),
-    });
 
-    // 3. GitHub Copilot CLI
-    let copilot_dir = home.as_ref().map(|h| h.join(".copilot"));
-    let copilot_detected = copilot_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
-    reports.push(ProviderStatusReport {
-        provider_id: "copilot".into(),
-        display_name: "GitHub Copilot CLI".into(),
-        detected: copilot_detected,
-        hook_status: if copilot_detected {
-            "unsupported".into()
-        } else {
-            "missing".into()
-        },
-        quota_status: None,
-        quota_provenance: "N/A".into(),
-        quota_updated_seconds_ago: None,
-        cost_usd: None,
-        cost_provenance: "N/A".into(),
-        input_tokens: None,
-        output_tokens: None,
-        tokens_provenance: "N/A".into(),
-        config_path: copilot_dir.map(|p| p.to_string_lossy().to_string()),
-    });
-
-    // 4. Google Antigravity
-    let ag_dir = home.as_ref().map(|h| h.join(".gemini").join("antigravity"));
-    let ag_detected = ag_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
-    reports.push(ProviderStatusReport {
-        provider_id: "antigravity".into(),
-        display_name: "Google Antigravity".into(),
-        detected: ag_detected,
-        hook_status: if ag_detected {
-            "unsupported".into()
-        } else {
-            "missing".into()
-        },
-        quota_status: None,
-        quota_provenance: "N/A".into(),
-        quota_updated_seconds_ago: None,
-        cost_usd: None,
-        cost_provenance: "N/A".into(),
-        input_tokens: None,
-        output_tokens: None,
-        tokens_provenance: "N/A".into(),
-        config_path: ag_dir.map(|p| p.to_string_lossy().to_string()),
-    });
-
-    // 5. Cursor IDE
-    let cursor_dir = home.as_ref().map(|h| h.join(".cursor"));
-    let cursor_detected = cursor_dir.as_ref().map(|p| p.is_dir()).unwrap_or(false);
-    reports.push(ProviderStatusReport {
-        provider_id: "cursor".into(),
-        display_name: "Cursor IDE".into(),
-        detected: cursor_detected,
-        hook_status: if cursor_detected {
-            "unsupported".into()
-        } else {
-            "missing".into()
-        },
-        quota_status: None,
-        quota_provenance: "N/A".into(),
-        quota_updated_seconds_ago: None,
-        cost_usd: None,
-        cost_provenance: "N/A".into(),
-        input_tokens: None,
-        output_tokens: None,
-        tokens_provenance: "N/A".into(),
-        config_path: cursor_dir.map(|p| p.to_string_lossy().to_string()),
-    });
-
-    Ok(reports)
+    let copilot = detected_dir(&[".copilot"]);
+    let antigravity = detected_dir(&[".gemini", "antigravity"]);
+    let cursor = detected_dir(&[".cursor"]);
+    Ok(vec![
+        claude,
+        ProviderStatusReport::without_usage(
+            "codex",
+            "OpenAI Codex CLI",
+            codex_detected,
+            codex_hook_status,
+            codex_quota_status(codex_detected),
+        ),
+        ProviderStatusReport::without_usage(
+            "copilot",
+            "GitHub Copilot CLI",
+            copilot,
+            hook_or_missing(copilot),
+            unsupported_quota_status(copilot),
+        ),
+        ProviderStatusReport::without_usage(
+            "antigravity",
+            "Google Antigravity",
+            antigravity,
+            hook_or_missing(antigravity),
+            unsupported_quota_status(antigravity),
+        ),
+        ProviderStatusReport::without_usage(
+            "cursor",
+            "Cursor IDE",
+            cursor,
+            hook_or_missing(cursor),
+            unsupported_quota_status(cursor),
+        ),
+    ])
 }
 
 #[cfg(debug_assertions)]
@@ -890,6 +945,7 @@ fn simulate_agent_event(
     require_main_window(&window)?;
     #[cfg(feature = "dev-simulator")]
     {
+        use agentpet_core::{EventType, PetEvent};
         let parsed_type = match event_type.as_str() {
             "started" => EventType::AgentStarted,
             "working" => EventType::AgentWorking,
@@ -921,27 +977,49 @@ fn simulate_agent_event(
     }
 }
 
+/// Monitor identity for placement: the OS device name, else its desktop origin.
+fn monitor_identity(monitor: &tauri::Monitor) -> String {
+    monitor.name().cloned().unwrap_or_else(|| {
+        let origin = monitor.position();
+        format!("@{},{}", origin.x, origin.y)
+    })
+}
+
+fn work_area_contains(monitor: &tauri::Monitor, x: i64, y: i64) -> bool {
+    let work = monitor.work_area();
+    let left = i64::from(work.position.x);
+    let top = i64::from(work.position.y);
+    x >= left
+        && x < left + i64::from(work.size.width)
+        && y >= top
+        && y < top + i64::from(work.size.height)
+}
+
+/// Restores the overlay from its monitor-relative placement. Falls back to the
+/// pre-v11 physical position, then to the primary monitor when the named
+/// monitor is gone; the result is always clamped inside a work area.
 fn restore_visible_position(
     window: &tauri::WebviewWindow,
-    saved: Option<DesktopPosition>,
+    placement: Option<OverlayPlacement>,
+    legacy: Option<DesktopPosition>,
 ) -> Result<(), String> {
     let monitors = window
         .available_monitors()
         .map_err(|error| format!("MONITOR_QUERY_FAILED: {error}"))?;
-    let saved_monitor = saved.and_then(|position| {
-        monitors
+    let saved_monitor = match &placement {
+        Some(placement) => monitors
             .iter()
-            .find(|monitor| {
-                let work = monitor.work_area();
-                let right = i64::from(work.position.x) + i64::from(work.size.width);
-                let bottom = i64::from(work.position.y) + i64::from(work.size.height);
-                i64::from(position.x) >= i64::from(work.position.x)
-                    && i64::from(position.x) < right
-                    && i64::from(position.y) >= i64::from(work.position.y)
-                    && i64::from(position.y) < bottom
-            })
-            .cloned()
-    });
+            .find(|monitor| monitor_identity(monitor) == placement.monitor)
+            .cloned(),
+        None => legacy.and_then(|position| {
+            monitors
+                .iter()
+                .find(|monitor| {
+                    work_area_contains(monitor, i64::from(position.x), i64::from(position.y))
+                })
+                .cloned()
+        }),
+    };
     let primary_monitor = if saved_monitor.is_none() {
         window
             .primary_monitor()
@@ -953,7 +1031,7 @@ fn restore_visible_position(
         .or(primary_monitor)
         .or_else(|| monitors.first().cloned());
     let Some(monitor) = monitor else {
-        if let Some(position) = saved {
+        if let Some(position) = legacy {
             window
                 .set_position(tauri::PhysicalPosition::new(position.x, position.y))
                 .map_err(|error| format!("PET_POSITION_RESTORE_FAILED: {error}"))?;
@@ -966,14 +1044,22 @@ fn restore_visible_position(
         .map_err(|error| format!("PET_WINDOW_SIZE_FAILED: {error}"))?;
     let left = i64::from(work.position.x);
     let top = i64::from(work.position.y);
+    let desired = match &placement {
+        // Placement offsets are validated finite and bounded, so rounding cannot overflow.
+        Some(placement) => Some((
+            left + (placement.logical_x * monitor.scale_factor()).round() as i64,
+            top + (placement.logical_y * monitor.scale_factor()).round() as i64,
+        )),
+        None => legacy.map(|position| (i64::from(position.x), i64::from(position.y))),
+    };
     let max_x = (left + i64::from(work.size.width) - i64::from(size.width)).max(left);
     let max_y = (top + i64::from(work.size.height) - i64::from(size.height)).max(top);
-    let x = saved
-        .map_or(max_x - 16, |position| i64::from(position.x))
+    let x = desired
+        .map_or(max_x - 16, |(x, _)| x)
         .clamp(left, max_x)
         .clamp(i64::from(i32::MIN), i64::from(i32::MAX)) as i32;
-    let y = saved
-        .map_or(max_y - 16, |position| i64::from(position.y))
+    let y = desired
+        .map_or(max_y - 16, |(_, y)| y)
         .clamp(top, max_y)
         .clamp(i64::from(i32::MIN), i64::from(i32::MAX)) as i32;
     window
@@ -981,8 +1067,39 @@ fn restore_visible_position(
         .map_err(|error| format!("PET_POSITION_RESTORE_FAILED: {error}"))
 }
 
+/// Converts a physical window position into a logical-DIP offset from the
+/// work-area origin of the monitor that contains it.
+fn overlay_placement_at(
+    window: &tauri::WebviewWindow,
+    position: tauri::PhysicalPosition<i32>,
+) -> Result<Option<OverlayPlacement>, String> {
+    let monitors = window
+        .available_monitors()
+        .map_err(|error| format!("MONITOR_QUERY_FAILED: {error}"))?;
+    let containing = monitors
+        .into_iter()
+        .find(|monitor| work_area_contains(monitor, i64::from(position.x), i64::from(position.y)));
+    let monitor = match containing {
+        Some(monitor) => Some(monitor),
+        None => window
+            .current_monitor()
+            .map_err(|error| format!("MONITOR_QUERY_FAILED: {error}"))?,
+    };
+    let Some(monitor) = monitor else {
+        return Ok(None);
+    };
+    let work = monitor.work_area();
+    let scale = monitor.scale_factor();
+    Ok(Some(OverlayPlacement {
+        monitor: monitor_identity(&monitor),
+        logical_x: (i64::from(position.x) - i64::from(work.position.x)) as f64 / scale,
+        logical_y: (i64::from(position.y) - i64::from(work.position.y)) as f64 / scale,
+    }))
+}
+
 fn run_position_writer(
     core: Core,
+    window: tauri::WebviewWindow,
     receiver: Receiver<tauri::PhysicalPosition<i32>>,
 ) -> std::io::Result<()> {
     std::thread::Builder::new()
@@ -992,10 +1109,13 @@ fn run_position_writer(
                 while let Ok(position) = receiver.recv_timeout(POSITION_WRITE_DEBOUNCE) {
                     latest = position;
                 }
-                if let Err(error) = core.save_overlay_position(DesktopPosition {
-                    x: latest.x,
-                    y: latest.y,
-                }) {
+                let saved = overlay_placement_at(&window, latest).and_then(|placement| {
+                    placement.map_or(Ok(()), |placement| {
+                        core.save_overlay_placement(&placement)
+                            .map_err(|error| error.to_string())
+                    })
+                });
+                if let Err(error) = saved {
                     eprintln!("AgentPet could not persist companion position: {error}");
                 }
             }
@@ -1083,6 +1203,11 @@ pub fn run() {
     let (position_sender, position_receiver) = mpsc::channel();
     tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
+        .plugin(
+            tauri_plugin_global_shortcut::Builder::new()
+                .with_handler(overlay_controls::handle_shortcut)
+                .build(),
+        )
         .setup(|app| {
             let data_dir = app.path().app_data_dir()?;
             let core = Core::open(&data_dir)?;
@@ -1092,16 +1217,28 @@ pub fn run() {
             let is_simulated = std::sync::Arc::new(std::sync::atomic::AtomicBool::new(false));
             let pet_library = data_dir.join("pet-library");
             let avatars_root = data_dir.join(AVATAR_LIBRARY_DIR);
+            // Cleanup must finish before the UI can begin new imports.
             if let Err(error) = core.sweep_avatar_staging(&avatars_root) {
                 eprintln!("AgentPet could not clean interrupted avatar imports: {error}");
             }
-            seed_starter_packs(&core, &pet_library);
+            let startup_core = core.clone();
+            let startup_pet_library = pet_library.clone();
             let overlay_window = app
                 .get_webview_window("pet-overlay")
                 .ok_or("pet-overlay window is missing")?;
-            restore_visible_position(&overlay_window, core.overlay_position()?)
+            restore_visible_position(
+                &overlay_window,
+                core.overlay_placement()?,
+                core.overlay_position()?,
+            )
+            .map_err(std::io::Error::other)?;
+            run_position_writer(core.clone(), overlay_window.clone(), position_receiver)
                 .map_err(std::io::Error::other)?;
-            run_position_writer(core.clone(), position_receiver).map_err(std::io::Error::other)?;
+            app.manage(overlay_controls::OverlayControl::default());
+            overlay_controls::register_saved_shortcuts(app.handle(), &core.shortcut_bindings()?);
+            overlay_controls::build_tray(app.handle())?;
+            overlay_controls::enter_click_through(app.handle()).map_err(std::io::Error::other)?;
+            overlay_controls::spawn_reposition_watcher(app.handle().clone())?;
             run_state_timer(
                 core.clone(),
                 #[cfg(feature = "dev-simulator")]
@@ -1109,6 +1246,20 @@ pub fn run() {
                 #[cfg(feature = "dev-simulator")]
                 is_simulated.clone(),
             )?;
+            let endpoint =
+                agentpet_ipc::Endpoint::resolve(&data_dir).map_err(std::io::Error::other)?;
+            let secret = agentpet_ipc::load_or_create_secret(&agentpet_ipc::secret_path(&data_dir))
+                .map_err(std::io::Error::other)?;
+            match agentpet_adapters::ipc::spawn_ipc_server(core.clone(), endpoint, secret) {
+                Ok(handle) => {
+                    app.manage(handle);
+                }
+                Err(error) => {
+                    eprintln!("AgentPet could not start local daemon IPC listener: {error}");
+                }
+            }
+            #[cfg(feature = "studio")]
+            app.manage(open_studio(&data_dir)?);
             app.manage(AppRuntime {
                 core,
                 #[cfg(feature = "dev-simulator")]
@@ -1119,16 +1270,33 @@ pub fn run() {
                 avatars_root,
                 app_data_dir: data_dir,
             });
+            // Both loops read AppRuntime, so they start after it is managed.
+            app.manage(CompanionHost::default());
+            companion_host::spawn_roaming(app.handle().clone())?;
+            companion_host::spawn_daily_moments(app.handle().clone())?;
+            // Pack validation decodes images and must not block the native event loop.
+            // This finite worker is intentionally detached; the UI polls persisted state.
+            let _startup_worker = std::thread::Builder::new()
+                .name("agentpet-startup-worker".into())
+                .spawn(move || seed_starter_packs(&startup_core, &startup_pet_library))?;
             Ok(())
         })
-        .on_window_event(move |window, event| {
-            if window.label() == "pet-overlay" {
-                if let tauri::WindowEvent::Moved(position) = event {
-                    if position_sender.send(*position).is_err() {
-                        eprintln!("AgentPet position writer is unavailable");
-                    }
+        .on_window_event(move |window, event| match (window.label(), event) {
+            (overlay_controls::OVERLAY_LABEL, tauri::WindowEvent::Moved(position)) => {
+                overlay_controls::record_activity(window.app_handle());
+                if position_sender.send(*position).is_err() {
+                    eprintln!("AgentPet position writer is unavailable");
                 }
             }
+            // The tray keeps the app alive; closing the main window hides it so
+            // "Open Command Deck" can bring it back. Quit lives in the tray.
+            ("main", tauri::WindowEvent::CloseRequested { api, .. }) => {
+                api.prevent_close();
+                if let Err(error) = window.hide() {
+                    eprintln!("AgentPet could not hide the main window: {error}");
+                }
+            }
+            _ => {}
         })
         .invoke_handler(tauri::generate_handler![
             get_runtime_snapshot,
@@ -1143,7 +1311,18 @@ pub fn run() {
             create_pet_from_image,
             select_pet,
             show_pet_overlay,
-            toggle_pet_pause,
+            get_companion_preferences,
+            save_companion_preferences,
+            import_legacy_companion_settings,
+            pet_interact,
+            pet_feed,
+            get_affection,
+            get_companion_shortcuts,
+            set_companion_shortcut,
+            run_companion_action,
+            report_overlay_activity,
+            exit_overlay_reposition,
+            get_daily_moments,
             verify_ledger,
             get_real_events,
             get_providers_status,
@@ -1163,7 +1342,49 @@ pub fn run() {
             create_custom_character,
             create_avatar_from_image,
             import_vrm_avatar,
-            delete_custom_avatar
+            delete_custom_avatar,
+            #[cfg(feature = "studio")]
+            studio_overview,
+            #[cfg(feature = "studio")]
+            studio_save_api_key,
+            #[cfg(feature = "studio")]
+            studio_delete_api_key,
+            #[cfg(feature = "studio")]
+            studio_account_balance,
+            #[cfg(feature = "studio")]
+            studio_set_default_model,
+            #[cfg(feature = "studio")]
+            studio_set_poll_policy,
+            #[cfg(feature = "studio")]
+            studio_build_prompt,
+            #[cfg(feature = "studio")]
+            studio_list_projects,
+            #[cfg(feature = "studio")]
+            studio_create_project,
+            #[cfg(feature = "studio")]
+            studio_list_assets,
+            #[cfg(feature = "studio")]
+            studio_asset_detail,
+            #[cfg(feature = "studio")]
+            studio_list_tasks,
+            #[cfg(feature = "studio")]
+            studio_inspect_image,
+            #[cfg(feature = "studio")]
+            studio_submit_text,
+            #[cfg(feature = "studio")]
+            studio_submit_image,
+            #[cfg(feature = "studio")]
+            studio_regenerate,
+            #[cfg(feature = "studio")]
+            studio_resume_task,
+            #[cfg(feature = "studio")]
+            studio_read_output,
+            #[cfg(feature = "studio")]
+            studio_export_output,
+            #[cfg(feature = "studio")]
+            studio_retopologize,
+            #[cfg(feature = "studio")]
+            studio_import_as_avatar
         ])
         .run(tauri::generate_context!())
         .expect("failed to run AgentPet desktop application");

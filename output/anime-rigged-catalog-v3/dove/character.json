@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.dove",
+  "name": "Dove",
+  "title": "Peace Keeper",
+  "description": "Resolves merge conflicts gently.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f8fafc",
+    "hair": "#e2e8f0",
+    "eyes": "#1e293b",
+    "primary": "#f8fafc",
+    "secondary": "#e2e8f0",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.7,
+  "tags": [
+    "dove",
+    "calm"
+  ],
+  "personality": "peaceful",
+  "specialty": "Gentle Olive Branch Merge",
+  "catchphrase": "Resolves merge conflicts gently.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f8fafc",
+    "icon": "\ud83d\udd4a\ufe0f",
+    "treatName": "WheatGrain",
+    "treatEmoji": "\ud83c\udf3e",
+    "feedReaction": "Golden wheat grains! Pure white wings spread in serene peace! \ud83c\udf3e\ud83d\udd4a\ufe0f",
+    "wakeReaction": "Fluttering down with a fresh green olive branch held in beak! \ud83d\udd4a\ufe0f",
+    "petReaction": "Perches on your shoulder, cooing a gentle melody that calms all tension! \ud83d\udd4a\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Resting on a marble balustrade, watching white clouds drift by. \ud83d\udd4a\ufe0f",
+      "working": "Bringing gentle reconciliations to tense, conflicting PR branches! \ud83d\udd4a\ufe0f\u26a1",
+      "thinking": "Finding the path of mutual harmony between conflicting diffs... \ud83e\udd14",
+      "success": "PEACE PROCLAIMED! Conflicting branches merged without a harsh word! \ud83d\udd4a\ufe0f\ud83c\udf89",
+      "error": "A gust of wind ruffled her feathers! Cooing calmly to center all! \ud83d\udd4a\ufe0f",
+      "sleeping": "Zzz... roosting in white marble bell tower under starry skies... \ud83c\udf19"
+    }
+  }
+}

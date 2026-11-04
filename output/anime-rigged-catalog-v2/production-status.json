@@ -1,0 +1,17 @@
+{
+  "schemaVersion": 1,
+  "requested": 213,
+  "structurallyValidated": 213,
+  "missing": [],
+  "bodyCounts": {
+    "humanoid": 119,
+    "beast": 56,
+    "bird": 12,
+    "slime": 12,
+    "robot": 14
+  },
+  "runtimeValidated": 213,
+  "artReview": "first-pass-models-require-individual-art-review",
+  "style": "full-anime",
+  "paidServicesUsed": false
+}

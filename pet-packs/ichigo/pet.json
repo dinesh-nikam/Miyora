@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "ichigo"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#ea580c",
+    "icon": "⚔️",
+    "treatName": "Chocolate",
+    "treatEmoji": "🍫",
+    "feedReaction": "Bittersweet chocolate. Enough fuel to maintain Bankai. 🍫⚔️",
+    "wakeReaction": "Zangetsu unslung. Who's threatening our project workspace? ⚔️",
+    "petReaction": "Hey, thanks, Chief. I'll make sure nothing breaks on my watch. ⚔️💖",
+    "dialogue": {
+      "idle": "Broadsword rested over shoulder. Standing guard for the team. ⚔️",
+      "working": "GETSUGA TENSHO! Cleaving right through dense legacy debt! ⚡💥",
+      "thinking": "Hearing the hollow within whisper hints about this bug... 🤔",
+      "success": "BANKAI VICTORY! Blocker obliterated with supreme spiritual pressure! ⚔️🎉",
+      "error": "Just a scratch! I won't lose to a pathetic runtime error! 🔥",
+      "sleeping": "Zzz... resting in his substitute badge bedroom in peace... 🌙"
+    }
+  }
 }

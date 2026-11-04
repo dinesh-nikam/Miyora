@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.rusty",
+  "name": "Rusty",
+  "title": "Red Panda Ranger",
+  "description": "Patrols the treetops of your dependency graph.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#c2410c",
+    "hair": "#fef3c7",
+    "eyes": "#451a03",
+    "primary": "#166534",
+    "secondary": "#78350f",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "red-panda",
+    "nature"
+  ],
+  "personality": "arboreal",
+  "specialty": "Red Panda Canopy Routing",
+  "catchphrase": "Patrols the treetops of your dependency graph.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#c2410c",
+    "icon": "\ud83d\udc3e",
+    "treatName": "AppleSlice",
+    "treatEmoji": "\ud83c\udf4e",
+    "feedReaction": "Sweet honeycrisp apple slice! Ringed fluffy tail held high! \ud83c\udf4e\ud83d\udc3e",
+    "wakeReaction": "Standing on hind legs with paws up in adorable defense pose! \ud83d\udc3e",
+    "petReaction": "Wraps big bushy striped tail gently around your wrist! \ud83d\udc3e\ud83d\udc96",
+    "dialogue": {
+      "idle": "Draped over a tree branch, front paws dangling comfortably. \ud83d\udc3e",
+      "working": "Climbing tree branches of dependency graphs with claws! \ud83d\udc3e\u26a1",
+      "thinking": "Balancing with thick tail while inspecting a high node... \ud83e\udd14",
+      "success": "Trunk cleared! Beautiful, healthy dependency canopy! \ud83d\udc3e\ud83c\udf89",
+      "error": "Startled squeak! Poofing up big and waving front paws! \ud83d\udc3e",
+      "sleeping": "Zzz... sleeping nestled high in the crook of a mossy bough... \ud83c\udf19"
+    }
+  }
+}

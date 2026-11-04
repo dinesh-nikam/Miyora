@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "killua"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#38bdf8",
+    "icon": "⚡",
+    "treatName": "ChocoRobo",
+    "treatEmoji": "🍫",
+    "feedReaction": "Choco-robot balls! Mmm, bought the whole store shelf! 🍫⚡",
+    "wakeReaction": "Yawn... popping a kickflip. Time to shock some slow code. ⚡",
+    "petReaction": "*cat ears twitch* Hey, don't mess up my hair! ...Heh, fine. ⚡💖",
+    "dialogue": {
+      "idle": "Spinning heavy yo-yos on fingertips. Don't bore me, Chief. ⚡",
+      "working": "GODSPEED! Slicing through the event loop in nanoseconds! ⚡🏃",
+      "thinking": "Analyzing assassin-level risk vectors in this pull request... 🤔",
+      "success": "Target dispatched in silent darkness. Zero latency. ⚡🎉",
+      "error": "Tch, someone left a sloppy trap. I'll disarm it quietly. 🔌",
+      "sleeping": "Zzz... resting cat-style with hands tucked behind neck... 🌙"
+    }
+  }
 }

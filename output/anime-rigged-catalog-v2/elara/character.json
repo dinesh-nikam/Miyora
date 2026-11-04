@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.elara",
+  "name": "Elara",
+  "title": "Elven Archivist",
+  "description": "Keeps a thousand years of commit history in perfect order.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [
+    "headband"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#fde68a",
+    "eyes": "#059669",
+    "primary": "#065f46",
+    "secondary": "#d9f99d",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "fantasy",
+    "scholar"
+  ],
+  "personality": "analytical",
+  "specialty": "Deep Inspection",
+  "catchphrase": "Every stack trace reveals the system's truth."
+}

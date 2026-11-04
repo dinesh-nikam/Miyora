@@ -6,10 +6,13 @@
 //! `agentpet-core`, and a caller-side rate limiter.
 
 use std::collections::VecDeque;
+use std::path::Path;
 #[cfg(unix)]
 use std::path::PathBuf;
+use std::time::Duration;
 
 use agentpet_core::{Core, CoreError, EventType, HookEvent, HookEventOutcome};
+use agentpet_ipc::{DaemonServer, Endpoint, IpcError, LocalSecret};
 use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 
@@ -258,6 +261,210 @@ pub fn daemon_pipe_name() -> String {
     r"\\.\pipe\dev.agentpet.desktop".to_owned()
 }
 
+/// Handle to a running background IPC server.
+pub struct IpcServerHandle {
+    shutdown_sender: tokio::sync::broadcast::Sender<()>,
+}
+
+impl IpcServerHandle {
+    /// Signals the IPC server to shut down cleanly.
+    pub fn shutdown(&self) {
+        let _ = self.shutdown_sender.send(());
+    }
+}
+
+impl Drop for IpcServerHandle {
+    fn drop(&mut self) {
+        self.shutdown();
+    }
+}
+
+/// Runs the local daemon IPC server until a shutdown signal is received.
+pub async fn run_ipc_server(
+    core: Core,
+    endpoint: Endpoint,
+    secret: LocalSecret,
+    mut shutdown_rx: tokio::sync::broadcast::Receiver<()>,
+) -> Result<(), IpcError> {
+    let mut server = DaemonServer::bind(&endpoint).await?;
+    let secret_bytes = secret.as_bytes().to_vec();
+
+    loop {
+        tokio::select! {
+            _ = shutdown_rx.recv() => {
+                break;
+            }
+            accept_res = server.accept() => {
+                match accept_res {
+                    Ok(mut conn) => {
+                        let core = core.clone();
+                        let secret_bytes = secret_bytes.clone();
+                        tokio::spawn(async move {
+                            if let Err(e) = conn.authenticate_server(&secret_bytes).await {
+                                eprintln!("agentpet IPC server: client authentication failed: {e}");
+                                return;
+                            }
+                            let mut limiter = SubmitRateLimiter::new();
+                            while let Ok(Some(frame)) = conn.read_frame().await {
+                                let now = Utc::now();
+                                if !limiter.check(now) {
+                                    let ack = HookAck::rejected("", "RATE_LIMITED", "rate limit exceeded".to_string());
+                                    let _ = conn.write_json(&ack).await;
+                                    continue;
+                                }
+                                let ack = dispatch_frame(&core, &frame, now);
+                                if conn.write_json(&ack).await.is_err() {
+                                    break;
+                                }
+                            }
+                        });
+                    }
+                    Err(err) => {
+                        eprintln!("agentpet IPC server: accept error: {err}");
+                        tokio::time::sleep(Duration::from_millis(10)).await;
+                    }
+                }
+            }
+        }
+    }
+    Ok(())
+}
+
+/// Spawns the IPC server in a background task with clean shutdown support.
+pub fn spawn_ipc_server(
+    core: Core,
+    endpoint: Endpoint,
+    secret: LocalSecret,
+) -> Result<IpcServerHandle, IpcError> {
+    let (shutdown_tx, shutdown_rx) = tokio::sync::broadcast::channel(1);
+    let handle = IpcServerHandle {
+        shutdown_sender: shutdown_tx,
+    };
+
+    if let Ok(tokio_handle) = tokio::runtime::Handle::try_current() {
+        tokio_handle.spawn(async move {
+            if let Err(e) = run_ipc_server(core, endpoint, secret, shutdown_rx).await {
+                eprintln!("agentpet IPC server error: {e}");
+            }
+        });
+    } else {
+        std::thread::Builder::new()
+            .name("agentpet-ipc-server".into())
+            .spawn(move || {
+                let rt = match tokio::runtime::Builder::new_current_thread()
+                    .enable_all()
+                    .build()
+                {
+                    Ok(rt) => rt,
+                    Err(e) => {
+                        eprintln!("Failed to create tokio runtime for IPC server: {e}");
+                        return;
+                    }
+                };
+                rt.block_on(async move {
+                    if let Err(e) = run_ipc_server(core, endpoint, secret, shutdown_rx).await {
+                        eprintln!("agentpet IPC server error: {e}");
+                    }
+                });
+            })
+            .map_err(|e| IpcError::TransportUnavailable(std::io::Error::other(e)))?;
+    }
+
+    Ok(handle)
+}
+
+/// Sends a normalized event to the local daemon over IPC asynchronously.
+pub async fn send_event_via_ipc(
+    endpoint: &Endpoint,
+    secret: &[u8],
+    event: &NormalizedEvent,
+    timeout_duration: Duration,
+) -> Result<HookAck, IpcError> {
+    let mut conn = tokio::time::timeout(timeout_duration, agentpet_ipc::connect(endpoint, secret))
+        .await
+        .map_err(|_| {
+            IpcError::TransportUnavailable(std::io::Error::new(
+                std::io::ErrorKind::TimedOut,
+                "IPC connect timed out",
+            ))
+        })?
+        .map_err(|e| IpcError::TransportUnavailable(std::io::Error::other(e.to_string())))?;
+
+    let envelope = submit_envelope(event.clone());
+    let frame = serde_json::to_vec(&envelope).map_err(|_| IpcError::MalformedFrame {
+        reason: "serialization failed",
+    })?;
+
+    tokio::time::timeout(timeout_duration, conn.write_frame(&frame))
+        .await
+        .map_err(|_| {
+            IpcError::TransportUnavailable(std::io::Error::new(
+                std::io::ErrorKind::TimedOut,
+                "IPC write timed out",
+            ))
+        })?
+        .map_err(|e| IpcError::TransportUnavailable(std::io::Error::other(e.to_string())))?;
+
+    let ack: HookAck = tokio::time::timeout(timeout_duration, conn.read_json())
+        .await
+        .map_err(|_| {
+            IpcError::TransportUnavailable(std::io::Error::new(
+                std::io::ErrorKind::TimedOut,
+                "IPC read timed out",
+            ))
+        })?
+        .map_err(|e| IpcError::TransportUnavailable(std::io::Error::other(e.to_string())))?;
+
+    Ok(ack)
+}
+
+/// Sends a normalized event to the local daemon over IPC synchronously.
+pub fn send_event_sync(
+    endpoint: &Endpoint,
+    secret: &[u8],
+    event: &NormalizedEvent,
+    timeout_duration: Duration,
+) -> Result<HookAck, IpcError> {
+    let rt = tokio::runtime::Builder::new_current_thread()
+        .enable_all()
+        .build()
+        .map_err(|e| IpcError::TransportUnavailable(std::io::Error::other(e)))?;
+    rt.block_on(send_event_via_ipc(
+        endpoint,
+        secret,
+        event,
+        timeout_duration,
+    ))
+}
+
+/// Dispatches an event to the daemon over IPC, falling back to direct SQLite when offline.
+pub fn dispatch_event_with_fallback(
+    data_dir: &Path,
+    event: &NormalizedEvent,
+) -> Result<HookAck, CoreError> {
+    if let Ok(endpoint) = Endpoint::resolve(data_dir) {
+        if let Ok(secret) =
+            agentpet_ipc::load_or_create_secret(&agentpet_ipc::secret_path(data_dir))
+        {
+            if let Ok(ack) = send_event_sync(
+                &endpoint,
+                secret.as_bytes(),
+                event,
+                Duration::from_millis(500),
+            ) {
+                if ack.accepted {
+                    return Ok(ack);
+                }
+            }
+        }
+    }
+
+    let core = Core::open(data_dir)?;
+    let hook_event = to_hook_event(event);
+    let outcome = core.record_hook_event(&hook_event)?;
+    Ok(HookAck::ok(&event.event_id, outcome))
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -314,5 +521,161 @@ mod tests {
         }
         assert!(!limiter.check(now));
         assert!(limiter.check(now + chrono::Duration::seconds(61)));
+    }
+
+    #[test]
+    fn hook_delivered_via_ipc_updates_live_pet_state() {
+        let temp_dir = tempfile::tempdir().expect("tempdir");
+        let core = Core::open(temp_dir.path()).expect("core");
+        #[cfg(windows)]
+        let endpoint =
+            Endpoint::NamedPipe(format!(r"\\.\pipe\test-pipe-live-{}", uuid::Uuid::new_v4()));
+        #[cfg(unix)]
+        let endpoint = Endpoint::UnixSocket(temp_dir.path().join("test_live.sock"));
+
+        let secret = LocalSecret::generate().expect("secret");
+        let handle = spawn_ipc_server(core.clone(), endpoint.clone(), secret.clone())
+            .expect("server spawned");
+        std::thread::sleep(Duration::from_millis(50));
+
+        let event = NormalizedEvent {
+            event_id: uuid::Uuid::new_v4().to_string(),
+            kind: HookEventKind::AgentWorking,
+            agent_id: "claude_code".into(),
+            session_id: Some("session-live-1".into()),
+            project_path: None,
+        };
+
+        let ack = send_event_sync(&endpoint, secret.as_bytes(), &event, Duration::from_secs(5))
+            .expect("send via ipc");
+        assert!(ack.accepted);
+
+        let snap = core.snapshot().expect("snapshot");
+        assert_eq!(snap.pet_state, agentpet_core::PetState::Working);
+
+        let finish = NormalizedEvent {
+            event_id: uuid::Uuid::new_v4().to_string(),
+            kind: HookEventKind::AgentCompleted,
+            agent_id: "claude_code".into(),
+            session_id: Some("session-live-1".into()),
+            project_path: None,
+        };
+        let ack2 = send_event_sync(
+            &endpoint,
+            secret.as_bytes(),
+            &finish,
+            Duration::from_secs(5),
+        )
+        .expect("send finish via ipc");
+        assert!(ack2.accepted);
+
+        let snap2 = core.snapshot().expect("snapshot");
+        assert_eq!(snap2.pet_state, agentpet_core::PetState::Success);
+
+        handle.shutdown();
+    }
+
+    #[test]
+    fn fallback_works_when_socket_is_absent() {
+        let temp_dir = tempfile::tempdir().expect("tempdir");
+        let event = NormalizedEvent {
+            event_id: uuid::Uuid::new_v4().to_string(),
+            kind: HookEventKind::AgentWorking,
+            agent_id: "claude_code".into(),
+            session_id: Some("session-fallback-1".into()),
+            project_path: None,
+        };
+
+        // No IPC server running on temp_dir
+        let ack = dispatch_event_with_fallback(temp_dir.path(), &event).expect("fallback succeeds");
+        assert!(ack.accepted);
+
+        let core = Core::open(temp_dir.path()).expect("core");
+        let snap = core.snapshot().expect("snapshot");
+        assert_eq!(snap.pet_state, agentpet_core::PetState::Working);
+    }
+
+    #[test]
+    fn concurrent_cli_and_daemon_writes_dont_corrupt_ledger() {
+        let temp_dir = tempfile::tempdir().expect("tempdir");
+        let core = Core::open(temp_dir.path()).expect("core");
+        let endpoint_name = format!("test-pipe-conc-{}", uuid::Uuid::new_v4());
+        #[cfg(windows)]
+        let endpoint = Endpoint::NamedPipe(format!(r"\\.\pipe\{}", endpoint_name));
+        #[cfg(unix)]
+        let endpoint = Endpoint::UnixSocket(temp_dir.path().join("test_conc.sock"));
+
+        let secret = LocalSecret::generate().expect("secret");
+        let handle = spawn_ipc_server(core.clone(), endpoint.clone(), secret.clone())
+            .expect("server spawned");
+        std::thread::sleep(Duration::from_millis(50));
+
+        let barrier = std::sync::Arc::new(std::sync::Barrier::new(8));
+        let mut handles = Vec::new();
+
+        // 4 threads writing via IPC
+        for i in 0..4 {
+            let b = barrier.clone();
+            let ep = endpoint.clone();
+            let sec = secret.as_bytes().to_vec();
+            handles.push(std::thread::spawn(move || {
+                b.wait();
+                for j in 0..5 {
+                    let session_id = format!("ipc-sess-{i}-{j}");
+                    let start_event = NormalizedEvent {
+                        event_id: uuid::Uuid::new_v4().to_string(),
+                        kind: HookEventKind::AgentStarted,
+                        agent_id: "test_agent".into(),
+                        session_id: Some(session_id.clone()),
+                        project_path: None,
+                    };
+                    let _ = send_event_sync(&ep, &sec, &start_event, Duration::from_secs(5));
+                    let complete_event = NormalizedEvent {
+                        event_id: uuid::Uuid::new_v4().to_string(),
+                        kind: HookEventKind::AgentCompleted,
+                        agent_id: "test_agent".into(),
+                        session_id: Some(session_id),
+                        project_path: None,
+                    };
+                    let _ = send_event_sync(&ep, &sec, &complete_event, Duration::from_secs(5));
+                }
+            }));
+        }
+
+        // 4 threads writing directly to SQLite (simulating offline CLI)
+        for i in 0..4 {
+            let b = barrier.clone();
+            let path = temp_dir.path().to_path_buf();
+            handles.push(std::thread::spawn(move || {
+                b.wait();
+                let direct_core = Core::open(&path).expect("open direct core");
+                for j in 0..5 {
+                    let session_id = format!("direct-sess-{i}-{j}");
+                    let _ = direct_core.start_session(&session_id, "direct_agent", None);
+                    let _ = direct_core.finish_session(
+                        &session_id,
+                        agentpet_core::SessionOutcome::Completed,
+                        Some(0),
+                        100,
+                    );
+                }
+            }));
+        }
+
+        for h in handles {
+            h.join().expect("thread finished");
+        }
+
+        handle.shutdown();
+
+        let verification = core.verify_ledger().expect("ledger verifies");
+        assert!(
+            verification.is_valid,
+            "ledger must remain valid with hash chains intact"
+        );
+        assert!(
+            verification.total_entries > 0,
+            "transactions must have been written"
+        );
     }
 }

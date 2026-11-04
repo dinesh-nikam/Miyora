@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.esme",
+  "name": "Esme",
+  "title": "Velvet Witch",
+  "description": "Hexes regressions before they reach production.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "dress",
+  "accessories": [
+    "witch_hat"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#7f1d1d",
+    "eyes": "#16a34a",
+    "primary": "#4c0519",
+    "secondary": "#1c1917",
+    "accent": "#a3e635"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "magic"
+  ],
+  "personality": "sorcerous",
+  "specialty": "Regression Hex Banishing",
+  "catchphrase": "Hexes regressions before they reach production.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#4c0519",
+    "icon": "\ud83e\uddd9\u200d\u2640\ufe0f",
+    "treatName": "CandiedApple",
+    "treatEmoji": "\ud83c\udf4f",
+    "feedReaction": "Caramel dipped candied apple! Bubbling cauldron glows emerald! \ud83c\udf4f\ud83e\uddd9\u200d\u2640\ufe0f",
+    "wakeReaction": "Adjusting pointy velvet witch hat. Time to brew counter-curses! \ud83e\uddd9\u200d\u2640\ufe0f",
+    "petReaction": "A playful wink and a protective warding charm for your laptop! \ud83e\uddd9\u200d\u2640\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Stirring aromatic herbs in a cast iron cauldron. Bubbling. \ud83e\uddd9\u200d\u2640\ufe0f",
+      "working": "Casting binding hexes on pesky edge-case regressions! \ud83e\uddd9\u200d\u2640\ufe0f\u26a1",
+      "thinking": "Consulting ancient grimoire recipes for debugging wards... \ud83e\udd14",
+      "success": "Banishment complete! The build is pure and regression-free! \ud83e\uddd9\u200d\u2640\ufe0f\ud83c\udf89",
+      "error": "A rogue imp caused mischief! Sprinkling banishing salt! \ud83e\uddc2",
+      "sleeping": "Zzz... snoozing upside down with black cat on her feet... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#dc2626"
+}

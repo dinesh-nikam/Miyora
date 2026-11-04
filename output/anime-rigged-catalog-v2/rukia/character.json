@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.rukia",
+  "name": "Rukia",
+  "title": "Snow Dance Soul Reaper",
+  "description": "Graceful reaper in black robes wielding the pure white frost zanpakuto with noble quiet dignity.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bob",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "katana"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6e7e7",
+    "hair": "#0c0a09",
+    "eyes": "#312e81",
+    "primary": "#0f172a",
+    "secondary": "#f8fafc",
+    "accent": "#67e8f9"
+  },
+  "proportions": {
+    "height": 0.92,
+    "headScale": 1.08,
+    "build": 0.92,
+    "limbLength": 0.95
+  },
+  "energy": 1.1,
+  "tags": [
+    "anime",
+    "avatar",
+    "reaper",
+    "rukia",
+    "frost"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

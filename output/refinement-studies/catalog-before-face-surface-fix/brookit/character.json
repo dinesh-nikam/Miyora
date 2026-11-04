@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.brookit",
+  "name": "Brookit",
+  "title": "Brook Kit",
+  "description": "The water form of Vixi; ripples spread wherever it naps.",
+  "body": "beast",
+  "ears": "fin",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "gem"
+  ],
+  "pattern": "waves",
+  "palette": {
+    "skin": "#7dd3fc",
+    "hair": "#e0f2fe",
+    "eyes": "#0c4a6e",
+    "primary": "#7dd3fc",
+    "secondary": "#0284c7",
+    "accent": "#a5f3fc"
+  },
+  "proportions": {
+    "height": 0.86,
+    "headScale": 1.28,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "pocket-monster",
+    "water"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

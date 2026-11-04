@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.killua",
+  "name": "Killua",
+  "title": "Silver Lightning Prodigy",
+  "description": "Lightning assassin with fluffy silver hair, cat-smirk blue eyes, navy skater layers, and electric crackle.",
+  "body": "humanoid",
+  "ears": "cat",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "hoodie",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fce7f3",
+    "hair": "#f8fafc",
+    "eyes": "#1d4ed8",
+    "primary": "#1e3a8a",
+    "secondary": "#93c5fd",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 0.92,
+    "headScale": 1.15,
+    "build": 0.96,
+    "limbLength": 0.98
+  },
+  "energy": 1.4,
+  "tags": [
+    "anime",
+    "avatar",
+    "lightning",
+    "killua",
+    "prodigy"
+  ],
+  "personality": "cunning",
+  "specialty": "Sub-Millisecond Event Dispatch",
+  "catchphrase": "Before the server realizes a request arrived, I've handled it.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#38bdf8",
+    "icon": "\u26a1",
+    "treatName": "ChocoRobo",
+    "treatEmoji": "\ud83c\udf6b",
+    "feedReaction": "Choco-robot balls! Mmm, bought the whole store shelf! \ud83c\udf6b\u26a1",
+    "wakeReaction": "Yawn... popping a kickflip. Time to shock some slow code. \u26a1",
+    "petReaction": "*cat ears twitch* Hey, don't mess up my hair! ...Heh, fine. \u26a1\ud83d\udc96",
+    "dialogue": {
+      "idle": "Spinning heavy yo-yos on fingertips. Don't bore me, Chief. \u26a1",
+      "working": "GODSPEED! Slicing through the event loop in nanoseconds! \u26a1\ud83c\udfc3",
+      "thinking": "Analyzing assassin-level risk vectors in this pull request... \ud83e\udd14",
+      "success": "Target dispatched in silent darkness. Zero latency. \u26a1\ud83c\udf89",
+      "error": "Tch, someone left a sloppy trap. I'll disarm it quietly. \ud83d\udd0c",
+      "sleeping": "Zzz... resting cat-style with hands tucked behind neck... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#93c5fd"
+}

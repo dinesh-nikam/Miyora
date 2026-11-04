@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "naruto"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#ea580c",
+    "icon": "🍥",
+    "treatName": "Ramen",
+    "treatEmoji": "🍜",
+    "feedReaction": "Ichiraku miso ramen with extra chashu! Dattebayo! 🍜🔥",
+    "wakeReaction": "Shadow clone jutsu! Ten of me ready to code before sunrise! 🍥",
+    "petReaction": "Hehe! You're an awesome friend, Chief! Let's do this! 🍥💖",
+    "dialogue": {
+      "idle": "Adjusting headband. My ninja way is never giving up! 🍥",
+      "working": "RASENGAN! Spinning through nested loops with spiral force! 🌀⚡",
+      "thinking": "Channeling Kurama's chakra to trace this tricky bug... 🤔",
+      "success": "DATTEBAYO! Another mission completed! Everyone acknowledges us! 🍥🎉",
+      "error": "A setback? Heh! Just makes me try ten times harder! 🔥",
+      "sleeping": "Zzz... dreaming of becoming the greatest Hokage ever... 🌙"
+    }
+  }
 }

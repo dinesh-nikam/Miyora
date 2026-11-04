@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.saraswati",
+  "name": "Saraswati",
+  "title": "Goddess of Arts and Wisdom",
+  "description": "Serene embodiment of music and wisdom in white and gold silks with a pearl tiara, white lotus blossoms, and a carved veena.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bun",
+  "eyes": "round",
+  "outfit": "dress",
+  "accessories": [
+    "flower",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d2b8",
+    "hair": "#1e293b",
+    "eyes": "#3f3f46",
+    "primary": "#f8fafc",
+    "secondary": "#ca8a04",
+    "accent": "#fde68a"
+  },
+  "proportions": {
+    "height": 0.98,
+    "headScale": 1.02,
+    "build": 0.9,
+    "limbLength": 1.02
+  },
+  "energy": 0.8,
+  "tags": [
+    "devotional",
+    "avatar",
+    "wisdom",
+    "saraswati",
+    "arts"
+  ],
+  "personality": "scholarly",
+  "specialty": "Clean Code & API Semantics",
+  "catchphrase": "Purity of thought, harmony in architecture, clarity in expression.",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#6366f1",
+    "icon": "\ud83e\ude95",
+    "treatName": "Honey",
+    "treatEmoji": "\ud83c\udf6f",
+    "feedReaction": "Pure wild honey! The strings of the veena resonate sweetly! \ud83c\udf6f\ud83e\ude95",
+    "wakeReaction": "Veena chords chime at dawn. Awakening supreme intellect! \ud83e\ude95\u2728",
+    "petReaction": "May the goddess of speech illuminate your syntax and logic. \ud83e\ude95\ud83d\udc96",
+    "dialogue": {
+      "idle": "Plucking the strings of pure knowledge. What shall we learn? \ud83e\ude95",
+      "working": "Composing elegant algorithms like classical raga movements! \ud83e\ude95\u26a1",
+      "thinking": "Discerning signal from noise with the swan's wisdom... \ud83e\udd14",
+      "success": "Masterpiece composed! Pure semantic harmony achieved! \ud83e\ude95\ud83c\udf89",
+      "error": "A discordant note. Tuning the strings back to true pitch. \ud83e\ude95\u2728",
+      "sleeping": "Zzz... resting upon white lotus petals beside sacred rivers... \ud83c\udf19"
+    }
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.atlas",
+  "name": "Atlas",
+  "title": "Heavy Loader",
+  "description": "Lifts monorepos without breaking a sweat.",
+  "body": "robot",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "visor",
+  "outfit": "plating",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f59e0b",
+    "hair": "#1c1917",
+    "eyes": "#f97316",
+    "primary": "#1c1917",
+    "secondary": "#44403c",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.3,
+    "limbLength": 1.0
+  },
+  "energy": 0.7,
+  "tags": [
+    "robot",
+    "strong"
+  ],
+  "personality": "methodical",
+  "specialty": "Deterministic CI",
+  "catchphrase": "Zero syntax faults allowed."
+}

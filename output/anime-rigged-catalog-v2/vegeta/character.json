@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.vegeta",
+  "name": "Vegeta",
+  "title": "Prince of All Saiyans",
+  "description": "Proud prince in white segmented battle armor and royal blue suit, with flame-swept black hair.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#0c0a09",
+    "eyes": "#111827",
+    "primary": "#1e3a8a",
+    "secondary": "#f8fafc",
+    "accent": "#eab308"
+  },
+  "proportions": {
+    "height": 0.96,
+    "headScale": 1.04,
+    "build": 1.18,
+    "limbLength": 0.98
+  },
+  "energy": 1.4,
+  "tags": [
+    "anime",
+    "avatar",
+    "saiyan",
+    "vegeta",
+    "prince"
+  ],
+  "personality": "proud",
+  "specialty": "Zero-Regression CI",
+  "catchphrase": "A Saiyan prince does not push broken builds."
+}

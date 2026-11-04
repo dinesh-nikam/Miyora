@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hazel",
+  "name": "Hazel",
+  "title": "Acorn Archivist",
+  "description": "Stashes snippets for the long winter.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a16207",
+    "hair": "#fef3c7",
+    "eyes": "#451a03",
+    "primary": "#15803d",
+    "secondary": "#365314",
+    "accent": "#f97316"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "squirrel",
+    "scholar"
+  ],
+  "personality": "hoarding",
+  "specialty": "Acorn Code Stashing",
+  "catchphrase": "Stashes snippets for the long winter.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#15803d",
+    "icon": "\ud83d\udc3f\ufe0f",
+    "treatName": "AcornNut",
+    "treatEmoji": "\ud83c\udf30",
+    "feedReaction": "Crisp roasted walnut kernel! Bushy tail shivering with glee! \ud83c\udf30\ud83d\udc3f\ufe0f",
+    "wakeReaction": "Darting down the trunk with cheeks stuffed full of code snippets! \ud83d\udc3f\ufe0f",
+    "petReaction": "Places a prized, perfectly polished golden acorn in your hand! \ud83c\udf30\ud83d\udc96",
+    "dialogue": {
+      "idle": "Cataloging hidden caches of handy code snippets in tree hollows. \ud83d\udc3f\ufe0f",
+      "working": "Retrieving the exact helper utility we stashed three months ago! \ud83d\udc3f\ufe0f\u26a1",
+      "thinking": "Remembering which branch holds the buried memory cache... \ud83e\udd14",
+      "success": "FOUND IT! The perfect snippet solved the problem instantly! \ud83c\udf30\ud83c\udf89",
+      "error": "Chittering angrily at a bluejay trying to steal an acorn! \ud83d\udc3f\ufe0f",
+      "sleeping": "Zzz... tucked deep inside an oak hollow lined with dry moss... \ud83c\udf19"
+    }
+  }
+}

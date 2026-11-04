@@ -1,0 +1,923 @@
+{
+  "schemaVersion": 1,
+  "engine": "Chrome WebGL + three-vrm",
+  "status": "passed",
+  "checked": 8,
+  "poseChecks": 120,
+  "expressionChecks": 40,
+  "errors": [],
+  "characters": [
+    {
+      "id": "miyora.nezuko",
+      "vrm": true,
+      "bones": 71,
+      "skinned": 27,
+      "triangles": 39352,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "c3cad686540033050517ed4332f9550a3352e6aef6aa7467b45034c6722f540d",
+      "expressions": {
+        "blink": true,
+        "happy": true,
+        "sad": true,
+        "aa": true,
+        "surprised": true
+      },
+      "toonMaterials": 38,
+      "springJoints": 15,
+      "poseChecks": [
+        {
+          "clip": "achievement",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "attention_required",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "celebrating",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "eating",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "error",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "hungry",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "idle",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "level_up",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "offline",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "paused",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "sleeping",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "success",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "thinking",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "waiting",
+          "finite": true,
+          "samples": 81
+        },
+        {
+          "clip": "working",
+          "finite": true,
+          "samples": 81
+        }
+      ],
+      "springFinite": true,
+      "springMaxRotation": 0.13246128445869715,
+      "status": "passed"
+    },
+    {
+      "id": "miyora.tanjiro",
+      "vrm": true,
+      "bones": 63,
+      "skinned": 22,
+      "triangles": 38864,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "fc10b189542ef11025d6f5e0c77a3f6425f8794c40ad9a0d187d951880d83c6f",
+      "expressions": {
+        "blink": true,
+        "happy": true,
+        "sad": true,
+        "aa": true,
+        "surprised": true
+      },
+      "toonMaterials": 24,
+      "springJoints": 9,
+      "poseChecks": [
+        {
+          "clip": "achievement",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "attention_required",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "celebrating",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "eating",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "error",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "hungry",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "idle",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "level_up",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "offline",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "paused",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "sleeping",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "success",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "thinking",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "waiting",
+          "finite": true,
+          "samples": 66
+        },
+        {
+          "clip": "working",
+          "finite": true,
+          "samples": 66
+        }
+      ],
+      "springFinite": true,
+      "springMaxRotation": 0.7393838497819071,
+      "status": "passed"
+    },
+    {
+      "id": "miyora.luffy",
+      "vrm": true,
+      "bones": 63,
+      "skinned": 21,
+      "triangles": 37424,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "3f1ef8a7edce0e80c97c8566ba5ee0e4d788be4f3cbbe1c26ca15904f9ad5e2a",
+      "expressions": {
+        "blink": true,
+        "happy": true,
+        "sad": true,
+        "aa": true,
+        "surprised": true
+      },
+      "toonMaterials": 26,
+      "springJoints": 9,
+      "poseChecks": [
+        {
+          "clip": "achievement",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "attention_required",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "celebrating",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "eating",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "error",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "hungry",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "idle",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "level_up",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "offline",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "paused",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "sleeping",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "success",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "thinking",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "waiting",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "working",
+          "finite": true,
+          "samples": 63
+        }
+      ],
+      "springFinite": true,
+      "springMaxRotation": 0.47846283291128167,
+      "status": "passed"
+    },
+    {
+      "id": "miyora.gojo",
+      "vrm": true,
+      "bones": 63,
+      "skinned": 19,
+      "triangles": 34688,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "3b38d70d3a46ef0901c5a544e9274cd543f1111b0785cdaae0fdbfdc8e0c77b9",
+      "expressions": {
+        "blink": true,
+        "happy": true,
+        "sad": true,
+        "aa": true,
+        "surprised": true
+      },
+      "toonMaterials": 22,
+      "springJoints": 9,
+      "poseChecks": [
+        {
+          "clip": "achievement",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "attention_required",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "celebrating",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "eating",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "error",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "hungry",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "idle",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "level_up",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "offline",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "paused",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "sleeping",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "success",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "thinking",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "waiting",
+          "finite": true,
+          "samples": 57
+        },
+        {
+          "clip": "working",
+          "finite": true,
+          "samples": 57
+        }
+      ],
+      "springFinite": true,
+      "springMaxRotation": 0.16041525069060159,
+      "status": "passed"
+    },
+    {
+      "id": "miyora.magnebit",
+      "vrm": true,
+      "bones": 51,
+      "skinned": 16,
+      "triangles": 19272,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "0df9040f769ea96f293a513f3eed5da61995b10a5f28abd35d2d9651584706b5",
+      "expressions": {
+        "blink": true,
+        "happy": true,
+        "sad": true,
+        "aa": true,
+        "surprised": true
+      },
+      "toonMaterials": 15,
+      "springJoints": 0,
+      "poseChecks": [
+        {
+          "clip": "achievement",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "attention_required",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "celebrating",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "eating",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "error",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "hungry",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "idle",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "level_up",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "offline",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "paused",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "sleeping",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "success",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "thinking",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "waiting",
+          "finite": true,
+          "samples": 48
+        },
+        {
+          "clip": "working",
+          "finite": true,
+          "samples": 48
+        }
+      ],
+      "springFinite": true,
+      "springMaxRotation": 0,
+      "status": "passed"
+    },
+    {
+      "id": "miyora.puffaloo",
+      "vrm": true,
+      "bones": 51,
+      "skinned": 11,
+      "triangles": 14060,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "73366caff06fb02db9053e36a43c988a270efbf884c002700a5a01cff0500ee8",
+      "expressions": {
+        "blink": true,
+        "happy": true,
+        "sad": true,
+        "aa": true,
+        "surprised": true
+      },
+      "toonMaterials": 11,
+      "springJoints": 0,
+      "poseChecks": [
+        {
+          "clip": "achievement",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "attention_required",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "celebrating",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "eating",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "error",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "hungry",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "idle",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "level_up",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "offline",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "paused",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "sleeping",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "success",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "thinking",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "waiting",
+          "finite": true,
+          "samples": 33
+        },
+        {
+          "clip": "working",
+          "finite": true,
+          "samples": 33
+        }
+      ],
+      "springFinite": true,
+      "springMaxRotation": 0,
+      "status": "passed"
+    },
+    {
+      "id": "miyora.lumibug",
+      "vrm": true,
+      "bones": 51,
+      "skinned": 15,
+      "triangles": 13172,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "1286244b0379c4782e8741a4401c641012e8a1ff12380368366c744b5a2269b9",
+      "expressions": {
+        "blink": true,
+        "happy": true,
+        "sad": true,
+        "aa": true,
+        "surprised": true
+      },
+      "toonMaterials": 21,
+      "springJoints": 0,
+      "poseChecks": [
+        {
+          "clip": "achievement",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "attention_required",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "celebrating",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "eating",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "error",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "hungry",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "idle",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "level_up",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "offline",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "paused",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "sleeping",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "success",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "thinking",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "waiting",
+          "finite": true,
+          "samples": 45
+        },
+        {
+          "clip": "working",
+          "finite": true,
+          "samples": 45
+        }
+      ],
+      "springFinite": true,
+      "springMaxRotation": 0,
+      "status": "passed"
+    },
+    {
+      "id": "miyora.ember",
+      "vrm": true,
+      "bones": 63,
+      "skinned": 21,
+      "triangles": 37168,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "6982bf01716b0006a452ff9257363ea150eef75886d794f96b7d3e2a9fb33e66",
+      "expressions": {
+        "blink": true,
+        "happy": true,
+        "sad": true,
+        "aa": true,
+        "surprised": true
+      },
+      "toonMaterials": 30,
+      "springJoints": 9,
+      "poseChecks": [
+        {
+          "clip": "achievement",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "attention_required",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "celebrating",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "eating",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "error",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "hungry",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "idle",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "level_up",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "offline",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "paused",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "sleeping",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "success",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "thinking",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "waiting",
+          "finite": true,
+          "samples": 63
+        },
+        {
+          "clip": "working",
+          "finite": true,
+          "samples": 63
+        }
+      ],
+      "springFinite": true,
+      "springMaxRotation": 0.1423083791467871,
+      "status": "passed"
+    }
+  ]
+}

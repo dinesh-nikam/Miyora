@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.ember",
+  "name": "Ember",
+  "title": "Fox Courier",
+  "description": "A quick-pawed fox who carries messages between your agents.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "scarf",
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e07a2f",
+    "hair": "#fff7ed",
+    "eyes": "#1e3a8a",
+    "primary": "#1f2937",
+    "secondary": "#374151",
+    "accent": "#f59e0b"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "fox",
+    "speedy"
+  ],
+  "personality": "agile",
+  "specialty": "Fox Trail Dispatch",
+  "catchphrase": "A quick-pawed fox who carries messages between your agents.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#e07a2f",
+    "icon": "\ud83e\udd8a",
+    "treatName": "SweetBerry",
+    "treatEmoji": "\ud83c\udf53",
+    "feedReaction": "Crunching sweet forest berries! Bushy orange tail swishes fast! \ud83c\udf53\ud83e\udd8a",
+    "wakeReaction": "Yip! Shaking morning dew off fur! Trail dispatch ready! \ud83e\udd8a",
+    "petReaction": "Nuzzles your hand with cold, friendly fox nose! \ud83e\udd8a\ud83d\udc96",
+    "dialogue": {
+      "idle": "Curled up in a neat little donut on the floorboards. \ud83e\udd8a",
+      "working": "Dashing across forest shortcuts to deliver subagent frames! \ud83e\udd8a\u26a1",
+      "thinking": "Ears swiveling 180 degrees to catch distant whispers... \ud83e\udd14",
+      "success": "YIPPEE! Message delivered before the sender even blinked! \ud83e\udd8a\ud83c\udf89",
+      "error": "Tripped over a mossy root! Rolling back to feet with grin! \ud83e\udd8a",
+      "sleeping": "Zzz... nose tucked under big fluffy tail... \ud83c\udf19"
+    }
+  }
+}

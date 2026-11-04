@@ -1,0 +1,114 @@
+{
+  "schemaVersion": 1,
+  "engine": "Chrome WebGL + three-vrm",
+  "status": "passed",
+  "checked": 3,
+  "errors": [],
+  "characters": [
+    {
+      "id": "miyora.nezuko",
+      "vrm": true,
+      "bones": 71,
+      "skinned": 25,
+      "triangles": 38600,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "34b6837bf9d98b98bb2c16a075d900e428e41c277340609960a016b83a2b3ff9",
+      "expressions": {
+        "blink": true,
+        "happy": true,
+        "sad": true,
+        "aa": true,
+        "surprised": true
+      },
+      "toonMaterials": 0,
+      "springJoints": 15,
+      "status": "passed"
+    },
+    {
+      "id": "miyora.magnebit",
+      "vrm": true,
+      "bones": 51,
+      "skinned": 14,
+      "triangles": 18296,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "47d134f4214995421c2d1f59cd763486e09334994f057d26ca9321ac4065fd29",
+      "expressions": {
+        "blink": true,
+        "happy": true,
+        "sad": true,
+        "aa": true,
+        "surprised": true
+      },
+      "toonMaterials": 0,
+      "springJoints": 0,
+      "status": "passed"
+    },
+    {
+      "id": "miyora.puffaloo",
+      "vrm": true,
+      "bones": 51,
+      "skinned": 11,
+      "triangles": 14060,
+      "clips": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ],
+      "sha256": "8b36d2023f7ab65c598d62a8f8d0be82ec5e64721a83bc7acc1069f8f2067e9b",
+      "expressions": {
+        "blink": true,
+        "happy": true,
+        "sad": true,
+        "aa": true,
+        "surprised": true
+      },
+      "toonMaterials": 0,
+      "springJoints": 0,
+      "status": "passed"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.akiho",
+  "name": "Akiho",
+  "title": "Cat-Eared Cafe Server",
+  "description": "Serves fresh builds with a curtsy.",
+  "body": "humanoid",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "twintails",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "bow"
+  ],
+  "pattern": "dots",
+  "palette": {
+    "skin": "#fbe3d4",
+    "hair": "#92400e",
+    "eyes": "#b45309",
+    "primary": "#1f2937",
+    "secondary": "#f8fafc",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "anime",
+    "cafe"
+  ],
+  "personality": "courteous",
+  "specialty": "Maid Cafe Deployment Hospitality",
+  "catchphrase": "Serves fresh builds with a curtsy.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#1f2937",
+    "icon": "\ud83c\udf80",
+    "treatName": "Parfait",
+    "treatEmoji": "\ud83c\udf68",
+    "feedReaction": "Strawberry cat-ear parfait! Frilled apron smoothed with a curtsy! \ud83c\udf68\ud83c\udf80",
+    "wakeReaction": "A polite, graceful curtsy: Welcome home to the codebase, Master! \ud83c\udf80",
+    "petReaction": "Hands you a warm steaming towel and a fresh cheerful smile! \ud83c\udf80\ud83d\udc96",
+    "dialogue": {
+      "idle": "Arranging clean napkins and silver spoons with neat precision. \ud83c\udf80",
+      "working": "Serving fresh hot deployments with five-star hospitality! \ud83c\udf80\u26a1",
+      "thinking": "Ensuring every customer touchpoint is filled with delight... \ud83e\udd14",
+      "success": "Moe moe kyun! Flawless release served with ultimate sweetness! \ud83c\udf80\ud83c\udf89",
+      "error": "A spilled glass of ice water! Wiping clean in a flash with smile! \ud83c\udf80",
+      "sleeping": "Zzz... resting in cafe breakroom hugging a fluffy cat cushion... \ud83c\udf19"
+    }
+  }
+}

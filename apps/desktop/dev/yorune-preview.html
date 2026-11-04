@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Yorune · Astral Cartographer</title>
+    <style>
+      :root { color-scheme: dark; }
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-height: 100%; }
+      body {
+        background:
+          radial-gradient(circle at 18% 12%, rgba(192, 132, 252, 0.18), transparent 42%),
+          radial-gradient(circle at 82% 8%, rgba(245, 197, 66, 0.12), transparent 38%),
+          radial-gradient(circle at 60% 92%, rgba(109, 36, 71, 0.34), transparent 48%),
+          #050817;
+        color: #e2e8f0;
+        font-family: Inter, "Segoe UI", system-ui, sans-serif;
+      }
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        background-image:
+          radial-gradient(1px 1px at 12% 24%, rgba(233, 213, 255, 0.9), transparent),
+          radial-gradient(1px 1px at 28% 68%, rgba(255, 243, 196, 0.75), transparent),
+          radial-gradient(1.5px 1.5px at 44% 16%, rgba(233, 213, 255, 0.65), transparent),
+          radial-gradient(1px 1px at 63% 42%, rgba(255, 255, 255, 0.6), transparent),
+          radial-gradient(1.5px 1.5px at 77% 74%, rgba(233, 213, 255, 0.7), transparent),
+          radial-gradient(1px 1px at 89% 30%, rgba(255, 243, 196, 0.8), transparent),
+          radial-gradient(1px 1px at 52% 88%, rgba(255, 255, 255, 0.55), transparent);
+      }
+      #root { position: relative; z-index: 1; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="./yorune-preview.tsx"></script>
+  </body>
+</html>

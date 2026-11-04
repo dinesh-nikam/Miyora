@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.lyra",
+  "name": "Lyra",
+  "title": "Comet Astronomer",
+  "description": "Charts latency like distant comets.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sparkle",
+  "outfit": "robe",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#4338ca",
+    "eyes": "#60a5fa",
+    "primary": "#1e1b4b",
+    "secondary": "#312e81",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "science",
+    "space"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

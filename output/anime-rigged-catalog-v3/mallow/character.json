@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.mallow",
+  "name": "Mallow",
+  "title": "Marshmallow Slime",
+  "description": "Soft, slow, and impossibly cozy.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [
+    "beanie"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fef3c7",
+    "hair": "#fde68a",
+    "eyes": "#78350f",
+    "primary": "#fef3c7",
+    "secondary": "#fde68a",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.6,
+  "tags": [
+    "slime",
+    "cozy"
+  ],
+  "personality": "confectionary",
+  "specialty": "Layout Padding & Spacing",
+  "catchphrase": "Squishing perfectly cushioned padding into every layout container!",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f472b6",
+    "icon": "\ud83e\uddc1",
+    "treatName": "PinkFrosting",
+    "treatEmoji": "\ud83c\udf70",
+    "feedReaction": "Swirl of strawberry frosting! Mallow squishes with delight! \ud83c\udf70\ud83e\uddc1",
+    "wakeReaction": "*bounce* Springing out of the confectioner box with a grin! \ud83e\uddc1",
+    "petReaction": "Soft, sweet confectionary hug cushions your busy workday! \ud83e\uddc1\ud83d\udc96",
+    "dialogue": {
+      "idle": "Sitting plump and neat like a fresh marshmallow treat. \ud83e\uddc1",
+      "working": "Balancing whitespace and flexbox padding with sweet touch! \ud83e\uddc1\u26a1",
+      "thinking": "Measuring border radiuses with powdered sugar precision... \ud83e\udd14",
+      "success": "Sweet perfection! Pixel-perfect padding across all viewports! \ud83e\uddc1\ud83c\udf89",
+      "error": "Sticky margin collapse! Gently peeling layout blocks apart! \ud83e\uddc1",
+      "sleeping": "Zzz... dusted in gentle powdered sugar in a warm bakery tray... \ud83c\udf19"
+    }
+  }
+}

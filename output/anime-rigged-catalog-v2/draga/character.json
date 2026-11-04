@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.draga",
+  "name": "Draga",
+  "title": "Dragon Knight",
+  "description": "Sworn protector of the main branch.",
+  "body": "humanoid",
+  "ears": "horns",
+  "tail": "dragon",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "armor",
+  "accessories": [
+    "katana",
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#14532d",
+    "eyes": "#f59e0b",
+    "primary": "#166534",
+    "secondary": "#1c1917",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.15,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "anime",
+    "knight",
+    "dragon"
+  ],
+  "personality": "stoic",
+  "specialty": "Branch Guarding",
+  "catchphrase": "Stand between main and bad merges.",
+  "hairTip": "#22c55e"
+}

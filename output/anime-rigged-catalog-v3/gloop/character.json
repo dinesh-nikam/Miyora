@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.gloop",
+  "name": "Gloop",
+  "title": "Mint Slime",
+  "description": "Wobbles with joy at every passing test.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#6ee7b7",
+    "hair": "#34d399",
+    "eyes": "#064e3b",
+    "primary": "#6ee7b7",
+    "secondary": "#34d399",
+    "accent": "#f0fdf4"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.2,
+  "tags": [
+    "slime",
+    "cute"
+  ],
+  "personality": "viscous",
+  "specialty": "Non-Newtonian Flow Viscosity",
+  "catchphrase": "Hardening under sudden load spikes, flowing smoothly in calm waters.",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#10b981",
+    "icon": "\ud83e\udee7",
+    "treatName": "SugarGel",
+    "treatEmoji": "\ud83c\udf6c",
+    "feedReaction": "Thick green sugar gel! Slime body wobbles with happy jiggles! \ud83c\udf6c\ud83e\udee7",
+    "wakeReaction": "*bloop* Slime surface glistens with fresh elastic tension! \ud83e\udee7",
+    "petReaction": "*gentle warm squish* Gloop ripples affectionately around you! \ud83e\udee7\ud83d\udc96",
+    "dialogue": {
+      "idle": "Puddling peacefully in a tidy bowl on your desk. \ud83e\udee7",
+      "working": "Hardening instantly against sudden heavy DDoS spikes! \ud83e\udee7\u26a1",
+      "thinking": "Flowing slowly through capillary gaps in the logic... \ud83e\udd14",
+      "success": "JIGGLE VICTORY! All pressure absorbed without a crack! \ud83e\udee7\ud83c\udf89",
+      "error": "Stretched thin! Snapping back with rubbery elasticity! \ud83e\udee7",
+      "sleeping": "Zzz... settled into a cozy, translucent emerald blob... \ud83c\udf19"
+    }
+  }
+}

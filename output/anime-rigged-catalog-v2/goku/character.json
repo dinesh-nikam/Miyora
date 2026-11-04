@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.goku",
+  "name": "Goku",
+  "title": "Earth-Raised Saiyan Hero",
+  "description": "Cheerful martial artist with wild black spikes, bright orange gi, navy wristbands, and limitless ki reserves.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fcd5be",
+    "hair": "#0c0a09",
+    "eyes": "#1e293b",
+    "primary": "#ea580c",
+    "secondary": "#1d4ed8",
+    "accent": "#ffd700"
+  },
+  "proportions": {
+    "height": 1.04,
+    "headScale": 1.02,
+    "build": 1.22,
+    "limbLength": 1.04
+  },
+  "energy": 1.5,
+  "tags": [
+    "anime",
+    "avatar",
+    "saiyan",
+    "goku",
+    "warrior"
+  ],
+  "personality": "cheerful",
+  "specialty": "Stress Testing",
+  "catchphrase": "This benchmark looks strong! Let's push it higher!"
+}

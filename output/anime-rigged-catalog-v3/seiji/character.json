@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.seiji",
+  "name": "Seiji",
+  "title": "Onmyoji Talisman Master",
+  "description": "Seals runaway processes with paper talismans.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "robe",
+  "accessories": [
+    "staff"
+  ],
+  "pattern": "diamonds",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#e5e7eb",
+    "eyes": "#7c3aed",
+    "primary": "#f8fafc",
+    "secondary": "#312e81",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "anime",
+    "onmyoji"
+  ],
+  "personality": "onmyodo",
+  "specialty": "Paper Talisman Process Sealing",
+  "catchphrase": "Seals runaway processes with paper talismans.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#312e81",
+    "icon": "\ud83d\udcdc",
+    "treatName": "LotusRoot",
+    "treatEmoji": "\ud83e\udeb7",
+    "feedReaction": "Crisp lotus root chips! Writing ink empowered by sacred well! \ud83e\udeb7\ud83d\udcdc",
+    "wakeReaction": "Flipping paper talisman between fingertips with quiet focus. \ud83d\udcdc",
+    "petReaction": "Affixes a paper talisman of good fortune and focus to your screen! \ud83d\udcdc\u2728",
+    "dialogue": {
+      "idle": "Consulting celestial almanac for auspicious compile times. \ud83d\udcdc",
+      "working": "Slapping paper talismans onto rogue infinite worker loops! \ud83d\udcdc\u26a1",
+      "thinking": "Reading the five elements balance across microservices... \ud83e\udd14",
+      "success": "Sealed and harmonized! Rogue processes bound in stillness! \ud83d\udcdc\ud83c\udf89",
+      "error": "Spiritual disruption! Chanting the purification mantra! \ud83d\udcdc\u26e9\ufe0f",
+      "sleeping": "Zzz... resting in onmyoji robes beside smoking incense... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#7c3aed"
+}

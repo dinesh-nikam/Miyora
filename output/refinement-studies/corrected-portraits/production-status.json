@@ -1,0 +1,9 @@
+{
+  "requested": 5,
+  "structurallyValidated": 5,
+  "runtimeValidated": 5,
+  "refinementRevision": "refined-catalog-v3",
+  "poseChecks": 75,
+  "expressionChecks": 25,
+  "artReview": "refined-assets-with-per-model-review-images"
+}

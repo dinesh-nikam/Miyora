@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sita",
+  "name": "Sita",
+  "title": "Mithila Princess of Grace",
+  "description": "Serene princess of Mithila draped in auspicious vermilion and woven gold silk, crowned with lotus grace.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "dress",
+  "accessories": [
+    "crown",
+    "flower",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f8dfd0",
+    "hair": "#1c1917",
+    "eyes": "#6b3e1f",
+    "primary": "#dc2626",
+    "secondary": "#ffd700",
+    "accent": "#fef08a"
+  },
+  "proportions": {
+    "height": 0.97,
+    "headScale": 1.05,
+    "build": 0.92,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "devotional",
+    "avatar",
+    "princess",
+    "sita",
+    "grace"
+  ],
+  "personality": "steadfast",
+  "specialty": "Fault Resilience & Recovery",
+  "catchphrase": "Quiet strength weathers every storm and trial.",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#dc2626",
+    "icon": "\ud83c\udf3a",
+    "treatName": "Kheer",
+    "treatEmoji": "\ud83e\udd63",
+    "feedReaction": "Warm sacred kheer! Deep gratitude for your hospitality! \ud83e\udd63\ud83c\udf3a",
+    "wakeReaction": "The earth awakens gently. May your focus stay unshakeable! \ud83c\udf3a\u2728",
+    "petReaction": "The steadfast patience of Mother Earth blesses your work. \ud83c\udf3a\ud83d\udc96",
+    "dialogue": {
+      "idle": "Serene stillness. True endurance resides within calmness. \ud83c\udf3a",
+      "working": "Enduring through complex refactors with unwavering poise! \ud83c\udf3a\u26a1",
+      "thinking": "Observing deeply... the solution is rooted in the earth. \ud83e\udd14",
+      "success": "Triumph of resilience! The codebase stands pure and firm! \ud83c\udf3a\ud83c\udf89",
+      "error": "Even the fiercest fire cannot scorch authentic truth. \ud83c\udf3a\ud83d\udee1\ufe0f",
+      "sleeping": "Zzz... sheltered peacefully under sacred Ashoka boughs... \ud83c\udf19"
+    }
+  }
+}

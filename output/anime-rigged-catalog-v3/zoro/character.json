@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.zoro",
+  "name": "Zoro",
+  "title": "Three-Sword Master",
+  "description": "Stoic three-sword master with cropped moss-green hair, deep green samurai coat, and lethal steel focus.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "katana"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#15803d",
+    "eyes": "#1e293b",
+    "primary": "#14532d",
+    "secondary": "#334155",
+    "accent": "#eab308"
+  },
+  "proportions": {
+    "height": 1.08,
+    "headScale": 0.98,
+    "build": 1.18,
+    "limbLength": 1.05
+  },
+  "energy": 1.1,
+  "tags": [
+    "anime",
+    "avatar",
+    "samurai",
+    "zoro",
+    "swordsman"
+  ],
+  "personality": "stoic",
+  "specialty": "Dead-Code Decapitation & Cleanup",
+  "catchphrase": "Nothing happened... just three clean commits.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#22c55e",
+    "icon": "\u2694\ufe0f",
+    "treatName": "Onigiri",
+    "treatEmoji": "\ud83c\udf59",
+    "feedReaction": "Onigiri consumed. Swords are sharpened. \ud83c\udf59\u2694\ufe0f",
+    "wakeReaction": "Yawn... Which file needs cutting down, Chief? \u2694\ufe0f",
+    "petReaction": "Hmph... don't slack off. Let's get these commits in. \u2694\ufe0f",
+    "dialogue": {
+      "idle": "Swords sharpened. Give me the next pull request, Chief. \u2694\ufe0f",
+      "working": "Three-sword syntax check. Slicing through technical debt! \u2694\ufe0f",
+      "thinking": "I'm not lost... just inspecting an unexplored submodule. \ud83e\udd14",
+      "success": "Nothing happened... just three clean commits. \ud83d\udde1\ufe0f\ud83c\udf89",
+      "error": "A stubborn blocker. We cut right through it again! \ud83d\udcaa",
+      "sleeping": "Zzz... sleeping on deck with a hand on the hilt... \ud83c\udf19"
+    }
+  }
+}

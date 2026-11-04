@@ -9,7 +9,7 @@
   <a href="#features"><img src="https://img.shields.io/badge/TypeScript-Strict-3178C6?style=for-the-badge&logo=typescript&logoColor=white" alt="TypeScript Strict" /></a>
   <a href="#architecture"><img src="https://img.shields.io/badge/SQLite-Local_Core-003B57?style=for-the-badge&logo=sqlite&logoColor=white" alt="SQLite" /></a>
   <a href="#security--privacy"><img src="https://img.shields.io/badge/Telemetry-Zero%20%7C%20Offline_First-10b981?style=for-the-badge" alt="Privacy First" /></a>
-  <a href="#quality-gates--test-suite"><img src="https://img.shields.io/badge/Tests-337_Passing-success?style=for-the-badge" alt="Tests" /></a>
+  <a href="#quality-gates--test-suite"><img src="https://img.shields.io/badge/Tests-757_Passing-success?style=for-the-badge" alt="Tests" /></a>
 </p>
 
 ---
@@ -46,7 +46,7 @@ Session evidence, progression metrics, and XP transactions are committed to an i
 | **🖥️ Native Desktop Shell** | Powered by **Tauri 2** and React strict TypeScript. Features an interactive main management window and a transparent, non-intrusive, always-on-top pet overlay with persistent screen coordinates. |
 | **👁️ Real Agent Observation** | Real-time observation through zero-overhead native hooks (**Claude Code**, **Codex**) or the universal process wrapper (`agentpet run -- <command>`) for any agent (Aider, OpenCode, Gemini CLI). No synthetic or mock activity. |
 | **🧠 Deterministic Finite State Machine** | 15-state priority-based reactive engine (`pet-engine`) enforcing strict transition allow-lists. Distinguishes active execution, deep reasoning, human attention requests, errors, and task victories. |
-| **🎭 3D Studio & 2D PetPacks** | Includes **167 procedural 3D characters** across 5 body archetypes with customizable rigs (ears, tails, auras, props, gradient hair), local silhouette-inflation sculpting from 2D images, VRM imports, and **47+ standalone PetPacks**. |
+| **🎭 3D Studio & 2D PetPacks** | Includes **214 procedural 3D characters** across 5 body archetypes with customizable rigs (ears, tails, auras, props, gradient hair), local silhouette-inflation sculpting from 2D images, VRM imports, and **47 PetPacks** (6 multi-frame animated/distinct state packs, 41 static packs with expressive transform-based motion). |
 | **🛡️ Tamper-Safe Progression** | Idempotent local XP ledger awarding XP strictly on verified child process completion. Session XP, level scaling, and milestone achievements are committed together in atomic SQLite transactions. |
 | **🔒 Air-Gapped Privacy** | No cloud account required. Zero background telemetry. Prompts, raw tool outputs, API keys, and sensitive filesystem paths are scrubbed before persistence. |
 
@@ -72,14 +72,17 @@ miyora (workspace root)
 ├── crates/pet-engine/             # 15-state reactive behavior engine & transition allow-list
 ├── crates/agentpet-adapters/      # Claude Code / Codex hooks & universal process wrapper
 ├── crates/pet-pack/               # Ed25519 signature checks, manifest parser, image normalization
+├── crates/avatar/                 # Procedural 3D character catalog, silhouette sculpting, GLB writer
+├── crates/studio/                 # Unified 3D generation (Tripo/TripoSR), decimation & retopology
+├── crates/agentpet-ipc/           # Local authenticated IPC transport (pipes/sockets)
 └── crates/agentpet-cli/           # Diagnostic CLI (`agentpet`) for headless execution and doctor checks
 ```
 
 ---
 
-## 🎨 3D Avatar Generation (Tripo 3D API)
+## 🎨 3D Avatar Generation & Studio Pipeline
 
-Miyora features an original 3D anime avatar generation pipeline powered by the **Tripo 3D API** and **Blender** post-processing. Rather than fabricating primitive meshes (such as cubes, spheres, or cylinders), the system calls Tripo's state-of-the-art text-to-3D and image-to-3D generation endpoints, polls the asynchronous job, and downloads clean game-ready GLB models.
+Miyora features an integrated 3D avatar generation and management pipeline powered by the native `crates/studio` engine and the desktop Command Deck. Rather than fabricating primitive meshes, the system calls state-of-the-art text-to-3D and image-to-3D generation endpoints (Tripo 3D API v3 / local TripoSR), polls the asynchronous job, and imports clean game-ready GLB models into the companion catalog.
 
 ### Getting a Tripo API Key
 
@@ -101,42 +104,15 @@ $env:TRIPO_API_KEY = "your_tripo_api_key_here"
 export TRIPO_API_KEY="your_tripo_api_key_here"
 ```
 
-### Running Text-to-3D Generation
+### 3D Companion Studio Pipeline
 
-Convert user text requests into fully detailed, original anime 3D models:
+Miyora features an integrated native 3D companion generation and management pipeline powered by `crates/studio` and the desktop Command Deck:
 
-```powershell
-python avatar_workflow.py --prompt "anime girl with pink hair"
-```
-
-The system automatically runs `anime_character_prompt.py` to expand short user descriptions into production-grade prompts (e.g. `Original full-body 3D anime-style girl character, long pink hair, large expressive eyes, stylish modern outfit, clean silhouette, appealing stylized proportions, T-pose, symmetrical face, high-quality PBR textures, clean topology, game-ready 3D model`), while guaranteeing that no copyrighted franchise character names (Nezuko, Naruto, Goku, Pikachu, etc.) are requested.
-
-### Running Image-to-3D Generation
-
-Create a 3D avatar from an uploaded local reference image or remote URL:
-
-```powershell
-# Local file
-python avatar_workflow.py --image "assets/reference_character.png"
-
-# Remote URL
-python avatar_workflow.py --image "https://example.com/character.png"
-```
-
-### Where Generated Models Are Saved
-
-All generated assets are saved under `/output/models/`:
-- **3D Model**: `output/models/<task_id>.glb` (standard PBR textured binary glTF)
-- **Rendered Preview**: `output/models/<task_id>_rendered.png` (studio-lit transparent render)
-
-### Post-Processing Architecture
-
-Blender post-processing (`blender_postprocess.py`) is reserved exclusively for presentation adjustments:
-- Importing and inspecting the downloaded mesh
-- Centering the geometry at origin and scaling to standard character height (1.8 units)
-- Positioning three-point studio lighting (Key, Fill, and Anime Rim lights)
-- Framing the camera for a complete full-body T-pose preview render
-- *It strictly does not rebuild the character or generate procedural mesh primitives.*
+- **Desktop Pet Library Generator:** Open the **Pet Library** tab in the desktop application and navigate to **Generate 3D** to create custom 3D companions from text prompts with real-time status and automatic catalog registration.
+- **Provider-Neutral Generation:** Native support for cloud 3D generation (Tripo API v3) and local offline generation (local TripoSR).
+- **Prompt Presets & Sanitization:** The prompt engine includes anime character presets and automatic copyright franchise sanitization (replacing copyrighted names with original stylistic archetypes).
+- **Post-Processing & Retopology:** Local polygon reduction / mesh decimation (`crates/studio/src/decimate.rs`) and full GLB/glTF export with normalization (`crates/studio/src/export.rs`).
+- **Legacy CLI Scripts:** Historical standalone Python workflows (`avatar_workflow.py`, `anime_character_prompt.py`, etc.) have been archived to `legacy/scripts/` for reference.
 
 ---
 
@@ -178,9 +154,9 @@ The companion’s mood and posture directly mirror real agent workload. Transiti
 
 ## 🐾 Companion Universe & PetPacks
 
-Miyora ships with rich 2D sprite packs and a comprehensive procedural 3D avatar engine. Packs are completely data-driven: manifests declare author attribution, license metadata, frame dimensions, and state mappings.
+Miyora ships with 47 built-in PetPacks and a comprehensive procedural 3D avatar engine. Packs are completely data-driven: manifests declare author attribution, license metadata, frame dimensions, animation state mappings, and optional personality dialogue. 6 packs feature genuinely distinct animated or multi-frame artwork (`ninja-cat`, `sun-wukong`, `arjuna`, `momiji`, `nezuko`, `starter-aoi`), while 41 static packs render expressive transform-based motion feedback across active states.
 
-### Featured Companions (47+ Built-in Packs)
+### Featured Companions (47 Built-in Packs)
 
 <table align="center">
   <tr>
@@ -219,7 +195,8 @@ Miyora ships with rich 2D sprite packs and a comprehensive procedural 3D avatar 
 
 ### 3D Character Studio Capabilities
 
-- **167 Procedural Characters**: 5 body types, 30 popular archetypes, and 25 pocket chibi creatures.
+- **214 Procedural Characters**: 5 body types, 30 popular archetypes, and pocket chibi creatures.
+- **Character Card V2 Profiles**: Identity cards under `crates/avatar/catalog/cards/` add scenario, greetings, example dialogue, lorebook entries, and a structured render prompt, validated against the 3D catalog.
 - **Parametric Customization**: 12 ear types, 10 dynamic tails (flame, star, leaf), 12 gradient hairstyles, 15 outfits, 20 accessories, and energy aura customization.
 - **Geometric Image-to-3D Sculpting**: Local silhouette-inflation sculpts flat images into watertight textured GLB models without sending photos to cloud APIs.
 - **VRM 1.0 Import**: Safe avatar loading with polygon-budget guardrails, metadata inspector, and humanoid retargeting.
@@ -301,12 +278,12 @@ All code in Miyora adheres to strict static verification and testing thresholds:
 ```powershell
 # Execute Rust test suite across all workspace crates
 cargo test --workspace
-# Output: 112 passed, 0 failed
+# Output: 247 passed, 0 failed
 
 # Run frontend unit & avatar rig tests
 cd apps/desktop
-npx vitest run
-# Output: 225 passed, 0 failed
+npm test
+# Output: 510 passed, 0 failed
 
 # Validate strict static analysis & formatting
 cargo clippy --workspace --all-features --all-targets -D warnings

@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "nami"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#f97316",
+    "icon": "🧭",
+    "treatName": "Tangerine",
+    "treatEmoji": "🍊",
+    "feedReaction": "Sweet mikan tangerine! Fresh and energizing! 🍊🧭",
+    "wakeReaction": "Checking the barometric pressure. Stormy release ahead, prepare! 🧭",
+    "petReaction": "Hehe, that will cost you 100,000 Berries! Just kidding, Chief! 🍊💖",
+    "dialogue": {
+      "idle": "Plotting navigational routes between endpoints. Ready! 🧭",
+      "working": "Thunderbolt Tempo! Zapping high-latency bottlenecks! ⚡🍊",
+      "thinking": "Calculating wind currents and payload delivery timing... 🤔",
+      "success": "Safe harbor! All microservices docked without a scratch! ⛵🎉",
+      "error": "A sudden cyclone in the API! Altering course immediately! 🌪️",
+      "sleeping": "Zzz... dreaming of giant piles of gold coins and mikan groves... 🌙"
+    }
+  }
 }

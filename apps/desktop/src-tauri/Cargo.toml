@@ -10,6 +10,10 @@ rust-version.workspace = true
 [lib]
 name = "agentpet_desktop_lib"
 crate-type = ["rlib"]
+# shortcut: no unit tests live here (logic is in domain crates). On Windows a test
+# harness linking the dialog plugin needs Tauri's comctl32 v6 manifest, which
+# tauri-build only embeds in the app binary; re-enable when adding tests here.
+test = false
 
 [[bin]]
 name = "agentpet-desktop"
@@ -20,16 +24,27 @@ tauri-build = { version = "2", features = [] }
 
 [dependencies]
 base64.workspace = true
+dunce.workspace = true
 agentpet-core = { path = "../../../crates/agentpet-core" }
 agentpet-adapters = { path = "../../../crates/agentpet-adapters" }
 agentpet-avatar = { path = "../../../crates/avatar" }
+agentpet-ipc = { path = "../../../crates/agentpet-ipc" }
 agentpet-pet-engine = { path = "../../../crates/pet-engine" }
 agentpet-pet-pack = { path = "../../../crates/pet-pack" }
+agentpet-studio = { path = "../../../crates/studio", optional = true }
+chrono.workspace = true
 serde.workspace = true
 serde_json.workspace = true
-tauri = { version = "2", features = [] }
+tauri = { version = "2", features = ["tray-icon"] }
 tauri-plugin-dialog = "2"
+tauri-plugin-global-shortcut = "2"
+
+[target.'cfg(windows)'.dependencies]
+# Already in the lockfile via Tauri; used for fullscreen and reduced-motion checks.
+windows-sys = { version = "0.61", features = ["Win32_Foundation", "Win32_Graphics_Gdi", "Win32_UI_WindowsAndMessaging"] }
 
 [features]
-default = []
+default = ["studio"]
 dev-simulator = ["agentpet-core/dev-simulator"]
+# 3D Studio (cloud model generation and procedural avatar sculpting).
+studio = ["dep:agentpet-studio"]

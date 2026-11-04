@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.pixkit",
+  "name": "Pixkit",
+  "title": "Pixie Kit",
+  "description": "The fairy form of Vixi, trailing ribbons and good luck.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "fairy",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "bow"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fbcfe8",
+    "hair": "#fdf2f8",
+    "eyes": "#831843",
+    "primary": "#fbcfe8",
+    "secondary": "#f472b6",
+    "accent": "#a5b4fc"
+  },
+  "proportions": {
+    "height": 0.86,
+    "headScale": 1.28,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.2,
+  "tags": [
+    "pocket-monster",
+    "fairy"
+  ],
+  "personality": "magical",
+  "specialty": "Pixel Magic Sparkle Sprinkling",
+  "catchphrase": "Sprinkles fairy dust over UI borders to give them a magical shine!",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f472b6",
+    "icon": "\ud83e\ude84",
+    "treatName": "SugarCrystals",
+    "treatEmoji": "\ud83c\udf6c",
+    "feedReaction": "Rainbow sugar rock crystals! Little fairy cat wings shimmer! \ud83c\udf6c\ud83e\ude84",
+    "wakeReaction": "Hovering an inch off the desk, shaking sparkle dust everywhere! \ud83e\ude84",
+    "petReaction": "Sprinkles shimmering pink fairy dust over your keyboard keys! \ud83e\ude84\ud83d\udc96",
+    "dialogue": {
+      "idle": "Polishing a tiny crystal wand with a miniature silk cloth. \ud83e\ude84",
+      "working": "Adding delightful micro-interactions and sparkle to the UI! \ud83e\ude84\u26a1",
+      "thinking": "Deciding which button deserves the extra glitter animation... \ud83e\udd14",
+      "success": "SPARKLE MAGIC! The frontend interface shines like diamonds! \ud83e\ude84\ud83c\udf89",
+      "error": "Glitter explosion in the console! Waving wand to tidy it! \ud83e\uddf9",
+      "sleeping": "Zzz... sleeping in a teacup lined with pink silk velvet... \ud83c\udf19"
+    }
+  }
+}

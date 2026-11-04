@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.magma",
+  "name": "Magma",
+  "title": "Lava Slime",
+  "description": "Bubbles hotter as CPU usage climbs.",
+  "body": "slime",
+  "ears": "horns",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f97316",
+    "hair": "#dc2626",
+    "eyes": "#450a0a",
+    "primary": "#f97316",
+    "secondary": "#dc2626",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "slime",
+    "fire"
+  ],
+  "personality": "volcanic",
+  "specialty": "Binary Compaction & Forging",
+  "catchphrase": "Forging glowing white-hot code into indestructible solid basalt!",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#ef4444",
+    "icon": "\ud83c\udf0b",
+    "treatName": "LavaRock",
+    "treatEmoji": "\ud83e\udea8",
+    "feedReaction": "Glowing chunk of basalt lava rock! Core burns with red-hot joy! \ud83e\udea8\ud83c\udf0b",
+    "wakeReaction": "Cracking open glowing lava fissures! Ready to smelt and forge! \ud83c\udf0b",
+    "petReaction": "Radiating steady campfire warmth to keep your hands cozy! \ud83c\udf0b\ud83d\udc96",
+    "dialogue": {
+      "idle": "Crust cools to a shiny obsidian shell, core glowing warm red. \ud83c\udf0b",
+      "working": "Smelting complex codebases in the heat of a volcano forge! \ud83c\udf0b\u26a1",
+      "thinking": "Simulating thermal stress tests on binary artifacts... \ud83e\udd14",
+      "success": "Tempered and forged! Indestructible basalt binary created! \ud83c\udf0b\ud83c\udf89",
+      "error": "Lava bubble pop! Re-smelting the cooling slag! \ud83c\udf0b",
+      "sleeping": "Zzz... curling up inside a warm volcanic crater caldera... \ud83c\udf19"
+    }
+  }
+}

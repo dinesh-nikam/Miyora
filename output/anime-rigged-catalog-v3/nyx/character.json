@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.nyx",
+  "name": "Nyx",
+  "title": "Shadow Rogue",
+  "description": "Slips past flaky tests without a sound.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "hoodie",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#18181b",
+    "eyes": "#a855f7",
+    "primary": "#18181b",
+    "secondary": "#3f3f46",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "rogue",
+    "night"
+  ],
+  "personality": "shadowy",
+  "specialty": "Stealth Flaky Test Elimination",
+  "catchphrase": "Disarming nondeterministic race conditions without leaving a trace.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#18181b",
+    "icon": "\ud83d\udde1\ufe0f",
+    "treatName": "MoonPlum",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Tart midnight moon plums. Daggers sharpened to silent perfection. \ud83e\uded0\ud83d\udde1\ufe0f",
+    "wakeReaction": "Stepping out of the shadows. The flaky test will not escape. \ud83d\udde1\ufe0f",
+    "petReaction": "A knowing nod from beneath the cowl. Your secrets are safe. \ud83d\udde1\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Concealed in the rafters above the staging servers. Silent. \ud83d\udde1\ufe0f",
+      "working": "Neutralizing elusive race conditions under cover of night! \ud83d\udde1\ufe0f\u26a1",
+      "thinking": "Tracking subtle jitter in asynchronous thread scheduling... \ud83e\udd14",
+      "success": "Target eliminated. The build is 100% deterministic now. \ud83d\udde1\ufe0f\ud83c\udf89",
+      "error": "Flaky test slipped the net! Slipping back into the dark! \ud83d\udde1\ufe0f",
+      "sleeping": "Zzz... perched silent and still high in the castle eaves... \ud83c\udf19"
+    }
+  }
+}

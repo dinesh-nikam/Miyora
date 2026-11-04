@@ -2,9 +2,9 @@
 
 ## 1. Purpose and scope
 
-This document defines the target architecture for an offline-first desktop companion platform. The workspace now contains an initial Tauri/React shell, Rust SQLite runtime core, and partial v1 manifest validator; the wider modules below remain target architecture until implemented and verified.
+This document defines the architecture of the **Miyora (AgentPet)** offline-first desktop companion platform. The codebase is implemented across a consolidated Rust domain crate architecture, a Tauri 2 host, and a presentation-only React 18 frontend.
 
-The desktop application must work without an account or network connection for pet rendering, agent event capture, local session history, progression, settings, and locally installed PetPacks. Cloud features are optional and must not be required for startup or local progress.
+The desktop application is completely air-gapped and offline-first: it works without an account, telemetry, or network connection for pet rendering, agent event capture, local session history, progression, settings, and locally installed PetPacks. Any cloud services (such as community sync or remote backends) described in historical targets remain unbuilt and purely aspirational; Miyora operates entirely locally on device.
 
 ## 2. Architecture decisions
 
@@ -13,12 +13,12 @@ The desktop application must work without an account or network connection for p
 | Cross-platform desktop | Tauri 2 | Native windows, tray, notifications, OS adapters, capability-scoped IPC |
 | Desktop UI | React + TypeScript strict mode | Presentation, user input, accessible settings and dashboards |
 | Domain/runtime | Rust workspace crates | Events, pet state, sessions, progression, pack validation, orchestration |
-| Local persistence | SQLite, accessed through Rust | Durable local records and migrations; UI never opens the database directly |
+| Local persistence | SQLite, accessed through Rust | Durable local records and migrations (1–12); UI never opens the database directly |
 | Agent integrations | Rust adapter crates plus hook/CLI processes | Convert real provider/agent data into normalized events |
 | Local event transport | Authenticated per-user Unix socket or Windows named pipe | Hook, CLI, and daemon communication; bounded, versioned messages |
 | Asset work | Rust background worker | Decode, validate, resize, and package images without blocking UI |
-| Optional cloud API | NestJS modular monolith + PostgreSQL | Accounts, community library, reports, and sync endpoints |
-| Optional cloud assets | Private object storage + CDN | Validated public PetPack assets, delivered by signed/versioned manifest |
+| Cloud services | Not implemented (aspirational) | Zero cloud dependency; local-first air-gapped operation |
+| Cloud assets | Not implemented (aspirational) | Bundled and local filesystem PetPacks only |
 
 Use one Tauri desktop application on macOS, Windows, and Linux. OS-specific behavior belongs behind Rust platform adapters. Desktop shell calls are explicit Tauri commands; there is no generic shell execution command exposed to the UI.
 
@@ -66,48 +66,27 @@ flowchart TD
 ```text
 apps/
   desktop/
-    src/                       # React and TypeScript UI
-    src-tauri/                 # Tauri bootstrap, commands, capabilities
-  web/                         # Optional community and account frontend
+    src/                       # React 18 strict TypeScript presentation layer
+    src/avatar/                # Procedural Three.js character rigs & shaders
+    src-tauri/                 # Tauri 2 host: window lifecycle, capabilities, IPC listener
 
 crates/
-  app-core/                    # Composition root and application services
-  event-engine/                # Event types, validation, priority, deduplication
-  pet-engine/                  # Explicit state machine and animation selection
-  pet-pack/                    # Pack schema, parsing, validation, migration
-  agent-sdk/                   # Agent adapter traits and normalized events
-  provider-sdk/                # Provider/model configuration contracts
-  progression/                 # XP ledger, levels, achievements, streaks
-  database/                    # SQLite migrations, repositories, transactions
-  ipc/                         # Local transport, framing, authentication
-  cli/                         # CLI and universal process wrapper
-  platform/                    # OS-specific window, credential, notification adapters
+  agentpet-core/               # Composition root: SQLite persistence, schema migrations 1–12,
+                               # session lifecycle, hash-chained immutable XP ledger, affection
+  pet-engine/                  # 15-state deterministic behavior engine, priority arbitration,
+                               # deterministic hunger/eating, bounded reaction queue (cap 4)
+  pet-pack/                    # PetPack manifest v1/v2 parser, Ed25519 signature checks,
+                               # asset honesty quality gates, path sanitization against escape
+  avatar/                      # Procedural 3D character catalog (214 specs), silhouette sculpting, GLB export
+  agentpet-adapters/           # Claude Code / Codex hooks & universal process wrapper
+  agentpet-ipc/                # Authenticated local IPC transport (pipes/sockets, HMAC-SHA256 handshake)
+  agentpet-cli/                # Diagnostic CLI (`agentpet`) for headless execution and doctor checks
+  studio/                      # Unified 3D avatar generation (Tripo/TripoSR), decimation & retopology
 
-services/
-  agent-daemon/                # Hook and CLI event receiver
-  asset-worker/                # Image, animation, and archive processing
-  sync-worker/                 # Optional durable cloud sync
-
-cloud/
-  api/                         # Optional NestJS modular monolith
-  migrations/                  # PostgreSQL schema migrations
-
-packages/
-  contracts/                   # Schemas and generated TypeScript contracts
-  ui/                          # Shared React components
-  i18n/                        # UI and speech message catalogs
-
-pet-packs/
-  starter/                     # Licensed data-only starter pack, if rights permit
-
-infra/
-  docker/
-  terraform/
-  github-actions/
-docs/
+pet-packs/                     # 47 validated bundled PetPacks (6 animated/distinct, 41 static)
 ```
 
-Dependency direction is inward: app shells and platform adapters depend on domain crates; domain crates do not depend on the UI, database implementation, cloud SDK, or a specific character. `app-core` wires interfaces to implementations. Avoid circular dependencies. The desktop UI consumes generated or schema-validated contracts rather than duplicating Rust business rules.
+Dependency direction is inward: app shells and platform adapters depend on domain crates; domain crates do not depend on the UI, cloud SDKs, or a specific character. `agentpet-core` acts as the composition root wiring domain services together. The desktop UI consumes typed IPC commands rather than duplicating Rust business rules.
 
 ## 5. Runtime processes
 
@@ -175,13 +154,13 @@ Higher-priority failures and approval requests can interrupt low-priority idle o
 Current implementation (`crates/pet-engine`, crate `agentpet-pet-engine`):
 
 - The engine is pure and has no I/O. `PetEngine::definition` gives each state a priority (`Background < Low < Normal < High < Critical`), an interruptible flag and an optional timeout. `allows` is the explicit transition table.
-- `decide(current, stimulus, context)` returns `Enter`, `Remain` or `Rejected`. A non-interruptible state (`LevelUp`, `Achievement`, `Paused`) yields only to a strictly higher-priority target or to an explicit user pause/resume. Deferred reactions are dropped, not queued.
-- Timed states return to rest: `Working` while any session is running, otherwise `Idle`. These are `Success`, `Error`, `Celebrating`, `LevelUp` and `Achievement`. `Idle` falls asleep after 15 minutes. Durations come from a validated `StatePolicy`.
+- `decide(current, stimulus, context)` returns `Enter`, `Remain` or `Rejected`. A non-interruptible state (`LevelUp`, `Achievement`, `Paused`) yields only to a strictly higher-priority target or to an explicit user pause/resume. When a non-interruptible state swallows a lower-priority celebratory reaction, `ReactionQueue` (capacity 4, priority-ordered, coalescing duplicates) queues it and plays it after the blocking state expires, instead of dropping it. Critical errors preempt immediately.
+- Timed states return to rest: `Working` while any session is running, otherwise `Idle`. These are `Success`, `Error`, `Celebrating`, `LevelUp`, `Achievement`, and `Eating` (4s timeout → `Resting`). `Idle` falls asleep after 15 minutes. `Hungry` is reached deterministically after 4 hours of inactivity (`HUNGRY_AFTER = 4h`). Durations come from a validated `StatePolicy`.
 - `agentpet-core` persists the entry time in `pet_state.state_entered_at` (UTC wall clock, so timers survive restarts). It applies expiries before every stimulus and through `Core::advance_state_timers`, which the desktop shell calls once per second on a background thread. A missing or future entry time counts as already expired.
+- User interactions (`PetInteracted`, `PetFed`) and process lifecycle events (`AgentDisconnected`, `AgentReconnected`) are fully supported. `PetFed` transitions to `Eating`, while `PetInteracted` triggers interaction feedback.
 - Session lifecycle writes always persist session facts. A presentation transition the engine rejects or defers leaves the pet state unchanged instead of failing the session update. Direct `accept_event` calls still reject invalid transitions.
 - Finishing a session reacts with `LevelUp`, then `Achievement`, then `Success` on success, and `Error` on failure.
 - Animation selection (`select_animation`) walks the state followed by its fallback chain (for example `LevelUp → Celebrating → Success → Idle`). For each candidate it checks the pack's `stateMappings` first, then an animation with the same name. Keys are matched case-insensitively, ignoring non-alphanumerics. If nothing matches, it uses the first animation.
-- Not yet implemented: per-state speech/sound, a user-facing pause/resume control, a reaction queue, and `Hungry`/`Eating` stimuli.
 
 ## 8. Agent and provider boundaries
 
@@ -195,7 +174,17 @@ AI `Provider` configuration is separate from agent integration. Providers descri
 
 The runtime consumes generic, validated PetPacks. Character names and artwork do not appear in business logic. The starter character is selected through initial settings and is replaceable immediately.
 
-PetPacks are data-only. Accepted content is limited to schema-defined JSON, supported images, and explicitly supported audio/font assets. Reject scripts, executables, libraries, unknown payloads, path traversal, unsupported MIME types, malformed manifests, excessive archive ratios, excessive dimensions, and excessive decoded memory use. The manifest declares schema version, identity, author, license, attribution/source, asset paths, animations, and compatible engine range.
+React and presentation components contain zero hardcoded franchise string matching (`isWukong`, `isNezuko`, etc.) or hardcoded character dialogue. All personality traits, treat names, feed reactions, wake reactions, and dialogue lines are strictly data-driven via the `personality` block in PetPack manifests (`pet.json`) and `companionPersonality` in 3D character specs (`characters.json`).
+
+Original characters may also carry a Character Card V2 profile under `crates/avatar/catalog/cards/`. Cards add scenario, opening messages, example dialogue, lorebook entries, and a structured render prompt. They are data-only and size-budgeted, and `scripts/validate_character_cards.py` cross-checks name, palette, specialty, catchphrase, and tags against the 3D catalog so identity data cannot drift.
+
+Cosmetic companion affection (+3 pet, +5 feed, daily cap 50) is completely decoupled from authoritative ledger XP. Affection is persisted in SQLite via migration 12 (`companion_affection`) and written exclusively through typed Tauri commands calling `agentpet-core`. It never awards levels, XP, or milestones.
+
+Audio playback via `AudioManager` lazily initializes and resumes the Web Audio `AudioContext` only upon the first user interaction, guarding against suspended browser audio contexts.
+
+PetPacks are data-only and strictly validated for asset honesty: packs declare their animation capability (`animated`, `static`, or `partial`). Reused identical image hashes across active states are detected and required to declare `animation: static`. The desktop renderer renders static packs with expressive CSS transform-based motion feedback rather than cycling duplicate frames. Path traversal and symlink escapes are strictly sanitized via `sanitize_pack_asset_path` and `dunce::canonicalize`.
+
+PetPacks accept content limited to schema-defined JSON, supported images, and explicitly supported audio/font assets. Reject scripts, executables, libraries, unknown payloads, path traversal, unsupported MIME types, malformed manifests, excessive archive ratios, excessive dimensions, and excessive decoded memory use. The manifest declares schema version, identity, author, license, attribution/source, asset paths, animations, and compatible engine range.
 
 Pack install flow: download or import to staging, inspect archive paths and limits, parse and migrate manifest, validate license metadata and assets, generate indexes/previews, atomically install, then expose as selectable. Never execute downloaded pack content. Community publishing additionally requires report/takedown handling and moderation policy.
 

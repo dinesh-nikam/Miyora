@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sol",
+  "name": "Sol",
+  "title": "Mane Captain",
+  "description": "Leads the team with a roar and a roadmap.",
+  "body": "beast",
+  "ears": "bear",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "crown"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fbbf24",
+    "hair": "#b45309",
+    "eyes": "#92400e",
+    "primary": "#7f1d1d",
+    "secondary": "#fef3c7",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.15,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "lion",
+    "leader"
+  ],
+  "personality": "regal",
+  "specialty": "Golden Mane Roadmap Roar",
+  "catchphrase": "Leads the team with a roar and a roadmap.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#7f1d1d",
+    "icon": "\ud83e\udd81",
+    "treatName": "GoldenRoast",
+    "treatEmoji": "\ud83c\udf56",
+    "feedReaction": "Slow-roasted golden mutton! Heavy lion mane shines like the sun! \ud83c\udf56\ud83e\udd81",
+    "wakeReaction": "Shaking golden mane, roaring a hearty morning greeting across savannah! \ud83e\udd81",
+    "petReaction": "Rests giant regal lion head on your desk with deep, purring affection! \ud83e\udd81\ud83d\udc96",
+    "dialogue": {
+      "idle": "Surveying the plains of the product roadmap from Pride Rock. \ud83e\udd81",
+      "working": "Leading the engineering pride forward with courage and clear vision! \ud83e\udd81\u26a1",
+      "thinking": "Evaluating the long-term migration strategy for the kingdom... \ud83e\udd14",
+      "success": "MIGHTY ROAR OF TRIUMPH! The major release milestone is conquered! \ud83e\udd81\ud83c\udf89",
+      "error": "Hyenas snapping at the heels! Standing tall and scattering them! \ud83e\udd81",
+      "sleeping": "Zzz... resting in the shade of an acacia tree at noon... \ud83c\udf19"
+    }
+  }
+}

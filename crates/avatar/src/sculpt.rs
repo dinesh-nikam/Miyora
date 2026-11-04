@@ -940,6 +940,13 @@ fn derive_spec(
         proportions: Proportions::default(),
         energy: 1.0,
         tags: vec!["custom".into(), "from-image".into()],
+        catchphrase: None,
+        specialty: None,
+        personality: None,
+        category: None,
+        three_d_eligible: true,
+        attribution: None,
+        companion_personality: None,
     };
     spec.validate()?;
     Ok(spec)

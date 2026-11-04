@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "style": "full-anime",
+  "characters": [
+    {
+      "id": "miyora.nezuko",
+      "name": "Nezuko",
+      "body": "humanoid",
+      "model": "nezuko/model.vrm",
+      "source": "nezuko/source.blend",
+      "sha256": "84d00eeb77cc09f6609c9afd00159103e18ca5e9061ff09b1a807bb3c569aed7",
+      "triangles": 34280,
+      "animations": [
+        "achievement",
+        "attention_required",
+        "celebrating",
+        "eating",
+        "error",
+        "hungry",
+        "idle",
+        "level_up",
+        "offline",
+        "paused",
+        "sleeping",
+        "success",
+        "thinking",
+        "waiting",
+        "working"
+      ]
+    }
+  ]
+}

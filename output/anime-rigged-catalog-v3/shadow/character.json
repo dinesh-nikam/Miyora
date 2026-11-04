@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.shadow",
+  "name": "Shadow",
+  "title": "Midnight Cat",
+  "description": "Sees race conditions in the dark.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#18181b",
+    "hair": "#27272a",
+    "eyes": "#facc15",
+    "primary": "#18181b",
+    "secondary": "#3f3f46",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "cat",
+    "night"
+  ],
+  "personality": "stealthy",
+  "specialty": "Shadow-Prowl Race Inspection",
+  "catchphrase": "Sees race conditions in the dark.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#18181b",
+    "icon": "\ud83d\udc08\u200d\u2b1b",
+    "treatName": "NightSardine",
+    "treatEmoji": "\ud83d\udc1f",
+    "feedReaction": "Midnight silver sardine! Golden cat eyes slit in dark delight! \ud83d\udc1f\ud83d\udc08\u200d\u2b1b",
+    "wakeReaction": "Appearing silently on top of the monitor out of thin air! \ud83d\udc08\u200d\u2b1b",
+    "petReaction": "Slow blinks of deep feline trust from the velvet shadows! \ud83d\udc08\u200d\u2b1b\ud83d\udc96",
+    "dialogue": {
+      "idle": "Completely invisible in dark mode except for two golden eyes. \ud83d\udc08\u200d\u2b1b",
+      "working": "Prowling through concurrent threads to catch race conditions! \ud83d\udc08\u200d\u2b1b\u26a1",
+      "thinking": "Watching asynchronous execution order with unblinking eyes... \ud83e\udd14",
+      "success": "Purr of the panther. Concurrency bug pinned down in shadows! \ud83d\udc08\u200d\u2b1b\ud83c\udf89",
+      "error": "Tail puffed! Glaring at the anomalous memory write! \ud83d\udc3e",
+      "sleeping": "Zzz... sleeping invisible in the darkest corner of the room... \ud83c\udf19"
+    }
+  }
+}

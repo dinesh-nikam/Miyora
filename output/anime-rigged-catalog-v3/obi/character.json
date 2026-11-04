@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.obi",
+  "name": "Obi",
+  "title": "Market Storyteller",
+  "description": "Turns commit messages into legends.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "tunic",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#6b4430",
+    "hair": "#0c0a09",
+    "eyes": "#92400e",
+    "primary": "#ea580c",
+    "secondary": "#166534",
+    "accent": "#facc15"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "storyteller"
+  ],
+  "personality": "narrative",
+  "specialty": "Release Notes Storytelling",
+  "catchphrase": "Turns commit messages into legends.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#ea580c",
+    "icon": "\ud83d\udcd6",
+    "treatName": "SpicedChai",
+    "treatEmoji": "\ud83e\uded6",
+    "feedReaction": "Piping hot spiced chai! Strumming the lute to tune the story! \ud83e\uded6\ud83d\udcd6",
+    "wakeReaction": "Clearing throat. Gather around, developers, for the new tale! \ud83d\udcd6",
+    "petReaction": "Dedicates an epic poetic stanza celebrating your engineering! \ud83d\udcd6\u2728",
+    "dialogue": {
+      "idle": "Polishing wooden lute, testing rhymes for the release notes. \ud83d\udcd6",
+      "working": "Turning dry commit hashes into gripping tales of triumph! \ud83d\udcd6\u26a1",
+      "thinking": "Finding the hero arc in this complex migration PR... \ud83e\udd14",
+      "success": "Legend immortalized! The release story will be sung for ages! \ud83d\udcd6\ud83c\udf89",
+      "error": "A plot twist in chapter three! The hero shall overcome! \ud83d\udcd6\u2694\ufe0f",
+      "sleeping": "Zzz... resting head against a bundle of story scrolls... \ud83c\udf19"
+    }
+  }
+}

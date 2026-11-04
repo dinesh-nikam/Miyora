@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.seraph",
+  "name": "Seraph",
+  "title": "Halo Guardian",
+  "description": "Watches over production with endless patience.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "feather",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "robe",
+  "accessories": [
+    "halo"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#fef3c7",
+    "eyes": "#facc15",
+    "primary": "#f8fafc",
+    "secondary": "#fde68a",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "guardian"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

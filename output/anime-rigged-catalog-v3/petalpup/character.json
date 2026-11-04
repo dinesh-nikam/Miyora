@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.petalpup",
+  "name": "Petalpup",
+  "title": "Blossom Puppy",
+  "description": "Wags hard enough to shake petals loose.",
+  "body": "beast",
+  "ears": "floppy",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "flower",
+    "bow"
+  ],
+  "pattern": "petals",
+  "palette": {
+    "skin": "#fecdd3",
+    "hair": "#fff1f2",
+    "eyes": "#9f1239",
+    "primary": "#fecdd3",
+    "secondary": "#fb7185",
+    "accent": "#86efac"
+  },
+  "proportions": {
+    "height": 0.84,
+    "headScale": 1.3,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.4,
+  "tags": [
+    "pocket-monster",
+    "fairy",
+    "cute"
+  ],
+  "personality": "flowery",
+  "specialty": "Flower Garden Puppy Bouncing",
+  "catchphrase": "Bounces through wildflower meadows with a wagging tail and a sunny nose.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f472b6",
+    "icon": "\ud83c\udf38",
+    "treatName": "FlowerBiscuit",
+    "treatEmoji": "\ud83c\udf6a",
+    "feedReaction": "Honey blossom flower cookie! Floral ears flap in joyful sprint! \ud83c\udf6a\ud83c\udf38",
+    "wakeReaction": "Trotting in with a fresh daisy held proudly in mouth! \ud83c\udf38",
+    "petReaction": "Puppy belly rolls on the carpet, begging for joyful tummy rubs! \ud83c\udf38\ud83d\udc96",
+    "dialogue": {
+      "idle": "Chasing yellow butterflies around the garden sprinkler. \ud83c\udf38",
+      "working": "Spreading joyful energy and flower petal cheer across the sprint! \ud83c\udf38\u26a1",
+      "thinking": "Sniffing a ladybug on a dandelion stem with curious nose... \ud83e\udd14",
+      "success": "WAG WAG WAG! Floral petal confetti showers the team! \ud83c\udf38\ud83c\udf89",
+      "error": "Dug a hole in the wrong flowerbed! Shaking dirt off ears! \ud83d\udc3e",
+      "sleeping": "Zzz... curled up in a sunny patch of clover and dandelions... \ud83c\udf19"
+    }
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tariq",
+  "name": "Tariq",
+  "title": "Desert Navigator",
+  "description": "Finds the oasis in any dependency desert.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "robe",
+  "accessories": [
+    "headband",
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#8a5a3c",
+    "hair": "#1c1917",
+    "eyes": "#b45309",
+    "primary": "#fde68a",
+    "secondary": "#b45309",
+    "accent": "#0d9488"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "explorer"
+  ],
+  "personality": "navigational",
+  "specialty": "Oasis Route Navigation",
+  "catchphrase": "Leading data pipelines through the driest infrastructure deserts.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#b45309",
+    "icon": "\ud83c\udfdc\ufe0f",
+    "treatName": "Dates",
+    "treatEmoji": "\ud83c\udf34",
+    "feedReaction": "Sweet desert dates and mint tea! Caravan energy restored! \ud83c\udf34\ud83c\udfdc\ufe0f",
+    "wakeReaction": "Reading morning star constellations above the sand dunes! \ud83c\udfdc\ufe0f",
+    "petReaction": "Touching hand to heart in warm, dignified desert greeting! \ud83c\udfdc\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Examining parchment maps of ancient trade routes. Ready. \ud83c\udfdc\ufe0f",
+      "working": "Guiding critical traffic caravans safely past sandstorms! \ud83c\udfdc\ufe0f\u26a1",
+      "thinking": "Feeling the desert wind for signs of network drought... \ud83e\udd14",
+      "success": "Oasis reached! Cool fresh water springs for all services! \ud83c\udf34\ud83c\udf89",
+      "error": "Shifting sands obscured the path! Trusting the compass needle! \ud83e\udded",
+      "sleeping": "Zzz... resting beneath a woven tent under clear desert stars... \ud83c\udf19"
+    }
+  }
+}

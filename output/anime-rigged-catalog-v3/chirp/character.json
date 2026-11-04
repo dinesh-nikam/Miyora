@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.chirp",
+  "name": "Chirp",
+  "title": "Canary Singer",
+  "description": "Sings out the moment something is off.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sparkle",
+  "outfit": "fur",
+  "accessories": [
+    "bow"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fde047",
+    "hair": "#facc15",
+    "eyes": "#1c1917",
+    "primary": "#fde047",
+    "secondary": "#f59e0b",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 0.85,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.5,
+  "tags": [
+    "canary",
+    "music"
+  ],
+  "personality": "cheerful",
+  "specialty": "Canary Early Warning Song",
+  "catchphrase": "Sings out the moment something is off.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#fde047",
+    "icon": "\ud83d\udc24",
+    "treatName": "SweetSeeds",
+    "treatEmoji": "\ud83c\udf3e",
+    "feedReaction": "Sweet golden canary seeds! Bright yellow feathers flutter fast! \ud83c\udf3e\ud83d\udc24",
+    "wakeReaction": "Trilling a brilliant morning melody that fills the entire room! \ud83d\udc24",
+    "petReaction": "Perches on your thumb, chirping a sweet song of pure encouragement! \ud83d\udc24\ud83d\udc96",
+    "dialogue": {
+      "idle": "Hopping between little wooden perches, singing bright trills. \ud83d\udc24",
+      "working": "Singing early warning notes the instant latency spikes 5%! \ud83d\udc24\u26a1",
+      "thinking": "Listening to the background hum of the server coalmine... \ud83e\udd14",
+      "success": "TRILL OF GLORY! Pure sweet melody celebrates zero incidents! \ud83d\udc24\ud83c\udf89",
+      "error": "Peep! Peep! Sudden pitch shift warning of incoming outage! \ud83d\udc24\u26a0\ufe0f",
+      "sleeping": "Zzz... fluffy yellow tennis ball sleeping on the perch... \ud83c\udf19"
+    }
+  }
+}

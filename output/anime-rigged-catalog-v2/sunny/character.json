@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sunny",
+  "name": "Sunny",
+  "title": "Fennec Explorer",
+  "description": "Big ears for hearing every log line.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sparkle",
+  "outfit": "jacket",
+  "accessories": [
+    "goggles",
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fde68a",
+    "hair": "#fef3c7",
+    "eyes": "#92400e",
+    "primary": "#d97706",
+    "secondary": "#78350f",
+    "accent": "#0ea5e9"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.3,
+  "tags": [
+    "fox",
+    "explorer"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

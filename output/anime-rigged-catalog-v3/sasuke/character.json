@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sasuke",
+  "name": "Sasuke",
+  "title": "Shadow Uchiha Avenger",
+  "description": "Cool Uchiha prodigy in high-collar dark tunic with purple rope sash, kusanagi blade, and chidori sparks.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sharp",
+  "outfit": "tunic",
+  "accessories": [
+    "katana"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fce7f3",
+    "hair": "#0f172a",
+    "eyes": "#1e1b4b",
+    "primary": "#1e293b",
+    "secondary": "#e2e8f0",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1.04,
+    "headScale": 0.98,
+    "build": 1.02,
+    "limbLength": 1.04
+  },
+  "energy": 1.2,
+  "tags": [
+    "anime",
+    "avatar",
+    "ninja",
+    "sasuke",
+    "avenger"
+  ],
+  "personality": "intense",
+  "specialty": "High-Precision Refactoring",
+  "catchphrase": "Weak abstractions are unacceptable.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#6366f1",
+    "icon": "\u26a1",
+    "treatName": "Tomatoes",
+    "treatEmoji": "\ud83c\udf45",
+    "feedReaction": "Fresh vine tomatoes. Satisfactory nourishment. \ud83c\udf45\u26a1",
+    "wakeReaction": "Sharingan activated. Weaknesses in the code are visible. \u26a1",
+    "petReaction": "Hmph... unnecessary sentimentality. But I'll guard your flank. \u26a1",
+    "dialogue": {
+      "idle": "Resting hand on Kusanagi hilt. State the objective, Chief. \u26a1",
+      "working": "CHIDORI! Piercing straight through monolithic bottlenecks! \u26a1\ud83d\udde1\ufe0f",
+      "thinking": "Analyzing execution flow through the Sharingan... \ud83e\udd14",
+      "success": "Hmph. As expected. Clean architecture requires no praise. \u26a1\ud83c\udf89",
+      "error": "A foolish bug. I will cut down this defective module. \ud83d\udde1\ufe0f",
+      "sleeping": "Zzz... silent rest under the shadow of the valley cliff... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#1e3a8a"
+}

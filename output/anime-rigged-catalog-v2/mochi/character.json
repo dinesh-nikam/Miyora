@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.mochi",
+  "name": "Mochi",
+  "title": "Snow Cat Napper",
+  "description": "Naps on warm laptops between deploys.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [
+    "bell"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f8fafc",
+    "hair": "#e2e8f0",
+    "eyes": "#60a5fa",
+    "primary": "#f8fafc",
+    "secondary": "#cbd5e1",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.6,
+  "tags": [
+    "cat",
+    "cozy"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

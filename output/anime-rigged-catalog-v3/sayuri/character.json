@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.sayuri",
+  "name": "Sayuri",
+  "title": "Shrine Maiden",
+  "description": "Keeps the shrine of stable releases swept and quiet.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "hime",
+  "eyes": "sleepy",
+  "outfit": "hakama",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#0c0a09",
+    "eyes": "#991b1b",
+    "primary": "#f8fafc",
+    "secondary": "#dc2626",
+    "accent": "#dc2626"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.7,
+  "tags": [
+    "anime",
+    "miko"
+  ],
+  "personality": "purifying",
+  "specialty": "Shrine Release Purification",
+  "catchphrase": "Keeps the shrine of stable releases swept and quiet.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#dc2626",
+    "icon": "\u26e9\ufe0f",
+    "treatName": "SweetDango",
+    "treatEmoji": "\ud83c\udf61",
+    "feedReaction": "Tricolor shrine dango! The purification wand swishes gently! \ud83c\udf61\u26e9\ufe0f",
+    "wakeReaction": "Sweeping cedar leaves off the shrine stone steps at sunrise. \u26e9\ufe0f",
+    "petReaction": "Gentle miko blessing for your fingers and code repository, Chief! \u26e9\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Arranging sacred paper streamers by the torii gate. Quiet. \u26e9\ufe0f",
+      "working": "Purifying release candidates of all stale buggy spirits! \u26e9\ufe0f\u26a1",
+      "thinking": "Listening to the divine wind rustle through temple bells... \ud83e\udd14",
+      "success": "Purified! A pristine release enters the world with blessings! \u26e9\ufe0f\ud83c\udf89",
+      "error": "A lingering hungry spirit in the logs! Chanting holy verse! \u26e9\ufe0f\ud83d\udcdc",
+      "sleeping": "Zzz... resting in miko quarters as temple bells chime... \ud83c\udf19"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.dmitri",
+  "name": "Dmitri",
+  "title": "Arctic Explorer",
+  "description": "Unbothered by frozen pipelines and frozen fingers alike.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "curly",
+  "eyes": "sleepy",
+  "outfit": "jacket",
+  "accessories": [
+    "beanie",
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#78350f",
+    "eyes": "#1d4ed8",
+    "primary": "#b91c1c",
+    "secondary": "#1f2937",
+    "accent": "#fef3c7"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "explorer",
+    "winter"
+  ],
+  "personality": "hardy",
+  "specialty": "Cold-Start Optimization & Pre-Warming",
+  "catchphrase": "Sub-zero cold starts melt under disciplined pre-warming.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#b91c1c",
+    "icon": "\u2744\ufe0f",
+    "treatName": "Borscht",
+    "treatEmoji": "\ud83c\udf72",
+    "feedReaction": "Hearty hot beetroot borscht! Warms the bones down to -40 degrees! \ud83c\udf72\u2744\ufe0f",
+    "wakeReaction": "Pulling on heavy fur-lined boots! The arctic pipeline awaits! \u2744\ufe0f",
+    "petReaction": "Firm, warm arctic handshake through thick woolen mittens! \u2744\ufe0f\ud83d\udcaa",
+    "dialogue": {
+      "idle": "Checking thermometer outside the tundra station. Frosty. \u2744\ufe0f",
+      "working": "Pre-warming serverless execution pools before winter strikes! \u2744\ufe0f\u26a1",
+      "thinking": "Calculating thermal mass of container initialization... \ud83e\udd14",
+      "success": "Blizzard conquered! Zero-millisecond cold starts achieved! \u2744\ufe0f\ud83c\udf89",
+      "error": "Frozen socket! Lighting kerosene heaters to thaw the pipe! \u2744\ufe0f\ud83d\udd25",
+      "sleeping": "Zzz... sleeping warm beneath heavy reindeer pelts... \ud83c\udf19"
+    }
+  }
+}

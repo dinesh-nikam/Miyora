@@ -13,6 +13,7 @@ pub const MAX_DESCRIPTION_CHARS: usize = 240;
 pub const MAX_ACCESSORIES: usize = 5;
 pub const MAX_TAGS: usize = 6;
 pub const MAX_TAG_CHARS: usize = 24;
+pub const MAX_ATTRIBUTION_CHARS: usize = 200;
 pub const HEIGHT_RANGE: (f32, f32) = (0.8, 1.2);
 pub const HEAD_SCALE_RANGE: (f32, f32) = (0.85, 1.35);
 pub const BUILD_RANGE: (f32, f32) = (0.8, 1.3);
@@ -216,6 +217,27 @@ impl Default for Proportions {
 }
 
 /// A complete, data-only description of a procedural 3D character.
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq, Default)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct CompanionPersonality {
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub theme_color: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub icon: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub treat_name: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub treat_emoji: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub feed_reaction: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub wake_reaction: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub pet_reaction: Option<String>,
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub dialogue: Option<std::collections::BTreeMap<String, String>>,
+}
+
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct CharacterSpec {
@@ -245,6 +267,52 @@ pub struct CharacterSpec {
     pub energy: f32,
     #[serde(default)]
     pub tags: Vec<String>,
+    /// Optional signature catchphrase or developer philosophy.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub catchphrase: Option<String>,
+    /// Optional engineering specialty or role domain.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub specialty: Option<String>,
+    /// Optional core personality temperament.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub personality: Option<String>,
+    /// Browsing group. Required for bundled catalog rows; absent on user designs.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub category: Option<Category>,
+    /// `false` for legacy designs that must never render as the active 3D pet.
+    #[serde(default = "eligible_by_default")]
+    pub three_d_eligible: bool,
+    /// Rights metadata. Required for bundled catalog rows.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub attribution: Option<Attribution>,
+    /// Optional rich personality profile with dialogues and treat reactions.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub companion_personality: Option<CompanionPersonality>,
+}
+
+fn eligible_by_default() -> bool {
+    true
+}
+
+#[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, Eq, Hash)]
+#[serde(rename_all = "snake_case")]
+pub enum Category {
+    Character,
+    Animal,
+    Creature,
+    Robot,
+    DeityInspired,
+    /// Imitates an unlicensed franchise character; 2D legacy use only.
+    Legacy,
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Eq)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct Attribution {
+    pub creator: String,
+    pub license: String,
+    pub source: String,
+    pub attribution: String,
 }
 
 impl CharacterSpec {
@@ -310,6 +378,31 @@ impl CharacterSpec {
                     "tags",
                     format!("tag `{tag}` must be 1-{MAX_TAG_CHARS} lowercase ASCII letters, digits, or hyphens"),
                 ));
+            }
+        }
+        if let Some(catchphrase) = &self.catchphrase {
+            validate_text("catchphrase", catchphrase, 1, 160)?;
+        }
+        if let Some(specialty) = &self.specialty {
+            validate_text("specialty", specialty, 1, 48)?;
+        }
+        if let Some(personality) = &self.personality {
+            validate_text("personality", personality, 1, 32)?;
+        }
+        if (self.category == Some(Category::Legacy)) == self.three_d_eligible {
+            return Err(invalid(
+                "threeDEligible",
+                "legacy characters, and only legacy characters, are ineligible for 3D",
+            ));
+        }
+        if let Some(attribution) = &self.attribution {
+            for (field, value) in [
+                ("attribution.creator", &attribution.creator),
+                ("attribution.license", &attribution.license),
+                ("attribution.source", &attribution.source),
+                ("attribution.attribution", &attribution.attribution),
+            ] {
+                validate_text(field, value, 1, MAX_ATTRIBUTION_CHARS)?;
             }
         }
         Ok(())
@@ -411,6 +504,18 @@ pub(crate) fn sample_spec() -> CharacterSpec {
         proportions: Proportions::default(),
         energy: 1.0,
         tags: vec!["fox".into()],
+        catchphrase: Some("Always one step ahead of the stack trace.".into()),
+        specialty: Some("Rapid Triage".into()),
+        personality: Some("clever".into()),
+        category: Some(Category::Animal),
+        three_d_eligible: true,
+        attribution: Some(Attribution {
+            creator: "Test".into(),
+            license: "CC0-1.0".into(),
+            source: "unit test".into(),
+            attribution: "Original test design".into(),
+        }),
+        companion_personality: None,
     }
 }
 

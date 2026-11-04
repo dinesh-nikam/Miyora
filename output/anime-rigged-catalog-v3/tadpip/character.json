@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tadpip",
+  "name": "Tadpip",
+  "title": "Swirl Tadpole",
+  "description": "Spins in circles when a pull request merges.",
+  "body": "slime",
+  "ears": "fin",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "waves",
+  "palette": {
+    "skin": "#93c5fd",
+    "hair": "#dbeafe",
+    "eyes": "#172554",
+    "primary": "#93c5fd",
+    "secondary": "#3b82f6",
+    "accent": "#f8fafc"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.2,
+  "tags": [
+    "pocket-monster",
+    "water"
+  ],
+  "personality": "perky",
+  "specialty": "Micro-Scale Event Bubbling",
+  "catchphrase": "Ribbit-splash! Hopping happily across micro-event bubbles!",
+  "category": "creature",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#22c55e",
+    "icon": "\ud83d\udc38",
+    "treatName": "WaterLily",
+    "treatEmoji": "\ud83e\udeb7",
+    "feedReaction": "Crisp sweet water lily petal! Ribbit-hop of pure excitement! \ud83e\udeb7\ud83d\udc38",
+    "wakeReaction": "*splash* Tadpip hops onto a lily pad to start the day! \ud83d\udc38",
+    "petReaction": "*cheerful croak* Playful splash sends gentle ripples of joy! \ud83d\udc38\ud83d\udc96",
+    "dialogue": {
+      "idle": "Sitting on a smooth wet pebble, big eyes blinking happily. \ud83d\udc38",
+      "working": "Bubbling UI events through the DOM tree with nimble hops! \ud83d\udc38\u26a1",
+      "thinking": "Dipping little webbed feet in the stream to test currents... \ud83e\udd14",
+      "success": "RIBBIT HOORAY! Puddle cleared with a grand leap! \ud83d\udc38\ud83c\udf89",
+      "error": "Slipped on a wet moss patch! Shaking off drops, ready again! \ud83d\udca7",
+      "sleeping": "Zzz... tucked under a broad green lotus leaf on the pond... \ud83c\udf19"
+    }
+  }
+}

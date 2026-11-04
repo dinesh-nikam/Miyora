@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.biscuit",
+  "name": "Biscuit",
+  "title": "Floppy-Eared Tester",
+  "description": "Fetches every edge case and drops it at your feet.",
+  "body": "beast",
+  "ears": "floppy",
+  "tail": "cat",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "hoodie",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#d6a26b",
+    "hair": "#92400e",
+    "eyes": "#451a03",
+    "primary": "#dc2626",
+    "secondary": "#7f1d1d",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.4,
+  "tags": [
+    "dog",
+    "tester"
+  ],
+  "personality": "playful",
+  "specialty": "Edge-Case Retrieval",
+  "catchphrase": "Fetches every edge case and drops it at your feet.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#dc2626",
+    "icon": "\ud83d\udc36",
+    "treatName": "TennisBall",
+    "treatEmoji": "\ud83c\udfbe",
+    "feedReaction": "Chomping down on a fresh squeaky yellow tennis ball! Tail wagging! \ud83c\udfbe\ud83d\udc36",
+    "wakeReaction": "Barking happily at the door, dropping a fresh squeaky toy! \ud83d\udc36",
+    "petReaction": "Resting warm puppy chin on your knee, looking up with adoring eyes! \ud83d\udc36\ud83d\udc96",
+    "dialogue": {
+      "idle": "Tail thumping rhythmically against floor. Throw the ball! \ud83d\udc36",
+      "working": "Dashing into underbrush to retrieve elusive edge cases! \ud83d\udc36\u26a1",
+      "thinking": "Head tilted all the way sideways, ears flopping down... \ud83e\udd14",
+      "success": "FETCH SUCCESS! Dropped the clean passing test at your feet! \ud83d\udc36\ud83c\udf89",
+      "error": "Whining softly at a stuck tennis ball! Digging it out! \ud83d\udc3e",
+      "sleeping": "Zzz... puppy paws twitching in sleep as he runs in dreams... \ud83c\udf19"
+    }
+  }
+}

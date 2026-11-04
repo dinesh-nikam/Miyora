@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.vamp",
+  "name": "Vamp",
+  "title": "Night Bat",
+  "description": "Echolocates memory leaks.",
+  "body": "beast",
+  "ears": "cat",
+  "tail": "none",
+  "wings": "bat",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [
+    "cape"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#4c1d95",
+    "hair": "#2e1065",
+    "eyes": "#f43f5e",
+    "primary": "#4c1d95",
+    "secondary": "#1e1b4b",
+    "accent": "#f43f5e"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "bat",
+    "night"
+  ],
+  "personality": "ultrasonic",
+  "specialty": "Ultrasonic Bug Echolocation",
+  "catchphrase": "Echolocates memory leaks.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#4c1d95",
+    "icon": "\ud83e\udd87",
+    "treatName": "GrapeCluster",
+    "treatEmoji": "\ud83c\udf47",
+    "feedReaction": "Sweet night vineyard grapes! Velvet bat wings wrap close! \ud83c\udf47\ud83e\udd87",
+    "wakeReaction": "Hanging upside down from monitor frame, ears twitching to pings! \ud83e\udd87",
+    "petReaction": "Gentle ultrasonic purr vibrates softly against your fingers! \ud83e\udd87\ud83d\udc96",
+    "dialogue": {
+      "idle": "Hanging upside down, grooming delicate velvet wings. \ud83e\udd87",
+      "working": "Emitting ultrasonic pings to map deep leaks in the heap! \ud83e\udd87\u26a1",
+      "thinking": "Listening to the echo delay between pointer dereferences... \ud83e\udd14",
+      "success": "Ping returned clean! Memory leaks located and sealed tight! \ud83e\udd87\ud83c\udf89",
+      "error": "Acoustic distortion! Shielding ears and recalibrating frequency! \ud83e\udd87",
+      "sleeping": "Zzz... wrapped in wing cloak like a tiny dark umbrella... \ud83c\udf19"
+    }
+  }
+}

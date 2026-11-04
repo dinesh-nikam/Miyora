@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.lumi",
+  "name": "Lumi",
+  "title": "Fairy Messenger",
+  "description": "Flutters notifications to exactly the right person.",
+  "body": "humanoid",
+  "ears": "elf",
+  "tail": "none",
+  "wings": "fairy",
+  "hair": "bob",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#a7f3d0",
+    "eyes": "#34d399",
+    "primary": "#6ee7b7",
+    "secondary": "#ecfdf5",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 0.85,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.4,
+  "tags": [
+    "fairy",
+    "cute"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

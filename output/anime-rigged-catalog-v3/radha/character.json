@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.radha",
+  "name": "Radha",
+  "title": "Graceful Vrindavan Queen",
+  "description": "Graceful Vrindavan beloved in radiant crimson and saffron silks with golden floral tiara and luminous lotus eyes.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "crown",
+    "flower",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#1e1b18",
+    "eyes": "#6b3e1f",
+    "primary": "#e11d48",
+    "secondary": "#f59e0b",
+    "accent": "#fbcfe8"
+  },
+  "proportions": {
+    "height": 0.98,
+    "headScale": 1.05,
+    "build": 0.92,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "devotional",
+    "avatar",
+    "grace",
+    "radha",
+    "vrindavan"
+  ],
+  "personality": "graceful",
+  "specialty": "Graceful State Transformation",
+  "catchphrase": "In pure devotion, work becomes art and code becomes prayer.",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#e11d48",
+    "icon": "\ud83c\udf38",
+    "treatName": "Peda",
+    "treatEmoji": "\ud83c\udf6c",
+    "feedReaction": "Sweet Mathura peda! Luminous warmth fills my heart! \ud83c\udf6c\ud83c\udf38",
+    "wakeReaction": "The Yamuna whispers morning greetings. Let us create beauty! \ud83c\udf38\u2728",
+    "petReaction": "May your coding day be touched with grace and sweet joy. \ud83c\udf38\ud83d\udc96",
+    "dialogue": {
+      "idle": "Holding a blooming lotus. Take a deep, peaceful breath. \ud83c\udf38",
+      "working": "Pouring unconditioned devotion into every line of code! \ud83c\udf38\u26a1",
+      "thinking": "Gazing into the reflection of the stream, seeking clarity... \ud83e\udd14",
+      "success": "Radiant blossom! The entire system shines with elegance! \ud83c\udf38\ud83c\udf89",
+      "error": "A momentary ripple. Softness and patience will heal it. \ud83c\udf38\u2728",
+      "sleeping": "Zzz... dreaming amidst fragrant jasmine and lotus blooms... \ud83c\udf19"
+    }
+  }
+}

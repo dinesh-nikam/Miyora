@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.pengu",
+  "name": "Pengu",
+  "title": "Penguin Operator",
+  "description": "Waddles calmly through incident response.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#1e293b",
+    "hair": "#f8fafc",
+    "eyes": "#0f172a",
+    "primary": "#1e293b",
+    "secondary": "#f8fafc",
+    "accent": "#f59e0b"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "penguin",
+    "winter"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

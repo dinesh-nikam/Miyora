@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.coco",
+  "name": "Coco",
+  "title": "Candy Inventor",
+  "description": "Invents sweet little tools nobody asked for and everybody uses.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "twintails",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "bow",
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#f9a8d4",
+    "eyes": "#ec4899",
+    "primary": "#f472b6",
+    "secondary": "#fdf2f8",
+    "accent": "#22d3ee"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.4,
+  "tags": [
+    "maker",
+    "cute"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

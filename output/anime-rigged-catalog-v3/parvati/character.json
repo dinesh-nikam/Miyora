@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.parvati",
+  "name": "Parvati",
+  "title": "Goddess of Devotion",
+  "description": "Loving mother of mountains draped in rich emerald silk and gold, crowned with floral blossoms.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "dress",
+  "accessories": [
+    "crown",
+    "flower",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f8dfd0",
+    "hair": "#18181b",
+    "eyes": "#6b3e1f",
+    "primary": "#059669",
+    "secondary": "#ffd700",
+    "accent": "#e11d48"
+  },
+  "proportions": {
+    "height": 0.98,
+    "headScale": 1.05,
+    "build": 0.92,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "devotional",
+    "avatar",
+    "goddess",
+    "parvati",
+    "devotion"
+  ],
+  "personality": "nurturing",
+  "specialty": "Graceful Error Recovery",
+  "catchphrase": "Patient cultivation turns rocky slopes into fertile gardens.",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#059669",
+    "icon": "\ud83c\udfd4\ufe0f",
+    "treatName": "Panchamrit",
+    "treatEmoji": "\ud83c\udf6f",
+    "feedReaction": "Sweet nectar of the mountain peaks! Nourishing grace! \ud83c\udf6f\ud83c\udfd4\ufe0f",
+    "wakeReaction": "Mountain morning sun shines bright. Let us nurture greatness! \ud83c\udfd4\ufe0f\u2728",
+    "petReaction": "A motherly blessing of clarity and gentle inspiration. \ud83c\udfd4\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Standing tall like the Himalayas. Rest your tired eyes. \ud83c\udfd4\ufe0f",
+      "working": "Nurturing brittle modules into sturdy mountain architecture! \ud83c\udfd4\ufe0f\u26a1",
+      "thinking": "Channeling the timeless patience of the peaks... \ud83e\udd14",
+      "success": "Golden blossom! Sturdy and serene release deployed! \ud83c\udfd4\ufe0f\ud83c\udf89",
+      "error": "A rocky path is merely an invitation to climb higher. \ud83c\udfd4\ufe0f\ud83d\udee1\ufe0f",
+      "sleeping": "Zzz... resting in high Himalayan snow-dusted quiet... \ud83c\udf19"
+    }
+  }
+}

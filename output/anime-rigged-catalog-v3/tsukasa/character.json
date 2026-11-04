@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tsukasa",
+  "name": "Tsukasa",
+  "title": "Wandering Ronin",
+  "description": "Drifts between repositories, fixing what others left behind.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "hakama",
+  "accessories": [
+    "katana",
+    "scarf"
+  ],
+  "pattern": "waves",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#1c1917",
+    "eyes": "#78716c",
+    "primary": "#334155",
+    "secondary": "#78716c",
+    "accent": "#ca8a04"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "anime",
+    "samurai"
+  ],
+  "personality": "wandering",
+  "specialty": "Wandering Refactor Ronin",
+  "catchphrase": "Drifts between repositories, fixing what others left behind.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#334155",
+    "icon": "\ud83c\udf3e",
+    "treatName": "SakeBun",
+    "treatEmoji": "\ud83c\udf76",
+    "feedReaction": "Steamed sweet sake bun! Bamboo water flask refilled for travel! \ud83c\udf76\ud83c\udf3e",
+    "wakeReaction": "Straw hat adjusted. A new unfamiliar repository awaits on the road. \ud83c\udf3e",
+    "petReaction": "Dignified bow of the wandering swordsman. Glad to travel with you. \ud83c\udf3e\u2728",
+    "dialogue": {
+      "idle": "Sitting on village milestone, chewing a stalk of wild grass. \ud83c\udf3e",
+      "working": "Quietly cleaning up abandoned tech debt along the trail! \ud83c\udf3e\u26a1",
+      "thinking": "Contemplating the original author's intent from five years ago... \ud83e\udd14",
+      "success": "Another abandoned village of code restored to prosperity! \ud83c\udf3e\ud83c\udf89",
+      "error": "A rusted lock on an old module! Forcing the rusted hinge! \ud83c\udf3e",
+      "sleeping": "Zzz... sleeping under a straw mat beside the mountain road... \ud83c\udf19"
+    }
+  }
+}

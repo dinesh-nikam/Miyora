@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.gloop",
+  "name": "Gloop",
+  "title": "Mint Slime",
+  "description": "Wobbles with joy at every passing test.",
+  "body": "slime",
+  "ears": "none",
+  "tail": "none",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#6ee7b7",
+    "hair": "#34d399",
+    "eyes": "#064e3b",
+    "primary": "#6ee7b7",
+    "secondary": "#34d399",
+    "accent": "#f0fdf4"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.2,
+  "tags": [
+    "slime",
+    "cute"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

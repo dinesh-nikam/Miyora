@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.voltkit",
+  "name": "Voltkit",
+  "title": "Volt Kit",
+  "description": "The electric form of Vixi, quick as a cache hit.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "star",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "sharp",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fef08a",
+    "hair": "#fefce8",
+    "eyes": "#1e3a8a",
+    "primary": "#fef08a",
+    "secondary": "#eab308",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 0.86,
+    "headScale": 1.28,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.6,
+  "tags": [
+    "pocket-monster",
+    "electric"
+  ],
+  "personality": "playful",
+  "specialty": "Cache & Triage",
+  "catchphrase": "Pouncing on stale dependencies with a grin!"
+}

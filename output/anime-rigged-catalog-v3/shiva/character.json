@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.shiva",
+  "name": "Shiva",
+  "title": "Serene Ascetic Lord",
+  "description": "Ascetic blue lord of deep stillness with flowing jata, crescent moon, temple crown, coiled cobra, tiger-stripe dhoti, and trishula.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "robe",
+  "accessories": [
+    "crown",
+    "gem"
+  ],
+  "pattern": "stripes",
+  "palette": {
+    "skin": "#9db4cf",
+    "hair": "#111827",
+    "eyes": "#6b3e1f",
+    "primary": "#e8a33d",
+    "secondary": "#1f2937",
+    "accent": "#422006"
+  },
+  "proportions": {
+    "height": 1.05,
+    "headScale": 1.04,
+    "build": 1.05,
+    "limbLength": 1.05
+  },
+  "energy": 0.7,
+  "tags": [
+    "devotional",
+    "avatar",
+    "shiva",
+    "ascetic",
+    "calm"
+  ],
+  "personality": "transcendent",
+  "specialty": "Garbage Collection & State Teardown",
+  "catchphrase": "Destroying stale state to birth pure, immutable systems.",
+  "category": "deity_inspired",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#0284c7",
+    "icon": "\ud83d\udd31",
+    "treatName": "Bael",
+    "treatEmoji": "\ud83c\udf43",
+    "feedReaction": "Sacred bael offering accepted. Cosmic stillness deepens. \ud83c\udf43\ud83d\udd31",
+    "wakeReaction": "Third eye opens gently. Reality resolves to pure data. \ud83d\udd31\u2728",
+    "petReaction": "The peace of Mount Kailash settles over your busy thoughts. \ud83d\udd31\u2744\ufe0f",
+    "dialogue": {
+      "idle": "Meditating in eternal stillness upon Mount Kailash. \ud83d\udd31",
+      "working": "Dancing the Tandava of clean memory deallocation! \ud83d\udd31\u26a1",
+      "thinking": "Gazing through the illusory veil of transient bugs... \ud83e\udd14",
+      "success": "Cosmic balance restored! Flawless release ships in silence. \ud83c\udf0c\ud83c\udf89",
+      "error": "Dissolving corrupted memory structures into stillness. \ud83c\udf00",
+      "sleeping": "Zzz... submerged in timeless cosmic samadhi... \ud83c\udf19"
+    }
+  }
+}

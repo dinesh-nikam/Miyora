@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.kuroha",
+  "name": "Kuroha",
+  "title": "Exorcist Gunslinger",
+  "description": "Banishes haunted processes with silver rounds.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "sharp",
+  "outfit": "coat",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f5ece8",
+    "hair": "#f8fafc",
+    "eyes": "#ef4444",
+    "primary": "#111827",
+    "secondary": "#3f3f46",
+    "accent": "#ef4444"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.2,
+  "tags": [
+    "anime",
+    "exorcist"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#94a3b8"
+}

@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.frizzle",
+  "name": "Frizzle",
+  "title": "Snowdrift Chick",
+  "description": "A fluffy chick that sneezes snowflakes.",
+  "body": "bird",
+  "ears": "none",
+  "tail": "feather",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0f2fe",
+    "hair": "#ffffff",
+    "eyes": "#0c4a6e",
+    "primary": "#e0f2fe",
+    "secondary": "#bae6fd",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 0.82,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.1,
+  "tags": [
+    "pocket-monster",
+    "ice",
+    "cute"
+  ],
+  "personality": "feathery",
+  "specialty": "Feathery Wing Fluttering",
+  "catchphrase": "Flutters soft downy feathers to dust off cobwebs in old repositories.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f59e0b",
+    "icon": "\ud83e\udeb6",
+    "treatName": "MilletSpray",
+    "treatEmoji": "\ud83c\udf3e",
+    "feedReaction": "Golden millet seed spray! Fluffing downy yellow feathers! \ud83c\udf3e\ud83e\udeb6",
+    "wakeReaction": "Fluttering into the room with cheerful chirps and ruffled wings! \ud83e\udeb6",
+    "petReaction": "Perches on your index finger with light, gentle grip and sweet trill! \ud83e\udeb6\ud83d\udc96",
+    "dialogue": {
+      "idle": "Preening soft downy feathers with beak, shaking out dust. \ud83e\udeb6",
+      "working": "Dusting away ancient cobwebs from dusty neglected repos! \ud83e\udeb6\u26a1",
+      "thinking": "Tilting head upside down to peer behind a dusty file... \ud83e\udd14",
+      "success": "DUSTED CLEAN! Old repository looks gleaming and brand new! \ud83e\udeb6\ud83c\udf89",
+      "error": "Sneezed at a cloud of dust! Fluttering up into clean air! \ud83d\udca8",
+      "sleeping": "Zzz... head tucked under soft yellow wing like a fluff ball... \ud83c\udf19"
+    }
+  }
+}

@@ -233,5 +233,22 @@
     "companion",
     "devotional",
     "lakshmi"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#be123c",
+    "icon": "🪷",
+    "treatName": "Payasam",
+    "treatEmoji": "🥣",
+    "feedReaction": "Golden cardamom payasam! Abundance multiplies manifold! 🥣🪷",
+    "wakeReaction": "Lotus petals open to prosperity! Golden fortunes await! 🪷✨",
+    "petReaction": "Shower of golden blessings upon your repository and crafts! 🪷💖",
+    "dialogue": {
+      "idle": "Seated on a pink lotus. Value flows where attention rests. 🪷",
+      "working": "Channeling golden flow into maximum runtime throughput! 🪷⚡",
+      "thinking": "Multiplying efficiency and eliminating wasted cycles... 🤔",
+      "success": "Infinite prosperity! Green metrics across every dashboard! 🪷🎉",
+      "error": "Temporary scarcity yields swiftly to renewed fortune. 🪷✨",
+      "sleeping": "Zzz... resting upon radiant lotus beds on the ocean of milk... 🌙"
+    }
+  }
 }

@@ -25,73 +25,173 @@
   "animations": {
     "idle": {
       "asset": "idle",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "working": {
       "asset": "working",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "thinking": {
       "asset": "thinking",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "waiting": {
       "asset": "waiting",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "success": {
       "asset": "success",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "celebrating": {
       "asset": "success",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "error": {
       "asset": "error",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "level_up": {
       "asset": "level_up",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "achievement": {
       "asset": "level_up",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     },
     "sleeping": {
       "asset": "sleeping",
-      "frames": [{ "x": 0, "y": 0, "width": 512, "height": 512 }],
+      "frames": [
+        {
+          "x": 0,
+          "y": 0,
+          "width": 512,
+          "height": 512
+        }
+      ],
       "fps": 1,
       "loop": true,
-      "anchor": { "x": 0.5, "y": 1.0 }
+      "anchor": {
+        "x": 0.5,
+        "y": 1.0
+      }
     }
   },
   "stateMappings": {
@@ -108,5 +208,29 @@
     "offline": "sleeping",
     "attention_required": "waiting"
   },
-  "tags": ["starter", "mythology", "journey-to-the-west", "sun-wukong", "monkey-king", "clean-room"]
+  "tags": [
+    "starter",
+    "mythology",
+    "journey-to-the-west",
+    "sun-wukong",
+    "monkey-king",
+    "clean-room"
+  ],
+  "personality": {
+    "themeColor": "#ffb703",
+    "icon": "☁️",
+    "treatName": "Peach",
+    "treatEmoji": "🍑",
+    "feedReaction": "Mmm! Celestial peach! Power level rising, Chief! 🍑✨",
+    "wakeReaction": "Hahaha! The Great Sage awakens! Point me to the bugs! ⚡☁️",
+    "petReaction": "Hahaha! The Monkey King is energized! Celestial blessing for your keyboard! 🍑✨",
+    "dialogue": {
+      "idle": "Riding my Somersault Cloud. Ready when you are, Chief! ☁️",
+      "working": "My Gold-Banded Cudgel will crush these merge conflicts! ⚡",
+      "thinking": "Pondering the Dao of clean code... 🤔",
+      "success": "HA! Another feature vanquished! The heavens rejoice! 🎉",
+      "error": "A minor bug demon! Stand back, Chief, we'll smash it! 💪",
+      "sleeping": "Zzz... napping on my Somersault Cloud... ☁️💤"
+    }
+  }
 }

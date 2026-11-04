@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.zara",
+  "name": "Zara",
+  "title": "Neon Racer",
+  "description": "Treats every benchmark like a street race.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "mohawk",
+  "eyes": "sharp",
+  "outfit": "jacket",
+  "accessories": [
+    "goggles"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#a86b4c",
+    "hair": "#ec4899",
+    "eyes": "#f43f5e",
+    "primary": "#0f172a",
+    "secondary": "#9d174d",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.5,
+  "tags": [
+    "speedy",
+    "cyber"
+  ],
+  "personality": "energetic",
+  "specialty": "Fast-Path Execution",
+  "catchphrase": "Faster than the next clock cycle."
+}

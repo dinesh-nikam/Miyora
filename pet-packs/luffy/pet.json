@@ -233,5 +233,22 @@
     "companion",
     "anime",
     "luffy"
-  ]
+  ],
+  "personality": {
+    "themeColor": "#ef4444",
+    "icon": "🍖",
+    "treatName": "Meat",
+    "treatEmoji": "🍖",
+    "feedReaction": "MEEEAT! Hahaha, let's ship the whole feature! 🍖🎉",
+    "wakeReaction": "MEAT! Wait, time to code? Let's do it! 🍖⚡",
+    "petReaction": "Shishishi! Thanks Chief! You're part of my crew now! 🍖✨",
+    "dialogue": {
+      "idle": "Yo! Let's set sail for the next feature! 🍖✨",
+      "working": "Gomu Gomu no... CODE REFACTOR! 🍖⚡",
+      "thinking": "Hmm... meat? No, algorithm! 🤔",
+      "success": "I'm gonna be King of the Programmers! Shipped! 🍖🎉",
+      "error": "Gaaaah! A tough bug! Bring it on! 💪",
+      "sleeping": "Zzz... dreaming of giant barbecue ribs... 🌙🍖"
+    }
+  }
 }

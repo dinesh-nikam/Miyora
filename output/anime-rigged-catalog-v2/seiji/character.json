@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.seiji",
+  "name": "Seiji",
+  "title": "Onmyoji Talisman Master",
+  "description": "Seals runaway processes with paper talismans.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sharp",
+  "outfit": "robe",
+  "accessories": [
+    "staff"
+  ],
+  "pattern": "diamonds",
+  "palette": {
+    "skin": "#f6d7c3",
+    "hair": "#e5e7eb",
+    "eyes": "#7c3aed",
+    "primary": "#f8fafc",
+    "secondary": "#312e81",
+    "accent": "#a855f7"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.8,
+  "tags": [
+    "anime",
+    "onmyoji"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#7c3aed"
+}

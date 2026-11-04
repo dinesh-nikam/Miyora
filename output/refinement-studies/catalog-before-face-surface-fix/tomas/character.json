@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.tomas",
+  "name": "Tomas",
+  "title": "Mountain Guide",
+  "description": "Knows every switchback on the road to 1.0.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "short",
+  "eyes": "round",
+  "outfit": "jacket",
+  "accessories": [
+    "beanie",
+    "backpack"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#e0ac83",
+    "hair": "#44403c",
+    "eyes": "#15803d",
+    "primary": "#ea580c",
+    "secondary": "#365314",
+    "accent": "#fde047"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1,
+  "tags": [
+    "explorer"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always."
+}

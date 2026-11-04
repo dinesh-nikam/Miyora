@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.nezuko",
+  "name": "Nezuko",
+  "title": "Beloved Kimono Sister",
+  "description": "Beloved companion with flowing black hair fading to fiery orange tips, bamboo muzzle, and pink kimono.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "round",
+  "outfit": "kimono",
+  "accessories": [
+    "bow"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fde2d2",
+    "hair": "#111827",
+    "eyes": "#f43f5e",
+    "primary": "#f472b6",
+    "secondary": "#1c1917",
+    "accent": "#ea580c"
+  },
+  "proportions": {
+    "height": 0.88,
+    "headScale": 1.18,
+    "build": 0.92,
+    "limbLength": 0.92
+  },
+  "energy": 1.1,
+  "tags": [
+    "anime",
+    "avatar",
+    "kimono",
+    "nezuko",
+    "demon"
+  ],
+  "personality": "protective",
+  "specialty": "Workspace Security & Threat Defense",
+  "catchphrase": "Mmm-ph! (Guarding your project workspace with gentle ferocity.)",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#ff69b4",
+    "icon": "\ud83c\udf38",
+    "treatName": "Tea",
+    "treatEmoji": "\ud83c\udf75",
+    "feedReaction": "Mmm-ph! (Nezuko sips warm tea happily!) (\u25d5\u203f\u25d5)\ud83c\udf75",
+    "wakeReaction": "Mmm-ph! (Rubs her eyes and smiles warmly!) \ud83c\udf38\u2728",
+    "petReaction": "Mmm-ph! (Nezuko smiles warmly and leans into your hand) \ud83c\udf38\ud83d\udc96",
+    "dialogue": {
+      "idle": "Keeping watch by your side. Hydrate when ready, Chief! \ud83c\udf75",
+      "working": "Mmm! (Guarding your focus while you code!) \u26a1\ud83c\udf38",
+      "thinking": "Mmm? (Tilts head curiously at the algorithm) \ud83e\udd14",
+      "success": "Mmm-ph!! (Jumps with joy!) All tests passed! \ud83c\udf89",
+      "error": "Mmm... (Hands you a lucky charm. We'll fix it!) \ud83d\udcaa",
+      "sleeping": "Zzz... resting peacefully in her cozy wooden box... \ud83c\udf19\ud83d\udca4"
+    }
+  },
+  "hairTip": "#ea580c"
+}

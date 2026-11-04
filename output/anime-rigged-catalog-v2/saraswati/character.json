@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.saraswati",
+  "name": "Saraswati",
+  "title": "Goddess of Arts and Wisdom",
+  "description": "Serene embodiment of music and wisdom in pure white silks with carved veena staff and tranquil azure eyes.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "long",
+  "eyes": "sleepy",
+  "outfit": "dress",
+  "accessories": [
+    "crown",
+    "staff",
+    "gem"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#1e293b",
+    "eyes": "#0284c7",
+    "primary": "#f8fafc",
+    "secondary": "#ca8a04",
+    "accent": "#67e8f9"
+  },
+  "proportions": {
+    "height": 0.98,
+    "headScale": 1.02,
+    "build": 0.9,
+    "limbLength": 1.02
+  },
+  "energy": 0.8,
+  "tags": [
+    "devotional",
+    "avatar",
+    "wisdom",
+    "saraswati",
+    "arts"
+  ],
+  "personality": "zen",
+  "specialty": "Code Cleanliness",
+  "catchphrase": "Patient cultivation builds stable software."
+}

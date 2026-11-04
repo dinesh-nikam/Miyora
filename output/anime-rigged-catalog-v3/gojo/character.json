@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.gojo",
+  "name": "Gojo",
+  "title": "The Strongest Sorcerer",
+  "description": "The invincible sorcerer with snow-white spiky hair, sleek high-collar dark uniform, and infinite cyan Six Eyes.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "spiky",
+  "eyes": "sparkle",
+  "outfit": "suit",
+  "accessories": [
+    "glasses"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#fce7f3",
+    "hair": "#f8fafc",
+    "eyes": "#38bdf8",
+    "primary": "#0f172a",
+    "secondary": "#1e1b4b",
+    "accent": "#38bdf8"
+  },
+  "proportions": {
+    "height": 1.12,
+    "headScale": 0.95,
+    "build": 1.02,
+    "limbLength": 1.1
+  },
+  "energy": 1.4,
+  "tags": [
+    "anime",
+    "avatar",
+    "sorcerer",
+    "gojo",
+    "strongest"
+  ],
+  "personality": "confident",
+  "specialty": "Fault Isolation & Infinite Concurrency",
+  "catchphrase": "Don't sweat the compiler. I'm the strongest.",
+  "category": "legacy",
+  "threeDEligible": false,
+  "attribution": {
+    "creator": "Third-party rights holder",
+    "license": "LicenseRef-Unlicensed",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only."
+  },
+  "companionPersonality": {
+    "themeColor": "#38bdf8",
+    "icon": "\u267e\ufe0f",
+    "treatName": "Kikufuku",
+    "treatEmoji": "\ud83c\udf61",
+    "feedReaction": "Sweet Kikufuku mochi! Cursed energy at maximum. \ud83c\udf61\u2728",
+    "wakeReaction": "Back from the void. Ready to show them what real code looks like. \u267e\ufe0f",
+    "petReaction": "Infinity won't stop a good high-five from you, Chief! \u267e\ufe0f\u2728",
+    "dialogue": {
+      "idle": "Don't worry, Chief. I'm the strongest companion you've got. \u267e\ufe0f\u2728",
+      "working": "Unlimited Void deployed. Compiling at the speed of light. \u267e\ufe0f\u26a1",
+      "thinking": "Six Eyes analyzing every branch and memory allocation... \ud83e\udd14",
+      "success": "Domain Expansion: Clean Architecture! Zero errors. \ud83d\ude80",
+      "error": "A cursed exception appeared. I'll exorcise it in one pass. \ud83d\udd0d",
+      "sleeping": "Reversing cursed energy... even the strongest needs rest. \ud83c\udf19"
+    }
+  }
+}

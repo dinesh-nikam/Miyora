@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.alma",
+  "name": "Alma",
+  "title": "Wandering Alchemist",
+  "description": "Transmutes messy data into tidy tables.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "bob",
+  "eyes": "round",
+  "outfit": "coat",
+  "accessories": [
+    "glasses",
+    "backpack"
+  ],
+  "pattern": "diamonds",
+  "palette": {
+    "skin": "#f2c9a8",
+    "hair": "#ca8a04",
+    "eyes": "#15803d",
+    "primary": "#7c2d12",
+    "secondary": "#1f2937",
+    "accent": "#fbbf24"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "anime",
+    "alchemist"
+  ],
+  "personality": "alchemical",
+  "specialty": "Data Structure Alchemy",
+  "catchphrase": "Transmutes messy data into tidy tables.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#7c2d12",
+    "icon": "\u2697\ufe0f",
+    "treatName": "SpicedAlmonds",
+    "treatEmoji": "\ud83e\udd5c",
+    "feedReaction": "Roasted cinnamon spiced almonds! Glass retorts bubble cleanly! \ud83e\udd5c\u2697\ufe0f",
+    "wakeReaction": "Adjusting round spectacles. Ready to transmute lead into gold! \u2697\ufe0f",
+    "petReaction": "Hands you a tiny crystal flask filled with liquid inspiration! \u2697\ufe0f\ud83d\udc96",
+    "dialogue": {
+      "idle": "Measuring powder balances on delicate brass scale pans. \u2697\ufe0f",
+      "working": "Transmuting messy unstructured dumps into pure typed gold! \u2697\ufe0f\u26a1",
+      "thinking": "Calculating molar ratios of schema normalization... \ud83e\udd14",
+      "success": "Magnum Opus! Pure, pristine relational tables crystallized! \u2697\ufe0f\ud83c\udf89",
+      "error": "Unstable reaction in retort! Adding stabilizing solvent! \u2697\ufe0f",
+      "sleeping": "Zzz... dozing surrounded by bubbling brass alchemical tubes... \ud83c\udf19"
+    }
+  }
+}

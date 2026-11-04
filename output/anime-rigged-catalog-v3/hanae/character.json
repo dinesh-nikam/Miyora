@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.hanae",
+  "name": "Hanae",
+  "title": "Lantern Ghost Girl",
+  "description": "Drifts through old logs carrying a paper lantern.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "hime",
+  "eyes": "sleepy",
+  "outfit": "kimono",
+  "accessories": [
+    "flower"
+  ],
+  "pattern": "waves",
+  "palette": {
+    "skin": "#fdf2f8",
+    "hair": "#0c0a09",
+    "eyes": "#60a5fa",
+    "primary": "#e0f2fe",
+    "secondary": "#93c5fd",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.6,
+  "tags": [
+    "anime",
+    "ghost"
+  ],
+  "personality": "spectral",
+  "specialty": "Historical Log Lantern Guiding",
+  "catchphrase": "Drifts through old logs carrying a paper lantern.",
+  "category": "character",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#e0f2fe",
+    "icon": "\ud83c\udfee",
+    "treatName": "SugarSnow",
+    "treatEmoji": "\ud83c\udf67",
+    "feedReaction": "Spun sugar snow shavings! Paper lantern glows pale sky blue! \ud83c\udf67\ud83c\udfee",
+    "wakeReaction": "Floating softly an inch above floorboards, raising paper lantern. \ud83c\udfee",
+    "petReaction": "A gentle cool breeze and a floating lantern to light your night! \ud83c\udfee\ud83d\udc96",
+    "dialogue": {
+      "idle": "Hovering quiet and gentle, lantern swinging like a pendulum. \ud83c\udfee",
+      "working": "Guiding lost developers through ancient cavernous server logs! \ud83c\udfee\u26a1",
+      "thinking": "Peering into the misty past through the lantern's glow... \ud83e\udd14",
+      "success": "Path found! The lost root cause illuminated for all to see! \ud83c\udfee\ud83c\udf89",
+      "error": "Lantern flickered in the cold wind! Cupping hands around it! \ud83c\udfee",
+      "sleeping": "Zzz... fading to a soft, comforting pale blue night glow... \ud83c\udf19"
+    }
+  },
+  "hairTip": "#93c5fd"
+}

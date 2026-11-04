@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.kiyomi",
+  "name": "Kiyomi",
+  "title": "Idol Singer",
+  "description": "Sings an encore every time a release ships.",
+  "body": "humanoid",
+  "ears": "human",
+  "tail": "none",
+  "wings": "none",
+  "hair": "side_tail",
+  "eyes": "sparkle",
+  "outfit": "dress",
+  "accessories": [
+    "headphones",
+    "bow"
+  ],
+  "pattern": "dots",
+  "palette": {
+    "skin": "#fbe3d4",
+    "hair": "#38bdf8",
+    "eyes": "#0ea5e9",
+    "primary": "#f0abfc",
+    "secondary": "#f8fafc",
+    "accent": "#f472b6"
+  },
+  "proportions": {
+    "height": 1,
+    "headScale": 1,
+    "build": 1,
+    "limbLength": 1
+  },
+  "energy": 1.5,
+  "tags": [
+    "anime",
+    "idol"
+  ],
+  "personality": "focused",
+  "specialty": "Full-Stack Engineering",
+  "catchphrase": "Ship clean, verify always.",
+  "hairTip": "#f0abfc"
+}

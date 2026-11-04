@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.nibbly",
+  "name": "Nibbly",
+  "title": "Cloud Dragonling",
+  "description": "A sky-blue dragonling that hums while it naps on clouds.",
+  "body": "beast",
+  "ears": "horns",
+  "tail": "dragon",
+  "wings": "feather",
+  "hair": "none",
+  "eyes": "sleepy",
+  "outfit": "fur",
+  "accessories": [],
+  "pattern": "none",
+  "palette": {
+    "skin": "#bae6fd",
+    "hair": "#f0f9ff",
+    "eyes": "#1e3a8a",
+    "primary": "#bae6fd",
+    "secondary": "#7dd3fc",
+    "accent": "#f9a8d4"
+  },
+  "proportions": {
+    "height": 0.86,
+    "headScale": 1.3,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 0.9,
+  "tags": [
+    "pocket-monster",
+    "dragon",
+    "cute"
+  ],
+  "personality": "industrious",
+  "specialty": "Cheerful Nibble Refactoring",
+  "catchphrase": "Nibbles away at technical debt one bite-sized commit at a time!",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f59e0b",
+    "icon": "\ud83e\uddab",
+    "treatName": "SweetBark",
+    "treatEmoji": "\ud83e\udeb5",
+    "feedReaction": "Crunchy sweet birch bark! Beaver teeth click in industrious rhythm! \ud83e\udeb5\ud83e\uddab",
+    "wakeReaction": "Slapping flat beaver tail on floorboard! Time to build dams! \ud83e\uddab",
+    "petReaction": "Waddles over to deliver a neatly carved wooden pencil holder! \ud83e\uddab\ud83d\udc96",
+    "dialogue": {
+      "idle": "Sharpening teeth on a cedar log, chips flying everywhere. \ud83e\uddab",
+      "working": "Chipping away at technical debt in tidy, manageable bite-sized PRs! \ud83e\uddab\u26a1",
+      "thinking": "Inspecting the grain of the architecture before the first cut... \ud83e\udd14",
+      "success": "TIMBER! Massive debt log brought down safely and repurposed! \ud83e\uddab\ud83c\udf89",
+      "error": "Teeth stuck in knotty pine! Wiggling loose with a grin! \ud83e\udeb5",
+      "sleeping": "Zzz... sleeping inside a snug lodge of woven river branches... \ud83c\udf19"
+    }
+  }
+}

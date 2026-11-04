@@ -1,0 +1,65 @@
+{
+  "schemaVersion": 1,
+  "id": "miyora.frost",
+  "name": "Frost",
+  "title": "Arctic Fox Scout",
+  "description": "Leaves neat footprints across snowy logs.",
+  "body": "beast",
+  "ears": "fox",
+  "tail": "fox",
+  "wings": "none",
+  "hair": "none",
+  "eyes": "round",
+  "outfit": "fur",
+  "accessories": [
+    "scarf"
+  ],
+  "pattern": "none",
+  "palette": {
+    "skin": "#f1f5f9",
+    "hair": "#e2e8f0",
+    "eyes": "#38bdf8",
+    "primary": "#f1f5f9",
+    "secondary": "#cbd5e1",
+    "accent": "#0ea5e9"
+  },
+  "proportions": {
+    "height": 1.0,
+    "headScale": 1.0,
+    "build": 1.0,
+    "limbLength": 1.0
+  },
+  "energy": 1.0,
+  "tags": [
+    "fox",
+    "winter"
+  ],
+  "personality": "arctic",
+  "specialty": "Arctic Snow Track Scouting",
+  "catchphrase": "Leaves neat footprints across snowy logs.",
+  "category": "animal",
+  "threeDEligible": true,
+  "attribution": {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora design"
+  },
+  "companionPersonality": {
+    "themeColor": "#f1f5f9",
+    "icon": "\ud83e\udd8a",
+    "treatName": "IceBerry",
+    "treatEmoji": "\ud83e\uded0",
+    "feedReaction": "Chilled frosted arctic blueberries! Pure white pelt gleams bright! \ud83e\uded0\ud83e\udd8a",
+    "wakeReaction": "Peeking out from fresh snowdrift, snow dusting little black nose! \ud83e\udd8a",
+    "petReaction": "Gentle nuzzle that feels cool like fresh snowflakes on your cheek! \ud83e\udd8a\ud83d\udc96",
+    "dialogue": {
+      "idle": "Sitting silent on snowy ridge, listening to frozen stillness. \ud83e\udd8a",
+      "working": "Tracking faint anomalies through snowy server logs! \ud83e\udd8a\u26a1",
+      "thinking": "Reading footprints left behind in the memory heap... \ud83e\udd14",
+      "success": "Track followed! Anomaly isolated cleanly in the blizzard! \ud83e\udd8a\ud83c\udf89",
+      "error": "Whiteout blizzard! Curled tight with nose tucked in fur! \u2744\ufe0f",
+      "sleeping": "Zzz... sleeping under a snowdrift, warm and hidden... \ud83c\udf19"
+    }
+  }
+}
