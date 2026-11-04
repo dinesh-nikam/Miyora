@@ -25,4 +25,5 @@ test_*.jpg
 test_*.png
 @reverse-engineer-anything*
 target*/
-
+output/*.zip
+*.zip
