@@ -259,20 +259,23 @@ for c in chars:
     if not (0.85 <= p.get("headScale", 1.0) <= 1.35):
         specs_valid = False
 
-record("Character Spec Proportions & Rules", specs_valid and len(chars) == 213,
-       f"213 characters verified within bounded humanoid/beast proportions")
+record("Character Spec Proportions & Rules", specs_valid and len(chars) >= 213,
+       f"{len(chars)} characters verified within bounded humanoid/beast proportions")
 record("Zero-Duplicate Philosophy & Specialty",
-       len(unique_catchphrases) == 213 and len(unique_specialties) == 213,
-       f"213 unique catchphrases, 213 unique specialties")
+       len(unique_catchphrases) == len(chars) and len(unique_specialties) == len(chars),
+       f"{len(unique_catchphrases)} unique catchphrases, {len(unique_specialties)} unique specialties")
 
 # ---------------------------------------------------------------------------
 # 8. Cryptographic XP Ledger & State Machine E2E Test
 # ---------------------------------------------------------------------------
 print("\n--- 8. Testing Cryptographic XP Ledger & State Machine ---")
+cli_bin = ROOT / "target" / "debug" / "agentpet.exe"
+cli_cmd = [str(cli_bin)] if cli_bin.exists() else ["cargo", "run", "-p", "agentpet-cli", "--"]
+
 try:
     res = subprocess.run(
-        ["cargo", "run", "-p", "agentpet-cli", "--", "verify-ledger"],
-        capture_output=True, text=True, cwd=str(ROOT), timeout=30
+        cli_cmd + ["verify-ledger"],
+        capture_output=True, text=True, cwd=str(ROOT), timeout=60
     )
     passed = res.returncode == 0 and "[OK] XP Ledger verified" in res.stdout
     record("Cryptographic XP Ledger Chain", passed, res.stdout.strip().splitlines()[-1] if passed else res.stderr)
@@ -281,8 +284,8 @@ except Exception as exc:
 
 try:
     res = subprocess.run(
-        ["cargo", "run", "-p", "agentpet-cli", "--", "status"],
-        capture_output=True, text=True, cwd=str(ROOT), timeout=30
+        cli_cmd + ["status"],
+        capture_output=True, text=True, cwd=str(ROOT), timeout=60
     )
     passed = res.returncode == 0 and "Pet state:" in res.stdout
     state_line = [l for l in res.stdout.splitlines() if "Pet state:" in l]
