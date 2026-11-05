@@ -77,7 +77,7 @@ crates/
                                # deterministic hunger/eating, bounded reaction queue (cap 4)
   pet-pack/                    # PetPack manifest v1/v2 parser, Ed25519 signature checks,
                                # asset honesty quality gates, path sanitization against escape
-  avatar/                      # Procedural 3D character catalog (214 specs), silhouette sculpting, GLB export
+  avatar/                      # Procedural 3D character catalog (213 specs), silhouette sculpting, GLB export
   agentpet-adapters/           # Claude Code / Codex hooks & universal process wrapper
   agentpet-ipc/                # Authenticated local IPC transport (pipes/sockets, HMAC-SHA256 handshake)
   agentpet-cli/                # Diagnostic CLI (`agentpet`) for headless execution and doctor checks
