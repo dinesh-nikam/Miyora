@@ -388,7 +388,44 @@ fn select_pet(
     runtime
         .core
         .set_selected_pet(pack_id.as_deref())
-        .map_err(|error| format!("PET_SELECTION_FAILED: {error}"))
+        .map_err(|error| format!("PET_SELECTION_FAILED: {error}"))?;
+
+    if let Some(selection_id) = &pack_id {
+        let packs = runtime
+            .active_core()
+            .list_installed_packs()
+            .map_err(|error| format!("PET_LIBRARY_READ_FAILED: {error}"))?;
+        if let Some(pack) = packs.into_iter().find(|p| p.selection_id == *selection_id) {
+            let root = runtime.pet_library.join(&pack.id).join(&pack.version);
+            if let Ok(manifest_bytes) = fs::read(root.join("pet.json")) {
+                if let Ok(manifest) = PetPackManifest::parse(&manifest_bytes) {
+                    let relative_asset = manifest.assets.get("idle").or_else(|| {
+                        manifest
+                            .animations
+                            .get("idle")
+                            .and_then(|a| manifest.assets.get(&a.asset))
+                    });
+                    if let Some(rel) = relative_asset {
+                        if let Ok(asset_path) =
+                            agentpet_pet_pack::sanitize_pack_asset_path(&root, rel)
+                        {
+                            if let Ok(sculpt) = runtime.core.ensure_pack_sculpt_avatar(
+                                &pack.id,
+                                &manifest.name,
+                                &asset_path,
+                                &runtime.avatars_root,
+                            ) {
+                                let _ = runtime
+                                    .core
+                                    .select_avatar(AvatarSource::Custom, &sculpt.avatar_id);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    Ok(())
 }
 
 #[tauri::command]
@@ -397,6 +434,11 @@ fn get_avatar(runtime: State<'_, AppRuntime>) -> Result<ResolvedAvatar, String> 
         .core
         .resolve_avatar()
         .map_err(|error| format!("AVATAR_READ_FAILED: {error}"))
+}
+
+#[tauri::command]
+fn get_selected_avatar(runtime: State<'_, AppRuntime>) -> Result<ResolvedAvatar, String> {
+    get_avatar(runtime)
 }
 
 /// Progress data the 3D stage visualizes: level and progress toward the next one.
@@ -1148,7 +1190,12 @@ fn run_state_timer(
     Ok(())
 }
 
-fn seed_starter_packs(app: &tauri::AppHandle, core: &Core, pet_library: &Path) {
+fn seed_starter_packs(
+    app: &tauri::AppHandle,
+    core: &Core,
+    pet_library: &Path,
+    avatars_root: &Path,
+) {
     let Ok(installed) = core.list_installed_packs() else {
         return;
     };
@@ -1197,6 +1244,39 @@ fn seed_starter_packs(app: &tauri::AppHandle, core: &Core, pet_library: &Path) {
                     let _ = core.set_selected_pet(Some("agentpet.starter-aoi@1.0.0"));
                 } else if let Some(first) = packs.first() {
                     let _ = core.set_selected_pet(Some(&format!("{}@{}", first.id, first.version)));
+                }
+            }
+        }
+    }
+
+    // Ensure the active pet has its matching high-fidelity 3D sculpt ready
+    if let Ok(snapshot) = core.snapshot() {
+        if let Some(selected) = snapshot.selected_pet_id {
+            if let Ok(packs) = core.list_installed_packs() {
+                if let Some(pack) = packs.into_iter().find(|p| p.selection_id == selected) {
+                    let root = pet_library.join(&pack.id).join(&pack.version);
+                    if let Ok(manifest_bytes) = fs::read(root.join("pet.json")) {
+                        if let Ok(manifest) = PetPackManifest::parse(&manifest_bytes) {
+                            let relative_asset = manifest.assets.get("idle").or_else(|| {
+                                manifest
+                                    .animations
+                                    .get("idle")
+                                    .and_then(|a| manifest.assets.get(&a.asset))
+                            });
+                            if let Some(rel) = relative_asset {
+                                if let Ok(asset_path) =
+                                    agentpet_pet_pack::sanitize_pack_asset_path(&root, rel)
+                                {
+                                    let _ = core.ensure_pack_sculpt_avatar(
+                                        &pack.id,
+                                        &manifest.name,
+                                        &asset_path,
+                                        avatars_root,
+                                    );
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -1271,7 +1351,7 @@ pub fn run() {
                 #[cfg(feature = "dev-simulator")]
                 is_simulated,
                 pet_library,
-                avatars_root,
+                avatars_root: avatars_root.clone(),
                 app_data_dir: data_dir,
             });
             // Both loops read AppRuntime, so they start after it is managed.
@@ -1281,10 +1361,16 @@ pub fn run() {
             // Pack validation decodes images and must not block the native event loop.
             // This finite worker is intentionally detached; the UI polls persisted state.
             let startup_app_handle = app.handle().clone();
+            let startup_avatars_root = avatars_root.clone();
             let _startup_worker = std::thread::Builder::new()
                 .name("agentpet-startup-worker".into())
                 .spawn(move || {
-                    seed_starter_packs(&startup_app_handle, &startup_core, &startup_pet_library)
+                    seed_starter_packs(
+                        &startup_app_handle,
+                        &startup_core,
+                        &startup_pet_library,
+                        &startup_avatars_root,
+                    )
                 })?;
             Ok(())
         })
@@ -1338,6 +1424,7 @@ pub fn run() {
             #[cfg(debug_assertions)]
             simulate_agent_event,
             get_avatar,
+            get_selected_avatar,
             get_avatar_hud,
             get_avatar_model,
             get_avatar_preview,

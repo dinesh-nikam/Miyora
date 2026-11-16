@@ -22,6 +22,7 @@ use agentpet_pet_pack::vrm::{validate_and_extract_vrm, VrmGuardrails, DEFAULT_MA
 use chrono::Utc;
 use rusqlite::{params, Connection, OptionalExtension};
 use serde::Serialize;
+use serde_json::json;
 use sha2::{Digest, Sha256};
 use uuid::Uuid;
 
@@ -482,6 +483,50 @@ impl Core {
                 });
             }
         }
+
+        // If the selection is the catalog default, but a PetPack is currently selected,
+        // see if there is an image-sculpt avatar matching that pet pack.
+        let selected_pet: Option<String> = connection
+            .query_row(
+                "SELECT selected_pet_id FROM pet_state WHERE singleton = 1",
+                [],
+                |row| row.get(0),
+            )
+            .optional()?
+            .flatten();
+
+        if let Some(pet_id) = selected_pet {
+            let base_id = pet_id.split('@').next().unwrap_or(&pet_id);
+            let pack_source1 = format!("pack:{pet_id}");
+            let pack_source2 = format!("pack:{base_id}");
+            let sculpt_row = connection
+                .query_row(
+                    &format!(
+                        "SELECT {CUSTOM_COLUMNS} FROM custom_avatars
+                         WHERE kind = 'image_sculpt' AND (source_avatar_id = ?1 OR source_avatar_id = ?2)
+                         ORDER BY created_at DESC LIMIT 1"
+                    ),
+                    [&pack_source1, &pack_source2],
+                    custom_row,
+                )
+                .optional()?
+                .map(CustomRawRow::into_row)
+                .transpose()?;
+
+            if let Some(row) = sculpt_row {
+                let summary = row.summary;
+                return Ok(ResolvedAvatar {
+                    source: AvatarSource::Custom,
+                    avatar_id: summary.avatar_id,
+                    kind: summary.kind,
+                    name: summary.name,
+                    spec: summary.spec,
+                    customized: false,
+                    model_sha256: summary.model_sha256,
+                    metadata: summary.metadata,
+                });
+            }
+        }
         let catalog = catalog()?;
         let base = catalog
             .get(&selection.avatar_id)
@@ -736,6 +781,86 @@ impl Core {
             match (sculpt, style) {
                 (Some(sculpt), Some(style)) => Ok(vec![sculpt.summary, style.summary]),
                 _ => Err(CoreError::AvatarNotFound(sculpt_id.clone())),
+            }
+        })();
+        record.map_err(|primary| remove_directory(&directory, primary))
+    }
+
+    /// Ensures a high-fidelity 3D image-sculpt avatar exists for an installed PetPack.
+    /// If one already exists with source_avatar_id = "pack:<pack_id>", it returns it.
+    /// Otherwise, it sculpts the provided image into a watertight textured 3D relief mesh,
+    /// persists it, and links it to the pack.
+    pub fn ensure_pack_sculpt_avatar(
+        &self,
+        pack_id: &str,
+        name: &str,
+        image_path: &Path,
+        avatars_root: &Path,
+    ) -> Result<CustomAvatarSummary, CoreError> {
+        let base_id = pack_id.split('@').next().unwrap_or(pack_id);
+        let pack_source = format!("pack:{base_id}");
+        {
+            let connection = self.lock_connection()?;
+            let existing_id: Option<String> = connection
+                .query_row(
+                    "SELECT avatar_id FROM custom_avatars WHERE kind = 'image_sculpt' AND source_avatar_id = ?1",
+                    [&pack_source],
+                    |row| row.get(0),
+                )
+                .optional()?;
+            if let Some(avatar_id) = existing_id {
+                if let Some(row) = load_custom(&connection, &avatar_id)? {
+                    if let Some(file_name) = &row.model_file {
+                        if avatars_root.join(&avatar_id).join(file_name).exists() {
+                            return Ok(row.summary);
+                        }
+                    }
+                }
+            }
+        }
+
+        let name = normalize_name(name)?;
+        {
+            let connection = self.lock_connection()?;
+            ensure_capacity(&connection, 1)?;
+        }
+        let sculpt_id = new_custom_id("sculpt");
+        let output = sculpt_image(image_path, &sculpt_id, &name, ImageSculptLimits::default())
+            .map_err(|error| CoreError::InvalidAvatar(error.to_string()))?;
+        let directory = stage_avatar_directory(
+            avatars_root,
+            &sculpt_id,
+            &[
+                (SCULPT_MODEL_FILE, &output.glb),
+                (PREVIEW_FILE, &output.preview_png),
+            ],
+        )?;
+        let record = (|| {
+            let mut connection = self.lock_connection()?;
+            ensure_capacity(&connection, 1)?;
+            let transaction = connection.transaction()?;
+            insert_custom(
+                &transaction,
+                &NewCustomAvatar {
+                    avatar_id: &sculpt_id,
+                    kind: AvatarKind::ImageSculpt,
+                    name: &name,
+                    spec_json: None,
+                    model_file: Some(SCULPT_MODEL_FILE),
+                    model_sha256: Some(sha256_hex(&output.glb)),
+                    triangle_count: Some(output.stats.triangle_count as i64),
+                    metadata_json: Some(serde_json::to_string(&json!({
+                        "pack_id": pack_id,
+                        "stats": output.stats
+                    }))?),
+                    source_avatar_id: Some(&pack_source),
+                },
+            )?;
+            transaction.commit()?;
+            let sculpt = load_custom(&connection, &sculpt_id)?;
+            match sculpt {
+                Some(sculpt) => Ok(sculpt.summary),
+                None => Err(CoreError::AvatarNotFound(sculpt_id.clone())),
             }
         })();
         record.map_err(|primary| remove_directory(&directory, primary))
@@ -1310,5 +1435,41 @@ mod tests {
             .map(|entries| entries.count())
             .unwrap_or(0);
         assert_eq!(leftovers, 0, "rejected files are removed from the library");
+    }
+
+    #[test]
+    fn pack_sculpt_avatar_ensured_and_resolved_for_active_pet() {
+        let core = Core::in_memory().expect("core");
+        let workspace = tempfile::tempdir().expect("tempdir");
+        let library = workspace.path().join("avatars");
+        let image = disk_png(workspace.path());
+
+        // Ensure pack sculpt avatar
+        let sculpt = core
+            .ensure_pack_sculpt_avatar("pet.tanjiro@1.0.0", "Tanjiro", &image, &library)
+            .expect("ensure sculpt");
+        assert_eq!(sculpt.kind, AvatarKind::ImageSculpt);
+        assert_eq!(sculpt.name, "Tanjiro");
+        assert_eq!(sculpt.source_avatar_id.as_deref(), Some("pack:pet.tanjiro"));
+
+        // Calling it again returns the same existing sculpt without re-sculpting
+        let second = core
+            .ensure_pack_sculpt_avatar("pet.tanjiro@1.0.0", "Tanjiro", &image, &library)
+            .expect("idempotent sculpt");
+        assert_eq!(sculpt.avatar_id, second.avatar_id);
+
+        // When pet.tanjiro@1.0.0 is set in pet_state, resolve_avatar returns this sculpt
+        let conn = core.lock_connection().expect("conn");
+        conn.execute(
+            "UPDATE pet_state SET selected_pet_id = 'pet.tanjiro@1.0.0' WHERE singleton = 1",
+            [],
+        )
+        .expect("update pet_state");
+        drop(conn);
+
+        let resolved = core.resolve_avatar().expect("resolve");
+        assert_eq!(resolved.avatar_id, sculpt.avatar_id);
+        assert_eq!(resolved.kind, AvatarKind::ImageSculpt);
+        assert_eq!(resolved.name, "Tanjiro");
     }
 }
