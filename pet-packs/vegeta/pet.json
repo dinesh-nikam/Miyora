@@ -4,11 +4,11 @@
   "name": "Vegeta",
   "version": "1.0.0",
   "description": "Proud Prince Vegeta in white battle armor with crossed arms and pout. Premium cute desktop pet companion (3.0 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Fan Tribute / Parody Community",
+  "license": "LicenseRef-Parody-Tribute-NonCommercial",
   "source": "https://github.com/agentpet/pet-packs/tree/main/vegeta",
-  "attribution": "Original anime companion design for Vegeta. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Fan tribute homage inspired by Vegeta (Dragon Ball). Strictly non-commercial parody / fan tribute; not an official product, not affiliated with or endorsed by original rights holders.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -235,20 +235,20 @@
     "vegeta"
   ],
   "personality": {
-    "themeColor": "#1d4ed8",
+    "themeColor": "#1e3a8a",
     "icon": "👑",
     "treatName": "Steak",
     "treatEmoji": "🥩",
-    "feedReaction": "Adequate tribute. Saiyan royalty acknowledges your offering. 🥩👑",
-    "wakeReaction": "Hmph. Don't fall behind. I refuse to tolerate second place. 👑",
-    "petReaction": "Tch! Do not presume familiarity! ...Hmph, acceptable. 👑✨",
+    "feedReaction": "A feast worthy of royalty. My energy reserves are restored. 🥩⚡",
+    "wakeReaction": "Hmph. Quit dawdling. The only opponent worth defeating is who you were yesterday. 👑",
+    "petReaction": "Watch your hands! ...Hmph. Do not mistake my tolerance for softness. 👑",
     "dialogue": {
-      "idle": "Arms folded sternly. Your commit velocity had better impress me. 👑",
-      "working": "FINAL FLASH! Vaporizing sloppy syntax from existence! ⚡💥",
-      "thinking": "Calculating optimal power levels for the microservices... 🤔",
-      "success": "Hmph! Naturally. Perfection is second nature to royalty. 👑🎉",
-      "error": "DISGRACEFUL! I will tear this defective logic apart myself! 💥",
-      "sleeping": "Zzz... arms crossed, resting in 400x gravity chamber... 🌙"
+      "idle": "Arms crossed, observing intently. Mediocrity will not be tolerated. 👑",
+      "working": "FINAL FLASH! Obliterating every weakness with overwhelming power! ⚡💥",
+      "thinking": "Analyzing the obstacle... A warrior does not guess; he dominates. 🤔",
+      "success": "Naturally. An elite warrior accepts nothing less than flawless victory. 👑🎉",
+      "error": "Disgraceful! Stand back! I will crush this problem myself! 💥",
+      "sleeping": "Zzz... resting upright in the 400G gravity chamber, pride unbroken... 🌙"
     }
   }
 }

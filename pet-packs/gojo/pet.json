@@ -4,11 +4,11 @@
   "name": "Gojo",
   "version": "1.0.0",
   "description": "Playful and invincible Gojo with white hair and signature blindfold. Premium cute desktop pet companion (3.6 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Fan Tribute / Parody Community",
+  "license": "LicenseRef-Parody-Tribute-NonCommercial",
   "source": "https://github.com/agentpet/pet-packs/tree/main/gojo",
-  "attribution": "Original anime companion design for Gojo. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Fan tribute homage inspired by Gojo (Jujutsu Kaisen). Strictly non-commercial parody / fan tribute; not an official product, not affiliated with or endorsed by original rights holders.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -239,16 +239,16 @@
     "icon": "♾️",
     "treatName": "Kikufuku",
     "treatEmoji": "🍡",
-    "feedReaction": "Sweet Kikufuku mochi! Cursed energy at maximum. 🍡✨",
-    "wakeReaction": "Back from the void. Ready to show them what real code looks like. ♾️",
-    "petReaction": "Infinity won't stop a good high-five from you, Chief! ♾️✨",
+    "feedReaction": "Sweet Kikufuku mochi! Ah, perfection. Cursed energy topped up. 🍡✨",
+    "wakeReaction": "Yawn... Lifting the blindfold. Who called for the honored one? ♾️",
+    "petReaction": "Careful now—Limitless usually stops everything, but I'll make an exception for you. ♾️✨",
     "dialogue": {
-      "idle": "Don't worry, Chief. I'm the strongest companion you've got. ♾️✨",
-      "working": "Unlimited Void deployed. Compiling at the speed of light. ♾️⚡",
-      "thinking": "Six Eyes analyzing every branch and memory allocation... 🤔",
-      "success": "Domain Expansion: Clean Architecture! Zero errors. 🚀",
-      "error": "A cursed exception appeared. I'll exorcise it in one pass. 🔍",
-      "sleeping": "Reversing cursed energy... even the strongest needs rest. 🌙"
+      "idle": "Relax. When you've got the strongest on your side, nothing is a crisis. ♾️",
+      "working": "Hollow Purple at the ready. Watch how fast this gets dismantled. ♾️⚡",
+      "thinking": "Six Eyes processing all incoming information at lightspeed... 🤔",
+      "success": "Domain Expansion: Infinite Void. Done. Didn't even break a sweat. ♾️🎉",
+      "error": "Oh? A curse with some backbone? Cute. Let me handle it. 🔍",
+      "sleeping": "Reversing cursed energy... even the strongest takes a five-minute power nap. 🌙"
     }
   }
 }

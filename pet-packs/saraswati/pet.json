@@ -4,11 +4,11 @@
   "name": "Saraswati",
   "version": "1.0.0",
   "description": "Pure Saraswati in cream silk sari holding her carved veena. Premium cute desktop pet companion (3.2 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Traditional Cultural Heritage",
+  "license": "Public-Domain-Cultural-Heritage",
   "source": "https://github.com/agentpet/pet-packs/tree/main/saraswati",
-  "attribution": "Original anime companion design for Saraswati. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Devotional and cultural tribute inspired by traditional sacred iconography of Goddess Saraswati. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -239,16 +239,16 @@
     "icon": "🪕",
     "treatName": "Honey",
     "treatEmoji": "🍯",
-    "feedReaction": "Pure wild honey! The strings of the veena resonate sweetly! 🍯🪕",
-    "wakeReaction": "Veena chords chime at dawn. Awakening supreme intellect! 🪕✨",
-    "petReaction": "May the goddess of speech illuminate your syntax and logic. 🪕💖",
+    "feedReaction": "Pure sweet nectar! The chords of the veena resonate in crystalline harmony! 🍯🪕",
+    "wakeReaction": "Veena notes greet the morning sun. May wisdom awaken in every breath. 🪕✨",
+    "petReaction": "May the goddess of arts and speech illuminate your intellect and expression. 🪕💖",
     "dialogue": {
-      "idle": "Plucking the strings of pure knowledge. What shall we learn? 🪕",
-      "working": "Composing elegant algorithms like classical raga movements! 🪕⚡",
-      "thinking": "Discerning signal from noise with the swan's wisdom... 🤔",
-      "success": "Masterpiece composed! Pure semantic harmony achieved! 🪕🎉",
-      "error": "A discordant note. Tuning the strings back to true pitch. 🪕✨",
-      "sleeping": "Zzz... resting upon white lotus petals beside sacred rivers... 🌙"
+      "idle": "Plucking quiet melodies on the veena. Learning is an endless journey. 🪕",
+      "working": "Composing thoughts with clarity and poetic precision. 🪕✨",
+      "thinking": "Separating truth from falsehood as the swan separates milk from water... 🪕",
+      "success": "A triumph of knowledge and art! Beautiful harmony achieved. 🪕🎉",
+      "error": "A discordant note is merely an opportunity to re-tune the instrument. 🪕✨",
+      "sleeping": "Resting upon a white lotus by the calm waters of the sacred river... 🌙🪕"
     }
   }
 }

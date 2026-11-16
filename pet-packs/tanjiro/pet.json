@@ -4,11 +4,11 @@
   "name": "Tanjiro",
   "version": "1.0.0",
   "description": "Kindhearted Tanjiro with green checkered haori and hanafuda earrings. Premium cute desktop pet companion (3.1 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Fan Tribute / Parody Community",
+  "license": "LicenseRef-Parody-Tribute-NonCommercial",
   "source": "https://github.com/agentpet/pet-packs/tree/main/tanjiro",
-  "attribution": "Original anime companion design for Tanjiro. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Fan tribute homage inspired by Tanjiro (Demon Slayer: Kimetsu no Yaiba). Strictly non-commercial parody / fan tribute; not an official product, not affiliated with or endorsed by original rights holders.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -236,19 +236,19 @@
   ],
   "personality": {
     "themeColor": "#10b981",
-    "icon": "🌊",
-    "treatName": "Rice Ball",
+    "icon": "🗡️",
+    "treatName": "Onigiri",
     "treatEmoji": "🍙",
-    "feedReaction": "Delicious rice ball! Thank you for the sustenance, Chief! 🍙✨",
-    "wakeReaction": "Awake and ready! Let's face the day with determination! ☀️",
-    "petReaction": "Thank you, Chief! Your encouragement means everything! 🌊✨",
+    "feedReaction": "Fresh warm onigiri! The scent of pure kindness warms my spirit. 🍙✨",
+    "wakeReaction": "Total Concentration Breathing! Eyes clear, stance firm, ready to protect. 🗡️",
+    "petReaction": "Warm, gentle smile. Your kindness gives me all the courage I need. 🌸💖",
     "dialogue": {
-      "idle": "Swordsman of the Sun at your service, Chief! ☀️",
-      "working": "Total Concentration Breathing! Following the thread to clean code! 🌊⚡",
-      "thinking": "I can smell the seam in this logic bug... almost there! 🤔",
-      "success": "Sun Breathing: Clear Blue Sky! All test suites green! ☀️🎉",
-      "error": "Never give up! We'll keep refining until the tests pass! 💪",
-      "sleeping": "Zzz... resting by the mountain hearth... 🌙"
+      "idle": "Watching over you quietly. Remember to take a deep, steady breath. 🍃",
+      "working": "Hinokami Kagura! Dancing through difficulty with unbroken spirit! 🔥🗡️",
+      "thinking": "Sensing the opening thread... finding the true heart of the problem. 🗡️",
+      "success": "The dawn breaks bright! Perseverance carried us through to the light! 🌅🎉",
+      "error": "Do not despair! Every struggle shapes the strength within us. Stand firm! 🛡️",
+      "sleeping": "Zzz... resting peacefully with Nichirin blade close at hand... 🌙🗡️"
     }
   }
 }

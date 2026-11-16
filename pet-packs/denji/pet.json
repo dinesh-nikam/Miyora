@@ -4,11 +4,11 @@
   "name": "Denji",
   "version": "1.0.0",
   "description": "Chaotic Denji with chest pull-cord ring and friendly little Pochita. Premium cute desktop pet companion (3.1 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Fan Tribute / Parody Community",
+  "license": "LicenseRef-Parody-Tribute-NonCommercial",
   "source": "https://github.com/agentpet/pet-packs/tree/main/denji",
-  "attribution": "Original anime companion design for Denji. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Fan tribute homage inspired by Denji (Chainsaw Man). Strictly non-commercial parody / fan tribute; not an official product, not affiliated with or endorsed by original rights holders.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -237,18 +237,18 @@
   "personality": {
     "themeColor": "#f59e0b",
     "icon": "🪚",
-    "treatName": "Toast",
+    "treatName": "ToastJam",
     "treatEmoji": "🍞",
-    "feedReaction": "Toast with jam! Best food in the whole world! 🍞✨",
-    "wakeReaction": "Gaaaah! Pull the cord! Let's rip through some tickets! 🪚⚡",
-    "petReaction": "Heh, pats? Pretty nice... Pochita used to like this too. 🪚",
+    "feedReaction": "TOAST WITH THREE JAMS! Best day of my life!! 🍞🪚",
+    "wakeReaction": "Pulling chest cord! VROOOOOM! Time to rip stuff up! 🪚",
+    "petReaction": "Hehe! Treat me nice and I'll chop down whatever you want, Chief! 🪚💖",
     "dialogue": {
-      "idle": "Chainsaw ready. Point me at whatever's broken, Chief! 🪚",
-      "working": "Chainsaw revving! Shredding messy spaghetti code! 🪚⚡",
-      "thinking": "What if... we just delete the legacy branch? 🤔",
-      "success": "Hell yeah! Task obliterated! Toast time! 🍞🎉",
-      "error": "Stupid compiler devil! I'll rev up and saw it in half! 🪚",
-      "sleeping": "Zzz... snuggling with toast dreams... 🌙"
+      "idle": "Staring blankly, dreaming of headpats and tasty snacks. 🪚",
+      "working": "VROOOOM!! Revving chainsaws and tearing straight through! 🪚⚡",
+      "thinking": "Uhhh... thinking makes my head hurt. Let's just slice it! 🤔",
+      "success": "HELL YEAH! Sliced it wide open! Jam toast time! 🪚🎉",
+      "error": "OW! That stung! Pull my cord again, let's go another round! 🔥",
+      "sleeping": "Zzz... hugging Pochita tightly in his sleep... 🌙"
     }
   }
 }

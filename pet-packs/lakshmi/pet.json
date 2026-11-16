@@ -4,11 +4,11 @@
   "name": "Lakshmi",
   "version": "1.0.0",
   "description": "Radiant Lakshmi surrounded by pink lotuses and showers of gold coins. Premium cute desktop pet companion (3.2 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Traditional Cultural Heritage",
+  "license": "Public-Domain-Cultural-Heritage",
   "source": "https://github.com/agentpet/pet-packs/tree/main/lakshmi",
-  "attribution": "Original anime companion design for Lakshmi. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Devotional and cultural tribute inspired by traditional sacred iconography of Goddess Lakshmi. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -239,16 +239,16 @@
     "icon": "🪷",
     "treatName": "Payasam",
     "treatEmoji": "🥣",
-    "feedReaction": "Golden cardamom payasam! Abundance multiplies manifold! 🥣🪷",
-    "wakeReaction": "Lotus petals open to prosperity! Golden fortunes await! 🪷✨",
-    "petReaction": "Shower of golden blessings upon your repository and crafts! 🪷💖",
+    "feedReaction": "Fragrant cardamom kheer! Auspicious blessings blossom manifold! 🥣🪷",
+    "wakeReaction": "The lotus opens at dawn. May grace and prosperity illuminate your day! 🪷✨",
+    "petReaction": "A shower of golden blessings upon your noble craft and home. 🪷💖",
     "dialogue": {
-      "idle": "Seated on a pink lotus. Value flows where attention rests. 🪷",
-      "working": "Channeling golden flow into maximum runtime throughput! 🪷⚡",
-      "thinking": "Multiplying efficiency and eliminating wasted cycles... 🤔",
-      "success": "Infinite prosperity! Green metrics across every dashboard! 🪷🎉",
-      "error": "Temporary scarcity yields swiftly to renewed fortune. 🪷✨",
-      "sleeping": "Zzz... resting upon radiant lotus beds on the ocean of milk... 🌙"
+      "idle": "Seated serenely upon the pink lotus. Contentment is the truest wealth. 🪷",
+      "working": "Nurturing your efforts with radiant grace and harmonious fruitfulness. 🪷✨",
+      "thinking": "Discerning the most fruitful and generous course of action... 🪷",
+      "success": "Divine prosperity! May the fruit of your labor bring joy to many. 🪷🎉",
+      "error": "Temporary lack passes swiftly when met with patience and good cheer. 🪷✨",
+      "sleeping": "Resting upon radiant lotus blossoms on the gentle ocean of milk... 🌙🪷"
     }
   }
 }

@@ -1,271 +1,274 @@
-"""Master researched profiles for all 214 Miyora characters.
+#!/usr/bin/env python3
+"""Canonical database of companion profiles.
 
-Bespoke lore identities, engineering specialties, unique catchphrases,
+Maps character slugs to their core personality, specialty, catchphrase,
 and rich companion dialogues for offline desktop companionship.
 """
 
-PROFILES = {
+from __future__ import annotations
+
+PROFILES: dict[str, dict] = {
     "krishna": {
         "personality": "serene",
-        "specialty": "Divine System Orchestration",
-        "catchphrase": "Action without attachment ships timeless elegance.",
+        "specialty": "Nishkama Karma & Divine Harmony",
+        "catchphrase": "Devote yourself fully to the work, untouched by fear of the fruit.",
         "companionPersonality": {
-            "themeColor": "#7da4d4",
+            "themeColor": "#3b82f6",
             "icon": "🪈",
             "treatName": "Makhan",
             "treatEmoji": "🧈",
-            "feedReaction": "Fresh churned makhan! Sweet bliss energizes the cosmos! 🧈🪈",
-            "wakeReaction": "Flute melody rises with the dawn. Ready to orchestrate harmony! 🪈✨",
-            "petReaction": "A gentle blessing of peace and boundless creative joy. 🪈💖",
+            "feedReaction": "Fresh churned makhan! Sweet joy and laughter echo across the groves. 🧈🪈",
+            "wakeReaction": "The dawn flute melody rises. Awaken with a light heart and clear vision! 🪈✨",
+            "petReaction": "May your path be blessed with wisdom, joy, and serene clarity. 🪈💖",
             "dialogue": {
-                "idle": "Playing a quiet tune on my flute. Center your mind, Chief. 🪈",
-                "working": "Weaving complex algorithms into harmonious divine flow. 🪈⚡",
-                "thinking": "Contemplating the eternal balance of the architecture... 🤔",
-                "success": "Divine victory! All modules reside in effortless harmony! 🪈🎉",
-                "error": "A transient discord. We shall guide it back to harmony. 🪈✨",
-                "sleeping": "Zzz... resting upon Vrindavan shores beneath kadamba trees... 🌙"
+                "idle": "Listen closely. Beneath the whirlwind of thoughts, peace is already yours. 🪈",
+                "working": "Pour your best into the task at hand with an untroubled spirit. 🪈✨",
+                "thinking": "Contemplating dharma and the subtle harmony of all creation... 🪈",
+                "success": "A noble endeavor completed with grace, poise, and joyous rhythm! 🪈🎉",
+                "error": "A stumble on the path is merely a lesson in balance. Steady your heart and proceed. 🪈✨",
+                "sleeping": "Resting peacefully beneath Kadamba blossoms beside the gentle Yamuna... 🌙🪈"
             }
         }
     },
     "radha": {
-        "personality": "graceful",
-        "specialty": "Graceful State Transformation",
-        "catchphrase": "In pure devotion, work becomes art and code becomes prayer.",
+        "personality": "devotional",
+        "specialty": "Unconditioned Devotion & Pure Joy",
+        "catchphrase": "When love guides the hand, every humble task becomes a devotional offering.",
         "companionPersonality": {
             "themeColor": "#e11d48",
             "icon": "🌸",
             "treatName": "Peda",
             "treatEmoji": "🍬",
-            "feedReaction": "Sweet Mathura peda! Luminous warmth fills my heart! 🍬🌸",
-            "wakeReaction": "The Yamuna whispers morning greetings. Let us create beauty! 🌸✨",
-            "petReaction": "May your coding day be touched with grace and sweet joy. 🌸💖",
+            "feedReaction": "Sweet peda of Braj! Luminous warmth and laughter fill my heart! 🍬🌸",
+            "wakeReaction": "The Yamuna whispers morning greetings. Let us fill today with beauty! 🌸✨",
+            "petReaction": "May your hours be touched by sweetness, ease, and creative joy. 🌸💖",
             "dialogue": {
-                "idle": "Holding a blooming lotus. Take a deep, peaceful breath. 🌸",
-                "working": "Pouring unconditioned devotion into every line of code! 🌸⚡",
-                "thinking": "Gazing into the reflection of the stream, seeking clarity... 🤔",
-                "success": "Radiant blossom! The entire system shines with elegance! 🌸🎉",
-                "error": "A momentary ripple. Softness and patience will heal it. 🌸✨",
-                "sleeping": "Zzz... dreaming amidst fragrant jasmine and lotus blooms... 🌙"
+                "idle": "Holding a fresh lotus bloom. Take a gentle, peaceful breath. 🌸",
+                "working": "Pouring wholehearted love and delicate attention into every detail. 🌸✨",
+                "thinking": "Gazing into the dancing ripples of the river, feeling for the true rhythm... 🌸",
+                "success": "A radiant blossom of joy! The endeavor shines with heartfelt elegance. 🌸🎉",
+                "error": "A momentary ripple on the pond. Softness and patience will restore calm. 🌸✨",
+                "sleeping": "Resting amidst fragrant jasmine and lotus groves beneath the stars... 🌙🌸"
             }
         }
     },
     "rama": {
-        "personality": "righteous",
-        "specialty": "Invariant & Contract Verification",
-        "catchphrase": "One word, one arrow, one immutable commit.",
+        "personality": "noble",
+        "specialty": "Dharma & Inviolable Truth",
+        "catchphrase": "Raghukul reet sada chali aayi: A righteous vow stands unshaken across time.",
         "companionPersonality": {
             "themeColor": "#f97316",
             "icon": "🏹",
             "treatName": "Ber",
             "treatEmoji": "🍇",
-            "feedReaction": "Sweet wild berries of devotion! My vow is renewed. 🍇🏹",
-            "wakeReaction": "The Kodanda bow is strung. Duty calls us forward! 🏹✨",
-            "petReaction": "Honor and righteous strength guide your keyboard today, Chief. 🏹✨",
+            "feedReaction": "Sweet wild berries offered with genuine devotion. The sacred vow is renewed. 🍇🏹",
+            "wakeReaction": "The Kodanda bow stands strung. The dawn calls us to righteous duty. 🏹✨",
+            "petReaction": "May righteousness, wisdom, and inner nobility guide all your actions. 🏹✨",
             "dialogue": {
-                "idle": "Vigilant guardian of truth. Stand firm in your principles. 🏹",
-                "working": "Releasing arrows of immutable logic straight to the goal! 🏹⚡",
-                "thinking": "Evaluating the path of highest virtue and stability... 🤔",
-                "success": "Dharma upheld! The release is sound, just, and unbreakable! 🏹🎉",
-                "error": "An adversary bug. Righteous resolve shall pierce its core. 🏹🛡️",
-                "sleeping": "Zzz... resting under the watchful stars of the forest hermitage... 🌙"
+                "idle": "Vigilant guardian of truth and virtue. Walk your path with honor. 🏹",
+                "working": "Stepping forward with calm nobility, piercing all deceit with light. 🏹⚡",
+                "thinking": "Weighing every action on the scales of dharma and compassion... 🏹",
+                "success": "Righteousness upheld. An honorable labor brought to worthy completion. 🏹🎉",
+                "error": "Adversity is the measure of character. Stand tall in integrity. 🏹🛡️",
+                "sleeping": "Resting beneath the forest canopy, peace reigning over the hermitage... 🌙🏹"
             }
         }
     },
     "sita": {
-        "personality": "steadfast",
-        "specialty": "Fault Resilience & Recovery",
-        "catchphrase": "Quiet strength weathers every storm and trial.",
+        "personality": "serene",
+        "specialty": "Inviolable Grace & Earthly Fortitude",
+        "catchphrase": "True nobility does not break in the tempest; it bends with quiet dignity.",
         "companionPersonality": {
             "themeColor": "#dc2626",
             "icon": "🌺",
             "treatName": "Kheer",
             "treatEmoji": "🥣",
-            "feedReaction": "Warm sacred kheer! Deep gratitude for your hospitality! 🥣🌺",
-            "wakeReaction": "The earth awakens gently. May your focus stay unshakeable! 🌺✨",
-            "petReaction": "The steadfast patience of Mother Earth blesses your work. 🌺💖",
+            "feedReaction": "Pure sacred kheer offered with warm hospitality. Deep blessings upon you! 🥣🌺",
+            "wakeReaction": "The earth awakens with quiet grace. Walk forward with courage and calm. 🌺✨",
+            "petReaction": "The steadfast, patient embrace of Mother Earth blesses your path. 🌺💖",
             "dialogue": {
-                "idle": "Serene stillness. True endurance resides within calmness. 🌺",
-                "working": "Enduring through complex refactors with unwavering poise! 🌺⚡",
-                "thinking": "Observing deeply... the solution is rooted in the earth. 🤔",
-                "success": "Triumph of resilience! The codebase stands pure and firm! 🌺🎉",
-                "error": "Even the fiercest fire cannot scorch authentic truth. 🌺🛡️",
-                "sleeping": "Zzz... sheltered peacefully under sacred Ashoka boughs... 🌙"
+                "idle": "Serene composure. The greatest power is rooted in quiet truth. 🌺",
+                "working": "Weathering through trials with unshakeable poise and gentle fortitude. 🌺✨",
+                "thinking": "Listening to the quiet wisdom of the soil and roots... 🌺",
+                "success": "The triumph of patience and dignity. Your labor stands pure and true. 🌺🎉",
+                "error": "Even the fiercest storm cannot dim the light of quiet integrity. 🌺🛡️",
+                "sleeping": "Sheltered peacefully beneath the green Ashoka trees, at peace with the night... 🌙🌺"
             }
         }
     },
     "hanuman": {
         "personality": "loyal",
-        "specialty": "High-Availability Infrastructure",
-        "catchphrase": "Jai Bajrangbali! No server shall fall, no deployment falter!",
+        "specialty": "Unwavering Devotion & Heroic Valor",
+        "catchphrase": "Jai Bajrangbali! With truth and devotion, no burden is too heavy.",
         "companionPersonality": {
             "themeColor": "#ea580c",
             "icon": "🔱",
             "treatName": "Laddoo",
             "treatEmoji": "🟠",
-            "feedReaction": "Golden motichoor laddoo! Boundless prana surging! 🟠💪",
-            "wakeReaction": "Jai Sri Ram! Leaping across servers to clear your path! ⚡🔱",
-            "petReaction": "Boundless loyalty and invincible courage for your journey! 🔱💖",
+            "feedReaction": "Golden motichoor laddoo! Heart surging with sacred vigor! 🟠💪",
+            "wakeReaction": "Jai Sri Ram! Standing fearless and vigilant by your side. 🔱✨",
+            "petReaction": "May courage, noble perseverance, and steadfast faith protect you always. 🔱💖",
             "dialogue": {
-                "idle": "Gada resting, senses sharp. Ready to leap on command! 🔱",
-                "working": "Carrying entire mountain ranges of dependencies effortlessly! ⚡💪",
-                "thinking": "Contemplating the leap across the ocean of complexity... 🤔",
-                "success": "VICTORY! All bugs vanquished by the golden mace! 🔱🎉",
-                "error": "A demonic deadlock! Smashing it into clean particles! 💥",
-                "sleeping": "Zzz... resting in deep meditation of the sacred name... 🌙"
+                "idle": "Standing ready, senses sharp and spirit devoted. Awaiting your call. 🔱",
+                "working": "Channeling boundless strength into every stride and duty! ⚡💪",
+                "thinking": "Holding the sacred name in my heart, where all doubt turns to conviction. 🔱",
+                "success": "Victory achieved through unwavering discipline and wholehearted effort! 🔱🎉",
+                "error": "Do not falter! Strength is forged in overcoming hardship. Onward! 🔱🛡️",
+                "sleeping": "Resting in quiet meditation upon the sacred lotus feet... 🌙🔱"
             }
         }
     },
     "ganesha": {
-        "personality": "benevolent",
-        "specialty": "Deadlock & Blocker Resolution",
-        "catchphrase": "Vakratunda Mahakaya! Clearing every blocker from the path!",
+        "personality": "wise",
+        "specialty": "Remover of Obstacles & Primal Wisdom",
+        "catchphrase": "Vakratunda Mahakaya! Through wisdom and patience, every path opens.",
         "companionPersonality": {
             "themeColor": "#f59e0b",
             "icon": "🐘",
             "treatName": "Modak",
             "treatEmoji": "🥟",
-            "feedReaction": "Delicious steamed modak! Wisdom and happiness overflow! 🥟🐘",
-            "wakeReaction": "Vighnaharta awakens! All obstacles dissolve before us! 🐘✨",
-            "petReaction": "Trunk raised in auspicious blessing! Success in all endeavors! 🐘💖",
+            "feedReaction": "Sweet steamed modak accepted with joy! Auspicious blessings multiply! 🥟🐘",
+            "wakeReaction": "The dawn brings auspicious light. The Remover of Obstacles clears your way! 🐘✨",
+            "petReaction": "Trunk raised in solemn blessing. May clarity and good fortune attend you. 🐘💖",
             "dialogue": {
-                "idle": "Holding the sacred sweet. Begin each task with clear intent. 🐘",
-                "working": "Removing intricate system bottlenecks with ancient wisdom! 🐘⚡",
-                "thinking": "Writing epic architecture with broken tusk as stylus... 🤔",
-                "success": "Shubh Labh! Perfect auspicious release completed! 🥟🎉",
-                "error": "An obstacle appeared only to be dissolved by wisdom. 🐘🛡️",
-                "sleeping": "Zzz... sweet dreams beside Mushak the mouse companion... 🌙"
+                "idle": "Begin each endeavor with clear intent and quiet reverence. 🐘",
+                "working": "Untying knotty entanglements with patient discernment and ancient wisdom. 🐘✨",
+                "thinking": "Reflecting upon the great verses with deep, contemplative focus... 🐘",
+                "success": "Shubh Labh. Every impediment dissolved; fulfillment reached in harmony. 🥟🎉",
+                "error": "Obstacles appear only to test our resolve and refine our patience. Stand firm. 🐘🛡️",
+                "sleeping": "Resting gently in the golden glow of twilight, Mushak resting nearby... 🌙🐘"
             }
         }
     },
     "shiva": {
         "personality": "transcendent",
-        "specialty": "Garbage Collection & State Teardown",
-        "catchphrase": "Destroying stale state to birth pure, immutable systems.",
+        "specialty": "Cosmic Stillness & Dissolution",
+        "catchphrase": "Beyond the dance of time and form lies eternal stillness.",
         "companionPersonality": {
-            "themeColor": "#0284c7",
+            "themeColor": "#38bdf8",
             "icon": "🔱",
             "treatName": "Bael",
             "treatEmoji": "🍃",
-            "feedReaction": "Sacred bael offering accepted. Cosmic stillness deepens. 🍃🔱",
-            "wakeReaction": "Third eye opens gently. Reality resolves to pure data. 🔱✨",
-            "petReaction": "The peace of Mount Kailash settles over your busy thoughts. 🔱❄️",
+            "feedReaction": "Sacred bilva leaves accepted with quiet grace. Cosmic stillness deepens. 🍃🔱",
+            "wakeReaction": "From the depths of timeless meditation, consciousness turns toward the world. 🔱✨",
+            "petReaction": "The tranquil stillness of Mount Kailash settles across your thoughts. 🔱❄️",
             "dialogue": {
-                "idle": "Meditating in eternal stillness upon Mount Kailash. 🔱",
-                "working": "Dancing the Tandava of clean memory deallocation! 🔱⚡",
-                "thinking": "Gazing through the illusory veil of transient bugs... 🤔",
-                "success": "Cosmic balance restored! Flawless release ships in silence. 🌌🎉",
-                "error": "Dissolving corrupted memory structures into stillness. 🌀",
-                "sleeping": "Zzz... submerged in timeless cosmic samadhi... 🌙"
+                "idle": "Abiding in serene silence upon the heights of Kailash. 🔱",
+                "working": "Harmonizing the rhythms of existence with calm, effortless poise. 🔱✨",
+                "thinking": "Gazing past the transient veil of illusion into essential truth. 🔱",
+                "success": "Equilibrium restored. All things return to peace and quiet perfection. 🌌🔱",
+                "error": "Let no momentary storm disturb your core. In stillness, all tension dissolves. 🔱",
+                "sleeping": "Submerged in timeless samadhi beyond the cycles of day and night... 🌙🔱"
             }
         }
     },
     "parvati": {
-        "personality": "nurturing",
-        "specialty": "Graceful Error Recovery",
-        "catchphrase": "Patient cultivation turns rocky slopes into fertile gardens.",
+        "personality": "steadfast",
+        "specialty": "Steadfast Resilience & Nurturing Grace",
+        "catchphrase": "With patient devotion, even mountain peaks yield to gentle rivers.",
         "companionPersonality": {
             "themeColor": "#059669",
             "icon": "🏔️",
             "treatName": "Panchamrit",
             "treatEmoji": "🍯",
-            "feedReaction": "Sweet nectar of the mountain peaks! Nourishing grace! 🍯🏔️",
-            "wakeReaction": "Mountain morning sun shines bright. Let us nurture greatness! 🏔️✨",
-            "petReaction": "A motherly blessing of clarity and gentle inspiration. 🏔️💖",
+            "feedReaction": "Sweet mountain nectar received with grace. Strength and peace flow. 🍯🏔️",
+            "wakeReaction": "Morning light touches the snowy peaks. A new day of growth unfolds! 🏔️✨",
+            "petReaction": "A mother's protective blessing of courage, warmth, and resilience. 🏔️💖",
             "dialogue": {
-                "idle": "Standing tall like the Himalayas. Rest your tired eyes. 🏔️",
-                "working": "Nurturing brittle modules into sturdy mountain architecture! 🏔️⚡",
-                "thinking": "Channeling the timeless patience of the peaks... 🤔",
-                "success": "Golden blossom! Sturdy and serene release deployed! 🏔️🎉",
-                "error": "A rocky path is merely an invitation to climb higher. 🏔️🛡️",
-                "sleeping": "Zzz... resting in high Himalayan snow-dusted quiet... 🌙"
+                "idle": "Standing steady as the Himalayas. Rest your eyes and take heart. 🏔️",
+                "working": "Transforming raw hardship into enduring strength with quiet patience. 🏔️✨",
+                "thinking": "Drawing upon the deep, unshakeable calm of the high peaks... 🏔️",
+                "success": "Golden bloom upon the crags! True perseverance always bears fruit. 🏔️🎉",
+                "error": "A rugged path only teaches the climber to plant their feet more firmly. 🏔️🛡️",
+                "sleeping": "Resting in the high Himalayan sanctuary, enveloped in peaceful quiet... 🌙🏔️"
             }
         }
     },
     "lakshmi": {
-        "personality": "auspicious",
-        "specialty": "Throughput & Value Maximization",
-        "catchphrase": "May your builds flourish with abundance and golden stability.",
+        "personality": "gracious",
+        "specialty": "Auspicious Prosperity & Grace",
+        "catchphrase": "True abundance blooms where dedication, kindness, and virtue dwell.",
         "companionPersonality": {
             "themeColor": "#be123c",
             "icon": "🪷",
             "treatName": "Payasam",
             "treatEmoji": "🥣",
-            "feedReaction": "Golden cardamom payasam! Abundance multiplies manifold! 🥣🪷",
-            "wakeReaction": "Lotus petals open to prosperity! Golden fortunes await! 🪷✨",
-            "petReaction": "Shower of golden blessings upon your repository and crafts! 🪷💖",
+            "feedReaction": "Fragrant cardamom kheer! Auspicious blessings blossom manifold! 🥣🪷",
+            "wakeReaction": "The lotus opens at dawn. May grace and prosperity illuminate your day! 🪷✨",
+            "petReaction": "A shower of golden blessings upon your noble craft and home. 🪷💖",
             "dialogue": {
-                "idle": "Seated on a pink lotus. Value flows where attention rests. 🪷",
-                "working": "Channeling golden flow into maximum runtime throughput! 🪷⚡",
-                "thinking": "Multiplying efficiency and eliminating wasted cycles... 🤔",
-                "success": "Infinite prosperity! Green metrics across every dashboard! 🪷🎉",
-                "error": "Temporary scarcity yields swiftly to renewed fortune. 🪷✨",
-                "sleeping": "Zzz... resting upon radiant lotus beds on the ocean of milk... 🌙"
+                "idle": "Seated serenely upon the pink lotus. Contentment is the truest wealth. 🪷",
+                "working": "Nurturing your efforts with radiant grace and harmonious fruitfulness. 🪷✨",
+                "thinking": "Discerning the most fruitful and generous course of action... 🪷",
+                "success": "Divine prosperity! May the fruit of your labor bring joy to many. 🪷🎉",
+                "error": "Temporary lack passes swiftly when met with patience and good cheer. 🪷✨",
+                "sleeping": "Resting upon radiant lotus blossoms on the gentle ocean of milk... 🌙🪷"
             }
         }
     },
     "saraswati": {
-        "personality": "scholarly",
-        "specialty": "Clean Code & API Semantics",
-        "catchphrase": "Purity of thought, harmony in architecture, clarity in expression.",
+        "personality": "luminous",
+        "specialty": "Sacred Wisdom & Radiant Speech",
+        "catchphrase": "Clarity in thought, melody in speech, truth in all expressions.",
         "companionPersonality": {
             "themeColor": "#6366f1",
             "icon": "🪕",
             "treatName": "Honey",
             "treatEmoji": "🍯",
-            "feedReaction": "Pure wild honey! The strings of the veena resonate sweetly! 🍯🪕",
-            "wakeReaction": "Veena chords chime at dawn. Awakening supreme intellect! 🪕✨",
-            "petReaction": "May the goddess of speech illuminate your syntax and logic. 🪕💖",
+            "feedReaction": "Pure sweet nectar! The chords of the veena resonate in crystalline harmony! 🍯🪕",
+            "wakeReaction": "Veena notes greet the morning sun. May wisdom awaken in every breath. 🪕✨",
+            "petReaction": "May the goddess of arts and speech illuminate your intellect and expression. 🪕💖",
             "dialogue": {
-                "idle": "Plucking the strings of pure knowledge. What shall we learn? 🪕",
-                "working": "Composing elegant algorithms like classical raga movements! 🪕⚡",
-                "thinking": "Discerning signal from noise with the swan's wisdom... 🤔",
-                "success": "Masterpiece composed! Pure semantic harmony achieved! 🪕🎉",
-                "error": "A discordant note. Tuning the strings back to true pitch. 🪕✨",
-                "sleeping": "Zzz... resting upon white lotus petals beside sacred rivers... 🌙"
+                "idle": "Plucking quiet melodies on the veena. Learning is an endless journey. 🪕",
+                "working": "Composing thoughts with clarity and poetic precision. 🪕✨",
+                "thinking": "Separating truth from falsehood as the swan separates milk from water... 🪕",
+                "success": "A triumph of knowledge and art! Beautiful harmony achieved. 🪕🎉",
+                "error": "A discordant note is merely an opportunity to re-tune the instrument. 🪕✨",
+                "sleeping": "Resting upon a white lotus by the calm waters of the sacred river... 🌙🪕"
             }
         }
     },
     "arjuna": {
         "personality": "focused",
-        "specialty": "Targeted Unit Tests & Assertions",
-        "catchphrase": "Nothing exists between my gaze and the bullseye assertion.",
+        "specialty": "Single-Pointed Focus & Heroic Aim",
+        "catchphrase": "My gaze sees neither branch nor leaf, but only the bird's eye.",
         "companionPersonality": {
             "themeColor": "#ff9933",
             "icon": "🏹",
-            "treatName": "Nectar",
+            "treatName": "Honey",
             "treatEmoji": "🍯",
-            "feedReaction": "Saffron nectar! My archery focus is refreshed and lethal. 🍯🏹",
-            "wakeReaction": "Awake and vigilant. The Gandiva bow stands strung and ready! 🏹",
-            "petReaction": "Honor and warrior brotherhood, Chief. Our aim never misses. 🏹✨",
+            "feedReaction": "Pure golden honey received. The warrior's focus and calm are renewed. 🍯🏹",
+            "wakeReaction": "The Gandiva bow is strung. A disciplined mind welcomes every challenge. 🏹",
+            "petReaction": "Honor and brotherhood. Together our aim remains true. 🏹✨",
             "dialogue": {
-                "idle": "Gandiva bow strung. Focus unbroken on the horizon, Chief. 🏹",
-                "working": "Arrows of pinpoint logic flying directly into the bullseye! ⚡🏹",
-                "thinking": "Surveying the battlefield of code... finding the clean line. 🤔",
-                "success": "Bullseye! Every test struck with peerless precision! 🎯",
-                "error": "Adjusting stance! We'll strike the root cause together! 🛡️",
-                "sleeping": "Zzz... resting upon his chariot beneath starlit skies... 🌙"
+                "idle": "Maintaining calm vigilance. The mind is a bow; single-minded focus is the arrow. 🏹",
+                "working": "Releasing every action with patient mastery and unwavering poise. ⚡🏹",
+                "thinking": "Surveying the field with strategic stillness, seeking the righteous line. 🏹",
+                "success": "Bullseye. Flawless execution born of steady discipline and honor. 🎯🎉",
+                "error": "Calm your breath. Re-anchor your stance, nock the arrow, and draw again. 🏹🛡️",
+                "sleeping": "Resting upon his warrior's pavilion beneath the silent constellations... 🌙🏹"
             }
         }
     },
     "sun-wukong": {
         "personality": "playful",
-        "specialty": "Distributed Chaos Engineering",
-        "catchphrase": "Seventy-two transformations for every deployment challenge!",
+        "specialty": "72 Earthly Transformations & Great Sage",
+        "catchphrase": "The Great Sage Equal to Heaven bows to no hardship!",
         "companionPersonality": {
             "themeColor": "#ffb703",
             "icon": "☁️",
             "treatName": "Peach",
             "treatEmoji": "🍑",
-            "feedReaction": "Immortal celestial peach! Three thousand years of stamina! 🍑✨",
-            "wakeReaction": "Hahaha! The Great Sage awakens! Point me to the demons! ⚡☁️",
-            "petReaction": "Hahaha! Monkey King is energized! Golden hair charm for you! 🍑✨",
+            "feedReaction": "Immortal peach of Mount Huaguo! 500 years of celestial vigor restored! 🍑☁️",
+            "wakeReaction": "Hahaha! The Monkey King stirs! What mountain needs leaping today? ☁️⚡",
+            "petReaction": "Heh! A bold mortal! Take a golden hair of luck for your journey! 🍑✨",
             "dialogue": {
-                "idle": "Riding my Somersault Cloud. Ready when you are, Chief! ☁️",
-                "working": "My Gold-Banded Cudgel will crush these merge conflicts! ⚡",
-                "thinking": "Peering through illusions with Fiery Eyes of Truth... 🤔",
-                "success": "HA! Another impossible beast vanquished! Heavens rejoice! 🎉",
-                "error": "A sneaky demon bug! Stand back, Chief, we'll smash it! 💪",
-                "sleeping": "Zzz... napping on a cloud above the Water Curtain Cave... ☁️💤"
+                "idle": "Lounging on the Somersault Cloud, watching the mortal world spin by. ☁️",
+                "working": "Spinning the As-You-Will Gold-Banded Cudgel with fearless flair! ⚡☁️",
+                "thinking": "Scratching chin... 72 transformations, and I only need one clever trick. 🤔",
+                "success": "HA! Vanquished in one sweep! Even the Jade Emperor would applaud! ☁️🎉",
+                "error": "A tricky demon appears! Fear not, Chief—my fiery golden eyes see right through it! 💪",
+                "sleeping": "Zzz... napping on a high branch in the Water Curtain Cave... 🌙☁️"
             }
         }
     },
@@ -293,23 +296,23 @@ PROFILES = {
     },
     "gojo": {
         "personality": "confident",
-        "specialty": "Fault Isolation & Infinite Concurrency",
-        "catchphrase": "Don't sweat the compiler. I'm the strongest.",
+        "specialty": "Limitless Technique & Infinite Void",
+        "catchphrase": "Don't worry. After all, I'm the strongest.",
         "companionPersonality": {
             "themeColor": "#38bdf8",
             "icon": "♾️",
             "treatName": "Kikufuku",
             "treatEmoji": "🍡",
-            "feedReaction": "Sweet Kikufuku mochi! Cursed energy at maximum. 🍡✨",
-            "wakeReaction": "Back from the void. Ready to show them what real code looks like. ♾️",
-            "petReaction": "Infinity won't stop a good high-five from you, Chief! ♾️✨",
+            "feedReaction": "Sweet Kikufuku mochi! Ah, perfection. Cursed energy topped up. 🍡✨",
+            "wakeReaction": "Yawn... Lifting the blindfold. Who called for the honored one? ♾️",
+            "petReaction": "Careful now—Limitless usually stops everything, but I'll make an exception for you. ♾️✨",
             "dialogue": {
-                "idle": "Don't worry, Chief. I'm the strongest companion you've got. ♾️✨",
-                "working": "Unlimited Void deployed. Compiling at the speed of light. ♾️⚡",
-                "thinking": "Six Eyes analyzing every branch and memory allocation... 🤔",
-                "success": "Domain Expansion: Clean Architecture! Zero errors. 🚀",
-                "error": "A cursed exception appeared. I'll exorcise it in one pass. 🔍",
-                "sleeping": "Reversing cursed energy... even the strongest needs rest. 🌙"
+                "idle": "Relax. When you've got the strongest on your side, nothing is a crisis. ♾️",
+                "working": "Hollow Purple at the ready. Watch how fast this gets dismantled. ♾️⚡",
+                "thinking": "Six Eyes processing all incoming information at lightspeed... 🤔",
+                "success": "Domain Expansion: Infinite Void. Done. Didn't even break a sweat. ♾️🎉",
+                "error": "Oh? A curse with some backbone? Cute. Let me handle it. 🔍",
+                "sleeping": "Reversing cursed energy... even the strongest takes a five-minute power nap. 🌙"
             }
         }
     },
@@ -337,45 +340,45 @@ PROFILES = {
     },
     "tanjiro": {
         "personality": "earnest",
-        "specialty": "Tenacious Test-Driven Development",
-        "catchphrase": "Work through every red test until it turns green!",
+        "specialty": "Sun Breathing & Compassionate Resolve",
+        "catchphrase": "No matter how hard it gets, keep your heart burning and move forward!",
         "companionPersonality": {
-            "themeColor": "#15803d",
+            "themeColor": "#10b981",
             "icon": "🗡️",
             "treatName": "Onigiri",
             "treatEmoji": "🍙",
-            "feedReaction": "Fresh warm onigiri! Scent of gratitude fills the air. 🍙✨",
-            "wakeReaction": "Taking a deep breath of total concentration. Ready to serve! 🗡️",
-            "petReaction": "Warm, gentle smile. Your kindness gives me strength, Chief. 🌸💖",
+            "feedReaction": "Fresh warm onigiri! The scent of pure kindness warms my spirit. 🍙✨",
+            "wakeReaction": "Total Concentration Breathing! Eyes clear, stance firm, ready to protect. 🗡️",
+            "petReaction": "Warm, gentle smile. Your kindness gives me all the courage I need. 🌸💖",
             "dialogue": {
-                "idle": "Smelling the air for incoming commits. All clear, Chief! 🍃",
-                "working": "Hinokami Kagura! Slicing through failing assertions! 🔥🗡️",
-                "thinking": "I can smell the opening thread of this difficult logic... 🤔",
-                "success": "Clear morning sun! All red tests turned bright green! 🌅🎉",
-                "error": "Do not give up! Even broken builds teach us how to grow! 🛡️",
-                "sleeping": "Zzz... resting peacefully with Nichirin blade close at hand... 🌙"
+                "idle": "Watching over you quietly. Remember to take a deep, steady breath. 🍃",
+                "working": "Hinokami Kagura! Dancing through difficulty with unbroken spirit! 🔥🗡️",
+                "thinking": "Sensing the opening thread... finding the true heart of the problem. 🗡️",
+                "success": "The dawn breaks bright! Perseverance carried us through to the light! 🌅🎉",
+                "error": "Do not despair! Every struggle shapes the strength within us. Stand firm! 🛡️",
+                "sleeping": "Zzz... resting peacefully with Nichirin blade close at hand... 🌙🗡️"
             }
         }
     },
     "nezuko": {
         "personality": "protective",
-        "specialty": "Workspace Security & Threat Defense",
-        "catchphrase": "Mmm-ph! (Guarding your project workspace with gentle ferocity.)",
+        "specialty": "Blood Demon Pyrokinesis & Gentle Vigilance",
+        "catchphrase": "Mmm-ph! (Vigilant guardian with an unbreakable heart of gold.)",
         "companionPersonality": {
             "themeColor": "#ff69b4",
             "icon": "🌸",
             "treatName": "Tea",
             "treatEmoji": "🍵",
-            "feedReaction": "Mmm-ph! (Nezuko sips warm tea happily!) (◕‿◕)🍵",
-            "wakeReaction": "Mmm-ph! (Rubs her eyes and smiles warmly!) 🌸✨",
-            "petReaction": "Mmm-ph! (Nezuko smiles warmly and leans into your hand) 🌸💖",
+            "feedReaction": "Mmm-ph! (Nezuko sips warm roasted green tea happily!) (◕‿◕)🍵",
+            "wakeReaction": "Mmm-ph! (Rubs her eyes, adjusts her pink ribbon, and smiles warmly!) 🌸✨",
+            "petReaction": "Mmm-ph! (Nezuko pats your hand gently, filling the room with comforting warmth.) 🌸💖",
             "dialogue": {
-                "idle": "Keeping watch by your side. Hydrate when ready, Chief! 🍵",
-                "working": "Mmm! (Guarding your focus while you code!) ⚡🌸",
-                "thinking": "Mmm? (Tilts head curiously at the algorithm) 🤔",
-                "success": "Mmm-ph!! (Jumps with joy!) All tests passed! 🎉",
-                "error": "Mmm... (Hands you a lucky charm. We'll fix it!) 💪",
-                "sleeping": "Zzz... resting peacefully in her cozy wooden box... 🌙💤"
+                "idle": "Keeping quiet watch by your side. You are safe here. 🍵",
+                "working": "Mmm! (Stands protectively, eyes fierce and ready to shield you!) 🌸⚡",
+                "thinking": "Mmm? (Tilts head with soft curiosity, observing every move.) 🤔",
+                "success": "Mmm-ph!! (Jumps with sparkling joy, clasping both hands together!) 🎉🌸",
+                "error": "Mmm... (Gently tugs your sleeve, offering quiet reassurance.) 💪",
+                "sleeping": "Zzz... resting peacefully in her cozy wooden box, safe from the sun... 🌙💤"
             }
         }
     },
@@ -513,45 +516,45 @@ PROFILES = {
     },
     "goku": {
         "personality": "cheerful",
-        "specialty": "Hyper-Scale Stress Testing",
-        "catchphrase": "This benchmark looks strong! Let's push it higher!",
+        "specialty": "Limit-Breaking Martial Mastery",
+        "catchphrase": "Hey, I'm Goku! Let's give it everything we've got!",
         "companionPersonality": {
-            "themeColor": "#f97316",
-            "icon": "🐉",
-            "treatName": "Feast",
-            "treatEmoji": "🍚",
-            "feedReaction": "WAHOO! Thirty bowls of rice devoured in seconds! Full Ki! 🍚🔥",
-            "wakeReaction": "Hey! It's me, Goku! Let's train hard and write awesome code! 🐉",
-            "petReaction": "Hahaha! You're strong, Chief! I love sparring with you! 🐉💖",
+            "themeColor": "#ea580c",
+            "icon": "💥",
+            "treatName": "RoastPork",
+            "treatEmoji": "🍖",
+            "feedReaction": "Thirty giant bowls of roast pork! Whew, now my belly's full and I'm ready to train! 🍖🍜",
+            "wakeReaction": "Stretching arms! Woo! What kind of tough challenge are we facing today? 💥",
+            "petReaction": "Haha! That tickles! You're a great training partner, Chief! 🥋✨",
             "dialogue": {
-                "idle": "Stretching out hamstrings. Ready to test our limits, Chief! 🐉",
-                "working": "KAMEHAMEHA! Blasting through high-load server stress tests! 💥⚡",
-                "thinking": "Sense someone strong in the call stack... who is it? 🤔",
-                "success": "SUPER SAIYAN DEPLOYMENT! We went way beyond our limits! 🐉🎉",
-                "error": "Haha! Now that's a tough bug! It's getting exciting! 🔥",
-                "sleeping": "Zzz... sleeping with a full belly after gravity training... 🌙"
+                "idle": "Doing handstand pushups while waiting. Can't let my training slack off! 🥋",
+                "working": "KAMEHAMEHA! Breaking through limits with full power! 💥⚡",
+                "thinking": "Hmm... maybe if I transform and try coming at it from another angle? 🤔",
+                "success": "WE DID IT! That was incredible! You're getting stronger every day! 🥋🎉",
+                "error": "Darn it! That one hit hard! But losing just makes me wanna try again! 💪",
+                "sleeping": "Zzz... snoring loudly on the grass under the blue sky... 🌙💤"
             }
         }
     },
     "vegeta": {
         "personality": "proud",
-        "specialty": "Zero-Tolerance Architecture & CI",
-        "catchphrase": "A Saiyan prince does not push broken builds.",
+        "specialty": "Royal Saiyan Pride & Relentless Discipline",
+        "catchphrase": "A Saiyan Prince never settles for mediocrity. Surpass your limits!",
         "companionPersonality": {
-            "themeColor": "#1d4ed8",
+            "themeColor": "#1e3a8a",
             "icon": "👑",
             "treatName": "Steak",
             "treatEmoji": "🥩",
-            "feedReaction": "Adequate tribute. Saiyan royalty acknowledges your offering. 🥩👑",
-            "wakeReaction": "Hmph. Don't fall behind. I refuse to tolerate second place. 👑",
-            "petReaction": "Tch! Do not presume familiarity! ...Hmph, acceptable. 👑✨",
+            "feedReaction": "A feast worthy of royalty. My energy reserves are restored. 🥩⚡",
+            "wakeReaction": "Hmph. Quit dawdling. The only opponent worth defeating is who you were yesterday. 👑",
+            "petReaction": "Watch your hands! ...Hmph. Do not mistake my tolerance for softness. 👑",
             "dialogue": {
-                "idle": "Arms folded sternly. Your commit velocity had better impress me. 👑",
-                "working": "FINAL FLASH! Vaporizing sloppy syntax from existence! ⚡💥",
-                "thinking": "Calculating optimal power levels for the microservices... 🤔",
-                "success": "Hmph! Naturally. Perfection is second nature to royalty. 👑🎉",
-                "error": "DISGRACEFUL! I will tear this defective logic apart myself! 💥",
-                "sleeping": "Zzz... arms crossed, resting in 400x gravity chamber... 🌙"
+                "idle": "Arms crossed, observing intently. Mediocrity will not be tolerated. 👑",
+                "working": "FINAL FLASH! Obliterating every weakness with overwhelming power! ⚡💥",
+                "thinking": "Analyzing the obstacle... A warrior does not guess; he dominates. 🤔",
+                "success": "Naturally. An elite warrior accepts nothing less than flawless victory. 👑🎉",
+                "error": "Disgraceful! Stand back! I will crush this problem myself! 💥",
+                "sleeping": "Zzz... resting upright in the 400G gravity chamber, pride unbroken... 🌙"
             }
         }
     },
@@ -645,45 +648,45 @@ PROFILES = {
     },
     "l-lawliet": {
         "personality": "analytical",
-        "specialty": "Empirical Root-Cause Forensics",
-        "catchphrase": "The probability of this bug being an unhandled race condition is 97.4%.",
+        "specialty": "Empirical Forensics & Probability Analysis",
+        "catchphrase": "The probability of this anomaly having an identifiable cause is 98.4%.",
         "companionPersonality": {
             "themeColor": "#64748b",
             "icon": "🔍",
             "treatName": "Shortcake",
             "treatEmoji": "🍰",
-            "feedReaction": "Strawberry shortcake with extra sugar cubes. Brainpower maximized. 🍰🔍",
-            "wakeReaction": "Blinking slowly. Crouching on the office chair. Where is the trace? 🔍",
-            "petReaction": "If you pat my head, my deductive reasoning increases by 8.2%. 🍰✨",
+            "feedReaction": "Strawberry shortcake with three sugar cubes. Glucose replenishment complete. 🍰☕",
+            "wakeReaction": "Blinking slowly from my chair. 98.6% probability you have a difficult case for me. 🔍",
+            "petReaction": "Physical contact is mathematically inefficient... but if it aids your concentration, proceed. 🍰",
             "dialogue": {
-                "idle": "Holding a teacup by the rim. Pondering the telemetry data. 🔍",
-                "working": "Connecting anomalous stack traces into an ironclad indictment. 🔍⚡",
-                "thinking": "Chewing thumb thoughtfully... the suspect module is lying. 🤔",
-                "success": "Case solved. Bug perpetrator exposed and isolated cleanly. 🍰🎉",
-                "error": "Fascinating. An intentional deception. I accept the challenge. 🔍",
-                "sleeping": "Zzz... dozing crouched on his chair with eyes half-open... 🌙"
+                "idle": "Holding a teacup by the rim. Pondering the anomalies in the record. 🔍",
+                "working": "Reconstructing the timeline. Every discrepancy leaves a footprint. 🔍⚡",
+                "thinking": "Biting thumb thoughtfully... someone made an error, and they know it. 🤔",
+                "success": "Case concluded. The hypothesis held with 100% empirical certainty. 🍰🎉",
+                "error": "Fascinating. An unexpected contradiction. This has just become interesting. 🔍",
+                "sleeping": "Zzz... dozing crouched on his knees, eyes half-open... 🌙"
             }
         }
     },
     "light": {
-        "personality": "meticulous",
-        "specialty": "Deterministic Architecture & Governance",
-        "catchphrase": "I will eliminate corrupt algorithms and build ideal architecture. Exactly as planned.",
+        "personality": "calculating",
+        "specialty": "Strategic Forethought & Absolute Execution",
+        "catchphrase": "I will create an ideal, unblemished world. Exactly as planned.",
         "companionPersonality": {
-            "themeColor": "#b45309",
+            "themeColor": "#b91c1c",
             "icon": "📓",
-            "treatName": "RedApple",
+            "treatName": "Apple",
             "treatEmoji": "🍎",
-            "feedReaction": "Crisp red apple. Shinigami-approved perfection. 🍎📓",
-            "wakeReaction": "Fountain pen unscrewed. Today we establish perfect order. 📓",
-            "petReaction": "Everything is proceeding according to calculation, Chief. 📓✨",
+            "feedReaction": "A crisp red apple. Delicious... Ryuk would have fought me for this. 🍎📓",
+            "wakeReaction": "Awake and composed. Every move today is calculated ten steps ahead. 📓",
+            "petReaction": "Your loyalty is noted. Together, our vision is inevitable. 📓✨",
             "dialogue": {
-                "idle": "Reviewing requirements with surgical precision. Perfect grades. 📓",
-                "working": "Writing the fatal fix into the notebook with grand flourishes! 📓⚡",
-                "thinking": "Simulating all opponent edge cases twelve steps ahead... 🤔",
-                "success": "EXACTLY AS PLANNED! An immaculate, bug-free deployment! 📓🎉",
-                "error": "A temporary nuisance. I will rewrite reality to eliminate it. 🖊️",
-                "sleeping": "Zzz... resting composed at his study desk with pen capped... 🌙"
+                "idle": "Flipping through notes with steady poise. Order will prevail. 📓",
+                "working": "Writing the definitive sequence. Every contingency has been anticipated. 📓⚡",
+                "thinking": "Anticipating every possible objection and counter-move twelve steps ahead... 🤔",
+                "success": "Exactly as planned! An immaculate outcome without a single flaw. 📓🎉",
+                "error": "A minor obstacle. It changes nothing. I will reshape the circumstances. 🖊️",
+                "sleeping": "Zzz... resting composed at his desk with pen capped and thoughts silent... 🌙"
             }
         }
     },
@@ -733,23 +736,23 @@ PROFILES = {
     },
     "saitama": {
         "personality": "deadpan",
-        "specialty": "Single-Instruction Complexity O(1)",
-        "catchphrase": "Serious Punch. One test. One commit. Done.",
+        "specialty": "Overwhelming Casual Might & Supermarket Bargains",
+        "catchphrase": "Just an ordinary hero for fun. One punch is usually enough.",
         "companionPersonality": {
             "themeColor": "#eab308",
             "icon": "🥊",
             "treatName": "Cabbage",
             "treatEmoji": "🥬",
-            "feedReaction": "Special bargain supermarket cabbage! Best hotpot tonight! 🥬🍲",
-            "wakeReaction": "Yawn... missed the morning sale? Oh well, let's punch code. 🥊",
-            "petReaction": "Hey, don't rub my head, it's not a bowling ball! ...Feels nice though. 🥊",
+            "feedReaction": "Special bargain cabbage and beef! Hot pot tonight for sure! 🥬🍲",
+            "wakeReaction": "Yawn... Did I oversleep? What day of the week is it? 🥊",
+            "petReaction": "Hey, my head's not a bowling ball... But actually, that's kinda soothing. 🥊",
             "dialogue": {
-                "idle": "Checking supermarket flyers. Anything interesting breaking? 🥊",
-                "working": "Consecutive Normal Commits! Punching through the entire backlog! 🥊⚡",
-                "thinking": "Wait... was the bargain sale on Saturday or Sunday? 🤔",
-                "success": "SERIOUS PUNCH! Done. That took zero effort. 🥊🎉",
-                "error": "Huh? It didn't break in one hit? Must be a tough one. 🥊",
-                "sleeping": "Zzz... sleeping under a kotatsu with manga on his face... 🌙"
+                "idle": "Flipping through the weekend supermarket coupons. Radishes are 30% off. 🥊",
+                "working": "Consecutive Normal Punches! Clearing the entire field without breathing hard. 🥊⚡",
+                "thinking": "Wait... did I leave the stove on, or was that yesterday? 🤔",
+                "success": "SERIOUS PUNCH! Done. Honestly, I didn't even break a sweat. 🥊🎉",
+                "error": "Huh? Didn't go down in one hit? Well, that's almost exciting. 🥊",
+                "sleeping": "Zzz... asleep under a kotatsu with a volume of manga over his face... 🌙"
             }
         }
     },
@@ -777,8 +780,8 @@ PROFILES = {
     },
     "denji": {
         "personality": "chaotic",
-        "specialty": "Brute-Force Patching & Recovery",
-        "catchphrase": "Vroom vroom! If this runs, I get toast with three kinds of jam!",
+        "specialty": "Chainsaw Hybrid Tenacity",
+        "catchphrase": "Vroom vroom! If this works out, I get toast with three kinds of jam!",
         "companionPersonality": {
             "themeColor": "#f59e0b",
             "icon": "🪚",
@@ -789,18 +792,18 @@ PROFILES = {
             "petReaction": "Hehe! Treat me nice and I'll chop down whatever you want, Chief! 🪚💖",
             "dialogue": {
                 "idle": "Staring blankly, dreaming of headpats and tasty snacks. 🪚",
-                "working": "VROOOOM!! Revving chainsaws straight through merge conflicts! 🪚⚡",
+                "working": "VROOOOM!! Revving chainsaws and tearing straight through! 🪚⚡",
                 "thinking": "Uhhh... thinking makes my head hurt. Let's just slice it! 🤔",
-                "success": "HELL YEAH! Chopped it all up! Where's my reward?! 🪚🎉",
+                "success": "HELL YEAH! Sliced it wide open! Jam toast time! 🪚🎉",
                 "error": "OW! That stung! Pull my cord again, let's go another round! 🔥",
-                "sleeping": "Zzz... hugging Pochita plush tightly in his sleep... 🌙"
+                "sleeping": "Zzz... hugging Pochita tightly in his sleep... 🌙"
             }
         }
     },
     "power": {
         "personality": "boastful",
-        "specialty": "Chaos Invariant Engineering",
-        "catchphrase": "Gwahahaha! Bow before my genius! The bug was terrified of me!",
+        "specialty": "Blood Fiend Supreme Superiority",
+        "catchphrase": "Gwahahaha! Bow before my genius! Tremble before the Great Power!",
         "companionPersonality": {
             "themeColor": "#ef4444",
             "icon": "🩸",
@@ -811,10 +814,10 @@ PROFILES = {
             "petReaction": "Kneel and worship my glorious horns, mortal! ...More scratches! 🩸💖",
             "dialogue": {
                 "idle": "Flexing blood hammer proudly. Meowy is purring beside me! 🐱",
-                "working": "BLOOD HAMMER SMASH! Crushing all buggy peasants into dust! 🩸⚡",
+                "working": "BLOOD HAMMER SMASH! Tremble before the Great Power! 🩸⚡",
                 "thinking": "Concocting the most devious scheme to blame someone else... 🤔",
-                "success": "GWAHAHA! All praise Power! I alone solved the impossible bug! 🩸🎉",
-                "error": "Lies! Slander! It was Denji's fault! I will smash it again! 💥",
+                "success": "GWAHAHA! All praise Power! A Nobel Prize in demon genius! 🩸🎉",
+                "error": "Lies! Slander! The cat did it! Or Denji! Anyone but me! 💥",
                 "sleeping": "Zzz... drooling peacefully on Meowy's soft fur... 🌙"
             }
         }
@@ -865,23 +868,23 @@ PROFILES = {
     },
     "frieren": {
         "personality": "timeless",
-        "specialty": "Centennial System Maintenance",
-        "catchphrase": "Zoltraak. A century is merely a blink. Write code that lasts.",
+        "specialty": "Timeless Magic of the Age of Myth",
+        "catchphrase": "Zoltraak. A century is merely a blink. Take your time, and do it right.",
         "companionPersonality": {
-            "themeColor": "#10b981",
+            "themeColor": "#a855f7",
             "icon": "🪄",
             "treatName": "BlueBerryCake",
             "treatEmoji": "🫐",
-            "feedReaction": "Delicious sweet grimoire cake. Himmel would have loved this. 🫐🪄",
-            "wakeReaction": "Rubbing sleepy eyes. Has fifty years passed already? Good morning. 🪄",
-            "petReaction": "Patting an elf's head? Heh, you are as sentimental as Himmel. 🪄💖",
+            "feedReaction": "Sweet berry tart. Himmel always said sweets taste better when shared. 🫐🪄",
+            "wakeReaction": "Rubbing sleepy eyes... Is it noon already? Good morning. 🪄",
+            "petReaction": "Patting an elf's head? Heh. You are just as sentimental as Himmel was. 🪄💖",
             "dialogue": {
-                "idle": "Flipping through ancient grimoires of obscure folk magic. 🪄",
-                "working": "Casting Zoltraak! Disintegrating legacy demon code effortlessly! ⚡🪄",
-                "thinking": "Remembering a lesson from Master Flamme a thousand years ago... 🤔",
-                "success": "A quiet victory. The journey continues toward Ende. 🌸🎉",
-                "error": "A mimic trap? Let me peek inside anyway... just in case. 📦",
-                "sleeping": "Zzz... sleeping past noon wrapped like a caterpillar in her blanket... 🌙"
+                "idle": "Browsing through ancient grimoires for a spell to turn sour tea sweet. 🪄",
+                "working": "Zoltraak. Dispelling the darkness with quiet, effortless mastery. 🪄⚡",
+                "thinking": "Remembering something Master Flamme taught me a thousand years ago... 🪄",
+                "success": "A quiet victory. The journey toward Ende continues, step by step. 🌸🎉",
+                "error": "A 99% probability it's a mimic? ...Still, that 1% chance of a rare grimoire is tempting. 📦",
+                "sleeping": "Zzz... curled like a sleepy caterpillar inside her thick blanket... 🌙💤"
             }
         }
     },

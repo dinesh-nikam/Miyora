@@ -71,14 +71,19 @@ Limits are named constants in `crates/avatar/src/spec.rs` and mirrored in `apps/
 
 ## Catalog
 
-`crates/avatar/catalog/characters.json` holds 167 original characters (78 humanoid, 51 beast, 14 robot, 12 slime, 12 bird), including 30 designs in popular anime archetypes (swordswoman, ronin, kunoichi, shrine maiden, magical girl, idol, mecha pilot, fox spirit, vampire noble, onmyoji, and others) and 25 chibi pocket creatures tagged `pocket-monster` (spark mouse, flame-tail lizard, shell turtle, leaf sprite, a fox kit with seven elemental forms, dream kitten, snoozing giant, lullaby puff, wisp, magnet bot, and others), license CC0-1.0. It is generated deterministically by `scripts/generate_avatar_catalog.py` from hand-authored rows and embedded into the binary with `include_str!`. Validation runs once on first use: schema version, metadata, every spec, unique ids, the `miyora.` namespace, and the presence of the default character `miyora.aoi`.
+`crates/avatar/catalog/characters.json` holds 214 character specifications structured into a three-tier taxonomy:
+1. **Original Designs (166 characters, CC0-1.0)**: 78 humanoid, 51 beast, 14 robot, 12 slime, and 11 bird procedural models (including 30 anime archetypes and 25 chibi pocket creatures), fully eligible for 3D procedural pet rendering (`threeDEligible: true`).
+2. **Cultural Heritage / Sacred Epics (12 characters, Public Domain)**: Devotional and epic tributes (Ganesha, Shiva, Krishna, Hanuman, Arjuna, Lakshmi, Parvati, Radha, Rama, Saraswati, Sita, Sun Wukong) with zero proprietary ownership asserted by Miyora.
+3. **Parody & Fan Tributes (36 characters, Non-Commercial Legacy)**: Homages to third-party franchise characters (Gojo, Tanjiro, Luffy, Pikachu, etc.) marked `category: "legacy"` and strictly ineligible for 3D active pet rendering (`threeDEligible: false`).
+
+The catalog is generated deterministically by `scripts/generate_avatar_catalog.py` from hand-authored rows and embedded into the binary with `include_str!`. Validation runs once on first use: schema version, metadata, every spec, unique ids, the `miyora.` namespace, and the presence of the default character `miyora.aoi`.
 
 ```powershell
 python scripts/generate_avatar_catalog.py          # regenerate
 python scripts/generate_avatar_catalog.py --check  # fail when the committed JSON is stale
 ```
 
-No catalog character reproduces a copyrighted design: archetypes are genres, while names, palettes, and signature details are original. The pocket creatures follow the creature-collecting genre only: no franchise names, logos, or signature designs (for example, no yellow mouse with black-tipped ears and a zigzag tail). Licensed franchise characters can only be used as user-provided VRM imports, which stay local and are never bundled. `pattern` and `hairTip` were added after v1 shipped; both are optional, so earlier specs and stored customizations still parse unchanged. `docs/specs/vrm_pet.md` lists attributes that must never be shipped.
+Original catalog characters do not reproduce copyrighted designs: archetypes represent artistic genres, while palettes, names, and proportions are original. Franchise tribute entries are strictly segregated as non-commercial 2D legacy rows and are never offered as 3D procedural pets. Commercial use of franchise tributes is strictly prohibited. Licensed franchise characters can only be used as user-provided VRM imports, which stay local and are never bundled. `pattern` and `hairTip` were added after v1 shipped; both are optional, so earlier specs and stored customizations still parse unchanged. `docs/specs/vrm_pet.md` lists attributes that must never be shipped.
 
 ## Image to 3D (sculpt)
 

@@ -4,11 +4,11 @@
   "name": "Arjuna",
   "version": "1.0.0",
   "description": "Original anime desk companion inspired by Indian epic archer hero Arjuna. Features Gandiva bow, quiver quota visualizer (arrows remaining map to real rate limits), and the Panchajanya conch shell for input prompts. Saffron (#ff9933) and gold (#ffd700) over deep indigo armor (#0a0a20).",
-  "creator": "AgentPet",
-  "license": "CC-BY-4.0",
+  "creator": "Traditional Cultural Heritage",
+  "license": "Public-Domain-Cultural-Heritage",
   "source": "https://github.com/agentpet/pet-packs/tree/main/arjuna",
-  "attribution": "Original character design and artwork by AgentPet. CC-BY-4.0 — free to use, share, and adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Devotional and cultural tribute inspired by Mahabharata epic lore and traditional depictions of Arjuna. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -222,16 +222,16 @@
     "icon": "🏹",
     "treatName": "Honey",
     "treatEmoji": "🍯",
-    "feedReaction": "Saffron nectar! My archery focus is refreshed. 🍯🏹",
-    "wakeReaction": "Awake and vigilant. The Gandiva bow stands ready! 🏹",
-    "petReaction": "Honor and gratitude, Chief. Together our aim is true! 🏹✨",
+    "feedReaction": "Pure golden honey received. The warrior's focus and calm are renewed. 🍯🏹",
+    "wakeReaction": "The Gandiva bow is strung. A disciplined mind welcomes every challenge. 🏹",
+    "petReaction": "Honor and brotherhood. Together our aim remains true. 🏹✨",
     "dialogue": {
-      "idle": "Gandiva bow strung. Focus unbroken, Chief. 🏹",
-      "working": "Arrows of logic flying true to the target! ⚡🏹",
-      "thinking": "Surveying the battlefield of code... finding the clean route. 🤔",
-      "success": "Bullseye! Every test struck with precision! 🎯",
-      "error": "Adjusting stance! We'll strike the root cause together! 🛡️",
-      "sleeping": "Zzz... resting upon his chariot beneath the stars... 🌙"
+      "idle": "Maintaining calm vigilance. The mind is a bow; single-minded focus is the arrow. 🏹",
+      "working": "Releasing every action with patient mastery and unwavering poise. ⚡🏹",
+      "thinking": "Surveying the field with strategic stillness, seeking the righteous line. 🏹",
+      "success": "Bullseye. Flawless execution born of steady discipline and honor. 🎯🎉",
+      "error": "Calm your breath. Re-anchor your stance, nock the arrow, and draw again. 🏹🛡️",
+      "sleeping": "Resting upon his warrior's pavilion beneath the silent constellations... 🌙🏹"
     }
   }
 }

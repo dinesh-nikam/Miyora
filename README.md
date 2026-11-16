@@ -321,9 +321,12 @@ Deep dive into the architecture and specifications:
 
 ## 📄 License & Attribution
 
-Distributed under dual **MIT** / **Apache-2.0** licensing. See [LICENSES.md](LICENSES.md) for details.
+Distributed under dual **MIT** / **Apache-2.0** licensing for application code. See [LICENSES.md](LICENSES.md) for character asset licensing, third-party rights disclaimers, and cultural tribute policies.
 
-Miyora character models, original art packs, and procedural rig assets are distributed under Creative Commons attribution licenses as specified in their respective pack manifests.
+Character specifications and art assets adhere to a strict three-tier taxonomy:
+- **Original Miyora Designs:** Released under Creative Commons Zero (`CC0-1.0` Public Domain Dedication).
+- **Cultural Heritage & Sacred Lore (Hindu Epics & Eastern Folklore):** Released under `Public-Domain-Cultural-Heritage` with `commercialUse: false`, respectfully disclaiming proprietary authorship.
+- **Parody & Fan Homages (Anime & Gaming Franchise Tributes):** Strictly non-commercial (`commercialUse: false`) under `LicenseRef-Parody-Tribute-NonCommercial`. Segregated as 2D legacy rows and never offered as 3D procedural pets. Unaffiliated with and unendorsed by original copyright holders.
 
 <p align="center">
   <img src="assets/branding/miyora-logo.svg" alt="Miyora Mark" width="280px" />

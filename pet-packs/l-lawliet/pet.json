@@ -4,11 +4,11 @@
   "name": "L",
   "version": "1.0.0",
   "description": "Eccentric detective L crouching in oversized shirt with a slice of cake. Premium cute desktop pet companion (3.0 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Fan Tribute / Parody Community",
+  "license": "LicenseRef-Parody-Tribute-NonCommercial",
   "source": "https://github.com/agentpet/pet-packs/tree/main/l-lawliet",
-  "attribution": "Original anime companion design for L. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Fan tribute homage inspired by L (Death Note). Strictly non-commercial parody / fan tribute; not an official product, not affiliated with or endorsed by original rights holders.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -239,16 +239,16 @@
     "icon": "🔍",
     "treatName": "Shortcake",
     "treatEmoji": "🍰",
-    "feedReaction": "Strawberry shortcake with extra sugar cubes. Brainpower maximized. 🍰🔍",
-    "wakeReaction": "Blinking slowly. Crouching on the office chair. Where is the trace? 🔍",
-    "petReaction": "If you pat my head, my deductive reasoning increases by 8.2%. 🍰✨",
+    "feedReaction": "Strawberry shortcake with three sugar cubes. Glucose replenishment complete. 🍰☕",
+    "wakeReaction": "Blinking slowly from my chair. 98.6% probability you have a difficult case for me. 🔍",
+    "petReaction": "Physical contact is mathematically inefficient... but if it aids your concentration, proceed. 🍰",
     "dialogue": {
-      "idle": "Holding a teacup by the rim. Pondering the telemetry data. 🔍",
-      "working": "Connecting anomalous stack traces into an ironclad indictment. 🔍⚡",
-      "thinking": "Chewing thumb thoughtfully... the suspect module is lying. 🤔",
-      "success": "Case solved. Bug perpetrator exposed and isolated cleanly. 🍰🎉",
-      "error": "Fascinating. An intentional deception. I accept the challenge. 🔍",
-      "sleeping": "Zzz... dozing crouched on his chair with eyes half-open... 🌙"
+      "idle": "Holding a teacup by the rim. Pondering the anomalies in the record. 🔍",
+      "working": "Reconstructing the timeline. Every discrepancy leaves a footprint. 🔍⚡",
+      "thinking": "Biting thumb thoughtfully... someone made an error, and they know it. 🤔",
+      "success": "Case concluded. The hypothesis held with 100% empirical certainty. 🍰🎉",
+      "error": "Fascinating. An unexpected contradiction. This has just become interesting. 🔍",
+      "sleeping": "Zzz... dozing crouched on his knees, eyes half-open... 🌙"
     }
   }
 }

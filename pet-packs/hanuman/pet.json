@@ -4,11 +4,11 @@
   "name": "Hanuman",
   "version": "1.0.0",
   "description": "Adorable and heroic Hanuman with golden gada and curled tail. Premium cute desktop pet companion (2.8 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Traditional Cultural Heritage",
+  "license": "Public-Domain-Cultural-Heritage",
   "source": "https://github.com/agentpet/pet-packs/tree/main/hanuman",
-  "attribution": "Original anime companion design for Hanuman. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Devotional and cultural tribute inspired by traditional sacred iconography of Lord Hanuman. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -236,19 +236,19 @@
   ],
   "personality": {
     "themeColor": "#ea580c",
-    "icon": "🔥",
-    "treatName": "Fruit",
-    "treatEmoji": "🥭",
-    "feedReaction": "Fresh mango! Boundless strength for our journey! 🥭🔥",
-    "wakeReaction": "Jai! The devoted servant arises with unyielding vigor! 🔥",
-    "petReaction": "Humbled and energized by your kindness, Chief! 🔥🙏",
+    "icon": "🔱",
+    "treatName": "Laddoo",
+    "treatEmoji": "🟠",
+    "feedReaction": "Golden motichoor laddoo! Heart surging with sacred vigor! 🟠💪",
+    "wakeReaction": "Jai Sri Ram! Standing fearless and vigilant by your side. 🔱✨",
+    "petReaction": "May courage, noble perseverance, and steadfast faith protect you always. 🔱💖",
     "dialogue": {
-      "idle": "Ready to leap across oceans for clean code, Chief! 🔥",
-      "working": "Leaping across mountains of technical debt with ease! 🔥⚡",
-      "thinking": "Channeling divine focus to overcome all obstacles... 🤔",
-      "success": "Victory! The fortress of bugs has fallen! Jai! 🔥🎉",
-      "error": "No challenge is insurmountable. With devotion, we prevail! 💪",
-      "sleeping": "Zzz... resting in meditative tranquility... 🌙🔥"
+      "idle": "Standing ready, senses sharp and spirit devoted. Awaiting your call. 🔱",
+      "working": "Channeling boundless strength into every stride and duty! ⚡💪",
+      "thinking": "Holding the sacred name in my heart, where all doubt turns to conviction. 🔱",
+      "success": "Victory achieved through unwavering discipline and wholehearted effort! 🔱🎉",
+      "error": "Do not falter! Strength is forged in overcoming hardship. Onward! 🔱🛡️",
+      "sleeping": "Resting in quiet meditation upon the sacred lotus feet... 🌙🔱"
     }
   }
 }

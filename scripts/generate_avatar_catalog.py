@@ -1,11 +1,19 @@
 #!/usr/bin/env python3
 """Generate the bundled 3D character catalog.
 
-Rows are hand-authored character designs for the procedural renderer. Most are
-original; rows in LEGACY_FRANCHISE imitate third-party franchise characters the
-project holds no license for, so they are marked `legacy` and are never offered
-as 3D pets. The script only formats and checks the rows; it does not randomize
-anything, so running it twice produces byte-identical output.
+Rows are hand-authored character designs for the procedural renderer, categorized
+into a clean three-tier taxonomy:
+1. Original Miyora Designs (CC0-1.0): Original characters created for Miyora.
+   Fully eligible for 3D procedural pet rendering.
+2. Cultural Heritage / Sacred Lore (Public Domain): Reverent cultural tributes
+   inspired by traditional sacred epics (e.g. Mahabharata, Ramayana, Journey to
+   the West). Eligible for 3D rendering, disclaiming proprietary design ownership.
+3. Parody / Fan Homage (Legacy Franchise Tributes): Non-commercial fan homages
+   imitating third-party franchise characters. Categorized as `legacy` and
+   ineligible for 3D active pet rendering (`threeDEligible: false`).
+
+The script formats and checks the rows deterministically; running it twice
+produces byte-identical output.
 
 Usage:
     python scripts/generate_avatar_catalog.py [--output PATH] [--check]
@@ -54,13 +62,19 @@ ORIGINAL_ATTRIBUTION = {
     "creator": "Miyora contributors",
     "license": "CC0-1.0",
     "source": "scripts/generate_avatar_catalog.py",
-    "attribution": "Original Miyora design",
+    "attribution": "Original Miyora procedural character design",
 }
-LEGACY_ATTRIBUTION = {
-    "creator": "Third-party rights holder",
-    "license": "LicenseRef-Unlicensed",
+DEITY_TRIBUTE_ATTRIBUTION = {
+    "creator": "Traditional Cultural Heritage / Sacred Lore",
+    "license": "Public-Domain-Cultural-Heritage",
     "source": "scripts/generate_avatar_catalog.py",
-    "attribution": "Imitates a franchise character; no license is held. Legacy 2D use only.",
+    "attribution": "Cultural and devotional tribute inspired by traditional sacred iconography and epics. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+}
+PARODY_TRIBUTE_ATTRIBUTION = {
+    "creator": "Fan Tribute / Parody Community",
+    "license": "LicenseRef-Parody-Tribute-NonCommercial",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Fan tribute / parody homage. Not an official product; strictly unaffiliated with, unsponsored by, and unendorsed by original franchise rights holders. 2D legacy non-commercial use only.",
 }
 
 
@@ -73,28 +87,28 @@ def derive_identity(slug: str, name: str, title: str, body: str, tags: list[str]
         "aoi": ("composed", "Async Pipelines", "Calm code, steady commits, zero drama."),
         "kenji": ("relentless", "Root Cause Debugging", "Stack traces at 3 a.m. are the truest truth."),
         "mira": ("inquisitive", "Type Architecture", "I read build logs like constellations."),
-        "gojo": ("confident", "Fault Tolerance", "Don't sweat the compiler. I'm the strongest."),
-        "tanjiro": ("earnest", "Test-Driven TDD", "Work through every red test until it turns green!"),
-        "nezuko": ("protective", "Workspace Security", "Guarding your project workspace with gentle ferocity."),
+        "gojo": ("confident", "Limitless Technique & Infinite Void", "Don't worry. After all, I'm the strongest."),
+        "tanjiro": ("earnest", "Sun Breathing & Compassionate Resolve", "No matter how hard it gets, keep your heart burning and move forward!"),
+        "nezuko": ("protective", "Blood Demon Pyrokinesis & Gentle Vigilance", "Mmm-ph! (Vigilant guardian with an unbreakable heart of gold.)"),
         "zoro": ("stoic", "Dead-Code Elimination", "Nothing happened... just three clean commits."),
         "luffy": ("fearless", "Rapid Prototyping", "I'm gonna be the King of Shipped Features!"),
-        "saitama": ("deadpan", "Single-Pass Optimization", "One punch. One test. Done."),
-        "frieren": ("timeless", "Legacy Maintenance", "Take your time. A century of maintenance is nothing."),
+        "saitama": ("deadpan", "Overwhelming Casual Might & Supermarket Bargains", "Just an ordinary hero for fun. One punch is usually enough."),
+        "frieren": ("timeless", "Timeless Magic of the Age of Myth", "Zoltraak. A century is merely a blink. Take your time, and do it right."),
         "anya": ("cheerful", "Telepathic Linting", "Waku waku! All tests passed!"),
-        "krishna": ("serene", "Divine Orchestration", "Action without attachment ships the finest code."),
-        "hanuman": ("loyal", "Heavy Infrastructure", "Leaping across regions with boundless energy."),
+        "krishna": ("serene", "Nishkama Karma & Divine Harmony", "Devote yourself fully to the work, untouched by fear of the fruit."),
+        "hanuman": ("loyal", "Unwavering Devotion & Heroic Valor", "Jai Bajrangbali! With truth and devotion, no burden is too heavy."),
         "naruto": ("spirited", "Continuous Delivery", "Believe it! I never back down from a failing build."),
         "sasuke": ("intense", "Precision Refactoring", "Weak abstractions are unacceptable."),
-        "goku": ("cheerful", "Stress Testing", "This benchmark looks strong! Let's push it higher!"),
-        "vegeta": ("proud", "Zero-Regression CI", "A Saiyan prince does not push broken builds."),
+        "goku": ("cheerful", "Limit-Breaking Martial Mastery", "Hey, I'm Goku! Let's give it everything we've got!"),
+        "vegeta": ("proud", "Royal Saiyan Pride & Relentless Discipline", "A Saiyan Prince never settles for mediocrity. Surpass your limits!"),
         "levi": ("disciplined", "Code Cleanup", "Tidy your modules. Filthy code is unacceptable."),
         "mikasa": ("steadfast", "Branch Protection", "I will protect this repository at all costs."),
-        "denji": ("chaotic", "Brute-Force Patching", "If it runs, I get jam on my toast!"),
-        "power": ("boastful", "Chaos Engineering", "Bow before my genius! The bug was terrified of me!"),
+        "denji": ("chaotic", "Chainsaw Hybrid Tenacity", "Vroom vroom! If this works out, I get toast with three kinds of jam!"),
+        "power": ("boastful", "Blood Fiend Supreme Superiority", "Gwahahaha! Bow before my genius! Tremble before the Great Power!"),
         "pikachu": ("perky", "Cache Re-ignition", "Pika! Lighting up the build pipeline!"),
-        "shiva": ("transcendent", "Garbage Collection", "Destroying memory leaks with cosmic stillness."),
-        "arjuna": ("focused", "Targeted Unit Tests", "My focus never wavers from the target assertion."),
-        "sun-wukong": ("playful", "Distributed Chaos", "Seven-fold transformations for every deployment."),
+        "shiva": ("transcendent", "Cosmic Stillness & Dissolution", "Beyond the dance of time and form lies eternal stillness."),
+        "arjuna": ("focused", "Single-Pointed Focus & Heroic Aim", "My gaze sees neither branch nor leaf, but only the bird's eye."),
+        "sun-wukong": ("playful", "72 Earthly Transformations & Great Sage", "The Great Sage Equal to Heaven bows to no hardship!"),
         "ninja-cat": ("stealthy", "Silent Instrumentation", "Tracing execution unseen in the shadows."),
     }
     if slug in ICONIC:
@@ -175,16 +189,16 @@ CATALOG_PERSONALITIES = {
         "icon": "☁️",
         "treatName": "Peach",
         "treatEmoji": "🍑",
-        "feedReaction": "Mmm! Celestial peach! Power level rising, Chief! 🍑✨",
-        "wakeReaction": "Hahaha! The Great Sage awakens! Point me to the bugs! ⚡☁️",
-        "petReaction": "Hahaha! The Monkey King is energized! Celestial blessing for your keyboard! 🍑✨",
+        "feedReaction": "Immortal peach of Mount Huaguo! 500 years of celestial vigor restored! 🍑☁️",
+        "wakeReaction": "Hahaha! The Monkey King stirs! What mountain needs leaping today? ☁️⚡",
+        "petReaction": "Heh! A bold mortal! Take a golden hair of luck for your journey! 🍑✨",
         "dialogue": {
-            "idle": "Riding my Somersault Cloud. Ready when you are, Chief! ☁️",
-            "working": "My Gold-Banded Cudgel will crush these merge conflicts! ⚡",
-            "thinking": "Pondering the Dao of clean code... 🤔",
-            "success": "HA! Another feature vanquished! The heavens rejoice! 🎉",
-            "error": "A minor bug demon! Stand back, Chief, we'll smash it! 💪",
-            "sleeping": "Zzz... napping on my Somersault Cloud... ☁️💤"
+            "idle": "Lounging on the Somersault Cloud, watching the mortal world spin by. ☁️",
+            "working": "Spinning the As-You-Will Gold-Banded Cudgel with fearless flair! ⚡☁️",
+            "thinking": "Scratching chin... 72 transformations, and I only need one clever trick. 🤔",
+            "success": "HA! Vanquished in one sweep! Even the Jade Emperor would applaud! ☁️🎉",
+            "error": "A tricky demon appears! Fear not, Chief—my fiery golden eyes see right through it! 💪",
+            "sleeping": "Zzz... napping on a high branch in the Water Curtain Cave... 🌙☁️"
         }
     },
     "nezuko": {
@@ -192,16 +206,16 @@ CATALOG_PERSONALITIES = {
         "icon": "🌸",
         "treatName": "Tea",
         "treatEmoji": "🍵",
-        "feedReaction": "Mmm-ph! (Nezuko sips warm tea happily!) (◕‿◕)🍵",
-        "wakeReaction": "Mmm-ph! (Rubs her eyes and smiles warmly!) 🌸✨",
-        "petReaction": "Mmm-ph! (Nezuko smiles warmly and leans into your hand) 🌸💖",
+        "feedReaction": "Mmm-ph! (Nezuko sips warm roasted green tea happily!) (◕‿◕)🍵",
+        "wakeReaction": "Mmm-ph! (Rubs her eyes, adjusts her pink ribbon, and smiles warmly!) 🌸✨",
+        "petReaction": "Mmm-ph! (Nezuko pats your hand gently, filling the room with comforting warmth.) 🌸💖",
         "dialogue": {
-            "idle": "Keeping watch by your side. Hydrate when ready, Chief! 🍵",
-            "working": "Mmm! (Guarding your focus while you code!) ⚡🌸",
-            "thinking": "Mmm? (Tilts head curiously at the algorithm) 🤔",
-            "success": "Mmm-ph!! (Jumps with joy!) All tests passed! 🎉",
-            "error": "Mmm... (Hands you a lucky charm. We'll fix it!) 💪",
-            "sleeping": "Zzz... resting peacefully in her cozy box... 🌙💤"
+            "idle": "Keeping quiet watch by your side. You are safe here. 🍵",
+            "working": "Mmm! (Stands protectively, eyes fierce and ready to shield you!) 🌸⚡",
+            "thinking": "Mmm? (Tilts head with soft curiosity, observing every move.) 🤔",
+            "success": "Mmm-ph!! (Jumps with sparkling joy, clasping both hands together!) 🎉🌸",
+            "error": "Mmm... (Gently tugs your sleeve, offering quiet reassurance.) 💪",
+            "sleeping": "Zzz... resting peacefully in her cozy wooden box, safe from the sun... 🌙💤"
         }
     },
     "gojo": {
@@ -209,16 +223,16 @@ CATALOG_PERSONALITIES = {
         "icon": "♾️",
         "treatName": "Kikufuku",
         "treatEmoji": "🍡",
-        "feedReaction": "Sweet Kikufuku mochi! Cursed energy at maximum. 🍡✨",
-        "wakeReaction": "Back from the void. Ready to show them what real code looks like. ♾️",
-        "petReaction": "Infinity won't stop a good high-five from you, Chief! ♾️✨",
+        "feedReaction": "Sweet Kikufuku mochi! Ah, perfection. Cursed energy topped up. 🍡✨",
+        "wakeReaction": "Yawn... Lifting the blindfold. Who called for the honored one? ♾️",
+        "petReaction": "Careful now—Limitless usually stops everything, but I'll make an exception for you. ♾️✨",
         "dialogue": {
-            "idle": "Don't worry, Chief. I'm the strongest companion you've got. ♾️✨",
-            "working": "Unlimited Void deployed. Compiling at the speed of light. ♾️⚡",
-            "thinking": "Six Eyes analyzing every branch and memory allocation... 🤔",
-            "success": "Domain Expansion: Clean Architecture! Zero errors. 🚀",
-            "error": "A cursed exception appeared. I'll exorcise it in one pass. 🔍",
-            "sleeping": "Reversing cursed energy... even the strongest needs rest. 🌙"
+            "idle": "Relax. When you've got the strongest on your side, nothing is a crisis. ♾️",
+            "working": "Hollow Purple at the ready. Watch how fast this gets dismantled. ♾️⚡",
+            "thinking": "Six Eyes processing all incoming information at lightspeed... 🤔",
+            "success": "Domain Expansion: Infinite Void. Done. Didn't even break a sweat. ♾️🎉",
+            "error": "Oh? A curse with some backbone? Cute. Let me handle it. 🔍",
+            "sleeping": "Reversing cursed energy... even the strongest takes a five-minute power nap. 🌙"
         }
     },
     "zoro": {
@@ -243,16 +257,16 @@ CATALOG_PERSONALITIES = {
         "icon": "🏹",
         "treatName": "Honey",
         "treatEmoji": "🍯",
-        "feedReaction": "Saffron nectar! My archery focus is refreshed. 🍯🏹",
-        "wakeReaction": "Awake and vigilant. The Gandiva bow stands ready! 🏹",
-        "petReaction": "Honor and gratitude, Chief. Together our aim is true! 🏹✨",
+        "feedReaction": "Pure golden honey received. The warrior's focus and calm are renewed. 🍯🏹",
+        "wakeReaction": "The Gandiva bow is strung. A disciplined mind welcomes every challenge. 🏹",
+        "petReaction": "Honor and brotherhood. Together our aim remains true. 🏹✨",
         "dialogue": {
-            "idle": "Gandiva bow strung. Focus unbroken, Chief. 🏹",
-            "working": "Arrows of logic flying true to the target! ⚡🏹",
-            "thinking": "Surveying the battlefield of code... finding the clean route. 🤔",
-            "success": "Bullseye! Every test struck with precision! 🎯",
-            "error": "Adjusting stance! We'll strike the root cause together! 🛡️",
-            "sleeping": "Zzz... resting upon his chariot beneath the stars... 🌙"
+            "idle": "Maintaining calm vigilance. The mind is a bow; single-minded focus is the arrow. 🏹",
+            "working": "Releasing every action with patient mastery and unwavering poise. ⚡🏹",
+            "thinking": "Surveying the field with strategic stillness, seeking the righteous line. 🏹",
+            "success": "Bullseye. Flawless execution born of steady discipline and honor. 🎯🎉",
+            "error": "Calm your breath. Re-anchor your stance, nock the arrow, and draw again. 🏹🛡️",
+            "sleeping": "Resting upon his warrior's pavilion beneath the silent constellations... 🌙🏹"
         }
     },
     "ninja-cat": {
@@ -296,7 +310,13 @@ def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessorie
     tag_list = tags.split()
     default_p, default_s, default_cp = derive_identity(slug, name, title, body, tag_list)
     legacy = slug in LEGACY_FRANCHISE
-    category = "legacy" if legacy else "deity_inspired" if slug in DEITY_INSPIRED else BODY_CATEGORY[body]
+    deity = slug in DEITY_INSPIRED
+    category = "legacy" if legacy else "deity_inspired" if deity else BODY_CATEGORY[body]
+    attribution = (
+        PARODY_TRIBUTE_ATTRIBUTION if legacy
+        else DEITY_TRIBUTE_ATTRIBUTION if deity
+        else ORIGINAL_ATTRIBUTION
+    )
     character = {
         "schemaVersion": 1,
         "id": f"miyora.{slug}",
@@ -321,7 +341,7 @@ def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessorie
         "catchphrase": catchphrase or default_cp,
         "category": category,
         "threeDEligible": not legacy,
-        "attribution": LEGACY_ATTRIBUTION if legacy else ORIGINAL_ATTRIBUTION,
+        "attribution": attribution,
     }
     if slug in PROFILES and "companionPersonality" in PROFILES[slug]:
         character["companionPersonality"] = PROFILES[slug]["companionPersonality"]
@@ -851,7 +871,7 @@ def build_catalog() -> dict:
         "schemaVersion": 1,
         "creator": "Miyora contributors",
         "license": "CC0-1.0",
-        "source": "Original designs authored in scripts/generate_avatar_catalog.py",
+        "source": "scripts/generate_avatar_catalog.py",
         "characters": CHARACTERS,
     }
 

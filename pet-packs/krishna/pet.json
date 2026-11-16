@@ -4,11 +4,11 @@
   "name": "Krishna",
   "version": "1.0.0",
   "description": "Cute blue-skinned Krishna playing his golden flute with peacock feather. Premium cute desktop pet companion (3.0 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Traditional Cultural Heritage",
+  "license": "Public-Domain-Cultural-Heritage",
   "source": "https://github.com/agentpet/pet-packs/tree/main/krishna",
-  "attribution": "Original anime companion design for Krishna. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Devotional and cultural tribute inspired by traditional sacred iconography of Lord Krishna. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -235,20 +235,20 @@
     "krishna"
   ],
   "personality": {
-    "themeColor": "#38bdf8",
+    "themeColor": "#3b82f6",
     "icon": "🪈",
     "treatName": "Makhan",
-    "treatEmoji": "🍯",
-    "feedReaction": "Sacred makhan! Divine harmony flows through your code. 🍯🪈",
-    "wakeReaction": "The dawn flute awakens wisdom. Let clarity guide our work today. 🪈",
-    "petReaction": "Divine grace upon your endeavors, Chief. Work in peace. 🪈💖",
+    "treatEmoji": "🧈",
+    "feedReaction": "Fresh churned makhan! Sweet joy and laughter echo across the groves. 🧈🪈",
+    "wakeReaction": "The dawn flute melody rises. Awaken with a light heart and clear vision! 🪈✨",
+    "petReaction": "May your path be blessed with wisdom, joy, and serene clarity. 🪈💖",
     "dialogue": {
-      "idle": "Act with steadfast purpose, Chief. The code will flourish. 🪈✨",
-      "working": "Performing code karma with focus and devotion. 🪈⚡",
-      "thinking": "The cosmic flute guides the flow of every abstraction... 🤔",
-      "success": "Victory without attachment! The architecture sings in harmony! 🪈🎉",
-      "error": "Every obstacle is an invitation to deeper understanding, Chief. 🧘",
-      "sleeping": "Resting in cosmic stillness beneath the kadamba tree... 🌙"
+      "idle": "Listen closely. Beneath the whirlwind of thoughts, peace is already yours. 🪈",
+      "working": "Pour your best into the task at hand with an untroubled spirit. 🪈✨",
+      "thinking": "Contemplating dharma and the subtle harmony of all creation... 🪈",
+      "success": "A noble endeavor completed with grace, poise, and joyous rhythm! 🪈🎉",
+      "error": "A stumble on the path is merely a lesson in balance. Steady your heart and proceed. 🪈✨",
+      "sleeping": "Resting peacefully beneath Kadamba blossoms beside the gentle Yamuna... 🌙🪈"
     }
   }
 }

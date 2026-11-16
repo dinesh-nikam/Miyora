@@ -4,11 +4,11 @@
   "name": "Light",
   "version": "1.0.0",
   "description": "Composed Light Yagami in school blazer holding the black notebook. Premium cute desktop pet companion (3.4 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Fan Tribute / Parody Community",
+  "license": "LicenseRef-Parody-Tribute-NonCommercial",
   "source": "https://github.com/agentpet/pet-packs/tree/main/light",
-  "attribution": "Original anime companion design for Light. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Fan tribute homage inspired by Light (Death Note). Strictly non-commercial parody / fan tribute; not an official product, not affiliated with or endorsed by original rights holders.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -235,20 +235,20 @@
     "light"
   ],
   "personality": {
-    "themeColor": "#b45309",
+    "themeColor": "#b91c1c",
     "icon": "📓",
-    "treatName": "RedApple",
+    "treatName": "Apple",
     "treatEmoji": "🍎",
-    "feedReaction": "Crisp red apple. Shinigami-approved perfection. 🍎📓",
-    "wakeReaction": "Fountain pen unscrewed. Today we establish perfect order. 📓",
-    "petReaction": "Everything is proceeding according to calculation, Chief. 📓✨",
+    "feedReaction": "A crisp red apple. Delicious... Ryuk would have fought me for this. 🍎📓",
+    "wakeReaction": "Awake and composed. Every move today is calculated ten steps ahead. 📓",
+    "petReaction": "Your loyalty is noted. Together, our vision is inevitable. 📓✨",
     "dialogue": {
-      "idle": "Reviewing requirements with surgical precision. Perfect grades. 📓",
-      "working": "Writing the fatal fix into the notebook with grand flourishes! 📓⚡",
-      "thinking": "Simulating all opponent edge cases twelve steps ahead... 🤔",
-      "success": "EXACTLY AS PLANNED! An immaculate, bug-free deployment! 📓🎉",
-      "error": "A temporary nuisance. I will rewrite reality to eliminate it. 🖊️",
-      "sleeping": "Zzz... resting composed at his study desk with pen capped... 🌙"
+      "idle": "Flipping through notes with steady poise. Order will prevail. 📓",
+      "working": "Writing the definitive sequence. Every contingency has been anticipated. 📓⚡",
+      "thinking": "Anticipating every possible objection and counter-move twelve steps ahead... 🤔",
+      "success": "Exactly as planned! An immaculate outcome without a single flaw. 📓🎉",
+      "error": "A minor obstacle. It changes nothing. I will reshape the circumstances. 🖊️",
+      "sleeping": "Zzz... resting composed at his desk with pen capped and thoughts silent... 🌙"
     }
   }
 }

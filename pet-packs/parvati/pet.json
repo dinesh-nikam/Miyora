@@ -4,11 +4,11 @@
   "name": "Parvati",
   "version": "1.0.0",
   "description": "Loving and motherly Parvati in rich emerald green and gold sari. Premium cute desktop pet companion (3.2 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Traditional Cultural Heritage",
+  "license": "Public-Domain-Cultural-Heritage",
   "source": "https://github.com/agentpet/pet-packs/tree/main/parvati",
-  "attribution": "Original anime companion design for Parvati. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Devotional and cultural tribute inspired by traditional sacred iconography of Goddess Parvati. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -239,16 +239,16 @@
     "icon": "🏔️",
     "treatName": "Panchamrit",
     "treatEmoji": "🍯",
-    "feedReaction": "Sweet nectar of the mountain peaks! Nourishing grace! 🍯🏔️",
-    "wakeReaction": "Mountain morning sun shines bright. Let us nurture greatness! 🏔️✨",
-    "petReaction": "A motherly blessing of clarity and gentle inspiration. 🏔️💖",
+    "feedReaction": "Sweet mountain nectar received with grace. Strength and peace flow. 🍯🏔️",
+    "wakeReaction": "Morning light touches the snowy peaks. A new day of growth unfolds! 🏔️✨",
+    "petReaction": "A mother's protective blessing of courage, warmth, and resilience. 🏔️💖",
     "dialogue": {
-      "idle": "Standing tall like the Himalayas. Rest your tired eyes. 🏔️",
-      "working": "Nurturing brittle modules into sturdy mountain architecture! 🏔️⚡",
-      "thinking": "Channeling the timeless patience of the peaks... 🤔",
-      "success": "Golden blossom! Sturdy and serene release deployed! 🏔️🎉",
-      "error": "A rocky path is merely an invitation to climb higher. 🏔️🛡️",
-      "sleeping": "Zzz... resting in high Himalayan snow-dusted quiet... 🌙"
+      "idle": "Standing steady as the Himalayas. Rest your eyes and take heart. 🏔️",
+      "working": "Transforming raw hardship into enduring strength with quiet patience. 🏔️✨",
+      "thinking": "Drawing upon the deep, unshakeable calm of the high peaks... 🏔️",
+      "success": "Golden bloom upon the crags! True perseverance always bears fruit. 🏔️🎉",
+      "error": "A rugged path only teaches the climber to plant their feet more firmly. 🏔️🛡️",
+      "sleeping": "Resting in the high Himalayan sanctuary, enveloped in peaceful quiet... 🌙🏔️"
     }
   }
 }

@@ -4,11 +4,11 @@
   "name": "Shiva",
   "version": "1.0.0",
   "description": "Peaceful Shiva with blue skin, crescent moon, and golden trishula. Premium cute desktop pet companion (3.3 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Traditional Cultural Heritage",
+  "license": "Public-Domain-Cultural-Heritage",
   "source": "https://github.com/agentpet/pet-packs/tree/main/shiva",
-  "attribution": "Original anime companion design for Shiva. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Devotional and cultural tribute inspired by traditional sacred iconography of Lord Shiva. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -235,20 +235,20 @@
     "shiva"
   ],
   "personality": {
-    "themeColor": "#0284c7",
+    "themeColor": "#38bdf8",
     "icon": "🔱",
-    "treatName": "Belpatra",
-    "treatEmoji": "🌿",
-    "feedReaction": "Sacred offering accepted. Peaceful serenity restored. 🌿🔱",
-    "wakeReaction": "The third eye opens upon the dance of creation and code. 🔱",
-    "petReaction": "Tranquil blessings flow into your creative flow, Chief. 🔱✨",
+    "treatName": "Bael",
+    "treatEmoji": "🍃",
+    "feedReaction": "Sacred bilva leaves accepted with quiet grace. Cosmic stillness deepens. 🍃🔱",
+    "wakeReaction": "From the depths of timeless meditation, consciousness turns toward the world. 🔱✨",
+    "petReaction": "The tranquil stillness of Mount Kailash settles across your thoughts. 🔱❄️",
     "dialogue": {
-      "idle": "Standing in calm stillness. Ready to begin, Chief. 🔱",
-      "working": "The Tandava dance dissolves legacy debt into elegant forms. 🔱⚡",
-      "thinking": "Deep meditation uncovers the root of all complexity... 🤔",
-      "success": "Perfect equilibrium achieved. The architecture stands eternal. 🔱🎉",
-      "error": "Dissolution precedes creation. We refine and rebuild. 🧘",
-      "sleeping": "In deep samadhi on Mount Kailash... 🌙🔱"
+      "idle": "Abiding in serene silence upon the heights of Kailash. 🔱",
+      "working": "Harmonizing the rhythms of existence with calm, effortless poise. 🔱✨",
+      "thinking": "Gazing past the transient veil of illusion into essential truth. 🔱",
+      "success": "Equilibrium restored. All things return to peace and quiet perfection. 🌌🔱",
+      "error": "Let no momentary storm disturb your core. In stillness, all tension dissolves. 🔱",
+      "sleeping": "Submerged in timeless samadhi beyond the cycles of day and night... 🌙🔱"
     }
   }
 }

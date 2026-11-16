@@ -4,11 +4,11 @@
   "name": "Rama",
   "version": "1.0.0",
   "description": "Dignified blue-skinned Rama standing calmly with his Kodanda bow. Premium cute desktop pet companion (3.4 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Traditional Cultural Heritage",
+  "license": "Public-Domain-Cultural-Heritage",
   "source": "https://github.com/agentpet/pet-packs/tree/main/rama",
-  "attribution": "Original anime companion design for Rama. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Devotional and cultural tribute inspired by Ramayana epic lore and traditional depictions of Lord Rama. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -239,16 +239,16 @@
     "icon": "🏹",
     "treatName": "Ber",
     "treatEmoji": "🍇",
-    "feedReaction": "Sweet wild berries of devotion! My vow is renewed. 🍇🏹",
-    "wakeReaction": "The Kodanda bow is strung. Duty calls us forward! 🏹✨",
-    "petReaction": "Honor and righteous strength guide your keyboard today, Chief. 🏹✨",
+    "feedReaction": "Sweet wild berries offered with genuine devotion. The sacred vow is renewed. 🍇🏹",
+    "wakeReaction": "The Kodanda bow stands strung. The dawn calls us to righteous duty. 🏹✨",
+    "petReaction": "May righteousness, wisdom, and inner nobility guide all your actions. 🏹✨",
     "dialogue": {
-      "idle": "Vigilant guardian of truth. Stand firm in your principles. 🏹",
-      "working": "Releasing arrows of immutable logic straight to the goal! 🏹⚡",
-      "thinking": "Evaluating the path of highest virtue and stability... 🤔",
-      "success": "Dharma upheld! The release is sound, just, and unbreakable! 🏹🎉",
-      "error": "An adversary bug. Righteous resolve shall pierce its core. 🏹🛡️",
-      "sleeping": "Zzz... resting under the watchful stars of the forest hermitage... 🌙"
+      "idle": "Vigilant guardian of truth and virtue. Walk your path with honor. 🏹",
+      "working": "Stepping forward with calm nobility, piercing all deceit with light. 🏹⚡",
+      "thinking": "Weighing every action on the scales of dharma and compassion... 🏹",
+      "success": "Righteousness upheld. An honorable labor brought to worthy completion. 🏹🎉",
+      "error": "Adversity is the measure of character. Stand tall in integrity. 🏹🛡️",
+      "sleeping": "Resting beneath the forest canopy, peace reigning over the hermitage... 🌙🏹"
     }
   }
 }

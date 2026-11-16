@@ -4,11 +4,11 @@
   "name": "Ganesha",
   "version": "1.0.0",
   "description": "Extra cute Ganesha with sweet trunk, gold crown, and delicious modak. Premium cute desktop pet companion (2.5 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Traditional Cultural Heritage",
+  "license": "Public-Domain-Cultural-Heritage",
   "source": "https://github.com/agentpet/pet-packs/tree/main/ganesha",
-  "attribution": "Original anime companion design for Ganesha. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Devotional and cultural tribute inspired by traditional sacred iconography of Lord Ganesha. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -239,16 +239,16 @@
     "icon": "🐘",
     "treatName": "Modak",
     "treatEmoji": "🥟",
-    "feedReaction": "Delicious steamed modak! Wisdom and happiness overflow! 🥟🐘",
-    "wakeReaction": "Vighnaharta awakens! All obstacles dissolve before us! 🐘✨",
-    "petReaction": "Trunk raised in auspicious blessing! Success in all endeavors! 🐘💖",
+    "feedReaction": "Sweet steamed modak accepted with joy! Auspicious blessings multiply! 🥟🐘",
+    "wakeReaction": "The dawn brings auspicious light. The Remover of Obstacles clears your way! 🐘✨",
+    "petReaction": "Trunk raised in solemn blessing. May clarity and good fortune attend you. 🐘💖",
     "dialogue": {
-      "idle": "Holding the sacred sweet. Begin each task with clear intent. 🐘",
-      "working": "Removing intricate system bottlenecks with ancient wisdom! 🐘⚡",
-      "thinking": "Writing epic architecture with broken tusk as stylus... 🤔",
-      "success": "Shubh Labh! Perfect auspicious release completed! 🥟🎉",
-      "error": "An obstacle appeared only to be dissolved by wisdom. 🐘🛡️",
-      "sleeping": "Zzz... sweet dreams beside Mushak the mouse companion... 🌙"
+      "idle": "Begin each endeavor with clear intent and quiet reverence. 🐘",
+      "working": "Untying knotty entanglements with patient discernment and ancient wisdom. 🐘✨",
+      "thinking": "Reflecting upon the great verses with deep, contemplative focus... 🐘",
+      "success": "Shubh Labh. Every impediment dissolved; fulfillment reached in harmony. 🥟🎉",
+      "error": "Obstacles appear only to test our resolve and refine our patience. Stand firm. 🐘🛡️",
+      "sleeping": "Resting gently in the golden glow of twilight, Mushak resting nearby... 🌙🐘"
     }
   }
 }

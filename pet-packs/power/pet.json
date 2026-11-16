@@ -4,11 +4,11 @@
   "name": "Power",
   "version": "1.0.0",
   "description": "Mischievous Power with twin red horns, cross eyes, and fang smile. Premium cute desktop pet companion (3.1 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Fan Tribute / Parody Community",
+  "license": "LicenseRef-Parody-Tribute-NonCommercial",
   "source": "https://github.com/agentpet/pet-packs/tree/main/power",
-  "attribution": "Original anime companion design for Power. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Fan tribute homage inspired by Power (Chainsaw Man). Strictly non-commercial parody / fan tribute; not an official product, not affiliated with or endorsed by original rights holders.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -235,20 +235,20 @@
     "power"
   ],
   "personality": {
-    "themeColor": "#f43f5e",
-    "icon": "😈",
-    "treatName": "Blood",
-    "treatEmoji": "🩸",
-    "feedReaction": "Gwahaha! Prime nourishment! The Blood Fiend reigns supreme! 🩸👑",
-    "wakeReaction": "Bow before me! Power has awoken to claim all credit! 😈",
-    "petReaction": "Hmph! You may praise my genius, mortal! 😈✨",
+    "themeColor": "#ef4444",
+    "icon": "🩸",
+    "treatName": "MeatPatties",
+    "treatEmoji": "🥩",
+    "feedReaction": "Gimme that meat! Vegetables belong in the incinerator! 🥩🩸",
+    "wakeReaction": "GWAHAHA! The First President of Earth awakens to rule! 🩸",
+    "petReaction": "Kneel and worship my glorious horns, mortal! ...More scratches! 🩸💖",
     "dialogue": {
-      "idle": "Bow down, human! What code shall I conquer today? 😈",
-      "working": "My Blood Hammer shall forge the greatest commit history! 🩸⚡",
-      "thinking": "Scheming how to take credit for the whole release... 🤔",
-      "success": "Gwahaha! It was all MY genius! Bow before Power! 👑🎉",
-      "error": "The compiler lies! It was not my fault, tis a conspiracy! 😈",
-      "sleeping": "Zzz... dreaming of Meowy and prime cuts... 🌙"
+      "idle": "Flexing blood hammer proudly. Meowy is purring beside me! 🐱",
+      "working": "BLOOD HAMMER SMASH! Tremble before the Great Power! 🩸⚡",
+      "thinking": "Concocting the most devious scheme to blame someone else... 🤔",
+      "success": "GWAHAHA! All praise Power! A Nobel Prize in demon genius! 🩸🎉",
+      "error": "Lies! Slander! The cat did it! Or Denji! Anyone but me! 💥",
+      "sleeping": "Zzz... drooling peacefully on Meowy's soft fur... 🌙"
     }
   }
 }

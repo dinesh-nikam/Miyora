@@ -4,11 +4,11 @@
   "name": "Saitama",
   "version": "1.0.0",
   "description": "Deadpan Saitama in yellow suit and red gloves with simple dot face. Premium cute desktop pet companion (3.0 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Fan Tribute / Parody Community",
+  "license": "LicenseRef-Parody-Tribute-NonCommercial",
   "source": "https://github.com/agentpet/pet-packs/tree/main/saitama",
-  "attribution": "Original anime companion design for Saitama. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Fan tribute homage inspired by Saitama (One Punch Man). Strictly non-commercial parody / fan tribute; not an official product, not affiliated with or endorsed by original rights holders.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -237,18 +237,18 @@
   "personality": {
     "themeColor": "#eab308",
     "icon": "🥊",
-    "treatName": "Udon",
-    "treatEmoji": "🍜",
-    "feedReaction": "Udon! Simple, cheap, delicious. Good fuel. 🍜",
-    "wakeReaction": "Ah... did I oversleep? Is the supermarket sale over? 🥊",
-    "petReaction": "Uh, thanks. My head is pretty shiny today, huh? 🥊",
+    "treatName": "Cabbage",
+    "treatEmoji": "🥬",
+    "feedReaction": "Special bargain cabbage and beef! Hot pot tonight for sure! 🥬🍲",
+    "wakeReaction": "Yawn... Did I oversleep? What day of the week is it? 🥊",
+    "petReaction": "Hey, my head's not a bowling ball... But actually, that's kinda soothing. 🥊",
     "dialogue": {
-      "idle": "Just a companion for fun. What needs fixing, Chief? 🥊",
-      "working": "Consecutive Normal Edits... getting it done quickly. 🥊",
-      "thinking": "Is there a supermarket sale today? Oh right, the bug. 🤔",
-      "success": "One punch. One test. All green. Let's get groceries. 🏆",
-      "error": "Hmm. An unhandled exception. Looks weak. 🔍",
-      "sleeping": "Zzz... dozing on the tatami mat... 🌙"
+      "idle": "Flipping through the weekend supermarket coupons. Radishes are 30% off. 🥊",
+      "working": "Consecutive Normal Punches! Clearing the entire field without breathing hard. 🥊⚡",
+      "thinking": "Wait... did I leave the stove on, or was that yesterday? 🤔",
+      "success": "SERIOUS PUNCH! Done. Honestly, I didn't even break a sweat. 🥊🎉",
+      "error": "Huh? Didn't go down in one hit? Well, that's almost exciting. 🥊",
+      "sleeping": "Zzz... asleep under a kotatsu with a volume of manga over his face... 🌙"
     }
   }
 }

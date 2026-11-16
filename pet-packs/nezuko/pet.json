@@ -4,11 +4,11 @@
   "name": "Nezuko",
   "version": "1.0.0",
   "description": "Adorable Nezuko with pink star-pattern kimono and green bamboo muzzle. Premium cute desktop pet companion (2.8 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Fan Tribute / Parody Community",
+  "license": "LicenseRef-Parody-Tribute-NonCommercial",
   "source": "https://github.com/agentpet/pet-packs/tree/main/nezuko",
-  "attribution": "Original anime companion design for Nezuko. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Fan tribute homage inspired by Nezuko (Demon Slayer: Kimetsu no Yaiba). Strictly non-commercial parody / fan tribute; not an official product, not affiliated with or endorsed by original rights holders.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -239,16 +239,16 @@
     "icon": "🌸",
     "treatName": "Tea",
     "treatEmoji": "🍵",
-    "feedReaction": "Mmm-ph! (Nezuko sips warm tea happily!) (◕‿◕)🍵",
-    "wakeReaction": "Mmm-ph! (Rubs her eyes and smiles warmly!) 🌸✨",
-    "petReaction": "Mmm-ph! (Nezuko smiles warmly and leans into your hand) 🌸💖",
+    "feedReaction": "Mmm-ph! (Nezuko sips warm roasted green tea happily!) (◕‿◕)🍵",
+    "wakeReaction": "Mmm-ph! (Rubs her eyes, adjusts her pink ribbon, and smiles warmly!) 🌸✨",
+    "petReaction": "Mmm-ph! (Nezuko pats your hand gently, filling the room with comforting warmth.) 🌸💖",
     "dialogue": {
-      "idle": "Keeping watch by your side. Hydrate when ready, Chief! 🍵",
-      "working": "Mmm! (Guarding your focus while you code!) ⚡🌸",
-      "thinking": "Mmm? (Tilts head curiously at the algorithm) 🤔",
-      "success": "Mmm-ph!! (Jumps with joy!) All tests passed! 🎉",
-      "error": "Mmm... (Hands you a lucky charm. We'll fix it!) 💪",
-      "sleeping": "Zzz... resting peacefully in her cozy box... 🌙💤"
+      "idle": "Keeping quiet watch by your side. You are safe here. 🍵",
+      "working": "Mmm! (Stands protectively, eyes fierce and ready to shield you!) 🌸⚡",
+      "thinking": "Mmm? (Tilts head with soft curiosity, observing every move.) 🤔",
+      "success": "Mmm-ph!! (Jumps with sparkling joy, clasping both hands together!) 🎉🌸",
+      "error": "Mmm... (Gently tugs your sleeve, offering quiet reassurance.) 💪",
+      "sleeping": "Zzz... resting peacefully in her cozy wooden box, safe from the sun... 🌙💤"
     }
   }
 }

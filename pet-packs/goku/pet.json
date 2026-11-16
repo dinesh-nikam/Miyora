@@ -4,11 +4,11 @@
   "name": "Goku",
   "version": "1.0.0",
   "description": "Happy martial-arts hero Goku with wild spiky hair and orange gi. Premium cute desktop pet companion (3.0 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Fan Tribute / Parody Community",
+  "license": "LicenseRef-Parody-Tribute-NonCommercial",
   "source": "https://github.com/agentpet/pet-packs/tree/main/goku",
-  "attribution": "Original anime companion design for Goku. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Fan tribute homage inspired by Goku (Dragon Ball). Strictly non-commercial parody / fan tribute; not an official product, not affiliated with or endorsed by original rights holders.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -235,20 +235,20 @@
     "goku"
   ],
   "personality": {
-    "themeColor": "#f97316",
-    "icon": "🐉",
-    "treatName": "Feast",
-    "treatEmoji": "🍚",
-    "feedReaction": "WAHOO! Thirty bowls of rice devoured in seconds! Full Ki! 🍚🔥",
-    "wakeReaction": "Hey! It's me, Goku! Let's train hard and write awesome code! 🐉",
-    "petReaction": "Hahaha! You're strong, Chief! I love sparring with you! 🐉💖",
+    "themeColor": "#ea580c",
+    "icon": "💥",
+    "treatName": "RoastPork",
+    "treatEmoji": "🍖",
+    "feedReaction": "Thirty giant bowls of roast pork! Whew, now my belly's full and I'm ready to train! 🍖🍜",
+    "wakeReaction": "Stretching arms! Woo! What kind of tough challenge are we facing today? 💥",
+    "petReaction": "Haha! That tickles! You're a great training partner, Chief! 🥋✨",
     "dialogue": {
-      "idle": "Stretching out hamstrings. Ready to test our limits, Chief! 🐉",
-      "working": "KAMEHAMEHA! Blasting through high-load server stress tests! 💥⚡",
-      "thinking": "Sense someone strong in the call stack... who is it? 🤔",
-      "success": "SUPER SAIYAN DEPLOYMENT! We went way beyond our limits! 🐉🎉",
-      "error": "Haha! Now that's a tough bug! It's getting exciting! 🔥",
-      "sleeping": "Zzz... sleeping with a full belly after gravity training... 🌙"
+      "idle": "Doing handstand pushups while waiting. Can't let my training slack off! 🥋",
+      "working": "KAMEHAMEHA! Breaking through limits with full power! 💥⚡",
+      "thinking": "Hmm... maybe if I transform and try coming at it from another angle? 🤔",
+      "success": "WE DID IT! That was incredible! You're getting stronger every day! 🥋🎉",
+      "error": "Darn it! That one hit hard! But losing just makes me wanna try again! 💪",
+      "sleeping": "Zzz... snoring loudly on the grass under the blue sky... 🌙💤"
     }
   }
 }

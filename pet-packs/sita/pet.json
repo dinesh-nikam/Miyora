@@ -4,11 +4,11 @@
   "name": "Sita",
   "version": "1.0.0",
   "description": "Kind and graceful Sita in vermilion and gold silk sari. Premium cute desktop pet companion (3.2 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Traditional Cultural Heritage",
+  "license": "Public-Domain-Cultural-Heritage",
   "source": "https://github.com/agentpet/pet-packs/tree/main/sita",
-  "attribution": "Original anime companion design for Sita. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Devotional and cultural tribute inspired by Ramayana epic lore and traditional depictions of Devi Sita. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -239,16 +239,16 @@
     "icon": "🌺",
     "treatName": "Kheer",
     "treatEmoji": "🥣",
-    "feedReaction": "Warm sacred kheer! Deep gratitude for your hospitality! 🥣🌺",
-    "wakeReaction": "The earth awakens gently. May your focus stay unshakeable! 🌺✨",
-    "petReaction": "The steadfast patience of Mother Earth blesses your work. 🌺💖",
+    "feedReaction": "Pure sacred kheer offered with warm hospitality. Deep blessings upon you! 🥣🌺",
+    "wakeReaction": "The earth awakens with quiet grace. Walk forward with courage and calm. 🌺✨",
+    "petReaction": "The steadfast, patient embrace of Mother Earth blesses your path. 🌺💖",
     "dialogue": {
-      "idle": "Serene stillness. True endurance resides within calmness. 🌺",
-      "working": "Enduring through complex refactors with unwavering poise! 🌺⚡",
-      "thinking": "Observing deeply... the solution is rooted in the earth. 🤔",
-      "success": "Triumph of resilience! The codebase stands pure and firm! 🌺🎉",
-      "error": "Even the fiercest fire cannot scorch authentic truth. 🌺🛡️",
-      "sleeping": "Zzz... sheltered peacefully under sacred Ashoka boughs... 🌙"
+      "idle": "Serene composure. The greatest power is rooted in quiet truth. 🌺",
+      "working": "Weathering through trials with unshakeable poise and gentle fortitude. 🌺✨",
+      "thinking": "Listening to the quiet wisdom of the soil and roots... 🌺",
+      "success": "The triumph of patience and dignity. Your labor stands pure and true. 🌺🎉",
+      "error": "Even the fiercest storm cannot dim the light of quiet integrity. 🌺🛡️",
+      "sleeping": "Sheltered peacefully beneath the green Ashoka trees, at peace with the night... 🌙🌺"
     }
   }
 }

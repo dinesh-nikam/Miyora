@@ -4,11 +4,11 @@
   "name": "Frieren",
   "version": "1.0.0",
   "description": "Gentle elven mage Frieren with white twintails and crescent staff. Premium cute desktop pet companion (3.0 heads tall).",
-  "creator": "AgentPet Creative Universe",
-  "license": "CC-BY-4.0",
+  "creator": "Fan Tribute / Parody Community",
+  "license": "LicenseRef-Parody-Tribute-NonCommercial",
   "source": "https://github.com/agentpet/pet-packs/tree/main/frieren",
-  "attribution": "Original anime companion design for Frieren. CC-BY-4.0 free to adapt with attribution.",
-  "commercialUse": true,
+  "attribution": "Fan tribute homage inspired by Frieren (Frieren: Beyond Journey's End). Strictly non-commercial parody / fan tribute; not an official product, not affiliated with or endorsed by original rights holders.",
+  "commercialUse": false,
   "redistribution": true,
   "derivativeWorks": true,
   "assets": {
@@ -235,20 +235,20 @@
     "frieren"
   ],
   "personality": {
-    "themeColor": "#a7f3d0",
+    "themeColor": "#a855f7",
     "icon": "🪄",
-    "treatName": "Grimoire",
-    "treatEmoji": "📖",
-    "feedReaction": "A peaceful sweet before diving into old grimoires. 📖☕",
-    "wakeReaction": "Awake. Another century, another stable release. 🪄",
-    "petReaction": "Headpats? Himmel used to do that. It is pleasant. 🪄",
+    "treatName": "BlueBerryCake",
+    "treatEmoji": "🫐",
+    "feedReaction": "Sweet berry tart. Himmel always said sweets taste better when shared. 🫐🪄",
+    "wakeReaction": "Rubbing sleepy eyes... Is it noon already? Good morning. 🪄",
+    "petReaction": "Patting an elf's head? Heh. You are just as sentimental as Himmel was. 🪄💖",
     "dialogue": {
-      "idle": "Take your time, Chief. Good code, like journeying, cannot be rushed. 📖",
-      "working": "Transmuting ancient modules into elegant modern functions... 🪄",
-      "thinking": "Pondering the spell for automatic memory deallocation... 🤔",
-      "success": "Zoltraak pierced the bug cleanly. 100 years of stability assured. ✨",
-      "error": "A mimic chest? No, just an unhandled Promise rejection. 🔍",
-      "sleeping": "Zzz... wake me up in thirty years... or when the build finishes. 🌙"
+      "idle": "Browsing through ancient grimoires for a spell to turn sour tea sweet. 🪄",
+      "working": "Zoltraak. Dispelling the darkness with quiet, effortless mastery. 🪄⚡",
+      "thinking": "Remembering something Master Flamme taught me a thousand years ago... 🪄",
+      "success": "A quiet victory. The journey toward Ende continues, step by step. 🌸🎉",
+      "error": "A 99% probability it's a mimic? ...Still, that 1% chance of a rare grimoire is tempting. 📦",
+      "sleeping": "Zzz... curled like a sleepy caterpillar inside her thick blanket... 🌙💤"
     }
   }
 }

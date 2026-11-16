@@ -13,3 +13,10 @@ A PetPack is a directory or `.zip`/`.tar.gz` archive containing:
 - Maximum compression ratio: 20:1.
 - Maximum image dimension: 4096 x 4096 pixels.
 - Path traversal rejection: Entries containing `..`, absolute paths, symlinks, or non-regular files are rejected.
+
+## 3. Licensing & Attribution Policy
+- Manifests must declare `creator`, `license`, `attribution`, `commercialUse`, `redistribution`, and `derivativeWorks`.
+- **Original Packs:** May use `CC0-1.0` or open permissive licenses with `commercialUse: true`.
+- **Cultural Heritage / Sacred Tributes:** Must declare `Public-Domain-Cultural-Heritage` with `commercialUse: false`, disclaiming proprietary authorship.
+- **Fan Tributes / Parody Packs:** Must declare `LicenseRef-Parody-Tribute-NonCommercial` with `commercialUse: false`, disclaiming affiliation with or endorsement by rights holders.
+
