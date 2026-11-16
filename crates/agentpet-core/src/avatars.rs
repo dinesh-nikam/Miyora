@@ -468,9 +468,7 @@ impl Core {
         let selection = self.avatar_selection()?;
         let connection = self.lock_connection()?;
         if selection.source == AvatarSource::Custom {
-            if let Some(row) = load_custom(&connection, &selection.avatar_id)?
-                .filter(|row| row.summary.kind == AvatarKind::Procedural)
-            {
+            if let Some(row) = load_custom(&connection, &selection.avatar_id)? {
                 let summary = row.summary;
                 return Ok(ResolvedAvatar {
                     source: AvatarSource::Custom,
@@ -525,7 +523,13 @@ impl Core {
                     .optional()?;
                 match kind {
                     None => return Err(CoreError::AvatarNotFound(avatar_id.to_owned())),
-                    Some(kind) => AvatarKind::parse(&kind)? == AvatarKind::Procedural,
+                    Some(kind) => {
+                        let parsed = AvatarKind::parse(&kind)?;
+                        matches!(
+                            parsed,
+                            AvatarKind::Procedural | AvatarKind::ImageSculpt | AvatarKind::Vrm
+                        )
+                    }
                 }
             }
         };
@@ -1219,14 +1223,13 @@ mod tests {
             .custom_avatar_model(&style.avatar_id, &library)
             .is_err());
 
-        // Image sculpts are not rigged pets, so they cannot become active.
-        assert!(matches!(
-            core.select_avatar(AvatarSource::Custom, &sculpt.avatar_id),
-            Err(CoreError::InvalidAvatar(_))
-        ));
+        // Image sculpts can become active as 3D relief pets.
+        assert!(core
+            .select_avatar(AvatarSource::Custom, &sculpt.avatar_id)
+            .is_ok());
         assert_eq!(
             core.resolve_avatar().expect("resolve").kind,
-            AvatarKind::Procedural
+            AvatarKind::ImageSculpt
         );
 
         // Tampering with the stored model is detected.
