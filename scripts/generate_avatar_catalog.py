@@ -1,903 +1,903 @@
-#!/usr/bin/env python3
-"""Generate the bundled 3D character catalog.
-
-Rows are hand-authored character designs for the procedural renderer, categorized
-into a clean three-tier taxonomy:
-1. Original Miyora Designs (CC0-1.0): Original characters created for Miyora.
-   Fully eligible for 3D procedural pet rendering.
-2. Cultural Heritage / Sacred Lore (Public Domain): Reverent cultural tributes
-   inspired by traditional sacred epics (e.g. Mahabharata, Ramayana, Journey to
-   the West). Eligible for 3D rendering, disclaiming proprietary design ownership.
-3. Parody / Fan Homage (Legacy Franchise Tributes): Non-commercial fan homages
-   imitating third-party franchise characters. Categorized as `legacy` and
-   ineligible for 3D active pet rendering (`threeDEligible: false`).
-
-The script formats and checks the rows deterministically; running it twice
-produces byte-identical output.
-
-Usage:
-    python scripts/generate_avatar_catalog.py [--output PATH] [--check]
-
---check exits with status 1 when the committed catalog differs from the
-generated one (useful in CI).
-"""
-
-from __future__ import annotations
-
-import argparse
-import json
-import re
-import sys
-from pathlib import Path
-
-try:
-    from character_profiles import PROFILES
-except ImportError:
-    from scripts.character_profiles import PROFILES
-
-ROOT = Path(__file__).resolve().parent.parent
-DEFAULT_OUTPUT = ROOT / "crates" / "avatar" / "catalog" / "characters.json"
-
-BODIES = {"humanoid", "beast", "robot", "slime", "bird"}
-EARS = {"none", "human", "elf", "cat", "fox", "bunny", "bear", "floppy", "horns", "antenna", "fin", "leaf"}
-TAILS = {"none", "cat", "fox", "bunny", "dragon", "cable", "feather", "flame", "leaf", "star"}
-WINGS = {"none", "feather", "bat", "fairy", "jet"}
-HAIR = {"none", "short", "bob", "long", "ponytail", "twintails", "spiky", "bun", "mohawk", "curly", "hime", "side_tail"}
-EYES = {"round", "sharp", "sleepy", "sparkle", "visor", "mono"}
-OUTFITS = {"hoodie", "kimono", "armor", "suit", "robe", "jacket", "dress", "overalls", "labcoat", "tunic", "fur", "plating", "hakama", "sailor", "coat"}
-PATTERNS = {"none", "dots", "stripes", "waves", "petals", "stars", "diamonds"}
-ACCESSORIES = {"glasses", "headphones", "scarf", "beanie", "witch_hat", "crown", "halo", "cape", "backpack", "headband", "bow", "flower", "goggles", "bell", "katana", "wand", "staff", "kitsune_mask", "shell", "gem"}
-PALETTE_KEYS = ("skin", "hair", "eyes", "primary", "secondary", "accent")
-HEX = re.compile(r"^[0-9a-f]{6}$")
-BODY_CATEGORY = {"humanoid": "character", "beast": "animal", "bird": "animal", "slime": "creature", "robot": "robot"}
-LEGACY_FRANCHISE = frozenset(
-    "anya denji frieren genos gojo goku gon ichigo killua kodama-spirit l-lawliet levi light luffy mikasa momiji "
-    "nami naruto nezuko pikachu power rukia saitama sanji sasuke tanjiro valley-flyer vegeta witch-apprentice "
-    "woodland-guardian yor yuji zoro".split()
-)
-DEITY_INSPIRED = frozenset(
-    "arjuna ganesha hanuman krishna lakshmi parvati radha rama saraswati shiva sita sun-wukong".split()
-)
-ORIGINAL_ATTRIBUTION = {
-    "creator": "Miyora contributors",
-    "license": "CC0-1.0",
-    "source": "scripts/generate_avatar_catalog.py",
-    "attribution": "Original Miyora procedural character design",
-}
-DEITY_TRIBUTE_ATTRIBUTION = {
-    "creator": "Traditional Cultural Heritage / Sacred Lore",
-    "license": "Public-Domain-Cultural-Heritage",
-    "source": "scripts/generate_avatar_catalog.py",
-    "attribution": "Cultural and devotional tribute inspired by traditional sacred iconography and epics. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
-}
-PARODY_TRIBUTE_ATTRIBUTION = {
-    "creator": "Fan Tribute / Parody Community",
-    "license": "LicenseRef-Parody-Tribute-NonCommercial",
-    "source": "scripts/generate_avatar_catalog.py",
-    "attribution": "Fan tribute / parody homage. Not an official product; strictly unaffiliated with, unsponsored by, and unendorsed by original franchise rights holders. 2D legacy non-commercial use only.",
-}
-
-
-def derive_identity(slug: str, name: str, title: str, body: str, tags: list[str]) -> tuple[str, str, str]:
-    if slug in PROFILES:
-        prof = PROFILES[slug]
-        return (prof["personality"], prof["specialty"], prof["catchphrase"])
-    tag_set = set(tags)
-    ICONIC = {
-        "aoi": ("composed", "Async Pipelines", "Calm code, steady commits, zero drama."),
-        "kenji": ("relentless", "Root Cause Debugging", "Stack traces at 3 a.m. are the truest truth."),
-        "mira": ("inquisitive", "Type Architecture", "I read build logs like constellations."),
-        "gojo": ("confident", "Limitless Technique & Infinite Void", "Don't worry. After all, I'm the strongest."),
-        "tanjiro": ("earnest", "Sun Breathing & Compassionate Resolve", "No matter how hard it gets, keep your heart burning and move forward!"),
-        "nezuko": ("protective", "Blood Demon Pyrokinesis & Gentle Vigilance", "Mmm-ph! (Vigilant guardian with an unbreakable heart of gold.)"),
-        "zoro": ("stoic", "Dead-Code Elimination", "Nothing happened... just three clean commits."),
-        "luffy": ("fearless", "Rapid Prototyping", "I'm gonna be the King of Shipped Features!"),
-        "saitama": ("deadpan", "Overwhelming Casual Might & Supermarket Bargains", "Just an ordinary hero for fun. One punch is usually enough."),
-        "frieren": ("timeless", "Timeless Magic of the Age of Myth", "Zoltraak. A century is merely a blink. Take your time, and do it right."),
-        "anya": ("cheerful", "Telepathic Linting", "Waku waku! All tests passed!"),
-        "krishna": ("serene", "Nishkama Karma & Divine Harmony", "Devote yourself fully to the work, untouched by fear of the fruit."),
-        "hanuman": ("loyal", "Unwavering Devotion & Heroic Valor", "Jai Bajrangbali! With truth and devotion, no burden is too heavy."),
-        "naruto": ("spirited", "Continuous Delivery", "Believe it! I never back down from a failing build."),
-        "sasuke": ("intense", "Precision Refactoring", "Weak abstractions are unacceptable."),
-        "goku": ("cheerful", "Limit-Breaking Martial Mastery", "Hey, I'm Goku! Let's give it everything we've got!"),
-        "vegeta": ("proud", "Royal Saiyan Pride & Relentless Discipline", "A Saiyan Prince never settles for mediocrity. Surpass your limits!"),
-        "levi": ("disciplined", "Code Cleanup", "Tidy your modules. Filthy code is unacceptable."),
-        "mikasa": ("steadfast", "Branch Protection", "I will protect this repository at all costs."),
-        "denji": ("chaotic", "Chainsaw Hybrid Tenacity", "Vroom vroom! If this works out, I get toast with three kinds of jam!"),
-        "power": ("boastful", "Blood Fiend Supreme Superiority", "Gwahahaha! Bow before my genius! Tremble before the Great Power!"),
-        "pikachu": ("perky", "Cache Re-ignition", "Pika! Lighting up the build pipeline!"),
-        "shiva": ("transcendent", "Cosmic Stillness & Dissolution", "Beyond the dance of time and form lies eternal stillness."),
-        "arjuna": ("focused", "Single-Pointed Focus & Heroic Aim", "My gaze sees neither branch nor leaf, but only the bird's eye."),
-        "sun-wukong": ("playful", "72 Earthly Transformations & Great Sage", "The Great Sage Equal to Heaven bows to no hardship!"),
-        "ninja-cat": ("stealthy", "Silent Instrumentation", "Tracing execution unseen in the shadows."),
-    }
-    if slug in ICONIC:
-        return ICONIC[slug]
-    if any(k in tag_set for k in ("sword", "samurai", "knight", "warrior", "archer", "blade")):
-        return ("stoic", "Branch Guarding", "Stand between main and bad merges.")
-    if any(k in tag_set for k in ("magic", "witch", "mage", "sorcerer", "cleric")):
-        return ("mystical", "AST Transmutation", "Casting clean checkmarks into the terminal.")
-    if body == "robot" or "robot" in tag_set:
-        return ("methodical", "Deterministic CI", "Zero syntax faults allowed.")
-    if body == "beast" or any(k in tag_set for k in ("cat", "fox", "dog", "cute", "pocket-monster")):
-        return ("playful", "Cache & Triage", "Pouncing on stale dependencies with a grin!")
-    if body == "slime":
-        return ("fluid", "Dynamic Elasticity", "Wobbling through edge cases smoothly.")
-    if "night" in tag_set or "scholar" in tag_set:
-        return ("analytical", "Deep Inspection", "Every stack trace reveals the system's truth.")
-    if "speedy" in tag_set:
-        return ("energetic", "Fast-Path Execution", "Faster than the next clock cycle.")
-    if any(k in tag_set for k in ("calm", "nature", "cozy", "devotional")):
-        return ("zen", "Code Cleanliness", "Patient cultivation builds stable software.")
-    return ("focused", "Full-Stack Engineering", "Ship clean, verify always.")
-
-
-CATALOG_PERSONALITIES = {
-    "kenji": {
-        "themeColor": "#818cf8",
-        "icon": "👓",
-        "treatName": "Espresso",
-        "treatEmoji": "☕",
-        "feedReaction": "Double espresso. Cognitive throughput restored to peak. ☕👓",
-        "wakeReaction": "Adjusting spectacles. Commencing static analysis session. 👓",
-        "petReaction": "Appreciated. Professional synergy increased by 15%. 👓✨",
-        "dialogue": {
-            "idle": "Analysis ready. What is our target module today? 👓",
-            "working": "Applying formal verification across all edge cases. 👓⚡",
-            "thinking": "Evaluating algorithmic complexity and memory layouts... 🤔",
-            "success": "Type soundness verified. Zero unsafe operations detected. 👓🎉",
-            "error": "Syntax anomaly isolated. Refactoring for invariants. 🔍",
-            "sleeping": "Zzz... running background GC cycles... 🌙"
-        }
-    },
-    "mira": {
-        "themeColor": "#c084fc",
-        "icon": "✨",
-        "treatName": "Starcandy",
-        "treatEmoji": "🍬",
-        "feedReaction": "Starcandy delight! Sparkling creative energy unlocked! 🍬✨",
-        "wakeReaction": "Good morning, starfarer! The cosmos is bright and full of code! ✨",
-        "petReaction": "A shower of stardust for you, Chief! Keep shining! ✨💖",
-        "dialogue": {
-            "idle": "Starlight companion ready! Where shall we explore next? ✨",
-            "working": "Weaving constellation threads into frontend magic! ✨⚡",
-            "thinking": "Listening to the melody between the stars... 🤔",
-            "success": "Starlight celebration! Everything renders with elegance! 🌌🎉",
-            "error": "A brief shadow passed by. Illuminating with stellar glow! ✨",
-            "sleeping": "Zzz... dreaming in nebula colors... 🌙✨"
-        }
-    },
-    "bolt": {
-        "themeColor": "#06b6d4",
-        "icon": "🤖",
-        "treatName": "Battery",
-        "treatEmoji": "🔋",
-        "feedReaction": "Supercharger connected! Battery cells at 100%! 🔋⚡",
-        "wakeReaction": "BEEP BOOP! Core diagnostics nominal! Ready to compile! 🤖",
-        "petReaction": "Haptic sensors tickled! Gratitude subroutine executed! 🤖💖",
-        "dialogue": {
-            "idle": "Unit online. Standby for operational directives, Chief! 🤖",
-            "working": "Overclocking CPU cores! Parallel pipeline processing active! 🤖⚡",
-            "thinking": "Running diagnostic simulations across 1,024 test cases... 🤔",
-            "success": "MISSION SUCCESS: All microservices responding green! 🤖🎉",
-            "error": "WARNING: Exception intercepted. Deploying auto-patch! ⚠️",
-            "sleeping": "Low-power standby mode engaged... Zzz... BEEP... 🌙"
-        }
-    },
-    "sun-wukong": {
-        "themeColor": "#ffb703",
-        "icon": "☁️",
-        "treatName": "Peach",
-        "treatEmoji": "🍑",
-        "feedReaction": "Immortal peach of Mount Huaguo! 500 years of celestial vigor restored! 🍑☁️",
-        "wakeReaction": "Hahaha! The Monkey King stirs! What mountain needs leaping today? ☁️⚡",
-        "petReaction": "Heh! A bold mortal! Take a golden hair of luck for your journey! 🍑✨",
-        "dialogue": {
-            "idle": "Lounging on the Somersault Cloud, watching the mortal world spin by. ☁️",
-            "working": "Spinning the As-You-Will Gold-Banded Cudgel with fearless flair! ⚡☁️",
-            "thinking": "Scratching chin... 72 transformations, and I only need one clever trick. 🤔",
-            "success": "HA! Vanquished in one sweep! Even the Jade Emperor would applaud! ☁️🎉",
-            "error": "A tricky demon appears! Fear not, Chief—my fiery golden eyes see right through it! 💪",
-            "sleeping": "Zzz... napping on a high branch in the Water Curtain Cave... 🌙☁️"
-        }
-    },
-    "nezuko": {
-        "themeColor": "#ff69b4",
-        "icon": "🌸",
-        "treatName": "Tea",
-        "treatEmoji": "🍵",
-        "feedReaction": "Mmm-ph! (Nezuko sips warm roasted green tea happily!) (◕‿◕)🍵",
-        "wakeReaction": "Mmm-ph! (Rubs her eyes, adjusts her pink ribbon, and smiles warmly!) 🌸✨",
-        "petReaction": "Mmm-ph! (Nezuko pats your hand gently, filling the room with comforting warmth.) 🌸💖",
-        "dialogue": {
-            "idle": "Keeping quiet watch by your side. You are safe here. 🍵",
-            "working": "Mmm! (Stands protectively, eyes fierce and ready to shield you!) 🌸⚡",
-            "thinking": "Mmm? (Tilts head with soft curiosity, observing every move.) 🤔",
-            "success": "Mmm-ph!! (Jumps with sparkling joy, clasping both hands together!) 🎉🌸",
-            "error": "Mmm... (Gently tugs your sleeve, offering quiet reassurance.) 💪",
-            "sleeping": "Zzz... resting peacefully in her cozy wooden box, safe from the sun... 🌙💤"
-        }
-    },
-    "gojo": {
-        "themeColor": "#38bdf8",
-        "icon": "♾️",
-        "treatName": "Kikufuku",
-        "treatEmoji": "🍡",
-        "feedReaction": "Sweet Kikufuku mochi! Ah, perfection. Cursed energy topped up. 🍡✨",
-        "wakeReaction": "Yawn... Lifting the blindfold. Who called for the honored one? ♾️",
-        "petReaction": "Careful now—Limitless usually stops everything, but I'll make an exception for you. ♾️✨",
-        "dialogue": {
-            "idle": "Relax. When you've got the strongest on your side, nothing is a crisis. ♾️",
-            "working": "Hollow Purple at the ready. Watch how fast this gets dismantled. ♾️⚡",
-            "thinking": "Six Eyes processing all incoming information at lightspeed... 🤔",
-            "success": "Domain Expansion: Infinite Void. Done. Didn't even break a sweat. ♾️🎉",
-            "error": "Oh? A curse with some backbone? Cute. Let me handle it. 🔍",
-            "sleeping": "Reversing cursed energy... even the strongest takes a five-minute power nap. 🌙"
-        }
-    },
-    "zoro": {
-        "themeColor": "#22c55e",
-        "icon": "⚔️",
-        "treatName": "Onigiri",
-        "treatEmoji": "🍙",
-        "feedReaction": "Onigiri consumed. Swords are sharpened. 🍙⚔️",
-        "wakeReaction": "Yawn... Which file needs cutting down, Chief? ⚔️",
-        "petReaction": "Hmph... don't slack off. Let's get these commits in. ⚔️",
-        "dialogue": {
-            "idle": "Swords sharpened. Give me the next pull request, Chief. ⚔️",
-            "working": "Three-sword syntax check. Slicing through technical debt! ⚔️",
-            "thinking": "I'm not lost... just inspecting an unexplored submodule. 🤔",
-            "success": "Nothing happened... just three clean commits. 🗡️🎉",
-            "error": "A stubborn blocker. We cut right through it again! 💪",
-            "sleeping": "Zzz... sleeping on deck with a hand on the hilt... 🌙"
-        }
-    },
-    "arjuna": {
-        "themeColor": "#ff9933",
-        "icon": "🏹",
-        "treatName": "Honey",
-        "treatEmoji": "🍯",
-        "feedReaction": "Pure golden honey received. The warrior's focus and calm are renewed. 🍯🏹",
-        "wakeReaction": "The Gandiva bow is strung. A disciplined mind welcomes every challenge. 🏹",
-        "petReaction": "Honor and brotherhood. Together our aim remains true. 🏹✨",
-        "dialogue": {
-            "idle": "Maintaining calm vigilance. The mind is a bow; single-minded focus is the arrow. 🏹",
-            "working": "Releasing every action with patient mastery and unwavering poise. ⚡🏹",
-            "thinking": "Surveying the field with strategic stillness, seeking the righteous line. 🏹",
-            "success": "Bullseye. Flawless execution born of steady discipline and honor. 🎯🎉",
-            "error": "Calm your breath. Re-anchor your stance, nock the arrow, and draw again. 🏹🛡️",
-            "sleeping": "Resting upon his warrior's pavilion beneath the silent constellations... 🌙🏹"
-        }
-    },
-    "ninja-cat": {
-        "themeColor": "#00f0ff",
-        "icon": "🐾",
-        "treatName": "Fish",
-        "treatEmoji": "🐟",
-        "feedReaction": "*crunch crunch* Purrrrr! Delicious fish! 🐟🐾",
-        "wakeReaction": "*stretches stealthily* Meow! Ready for deployment! 🐾",
-        "petReaction": "*loud purring* Purrrrr... blessed by the shinobi cat! 🐾💖",
-        "dialogue": {
-            "idle": "*purrs* All systems quiet and secure, Chief. 🐾",
-            "working": "*silent paws typing at 200 WPM* 🐾⚡",
-            "thinking": "*ears twitching* Sensing an async race condition... 🤔",
-            "success": "Target silenced! Build green and stealthy! 🐾🎉",
-            "error": "Hiss! Bug detected in perimeter! Ambushing... ⚔️",
-            "sleeping": "Zzz... curled up in a neat little cat ball... 🌙🐾"
-        }
-    }
-}
-
-
-def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessories, palette, description, tags,
-      energy=1.0, height=1.0, head=1.0, build=1.0, limbs=1.0, pattern="none", tip=None,
-      catchphrase=None, specialty=None, personality=None):
-    colors = palette.split()
-    if len(colors) != len(PALETTE_KEYS) or not all(HEX.match(color) for color in colors):
-        raise ValueError(f"{slug}: palette must contain six lowercase hex colors")
-    for value, allowed, field in (
-        (body, BODIES, "body"), (ears, EARS, "ears"), (tail, TAILS, "tail"), (wings, WINGS, "wings"),
-        (hair, HAIR, "hair"), (eyes, EYES, "eyes"), (outfit, OUTFITS, "outfit"), (pattern, PATTERNS, "pattern"),
-    ):
-        if value not in allowed:
-            raise ValueError(f"{slug}: unknown {field} `{value}`")
-    if tip is not None and not HEX.match(tip):
-        raise ValueError(f"{slug}: hair tip must be a lowercase hex color")
-    accessory_list = accessories.split() if accessories else []
-    for accessory in accessory_list:
-        if accessory not in ACCESSORIES:
-            raise ValueError(f"{slug}: unknown accessory `{accessory}`")
-    tag_list = tags.split()
-    default_p, default_s, default_cp = derive_identity(slug, name, title, body, tag_list)
-    legacy = slug in LEGACY_FRANCHISE
-    deity = slug in DEITY_INSPIRED
-    category = "legacy" if legacy else "deity_inspired" if deity else BODY_CATEGORY[body]
-    attribution = (
-        PARODY_TRIBUTE_ATTRIBUTION if legacy
-        else DEITY_TRIBUTE_ATTRIBUTION if deity
-        else ORIGINAL_ATTRIBUTION
-    )
-    character = {
-        "schemaVersion": 1,
-        "id": f"miyora.{slug}",
-        "name": name,
-        "title": title,
-        "description": description,
-        "body": body,
-        "ears": ears,
-        "tail": tail,
-        "wings": wings,
-        "hair": hair,
-        "eyes": eyes,
-        "outfit": outfit,
-        "accessories": accessory_list,
-        "pattern": pattern,
-        "palette": {key: f"#{color}" for key, color in zip(PALETTE_KEYS, colors)},
-        "proportions": {"height": height, "headScale": head, "build": build, "limbLength": limbs},
-        "energy": energy,
-        "tags": tag_list,
-        "personality": personality or default_p,
-        "specialty": specialty or default_s,
-        "catchphrase": catchphrase or default_cp,
-        "category": category,
-        "threeDEligible": not legacy,
-        "attribution": attribution,
-    }
-    if slug in PROFILES and "companionPersonality" in PROFILES[slug]:
-        character["companionPersonality"] = PROFILES[slug]["companionPersonality"]
-    elif slug in CATALOG_PERSONALITIES:
-        character["companionPersonality"] = CATALOG_PERSONALITIES[slug]
-    if tip is not None:
-        character["hairTip"] = f"#{tip}"
-    return character
-
-
-CHARACTERS = [
-    # ---- Humanoids -------------------------------------------------------
-    c("aoi", "Aoi", "Streetwear Coder", "humanoid", "human", "none", "none", "bob", "round", "hoodie", "headphones",
-      "f2c9a8 1e293b 06b6d4 0f766e 334155 22d3ee", "The default companion: a calm coder in a teal tech hoodie who hums along while your agents work.", "coder cyber default", head=1.1),
-    c("kenji", "Kenji", "Night-Shift Debugger", "humanoid", "human", "none", "none", "short", "sharp", "jacket", "glasses",
-      "e0ac83 111827 6366f1 1f2937 4b5563 818cf8", "Lives for stack traces at 3 a.m. and never loses a breakpoint.", "coder night"),
-    c("mira", "Mira", "Starlight Mage", "humanoid", "human", "none", "none", "long", "sparkle", "robe", "witch_hat",
-      "f6d7c3 7c3aed f0abfc 312e81 4c1d95 fbbf24", "Reads build logs like constellations and casts green checkmarks.", "magic fantasy", energy=0.9, pattern="stars", tip="f0abfc"),
-    c("rowan", "Rowan", "Forest Ranger", "humanoid", "human", "none", "none", "ponytail", "round", "tunic", "cape",
-      "c68863 7c2d12 15803d 166534 78350f a3e635", "Tracks every branch in the repository forest.", "nature fantasy"),
-    c("sora", "Sora", "Sky Courier", "humanoid", "human", "none", "none", "twintails", "sparkle", "jacket", "goggles",
-      "f2c9a8 38bdf8 0ea5e9 f8fafc 0369a1 f97316", "Delivers pull requests faster than the wind.", "sky speedy", energy=1.4),
-    c("hana", "Hana", "Garden Botanist", "humanoid", "human", "none", "none", "bun", "round", "overalls", "flower",
-      "f6d7c3 9a3412 65a30d 84cc16 365314 f472b6", "Grows tidy modules the way she grows tomatoes: patiently.", "nature calm", energy=0.8),
-    c("ravi", "Ravi", "Systems Architect", "humanoid", "human", "none", "none", "short", "round", "suit", "glasses",
-      "a86b4c 0f172a 92400e 1e3a8a e2e8f0 f59e0b", "Sketches clean boundaries before a single line is written.", "coder office"),
-    c("lina", "Lina", "Lab Researcher", "humanoid", "human", "none", "none", "ponytail", "round", "labcoat", "glasses",
-      "e0ac83 1c1917 0891b2 f1f5f9 0e7490 14b8a6", "Runs every experiment twice and writes down both results.", "science"),
-    c("dmitri", "Dmitri", "Arctic Explorer", "humanoid", "human", "none", "none", "curly", "sleepy", "jacket", "beanie scarf",
-      "f6d7c3 78350f 1d4ed8 b91c1c 1f2937 fef3c7", "Unbothered by frozen pipelines and frozen fingers alike.", "explorer winter", energy=0.8),
-    c("yuki", "Yuki", "Snow Spirit", "humanoid", "elf", "none", "none", "long", "sleepy", "kimono", "flower",
-      "fdf2f8 e0f2fe 7dd3fc e0f2fe 93c5fd f9a8d4", "A quiet spirit who settles over idle terminals like fresh snow.", "spirit winter", energy=0.7, pattern="petals", tip="bae6fd"),
-    c("tariq", "Tariq", "Desert Navigator", "humanoid", "human", "none", "none", "short", "sharp", "robe", "headband scarf",
-      "8a5a3c 1c1917 b45309 fde68a b45309 0d9488", "Finds the oasis in any dependency desert.", "explorer"),
-    c("isla", "Isla", "Coral Diver", "humanoid", "fin", "none", "none", "bob", "round", "dress", "goggles",
-      "c68863 0d9488 2dd4bf 0e7490 134e4a fb7185", "Dives deep into legacy code and surfaces with pearls.", "ocean"),
-    c("felix", "Felix", "Clockwork Tinkerer", "humanoid", "human", "none", "none", "spiky", "round", "overalls", "goggles backpack",
-      "f2c9a8 c2410c 92400e 92400e 44403c fbbf24", "Cannot leave a gear un-greased or a test un-run.", "maker steampunk", energy=1.2),
-    c("noor", "Noor", "Moonlit Scholar", "humanoid", "human", "none", "none", "long", "sleepy", "robe", "glasses scarf",
-      "a86b4c 0f172a a78bfa 1e1b4b 6d28d9 e9d5ff", "Annotates documentation by lamplight.", "scholar night", energy=0.8),
-    c("bjorn", "Bjorn", "Shield Bearer", "humanoid", "human", "none", "none", "curly", "sharp", "armor", "",
-      "f2c9a8 ca8a04 1e40af 64748b 334155 eab308", "Stands between your main branch and every bad merge.", "knight", build=1.25),
-    c("elara", "Elara", "Elven Archivist", "humanoid", "elf", "none", "none", "long", "round", "tunic", "headband",
-      "f6d7c3 fde68a 059669 065f46 d9f99d fbbf24", "Keeps a thousand years of commit history in perfect order.", "fantasy scholar"),
-    c("kai", "Kai", "Surf Programmer", "humanoid", "human", "none", "none", "spiky", "round", "hoodie", "headphones",
-      "c68863 f59e0b 0284c7 0284c7 fde047 f97316", "Rides every release wave with a grin.", "coder ocean", energy=1.3),
-    c("maya", "Maya", "Data Cartographer", "humanoid", "human", "none", "none", "bob", "round", "jacket", "backpack glasses",
-      "8a5a3c 1c1917 7c3aed 7c3aed 1f2937 34d399", "Maps tangled data flows into clean charts.", "data explorer"),
-    c("theo", "Theo", "Pixel Painter", "humanoid", "human", "none", "none", "curly", "round", "overalls", "beanie",
-      "f6d7c3 92400e 16a34a 2563eb fef3c7 ef4444", "Pushes pixels until the interface sings.", "artist"),
-    c("zara", "Zara", "Neon Racer", "humanoid", "human", "none", "none", "mohawk", "sharp", "jacket", "goggles",
-      "a86b4c ec4899 f43f5e 0f172a 9d174d f472b6", "Treats every benchmark like a street race.", "speedy cyber", energy=1.5),
-    c("oren", "Oren", "Library Keeper", "humanoid", "human", "none", "none", "short", "sleepy", "suit", "glasses scarf",
-      "e0ac83 57534e 78716c 57534e d6d3d1 b91c1c", "Knows exactly which crate holds the answer.", "scholar calm", energy=0.7),
-    c("priya", "Priya", "Rhythm Composer", "humanoid", "human", "none", "none", "ponytail", "sparkle", "dress", "headphones",
-      "a86b4c 0c0a09 db2777 be185d fce7f3 facc15", "Hears the tempo in a well-paced CI pipeline.", "music"),
-    c("leo", "Leo", "Sunrise Paladin", "humanoid", "human", "none", "none", "short", "round", "armor", "cape",
-      "e0ac83 facc15 2563eb e5e7eb 1d4ed8 fbbf24", "Greets every morning standup with unreasonable optimism.", "knight", build=1.15),
-    c("nyx", "Nyx", "Shadow Rogue", "humanoid", "elf", "none", "none", "short", "sharp", "hoodie", "scarf",
-      "f6d7c3 18181b a855f7 18181b 3f3f46 a855f7", "Slips past flaky tests without a sound.", "rogue night"),
-    c("amara", "Amara", "Sunstone Healer", "humanoid", "human", "none", "none", "curly", "round", "robe", "halo",
-      "6b4430 1c1917 f59e0b fef3c7 f59e0b fde047", "Mends broken builds with a warm glow.", "healer", energy=0.9),
-    c("ivo", "Ivo", "Glacier Engineer", "humanoid", "human", "none", "none", "short", "round", "overalls", "goggles",
-      "f6d7c3 f1f5f9 38bdf8 0ea5e9 1e293b fef08a", "Keeps hot paths ice cold.", "maker winter"),
-    c("suki", "Suki", "Tea House Host", "humanoid", "human", "none", "none", "bun", "round", "kimono", "flower",
-      "f2c9a8 3f1d0b 166534 15803d fef3c7 dc2626", "Serves green tea and green test suites.", "calm", energy=0.8, pattern="waves"),
-    c("marco", "Marco", "Harbor Captain", "humanoid", "human", "none", "none", "curly", "sharp", "jacket", "beanie",
-      "c68863 292524 0369a1 1e3a8a f8fafc dc2626", "Steers releases through any storm.", "ocean leader"),
-    c("lyra", "Lyra", "Comet Astronomer", "humanoid", "human", "none", "none", "long", "sparkle", "robe", "glasses",
-      "f6d7c3 4338ca 60a5fa 1e1b4b 312e81 fde047", "Charts latency like distant comets.", "science space"),
-    c("jun", "Jun", "Cafe Barista", "humanoid", "human", "none", "none", "short", "round", "overalls", "",
-      "e0ac83 3f3f46 78350f 78350f fef3c7 f97316", "Brews strong coffee for long refactors.", "cozy"),
-    c("esme", "Esme", "Velvet Witch", "humanoid", "human", "none", "none", "long", "sharp", "dress", "witch_hat",
-      "f6d7c3 7f1d1d 16a34a 4c0519 1c1917 a3e635", "Hexes regressions before they reach production.", "magic", tip="dc2626"),
-    c("obi", "Obi", "Market Storyteller", "humanoid", "human", "none", "none", "short", "round", "tunic", "scarf",
-      "6b4430 0c0a09 92400e ea580c 166534 facc15", "Turns commit messages into legends.", "storyteller"),
-    c("rin", "Rin", "Signal Hacker", "humanoid", "human", "none", "none", "twintails", "sharp", "hoodie", "headphones",
-      "f2c9a8 22c55e 4ade80 052e16 14532d 4ade80", "Reads packet captures for fun.", "coder cyber", energy=1.3),
-    c("caspian", "Caspian", "Ocean Cartographer", "humanoid", "human", "none", "none", "ponytail", "round", "jacket", "scarf",
-      "e0ac83 1e3a8a 0e7490 0f766e e2e8f0 38bdf8", "Measures every current twice before setting sail.", "ocean explorer"),
-    c("freya", "Freya", "Aurora Knight", "humanoid", "human", "none", "none", "long", "sharp", "armor", "headband",
-      "fdf2f8 fef3c7 22d3ee 94a3b8 0f766e a78bfa", "Guards the northern servers under shifting lights.", "knight winter"),
-    c("hugo", "Hugo", "Bakery Apprentice", "humanoid", "human", "none", "none", "curly", "round", "overalls", "beanie",
-      "f6d7c3 b45309 78350f fef3c7 d97706 f43f5e", "Proofs dough and pull requests with equal care.", "cozy", energy=1.1),
-    c("sana", "Sana", "Origami Artist", "humanoid", "human", "none", "none", "bob", "sleepy", "kimono", "bow",
-      "f2c9a8 0c0a09 be123c fda4af fff1f2 e11d48", "Folds complex problems into simple shapes.", "artist calm", energy=0.8, pattern="dots"),
-    c("dex", "Dex", "Arcade Champion", "humanoid", "human", "none", "none", "spiky", "sparkle", "jacket", "headphones",
-      "c68863 7c3aed facc15 facc15 1e1b4b 22d3ee", "Holds the high score on every leaderboard.", "gamer", energy=1.5),
-    c("aria", "Aria", "Wind Bard", "humanoid", "elf", "none", "none", "ponytail", "sparkle", "tunic", "cape flower",
-      "f6d7c3 65a30d 22c55e 15803d fef9c3 f59e0b", "Sings release notes from the treetops.", "music fantasy"),
-    c("tomas", "Tomas", "Mountain Guide", "humanoid", "human", "none", "none", "short", "round", "jacket", "beanie backpack",
-      "e0ac83 44403c 15803d ea580c 365314 fde047", "Knows every switchback on the road to 1.0.", "explorer"),
-    c("ines", "Ines", "Lighthouse Keeper", "humanoid", "human", "none", "none", "bun", "round", "jacket", "scarf",
-      "c68863 7c2d12 0369a1 fef3c7 b91c1c 0ea5e9", "Keeps the status page shining through the night.", "ocean calm", energy=0.9),
-    c("vale", "Vale", "Thunder Monk", "humanoid", "human", "none", "none", "none", "sharp", "robe", "headband",
-      "a86b4c 0c0a09 38bdf8 f59e0b 7c2d12 38bdf8", "Meditates through outages, then strikes like lightning.", "monk"),
-    c("coco", "Coco", "Candy Inventor", "humanoid", "human", "none", "none", "twintails", "sparkle", "dress", "bow goggles",
-      "f6d7c3 f9a8d4 ec4899 f472b6 fdf2f8 22d3ee", "Invents sweet little tools nobody asked for and everybody uses.", "maker cute", energy=1.4),
-    c("orion", "Orion", "Star Navigator", "humanoid", "human", "none", "none", "short", "sharp", "suit", "cape",
-      "8a5a3c e5e7eb 93c5fd 0f172a 1e3a8a fde047", "Plots courses between distant microservices.", "space leader"),
-    c("ignis", "Ignis", "Dragonkin Smith", "humanoid", "horns", "dragon", "none", "short", "sharp", "armor", "",
-      "e0ac83 7f1d1d f97316 431407 7c2d12 f97316", "Forges sturdy binaries in dragonfire.", "dragon maker", build=1.2),
-    c("lumi", "Lumi", "Fairy Messenger", "humanoid", "elf", "none", "fairy", "bob", "sparkle", "dress", "flower",
-      "fdf2f8 a7f3d0 34d399 6ee7b7 ecfdf5 f472b6", "Flutters notifications to exactly the right person.", "fairy cute", energy=1.4, height=0.85),
-    c("vesper", "Vesper", "Midnight Poet", "humanoid", "elf", "none", "bat", "long", "sharp", "suit", "cape",
-      "f6e7e7 1c1917 dc2626 1c1917 7f1d1d dc2626", "Writes commit messages in perfect verse.", "night poet", energy=0.8),
-    c("seraph", "Seraph", "Halo Guardian", "humanoid", "human", "none", "feather", "long", "round", "robe", "halo",
-      "f2c9a8 fef3c7 facc15 f8fafc fde68a fbbf24", "Watches over production with endless patience.", "guardian", energy=0.8),
-    # ---- Anime archetypes (original designs) -------------------------
-    c("akane", "Akane", "Crimson Blade Hunter", "humanoid", "human", "none", "none", "ponytail", "sharp", "hakama", "katana headband",
-      "f2c9a8 2b1d1d dc2626 f8fafc 1f2937 b91c1c", "Hunts down regressions after dark with a single clean cut.", "anime swordswoman", energy=1.3, tip="b91c1c"),
-    c("tsukasa", "Tsukasa", "Wandering Ronin", "humanoid", "human", "none", "none", "short", "sharp", "hakama", "katana scarf",
-      "e0ac83 1c1917 78716c 334155 78716c ca8a04", "Drifts between repositories, fixing what others left behind.", "anime samurai", energy=0.8, pattern="waves"),
-    c("kaede", "Kaede", "Shadow Kunoichi", "humanoid", "human", "none", "none", "ponytail", "sharp", "tunic", "katana scarf",
-      "f2c9a8 18181b a855f7 3b0764 18181b a855f7", "Moves through the call stack without leaving a trace.", "anime ninja", energy=1.5, tip="7c3aed"),
-    c("sayuri", "Sayuri", "Shrine Maiden", "humanoid", "human", "none", "none", "hime", "sleepy", "hakama", "flower",
-      "f6d7c3 0c0a09 991b1b f8fafc dc2626 dc2626", "Keeps the shrine of stable releases swept and quiet.", "anime miko", energy=0.7),
-    c("hoshimi", "Hoshimi", "Magical Star Girl", "humanoid", "human", "none", "none", "twintails", "sparkle", "sailor", "wand bow",
-      "fbe3d4 f9a8d4 db2777 f8fafc ec4899 fde047", "Transforms failing tests into shooting stars.", "anime magical-girl", energy=1.5, pattern="stars", tip="fde047"),
-    c("nagi", "Nagi", "Mecha Pilot", "humanoid", "human", "none", "none", "short", "sharp", "jacket", "goggles headphones",
-      "f6d7c3 0f172a 0ea5e9 f8fafc 1e3a8a ef4444", "Syncs with the build machine at one hundred percent.", "anime mecha", energy=1.2, tip="1e3a8a"),
-    c("marlo", "Marlo", "Sky Pirate Captain", "humanoid", "human", "none", "none", "long", "sharp", "coat", "katana headband",
-      "c68863 7f1d1d f59e0b 7f1d1d 1c1917 fbbf24", "Raids stale branches for forgotten treasure.", "anime pirate", energy=1.3, pattern="stripes"),
-    c("kiyomi", "Kiyomi", "Idol Singer", "humanoid", "human", "none", "none", "side_tail", "sparkle", "dress", "headphones bow",
-      "fbe3d4 38bdf8 0ea5e9 f0abfc f8fafc f472b6", "Sings an encore every time a release ships.", "anime idol", energy=1.5, pattern="dots", tip="f0abfc"),
-    c("daichi", "Daichi", "School Delinquent", "humanoid", "human", "none", "none", "spiky", "sharp", "coat", "scarf",
-      "e0ac83 facc15 b45309 111827 1f2937 dc2626", "Acts tough, then quietly fixes the flaky tests.", "anime delinquent", energy=1.3, tip="f97316"),
-    c("sorako", "Sorako", "Nine-Tail Fox Spirit", "humanoid", "fox", "fox", "none", "hime", "sharp", "kimono", "kitsune_mask",
-      "fdf2f8 f5f5f4 f59e0b dc2626 f8fafc fbbf24", "An old spirit who guards the shrine of passing builds.", "anime kitsune", energy=0.9, pattern="petals", tip="f97316"),
-    c("valen", "Valen", "Vampire Noble", "humanoid", "elf", "none", "bat", "long", "sharp", "coat", "cape",
-      "f5ece8 e5e7eb dc2626 450a0a 1c1917 dc2626", "Only works night shifts, and only on elegant code.", "anime vampire", energy=0.8, tip="94a3b8"),
-    c("draga", "Draga", "Dragon Knight", "humanoid", "horns", "dragon", "none", "short", "sharp", "armor", "katana cape",
-      "e0ac83 14532d f59e0b 166534 1c1917 fbbf24", "Sworn protector of the main branch.", "anime knight dragon", build=1.15, tip="22c55e"),
-    c("alma", "Alma", "Wandering Alchemist", "humanoid", "human", "none", "none", "bob", "round", "coat", "glasses backpack",
-      "f2c9a8 ca8a04 15803d 7c2d12 1f2937 fbbf24", "Transmutes messy data into tidy tables.", "anime alchemist", pattern="diamonds"),
-    c("seiji", "Seiji", "Onmyoji Talisman Master", "humanoid", "human", "none", "none", "long", "sharp", "robe", "staff",
-      "f6d7c3 e5e7eb 7c3aed f8fafc 312e81 a855f7", "Seals runaway processes with paper talismans.", "anime onmyoji", energy=0.8, pattern="diamonds", tip="7c3aed"),
-    c("masaru", "Masaru", "Iron Samurai", "humanoid", "human", "none", "none", "short", "sharp", "armor", "katana headband",
-      "e0ac83 0c0a09 92400e b91c1c 1c1917 ca8a04", "Never retreats from a failing pipeline.", "anime samurai", build=1.2),
-    c("lyrielle", "Lyrielle", "Battle Sister", "humanoid", "human", "none", "none", "long", "round", "robe", "staff halo",
-      "fdf2f8 fef3c7 2563eb 1e293b f8fafc fde047", "Blesses deployments and smites null pointers.", "anime cleric", energy=0.9, tip="fde68a"),
-    c("pico", "Pico", "Monster Tamer", "humanoid", "human", "none", "none", "short", "sparkle", "jacket", "backpack goggles",
-      "f2c9a8 22c55e 16a34a ef4444 f8fafc facc15", "Has befriended every bug in the codebase.", "anime tamer", energy=1.5, height=0.9),
-    c("hayato", "Hayato", "Rival Swordsman", "humanoid", "human", "none", "none", "spiky", "sharp", "hakama", "katana",
-      "f2c9a8 1e3a8a 0284c7 1e293b 64748b 38bdf8", "Always one benchmark behind you, and determined to win.", "anime rival", energy=1.4, tip="38bdf8"),
-    c("velis", "Velis", "Shadow Sorcerer", "humanoid", "elf", "none", "none", "long", "sharp", "robe", "witch_hat wand",
-      "f5ece8 1e1b4b a855f7 1e1b4b 312e81 a855f7", "Casts spells only in the dark theme.", "anime sorcerer", energy=0.9, pattern="stars", tip="a855f7"),
-    c("hanae", "Hanae", "Lantern Ghost Girl", "humanoid", "human", "none", "none", "hime", "sleepy", "kimono", "flower",
-      "fdf2f8 0c0a09 60a5fa e0f2fe 93c5fd f472b6", "Drifts through old logs carrying a paper lantern.", "anime ghost", energy=0.6, pattern="waves", tip="93c5fd"),
-    c("benika", "Benika", "Oni Brawler", "humanoid", "horns", "none", "none", "spiky", "sharp", "hakama", "headband",
-      "f2c9a8 7f1d1d f59e0b f8fafc dc2626 f97316", "Punches through blockers with a grin.", "anime oni", energy=1.5, build=1.15, tip="f97316"),
-    c("kazane", "Kazane", "Wind Tengu Guard", "humanoid", "human", "none", "feather", "short", "sharp", "hakama", "staff",
-      "e0ac83 1c1917 dc2626 f8fafc 1c1917 dc2626", "Patrols the mountain pass between staging and production.", "anime tengu", energy=1.2),
-    c("akiho", "Akiho", "Cat-Eared Cafe Server", "humanoid", "cat", "cat", "none", "twintails", "sparkle", "dress", "bow",
-      "fbe3d4 92400e b45309 1f2937 f8fafc f472b6", "Serves fresh builds with a curtsy.", "anime cafe", energy=1.3, pattern="dots"),
-    c("kenta", "Kenta", "Soccer Ace", "humanoid", "human", "none", "none", "spiky", "round", "jacket", "headband",
-      "e0ac83 f97316 16a34a 1d4ed8 f8fafc facc15", "Scores a goal for every merged pull request.", "anime sports", energy=1.6, tip="fde047"),
-    c("mirei", "Mirei", "Student Council President", "humanoid", "human", "none", "none", "hime", "sharp", "sailor", "glasses",
-      "f6d7c3 1e293b 7c3aed f8fafc 1e3a8a dc2626", "Approves pull requests only after reading every line.", "anime school", energy=0.9),
-    c("haruki", "Haruki", "Transfer Student", "humanoid", "human", "none", "none", "short", "round", "suit", "backpack",
-      "f2c9a8 78350f 92400e 111827 f8fafc ca8a04", "New to the codebase, already fixing the hard bugs.", "anime school", tip="b45309"),
-    c("lunaria", "Lunaria", "Moon Princess", "humanoid", "elf", "none", "fairy", "long", "sparkle", "dress", "crown wand",
-      "fdf2f8 e0e7ff 818cf8 312e81 e0e7ff fde047", "Rules the night shift from a silver tower.", "anime princess", energy=0.9, pattern="stars", tip="818cf8"),
-    c("kuroha", "Kuroha", "Exorcist Gunslinger", "humanoid", "human", "none", "none", "short", "sharp", "coat", "goggles",
-      "f5ece8 f8fafc ef4444 111827 3f3f46 ef4444", "Banishes haunted processes with silver rounds.", "anime exorcist", energy=1.2, tip="94a3b8"),
-    c("tetsu", "Tetsu", "Mech Engineer Kid", "humanoid", "human", "none", "none", "spiky", "round", "overalls", "goggles",
-      "e0ac83 0ea5e9 0369a1 f97316 1f2937 fde047", "Built a giant robot out of spare build agents.", "anime mecha maker", energy=1.4, height=0.9, tip="1e3a8a"),
-    c("sumire", "Sumire", "Ink Brush Calligrapher", "humanoid", "human", "none", "none", "bun", "sleepy", "kimono", "flower",
-      "f6d7c3 3f3f46 6d28d9 6d28d9 f5f3ff fbbf24", "Writes commit messages in perfect brushstrokes.", "anime artist", energy=0.7, pattern="petals"),
-    c("momiji", "Momiji", "Petal Kimono Quiet One", "humanoid", "human", "none", "none", "long", "round", "kimono", "flower",
-      "f2c9a8 0c0a09 db2777 be185d 111827 f9a8d4", "Barefoot through the build logs on quiet mornings, dark hair with pink tips swaying as long sessions run to green.", "anime kimono petals calm", energy=0.9, height=0.85, pattern="petals", tip="fb7185"),
-    # ---- Beasts ----------------------------------------------------------
-    c("ember", "Ember", "Fox Courier", "beast", "fox", "fox", "none", "short", "round", "jacket", "scarf backpack",
-      "e07a2f fff7ed 1e3a8a 1f2937 374151 f59e0b", "A quick-pawed fox who carries messages between your agents.", "fox speedy", energy=1.3),
-    c("miso", "Miso", "Tabby Debugger", "beast", "cat", "cat", "none", "none", "round", "hoodie", "bell",
-      "f59e0b 92400e 16a34a 0f766e 134e4a facc15", "Pounces on bugs the moment they twitch.", "cat coder"),
-    c("pip", "Pip", "Meadow Messenger", "beast", "bunny", "bunny", "none", "none", "sparkle", "overalls", "",
-      "f5f5f4 e7e5e4 ec4899 60a5fa 1e3a8a f472b6", "Hops between tasks with boundless enthusiasm.", "bunny cute", energy=1.5, height=0.9),
-    c("bruno", "Bruno", "Honey Bear Sysadmin", "beast", "bear", "none", "none", "none", "sleepy", "overalls", "glasses",
-      "92400e 78350f 451a03 1e40af 1e3a8a fbbf24", "Slow, steady, and never forgets a backup.", "bear calm", energy=0.7, build=1.25),
-    c("bao", "Bao", "Bamboo Ops Panda", "beast", "bear", "none", "none", "none", "round", "fur", "headband",
-      "f8fafc 18181b 18181b 18181b f8fafc 22c55e", "Munches bamboo and monitors dashboards with zen focus.", "panda calm", energy=0.8, build=1.2),
-    c("luna", "Luna", "Moon Wolf", "beast", "fox", "fox", "none", "short", "sharp", "fur", "scarf",
-      "94a3b8 e2e8f0 38bdf8 64748b 1e293b a5b4fc", "Howls once when the nightly build goes green.", "wolf night"),
-    c("biscuit", "Biscuit", "Floppy-Eared Tester", "beast", "floppy", "cat", "none", "none", "round", "hoodie", "",
-      "d6a26b 92400e 451a03 dc2626 7f1d1d fde047", "Fetches every edge case and drops it at your feet.", "dog tester", energy=1.4),
-    c("mochi", "Mochi", "Snow Cat Napper", "beast", "cat", "cat", "none", "none", "sleepy", "fur", "bell",
-      "f8fafc e2e8f0 60a5fa f8fafc cbd5e1 f472b6", "Naps on warm laptops between deploys.", "cat cozy", energy=0.6),
-    c("rusty", "Rusty", "Red Panda Ranger", "beast", "bear", "fox", "none", "none", "round", "tunic", "",
-      "c2410c fef3c7 451a03 166534 78350f fde047", "Patrols the treetops of your dependency graph.", "red-panda nature"),
-    c("tofu", "Tofu", "Lop Bunny Baker", "beast", "floppy", "bunny", "none", "none", "round", "overalls", "beanie",
-      "fef3c7 fde68a 92400e fb923c fef3c7 f43f5e", "Bakes carrot cake for every merged feature.", "bunny cozy", energy=0.9),
-    c("shadow", "Shadow", "Midnight Cat", "beast", "cat", "cat", "none", "none", "sharp", "fur", "scarf",
-      "18181b 27272a facc15 18181b 3f3f46 dc2626", "Sees race conditions in the dark.", "cat night"),
-    c("sunny", "Sunny", "Fennec Explorer", "beast", "fox", "fox", "none", "none", "sparkle", "jacket", "goggles backpack",
-      "fde68a fef3c7 92400e d97706 78350f 0ea5e9", "Big ears for hearing every log line.", "fox explorer", energy=1.3),
-    c("hazel", "Hazel", "Acorn Archivist", "beast", "bear", "fox", "none", "none", "round", "tunic", "glasses",
-      "a16207 fef3c7 451a03 15803d 365314 f97316", "Stashes snippets for the long winter.", "squirrel scholar"),
-    c("mako", "Mako", "Cloud-Step Monkey", "beast", "human", "cat", "none", "spiky", "sharp", "armor", "headband",
-      "92400e 78350f f59e0b dc2626 facc15 fbbf24", "Leaps between clouds and cloud regions alike.", "monkey speedy", energy=1.5),
-    c("kuma", "Kuma", "Grizzly Guardian", "beast", "bear", "none", "none", "none", "sharp", "armor", "cape",
-      "57534e 44403c 451a03 78716c 292524 eab308", "Guards the vault of production secrets.", "bear knight", build=1.3),
-    c("nori", "Nori", "River Otter Engineer", "beast", "bear", "cat", "none", "none", "round", "overalls", "goggles",
-      "78350f fef3c7 1c1917 0284c7 0c4a6e fde047", "Builds dams of clean abstractions.", "otter maker"),
-    c("pepper", "Pepper", "Calico Designer", "beast", "cat", "cat", "none", "none", "sparkle", "dress", "bow",
-      "fbbf24 1c1917 16a34a f472b6 fdf2f8 a855f7", "Patches together layouts as lovely as her coat.", "cat artist"),
-    c("dash", "Dash", "Sprint Cat", "beast", "cat", "cat", "none", "none", "sharp", "jacket", "headband",
-      "facc15 1c1917 f97316 dc2626 1c1917 facc15", "Finishes the sprint before planning ends.", "cat speedy", energy=1.6),
-    c("frost", "Frost", "Arctic Fox Scout", "beast", "fox", "fox", "none", "none", "round", "fur", "scarf",
-      "f1f5f9 e2e8f0 38bdf8 f1f5f9 cbd5e1 0ea5e9", "Leaves neat footprints across snowy logs.", "fox winter"),
-    c("clover", "Clover", "Lucky Bunny", "beast", "bunny", "bunny", "none", "none", "sparkle", "tunic", "flower",
-      "fafaf9 e7e5e4 22c55e 4ade80 14532d facc15", "Somehow every test passes on the first try near her.", "bunny lucky"),
-    c("tora", "Tora", "Stripe Sentinel", "beast", "cat", "cat", "none", "none", "sharp", "armor", "",
-      "f97316 1c1917 16a34a 334155 1c1917 facc15", "Prowls the perimeter of your API.", "tiger knight", build=1.2),
-    c("sol", "Sol", "Mane Captain", "beast", "bear", "cat", "none", "curly", "round", "jacket", "crown",
-      "fbbf24 b45309 92400e 7f1d1d fef3c7 fde047", "Leads the team with a roar and a roadmap.", "lion leader", build=1.15),
-    c("fawn", "Fawn", "Woodland Deer", "beast", "horns", "bunny", "none", "none", "sparkle", "tunic", "flower",
-      "b45309 fef3c7 451a03 65a30d fef3c7 f9a8d4", "Treads softly through fragile legacy forests.", "deer nature", energy=0.8),
-    c("gumtree", "Gumtree", "Sleepy Koala", "beast", "bear", "none", "none", "none", "sleepy", "fur", "headphones",
-      "a8a29e e7e5e4 1c1917 78716c d6d3d1 22c55e", "Mostly asleep; wakes for green builds.", "koala cozy", energy=0.5),
-    c("bandit", "Bandit", "Raccoon Hacker", "beast", "bear", "fox", "none", "none", "sharp", "hoodie", "goggles",
-      "78716c 1c1917 facc15 1c1917 44403c 22c55e", "Rummages through dumps for treasure.", "raccoon coder", energy=1.2),
-    c("sled", "Sled", "Husky Hauler", "beast", "fox", "fox", "none", "none", "round", "jacket", "scarf",
-      "64748b f8fafc 0ea5e9 dc2626 1e293b f8fafc", "Hauls heavy migrations through the snow.", "dog winter", build=1.15),
-    c("seed", "Seed", "Pocket Hamster", "beast", "bear", "none", "none", "none", "sparkle", "overalls", "backpack",
-      "fdba74 fff7ed 1c1917 22c55e 14532d f43f5e", "Stores snacks and snippets in equal measure.", "hamster cute", energy=1.4, height=0.85),
-    c("drako", "Drako", "Dragon Pup", "beast", "horns", "dragon", "bat", "none", "round", "fur", "",
-      "16a34a 14532d facc15 16a34a 052e16 fde047", "A tiny dragon who sneezes sparks when tests fail.", "dragon cute", energy=1.3),
-    c("saffi", "Saffi", "Ember Wyrmling", "beast", "horns", "dragon", "bat", "none", "sharp", "fur", "crown",
-      "dc2626 7f1d1d facc15 dc2626 450a0a f97316", "Hoards achievements like gold.", "dragon"),
-    c("lotl", "Lotl", "Axolotl Healer", "beast", "fin", "dragon", "none", "none", "sparkle", "fur", "",
-      "f9a8d4 f472b6 1c1917 f9a8d4 fbcfe8 ec4899", "Regenerates broken modules overnight.", "axolotl cute", energy=0.9),
-    c("vamp", "Vamp", "Night Bat", "beast", "cat", "none", "bat", "none", "sharp", "fur", "cape",
-      "4c1d95 2e1065 f43f5e 4c1d95 1e1b4b f43f5e", "Echolocates memory leaks.", "bat night"),
-    c("woolly", "Woolly", "Cloud Sheep", "beast", "floppy", "none", "none", "curly", "sleepy", "fur", "bell",
-      "f5f5f4 fafaf9 1c1917 e7e5e4 d6d3d1 60a5fa", "Counts builds instead of sheep.", "sheep cozy", energy=0.6),
-    # ---- Pocket creatures (original designs, no franchise likeness) -------
-    c("zippa", "Zippa", "Spark Mouse", "beast", "bear", "star", "none", "none", "sparkle", "fur", "",
-      "c4b5fd ede9fe 1e1b4b c4b5fd 8b5cf6 fde047", "Stores static in her star-tipped tail and zaps stalled builds awake.", "pocket-monster electric cute", energy=1.5, height=0.82, head=1.3),
-    c("cindle", "Cindle", "Flame-Tail Lizard", "beast", "none", "flame", "none", "none", "round", "fur", "",
-      "5eead4 ccfbf1 134e4a 5eead4 0d9488 a855f7", "Its violet tail flame burns brighter the longer the session runs.", "pocket-monster fire cute", energy=1.3, height=0.85, head=1.28),
-    c("shelloo", "Shelloo", "Tide Shell Turtle", "beast", "fin", "none", "none", "none", "round", "fur", "shell",
-      "fda4af ffe4e6 1e3a8a fda4af 14b8a6 fef08a", "Tucks into its teal shell whenever a deploy looks scary.", "pocket-monster water cute", energy=0.9, height=0.84, head=1.3, build=1.15),
-    c("sprigget", "Sprigget", "Leaf Sprite", "beast", "leaf", "leaf", "none", "none", "sparkle", "fur", "flower",
-      "bbf7d0 22c55e 14532d bbf7d0 16a34a f472b6", "Photosynthesizes on sunny monitors and sprouts a bud when tests pass.", "pocket-monster grass cute", energy=1.1, height=0.84, head=1.3, pattern="petals"),
-    c("vixi", "Vixi", "Fluffy Change Kit", "beast", "fox", "fox", "none", "none", "sparkle", "fur", "scarf",
-      "cbd5e1 f8fafc 4c1d95 cbd5e1 94a3b8 c084fc", "Could grow into anything; for now it just wants head pats.", "pocket-monster normal cute", energy=1.3, height=0.84, head=1.32),
-    c("emberkit", "Emberkit", "Ember Kit", "beast", "fox", "flame", "none", "none", "round", "fur", "",
-      "fb923c fed7aa 7c2d12 fb923c ea580c fde047", "The fiery form of Vixi, warm enough to keep a laptop toasty.", "pocket-monster fire", energy=1.4, height=0.86, head=1.28),
-    c("brookit", "Brookit", "Brook Kit", "beast", "fin", "fox", "none", "none", "round", "fur", "gem",
-      "7dd3fc e0f2fe 0c4a6e 7dd3fc 0284c7 a5f3fc", "The water form of Vixi; ripples spread wherever it naps.", "pocket-monster water", energy=1.0, height=0.86, head=1.28, pattern="waves"),
-    c("frostkit", "Frostkit", "Frost Kit", "beast", "fox", "fox", "none", "none", "sleepy", "fur", "gem scarf",
-      "e0f2fe f8fafc 1d4ed8 e0f2fe 93c5fd 67e8f9", "The frosty form of Vixi, cool under any production pressure.", "pocket-monster ice", energy=0.8, height=0.86, head=1.28, pattern="diamonds"),
-    c("leafkit", "Leafkit", "Leaf Kit", "beast", "leaf", "leaf", "none", "none", "round", "fur", "",
-      "d9f99d f7fee7 365314 d9f99d 65a30d 4ade80", "The grassy form of Vixi; smells faintly of fresh mint.", "pocket-monster grass", energy=1.0, height=0.86, head=1.28),
-    c("voltkit", "Voltkit", "Volt Kit", "beast", "fox", "star", "none", "none", "sharp", "fur", "",
-      "fef08a fefce8 1e3a8a fef08a eab308 38bdf8", "The electric form of Vixi, quick as a cache hit.", "pocket-monster electric", energy=1.6, height=0.86, head=1.28),
-    c("duskit", "Duskit", "Dusk Kit", "beast", "fox", "fox", "none", "none", "sharp", "fur", "gem",
-      "334155 1e293b fbbf24 334155 0f172a fbbf24", "The moonlit form of Vixi; its gem glows on the night shift.", "pocket-monster dark night", energy=1.0, height=0.86, head=1.28, pattern="stars"),
-    c("pixkit", "Pixkit", "Pixie Kit", "beast", "fox", "fox", "fairy", "none", "sparkle", "fur", "bow",
-      "fbcfe8 fdf2f8 831843 fbcfe8 f472b6 a5b4fc", "The fairy form of Vixi, trailing ribbons and good luck.", "pocket-monster fairy", energy=1.2, height=0.86, head=1.28),
-    c("lumeow", "Lumeow", "Dream Kitten", "beast", "cat", "cat", "none", "none", "sparkle", "fur", "gem",
-      "a5f3fc ecfeff 6d28d9 a5f3fc 22d3ee f0abfc", "Floats a little when it dreams, which is most of the time.", "pocket-monster psychic cute", energy=1.1, height=0.84, head=1.32),
-    c("dozzle", "Dozzle", "Snoozing Giant", "beast", "bear", "none", "none", "none", "sleepy", "fur", "",
-      "5b8a8f d6e9e4 1c1917 5b8a8f fef3c7 f59e0b", "Blocks the hallway and the build queue until snack time.", "pocket-monster normal sleepy", energy=0.5, build=1.3, head=1.2),
-    c("nibbly", "Nibbly", "Cloud Dragonling", "beast", "horns", "dragon", "feather", "none", "sleepy", "fur", "",
-      "bae6fd f0f9ff 1e3a8a bae6fd 7dd3fc f9a8d4", "A sky-blue dragonling that hums while it naps on clouds.", "pocket-monster dragon cute", energy=0.9, height=0.86, head=1.3),
-    c("bubbit", "Bubbit", "Bubble Bunny", "beast", "bunny", "bunny", "none", "none", "round", "fur", "gem",
-      "99f6e4 f0fdfa 115e59 99f6e4 2dd4bf 60a5fa", "Blows bubbles that pop exactly when the tests finish.", "pocket-monster water cute", energy=1.3, height=0.82, head=1.3, pattern="dots"),
-    c("pebbluff", "Pebbluff", "Pebble Pup", "beast", "floppy", "cat", "none", "none", "sharp", "fur", "gem",
-      "a8a29e e7e5e4 292524 a8a29e 78716c f97316", "Sturdy as bedrock; fetches stones and stack traces.", "pocket-monster rock", energy=1.1, height=0.86, head=1.25, build=1.15),
-    c("petalpup", "Petalpup", "Blossom Puppy", "beast", "floppy", "fox", "none", "none", "sparkle", "fur", "flower bow",
-      "fecdd3 fff1f2 9f1239 fecdd3 fb7185 86efac", "Wags hard enough to shake petals loose.", "pocket-monster fairy cute", energy=1.4, height=0.84, head=1.3, pattern="petals"),
-    c("cindersnout", "Cindersnout", "Ember Piglet", "beast", "bear", "flame", "none", "none", "round", "fur", "",
-      "fca5a5 fee2e2 450a0a fca5a5 1c1917 fb923c", "Snorts tiny embers and roasts marshmallows for the team.", "pocket-monster fire", energy=1.2, height=0.84, head=1.26, build=1.15),
-    c("lumibug", "Lumibug", "Lantern Firefly", "bird", "antenna", "star", "fairy", "none", "sparkle", "fur", "",
-      "fde68a fef9c3 1c1917 fde68a 84cc16 bef264", "Lights the way through long-running sessions.", "pocket-monster bug", energy=1.3, height=0.82),
-    c("frizzle", "Frizzle", "Snowdrift Chick", "bird", "none", "feather", "none", "short", "round", "fur", "gem",
-      "e0f2fe ffffff 0c4a6e e0f2fe bae6fd 38bdf8", "A fluffy chick that sneezes snowflakes.", "pocket-monster ice cute", energy=1.1, height=0.82),
-    c("puffaloo", "Puffaloo", "Lullaby Puff", "slime", "cat", "none", "none", "none", "sparkle", "fur", "bow headphones",
-      "fed7aa ffedd5 0f766e fed7aa fdba74 2dd4bf", "Sings everyone to sleep, then pouts that nobody listened.", "pocket-monster normal cute", energy=1.0),
-    c("wispet", "Wispet", "Lantern Wisp", "slime", "none", "none", "none", "none", "sleepy", "fur", "gem",
-      "c7d2fe e0e7ff 312e81 c7d2fe a5b4fc 22d3ee", "A friendly ghost that haunts only the idle terminals.", "pocket-monster ghost", energy=0.7),
-    c("tadpip", "Tadpip", "Swirl Tadpole", "slime", "fin", "none", "none", "none", "round", "fur", "",
-      "93c5fd dbeafe 172554 93c5fd 3b82f6 f8fafc", "Spins in circles when a pull request merges.", "pocket-monster water", energy=1.2, pattern="waves"),
-    c("magnebit", "Magnebit", "Magnet Bot", "robot", "antenna", "none", "none", "none", "mono", "plating", "gem",
-      "d4d4d8 a1a1aa 2563eb a1a1aa 52525b ef4444", "Clings to warm servers and hums along with the fans.", "pocket-monster steel electric", energy=1.1, height=0.82, head=1.3),
-    # ---- Robots ----------------------------------------------------------
-    c("bolt", "Bolt", "Build Bot", "robot", "antenna", "none", "none", "none", "visor", "plating", "",
-      "cbd5e1 64748b 22d3ee 64748b 334155 22d3ee", "Compiles, links, and blinks happily.", "robot builder"),
-    c("seven", "Seven", "QA Droid", "robot", "none", "none", "none", "none", "mono", "plating", "",
-      "e2e8f0 94a3b8 ef4444 94a3b8 1e293b ef4444", "Inspects every pixel with one unblinking eye.", "robot tester"),
-    c("cog", "Cog", "Courier Unit", "robot", "antenna", "none", "none", "none", "round", "plating", "backpack",
-      "fbbf24 92400e 1c1917 f59e0b 78350f 38bdf8", "Carries packages and packets.", "robot speedy", energy=1.3),
-    c("vega", "Vega", "Satellite Sentinel", "robot", "none", "none", "jet", "none", "visor", "plating", "",
-      "f8fafc 94a3b8 a855f7 e2e8f0 475569 a855f7", "Orbits your infrastructure and reports in.", "robot space"),
-    c("pixel", "Pixel", "Pocket Assistant", "robot", "antenna", "none", "none", "none", "round", "plating", "headphones",
-      "a7f3d0 34d399 0f172a 6ee7b7 065f46 f472b6", "Small enough to sit on your taskbar, bright enough to light it.", "robot cute", height=0.85, head=1.25),
-    c("atlas", "Atlas", "Heavy Loader", "robot", "none", "none", "none", "none", "visor", "plating", "",
-      "f59e0b 1c1917 f97316 1c1917 44403c facc15", "Lifts monorepos without breaking a sweat.", "robot strong", build=1.3, energy=0.7),
-    c("nova", "Nova", "Helper Android", "robot", "antenna", "none", "none", "none", "round", "plating", "halo",
-      "f1f5f9 cbd5e1 60a5fa e0f2fe 3b82f6 fde047", "Polite, precise, and always on call.", "robot helper"),
-    c("gizmo", "Gizmo", "Fix-It Bot", "robot", "antenna", "none", "none", "none", "mono", "plating", "goggles",
-      "84cc16 3f6212 facc15 65a30d 1a2e05 f97316", "Carries a wrench for every warning.", "robot maker", energy=1.2),
-    c("echo", "Echo", "Listening Unit", "robot", "none", "none", "none", "none", "visor", "plating", "headphones",
-      "1e293b 0f172a 22d3ee 334155 0f172a 22d3ee", "Hears every hook event and nods.", "robot calm", energy=0.8),
-    c("rivet", "Rivet", "Welder Mech", "robot", "none", "cable", "none", "none", "mono", "plating", "",
-      "78716c 44403c f97316 57534e 292524 f97316", "Welds broken pipelines back together.", "robot maker"),
-    c("chroma", "Chroma", "Painter Bot", "robot", "antenna", "none", "none", "none", "round", "plating", "flower",
-      "fbcfe8 f472b6 7c3aed f9a8d4 a855f7 22d3ee", "Paints UI mockups in perfect gradients.", "robot artist"),
-    c("servo", "Servo", "Butler Unit", "robot", "none", "none", "none", "none", "round", "suit", "bow",
-      "e5e7eb 9ca3af 0ea5e9 1f2937 f8fafc dc2626", "Announces every finished session with a bow.", "robot butler", energy=0.7),
-    c("orbit", "Orbit", "Scout Drone", "robot", "antenna", "none", "jet", "none", "mono", "plating", "",
-      "38bdf8 0369a1 facc15 0ea5e9 0c4a6e facc15", "Flies ahead to scout failing tests.", "robot speedy", energy=1.5, height=0.85),
-    # ---- Slimes ----------------------------------------------------------
-    c("gloop", "Gloop", "Mint Slime", "slime", "none", "none", "none", "none", "round", "fur", "",
-      "6ee7b7 34d399 064e3b 6ee7b7 34d399 f0fdf4", "Wobbles with joy at every passing test.", "slime cute", energy=1.2),
-    c("jelly", "Jelly", "Berry Royal", "slime", "none", "none", "none", "none", "sparkle", "fur", "crown",
-      "c084fc a855f7 3b0764 c084fc a855f7 fde047", "Rules the task queue from a gelatinous throne.", "slime royal"),
-    c("blub", "Blub", "Ocean Slime", "slime", "fin", "none", "none", "none", "round", "fur", "goggles",
-      "38bdf8 0ea5e9 082f49 38bdf8 0284c7 f0f9ff", "Splashes into deep dives.", "slime ocean"),
-    c("mallow", "Mallow", "Marshmallow Slime", "slime", "none", "none", "none", "none", "sleepy", "fur", "beanie",
-      "fef3c7 fde68a 78350f fef3c7 fde68a f472b6", "Soft, slow, and impossibly cozy.", "slime cozy", energy=0.6),
-    c("magma", "Magma", "Lava Slime", "slime", "horns", "none", "none", "none", "sharp", "fur", "",
-      "f97316 dc2626 450a0a f97316 dc2626 fde047", "Bubbles hotter as CPU usage climbs.", "slime fire", energy=1.3),
-    c("sprout", "Sprout", "Seedling Slime", "slime", "none", "none", "none", "none", "round", "fur", "flower",
-      "a3e635 65a30d 1a2e05 a3e635 65a30d f472b6", "Grows a little with every completed session.", "slime nature"),
-    c("glimmer", "Glimmer", "Crystal Slime", "slime", "none", "none", "none", "none", "sparkle", "fur", "halo",
-      "a5f3fc 67e8f9 164e63 a5f3fc 22d3ee fde047", "Refracts status lights into rainbows.", "slime magic"),
-    c("wizzle", "Wizzle", "Wizard Slime", "slime", "none", "none", "none", "none", "round", "fur", "witch_hat",
-      "818cf8 6366f1 1e1b4b 818cf8 4f46e5 fbbf24", "Knows exactly one spell: retry.", "slime magic"),
-    c("kiwi", "Kiwi", "Cat-Eared Slime", "slime", "cat", "none", "none", "none", "sparkle", "fur", "bow",
-      "bef264 84cc16 1a2e05 bef264 84cc16 f472b6", "Purrs, somehow.", "slime cat cute", energy=1.3),
-    # ---- Birds -----------------------------------------------------------
-    c("hoot", "Hoot", "Night Owl Reviewer", "bird", "none", "feather", "none", "short", "round", "fur", "glasses",
-      "92400e fef3c7 f59e0b 78350f fef3c7 f59e0b", "Reviews pull requests long after midnight.", "owl night", energy=0.8),
-    c("pengu", "Pengu", "Penguin Operator", "bird", "none", "feather", "none", "none", "round", "fur", "scarf",
-      "1e293b f8fafc 0f172a 1e293b f8fafc f59e0b", "Waddles calmly through incident response.", "penguin winter", energy=0.9),
-    c("polly", "Polly", "Parrot Linguist", "bird", "none", "feather", "none", "spiky", "sparkle", "fur", "headphones",
-      "16a34a dc2626 1c1917 16a34a facc15 2563eb", "Repeats error messages until someone listens.", "parrot talkative", energy=1.4),
-    c("corvi", "Corvi", "Crow Collector", "bird", "none", "feather", "none", "spiky", "sharp", "fur", "cape",
-      "27272a 18181b a855f7 27272a 3f3f46 a855f7", "Collects shiny artifacts from every build.", "crow night"),
-    c("chirp", "Chirp", "Canary Singer", "bird", "none", "feather", "none", "short", "sparkle", "fur", "bow",
-      "fde047 facc15 1c1917 fde047 f59e0b f472b6", "Sings out the moment something is off.", "canary music", energy=1.5, height=0.85),
-    c("puff", "Puff", "Puffin Sailor", "bird", "none", "feather", "none", "none", "round", "fur", "beanie",
-      "1c1917 f8fafc 1c1917 1c1917 f8fafc f97316", "Sails small boats through big data lakes.", "puffin ocean"),
-    c("flare", "Flare", "Phoenix Chick", "bird", "none", "feather", "none", "spiky", "sparkle", "fur", "crown",
-      "f97316 facc15 7f1d1d f97316 dc2626 fde047", "Rises from every failed build stronger.", "phoenix fire", energy=1.4),
-    c("dove", "Dove", "Peace Keeper", "bird", "none", "feather", "none", "none", "sleepy", "fur", "flower",
-      "f8fafc e2e8f0 1e293b f8fafc e2e8f0 f472b6", "Resolves merge conflicts gently.", "dove calm", energy=0.7),
-    c("robin", "Robin", "Trail Scout", "bird", "none", "feather", "none", "short", "round", "fur", "backpack",
-      "78350f fef3c7 1c1917 ea580c 78350f 22c55e", "First to spot a new release on the horizon.", "robin explorer", energy=1.2),
-    c("tuko", "Tuko", "Toucan Navigator", "bird", "none", "feather", "none", "none", "round", "fur", "goggles",
-      "1c1917 fef3c7 0ea5e9 1c1917 fef3c7 f97316", "Navigates jungles of nested callbacks.", "toucan explorer"),
-    # ---- Companion Universe Pet Packs (3D Procedural Roster) -----------
-    # 1. Indian Epic & Devotional
-    c("krishna", "Krishna", "Divine Flute Avatar", "humanoid", "human", "none", "none", "curly", "round", "robe", "crown flower gem",
-      "8fb6e8 1a2238 6b3e1f ffd700 b91c1c 0d9488", "Sky-blue Krishna with dark curly locks, golden pitambara silk, crimson sash, peacock feather in a temple crown, and a golden flute.", "devotional avatar flute divine krishna",
-      energy=1.2, height=1.0, head=1.12, build=0.95, pattern="none"),
-    c("radha", "Radha", "Graceful Vrindavan Queen", "humanoid", "human", "none", "none", "long", "sparkle", "dress", "crown flower gem",
-      "f6d7c3 1e1b18 6b3e1f e11d48 f59e0b fbcfe8", "Graceful Vrindavan beloved in radiant crimson and saffron silks with golden floral tiara and luminous lotus eyes.", "devotional avatar grace radha vrindavan",
-      energy=1.0, height=0.98, head=1.05, build=0.92, pattern="none"),
-    c("rama", "Rama", "Righteous Archer King", "humanoid", "human", "none", "none", "spiky", "round", "tunic", "crown gem",
-      "d9a066 1e1b4b 1f2937 ffd700 15803d f97316", "Dignified warrior prince of Ayodhya in a golden temple crown, gold dhoti with green sash, and the Kodanda bow.", "devotional avatar archer king rama",
-      energy=1.1, height=1.08, head=0.98, build=1.1, limbs=1.05, pattern="none"),
-    c("sita", "Sita", "Mithila Princess of Grace", "humanoid", "human", "none", "none", "long", "round", "dress", "crown flower gem",
-      "f8dfd0 1c1917 6b3e1f dc2626 ffd700 fef08a", "Serene princess of Mithila draped in auspicious vermilion and woven gold silk, crowned with lotus grace.", "devotional avatar princess sita grace",
-      energy=0.9, height=0.97, head=1.05, build=0.92, pattern="none"),
-    c("hanuman", "Hanuman", "Mighty Loyal Hero", "humanoid", "human", "cat", "none", "spiky", "round", "tunic", "crown gem",
-      "e8a84c c27a2c 6b3e1f b91c1c ea580c ffd700", "Golden-furred hero of boundless courage with curled tail, radiant temple crown, red and saffron dhoti, and golden gada.", "devotional avatar hero hanuman courage",
-      energy=1.5, height=0.95, head=1.18, build=1.2, limbs=0.95, pattern="none"),
-    c("ganesha", "Ganesha", "Lord of Good Fortune", "beast", "none", "none", "none", "none", "round", "robe", "crown gem",
-      "f0b860 c27a2c 5b3417 f5b301 c0392b ffd700", "Beloved remover of obstacles with golden skin, broad elephant ears, curled trunk, temple crown, and a bowl of sweet modaks.", "devotional avatar ganesha wisdom fortune",
-      energy=1.2, height=0.88, head=1.28, build=1.28, limbs=0.88, pattern="none"),
-    c("shiva", "Shiva", "Serene Ascetic Lord", "humanoid", "human", "none", "none", "long", "round", "robe", "crown gem",
-      "9db4cf 111827 6b3e1f e8a33d 1f2937 422006", "Ascetic blue lord of deep stillness with flowing jata, crescent moon, temple crown, coiled cobra, tiger-stripe dhoti, and trishula.", "devotional avatar shiva ascetic calm",
-      energy=0.7, height=1.05, head=1.04, build=1.05, limbs=1.05, pattern="stripes"),
-    c("parvati", "Parvati", "Goddess of Devotion", "humanoid", "human", "none", "none", "long", "round", "dress", "crown flower gem",
-      "f8dfd0 18181b 6b3e1f 059669 ffd700 e11d48", "Loving mother of mountains draped in rich emerald silk and gold, crowned with floral blossoms.", "devotional avatar goddess parvati devotion",
-      energy=1.0, height=0.98, head=1.05, build=0.92, pattern="none"),
-    c("lakshmi", "Lakshmi", "Goddess of Prosperity", "humanoid", "human", "none", "none", "long", "sparkle", "dress", "crown flower gem",
-      "f2c38f 1c1917 6b3e1f be123c ffd700 fda4af", "Radiant goddess of abundance holding a pink lotus, draped in crimson silk with gold borders under a golden temple crown.", "devotional avatar goddess lakshmi prosperity",
-      energy=1.1, height=0.98, head=1.04, build=0.92, pattern="none"),
-    c("saraswati", "Saraswati", "Goddess of Arts and Wisdom", "humanoid", "human", "none", "none", "bun", "round", "dress", "flower gem",
-      "f6d2b8 1e293b 3f3f46 f8fafc ca8a04 fde68a", "Serene embodiment of music and wisdom in white and gold silks with a pearl tiara, white lotus blossoms, and a carved veena.", "devotional avatar wisdom saraswati arts",
-      energy=0.8, height=0.98, head=1.02, build=0.90, limbs=1.02, pattern="none"),
-    c("arjuna", "Arjuna", "Peerless Gandiva Archer", "humanoid", "human", "none", "none", "ponytail", "sharp", "armor", "crown cape gem",
-      "f5d2b9 0a0a20 00f0ff 191c41 ff9933 ffd700", "Epic Pandava archer in midnight indigo armor with saffron cape, golden crest, and pinpoint cyan focus.", "warrior avatar archer arjuna epic",
-      energy=1.3, height=1.05, head=0.98, build=1.12, limbs=1.05, pattern="none", tip="ff9933"),
-    # 2. Top Anime Characters
-    c("gojo", "Gojo", "The Strongest Sorcerer", "humanoid", "human", "none", "none", "spiky", "sparkle", "suit", "glasses",
-      "fce7f3 f8fafc 38bdf8 0f172a 1e1b4b 38bdf8", "The invincible sorcerer with snow-white spiky hair, sleek high-collar dark uniform, and infinite cyan Six Eyes.", "anime avatar sorcerer gojo strongest",
-      energy=1.4, height=1.12, head=0.95, build=1.02, limbs=1.1, pattern="none"),
-    c("yuji", "Yuji", "Tiger Jujutsu Vessel", "humanoid", "human", "none", "none", "spiky", "sharp", "hoodie", "",
-      "fcd5be fb7185 78350f 0f172a dc2626 0284c7", "High-energy vessel with spiked salmon hair, iconic red hoodie insert, athletic build, and punch-ready stance.", "anime avatar sorcerer yuji brawler",
-      energy=1.5, height=1.02, head=1.0, build=1.12, limbs=1.02, pattern="none", tip="1f2937"),
-    c("tanjiro", "Tanjiro", "Sun Breathing Swordsman", "humanoid", "human", "none", "none", "spiky", "round", "kimono", "katana",
-      "f2c9a8 7f1d1d 991b1b 166534 111827 f59e0b", "Kindhearted swordsman with green haori, hanafuda earrings, forehead sun scar, and nichirin blade.", "anime avatar swordsman tanjiro sun",
-      energy=1.3, height=1.0, head=1.05, build=1.05, pattern="none", tip="dc2626"),
-    c("nezuko", "Nezuko", "Beloved Kimono Sister", "humanoid", "human", "none", "none", "long", "round", "kimono", "bow",
-      "fde2d2 111827 f43f5e f472b6 1c1917 ea580c", "Beloved companion with flowing black hair fading to fiery orange tips, bamboo muzzle, and pink kimono.", "anime avatar kimono nezuko demon",
-      energy=1.1, height=0.88, head=1.18, build=0.92, limbs=0.92, pattern="none", tip="ea580c"),
-    c("luffy", "Luffy", "Straw Hat Captain", "humanoid", "human", "none", "none", "short", "round", "jacket", "",
-      "e0ac83 0c0a09 1e293b dc2626 0284c7 eab308", "Fearless pirate captain with straw hat, bold red vest, denim shorts, chest scar, and boundless optimism.", "anime avatar pirate luffy captain",
-      energy=1.6, height=0.98, head=1.08, build=1.0, limbs=1.05, pattern="none"),
-    c("zoro", "Zoro", "Three-Sword Master", "humanoid", "human", "none", "none", "short", "sharp", "hakama", "katana",
-      "e0ac83 15803d 1e293b 14532d 334155 eab308", "Stoic three-sword master with cropped moss-green hair, deep green samurai coat, and lethal steel focus.", "anime avatar samurai zoro swordsman",
-      energy=1.1, height=1.08, head=0.98, build=1.18, limbs=1.05, pattern="none"),
-    c("nami", "Nami", "Cat Burglar Navigator", "humanoid", "human", "none", "none", "long", "sparkle", "jacket", "staff",
-      "f6d7c3 ea580c 7c2d12 0284c7 f8fafc facc15", "Genius navigator with flowing tangerine hair, weather-controlling staff, and sharp weather-routing senses.", "anime avatar navigator nami ocean",
-      energy=1.3, height=1.02, head=1.0, build=0.94, limbs=1.05, pattern="none"),
-    c("sanji", "Sanji", "Black Leg Chef", "humanoid", "human", "none", "none", "short", "sharp", "suit", "",
-      "f2c9a8 facc15 1e293b 0f172a 1e1b4b ea580c", "Refined ship cook in impeccable black suit with swept blond fringe and fiery diable jambe footwork.", "anime avatar chef sanji suit",
-      energy=1.2, height=1.08, head=0.96, build=1.05, limbs=1.12, pattern="none"),
-    c("naruto", "Naruto", "Hero of the Hidden Leaf", "humanoid", "human", "none", "none", "spiky", "round", "jacket", "headband",
-      "fcd5be facc15 0284c7 ea580c 1f2937 f8fafc", "Spirited ninja with spiky blond hair, metallic Leaf forehead protector, whisker marks, and rasengan energy.", "anime avatar ninja naruto leaf",
-      energy=1.6, height=0.98, head=1.08, build=1.02, pattern="none"),
-    c("sasuke", "Sasuke", "Shadow Uchiha Avenger", "humanoid", "human", "none", "none", "spiky", "sharp", "tunic", "katana",
-      "fce7f3 0f172a 1e1b4b 1e293b e2e8f0 a855f7", "Cool Uchiha prodigy in high-collar dark tunic with purple rope sash, kusanagi blade, and chidori sparks.", "anime avatar ninja sasuke avenger",
-      energy=1.2, height=1.04, head=0.98, build=1.02, limbs=1.04, pattern="none", tip="1e3a8a"),
-    c("goku", "Goku", "Earth-Raised Saiyan Hero", "humanoid", "human", "none", "none", "spiky", "round", "tunic", "",
-      "fcd5be 0c0a09 1e293b ea580c 1d4ed8 ffd700", "Cheerful martial artist with wild black spikes, bright orange gi, navy wristbands, and limitless ki reserves.", "anime avatar saiyan goku warrior",
-      energy=1.5, height=1.04, head=1.02, build=1.22, limbs=1.04, pattern="none"),
-    c("vegeta", "Vegeta", "Prince of All Saiyans", "humanoid", "human", "none", "none", "spiky", "sharp", "armor", "",
-      "f2c9a8 0c0a09 111827 1e3a8a f8fafc eab308", "Proud prince in white segmented battle armor and royal blue suit, with flame-swept black hair.", "anime avatar saiyan vegeta prince",
-      energy=1.4, height=0.96, head=1.04, build=1.18, limbs=0.98, pattern="none"),
-    c("levi", "Levi", "Humanitys Strongest Captain", "humanoid", "human", "none", "feather", "short", "sharp", "jacket", "katana cape",
-      "f5ece8 111827 334155 78350f 15803d f8fafc", "Scout captain with crisp black undercut, white cravat, green cape, dual steel blades, and deadpan discipline.", "anime avatar scout levi captain",
-      energy=1.2, height=0.92, head=1.04, build=1.1, limbs=0.98, pattern="none"),
-    c("mikasa", "Mikasa", "Devoted Scout Protector", "humanoid", "human", "none", "feather", "bob", "sharp", "jacket", "scarf katana cape",
-      "f6e7e7 111827 1f2937 78350f 991b1b e2e8f0", "Deadly elite scout with sleek black bob, iconic dark crimson knit scarf, dual blades, and steadfast poise.", "anime avatar scout mikasa blade",
-      energy=1.2, height=1.04, head=0.98, build=1.08, limbs=1.05, pattern="none"),
-    c("gon", "Gon", "Whale Island Green Hunter", "humanoid", "human", "none", "none", "spiky", "sparkle", "jacket", "staff backpack",
-      "f2c9a8 14532d 78350f 16a34a f97316 fde047", "Whale Island youth with tall green spikes, emerald adventure jacket, fishing rod, and pure hunter resolve.", "anime avatar hunter gon green",
-      energy=1.5, height=0.9, head=1.18, build=0.98, limbs=0.95, pattern="none", tip="22c55e"),
-    c("killua", "Killua", "Silver Lightning Prodigy", "humanoid", "cat", "none", "none", "spiky", "sharp", "hoodie", "",
-      "fce7f3 f8fafc 1d4ed8 1e3a8a 93c5fd 38bdf8", "Lightning assassin with fluffy silver hair, cat-smirk blue eyes, navy skater layers, and electric crackle.", "anime avatar lightning killua prodigy",
-      energy=1.4, height=0.92, head=1.15, build=0.96, limbs=0.98, pattern="none", tip="93c5fd"),
-    c("l-lawliet", "L Lawliet", "Eccentric Master Detective", "humanoid", "human", "none", "none", "spiky", "sleepy", "tunic", "",
-      "f5ece8 111827 1e1b4b f8fafc 334155 ef4444", "Crouching world detective in loose white tee with messy bedhead, dark circles, and sugar-fueled logic.", "anime avatar detective l-lawliet mystery",
-      energy=0.7, height=0.96, head=1.12, build=0.9, limbs=1.02, pattern="none"),
-    c("light", "Light", "Prodigy Honor Scholar", "humanoid", "human", "none", "none", "short", "sharp", "suit", "backpack",
-      "f6d7c3 78350f 991b1b b45309 111827 dc2626", "Immaculate honor student in caramel blazer and crimson tie, harboring brilliant cold deduction.", "anime avatar scholar light genius",
-      energy=1.1, height=1.08, head=0.96, build=1.02, limbs=1.06, pattern="none"),
-    c("ichigo", "Ichigo", "Substitute Shinigami", "humanoid", "human", "none", "none", "spiky", "sharp", "hakama", "katana",
-      "f2c9a8 ea580c 854d0e 0f172a f8fafc dc2626", "Orange-haired protector in black soul reaper hakama wielding the black Zangetsu cleaver with fierce resolve.", "anime avatar reaper ichigo shinigami",
-      energy=1.4, height=1.08, head=0.96, build=1.14, limbs=1.08, pattern="none", tip="f97316"),
-    c("rukia", "Rukia", "Snow Dance Soul Reaper", "humanoid", "human", "none", "none", "bob", "sharp", "hakama", "katana",
-      "f6e7e7 0c0a09 312e81 0f172a f8fafc 67e8f9", "Graceful reaper in black robes wielding the pure white frost zanpakuto with noble quiet dignity.", "anime avatar reaper rukia frost",
-      energy=1.1, height=0.92, head=1.08, build=0.92, limbs=0.95, pattern="none"),
-    c("saitama", "Saitama", "One-Punch Hero for Fun", "humanoid", "human", "none", "none", "none", "round", "suit", "cape",
-      "fcd5be fcd5be 111827 eab308 dc2626 f8fafc", "Deadpan hero in bright yellow suit, heavy red gloves, and white cape who ends every bug in a single punch.", "anime avatar hero saitama punch",
-      energy=0.9, height=1.04, head=1.02, build=1.15, limbs=1.02, pattern="none"),
-    c("genos", "Genos", "Demon Cyborg Disciple", "humanoid", "human", "none", "jet", "spiky", "sharp", "jacket", "",
-      "f2c9a8 fde047 facc15 0f172a 334155 f97316", "Devoted cyborg disciple with blond spikes, black sclera golden eyes, gunmetal arms, and glowing core.", "anime avatar cyborg genos fire",
-      energy=1.5, height=1.06, head=0.98, build=1.1, limbs=1.06, pattern="none"),
-    c("denji", "Denji", "Chainsaw Devil Fiend", "humanoid", "human", "none", "none", "short", "sharp", "suit", "",
-      "fcd5be f59e0b b45309 f8fafc 111827 111827", "Wild-eyed devil hunter with scruffy blond hair, rumpled white shirt, black tie, and chest pull cord.", "anime avatar devil denji chainsaw",
-      energy=1.6, height=1.0, head=1.04, build=1.05, limbs=1.02, pattern="none"),
-    c("power", "Power", "Blood Devil Fiend", "humanoid", "horns", "none", "none", "long", "sharp", "jacket", "",
-      "fde2d2 fed7aa dc2626 1e3a8a f8fafc dc2626", "Boastful blood devil with sharp red horns, long strawberry-blond locks, cross eyes, and unbridled chaos.", "anime avatar devil power horns",
-      energy=1.6, height=0.98, head=1.08, build=0.96, limbs=1.02, pattern="none"),
-    c("anya", "Anya", "Telepathic Star Student", "humanoid", "horns", "none", "none", "bob", "sparkle", "dress", "backpack",
-      "fce7f3 f472b6 16a34a 0f172a ca8a04 ca8a04", "Smug telepathic darling with pink bob, black horn clips, gold-trimmed Eden uniform, and peanut craving.", "anime avatar telepath anya cute",
-      energy=1.4, height=0.82, head=1.32, build=0.88, limbs=0.86, pattern="none"),
-    c("yor", "Yor", "Thorn Princess Assassin", "humanoid", "human", "none", "none", "long", "sharp", "dress", "headband katana",
-      "fce7f3 111827 991b1b 0f172a b91c1c ffd700", "Graceful Thorn Princess in black cocktail gown with red rose lining, golden stiletto needles, and lethal speed.", "anime avatar assassin yor thorn",
-      energy=1.2, height=1.06, head=0.96, build=0.96, limbs=1.08, pattern="none"),
-    c("frieren", "Frieren", "Mage of the Journey", "humanoid", "elf", "none", "none", "twintails", "sleepy", "coat", "staff cape",
-      "fdf2f8 e2e8f0 10b981 f8fafc 1e293b f59e0b", "Ancient elven mage with long pointed ears, white twintails, golden crescent staff, and quiet timeless patience.", "anime avatar elf frieren mage",
-      energy=0.7, height=0.92, head=1.1, build=0.9, limbs=0.96, pattern="none"),
-    # 3. Pocket Creature
-    c("pikachu", "Pikachu", "Electric Mouse Companion", "beast", "bunny", "star", "none", "none", "sparkle", "fur", "",
-      "facc15 facc15 1e293b facc15 dc2626 78350f", "Chubby electric companion with tall black-tipped ears, lightning tail, rosy red spark cheeks, and cheerful bounce.", "anime avatar electric pikachu mouse",
-      energy=1.5, height=0.82, head=1.34, build=1.28, limbs=0.85, pattern="none", tip="1c1917"),
-    # 4. Ghibli-Inspired Originals
-    c("kodama-spirit", "Suzu", "Forest Sprout Spirit", "humanoid", "none", "none", "none", "none", "round", "fur", "staff",
-      "fdfbf7 ecfdf5 1c1917 ecfdf5 a7f3d0 34d399", "Gentle porcelain forest spirit with tilted bobblehead, fresh clover sprout, soft celadon glow, and lotus leaf umbrella.", "ghibli avatar spirit kodama forest",
-      energy=0.8, height=0.84, head=1.35, build=0.88, limbs=0.88, pattern="none"),
-    c("witch-apprentice", "Noa", "Little Broom Delivery Witch", "humanoid", "human", "none", "none", "bob", "sparkle", "dress", "bow backpack staff",
-      "fbe3d4 3f2b1d 451a03 1e1b4b dc2626 fde047", "Earnest young delivery witch in dark navy smock with giant red head bow, courier satchel, and broom staff.", "ghibli avatar witch delivery noa",
-      energy=1.4, height=0.9, head=1.18, build=0.92, limbs=0.95, pattern="none"),
-    c("valley-flyer", "Ren", "Wind Valley Glider Explorer", "humanoid", "human", "none", "jet", "short", "round", "jacket", "goggles scarf backpack",
-      "fcd5be 92400e 0e7490 0891b2 f8fafc f97316", "Brave glider pilot in cyan flight jacket with aviator goggles, trailing wind scarf, and lightweight white wings.", "ghibli avatar glider explorer wind",
-      energy=1.3, height=1.02, head=1.05, build=0.98, limbs=1.04, pattern="none"),
-    c("woodland-guardian", "Bramble", "Moss Antler Forest Beast", "beast", "horns", "bunny", "none", "none", "round", "fur", "staff",
-      "d6d3d1 78716c 1c1917 15803d 78350f facc15", "Plush mossy woodland beast with velvety antlers, soft stone-grey pelt, chevron belly, and giant green leaf umbrella.", "ghibli avatar guardian beast bramble",
-      energy=0.7, height=0.92, head=1.3, build=1.28, limbs=0.88, pattern="none"),
-    # 5. Universe Starters
-    c("ninja-cat", "Ninja Cat", "Cyber Shinobi Feline", "beast", "cat", "cat", "none", "short", "visor", "plating", "katana scarf headband",
-      "111927 1f2937 00f0ff 111927 314155 00f0ff", "Stealth shinobi feline in midnight slate armor with glowing cyan HUD visor, dual ninjato, and scroll.", "cyberpunk avatar ninja cat shinobi",
-      energy=1.5, height=0.88, head=1.24, build=0.95, limbs=0.95, pattern="none", tip="00f0ff"),
-    c("sun-wukong", "Sun Wukong", "Great Sage Equal to Heaven", "beast", "human", "cat", "none", "spiky", "sparkle", "armor", "headband staff cape",
-      "fad7b9 d7965f ffb703 e63946 ffb703 232832", "The Monkey King crowned with the golden fillet, clad in crimson and gold armor, wielding the Ruyi Jingu Bang.", "mythology avatar wukong monkey sage",
-      energy=1.6, height=0.98, head=1.14, build=1.1, limbs=1.02, pattern="none", tip="ffb703"),
-    # 6. Starlit Originals
-    c("yorune", "Yorune", "Astral Cartographer", "humanoid", "fox", "fox", "fairy", "hime", "sparkle", "coat",
-      "kitsune_mask staff halo gem cape",
-      "f3d2b3 2a1a3e f5c542 6d2447 16213e c084fc",
-      "A fox-eared astral cartographer who reads dying stars as living schemas. Her midnight coat maps constellations that redraw themselves whenever an agent learns something new.",
-      "astral kitsune oracle cartographer night mystic",
-      energy=1.2, height=1.06, head=1.08, build=0.94, limbs=1.08, pattern="stars", tip="e9d5ff"),
-]
-
-
-def build_catalog() -> dict:
-    ids, names = set(), set()
-    for character in CHARACTERS:
-        if character["id"] in ids:
-            raise ValueError(f"duplicate id {character['id']}")
-        if character["name"] in names:
-            raise ValueError(f"duplicate name {character['name']}")
-        if len(character["accessories"]) > 5 or len(set(character["accessories"])) != len(character["accessories"]):
-            raise ValueError(f"{character['id']}: accessories must be unique and at most five")
-        if len(character["tags"]) > 6:
-            raise ValueError(f"{character['id']}: at most six tags")
-        if len(character["description"]) > 240:
-            raise ValueError(f"{character['id']}: description too long")
-        ids.add(character["id"])
-        names.add(character["name"])
-    if len(CHARACTERS) < 100:
-        raise ValueError(f"catalog has only {len(CHARACTERS)} characters")
-    unknown = (LEGACY_FRANCHISE | DEITY_INSPIRED) - {character["id"].removeprefix("miyora.") for character in CHARACTERS}
-    if unknown:
-        raise ValueError(f"category sets name unknown slugs: {sorted(unknown)}")
-    return {
-        "schemaVersion": 1,
-        "creator": "Miyora contributors",
-        "license": "CC0-1.0",
-        "source": "scripts/generate_avatar_catalog.py",
-        "characters": CHARACTERS,
-    }
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="catalog JSON path")
-    parser.add_argument("--check", action="store_true", help="fail when the output file is out of date")
-    args = parser.parse_args()
-    try:
-        rendered = json.dumps(build_catalog(), indent=2, ensure_ascii=False) + "\n"
-    except ValueError as error:
-        print(f"catalog error: {error}", file=sys.stderr)
-        return 2
-    if args.check:
-        current = args.output.read_text(encoding="utf-8") if args.output.exists() else ""
-        if current != rendered:
-            print(f"{args.output} is out of date; rerun scripts/generate_avatar_catalog.py", file=sys.stderr)
-            return 1
-        print(f"{args.output} is up to date ({len(CHARACTERS)} characters)")
-        return 0
-    args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(rendered, encoding="utf-8", newline="\n")
-    print(f"wrote {len(CHARACTERS)} characters to {args.output}")
-    return 0
-
-
-if __name__ == "__main__":
-    sys.exit(main())
+#!/usr/bin/env python3
+"""Generate the bundled 3D character catalog.
+
+Rows are hand-authored character designs for the procedural renderer, categorized
+into a clean three-tier taxonomy:
+1. Original Miyora Designs (CC0-1.0): Original characters created for Miyora.
+   Fully eligible for 3D procedural pet rendering.
+2. Cultural Heritage / Sacred Lore (Public Domain): Reverent cultural tributes
+   inspired by traditional sacred epics (e.g. Mahabharata, Ramayana, Journey to
+   the West). Eligible for 3D rendering, disclaiming proprietary design ownership.
+3. Parody / Fan Homage (Legacy Franchise Tributes): Non-commercial fan homages
+   imitating third-party franchise characters. Categorized as `legacy` and
+   ineligible for 3D active pet rendering (`threeDEligible: false`).
+
+The script formats and checks the rows deterministically; running it twice
+produces byte-identical output.
+
+Usage:
+    python scripts/generate_avatar_catalog.py [--output PATH] [--check]
+
+--check exits with status 1 when the committed catalog differs from the
+generated one (useful in CI).
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import re
+import sys
+from pathlib import Path
+
+try:
+    from character_profiles import PROFILES
+except ImportError:
+    from scripts.character_profiles import PROFILES
+
+ROOT = Path(__file__).resolve().parent.parent
+DEFAULT_OUTPUT = ROOT / "crates" / "avatar" / "catalog" / "characters.json"
+
+BODIES = {"humanoid", "beast", "robot", "slime", "bird"}
+EARS = {"none", "human", "elf", "cat", "fox", "bunny", "bear", "floppy", "horns", "antenna", "fin", "leaf"}
+TAILS = {"none", "cat", "fox", "bunny", "dragon", "cable", "feather", "flame", "leaf", "star"}
+WINGS = {"none", "feather", "bat", "fairy", "jet"}
+HAIR = {"none", "short", "bob", "long", "ponytail", "twintails", "spiky", "bun", "mohawk", "curly", "hime", "side_tail"}
+EYES = {"round", "sharp", "sleepy", "sparkle", "visor", "mono"}
+OUTFITS = {"hoodie", "kimono", "armor", "suit", "robe", "jacket", "dress", "overalls", "labcoat", "tunic", "fur", "plating", "hakama", "sailor", "coat"}
+PATTERNS = {"none", "dots", "stripes", "waves", "petals", "stars", "diamonds"}
+ACCESSORIES = {"glasses", "headphones", "scarf", "beanie", "witch_hat", "crown", "halo", "cape", "backpack", "headband", "bow", "flower", "goggles", "bell", "katana", "wand", "staff", "kitsune_mask", "shell", "gem"}
+PALETTE_KEYS = ("skin", "hair", "eyes", "primary", "secondary", "accent")
+HEX = re.compile(r"^[0-9a-f]{6}$")
+BODY_CATEGORY = {"humanoid": "character", "beast": "animal", "bird": "animal", "slime": "creature", "robot": "robot"}
+LEGACY_FRANCHISE = frozenset(
+    "anya denji frieren genos gojo goku gon ichigo killua kodama-spirit l-lawliet levi light luffy mikasa momiji "
+    "nami naruto nezuko pikachu power rukia saitama sanji sasuke tanjiro valley-flyer vegeta witch-apprentice "
+    "woodland-guardian yor yuji zoro".split()
+)
+DEITY_INSPIRED = frozenset(
+    "arjuna ganesha hanuman krishna lakshmi parvati radha rama saraswati shiva sita sun-wukong".split()
+)
+ORIGINAL_ATTRIBUTION = {
+    "creator": "Miyora contributors",
+    "license": "CC0-1.0",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Original Miyora procedural character design",
+}
+DEITY_TRIBUTE_ATTRIBUTION = {
+    "creator": "Traditional Cultural Heritage / Sacred Lore",
+    "license": "Public-Domain-Cultural-Heritage",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Cultural and devotional tribute inspired by traditional sacred iconography and epics. Reverent non-commercial depiction; disclaims any proprietary original design assertion.",
+}
+PARODY_TRIBUTE_ATTRIBUTION = {
+    "creator": "Fan Tribute / Parody Community",
+    "license": "LicenseRef-Parody-Tribute-NonCommercial",
+    "source": "scripts/generate_avatar_catalog.py",
+    "attribution": "Fan tribute / parody homage. Not an official product; strictly unaffiliated with, unsponsored by, and unendorsed by original franchise rights holders. 2D legacy non-commercial use only.",
+}
+
+
+def derive_identity(slug: str, name: str, title: str, body: str, tags: list[str]) -> tuple[str, str, str]:
+    if slug in PROFILES:
+        prof = PROFILES[slug]
+        return (prof["personality"], prof["specialty"], prof["catchphrase"])
+    tag_set = set(tags)
+    ICONIC = {
+        "aoi": ("composed", "Async Pipelines", "Calm code, steady commits, zero drama."),
+        "kenji": ("relentless", "Root Cause Debugging", "Stack traces at 3 a.m. are the truest truth."),
+        "mira": ("inquisitive", "Type Architecture", "I read build logs like constellations."),
+        "gojo": ("confident", "Limitless Technique & Infinite Void", "Don't worry. After all, I'm the strongest."),
+        "tanjiro": ("earnest", "Sun Breathing & Compassionate Resolve", "No matter how hard it gets, keep your heart burning and move forward!"),
+        "nezuko": ("protective", "Blood Demon Pyrokinesis & Gentle Vigilance", "Mmm-ph! (Vigilant guardian with an unbreakable heart of gold.)"),
+        "zoro": ("stoic", "Dead-Code Elimination", "Nothing happened... just three clean commits."),
+        "luffy": ("fearless", "Rapid Prototyping", "I'm gonna be the King of Shipped Features!"),
+        "saitama": ("deadpan", "Overwhelming Casual Might & Supermarket Bargains", "Just an ordinary hero for fun. One punch is usually enough."),
+        "frieren": ("timeless", "Timeless Magic of the Age of Myth", "Zoltraak. A century is merely a blink. Take your time, and do it right."),
+        "anya": ("cheerful", "Telepathic Linting", "Waku waku! All tests passed!"),
+        "krishna": ("serene", "Nishkama Karma & Divine Harmony", "Devote yourself fully to the work, untouched by fear of the fruit."),
+        "hanuman": ("loyal", "Unwavering Devotion & Heroic Valor", "Jai Bajrangbali! With truth and devotion, no burden is too heavy."),
+        "naruto": ("spirited", "Continuous Delivery", "Believe it! I never back down from a failing build."),
+        "sasuke": ("intense", "Precision Refactoring", "Weak abstractions are unacceptable."),
+        "goku": ("cheerful", "Limit-Breaking Martial Mastery", "Hey, I'm Goku! Let's give it everything we've got!"),
+        "vegeta": ("proud", "Royal Saiyan Pride & Relentless Discipline", "A Saiyan Prince never settles for mediocrity. Surpass your limits!"),
+        "levi": ("disciplined", "Code Cleanup", "Tidy your modules. Filthy code is unacceptable."),
+        "mikasa": ("steadfast", "Branch Protection", "I will protect this repository at all costs."),
+        "denji": ("chaotic", "Chainsaw Hybrid Tenacity", "Vroom vroom! If this works out, I get toast with three kinds of jam!"),
+        "power": ("boastful", "Blood Fiend Supreme Superiority", "Gwahahaha! Bow before my genius! Tremble before the Great Power!"),
+        "pikachu": ("perky", "Cache Re-ignition", "Pika! Lighting up the build pipeline!"),
+        "shiva": ("transcendent", "Cosmic Stillness & Dissolution", "Beyond the dance of time and form lies eternal stillness."),
+        "arjuna": ("focused", "Single-Pointed Focus & Heroic Aim", "My gaze sees neither branch nor leaf, but only the bird's eye."),
+        "sun-wukong": ("playful", "72 Earthly Transformations & Great Sage", "The Great Sage Equal to Heaven bows to no hardship!"),
+        "ninja-cat": ("stealthy", "Silent Instrumentation", "Tracing execution unseen in the shadows."),
+    }
+    if slug in ICONIC:
+        return ICONIC[slug]
+    if any(k in tag_set for k in ("sword", "samurai", "knight", "warrior", "archer", "blade")):
+        return ("stoic", "Branch Guarding", "Stand between main and bad merges.")
+    if any(k in tag_set for k in ("magic", "witch", "mage", "sorcerer", "cleric")):
+        return ("mystical", "AST Transmutation", "Casting clean checkmarks into the terminal.")
+    if body == "robot" or "robot" in tag_set:
+        return ("methodical", "Deterministic CI", "Zero syntax faults allowed.")
+    if body == "beast" or any(k in tag_set for k in ("cat", "fox", "dog", "cute", "pocket-monster")):
+        return ("playful", "Cache & Triage", "Pouncing on stale dependencies with a grin!")
+    if body == "slime":
+        return ("fluid", "Dynamic Elasticity", "Wobbling through edge cases smoothly.")
+    if "night" in tag_set or "scholar" in tag_set:
+        return ("analytical", "Deep Inspection", "Every stack trace reveals the system's truth.")
+    if "speedy" in tag_set:
+        return ("energetic", "Fast-Path Execution", "Faster than the next clock cycle.")
+    if any(k in tag_set for k in ("calm", "nature", "cozy", "devotional")):
+        return ("zen", "Code Cleanliness", "Patient cultivation builds stable software.")
+    return ("focused", "Full-Stack Engineering", "Ship clean, verify always.")
+
+
+CATALOG_PERSONALITIES = {
+    "kenji": {
+        "themeColor": "#818cf8",
+        "icon": "👓",
+        "treatName": "Espresso",
+        "treatEmoji": "☕",
+        "feedReaction": "Double espresso. Cognitive throughput restored to peak. ☕👓",
+        "wakeReaction": "Adjusting spectacles. Commencing static analysis session. 👓",
+        "petReaction": "Appreciated. Professional synergy increased by 15%. 👓✨",
+        "dialogue": {
+            "idle": "Analysis ready. What is our target module today? 👓",
+            "working": "Applying formal verification across all edge cases. 👓⚡",
+            "thinking": "Evaluating algorithmic complexity and memory layouts... 🤔",
+            "success": "Type soundness verified. Zero unsafe operations detected. 👓🎉",
+            "error": "Syntax anomaly isolated. Refactoring for invariants. 🔍",
+            "sleeping": "Zzz... running background GC cycles... 🌙"
+        }
+    },
+    "mira": {
+        "themeColor": "#c084fc",
+        "icon": "✨",
+        "treatName": "Starcandy",
+        "treatEmoji": "🍬",
+        "feedReaction": "Starcandy delight! Sparkling creative energy unlocked! 🍬✨",
+        "wakeReaction": "Good morning, starfarer! The cosmos is bright and full of code! ✨",
+        "petReaction": "A shower of stardust for you, Chief! Keep shining! ✨💖",
+        "dialogue": {
+            "idle": "Starlight companion ready! Where shall we explore next? ✨",
+            "working": "Weaving constellation threads into frontend magic! ✨⚡",
+            "thinking": "Listening to the melody between the stars... 🤔",
+            "success": "Starlight celebration! Everything renders with elegance! 🌌🎉",
+            "error": "A brief shadow passed by. Illuminating with stellar glow! ✨",
+            "sleeping": "Zzz... dreaming in nebula colors... 🌙✨"
+        }
+    },
+    "bolt": {
+        "themeColor": "#06b6d4",
+        "icon": "🤖",
+        "treatName": "Battery",
+        "treatEmoji": "🔋",
+        "feedReaction": "Supercharger connected! Battery cells at 100%! 🔋⚡",
+        "wakeReaction": "BEEP BOOP! Core diagnostics nominal! Ready to compile! 🤖",
+        "petReaction": "Haptic sensors tickled! Gratitude subroutine executed! 🤖💖",
+        "dialogue": {
+            "idle": "Unit online. Standby for operational directives, Chief! 🤖",
+            "working": "Overclocking CPU cores! Parallel pipeline processing active! 🤖⚡",
+            "thinking": "Running diagnostic simulations across 1,024 test cases... 🤔",
+            "success": "MISSION SUCCESS: All microservices responding green! 🤖🎉",
+            "error": "WARNING: Exception intercepted. Deploying auto-patch! ⚠️",
+            "sleeping": "Low-power standby mode engaged... Zzz... BEEP... 🌙"
+        }
+    },
+    "sun-wukong": {
+        "themeColor": "#ffb703",
+        "icon": "☁️",
+        "treatName": "Peach",
+        "treatEmoji": "🍑",
+        "feedReaction": "Immortal peach of Mount Huaguo! 500 years of celestial vigor restored! 🍑☁️",
+        "wakeReaction": "Hahaha! The Monkey King stirs! What mountain needs leaping today? ☁️⚡",
+        "petReaction": "Heh! A bold mortal! Take a golden hair of luck for your journey! 🍑✨",
+        "dialogue": {
+            "idle": "Lounging on the Somersault Cloud, watching the mortal world spin by. ☁️",
+            "working": "Spinning the As-You-Will Gold-Banded Cudgel with fearless flair! ⚡☁️",
+            "thinking": "Scratching chin... 72 transformations, and I only need one clever trick. 🤔",
+            "success": "HA! Vanquished in one sweep! Even the Jade Emperor would applaud! ☁️🎉",
+            "error": "A tricky demon appears! Fear not, Chief—my fiery golden eyes see right through it! 💪",
+            "sleeping": "Zzz... napping on a high branch in the Water Curtain Cave... 🌙☁️"
+        }
+    },
+    "nezuko": {
+        "themeColor": "#ff69b4",
+        "icon": "🌸",
+        "treatName": "Tea",
+        "treatEmoji": "🍵",
+        "feedReaction": "Mmm-ph! (Nezuko sips warm roasted green tea happily!) (◕‿◕)🍵",
+        "wakeReaction": "Mmm-ph! (Rubs her eyes, adjusts her pink ribbon, and smiles warmly!) 🌸✨",
+        "petReaction": "Mmm-ph! (Nezuko pats your hand gently, filling the room with comforting warmth.) 🌸💖",
+        "dialogue": {
+            "idle": "Keeping quiet watch by your side. You are safe here. 🍵",
+            "working": "Mmm! (Stands protectively, eyes fierce and ready to shield you!) 🌸⚡",
+            "thinking": "Mmm? (Tilts head with soft curiosity, observing every move.) 🤔",
+            "success": "Mmm-ph!! (Jumps with sparkling joy, clasping both hands together!) 🎉🌸",
+            "error": "Mmm... (Gently tugs your sleeve, offering quiet reassurance.) 💪",
+            "sleeping": "Zzz... resting peacefully in her cozy wooden box, safe from the sun... 🌙💤"
+        }
+    },
+    "gojo": {
+        "themeColor": "#38bdf8",
+        "icon": "♾️",
+        "treatName": "Kikufuku",
+        "treatEmoji": "🍡",
+        "feedReaction": "Sweet Kikufuku mochi! Ah, perfection. Cursed energy topped up. 🍡✨",
+        "wakeReaction": "Yawn... Lifting the blindfold. Who called for the honored one? ♾️",
+        "petReaction": "Careful now—Limitless usually stops everything, but I'll make an exception for you. ♾️✨",
+        "dialogue": {
+            "idle": "Relax. When you've got the strongest on your side, nothing is a crisis. ♾️",
+            "working": "Hollow Purple at the ready. Watch how fast this gets dismantled. ♾️⚡",
+            "thinking": "Six Eyes processing all incoming information at lightspeed... 🤔",
+            "success": "Domain Expansion: Infinite Void. Done. Didn't even break a sweat. ♾️🎉",
+            "error": "Oh? A curse with some backbone? Cute. Let me handle it. 🔍",
+            "sleeping": "Reversing cursed energy... even the strongest takes a five-minute power nap. 🌙"
+        }
+    },
+    "zoro": {
+        "themeColor": "#22c55e",
+        "icon": "⚔️",
+        "treatName": "Onigiri",
+        "treatEmoji": "🍙",
+        "feedReaction": "Onigiri consumed. Swords are sharpened. 🍙⚔️",
+        "wakeReaction": "Yawn... Which file needs cutting down, Chief? ⚔️",
+        "petReaction": "Hmph... don't slack off. Let's get these commits in. ⚔️",
+        "dialogue": {
+            "idle": "Swords sharpened. Give me the next pull request, Chief. ⚔️",
+            "working": "Three-sword syntax check. Slicing through technical debt! ⚔️",
+            "thinking": "I'm not lost... just inspecting an unexplored submodule. 🤔",
+            "success": "Nothing happened... just three clean commits. 🗡️🎉",
+            "error": "A stubborn blocker. We cut right through it again! 💪",
+            "sleeping": "Zzz... sleeping on deck with a hand on the hilt... 🌙"
+        }
+    },
+    "arjuna": {
+        "themeColor": "#ff9933",
+        "icon": "🏹",
+        "treatName": "Honey",
+        "treatEmoji": "🍯",
+        "feedReaction": "Pure golden honey received. The warrior's focus and calm are renewed. 🍯🏹",
+        "wakeReaction": "The Gandiva bow is strung. A disciplined mind welcomes every challenge. 🏹",
+        "petReaction": "Honor and brotherhood. Together our aim remains true. 🏹✨",
+        "dialogue": {
+            "idle": "Maintaining calm vigilance. The mind is a bow; single-minded focus is the arrow. 🏹",
+            "working": "Releasing every action with patient mastery and unwavering poise. ⚡🏹",
+            "thinking": "Surveying the field with strategic stillness, seeking the righteous line. 🏹",
+            "success": "Bullseye. Flawless execution born of steady discipline and honor. 🎯🎉",
+            "error": "Calm your breath. Re-anchor your stance, nock the arrow, and draw again. 🏹🛡️",
+            "sleeping": "Resting upon his warrior's pavilion beneath the silent constellations... 🌙🏹"
+        }
+    },
+    "ninja-cat": {
+        "themeColor": "#00f0ff",
+        "icon": "🐾",
+        "treatName": "Fish",
+        "treatEmoji": "🐟",
+        "feedReaction": "*crunch crunch* Purrrrr! Delicious fish! 🐟🐾",
+        "wakeReaction": "*stretches stealthily* Meow! Ready for deployment! 🐾",
+        "petReaction": "*loud purring* Purrrrr... blessed by the shinobi cat! 🐾💖",
+        "dialogue": {
+            "idle": "*purrs* All systems quiet and secure, Chief. 🐾",
+            "working": "*silent paws typing at 200 WPM* 🐾⚡",
+            "thinking": "*ears twitching* Sensing an async race condition... 🤔",
+            "success": "Target silenced! Build green and stealthy! 🐾🎉",
+            "error": "Hiss! Bug detected in perimeter! Ambushing... ⚔️",
+            "sleeping": "Zzz... curled up in a neat little cat ball... 🌙🐾"
+        }
+    }
+}
+
+
+def c(slug, name, title, body, ears, tail, wings, hair, eyes, outfit, accessories, palette, description, tags,
+      energy=1.0, height=1.0, head=1.0, build=1.0, limbs=1.0, pattern="none", tip=None,
+      catchphrase=None, specialty=None, personality=None):
+    colors = palette.split()
+    if len(colors) != len(PALETTE_KEYS) or not all(HEX.match(color) for color in colors):
+        raise ValueError(f"{slug}: palette must contain six lowercase hex colors")
+    for value, allowed, field in (
+        (body, BODIES, "body"), (ears, EARS, "ears"), (tail, TAILS, "tail"), (wings, WINGS, "wings"),
+        (hair, HAIR, "hair"), (eyes, EYES, "eyes"), (outfit, OUTFITS, "outfit"), (pattern, PATTERNS, "pattern"),
+    ):
+        if value not in allowed:
+            raise ValueError(f"{slug}: unknown {field} `{value}`")
+    if tip is not None and not HEX.match(tip):
+        raise ValueError(f"{slug}: hair tip must be a lowercase hex color")
+    accessory_list = accessories.split() if accessories else []
+    for accessory in accessory_list:
+        if accessory not in ACCESSORIES:
+            raise ValueError(f"{slug}: unknown accessory `{accessory}`")
+    tag_list = tags.split()
+    default_p, default_s, default_cp = derive_identity(slug, name, title, body, tag_list)
+    legacy = slug in LEGACY_FRANCHISE
+    deity = slug in DEITY_INSPIRED
+    category = "legacy" if legacy else "deity_inspired" if deity else BODY_CATEGORY[body]
+    attribution = (
+        PARODY_TRIBUTE_ATTRIBUTION if legacy
+        else DEITY_TRIBUTE_ATTRIBUTION if deity
+        else ORIGINAL_ATTRIBUTION
+    )
+    character = {
+        "schemaVersion": 1,
+        "id": f"miyora.{slug}",
+        "name": name,
+        "title": title,
+        "description": description,
+        "body": body,
+        "ears": ears,
+        "tail": tail,
+        "wings": wings,
+        "hair": hair,
+        "eyes": eyes,
+        "outfit": outfit,
+        "accessories": accessory_list,
+        "pattern": pattern,
+        "palette": {key: f"#{color}" for key, color in zip(PALETTE_KEYS, colors)},
+        "proportions": {"height": height, "headScale": head, "build": build, "limbLength": limbs},
+        "energy": energy,
+        "tags": tag_list,
+        "personality": personality or default_p,
+        "specialty": specialty or default_s,
+        "catchphrase": catchphrase or default_cp,
+        "category": category,
+        "threeDEligible": not legacy,
+        "attribution": attribution,
+    }
+    if slug in PROFILES and "companionPersonality" in PROFILES[slug]:
+        character["companionPersonality"] = PROFILES[slug]["companionPersonality"]
+    elif slug in CATALOG_PERSONALITIES:
+        character["companionPersonality"] = CATALOG_PERSONALITIES[slug]
+    if tip is not None:
+        character["hairTip"] = f"#{tip}"
+    return character
+
+
+CHARACTERS = [
+    # ---- Humanoids -------------------------------------------------------
+    c("aoi", "Aoi", "Streetwear Coder", "humanoid", "human", "none", "none", "bob", "round", "hoodie", "headphones",
+      "f2c9a8 1e293b 06b6d4 0f766e 334155 22d3ee", "The default companion: a calm coder in a teal tech hoodie who hums along while your agents work.", "coder cyber default", head=1.1),
+    c("kenji", "Kenji", "Night-Shift Debugger", "humanoid", "human", "none", "none", "short", "sharp", "jacket", "glasses",
+      "e0ac83 111827 6366f1 1f2937 4b5563 818cf8", "Lives for stack traces at 3 a.m. and never loses a breakpoint.", "coder night"),
+    c("mira", "Mira", "Starlight Mage", "humanoid", "human", "none", "none", "long", "sparkle", "robe", "witch_hat",
+      "f6d7c3 7c3aed f0abfc 312e81 4c1d95 fbbf24", "Reads build logs like constellations and casts green checkmarks.", "magic fantasy", energy=0.9, pattern="stars", tip="f0abfc"),
+    c("rowan", "Rowan", "Forest Ranger", "humanoid", "human", "none", "none", "ponytail", "round", "tunic", "cape",
+      "c68863 7c2d12 15803d 166534 78350f a3e635", "Tracks every branch in the repository forest.", "nature fantasy"),
+    c("sora", "Sora", "Sky Courier", "humanoid", "human", "none", "none", "twintails", "sparkle", "jacket", "goggles",
+      "f2c9a8 38bdf8 0ea5e9 f8fafc 0369a1 f97316", "Delivers pull requests faster than the wind.", "sky speedy", energy=1.4),
+    c("hana", "Hana", "Garden Botanist", "humanoid", "human", "none", "none", "bun", "round", "overalls", "flower",
+      "f6d7c3 9a3412 65a30d 84cc16 365314 f472b6", "Grows tidy modules the way she grows tomatoes: patiently.", "nature calm", energy=0.8),
+    c("ravi", "Ravi", "Systems Architect", "humanoid", "human", "none", "none", "short", "round", "suit", "glasses",
+      "a86b4c 0f172a 92400e 1e3a8a e2e8f0 f59e0b", "Sketches clean boundaries before a single line is written.", "coder office"),
+    c("lina", "Lina", "Lab Researcher", "humanoid", "human", "none", "none", "ponytail", "round", "labcoat", "glasses",
+      "e0ac83 1c1917 0891b2 f1f5f9 0e7490 14b8a6", "Runs every experiment twice and writes down both results.", "science"),
+    c("dmitri", "Dmitri", "Arctic Explorer", "humanoid", "human", "none", "none", "curly", "sleepy", "jacket", "beanie scarf",
+      "f6d7c3 78350f 1d4ed8 b91c1c 1f2937 fef3c7", "Unbothered by frozen pipelines and frozen fingers alike.", "explorer winter", energy=0.8),
+    c("yuki", "Yuki", "Snow Spirit", "humanoid", "elf", "none", "none", "long", "sleepy", "kimono", "flower",
+      "fdf2f8 e0f2fe 7dd3fc e0f2fe 93c5fd f9a8d4", "A quiet spirit who settles over idle terminals like fresh snow.", "spirit winter", energy=0.7, pattern="petals", tip="bae6fd"),
+    c("tariq", "Tariq", "Desert Navigator", "humanoid", "human", "none", "none", "short", "sharp", "robe", "headband scarf",
+      "8a5a3c 1c1917 b45309 fde68a b45309 0d9488", "Finds the oasis in any dependency desert.", "explorer"),
+    c("isla", "Isla", "Coral Diver", "humanoid", "fin", "none", "none", "bob", "round", "dress", "goggles",
+      "c68863 0d9488 2dd4bf 0e7490 134e4a fb7185", "Dives deep into legacy code and surfaces with pearls.", "ocean"),
+    c("felix", "Felix", "Clockwork Tinkerer", "humanoid", "human", "none", "none", "spiky", "round", "overalls", "goggles backpack",
+      "f2c9a8 c2410c 92400e 92400e 44403c fbbf24", "Cannot leave a gear un-greased or a test un-run.", "maker steampunk", energy=1.2),
+    c("noor", "Noor", "Moonlit Scholar", "humanoid", "human", "none", "none", "long", "sleepy", "robe", "glasses scarf",
+      "a86b4c 0f172a a78bfa 1e1b4b 6d28d9 e9d5ff", "Annotates documentation by lamplight.", "scholar night", energy=0.8),
+    c("bjorn", "Bjorn", "Shield Bearer", "humanoid", "human", "none", "none", "curly", "sharp", "armor", "",
+      "f2c9a8 ca8a04 1e40af 64748b 334155 eab308", "Stands between your main branch and every bad merge.", "knight", build=1.25),
+    c("elara", "Elara", "Elven Archivist", "humanoid", "elf", "none", "none", "long", "round", "tunic", "headband",
+      "f6d7c3 fde68a 059669 065f46 d9f99d fbbf24", "Keeps a thousand years of commit history in perfect order.", "fantasy scholar"),
+    c("kai", "Kai", "Surf Programmer", "humanoid", "human", "none", "none", "spiky", "round", "hoodie", "headphones",
+      "c68863 f59e0b 0284c7 0284c7 fde047 f97316", "Rides every release wave with a grin.", "coder ocean", energy=1.3),
+    c("maya", "Maya", "Data Cartographer", "humanoid", "human", "none", "none", "bob", "round", "jacket", "backpack glasses",
+      "8a5a3c 1c1917 7c3aed 7c3aed 1f2937 34d399", "Maps tangled data flows into clean charts.", "data explorer"),
+    c("theo", "Theo", "Pixel Painter", "humanoid", "human", "none", "none", "curly", "round", "overalls", "beanie",
+      "f6d7c3 92400e 16a34a 2563eb fef3c7 ef4444", "Pushes pixels until the interface sings.", "artist"),
+    c("zara", "Zara", "Neon Racer", "humanoid", "human", "none", "none", "mohawk", "sharp", "jacket", "goggles",
+      "a86b4c ec4899 f43f5e 0f172a 9d174d f472b6", "Treats every benchmark like a street race.", "speedy cyber", energy=1.5),
+    c("oren", "Oren", "Library Keeper", "humanoid", "human", "none", "none", "short", "sleepy", "suit", "glasses scarf",
+      "e0ac83 57534e 78716c 57534e d6d3d1 b91c1c", "Knows exactly which crate holds the answer.", "scholar calm", energy=0.7),
+    c("priya", "Priya", "Rhythm Composer", "humanoid", "human", "none", "none", "ponytail", "sparkle", "dress", "headphones",
+      "a86b4c 0c0a09 db2777 be185d fce7f3 facc15", "Hears the tempo in a well-paced CI pipeline.", "music"),
+    c("leo", "Leo", "Sunrise Paladin", "humanoid", "human", "none", "none", "short", "round", "armor", "cape",
+      "e0ac83 facc15 2563eb e5e7eb 1d4ed8 fbbf24", "Greets every morning standup with unreasonable optimism.", "knight", build=1.15),
+    c("nyx", "Nyx", "Shadow Rogue", "humanoid", "elf", "none", "none", "short", "sharp", "hoodie", "scarf",
+      "f6d7c3 18181b a855f7 18181b 3f3f46 a855f7", "Slips past flaky tests without a sound.", "rogue night"),
+    c("amara", "Amara", "Sunstone Healer", "humanoid", "human", "none", "none", "curly", "round", "robe", "halo",
+      "6b4430 1c1917 f59e0b fef3c7 f59e0b fde047", "Mends broken builds with a warm glow.", "healer", energy=0.9),
+    c("ivo", "Ivo", "Glacier Engineer", "humanoid", "human", "none", "none", "short", "round", "overalls", "goggles",
+      "f6d7c3 f1f5f9 38bdf8 0ea5e9 1e293b fef08a", "Keeps hot paths ice cold.", "maker winter"),
+    c("suki", "Suki", "Tea House Host", "humanoid", "human", "none", "none", "bun", "round", "kimono", "flower",
+      "f2c9a8 3f1d0b 166534 15803d fef3c7 dc2626", "Serves green tea and green test suites.", "calm", energy=0.8, pattern="waves"),
+    c("marco", "Marco", "Harbor Captain", "humanoid", "human", "none", "none", "curly", "sharp", "jacket", "beanie",
+      "c68863 292524 0369a1 1e3a8a f8fafc dc2626", "Steers releases through any storm.", "ocean leader"),
+    c("lyra", "Lyra", "Comet Astronomer", "humanoid", "human", "none", "none", "long", "sparkle", "robe", "glasses",
+      "f6d7c3 4338ca 60a5fa 1e1b4b 312e81 fde047", "Charts latency like distant comets.", "science space"),
+    c("jun", "Jun", "Cafe Barista", "humanoid", "human", "none", "none", "short", "round", "overalls", "",
+      "e0ac83 3f3f46 78350f 78350f fef3c7 f97316", "Brews strong coffee for long refactors.", "cozy"),
+    c("esme", "Esme", "Velvet Witch", "humanoid", "human", "none", "none", "long", "sharp", "dress", "witch_hat",
+      "f6d7c3 7f1d1d 16a34a 4c0519 1c1917 a3e635", "Hexes regressions before they reach production.", "magic", tip="dc2626"),
+    c("obi", "Obi", "Market Storyteller", "humanoid", "human", "none", "none", "short", "round", "tunic", "scarf",
+      "6b4430 0c0a09 92400e ea580c 166534 facc15", "Turns commit messages into legends.", "storyteller"),
+    c("rin", "Rin", "Signal Hacker", "humanoid", "human", "none", "none", "twintails", "sharp", "hoodie", "headphones",
+      "f2c9a8 22c55e 4ade80 052e16 14532d 4ade80", "Reads packet captures for fun.", "coder cyber", energy=1.3),
+    c("caspian", "Caspian", "Ocean Cartographer", "humanoid", "human", "none", "none", "ponytail", "round", "jacket", "scarf",
+      "e0ac83 1e3a8a 0e7490 0f766e e2e8f0 38bdf8", "Measures every current twice before setting sail.", "ocean explorer"),
+    c("freya", "Freya", "Aurora Knight", "humanoid", "human", "none", "none", "long", "sharp", "armor", "headband",
+      "fdf2f8 fef3c7 22d3ee 94a3b8 0f766e a78bfa", "Guards the northern servers under shifting lights.", "knight winter"),
+    c("hugo", "Hugo", "Bakery Apprentice", "humanoid", "human", "none", "none", "curly", "round", "overalls", "beanie",
+      "f6d7c3 b45309 78350f fef3c7 d97706 f43f5e", "Proofs dough and pull requests with equal care.", "cozy", energy=1.1),
+    c("sana", "Sana", "Origami Artist", "humanoid", "human", "none", "none", "bob", "sleepy", "kimono", "bow",
+      "f2c9a8 0c0a09 be123c fda4af fff1f2 e11d48", "Folds complex problems into simple shapes.", "artist calm", energy=0.8, pattern="dots"),
+    c("dex", "Dex", "Arcade Champion", "humanoid", "human", "none", "none", "spiky", "sparkle", "jacket", "headphones",
+      "c68863 7c3aed facc15 facc15 1e1b4b 22d3ee", "Holds the high score on every leaderboard.", "gamer", energy=1.5),
+    c("aria", "Aria", "Wind Bard", "humanoid", "elf", "none", "none", "ponytail", "sparkle", "tunic", "cape flower",
+      "f6d7c3 65a30d 22c55e 15803d fef9c3 f59e0b", "Sings release notes from the treetops.", "music fantasy"),
+    c("tomas", "Tomas", "Mountain Guide", "humanoid", "human", "none", "none", "short", "round", "jacket", "beanie backpack",
+      "e0ac83 44403c 15803d ea580c 365314 fde047", "Knows every switchback on the road to 1.0.", "explorer"),
+    c("ines", "Ines", "Lighthouse Keeper", "humanoid", "human", "none", "none", "bun", "round", "jacket", "scarf",
+      "c68863 7c2d12 0369a1 fef3c7 b91c1c 0ea5e9", "Keeps the status page shining through the night.", "ocean calm", energy=0.9),
+    c("vale", "Vale", "Thunder Monk", "humanoid", "human", "none", "none", "none", "sharp", "robe", "headband",
+      "a86b4c 0c0a09 38bdf8 f59e0b 7c2d12 38bdf8", "Meditates through outages, then strikes like lightning.", "monk"),
+    c("coco", "Coco", "Candy Inventor", "humanoid", "human", "none", "none", "twintails", "sparkle", "dress", "bow goggles",
+      "f6d7c3 f9a8d4 ec4899 f472b6 fdf2f8 22d3ee", "Invents sweet little tools nobody asked for and everybody uses.", "maker cute", energy=1.4),
+    c("orion", "Orion", "Star Navigator", "humanoid", "human", "none", "none", "short", "sharp", "suit", "cape",
+      "8a5a3c e5e7eb 93c5fd 0f172a 1e3a8a fde047", "Plots courses between distant microservices.", "space leader"),
+    c("ignis", "Ignis", "Dragonkin Smith", "humanoid", "horns", "dragon", "none", "short", "sharp", "armor", "",
+      "e0ac83 7f1d1d f97316 431407 7c2d12 f97316", "Forges sturdy binaries in dragonfire.", "dragon maker", build=1.2),
+    c("lumi", "Lumi", "Fairy Messenger", "humanoid", "elf", "none", "fairy", "bob", "sparkle", "dress", "flower",
+      "fdf2f8 a7f3d0 34d399 6ee7b7 ecfdf5 f472b6", "Flutters notifications to exactly the right person.", "fairy cute", energy=1.4, height=0.85),
+    c("vesper", "Vesper", "Midnight Poet", "humanoid", "elf", "none", "bat", "long", "sharp", "suit", "cape",
+      "f6e7e7 1c1917 dc2626 1c1917 7f1d1d dc2626", "Writes commit messages in perfect verse.", "night poet", energy=0.8),
+    c("seraph", "Seraph", "Halo Guardian", "humanoid", "human", "none", "feather", "long", "round", "robe", "halo",
+      "f2c9a8 fef3c7 facc15 f8fafc fde68a fbbf24", "Watches over production with endless patience.", "guardian", energy=0.8),
+    # ---- Anime archetypes (original designs) -------------------------
+    c("akane", "Akane", "Crimson Blade Hunter", "humanoid", "human", "none", "none", "ponytail", "sharp", "hakama", "katana headband",
+      "f2c9a8 2b1d1d dc2626 f8fafc 1f2937 b91c1c", "Hunts down regressions after dark with a single clean cut.", "anime swordswoman", energy=1.3, tip="b91c1c"),
+    c("tsukasa", "Tsukasa", "Wandering Ronin", "humanoid", "human", "none", "none", "short", "sharp", "hakama", "katana scarf",
+      "e0ac83 1c1917 78716c 334155 78716c ca8a04", "Drifts between repositories, fixing what others left behind.", "anime samurai", energy=0.8, pattern="waves"),
+    c("kaede", "Kaede", "Shadow Kunoichi", "humanoid", "human", "none", "none", "ponytail", "sharp", "tunic", "katana scarf",
+      "f2c9a8 18181b a855f7 3b0764 18181b a855f7", "Moves through the call stack without leaving a trace.", "anime ninja", energy=1.5, tip="7c3aed"),
+    c("sayuri", "Sayuri", "Shrine Maiden", "humanoid", "human", "none", "none", "hime", "sleepy", "hakama", "flower",
+      "f6d7c3 0c0a09 991b1b f8fafc dc2626 dc2626", "Keeps the shrine of stable releases swept and quiet.", "anime miko", energy=0.7),
+    c("hoshimi", "Hoshimi", "Magical Star Girl", "humanoid", "human", "none", "none", "twintails", "sparkle", "sailor", "wand bow",
+      "fbe3d4 f9a8d4 db2777 f8fafc ec4899 fde047", "Transforms failing tests into shooting stars.", "anime magical-girl", energy=1.5, pattern="stars", tip="fde047"),
+    c("nagi", "Nagi", "Mecha Pilot", "humanoid", "human", "none", "none", "short", "sharp", "jacket", "goggles headphones",
+      "f6d7c3 0f172a 0ea5e9 f8fafc 1e3a8a ef4444", "Syncs with the build machine at one hundred percent.", "anime mecha", energy=1.2, tip="1e3a8a"),
+    c("marlo", "Marlo", "Sky Pirate Captain", "humanoid", "human", "none", "none", "long", "sharp", "coat", "katana headband",
+      "c68863 7f1d1d f59e0b 7f1d1d 1c1917 fbbf24", "Raids stale branches for forgotten treasure.", "anime pirate", energy=1.3, pattern="stripes"),
+    c("kiyomi", "Kiyomi", "Idol Singer", "humanoid", "human", "none", "none", "side_tail", "sparkle", "dress", "headphones bow",
+      "fbe3d4 38bdf8 0ea5e9 f0abfc f8fafc f472b6", "Sings an encore every time a release ships.", "anime idol", energy=1.5, pattern="dots", tip="f0abfc"),
+    c("daichi", "Daichi", "School Delinquent", "humanoid", "human", "none", "none", "spiky", "sharp", "coat", "scarf",
+      "e0ac83 facc15 b45309 111827 1f2937 dc2626", "Acts tough, then quietly fixes the flaky tests.", "anime delinquent", energy=1.3, tip="f97316"),
+    c("sorako", "Sorako", "Nine-Tail Fox Spirit", "humanoid", "fox", "fox", "none", "hime", "sharp", "kimono", "kitsune_mask",
+      "fdf2f8 f5f5f4 f59e0b dc2626 f8fafc fbbf24", "An old spirit who guards the shrine of passing builds.", "anime kitsune", energy=0.9, pattern="petals", tip="f97316"),
+    c("valen", "Valen", "Vampire Noble", "humanoid", "elf", "none", "bat", "long", "sharp", "coat", "cape",
+      "f5ece8 e5e7eb dc2626 450a0a 1c1917 dc2626", "Only works night shifts, and only on elegant code.", "anime vampire", energy=0.8, tip="94a3b8"),
+    c("draga", "Draga", "Dragon Knight", "humanoid", "horns", "dragon", "none", "short", "sharp", "armor", "katana cape",
+      "e0ac83 14532d f59e0b 166534 1c1917 fbbf24", "Sworn protector of the main branch.", "anime knight dragon", build=1.15, tip="22c55e"),
+    c("alma", "Alma", "Wandering Alchemist", "humanoid", "human", "none", "none", "bob", "round", "coat", "glasses backpack",
+      "f2c9a8 ca8a04 15803d 7c2d12 1f2937 fbbf24", "Transmutes messy data into tidy tables.", "anime alchemist", pattern="diamonds"),
+    c("seiji", "Seiji", "Onmyoji Talisman Master", "humanoid", "human", "none", "none", "long", "sharp", "robe", "staff",
+      "f6d7c3 e5e7eb 7c3aed f8fafc 312e81 a855f7", "Seals runaway processes with paper talismans.", "anime onmyoji", energy=0.8, pattern="diamonds", tip="7c3aed"),
+    c("masaru", "Masaru", "Iron Samurai", "humanoid", "human", "none", "none", "short", "sharp", "armor", "katana headband",
+      "e0ac83 0c0a09 92400e b91c1c 1c1917 ca8a04", "Never retreats from a failing pipeline.", "anime samurai", build=1.2),
+    c("lyrielle", "Lyrielle", "Battle Sister", "humanoid", "human", "none", "none", "long", "round", "robe", "staff halo",
+      "fdf2f8 fef3c7 2563eb 1e293b f8fafc fde047", "Blesses deployments and smites null pointers.", "anime cleric", energy=0.9, tip="fde68a"),
+    c("pico", "Pico", "Monster Tamer", "humanoid", "human", "none", "none", "short", "sparkle", "jacket", "backpack goggles",
+      "f2c9a8 22c55e 16a34a ef4444 f8fafc facc15", "Has befriended every bug in the codebase.", "anime tamer", energy=1.5, height=0.9),
+    c("hayato", "Hayato", "Rival Swordsman", "humanoid", "human", "none", "none", "spiky", "sharp", "hakama", "katana",
+      "f2c9a8 1e3a8a 0284c7 1e293b 64748b 38bdf8", "Always one benchmark behind you, and determined to win.", "anime rival", energy=1.4, tip="38bdf8"),
+    c("velis", "Velis", "Shadow Sorcerer", "humanoid", "elf", "none", "none", "long", "sharp", "robe", "witch_hat wand",
+      "f5ece8 1e1b4b a855f7 1e1b4b 312e81 a855f7", "Casts spells only in the dark theme.", "anime sorcerer", energy=0.9, pattern="stars", tip="a855f7"),
+    c("hanae", "Hanae", "Lantern Ghost Girl", "humanoid", "human", "none", "none", "hime", "sleepy", "kimono", "flower",
+      "fdf2f8 0c0a09 60a5fa e0f2fe 93c5fd f472b6", "Drifts through old logs carrying a paper lantern.", "anime ghost", energy=0.6, pattern="waves", tip="93c5fd"),
+    c("benika", "Benika", "Oni Brawler", "humanoid", "horns", "none", "none", "spiky", "sharp", "hakama", "headband",
+      "f2c9a8 7f1d1d f59e0b f8fafc dc2626 f97316", "Punches through blockers with a grin.", "anime oni", energy=1.5, build=1.15, tip="f97316"),
+    c("kazane", "Kazane", "Wind Tengu Guard", "humanoid", "human", "none", "feather", "short", "sharp", "hakama", "staff",
+      "e0ac83 1c1917 dc2626 f8fafc 1c1917 dc2626", "Patrols the mountain pass between staging and production.", "anime tengu", energy=1.2),
+    c("akiho", "Akiho", "Cat-Eared Cafe Server", "humanoid", "cat", "cat", "none", "twintails", "sparkle", "dress", "bow",
+      "fbe3d4 92400e b45309 1f2937 f8fafc f472b6", "Serves fresh builds with a curtsy.", "anime cafe", energy=1.3, pattern="dots"),
+    c("kenta", "Kenta", "Soccer Ace", "humanoid", "human", "none", "none", "spiky", "round", "jacket", "headband",
+      "e0ac83 f97316 16a34a 1d4ed8 f8fafc facc15", "Scores a goal for every merged pull request.", "anime sports", energy=1.6, tip="fde047"),
+    c("mirei", "Mirei", "Student Council President", "humanoid", "human", "none", "none", "hime", "sharp", "sailor", "glasses",
+      "f6d7c3 1e293b 7c3aed f8fafc 1e3a8a dc2626", "Approves pull requests only after reading every line.", "anime school", energy=0.9),
+    c("haruki", "Haruki", "Transfer Student", "humanoid", "human", "none", "none", "short", "round", "suit", "backpack",
+      "f2c9a8 78350f 92400e 111827 f8fafc ca8a04", "New to the codebase, already fixing the hard bugs.", "anime school", tip="b45309"),
+    c("lunaria", "Lunaria", "Moon Princess", "humanoid", "elf", "none", "fairy", "long", "sparkle", "dress", "crown wand",
+      "fdf2f8 e0e7ff 818cf8 312e81 e0e7ff fde047", "Rules the night shift from a silver tower.", "anime princess", energy=0.9, pattern="stars", tip="818cf8"),
+    c("kuroha", "Kuroha", "Exorcist Gunslinger", "humanoid", "human", "none", "none", "short", "sharp", "coat", "goggles",
+      "f5ece8 f8fafc ef4444 111827 3f3f46 ef4444", "Banishes haunted processes with silver rounds.", "anime exorcist", energy=1.2, tip="94a3b8"),
+    c("tetsu", "Tetsu", "Mech Engineer Kid", "humanoid", "human", "none", "none", "spiky", "round", "overalls", "goggles",
+      "e0ac83 0ea5e9 0369a1 f97316 1f2937 fde047", "Built a giant robot out of spare build agents.", "anime mecha maker", energy=1.4, height=0.9, tip="1e3a8a"),
+    c("sumire", "Sumire", "Ink Brush Calligrapher", "humanoid", "human", "none", "none", "bun", "sleepy", "kimono", "flower",
+      "f6d7c3 3f3f46 6d28d9 6d28d9 f5f3ff fbbf24", "Writes commit messages in perfect brushstrokes.", "anime artist", energy=0.7, pattern="petals"),
+    c("momiji", "Momiji", "Petal Kimono Quiet One", "humanoid", "human", "none", "none", "long", "round", "kimono", "flower",
+      "f2c9a8 0c0a09 db2777 be185d 111827 f9a8d4", "Barefoot through the build logs on quiet mornings, dark hair with pink tips swaying as long sessions run to green.", "anime kimono petals calm", energy=0.9, height=0.85, pattern="petals", tip="fb7185"),
+    # ---- Beasts ----------------------------------------------------------
+    c("ember", "Ember", "Fox Courier", "beast", "fox", "fox", "none", "short", "round", "jacket", "scarf backpack",
+      "e07a2f fff7ed 1e3a8a 1f2937 374151 f59e0b", "A quick-pawed fox who carries messages between your agents.", "fox speedy", energy=1.3),
+    c("miso", "Miso", "Tabby Debugger", "beast", "cat", "cat", "none", "none", "round", "hoodie", "bell",
+      "f59e0b 92400e 16a34a 0f766e 134e4a facc15", "Pounces on bugs the moment they twitch.", "cat coder"),
+    c("pip", "Pip", "Meadow Messenger", "beast", "bunny", "bunny", "none", "none", "sparkle", "overalls", "",
+      "f5f5f4 e7e5e4 ec4899 60a5fa 1e3a8a f472b6", "Hops between tasks with boundless enthusiasm.", "bunny cute", energy=1.5, height=0.9),
+    c("bruno", "Bruno", "Honey Bear Sysadmin", "beast", "bear", "none", "none", "none", "sleepy", "overalls", "glasses",
+      "92400e 78350f 451a03 1e40af 1e3a8a fbbf24", "Slow, steady, and never forgets a backup.", "bear calm", energy=0.7, build=1.25),
+    c("bao", "Bao", "Bamboo Ops Panda", "beast", "bear", "none", "none", "none", "round", "fur", "headband",
+      "f8fafc 18181b 18181b 18181b f8fafc 22c55e", "Munches bamboo and monitors dashboards with zen focus.", "panda calm", energy=0.8, build=1.2),
+    c("luna", "Luna", "Moon Wolf", "beast", "fox", "fox", "none", "short", "sharp", "fur", "scarf",
+      "94a3b8 e2e8f0 38bdf8 64748b 1e293b a5b4fc", "Howls once when the nightly build goes green.", "wolf night"),
+    c("biscuit", "Biscuit", "Floppy-Eared Tester", "beast", "floppy", "cat", "none", "none", "round", "hoodie", "",
+      "d6a26b 92400e 451a03 dc2626 7f1d1d fde047", "Fetches every edge case and drops it at your feet.", "dog tester", energy=1.4),
+    c("mochi", "Mochi", "Snow Cat Napper", "beast", "cat", "cat", "none", "none", "sleepy", "fur", "bell",
+      "f8fafc e2e8f0 60a5fa f8fafc cbd5e1 f472b6", "Naps on warm laptops between deploys.", "cat cozy", energy=0.6),
+    c("rusty", "Rusty", "Red Panda Ranger", "beast", "bear", "fox", "none", "none", "round", "tunic", "",
+      "c2410c fef3c7 451a03 166534 78350f fde047", "Patrols the treetops of your dependency graph.", "red-panda nature"),
+    c("tofu", "Tofu", "Lop Bunny Baker", "beast", "floppy", "bunny", "none", "none", "round", "overalls", "beanie",
+      "fef3c7 fde68a 92400e fb923c fef3c7 f43f5e", "Bakes carrot cake for every merged feature.", "bunny cozy", energy=0.9),
+    c("shadow", "Shadow", "Midnight Cat", "beast", "cat", "cat", "none", "none", "sharp", "fur", "scarf",
+      "18181b 27272a facc15 18181b 3f3f46 dc2626", "Sees race conditions in the dark.", "cat night"),
+    c("sunny", "Sunny", "Fennec Explorer", "beast", "fox", "fox", "none", "none", "sparkle", "jacket", "goggles backpack",
+      "fde68a fef3c7 92400e d97706 78350f 0ea5e9", "Big ears for hearing every log line.", "fox explorer", energy=1.3),
+    c("hazel", "Hazel", "Acorn Archivist", "beast", "bear", "fox", "none", "none", "round", "tunic", "glasses",
+      "a16207 fef3c7 451a03 15803d 365314 f97316", "Stashes snippets for the long winter.", "squirrel scholar"),
+    c("mako", "Mako", "Cloud-Step Monkey", "beast", "human", "cat", "none", "spiky", "sharp", "armor", "headband",
+      "92400e 78350f f59e0b dc2626 facc15 fbbf24", "Leaps between clouds and cloud regions alike.", "monkey speedy", energy=1.5),
+    c("kuma", "Kuma", "Grizzly Guardian", "beast", "bear", "none", "none", "none", "sharp", "armor", "cape",
+      "57534e 44403c 451a03 78716c 292524 eab308", "Guards the vault of production secrets.", "bear knight", build=1.3),
+    c("nori", "Nori", "River Otter Engineer", "beast", "bear", "cat", "none", "none", "round", "overalls", "goggles",
+      "78350f fef3c7 1c1917 0284c7 0c4a6e fde047", "Builds dams of clean abstractions.", "otter maker"),
+    c("pepper", "Pepper", "Calico Designer", "beast", "cat", "cat", "none", "none", "sparkle", "dress", "bow",
+      "fbbf24 1c1917 16a34a f472b6 fdf2f8 a855f7", "Patches together layouts as lovely as her coat.", "cat artist"),
+    c("dash", "Dash", "Sprint Cat", "beast", "cat", "cat", "none", "none", "sharp", "jacket", "headband",
+      "facc15 1c1917 f97316 dc2626 1c1917 facc15", "Finishes the sprint before planning ends.", "cat speedy", energy=1.6),
+    c("frost", "Frost", "Arctic Fox Scout", "beast", "fox", "fox", "none", "none", "round", "fur", "scarf",
+      "f1f5f9 e2e8f0 38bdf8 f1f5f9 cbd5e1 0ea5e9", "Leaves neat footprints across snowy logs.", "fox winter"),
+    c("clover", "Clover", "Lucky Bunny", "beast", "bunny", "bunny", "none", "none", "sparkle", "tunic", "flower",
+      "fafaf9 e7e5e4 22c55e 4ade80 14532d facc15", "Somehow every test passes on the first try near her.", "bunny lucky"),
+    c("tora", "Tora", "Stripe Sentinel", "beast", "cat", "cat", "none", "none", "sharp", "armor", "",
+      "f97316 1c1917 16a34a 334155 1c1917 facc15", "Prowls the perimeter of your API.", "tiger knight", build=1.2),
+    c("sol", "Sol", "Mane Captain", "beast", "bear", "cat", "none", "curly", "round", "jacket", "crown",
+      "fbbf24 b45309 92400e 7f1d1d fef3c7 fde047", "Leads the team with a roar and a roadmap.", "lion leader", build=1.15),
+    c("fawn", "Fawn", "Woodland Deer", "beast", "horns", "bunny", "none", "none", "sparkle", "tunic", "flower",
+      "b45309 fef3c7 451a03 65a30d fef3c7 f9a8d4", "Treads softly through fragile legacy forests.", "deer nature", energy=0.8),
+    c("gumtree", "Gumtree", "Sleepy Koala", "beast", "bear", "none", "none", "none", "sleepy", "fur", "headphones",
+      "a8a29e e7e5e4 1c1917 78716c d6d3d1 22c55e", "Mostly asleep; wakes for green builds.", "koala cozy", energy=0.5),
+    c("bandit", "Bandit", "Raccoon Hacker", "beast", "bear", "fox", "none", "none", "sharp", "hoodie", "goggles",
+      "78716c 1c1917 facc15 1c1917 44403c 22c55e", "Rummages through dumps for treasure.", "raccoon coder", energy=1.2),
+    c("sled", "Sled", "Husky Hauler", "beast", "fox", "fox", "none", "none", "round", "jacket", "scarf",
+      "64748b f8fafc 0ea5e9 dc2626 1e293b f8fafc", "Hauls heavy migrations through the snow.", "dog winter", build=1.15),
+    c("seed", "Seed", "Pocket Hamster", "beast", "bear", "none", "none", "none", "sparkle", "overalls", "backpack",
+      "fdba74 fff7ed 1c1917 22c55e 14532d f43f5e", "Stores snacks and snippets in equal measure.", "hamster cute", energy=1.4, height=0.85),
+    c("drako", "Drako", "Dragon Pup", "beast", "horns", "dragon", "bat", "none", "round", "fur", "",
+      "16a34a 14532d facc15 16a34a 052e16 fde047", "A tiny dragon who sneezes sparks when tests fail.", "dragon cute", energy=1.3),
+    c("saffi", "Saffi", "Ember Wyrmling", "beast", "horns", "dragon", "bat", "none", "sharp", "fur", "crown",
+      "dc2626 7f1d1d facc15 dc2626 450a0a f97316", "Hoards achievements like gold.", "dragon"),
+    c("lotl", "Lotl", "Axolotl Healer", "beast", "fin", "dragon", "none", "none", "sparkle", "fur", "",
+      "f9a8d4 f472b6 1c1917 f9a8d4 fbcfe8 ec4899", "Regenerates broken modules overnight.", "axolotl cute", energy=0.9),
+    c("vamp", "Vamp", "Night Bat", "beast", "cat", "none", "bat", "none", "sharp", "fur", "cape",
+      "4c1d95 2e1065 f43f5e 4c1d95 1e1b4b f43f5e", "Echolocates memory leaks.", "bat night"),
+    c("woolly", "Woolly", "Cloud Sheep", "beast", "floppy", "none", "none", "curly", "sleepy", "fur", "bell",
+      "f5f5f4 fafaf9 1c1917 e7e5e4 d6d3d1 60a5fa", "Counts builds instead of sheep.", "sheep cozy", energy=0.6),
+    # ---- Spirit Familiars & Elemental Companions (Original Miyora Folklore) -------
+    c("zippa", "Zippa", "Star-Tail Spirit Kit", "beast", "bear", "star", "none", "none", "sparkle", "fur", "",
+      "c4b5fd ede9fe 1e1b4b c4b5fd 8b5cf6 fde047", "A celestial static spirit that stores starlight in her star-tipped tail and sparks energy into quiet coding flow.", "spirit-familiar pocket-monster electric cute", energy=1.5, height=0.82, head=1.3),
+    c("cindle", "Cindle", "Hearth Drake", "beast", "none", "flame", "none", "none", "round", "fur", "",
+      "5eead4 ccfbf1 134e4a 5eead4 0d9488 a855f7", "A miniature ember drake whose violet tail flame radiates steady warmth during deep flow states.", "spirit-familiar pocket-monster fire cute", energy=1.3, height=0.85, head=1.28),
+    c("shelloo", "Shelloo", "Tide Jade Tortoise", "beast", "fin", "none", "none", "none", "round", "fur", "shell",
+      "fda4af ffe4e6 1e3a8a fda4af 14b8a6 fef08a", "An ancient river spirit resting in a polished jade shell, maintaining calm when systems churn.", "spirit-familiar pocket-monster water cute", energy=0.9, height=0.84, head=1.3, build=1.15),
+    c("sprigget", "Sprigget", "Verdant Flora Sprite", "beast", "leaf", "leaf", "none", "none", "sparkle", "fur", "flower",
+      "bbf7d0 22c55e 14532d bbf7d0 16a34a f472b6", "A forest sprite whose leafy crown blooms vibrant petals when test assertions turn green.", "spirit-familiar pocket-monster grass cute", energy=1.1, height=0.84, head=1.3, pattern="petals"),
+    c("vixi", "Vixi", "Prism Familiar Kit", "beast", "fox", "fox", "none", "none", "sparkle", "fur", "scarf",
+      "cbd5e1 f8fafc 4c1d95 cbd5e1 94a3b8 c084fc", "A mystical multi-attuned spirit fox born of crystalline light, seeking a warm desk to call home.", "spirit-familiar pocket-monster normal cute", energy=1.3, height=0.84, head=1.32),
+    c("emberkit", "Emberkit", "Hearth Flame Familiar", "beast", "fox", "flame", "none", "none", "round", "fur", "",
+      "fb923c fed7aa 7c2d12 fb923c ea580c fde047", "The radiant fire attunement of Vixi, warming cold late-night coding sessions.", "spirit-familiar pocket-monster fire", energy=1.4, height=0.86, head=1.28),
+    c("brookit", "Brookit", "Tranquil Brook Familiar", "beast", "fin", "fox", "none", "none", "round", "fur", "gem",
+      "7dd3fc e0f2fe 0c4a6e 7dd3fc 0284c7 a5f3fc", "The calm river attunement of Vixi, casting gentle ripples of clarity wherever it rests.", "spirit-familiar pocket-monster water", energy=1.0, height=0.86, head=1.28, pattern="waves"),
+    c("frostkit", "Frostkit", "Glacial Aurora Familiar", "beast", "fox", "fox", "none", "none", "sleepy", "fur", "gem scarf",
+      "e0f2fe f8fafc 1d4ed8 e0f2fe 93c5fd 67e8f9", "The crystalline ice attunement of Vixi, cool and unflappable under critical release pressure.", "spirit-familiar pocket-monster ice", energy=0.8, height=0.86, head=1.28, pattern="diamonds"),
+    c("leafkit", "Leafkit", "Ancient Grove Familiar", "beast", "leaf", "leaf", "none", "none", "round", "fur", "",
+      "d9f99d f7fee7 365314 d9f99d 65a30d 4ade80", "The whispering grove attunement of Vixi, smelling faintly of sweet highland mint and pine.", "spirit-familiar pocket-monster grass", energy=1.0, height=0.86, head=1.28),
+    c("voltkit", "Voltkit", "Storm Spark Familiar", "beast", "fox", "star", "none", "none", "sharp", "fur", "",
+      "fef08a fefce8 1e3a8a fef08a eab308 38bdf8", "The swift tempest attunement of Vixi, fast as an L1 CPU cache hit.", "spirit-familiar pocket-monster electric", energy=1.6, height=0.86, head=1.28),
+    c("duskit", "Duskit", "Umbral Moon Familiar", "beast", "fox", "fox", "none", "none", "sharp", "fur", "gem",
+      "334155 1e293b fbbf24 334155 0f172a fbbf24", "The midnight lunar attunement of Vixi, whose forehead star guides peaceful nocturnal focus.", "spirit-familiar pocket-monster dark night", energy=1.0, height=0.86, head=1.28, pattern="stars"),
+    c("pixkit", "Pixkit", "Astral Starlight Familiar", "beast", "fox", "fox", "fairy", "none", "sparkle", "fur", "bow",
+      "fbcfe8 fdf2f8 831843 fbcfe8 f472b6 a5b4fc", "The shimmering fairy attunement of Vixi, trailing silk ribbons and creative serendipity.", "spirit-familiar pocket-monster fairy", energy=1.2, height=0.86, head=1.28),
+    c("lumeow", "Lumeow", "Astral Dream Kitten", "beast", "cat", "cat", "none", "none", "sparkle", "fur", "gem",
+      "a5f3fc ecfeff 6d28d9 a5f3fc 22d3ee f0abfc", "A celestial dream kitten that floats weightlessly along ripples of creative thought.", "spirit-familiar pocket-monster psychic cute", energy=1.1, height=0.84, head=1.32),
+    c("dozzle", "Dozzle", "Slumber Hearth Guardian", "beast", "bear", "none", "none", "none", "sleepy", "fur", "",
+      "5b8a8f d6e9e4 1c1917 5b8a8f fef3c7 f59e0b", "A massive, gentle hound guardian resting a comforting heavy snout beside your workspace.", "spirit-familiar pocket-monster normal sleepy", energy=0.5, build=1.3, head=1.2),
+    c("nibbly", "Nibbly", "Cloud Dragonling", "beast", "horns", "dragon", "feather", "none", "sleepy", "fur", "",
+      "bae6fd f0f9ff 1e3a8a bae6fd 7dd3fc f9a8d4", "A sky-blue dragonling that hums gentle harmonies while napping on soft cumulus clouds.", "spirit-familiar pocket-monster dragon cute", energy=0.9, height=0.86, head=1.3),
+    c("bubbit", "Bubbit", "Tide Bubble Hare", "beast", "bunny", "bunny", "none", "none", "round", "fur", "gem",
+      "99f6e4 f0fdfa 115e59 99f6e4 2dd4bf 60a5fa", "A playful water hare blowing iridescent bubbles that pop softly when tasks succeed.", "spirit-familiar pocket-monster water cute", energy=1.3, height=0.82, head=1.3, pattern="dots"),
+    c("pebbluff", "Pebbluff", "Bedrock Pebble Pup", "beast", "floppy", "cat", "none", "none", "sharp", "fur", "gem",
+      "a8a29e e7e5e4 292524 a8a29e 78716c f97316", "Sturdy as granite bedrock, fetching smooth river stones and stack traces with loyal cheer.", "spirit-familiar pocket-monster rock", energy=1.1, height=0.86, head=1.25, build=1.15),
+    c("petalpup", "Petalpup", "Blossom Hound", "beast", "floppy", "fox", "none", "none", "sparkle", "fur", "flower bow",
+      "fecdd3 fff1f2 9f1239 fecdd3 fb7185 86efac", "A joyous garden hound who wags hard enough to shower cherry blossom petals across your desk.", "spirit-familiar pocket-monster fairy cute", energy=1.4, height=0.84, head=1.3, pattern="petals"),
+    c("cindersnout", "Cindersnout", "Hearth Ember Piglet", "beast", "bear", "flame", "none", "none", "round", "fur", "",
+      "fca5a5 fee2e2 450a0a fca5a5 1c1917 fb923c", "Snorts warm friendly embers to keep spirits bright during cold winter builds.", "spirit-familiar pocket-monster fire", energy=1.2, height=0.84, head=1.26, build=1.15),
+    c("lumibug", "Lumibug", "Lantern Firefly Sprite", "bird", "antenna", "star", "fairy", "none", "sparkle", "fur", "",
+      "fde68a fef9c3 1c1917 fde68a 84cc16 bef264", "A soft firefly spirit illuminating the path through complex codebase labyrinths.", "spirit-familiar pocket-monster bug", energy=1.3, height=0.82),
+    c("frizzle", "Frizzle", "Frostdrift Chick", "bird", "none", "feather", "none", "short", "round", "fur", "gem",
+      "e0f2fe ffffff 0c4a6e e0f2fe bae6fd 38bdf8", "A downy arctic chick that sneezes sparkling crystalline snowflakes when pleased.", "spirit-familiar pocket-monster ice cute", energy=1.1, height=0.82),
+    c("puffaloo", "Puffaloo", "Nimbus Harmonizer", "slime", "cat", "none", "none", "none", "sparkle", "fur", "bow headphones",
+      "fed7aa ffedd5 0f766e fed7aa fdba74 2dd4bf", "A floating marshmallow cloud creature humming soft lofi frequencies to soothe busy minds.", "spirit-familiar pocket-monster normal cute", energy=1.0),
+    c("wispet", "Wispet", "Twilight Lantern Wisp", "slime", "none", "none", "none", "none", "sleepy", "fur", "gem",
+      "c7d2fe e0e7ff 312e81 c7d2fe a5b4fc 22d3ee", "A gentle spectral wisp that hovers quietly over inactive terminals, waiting for you.", "spirit-familiar pocket-monster ghost", energy=0.7),
+    c("tadpip", "Tadpip", "Ripple Swirl Tadpole", "slime", "fin", "none", "none", "none", "round", "fur", "",
+      "93c5fd dbeafe 172554 93c5fd 3b82f6 f8fafc", "A playful spring tadpole that spins in joyful aquatic circles when pull requests land.", "spirit-familiar pocket-monster water", energy=1.2, pattern="waves"),
+    c("magnebit", "Magnebit", "Flux Core Automaton", "robot", "antenna", "none", "none", "none", "mono", "plating", "gem",
+      "d4d4d8 a1a1aa 2563eb a1a1aa 52525b ef4444", "A cheerful magnetic companion drone clinging to warm chassis vents and humming with fans.", "spirit-familiar pocket-monster steel electric", energy=1.1, height=0.82, head=1.3),
+    # ---- Robots ----------------------------------------------------------
+    c("bolt", "Bolt", "Build Bot", "robot", "antenna", "none", "none", "none", "visor", "plating", "",
+      "cbd5e1 64748b 22d3ee 64748b 334155 22d3ee", "Compiles, links, and blinks happily.", "robot builder"),
+    c("seven", "Seven", "QA Droid", "robot", "none", "none", "none", "none", "mono", "plating", "",
+      "e2e8f0 94a3b8 ef4444 94a3b8 1e293b ef4444", "Inspects every pixel with one unblinking eye.", "robot tester"),
+    c("cog", "Cog", "Courier Unit", "robot", "antenna", "none", "none", "none", "round", "plating", "backpack",
+      "fbbf24 92400e 1c1917 f59e0b 78350f 38bdf8", "Carries packages and packets.", "robot speedy", energy=1.3),
+    c("vega", "Vega", "Satellite Sentinel", "robot", "none", "none", "jet", "none", "visor", "plating", "",
+      "f8fafc 94a3b8 a855f7 e2e8f0 475569 a855f7", "Orbits your infrastructure and reports in.", "robot space"),
+    c("pixel", "Pixel", "Pocket Assistant", "robot", "antenna", "none", "none", "none", "round", "plating", "headphones",
+      "a7f3d0 34d399 0f172a 6ee7b7 065f46 f472b6", "Small enough to sit on your taskbar, bright enough to light it.", "robot cute", height=0.85, head=1.25),
+    c("atlas", "Atlas", "Heavy Loader", "robot", "none", "none", "none", "none", "visor", "plating", "",
+      "f59e0b 1c1917 f97316 1c1917 44403c facc15", "Lifts monorepos without breaking a sweat.", "robot strong", build=1.3, energy=0.7),
+    c("nova", "Nova", "Helper Android", "robot", "antenna", "none", "none", "none", "round", "plating", "halo",
+      "f1f5f9 cbd5e1 60a5fa e0f2fe 3b82f6 fde047", "Polite, precise, and always on call.", "robot helper"),
+    c("gizmo", "Gizmo", "Fix-It Bot", "robot", "antenna", "none", "none", "none", "mono", "plating", "goggles",
+      "84cc16 3f6212 facc15 65a30d 1a2e05 f97316", "Carries a wrench for every warning.", "robot maker", energy=1.2),
+    c("echo", "Echo", "Listening Unit", "robot", "none", "none", "none", "none", "visor", "plating", "headphones",
+      "1e293b 0f172a 22d3ee 334155 0f172a 22d3ee", "Hears every hook event and nods.", "robot calm", energy=0.8),
+    c("rivet", "Rivet", "Welder Mech", "robot", "none", "cable", "none", "none", "mono", "plating", "",
+      "78716c 44403c f97316 57534e 292524 f97316", "Welds broken pipelines back together.", "robot maker"),
+    c("chroma", "Chroma", "Painter Bot", "robot", "antenna", "none", "none", "none", "round", "plating", "flower",
+      "fbcfe8 f472b6 7c3aed f9a8d4 a855f7 22d3ee", "Paints UI mockups in perfect gradients.", "robot artist"),
+    c("servo", "Servo", "Butler Unit", "robot", "none", "none", "none", "none", "round", "suit", "bow",
+      "e5e7eb 9ca3af 0ea5e9 1f2937 f8fafc dc2626", "Announces every finished session with a bow.", "robot butler", energy=0.7),
+    c("orbit", "Orbit", "Scout Drone", "robot", "antenna", "none", "jet", "none", "mono", "plating", "",
+      "38bdf8 0369a1 facc15 0ea5e9 0c4a6e facc15", "Flies ahead to scout failing tests.", "robot speedy", energy=1.5, height=0.85),
+    # ---- Slimes ----------------------------------------------------------
+    c("gloop", "Gloop", "Mint Slime", "slime", "none", "none", "none", "none", "round", "fur", "",
+      "6ee7b7 34d399 064e3b 6ee7b7 34d399 f0fdf4", "Wobbles with joy at every passing test.", "slime cute", energy=1.2),
+    c("jelly", "Jelly", "Berry Royal", "slime", "none", "none", "none", "none", "sparkle", "fur", "crown",
+      "c084fc a855f7 3b0764 c084fc a855f7 fde047", "Rules the task queue from a gelatinous throne.", "slime royal"),
+    c("blub", "Blub", "Ocean Slime", "slime", "fin", "none", "none", "none", "round", "fur", "goggles",
+      "38bdf8 0ea5e9 082f49 38bdf8 0284c7 f0f9ff", "Splashes into deep dives.", "slime ocean"),
+    c("mallow", "Mallow", "Marshmallow Slime", "slime", "none", "none", "none", "none", "sleepy", "fur", "beanie",
+      "fef3c7 fde68a 78350f fef3c7 fde68a f472b6", "Soft, slow, and impossibly cozy.", "slime cozy", energy=0.6),
+    c("magma", "Magma", "Lava Slime", "slime", "horns", "none", "none", "none", "sharp", "fur", "",
+      "f97316 dc2626 450a0a f97316 dc2626 fde047", "Bubbles hotter as CPU usage climbs.", "slime fire", energy=1.3),
+    c("sprout", "Sprout", "Seedling Slime", "slime", "none", "none", "none", "none", "round", "fur", "flower",
+      "a3e635 65a30d 1a2e05 a3e635 65a30d f472b6", "Grows a little with every completed session.", "slime nature"),
+    c("glimmer", "Glimmer", "Crystal Slime", "slime", "none", "none", "none", "none", "sparkle", "fur", "halo",
+      "a5f3fc 67e8f9 164e63 a5f3fc 22d3ee fde047", "Refracts status lights into rainbows.", "slime magic"),
+    c("wizzle", "Wizzle", "Wizard Slime", "slime", "none", "none", "none", "none", "round", "fur", "witch_hat",
+      "818cf8 6366f1 1e1b4b 818cf8 4f46e5 fbbf24", "Knows exactly one spell: retry.", "slime magic"),
+    c("kiwi", "Kiwi", "Cat-Eared Slime", "slime", "cat", "none", "none", "none", "sparkle", "fur", "bow",
+      "bef264 84cc16 1a2e05 bef264 84cc16 f472b6", "Purrs, somehow.", "slime cat cute", energy=1.3),
+    # ---- Birds -----------------------------------------------------------
+    c("hoot", "Hoot", "Night Owl Reviewer", "bird", "none", "feather", "none", "short", "round", "fur", "glasses",
+      "92400e fef3c7 f59e0b 78350f fef3c7 f59e0b", "Reviews pull requests long after midnight.", "owl night", energy=0.8),
+    c("pengu", "Pengu", "Penguin Operator", "bird", "none", "feather", "none", "none", "round", "fur", "scarf",
+      "1e293b f8fafc 0f172a 1e293b f8fafc f59e0b", "Waddles calmly through incident response.", "penguin winter", energy=0.9),
+    c("polly", "Polly", "Parrot Linguist", "bird", "none", "feather", "none", "spiky", "sparkle", "fur", "headphones",
+      "16a34a dc2626 1c1917 16a34a facc15 2563eb", "Repeats error messages until someone listens.", "parrot talkative", energy=1.4),
+    c("corvi", "Corvi", "Crow Collector", "bird", "none", "feather", "none", "spiky", "sharp", "fur", "cape",
+      "27272a 18181b a855f7 27272a 3f3f46 a855f7", "Collects shiny artifacts from every build.", "crow night"),
+    c("chirp", "Chirp", "Canary Singer", "bird", "none", "feather", "none", "short", "sparkle", "fur", "bow",
+      "fde047 facc15 1c1917 fde047 f59e0b f472b6", "Sings out the moment something is off.", "canary music", energy=1.5, height=0.85),
+    c("puff", "Puff", "Puffin Sailor", "bird", "none", "feather", "none", "none", "round", "fur", "beanie",
+      "1c1917 f8fafc 1c1917 1c1917 f8fafc f97316", "Sails small boats through big data lakes.", "puffin ocean"),
+    c("flare", "Flare", "Phoenix Chick", "bird", "none", "feather", "none", "spiky", "sparkle", "fur", "crown",
+      "f97316 facc15 7f1d1d f97316 dc2626 fde047", "Rises from every failed build stronger.", "phoenix fire", energy=1.4),
+    c("dove", "Dove", "Peace Keeper", "bird", "none", "feather", "none", "none", "sleepy", "fur", "flower",
+      "f8fafc e2e8f0 1e293b f8fafc e2e8f0 f472b6", "Resolves merge conflicts gently.", "dove calm", energy=0.7),
+    c("robin", "Robin", "Trail Scout", "bird", "none", "feather", "none", "short", "round", "fur", "backpack",
+      "78350f fef3c7 1c1917 ea580c 78350f 22c55e", "First to spot a new release on the horizon.", "robin explorer", energy=1.2),
+    c("tuko", "Tuko", "Toucan Navigator", "bird", "none", "feather", "none", "none", "round", "fur", "goggles",
+      "1c1917 fef3c7 0ea5e9 1c1917 fef3c7 f97316", "Navigates jungles of nested callbacks.", "toucan explorer"),
+    # ---- Companion Universe Pet Packs (3D Procedural Roster) -----------
+    # 1. Indian Epic & Devotional
+    c("krishna", "Krishna", "Divine Flute Avatar", "humanoid", "human", "none", "none", "curly", "round", "robe", "crown flower gem",
+      "8fb6e8 1a2238 6b3e1f ffd700 b91c1c 0d9488", "Sky-blue Krishna with dark curly locks, golden pitambara silk, crimson sash, peacock feather in a temple crown, and a golden flute.", "devotional avatar flute divine krishna",
+      energy=1.2, height=1.0, head=1.12, build=0.95, pattern="none"),
+    c("radha", "Radha", "Graceful Vrindavan Queen", "humanoid", "human", "none", "none", "long", "sparkle", "dress", "crown flower gem",
+      "f6d7c3 1e1b18 6b3e1f e11d48 f59e0b fbcfe8", "Graceful Vrindavan beloved in radiant crimson and saffron silks with golden floral tiara and luminous lotus eyes.", "devotional avatar grace radha vrindavan",
+      energy=1.0, height=0.98, head=1.05, build=0.92, pattern="none"),
+    c("rama", "Rama", "Righteous Archer King", "humanoid", "human", "none", "none", "spiky", "round", "tunic", "crown gem",
+      "d9a066 1e1b4b 1f2937 ffd700 15803d f97316", "Dignified warrior prince of Ayodhya in a golden temple crown, gold dhoti with green sash, and the Kodanda bow.", "devotional avatar archer king rama",
+      energy=1.1, height=1.08, head=0.98, build=1.1, limbs=1.05, pattern="none"),
+    c("sita", "Sita", "Mithila Princess of Grace", "humanoid", "human", "none", "none", "long", "round", "dress", "crown flower gem",
+      "f8dfd0 1c1917 6b3e1f dc2626 ffd700 fef08a", "Serene princess of Mithila draped in auspicious vermilion and woven gold silk, crowned with lotus grace.", "devotional avatar princess sita grace",
+      energy=0.9, height=0.97, head=1.05, build=0.92, pattern="none"),
+    c("hanuman", "Hanuman", "Mighty Loyal Hero", "humanoid", "human", "cat", "none", "spiky", "round", "tunic", "crown gem",
+      "e8a84c c27a2c 6b3e1f b91c1c ea580c ffd700", "Golden-furred hero of boundless courage with curled tail, radiant temple crown, red and saffron dhoti, and golden gada.", "devotional avatar hero hanuman courage",
+      energy=1.5, height=0.95, head=1.18, build=1.2, limbs=0.95, pattern="none"),
+    c("ganesha", "Ganesha", "Lord of Good Fortune", "beast", "none", "none", "none", "none", "round", "robe", "crown gem",
+      "f0b860 c27a2c 5b3417 f5b301 c0392b ffd700", "Beloved remover of obstacles with golden skin, broad elephant ears, curled trunk, temple crown, and a bowl of sweet modaks.", "devotional avatar ganesha wisdom fortune",
+      energy=1.2, height=0.88, head=1.28, build=1.28, limbs=0.88, pattern="none"),
+    c("shiva", "Shiva", "Serene Ascetic Lord", "humanoid", "human", "none", "none", "long", "round", "robe", "crown gem",
+      "9db4cf 111827 6b3e1f e8a33d 1f2937 422006", "Ascetic blue lord of deep stillness with flowing jata, crescent moon, temple crown, coiled cobra, tiger-stripe dhoti, and trishula.", "devotional avatar shiva ascetic calm",
+      energy=0.7, height=1.05, head=1.04, build=1.05, limbs=1.05, pattern="stripes"),
+    c("parvati", "Parvati", "Goddess of Devotion", "humanoid", "human", "none", "none", "long", "round", "dress", "crown flower gem",
+      "f8dfd0 18181b 6b3e1f 059669 ffd700 e11d48", "Loving mother of mountains draped in rich emerald silk and gold, crowned with floral blossoms.", "devotional avatar goddess parvati devotion",
+      energy=1.0, height=0.98, head=1.05, build=0.92, pattern="none"),
+    c("lakshmi", "Lakshmi", "Goddess of Prosperity", "humanoid", "human", "none", "none", "long", "sparkle", "dress", "crown flower gem",
+      "f2c38f 1c1917 6b3e1f be123c ffd700 fda4af", "Radiant goddess of abundance holding a pink lotus, draped in crimson silk with gold borders under a golden temple crown.", "devotional avatar goddess lakshmi prosperity",
+      energy=1.1, height=0.98, head=1.04, build=0.92, pattern="none"),
+    c("saraswati", "Saraswati", "Goddess of Arts and Wisdom", "humanoid", "human", "none", "none", "bun", "round", "dress", "flower gem",
+      "f6d2b8 1e293b 3f3f46 f8fafc ca8a04 fde68a", "Serene embodiment of music and wisdom in white and gold silks with a pearl tiara, white lotus blossoms, and a carved veena.", "devotional avatar wisdom saraswati arts",
+      energy=0.8, height=0.98, head=1.02, build=0.90, limbs=1.02, pattern="none"),
+    c("arjuna", "Arjuna", "Peerless Gandiva Archer", "humanoid", "human", "none", "none", "ponytail", "sharp", "armor", "crown cape gem",
+      "f5d2b9 0a0a20 00f0ff 191c41 ff9933 ffd700", "Epic Pandava archer in midnight indigo armor with saffron cape, golden crest, and pinpoint cyan focus.", "warrior avatar archer arjuna epic",
+      energy=1.3, height=1.05, head=0.98, build=1.12, limbs=1.05, pattern="none", tip="ff9933"),
+    # 2. Top Anime Characters
+    c("gojo", "Gojo", "The Strongest Sorcerer", "humanoid", "human", "none", "none", "spiky", "sparkle", "suit", "glasses",
+      "fce7f3 f8fafc 38bdf8 0f172a 1e1b4b 38bdf8", "The invincible sorcerer with snow-white spiky hair, sleek high-collar dark uniform, and infinite cyan Six Eyes.", "anime avatar sorcerer gojo strongest",
+      energy=1.4, height=1.12, head=0.95, build=1.02, limbs=1.1, pattern="none"),
+    c("yuji", "Yuji", "Tiger Jujutsu Vessel", "humanoid", "human", "none", "none", "spiky", "sharp", "hoodie", "",
+      "fcd5be fb7185 78350f 0f172a dc2626 0284c7", "High-energy vessel with spiked salmon hair, iconic red hoodie insert, athletic build, and punch-ready stance.", "anime avatar sorcerer yuji brawler",
+      energy=1.5, height=1.02, head=1.0, build=1.12, limbs=1.02, pattern="none", tip="1f2937"),
+    c("tanjiro", "Tanjiro", "Sun Breathing Swordsman", "humanoid", "human", "none", "none", "spiky", "round", "kimono", "katana",
+      "f2c9a8 7f1d1d 991b1b 166534 111827 f59e0b", "Kindhearted swordsman with green haori, hanafuda earrings, forehead sun scar, and nichirin blade.", "anime avatar swordsman tanjiro sun",
+      energy=1.3, height=1.0, head=1.05, build=1.05, pattern="none", tip="dc2626"),
+    c("nezuko", "Nezuko", "Beloved Kimono Sister", "humanoid", "human", "none", "none", "long", "round", "kimono", "bow",
+      "fde2d2 111827 f43f5e f472b6 1c1917 ea580c", "Beloved companion with flowing black hair fading to fiery orange tips, bamboo muzzle, and pink kimono.", "anime avatar kimono nezuko demon",
+      energy=1.1, height=0.88, head=1.18, build=0.92, limbs=0.92, pattern="none", tip="ea580c"),
+    c("luffy", "Luffy", "Straw Hat Captain", "humanoid", "human", "none", "none", "short", "round", "jacket", "",
+      "e0ac83 0c0a09 1e293b dc2626 0284c7 eab308", "Fearless pirate captain with straw hat, bold red vest, denim shorts, chest scar, and boundless optimism.", "anime avatar pirate luffy captain",
+      energy=1.6, height=0.98, head=1.08, build=1.0, limbs=1.05, pattern="none"),
+    c("zoro", "Zoro", "Three-Sword Master", "humanoid", "human", "none", "none", "short", "sharp", "hakama", "katana",
+      "e0ac83 15803d 1e293b 14532d 334155 eab308", "Stoic three-sword master with cropped moss-green hair, deep green samurai coat, and lethal steel focus.", "anime avatar samurai zoro swordsman",
+      energy=1.1, height=1.08, head=0.98, build=1.18, limbs=1.05, pattern="none"),
+    c("nami", "Nami", "Cat Burglar Navigator", "humanoid", "human", "none", "none", "long", "sparkle", "jacket", "staff",
+      "f6d7c3 ea580c 7c2d12 0284c7 f8fafc facc15", "Genius navigator with flowing tangerine hair, weather-controlling staff, and sharp weather-routing senses.", "anime avatar navigator nami ocean",
+      energy=1.3, height=1.02, head=1.0, build=0.94, limbs=1.05, pattern="none"),
+    c("sanji", "Sanji", "Black Leg Chef", "humanoid", "human", "none", "none", "short", "sharp", "suit", "",
+      "f2c9a8 facc15 1e293b 0f172a 1e1b4b ea580c", "Refined ship cook in impeccable black suit with swept blond fringe and fiery diable jambe footwork.", "anime avatar chef sanji suit",
+      energy=1.2, height=1.08, head=0.96, build=1.05, limbs=1.12, pattern="none"),
+    c("naruto", "Naruto", "Hero of the Hidden Leaf", "humanoid", "human", "none", "none", "spiky", "round", "jacket", "headband",
+      "fcd5be facc15 0284c7 ea580c 1f2937 f8fafc", "Spirited ninja with spiky blond hair, metallic Leaf forehead protector, whisker marks, and rasengan energy.", "anime avatar ninja naruto leaf",
+      energy=1.6, height=0.98, head=1.08, build=1.02, pattern="none"),
+    c("sasuke", "Sasuke", "Shadow Uchiha Avenger", "humanoid", "human", "none", "none", "spiky", "sharp", "tunic", "katana",
+      "fce7f3 0f172a 1e1b4b 1e293b e2e8f0 a855f7", "Cool Uchiha prodigy in high-collar dark tunic with purple rope sash, kusanagi blade, and chidori sparks.", "anime avatar ninja sasuke avenger",
+      energy=1.2, height=1.04, head=0.98, build=1.02, limbs=1.04, pattern="none", tip="1e3a8a"),
+    c("goku", "Goku", "Earth-Raised Saiyan Hero", "humanoid", "human", "none", "none", "spiky", "round", "tunic", "",
+      "fcd5be 0c0a09 1e293b ea580c 1d4ed8 ffd700", "Cheerful martial artist with wild black spikes, bright orange gi, navy wristbands, and limitless ki reserves.", "anime avatar saiyan goku warrior",
+      energy=1.5, height=1.04, head=1.02, build=1.22, limbs=1.04, pattern="none"),
+    c("vegeta", "Vegeta", "Prince of All Saiyans", "humanoid", "human", "none", "none", "spiky", "sharp", "armor", "",
+      "f2c9a8 0c0a09 111827 1e3a8a f8fafc eab308", "Proud prince in white segmented battle armor and royal blue suit, with flame-swept black hair.", "anime avatar saiyan vegeta prince",
+      energy=1.4, height=0.96, head=1.04, build=1.18, limbs=0.98, pattern="none"),
+    c("levi", "Levi", "Humanitys Strongest Captain", "humanoid", "human", "none", "feather", "short", "sharp", "jacket", "katana cape",
+      "f5ece8 111827 334155 78350f 15803d f8fafc", "Scout captain with crisp black undercut, white cravat, green cape, dual steel blades, and deadpan discipline.", "anime avatar scout levi captain",
+      energy=1.2, height=0.92, head=1.04, build=1.1, limbs=0.98, pattern="none"),
+    c("mikasa", "Mikasa", "Devoted Scout Protector", "humanoid", "human", "none", "feather", "bob", "sharp", "jacket", "scarf katana cape",
+      "f6e7e7 111827 1f2937 78350f 991b1b e2e8f0", "Deadly elite scout with sleek black bob, iconic dark crimson knit scarf, dual blades, and steadfast poise.", "anime avatar scout mikasa blade",
+      energy=1.2, height=1.04, head=0.98, build=1.08, limbs=1.05, pattern="none"),
+    c("gon", "Gon", "Whale Island Green Hunter", "humanoid", "human", "none", "none", "spiky", "sparkle", "jacket", "staff backpack",
+      "f2c9a8 14532d 78350f 16a34a f97316 fde047", "Whale Island youth with tall green spikes, emerald adventure jacket, fishing rod, and pure hunter resolve.", "anime avatar hunter gon green",
+      energy=1.5, height=0.9, head=1.18, build=0.98, limbs=0.95, pattern="none", tip="22c55e"),
+    c("killua", "Killua", "Silver Lightning Prodigy", "humanoid", "cat", "none", "none", "spiky", "sharp", "hoodie", "",
+      "fce7f3 f8fafc 1d4ed8 1e3a8a 93c5fd 38bdf8", "Lightning assassin with fluffy silver hair, cat-smirk blue eyes, navy skater layers, and electric crackle.", "anime avatar lightning killua prodigy",
+      energy=1.4, height=0.92, head=1.15, build=0.96, limbs=0.98, pattern="none", tip="93c5fd"),
+    c("l-lawliet", "L Lawliet", "Eccentric Master Detective", "humanoid", "human", "none", "none", "spiky", "sleepy", "tunic", "",
+      "f5ece8 111827 1e1b4b f8fafc 334155 ef4444", "Crouching world detective in loose white tee with messy bedhead, dark circles, and sugar-fueled logic.", "anime avatar detective l-lawliet mystery",
+      energy=0.7, height=0.96, head=1.12, build=0.9, limbs=1.02, pattern="none"),
+    c("light", "Light", "Prodigy Honor Scholar", "humanoid", "human", "none", "none", "short", "sharp", "suit", "backpack",
+      "f6d7c3 78350f 991b1b b45309 111827 dc2626", "Immaculate honor student in caramel blazer and crimson tie, harboring brilliant cold deduction.", "anime avatar scholar light genius",
+      energy=1.1, height=1.08, head=0.96, build=1.02, limbs=1.06, pattern="none"),
+    c("ichigo", "Ichigo", "Substitute Shinigami", "humanoid", "human", "none", "none", "spiky", "sharp", "hakama", "katana",
+      "f2c9a8 ea580c 854d0e 0f172a f8fafc dc2626", "Orange-haired protector in black soul reaper hakama wielding the black Zangetsu cleaver with fierce resolve.", "anime avatar reaper ichigo shinigami",
+      energy=1.4, height=1.08, head=0.96, build=1.14, limbs=1.08, pattern="none", tip="f97316"),
+    c("rukia", "Rukia", "Snow Dance Soul Reaper", "humanoid", "human", "none", "none", "bob", "sharp", "hakama", "katana",
+      "f6e7e7 0c0a09 312e81 0f172a f8fafc 67e8f9", "Graceful reaper in black robes wielding the pure white frost zanpakuto with noble quiet dignity.", "anime avatar reaper rukia frost",
+      energy=1.1, height=0.92, head=1.08, build=0.92, limbs=0.95, pattern="none"),
+    c("saitama", "Saitama", "One-Punch Hero for Fun", "humanoid", "human", "none", "none", "none", "round", "suit", "cape",
+      "fcd5be fcd5be 111827 eab308 dc2626 f8fafc", "Deadpan hero in bright yellow suit, heavy red gloves, and white cape who ends every bug in a single punch.", "anime avatar hero saitama punch",
+      energy=0.9, height=1.04, head=1.02, build=1.15, limbs=1.02, pattern="none"),
+    c("genos", "Genos", "Demon Cyborg Disciple", "humanoid", "human", "none", "jet", "spiky", "sharp", "jacket", "",
+      "f2c9a8 fde047 facc15 0f172a 334155 f97316", "Devoted cyborg disciple with blond spikes, black sclera golden eyes, gunmetal arms, and glowing core.", "anime avatar cyborg genos fire",
+      energy=1.5, height=1.06, head=0.98, build=1.1, limbs=1.06, pattern="none"),
+    c("denji", "Denji", "Chainsaw Devil Fiend", "humanoid", "human", "none", "none", "short", "sharp", "suit", "",
+      "fcd5be f59e0b b45309 f8fafc 111827 111827", "Wild-eyed devil hunter with scruffy blond hair, rumpled white shirt, black tie, and chest pull cord.", "anime avatar devil denji chainsaw",
+      energy=1.6, height=1.0, head=1.04, build=1.05, limbs=1.02, pattern="none"),
+    c("power", "Power", "Blood Devil Fiend", "humanoid", "horns", "none", "none", "long", "sharp", "jacket", "",
+      "fde2d2 fed7aa dc2626 1e3a8a f8fafc dc2626", "Boastful blood devil with sharp red horns, long strawberry-blond locks, cross eyes, and unbridled chaos.", "anime avatar devil power horns",
+      energy=1.6, height=0.98, head=1.08, build=0.96, limbs=1.02, pattern="none"),
+    c("anya", "Anya", "Telepathic Star Student", "humanoid", "horns", "none", "none", "bob", "sparkle", "dress", "backpack",
+      "fce7f3 f472b6 16a34a 0f172a ca8a04 ca8a04", "Smug telepathic darling with pink bob, black horn clips, gold-trimmed Eden uniform, and peanut craving.", "anime avatar telepath anya cute",
+      energy=1.4, height=0.82, head=1.32, build=0.88, limbs=0.86, pattern="none"),
+    c("yor", "Yor", "Thorn Princess Assassin", "humanoid", "human", "none", "none", "long", "sharp", "dress", "headband katana",
+      "fce7f3 111827 991b1b 0f172a b91c1c ffd700", "Graceful Thorn Princess in black cocktail gown with red rose lining, golden stiletto needles, and lethal speed.", "anime avatar assassin yor thorn",
+      energy=1.2, height=1.06, head=0.96, build=0.96, limbs=1.08, pattern="none"),
+    c("frieren", "Frieren", "Mage of the Journey", "humanoid", "elf", "none", "none", "twintails", "sleepy", "coat", "staff cape",
+      "fdf2f8 e2e8f0 10b981 f8fafc 1e293b f59e0b", "Ancient elven mage with long pointed ears, white twintails, golden crescent staff, and quiet timeless patience.", "anime avatar elf frieren mage",
+      energy=0.7, height=0.92, head=1.1, build=0.9, limbs=0.96, pattern="none"),
+    # 3. Pocket Creature
+    c("pikachu", "Pikachu", "Electric Mouse Companion", "beast", "bunny", "star", "none", "none", "sparkle", "fur", "",
+      "facc15 facc15 1e293b facc15 dc2626 78350f", "Chubby electric companion with tall black-tipped ears, lightning tail, rosy red spark cheeks, and cheerful bounce.", "anime avatar electric pikachu mouse",
+      energy=1.5, height=0.82, head=1.34, build=1.28, limbs=0.85, pattern="none", tip="1c1917"),
+    # 4. Ghibli-Inspired Originals
+    c("kodama-spirit", "Suzu", "Forest Sprout Spirit", "humanoid", "none", "none", "none", "none", "round", "fur", "staff",
+      "fdfbf7 ecfdf5 1c1917 ecfdf5 a7f3d0 34d399", "Gentle porcelain forest spirit with tilted bobblehead, fresh clover sprout, soft celadon glow, and lotus leaf umbrella.", "ghibli avatar spirit kodama forest",
+      energy=0.8, height=0.84, head=1.35, build=0.88, limbs=0.88, pattern="none"),
+    c("witch-apprentice", "Noa", "Little Broom Delivery Witch", "humanoid", "human", "none", "none", "bob", "sparkle", "dress", "bow backpack staff",
+      "fbe3d4 3f2b1d 451a03 1e1b4b dc2626 fde047", "Earnest young delivery witch in dark navy smock with giant red head bow, courier satchel, and broom staff.", "ghibli avatar witch delivery noa",
+      energy=1.4, height=0.9, head=1.18, build=0.92, limbs=0.95, pattern="none"),
+    c("valley-flyer", "Ren", "Wind Valley Glider Explorer", "humanoid", "human", "none", "jet", "short", "round", "jacket", "goggles scarf backpack",
+      "fcd5be 92400e 0e7490 0891b2 f8fafc f97316", "Brave glider pilot in cyan flight jacket with aviator goggles, trailing wind scarf, and lightweight white wings.", "ghibli avatar glider explorer wind",
+      energy=1.3, height=1.02, head=1.05, build=0.98, limbs=1.04, pattern="none"),
+    c("woodland-guardian", "Bramble", "Moss Antler Forest Beast", "beast", "horns", "bunny", "none", "none", "round", "fur", "staff",
+      "d6d3d1 78716c 1c1917 15803d 78350f facc15", "Plush mossy woodland beast with velvety antlers, soft stone-grey pelt, chevron belly, and giant green leaf umbrella.", "ghibli avatar guardian beast bramble",
+      energy=0.7, height=0.92, head=1.3, build=1.28, limbs=0.88, pattern="none"),
+    # 5. Universe Starters
+    c("ninja-cat", "Ninja Cat", "Cyber Shinobi Feline", "beast", "cat", "cat", "none", "short", "visor", "plating", "katana scarf headband",
+      "111927 1f2937 00f0ff 111927 314155 00f0ff", "Stealth shinobi feline in midnight slate armor with glowing cyan HUD visor, dual ninjato, and scroll.", "cyberpunk avatar ninja cat shinobi",
+      energy=1.5, height=0.88, head=1.24, build=0.95, limbs=0.95, pattern="none", tip="00f0ff"),
+    c("sun-wukong", "Sun Wukong", "Great Sage Equal to Heaven", "beast", "human", "cat", "none", "spiky", "sparkle", "armor", "headband staff cape",
+      "fad7b9 d7965f ffb703 e63946 ffb703 232832", "The Monkey King crowned with the golden fillet, clad in crimson and gold armor, wielding the Ruyi Jingu Bang.", "mythology avatar wukong monkey sage",
+      energy=1.6, height=0.98, head=1.14, build=1.1, limbs=1.02, pattern="none", tip="ffb703"),
+    # 6. Starlit Originals
+    c("yorune", "Yorune", "Astral Cartographer", "humanoid", "fox", "fox", "fairy", "hime", "sparkle", "coat",
+      "kitsune_mask staff halo gem cape",
+      "f3d2b3 2a1a3e f5c542 6d2447 16213e c084fc",
+      "A fox-eared astral cartographer who reads dying stars as living schemas. Her midnight coat maps constellations that redraw themselves whenever an agent learns something new.",
+      "astral kitsune oracle cartographer night mystic",
+      energy=1.2, height=1.06, head=1.08, build=0.94, limbs=1.08, pattern="stars", tip="e9d5ff"),
+]
+
+
+def build_catalog() -> dict:
+    ids, names = set(), set()
+    for character in CHARACTERS:
+        if character["id"] in ids:
+            raise ValueError(f"duplicate id {character['id']}")
+        if character["name"] in names:
+            raise ValueError(f"duplicate name {character['name']}")
+        if len(character["accessories"]) > 5 or len(set(character["accessories"])) != len(character["accessories"]):
+            raise ValueError(f"{character['id']}: accessories must be unique and at most five")
+        if len(character["tags"]) > 6:
+            raise ValueError(f"{character['id']}: at most six tags")
+        if len(character["description"]) > 240:
+            raise ValueError(f"{character['id']}: description too long")
+        ids.add(character["id"])
+        names.add(character["name"])
+    if len(CHARACTERS) < 100:
+        raise ValueError(f"catalog has only {len(CHARACTERS)} characters")
+    unknown = (LEGACY_FRANCHISE | DEITY_INSPIRED) - {character["id"].removeprefix("miyora.") for character in CHARACTERS}
+    if unknown:
+        raise ValueError(f"category sets name unknown slugs: {sorted(unknown)}")
+    return {
+        "schemaVersion": 1,
+        "creator": "Miyora contributors",
+        "license": "CC0-1.0",
+        "source": "scripts/generate_avatar_catalog.py",
+        "characters": CHARACTERS,
+    }
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT, help="catalog JSON path")
+    parser.add_argument("--check", action="store_true", help="fail when the output file is out of date")
+    args = parser.parse_args()
+    try:
+        rendered = json.dumps(build_catalog(), indent=2, ensure_ascii=False) + "\n"
+    except ValueError as error:
+        print(f"catalog error: {error}", file=sys.stderr)
+        return 2
+    if args.check:
+        current = args.output.read_text(encoding="utf-8") if args.output.exists() else ""
+        if current != rendered:
+            print(f"{args.output} is out of date; rerun scripts/generate_avatar_catalog.py", file=sys.stderr)
+            return 1
+        print(f"{args.output} is up to date ({len(CHARACTERS)} characters)")
+        return 0
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(rendered, encoding="utf-8", newline="\n")
+    print(f"wrote {len(CHARACTERS)} characters to {args.output}")
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
