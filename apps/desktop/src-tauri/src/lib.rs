@@ -1148,15 +1148,19 @@ fn run_state_timer(
     Ok(())
 }
 
-fn seed_starter_packs(core: &Core, pet_library: &Path) {
+fn seed_starter_packs(app: &tauri::AppHandle, core: &Core, pet_library: &Path) {
     let Ok(installed) = core.list_installed_packs() else {
         return;
     };
-    let search_roots = [
+    let mut search_roots = Vec::new();
+    if let Ok(resource_dir) = app.path().resource_dir() {
+        search_roots.push(resource_dir.join("pet-packs"));
+    }
+    search_roots.extend([
         PathBuf::from("pet-packs"),
         PathBuf::from("../../pet-packs"),
         PathBuf::from("../../../pet-packs"),
-    ];
+    ]);
 
     for candidate_root in &search_roots {
         if candidate_root.is_dir() {
@@ -1276,9 +1280,12 @@ pub fn run() {
             companion_host::spawn_daily_moments(app.handle().clone())?;
             // Pack validation decodes images and must not block the native event loop.
             // This finite worker is intentionally detached; the UI polls persisted state.
+            let startup_app_handle = app.handle().clone();
             let _startup_worker = std::thread::Builder::new()
                 .name("agentpet-startup-worker".into())
-                .spawn(move || seed_starter_packs(&startup_core, &startup_pet_library))?;
+                .spawn(move || {
+                    seed_starter_packs(&startup_app_handle, &startup_core, &startup_pet_library)
+                })?;
             Ok(())
         })
         .on_window_event(move |window, event| match (window.label(), event) {

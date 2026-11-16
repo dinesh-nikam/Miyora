@@ -1199,7 +1199,6 @@ mod tests {
             secret.clone(),
         )
         .expect("server spawned");
-        std::thread::sleep(std::time::Duration::from_millis(50));
 
         let event = agentpet_adapters::NormalizedEvent {
             event_id: uuid::Uuid::new_v4().to_string(),
@@ -1209,13 +1208,21 @@ mod tests {
             project_path: None,
         };
 
-        let ack = agentpet_adapters::ipc::send_event_sync(
-            &endpoint,
-            secret.as_bytes(),
-            &event,
-            std::time::Duration::from_secs(5),
-        )
-        .expect("send via ipc");
+        let start = std::time::Instant::now();
+        let ack = loop {
+            match agentpet_adapters::ipc::send_event_sync(
+                &endpoint,
+                secret.as_bytes(),
+                &event,
+                std::time::Duration::from_secs(1),
+            ) {
+                Ok(ack) => break ack,
+                Err(_) if start.elapsed() < std::time::Duration::from_secs(5) => {
+                    std::thread::sleep(std::time::Duration::from_millis(25));
+                }
+                Err(e) => panic!("send via ipc: {e:?}"),
+            }
+        };
         assert!(ack.accepted);
 
         let snap = core.snapshot().expect("snapshot");

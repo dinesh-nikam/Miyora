@@ -1000,6 +1000,8 @@ export function CompanionRenderer({
               hud={hud}
               size={size}
               interactive={interactive}
+              cleanPet={true}
+              onClick={interactive ? handlePet : undefined}
               onDoubleClick={onDoubleClick}
               onError={onError}
             />

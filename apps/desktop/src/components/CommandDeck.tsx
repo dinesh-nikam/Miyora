@@ -327,9 +327,11 @@ export function CommandDeck({
                     : "Ledger check failed"
               : "Verify XP ledger"}
           </button>
-          <button className="deck-action is-quiet" onClick={onToggleSimulated}>
-            {isSimulated ? "Return to live data" : "Start simulated demo"}
-          </button>
+          {import.meta.env.DEV && (
+            <button className="deck-action is-quiet" onClick={onToggleSimulated}>
+              {isSimulated ? "Return to live data" : "Start simulated demo"}
+            </button>
+          )}
           {latencyMs !== undefined && latencyMs !== null && (
             <span className="deck-quiet deck-latency">Rendered in {latencyMs} ms</span>
           )}

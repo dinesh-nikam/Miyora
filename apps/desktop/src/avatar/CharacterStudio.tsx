@@ -27,6 +27,7 @@ import {
   type StageSubject,
 } from "./types";
 import { CATEGORY_LABELS, searchCatalog } from "./catalogSearch";
+import type { AccountBalance, ProviderInfo, StudioOverview } from "../studio/types";
 
 export interface CharacterStudioProps {
   liveState: PetState;
@@ -245,6 +246,66 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
   const [imageName, setImageName] = useState("My Character");
   const [generatePrompt, setGeneratePrompt] = useState("");
   const [generatePreset, setGeneratePreset] = useState("anime-character");
+  const [studioProviders, setStudioProviders] = useState<ProviderInfo[]>([]);
+  const [selectedProviderId, setSelectedProviderId] = useState<string>("tripo");
+  const [apiKeyInput, setApiKeyInput] = useState<string>("");
+  const [accountBalance, setAccountBalance] = useState<AccountBalance | null>(null);
+
+  const refreshStudioProviders = useCallback(async () => {
+    const res = await invokeSafe<StudioOverview>("studio_overview");
+    if (res.ok) {
+      setStudioProviders(res.data.providers);
+      if (res.data.providers.length > 0) {
+        setSelectedProviderId((prev) => {
+          if (res.data.providers.some((p) => p.id === prev)) return prev;
+          const ready = res.data.providers.find((p) => p.configured) ?? res.data.providers[0];
+          return ready ? ready.id : "tripo";
+        });
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (tab === "generate") {
+      void refreshStudioProviders();
+    }
+  }, [tab, refreshStudioProviders]);
+
+  const handleSaveApiKey = async (providerId: string) => {
+    if (!apiKeyInput.trim()) return;
+    setStatus({ tone: "info", text: "Saving API key to secure OS store..." });
+    const res = await invokeSafe<null>("studio_save_api_key", { provider: providerId, apiKey: apiKeyInput.trim() });
+    if (res.ok) {
+      setApiKeyInput("");
+      setStatus({ tone: "info", text: "API key securely stored." });
+      await refreshStudioProviders();
+    } else {
+      reportError(`Failed to save API key: ${res.error}`);
+    }
+  };
+
+  const handleDeleteApiKey = async (providerId: string) => {
+    setStatus({ tone: "info", text: "Removing stored API key..." });
+    const res = await invokeSafe<null>("studio_delete_api_key", { provider: providerId });
+    if (res.ok) {
+      setAccountBalance(null);
+      setStatus({ tone: "info", text: "API key removed." });
+      await refreshStudioProviders();
+    } else {
+      reportError(`Failed to delete API key: ${res.error}`);
+    }
+  };
+
+  const handleCheckBalance = async (providerId: string) => {
+    setStatus({ tone: "info", text: "Checking provider account balance..." });
+    const res = await invokeSafe<AccountBalance>("studio_account_balance", { provider: providerId });
+    if (res.ok) {
+      setAccountBalance(res.data);
+      setStatus({ tone: "info", text: `Balance: ${res.data.available} credits available (${res.data.frozen} frozen).` });
+    } else {
+      reportError(`Failed to check balance: ${res.error}`);
+    }
+  };
 
   const reportError = useCallback((text: string) => setStatus({ tone: "error", text }), []);
 
@@ -433,12 +494,12 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
         return;
       }
 
-      const overviewRes = await invokeSafe<{ providers: Array<{ id: string; configured: boolean; label: string }> }>("studio_overview");
-      let providerId = "tripo";
-      if (overviewRes.ok) {
-        const readyProvider = overviewRes.data.providers.find((p) => p.configured) ?? overviewRes.data.providers[0];
-        if (readyProvider) providerId = readyProvider.id;
+      const activeProvider = studioProviders.find((p) => p.id === selectedProviderId) ?? studioProviders[0];
+      if (activeProvider && activeProvider.requiresApiKey && !activeProvider.hasApiKey) {
+        reportError(`API key required for ${activeProvider.label}. Please enter and save your API key below.`);
+        return;
       }
+      const providerId = activeProvider ? activeProvider.id : "tripo";
 
       setStatus({ tone: "info", text: "Submitting prompt to 3D engine..." });
       const submitRes = await invokeSafe<{ id: string; assetId: string; generationId: string }>("studio_submit_text", {
@@ -812,6 +873,105 @@ export function CharacterStudio({ liveState, hud, activeAvatar, onAvatarChanged 
               <div style={{ fontSize: "12px", color: "#94a3b8", lineHeight: 1.6 }}>
                 Generate an original 3D avatar companion from a description. Once generated, the model is automatically imported, rigged, and added to your companion library.
               </div>
+
+              {/* Provider Selection and API Key Management */}
+              {(() => {
+                const currentProvider = studioProviders.find((p) => p.id === selectedProviderId) ?? studioProviders[0];
+                return (
+                  <div style={{ background: "#0a101d", border: "1px solid rgba(255, 255, 255, 0.08)", borderRadius: "8px", padding: "12px", display: "flex", flexDirection: "column", gap: "10px" }}>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px" }}>
+                      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                        <span style={{ fontSize: "12px", fontWeight: 700, color: "#e2e8f0" }}>3D Engine:</span>
+                        {studioProviders.length > 1 ? (
+                          <select
+                            style={{ ...input, padding: "2px 8px" }}
+                            value={selectedProviderId}
+                            onChange={(e) => setSelectedProviderId(e.target.value)}
+                          >
+                            {studioProviders.map((p) => (
+                              <option key={p.id} value={p.id}>{p.label}</option>
+                            ))}
+                          </select>
+                        ) : (
+                          <span style={{ fontSize: "12px", color: "#38bdf8", fontWeight: 600 }}>
+                            {currentProvider ? currentProvider.label : "Tripo 3D"}
+                          </span>
+                        )}
+                      </div>
+
+                      {currentProvider && (
+                        <div>
+                          {currentProvider.hasApiKey || currentProvider.configured ? (
+                            <span style={{ fontSize: "11px", fontWeight: 700, color: "#34d399", background: "rgba(16, 185, 129, 0.15)", border: "1px solid rgba(16, 185, 129, 0.3)", padding: "2px 8px", borderRadius: "999px" }}>
+                              ● Ready
+                            </span>
+                          ) : currentProvider.requiresApiKey ? (
+                            <span style={{ fontSize: "11px", fontWeight: 700, color: "#facc15", background: "rgba(250, 204, 21, 0.15)", border: "1px solid rgba(250, 204, 21, 0.3)", padding: "2px 8px", borderRadius: "999px" }}>
+                              ▲ Key Required
+                            </span>
+                          ) : null}
+                        </div>
+                      )}
+                    </div>
+
+                    {currentProvider?.acceptsApiKey && (
+                      <div style={{ display: "flex", flexDirection: "column", gap: "8px", marginTop: "4px" }}>
+                        {currentProvider.hasApiKey ? (
+                          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "8px", background: "rgba(56, 189, 248, 0.05)", padding: "8px 10px", borderRadius: "6px" }}>
+                            <div style={{ fontSize: "11px", color: "#94a3b8" }}>
+                              Key stored securely in OS credential manager.
+                              {accountBalance && (
+                                <span style={{ marginLeft: "8px", color: "#38bdf8", fontWeight: 600 }}>
+                                  ({accountBalance.available} credits)
+                                </span>
+                              )}
+                            </div>
+                            <div style={{ display: "flex", gap: "6px" }}>
+                              <button
+                                style={{ ...button("ghost", busy), padding: "3px 8px", fontSize: "11px" }}
+                                disabled={busy}
+                                onClick={() => void handleCheckBalance(currentProvider.id)}
+                              >
+                                Check Balance
+                              </button>
+                              <button
+                                style={{ ...button("danger", busy), padding: "3px 8px", fontSize: "11px" }}
+                                disabled={busy}
+                                onClick={() => void handleDeleteApiKey(currentProvider.id)}
+                              >
+                                Remove Key
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+                            <div style={{ fontSize: "11px", color: "#94a3b8" }}>
+                              Enter your {currentProvider.label} API key. Keys are stored in the OS credential manager, never plaintext.
+                            </div>
+                            <div style={{ display: "flex", gap: "8px" }}>
+                              <input
+                                type="password"
+                                style={{ ...input, flex: 1 }}
+                                placeholder="Paste API key..."
+                                value={apiKeyInput}
+                                onChange={(e) => setApiKeyInput(e.target.value)}
+                              />
+                              <button
+                                style={button("primary", !apiKeyInput.trim() || busy)}
+                                disabled={!apiKeyInput.trim() || busy}
+                                onClick={() => void handleSaveApiKey(currentProvider.id)}
+                              >
+                                Save Key
+                              </button>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                );
+              })()}
+
               <Field title="Character prompt">
                 <input
                   style={input}

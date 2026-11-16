@@ -536,7 +536,6 @@ mod tests {
         let secret = LocalSecret::generate().expect("secret");
         let handle = spawn_ipc_server(core.clone(), endpoint.clone(), secret.clone())
             .expect("server spawned");
-        std::thread::sleep(Duration::from_millis(50));
 
         let event = NormalizedEvent {
             event_id: uuid::Uuid::new_v4().to_string(),
@@ -546,8 +545,16 @@ mod tests {
             project_path: None,
         };
 
-        let ack = send_event_sync(&endpoint, secret.as_bytes(), &event, Duration::from_secs(5))
-            .expect("send via ipc");
+        let start = std::time::Instant::now();
+        let ack = loop {
+            match send_event_sync(&endpoint, secret.as_bytes(), &event, Duration::from_secs(1)) {
+                Ok(ack) => break ack,
+                Err(_) if start.elapsed() < Duration::from_secs(5) => {
+                    std::thread::sleep(Duration::from_millis(25));
+                }
+                Err(e) => panic!("send via ipc: {e:?}"),
+            }
+        };
         assert!(ack.accepted);
 
         let snap = core.snapshot().expect("snapshot");
@@ -608,7 +615,27 @@ mod tests {
         let secret = LocalSecret::generate().expect("secret");
         let handle = spawn_ipc_server(core.clone(), endpoint.clone(), secret.clone())
             .expect("server spawned");
-        std::thread::sleep(Duration::from_millis(50));
+        let start = std::time::Instant::now();
+        while start.elapsed() < Duration::from_secs(5) {
+            let probe = NormalizedEvent {
+                event_id: uuid::Uuid::new_v4().to_string(),
+                kind: HookEventKind::AgentWorking,
+                agent_id: "probe".into(),
+                session_id: Some("probe".into()),
+                project_path: None,
+            };
+            if send_event_sync(
+                &endpoint,
+                secret.as_bytes(),
+                &probe,
+                Duration::from_millis(500),
+            )
+            .is_ok()
+            {
+                break;
+            }
+            std::thread::sleep(Duration::from_millis(25));
+        }
 
         let barrier = std::sync::Arc::new(std::sync::Barrier::new(8));
         let mut handles = Vec::new();

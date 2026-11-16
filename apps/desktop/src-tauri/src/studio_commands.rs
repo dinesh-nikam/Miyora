@@ -18,8 +18,10 @@ use agentpet_studio::service::{
 use agentpet_studio::store::{AssetDetail, AssetSummary, ExportView, ProjectView, TaskView};
 use agentpet_studio::task::PollPolicy;
 use agentpet_studio::transport::{HttpConfig, ReqwestTransport};
-use tauri::State;
+use tauri::{State, WebviewWindow};
 use tauri_plugin_dialog::DialogExt;
+
+use crate::require_main_window;
 
 pub fn open_studio(app_data_dir: &Path) -> Result<StudioService, Box<dyn std::error::Error>> {
     let transport = ReqwestTransport::new(HttpConfig::default())
@@ -50,9 +52,11 @@ fn report(error: StudioError) -> String {
 }
 
 async fn run<T: Send + 'static>(
+    window: &WebviewWindow,
     studio: State<'_, StudioService>,
     job: impl FnOnce(StudioService) -> Result<T, StudioError> + Send + 'static,
 ) -> Result<T, String> {
+    require_main_window(window)?;
     let service = studio.inner().clone();
     tauri::async_runtime::spawn_blocking(move || job(service))
         .await
@@ -65,17 +69,21 @@ async fn run<T: Send + 'static>(
 }
 
 #[tauri::command]
-pub async fn studio_overview(studio: State<'_, StudioService>) -> Result<StudioOverview, String> {
-    run(studio, |service| service.overview()).await
+pub async fn studio_overview(
+    window: WebviewWindow,
+    studio: State<'_, StudioService>,
+) -> Result<StudioOverview, String> {
+    run(&window, studio, |service| service.overview()).await
 }
 
 #[tauri::command]
 pub async fn studio_save_api_key(
+    window: WebviewWindow,
     provider: String,
     api_key: String,
     studio: State<'_, StudioService>,
 ) -> Result<(), String> {
-    run(studio, move |service| {
+    run(&window, studio, move |service| {
         service.save_api_key(&provider, &api_key)
     })
     .await
@@ -83,27 +91,36 @@ pub async fn studio_save_api_key(
 
 #[tauri::command]
 pub async fn studio_delete_api_key(
+    window: WebviewWindow,
     provider: String,
     studio: State<'_, StudioService>,
 ) -> Result<(), String> {
-    run(studio, move |service| service.delete_api_key(&provider)).await
+    run(&window, studio, move |service| {
+        service.delete_api_key(&provider)
+    })
+    .await
 }
 
 #[tauri::command]
 pub async fn studio_account_balance(
+    window: WebviewWindow,
     provider: String,
     studio: State<'_, StudioService>,
 ) -> Result<AccountBalance, String> {
-    run(studio, move |service| service.account_balance(&provider)).await
+    run(&window, studio, move |service| {
+        service.account_balance(&provider)
+    })
+    .await
 }
 
 #[tauri::command]
 pub async fn studio_set_default_model(
+    window: WebviewWindow,
     provider: String,
     model: String,
     studio: State<'_, StudioService>,
 ) -> Result<(), String> {
-    run(studio, move |service| {
+    run(&window, studio, move |service| {
         service.set_default_model(&provider, &model)
     })
     .await
@@ -111,20 +128,25 @@ pub async fn studio_set_default_model(
 
 #[tauri::command]
 pub async fn studio_set_poll_policy(
+    window: WebviewWindow,
     policy: PollPolicy,
     studio: State<'_, StudioService>,
 ) -> Result<PollPolicy, String> {
-    run(studio, move |service| service.set_poll_policy(policy)).await
+    run(&window, studio, move |service| {
+        service.set_poll_policy(policy)
+    })
+    .await
 }
 
 #[tauri::command]
 pub async fn studio_build_prompt(
+    window: WebviewWindow,
     provider: String,
     intent: PromptIntent,
     preset_id: Option<String>,
     studio: State<'_, StudioService>,
 ) -> Result<BuiltPrompt, String> {
-    run(studio, move |service| {
+    run(&window, studio, move |service| {
         service.build_prompt(&provider, &intent, preset_id.as_deref())
     })
     .await
@@ -132,47 +154,64 @@ pub async fn studio_build_prompt(
 
 #[tauri::command]
 pub async fn studio_list_projects(
+    window: WebviewWindow,
     studio: State<'_, StudioService>,
 ) -> Result<Vec<ProjectView>, String> {
-    run(studio, |service| service.list_projects()).await
+    run(&window, studio, |service| service.list_projects()).await
 }
 
 #[tauri::command]
 pub async fn studio_create_project(
+    window: WebviewWindow,
     name: String,
     studio: State<'_, StudioService>,
 ) -> Result<ProjectView, String> {
-    run(studio, move |service| service.create_project(&name)).await
+    run(&window, studio, move |service| {
+        service.create_project(&name)
+    })
+    .await
 }
 
 #[tauri::command]
 pub async fn studio_list_assets(
+    window: WebviewWindow,
     project_id: String,
     studio: State<'_, StudioService>,
 ) -> Result<Vec<AssetSummary>, String> {
-    run(studio, move |service| service.list_assets(&project_id)).await
+    run(&window, studio, move |service| {
+        service.list_assets(&project_id)
+    })
+    .await
 }
 
 #[tauri::command]
 pub async fn studio_asset_detail(
+    window: WebviewWindow,
     asset_id: String,
     studio: State<'_, StudioService>,
 ) -> Result<AssetDetail, String> {
-    run(studio, move |service| service.asset_detail(&asset_id)).await
+    run(&window, studio, move |service| {
+        service.asset_detail(&asset_id)
+    })
+    .await
 }
 
 #[tauri::command]
-pub async fn studio_list_tasks(studio: State<'_, StudioService>) -> Result<Vec<TaskView>, String> {
-    run(studio, |service| service.list_tasks()).await
+pub async fn studio_list_tasks(
+    window: WebviewWindow,
+    studio: State<'_, StudioService>,
+) -> Result<Vec<TaskView>, String> {
+    run(&window, studio, |service| service.list_tasks()).await
 }
 
 #[tauri::command]
 pub async fn studio_inspect_image(
+    window: WebviewWindow,
     provider: String,
     path: String,
     studio: State<'_, StudioService>,
 ) -> Result<ImageInspection, String> {
-    run(studio, move |service| {
+    run(&window, studio, move |service| {
         service.inspect_image(&provider, &path)
     })
     .await
@@ -180,18 +219,23 @@ pub async fn studio_inspect_image(
 
 #[tauri::command]
 pub async fn studio_submit_text(
+    window: WebviewWindow,
     submission: TextSubmission,
     studio: State<'_, StudioService>,
 ) -> Result<TaskView, String> {
-    run(studio, move |service| service.submit_text_to_3d(submission)).await
+    run(&window, studio, move |service| {
+        service.submit_text_to_3d(submission)
+    })
+    .await
 }
 
 #[tauri::command]
 pub async fn studio_submit_image(
+    window: WebviewWindow,
     submission: ImageSubmission,
     studio: State<'_, StudioService>,
 ) -> Result<TaskView, String> {
-    run(studio, move |service| {
+    run(&window, studio, move |service| {
         service.submit_image_to_3d(submission)
     })
     .await
@@ -199,29 +243,40 @@ pub async fn studio_submit_image(
 
 #[tauri::command]
 pub async fn studio_regenerate(
+    window: WebviewWindow,
     generation_id: String,
     studio: State<'_, StudioService>,
 ) -> Result<TaskView, String> {
-    run(studio, move |service| service.regenerate(&generation_id)).await
+    run(&window, studio, move |service| {
+        service.regenerate(&generation_id)
+    })
+    .await
 }
 
 #[tauri::command]
 pub async fn studio_resume_task(
+    window: WebviewWindow,
     task_id: String,
     studio: State<'_, StudioService>,
 ) -> Result<TaskView, String> {
-    run(studio, move |service| service.resume_task(&task_id)).await
+    run(&window, studio, move |service| {
+        service.resume_task(&task_id)
+    })
+    .await
 }
 
 /// Raw bytes (no JSON array encoding) for model files and preview images.
 #[tauri::command]
 pub async fn studio_read_output(
+    window: WebviewWindow,
     output_id: i64,
     studio: State<'_, StudioService>,
 ) -> Result<tauri::ipc::Response, String> {
-    run(studio, move |service| service.read_output(output_id))
-        .await
-        .map(tauri::ipc::Response::new)
+    run(&window, studio, move |service| {
+        service.read_output(output_id)
+    })
+    .await
+    .map(tauri::ipc::Response::new)
 }
 
 /// Asks for a destination with the native Save dialog (opened here, so the
@@ -229,13 +284,14 @@ pub async fn studio_read_output(
 /// `None` means the user cancelled.
 #[tauri::command]
 pub async fn studio_export_output(
+    window: WebviewWindow,
     app: tauri::AppHandle,
     output_id: i64,
     format: LocalExportFormat,
     options: ExportOptions,
     studio: State<'_, StudioService>,
 ) -> Result<Option<ExportView>, String> {
-    run(studio, move |service| {
+    run(&window, studio, move |service| {
         let plan = service.export_plan(output_id, format)?;
         let picked = app
             .dialog()
@@ -259,8 +315,12 @@ pub async fn studio_export_output(
 /// Polygon reduction on this computer; returns the new version's (completed) task.
 #[tauri::command]
 pub async fn studio_retopologize(
+    window: WebviewWindow,
     request: RetopologyRequest,
     studio: State<'_, StudioService>,
 ) -> Result<TaskView, String> {
-    run(studio, move |service| service.retopologize(request)).await
+    run(&window, studio, move |service| {
+        service.retopologize(request)
+    })
+    .await
 }
