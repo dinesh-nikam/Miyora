@@ -135,7 +135,14 @@ export function motionForPresentation(
 ): StateMotion {
   const clip = presentation.stateClip === "walk" ? "idle" : presentation.stateClip;
   const motion = motionFor(CLIP_STATES[clip], t, energy, spec);
-  if (presentation.locomotionClip === "walk") applyWalkCycle(motion.pose, t * energy);
+  if (presentation.locomotionClip === "walk") {
+    applyWalkCycle(motion.pose, t * energy);
+  } else if (presentation.locomotionClip === null) {
+    motion.pose.legL = 0;
+    motion.pose.legR = 0;
+    motion.pose.kneeL = 0;
+    motion.pose.kneeR = 0;
+  }
   return motion;
 }
 
@@ -511,7 +518,13 @@ export function motionFor(state: PetState, t: number, energy = 1, spec?: Charact
       break;
     }
     case "idle":
-    default:
+    default: {
+      // Codex-style natural pet behavioral cycle (12-second loop)
+      const loop = w % 12;
+      const weightShift = Math.sin(w * 0.9);
+      const isStepping = loop >= 4.5 && loop < 7.5;
+      const isCurious = loop >= 7.5 && loop < 10.0;
+
       if (isWarrior) {
         Object.assign(pose, {
           spineX: 0.01 * breathe,
@@ -590,12 +603,53 @@ export function motionFor(state: PetState, t: number, energy = 1, spec?: Charact
           squash: 0.03 * breathe,
         });
       }
+
+      // Dynamic organic desktop pet movement layering:
+      if (!isSlime) {
+        if (isStepping && !isRobot) {
+          // Playful pacing / micro-steps in place like Codex pet
+          const stepProgress = (loop - 4.5) / 3.0;
+          const stepEnvelope = Math.sin(stepProgress * Math.PI);
+          const stepCycle = (loop - 4.5) * 6;
+          const stride = Math.sin(stepCycle) * stepEnvelope;
+          pose.legL = 0.24 * stride;
+          pose.legR = -0.24 * stride;
+          pose.kneeL = 0.2 * Math.max(0, -stride);
+          pose.kneeR = 0.2 * Math.max(0, stride);
+          pose.rootY += 0.012 * Math.abs(Math.cos(stepCycle)) * stepEnvelope;
+          pose.armL[0] -= 0.14 * stride;
+          pose.armR[0] += 0.14 * stride;
+          pose.turnY += 0.05 * Math.sin(stepCycle * 0.5) * stepEnvelope;
+        } else {
+          // Subtle natural weight shift and breathing float
+          pose.legL += 0.03 * weightShift;
+          pose.legR -= 0.03 * weightShift;
+          pose.kneeL += 0.025 * Math.max(0, -weightShift);
+          pose.kneeR += 0.025 * Math.max(0, weightShift);
+          pose.chestZ += 0.02 * weightShift;
+          pose.turnY += 0.025 * weightShift;
+          pose.rootY += 0.005 * breathe;
+        }
+
+        if (isCurious && !isRobot) {
+          // Inquisitive head tilt & ear perk looking around the desk
+          const curiousProgress = (loop - 7.5) / 2.5;
+          const curiousEnvelope = Math.sin(curiousProgress * Math.PI);
+          pose.headZ += 0.12 * curiousEnvelope;
+          pose.headX += 0.05 * curiousEnvelope;
+          pose.headY += 0.15 * Math.sin((loop - 7.5) * 2) * curiousEnvelope;
+          expression.browLift = Math.max(expression.browLift, 0.18 * curiousEnvelope);
+        }
+      }
+
       // A brief happy squint every few seconds keeps idle pets lively.
-      if (!isRobot && Math.sin(w * 0.8) > 0.985) {
+      if (!isRobot && (Math.sin(w * 0.8) > 0.985 || (loop >= 7.0 && loop < 7.4))) {
         expression.eyes = "happy";
         expression.mouth = "grin";
+        expression.blush = Math.max(expression.blush, 0.45);
       }
       break;
+    }
   }
   return { pose, expression, props, frameRate };
 }
