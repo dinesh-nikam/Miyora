@@ -46,7 +46,7 @@ const DATABASE_FILE: &str = "agentpet.sqlite3";
 pub const SIMULATED_DATABASE_FILE: &str = "agentpet_simulated.sqlite3";
 const SCHEMA_VERSION: i64 = 12;
 const SQLITE_BUSY_TIMEOUT: Duration = Duration::from_secs(5);
-pub const DAILY_AFFECTION_CAP: u32 = 50;
+pub const DAILY_AFFECTION_CAP: u32 = 250;
 pub const AFFECTION_PET_GAIN: u32 = 3;
 pub const AFFECTION_FEED_GAIN: u32 = 5;
 const DEFAULT_SESSION_XP: i64 = 10;
@@ -1074,6 +1074,7 @@ impl Core {
         Ok(Self {
             connection: Arc::new(Mutex::new(connection)),
             engine: PetEngine::default(),
+            reaction_queue: Arc::new(Mutex::new(ReactionQueue::default())),
             data_dir: Some(data_dir.to_path_buf()),
         })
     }
@@ -2770,7 +2771,7 @@ mod tests {
         let initial = core.get_affection().expect("initial affection");
         assert_eq!(initial.affection, 0);
         assert_eq!(initial.daily_gain, 0);
-        assert_eq!(initial.daily_cap, 50);
+        assert_eq!(initial.daily_cap, DAILY_AFFECTION_CAP);
 
         let after_pet = core.pet_interact("desktop").expect("pet succeeds");
         assert_eq!(after_pet.affection, 3);
@@ -2780,18 +2781,18 @@ mod tests {
         assert_eq!(after_feed.affection, 8);
         assert_eq!(after_feed.daily_gain, 8);
 
-        // Cap is 50. Feed 9 more times (9 * 5 = 45 -> 8 + 45 = 53 -> capped at 50)
-        for _ in 0..9 {
+        // Feed until reaching the generous DAILY_AFFECTION_CAP
+        while core.get_affection().expect("get affection").daily_gain < DAILY_AFFECTION_CAP {
             core.pet_feed("desktop").expect("feed succeeds");
         }
         let capped = core.get_affection().expect("get affection");
-        assert_eq!(capped.affection, 50);
-        assert_eq!(capped.daily_gain, 50);
+        assert_eq!(capped.affection, DAILY_AFFECTION_CAP);
+        assert_eq!(capped.daily_gain, DAILY_AFFECTION_CAP);
 
-        // Further interaction today yields no additional affection
+        // Further interaction today yields no additional affection beyond the cap
         let extra = core.pet_interact("desktop").expect("pet succeeds");
-        assert_eq!(extra.affection, 50);
-        assert_eq!(extra.daily_gain, 50);
+        assert_eq!(extra.affection, DAILY_AFFECTION_CAP);
+        assert_eq!(extra.daily_gain, DAILY_AFFECTION_CAP);
 
         // Ledger XP is completely untouched
         let progression = core.progression().expect("progression");
