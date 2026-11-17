@@ -100,7 +100,10 @@ pub fn simulate_post_commit_retry(
     match outcome_initial {
         HookEventOutcome::SessionStarted => {
             assert!(
-                matches!(outcome_retry, HookEventOutcome::Duplicate | HookEventOutcome::Accepted),
+                matches!(
+                    outcome_retry,
+                    HookEventOutcome::Duplicate | HookEventOutcome::Accepted
+                ),
                 "Duplicate SessionStarted must not create a new session"
             );
         }
@@ -108,7 +111,8 @@ pub fn simulate_post_commit_retry(
             assert!(
                 matches!(
                     outcome_retry,
-                    HookEventOutcome::Duplicate | HookEventOutcome::SessionCompleted { xp_awarded: false }
+                    HookEventOutcome::Duplicate
+                        | HookEventOutcome::SessionCompleted { xp_awarded: false }
                 ),
                 "Duplicate SessionCompleted must return xp_awarded: false or Duplicate"
             );
@@ -129,10 +133,7 @@ pub fn simulate_post_commit_retry(
         ledger_initial.total_entries, ledger_retry.total_entries,
         "Ledger entry count must not increase on post-commit retry"
     );
-    assert!(
-        ledger_retry.is_valid,
-        "Ledger hash chain must remain valid"
-    );
+    assert!(ledger_retry.is_valid, "Ledger hash chain must remain valid");
 
     Ok(())
 }

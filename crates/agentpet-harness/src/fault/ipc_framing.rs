@@ -29,7 +29,10 @@ pub async fn assert_truncated_header_rejected(header_bytes: &[u8]) {
         Err(IpcError::MalformedFrame { reason }) => {
             assert_eq!(reason, "truncated length header");
         }
-        other => panic!("Expected MalformedFrame(truncated length header), got: {:?}", other),
+        other => panic!(
+            "Expected MalformedFrame(truncated length header), got: {:?}",
+            other
+        ),
     }
 }
 
@@ -40,7 +43,9 @@ pub async fn assert_oversized_frame_rejected(declared_length: usize, limit: usiz
     let mut cursor = Cursor::new(length_bytes);
     let result = read_frame(&mut cursor, limit).await;
     match result {
-        Err(IpcError::FrameTooLarge { limit: reported_limit }) => {
+        Err(IpcError::FrameTooLarge {
+            limit: reported_limit,
+        }) => {
             assert_eq!(reported_limit, limit);
         }
         other => panic!("Expected FrameTooLarge, got: {:?}", other),
@@ -56,7 +61,10 @@ pub async fn assert_zero_length_payload_rejected() {
         Err(IpcError::MalformedFrame { reason }) => {
             assert_eq!(reason, "empty frame payload");
         }
-        other => panic!("Expected MalformedFrame(empty frame payload), got: {:?}", other),
+        other => panic!(
+            "Expected MalformedFrame(empty frame payload), got: {:?}",
+            other
+        ),
     }
 }
 
@@ -74,7 +82,10 @@ pub async fn assert_truncated_payload_rejected(declared_length: u32, actual_byte
     let result = read_frame(&mut cursor, DEFAULT_MAX_FRAME_BYTES).await;
     match result {
         Err(IpcError::TransportUnavailable(_)) => {}
-        other => panic!("Expected TransportUnavailable on truncated payload, got: {:?}", other),
+        other => panic!(
+            "Expected TransportUnavailable on truncated payload, got: {:?}",
+            other
+        ),
     }
 }
 
@@ -87,13 +98,9 @@ pub fn assert_tampered_hmac_rejected(secret: &[u8]) {
         nonce: agentpet_ipc::handshake::random_nonce().expect("random server nonce"),
     };
     let client_nonce = agentpet_ipc::handshake::random_nonce().expect("random client nonce");
-    let mut response = build_client_response(
-        secret,
-        PROTOCOL_VERSION,
-        &challenge.nonce,
-        &client_nonce,
-    )
-    .expect("build valid response");
+    let mut response =
+        build_client_response(secret, PROTOCOL_VERSION, &challenge.nonce, &client_nonce)
+            .expect("build valid response");
 
     // Tamper with the tag using arbitrary valid base64 bytes
     response.tag = BASE64.encode([0_u8; 32]);
@@ -101,7 +108,10 @@ pub fn assert_tampered_hmac_rejected(secret: &[u8]) {
     let result = verify_client_response(secret, &challenge, &response);
     match result {
         Err(IpcError::AuthenticationFailed) => {}
-        other => panic!("Expected AuthenticationFailed on tampered HMAC tag, got: {:?}", other),
+        other => panic!(
+            "Expected AuthenticationFailed on tampered HMAC tag, got: {:?}",
+            other
+        ),
     }
 }
 

@@ -10,6 +10,7 @@ and Miyora 15-state behavior reactions.
 import json
 import os
 from pathlib import Path
+from character_data_expanded import EXPANDED_CHARACTERS
 
 CHARACTERS = [
     # -------------------------------------------------------------
@@ -1924,10 +1925,12 @@ def main():
     output_path = repo_root / "docs" / "detailed_character_specifications.json"
     showcase_data_path = repo_root / "showcase" / "public" / "all_avatars_data.json"
     
+    all_characters = CHARACTERS + EXPANDED_CHARACTERS
+    
     # 1. Write the comprehensive database
     with open(output_path, "w", encoding="utf-8") as f:
-        json.dump(CHARACTERS, f, indent=2, ensure_ascii=False)
-    print(f"Successfully wrote {len(CHARACTERS)} deep character specifications to {output_path}")
+        json.dump(all_characters, f, indent=2, ensure_ascii=False)
+    print(f"Successfully wrote {len(all_characters)} deep character specifications to {output_path}")
 
     # 2. Merge into showcase catalog so LO sees authentic 3D avatars directly
     # Load all_avatars_data.json
@@ -1936,7 +1939,7 @@ def main():
 
     # Build a lookup of deep specs by id and slug
     spec_map = {}
-    for c in CHARACTERS:
+    for c in all_characters:
         spec_map[c["id"]] = c
         spec_map[c["slug"]] = c
 
@@ -1945,7 +1948,7 @@ def main():
     curated_avatars = []
     
     # First, add all deep-spec characters as authentic 3D humanoid entries
-    for c in CHARACTERS:
+    for c in all_characters:
         entry = {
             "id": c["id"],
             "name": c["name"],

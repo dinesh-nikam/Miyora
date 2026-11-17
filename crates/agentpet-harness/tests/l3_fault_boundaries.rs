@@ -47,8 +47,7 @@ fn test_persistence_post_commit_retry_is_strictly_idempotent() {
         session_id: Some(session_id.clone()),
         project_path: Some("/test/project".into()),
     };
-    persistence::simulate_post_commit_retry(&core, &start_event)
-        .expect("start retry idempotent");
+    persistence::simulate_post_commit_retry(&core, &start_event).expect("start retry idempotent");
 
     // 2. Session completed retry (XP awarding event)
     let complete_event = HookEvent {

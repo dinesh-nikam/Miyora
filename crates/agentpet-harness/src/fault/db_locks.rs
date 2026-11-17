@@ -32,12 +32,14 @@ pub fn simulate_lock_contention_and_recovery(
     // Spawn an external thread holding an exclusive write lock
     let lock_holder = thread::spawn(move || {
         let conn = Connection::open(&db_path_clone).expect("open external connection");
-        conn.execute_batch("BEGIN EXCLUSIVE").expect("begin exclusive lock");
+        conn.execute_batch("BEGIN EXCLUSIVE")
+            .expect("begin exclusive lock");
         barrier_clone.wait(); // Signal that lock is acquired
 
         // Hold the exclusive lock for 250 milliseconds
         thread::sleep(Duration::from_millis(250));
-        conn.execute_batch("ROLLBACK").expect("rollback exclusive lock");
+        conn.execute_batch("ROLLBACK")
+            .expect("rollback exclusive lock");
     });
 
     // Wait until the external thread holds the lock
@@ -75,12 +77,14 @@ pub fn simulate_persisted_lock_timeout(
 
     let lock_holder = thread::spawn(move || {
         let conn = Connection::open(&db_path_clone).expect("open external connection");
-        conn.execute_batch("BEGIN EXCLUSIVE").expect("begin exclusive lock");
+        conn.execute_batch("BEGIN EXCLUSIVE")
+            .expect("begin exclusive lock");
         barrier_clone.wait(); // Lock is held
 
         // Wait until core attempt has failed and signaled
         release_clone.wait();
-        conn.execute_batch("ROLLBACK").expect("rollback exclusive lock");
+        conn.execute_batch("ROLLBACK")
+            .expect("rollback exclusive lock");
     });
 
     barrier.wait();
