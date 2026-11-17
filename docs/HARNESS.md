@@ -44,6 +44,25 @@ Replays real agent session event flows against SQLite and validates against a ca
 cargo test -p agentpet-harness --test l2_replay_snapshots
 ```
 
+### Layer 3: Fault Injection Boundaries
+Simulates system crashes, transaction rollbacks, concurrent database lockouts, and adversarial IPC frame corruptions.
+
+| Test File | Requirement | Invariant Verified |
+| :--- | :--- | :--- |
+| `tests/l3_fault_boundaries.rs` | `MYR-HARN-007` | **Mid-Transaction Crash Rollback**: Process termination mid-transaction leaves zero partial rows, zero phantom XP, and rolls back cleanly without database corruption. |
+| `tests/l3_fault_boundaries.rs` | `MYR-HARN-008` | **Post-Commit Retry Invariance**: Retrying requests after commit (due to dropped ACK) is strictly idempotent; awards zero duplicate XP, zero duplicate achievements, and maintains valid hash chain. |
+| `tests/l3_fault_boundaries.rs` | `MYR-HARN-009` | **SQLite Lock Contention & Recovery**: Concurrently locked SQLite database (`SQLITE_BUSY`) recovers cleanly within the busy timeout window; timeouts return typed `CoreError::Database` errors without panics or deadlocks. |
+| `tests/l3_fault_boundaries.rs` | `MYR-HARN-010` | **IPC Truncated Header**: Frames with < 4 header bytes are rejected with typed `IpcError::MalformedFrame`. |
+| `tests/l3_fault_boundaries.rs` | `MYR-HARN-011` | **IPC Oversized Frame**: Frames exceeding `max_frame_bytes` are rejected before buffer allocation with `IpcError::FrameTooLarge`. |
+| `tests/l3_fault_boundaries.rs` | `MYR-HARN-012` | **IPC Zero-Length Payload**: Frames declaring 0 payload bytes are rejected with `IpcError::MalformedFrame`. |
+| `tests/l3_fault_boundaries.rs` | `MYR-HARN-013` | **IPC Truncated Payload**: Payload streams ending prematurely before declared length return `IpcError::TransportUnavailable`. |
+| `tests/l3_fault_boundaries.rs` | `MYR-HARN-014` | **IPC Handshake Security**: Tampered HMAC tags reject with `IpcError::AuthenticationFailed`; unsupported versions reject with `IpcError::ProtocolVersionUnsupported`. |
+
+**Command to run Layer 3:**
+```bash
+cargo test -p agentpet-harness --test l3_fault_boundaries
+```
+
 ### Production Isolation Guard
 ```bash
 cargo test -p agentpet-harness --test isolation
@@ -121,28 +140,36 @@ std::fs::write("crates/agentpet-harness/fixtures/<snapshot_name>.json", json).un
 | **Half-Populated DB Replay** | L2 | `test_replay_into_half_populated_db_is_strictly_identical` | **COVERED (GREEN)** |
 | **Snapshot Divergence Mutation Sanity**| L2 | `mutation_sanity_check_fails_on_snapshot_divergence` | **COVERED (GREEN)** |
 | **Production Dependency Isolation** | Isolation | `test_harness_is_never_linked_into_production_crates` | **COVERED (GREEN)** |
+| **Mid-Tx Crash Rollback** | L3 | `test_persistence_mid_transaction_crash_leaves_zero_traces` | **COVERED (GREEN)** |
+| **Post-Commit Retry Invariance** | L3 | `test_persistence_post_commit_retry_is_strictly_idempotent` | **COVERED (GREEN)** |
+| **SQLite Lock Recovery** | L3 | `test_sqlite_locked_db_recovers_gracefully` | **COVERED (GREEN)** |
+| **SQLite Lock Timeout Error** | L3 | `test_sqlite_persisted_lock_timeout_returns_typed_busy_error` | **COVERED (GREEN)** |
+| **IPC Truncated Header Rejection** | L3 | `test_ipc_truncated_header_rejects_without_panic` | **COVERED (GREEN)** |
+| **IPC Oversized Frame Rejection** | L3 | `test_ipc_oversized_frame_rejects_without_buffering` | **COVERED (GREEN)** |
+| **IPC Zero-Length Payload** | L3 | `test_ipc_empty_payload_rejects_with_typed_error` | **COVERED (GREEN)** |
+| **IPC Truncated Payload** | L3 | `test_ipc_truncated_payload_rejects_gracefully` | **COVERED (GREEN)** |
+| **IPC Tampered HMAC Rejection** | L3 | `test_ipc_handshake_tampered_hmac_rejects_auth` | **COVERED (GREEN)** |
+| **IPC Unsupported Version Rejection**| L3 | `test_ipc_handshake_unsupported_version_rejects` | **COVERED (GREEN)** |
+| **IPC Framing Mutation Sanity** | L3 | `mutation_sanity_check_fails_if_corrupted_frame_is_accepted` | **COVERED (GREEN)** |
 
 ---
 
-## 6. Uncovered Invariants & Roadmap (Layers 3–8)
+## 6. Uncovered Invariants & Roadmap (Layers 4–8)
 
 The following layers were defined in the verification harness architecture and are scheduled for successive implementation slices:
 
-1. **Layer 3: Fault Injection Boundaries (L3)**
-   - *Scope:* Process termination at persistence boundary (pre-commit, mid-transaction, post-commit pre-ACK); disk full simulation; locked SQLite crash recovery.
-   - *Status:* Scheduled next after L1/L2 approval.
-2. **Layer 4: Historical Schema Migration Suite (L4)**
+1. **Layer 4: Historical Schema Migration Suite (L4)**
    - *Scope:* Frozen `.sqlite3` binary fixtures for schemas v1 through v11 asserting foreign key integrity, XP preservation, and ledger continuity when migrated to v12.
    - *Status:* Requires capturing binary snapshots of past migrations.
-3. **Layer 5: Adversarial PetPack Corpus (L5)**
+2. **Layer 5: Adversarial PetPack Corpus (L5)**
    - *Scope:* Automated rejection of zip bombs, nested executables/scripts (`.exe`, `.sh`, `.dll`), symlink escapes, and Unicode case collisions.
    - *Status:* Scheduled following L3.
-4. **Layer 6: Security & Privacy Canary Tracing (L6)**
+3. **Layer 6: Security & Privacy Canary Tracing (L6)**
    - *Scope:* Injected canary strings into prompts, paths, and environment variables asserted absent from SQLite persistence, diagnostics logs, and IPC frames.
    - *Status:* Scheduled following L5.
-5. **Layer 7: Headless Desktop E2E (L7)**
+4. **Layer 7: Headless Desktop E2E (L7)**
    - *Scope:* Automated desktop profile driver asserting visual companion state against SQLite state.
    - *Status:* Requires headless Tauri test runner setup.
-6. **Layer 8: CI Ordered Gates & Reporting (L8)**
+5. **Layer 8: CI Ordered Gates & Reporting (L8)**
    - *Scope:* Integrating `npm test` into `.github/workflows/ci.yml`, ordered test gating, and JUnit test output.
    - *Status:* Scheduled for CI hardening slice.
