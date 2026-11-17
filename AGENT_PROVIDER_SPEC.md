@@ -2,7 +2,7 @@
 
 ## Status and terminology
 
-This defines integration contracts. The universal process wrapper is implemented at an initial level. The CLI can discover five known executable names on PATH, but native agent hooks/adapters and provider integrations are not implemented. PATH discovery does not verify the executable's identity or version and does not mean that activity outside `agentpet run` is observed. An **agent** is a coding application or CLI whose activity is observed. A **provider** is a model API or local model endpoint. These are independent: one agent can use multiple providers, and provider credentials do not belong in agent adapters.
+This defines integration contracts. Miyora implements native hooks for Claude Code and OpenAI Codex CLI (`crates/agentpet-adapters`), alongside the universal process wrapper (`agentpet run -- <command>`). The CLI discovers five known executable names on PATH. An **agent** is a coding application or CLI whose activity is observed. A **provider** is a model API or local model endpoint. These are independent: one agent can use multiple providers, and provider credentials do not belong in agent adapters.
 
 Current PATH names: Claude Code (`claude`), OpenAI Codex CLI (`codex`), Gemini CLI (`gemini`), Aider (`aider`), and OpenCode (`opencode`). `agentpet agents list` reports found paths only; it may detect Windows command launchers whose invocation through the wrapper is not yet supported. When a successfully launched wrapper command itself has one of these executable names, its session receives the corresponding stable local ID; other commands are recorded as `universal`.
 

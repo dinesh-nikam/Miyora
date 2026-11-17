@@ -1,6 +1,6 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
-  "productName": "AgentPet",
+  "productName": "Miyora",
   "version": "0.1.0",
   "identifier": "dev.agentpet.desktop",
   "build": {
@@ -13,7 +13,7 @@
     "windows": [
       {
         "label": "main",
-        "title": "AgentPet",
+        "title": "Miyora",
         "width": 1040,
         "height": 720,
         "minWidth": 760,
@@ -22,7 +22,7 @@
       },
       {
         "label": "pet-overlay",
-        "title": "AgentPet Companion",
+        "title": "Miyora Companion",
         "url": "index.html?overlay=1",
         "width": 270,
         "height": 340,

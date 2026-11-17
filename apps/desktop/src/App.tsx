@@ -120,7 +120,7 @@ export default function App() {
         const [progRes, eventsRes, provsRes] = await Promise.all([
           invokeSafe<ProgressionSnapshot>("get_progression"),
           invokeSafe<StoredAgentEvent[]>("get_real_events", { limit: 15 }),
-          invokeSafe<ProviderReport[]>("get_provider_reports"),
+          invokeSafe<ProviderReport[]>("get_providers_status"),
         ]);
 
         if (progRes.ok) {

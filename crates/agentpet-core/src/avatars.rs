@@ -486,45 +486,47 @@ impl Core {
 
         // If the selection is the catalog default, but a PetPack is currently selected,
         // see if there is an image-sculpt avatar matching that pet pack.
-        let selected_pet: Option<String> = connection
-            .query_row(
-                "SELECT selected_pet_id FROM pet_state WHERE singleton = 1",
-                [],
-                |row| row.get(0),
-            )
-            .optional()?
-            .flatten();
-
-        if let Some(pet_id) = selected_pet {
-            let base_id = pet_id.split('@').next().unwrap_or(&pet_id);
-            let pack_source1 = format!("pack:{pet_id}");
-            let pack_source2 = format!("pack:{base_id}");
-            let sculpt_row = connection
+        if selection.avatar_id == DEFAULT_AVATAR_ID {
+            let selected_pet: Option<String> = connection
                 .query_row(
-                    &format!(
-                        "SELECT {CUSTOM_COLUMNS} FROM custom_avatars
-                         WHERE kind = 'image_sculpt' AND (source_avatar_id = ?1 OR source_avatar_id = ?2)
-                         ORDER BY created_at DESC LIMIT 1"
-                    ),
-                    [&pack_source1, &pack_source2],
-                    custom_row,
+                    "SELECT selected_pet_id FROM pet_state WHERE singleton = 1",
+                    [],
+                    |row| row.get(0),
                 )
                 .optional()?
-                .map(CustomRawRow::into_row)
-                .transpose()?;
+                .flatten();
 
-            if let Some(row) = sculpt_row {
-                let summary = row.summary;
-                return Ok(ResolvedAvatar {
-                    source: AvatarSource::Custom,
-                    avatar_id: summary.avatar_id,
-                    kind: summary.kind,
-                    name: summary.name,
-                    spec: summary.spec,
-                    customized: false,
-                    model_sha256: summary.model_sha256,
-                    metadata: summary.metadata,
-                });
+            if let Some(pet_id) = selected_pet {
+                let base_id = pet_id.split('@').next().unwrap_or(&pet_id);
+                let pack_source1 = format!("pack:{pet_id}");
+                let pack_source2 = format!("pack:{base_id}");
+                let sculpt_row = connection
+                    .query_row(
+                        &format!(
+                            "SELECT {CUSTOM_COLUMNS} FROM custom_avatars
+                             WHERE kind = 'image_sculpt' AND (source_avatar_id = ?1 OR source_avatar_id = ?2)
+                             ORDER BY created_at DESC LIMIT 1"
+                        ),
+                        [&pack_source1, &pack_source2],
+                        custom_row,
+                    )
+                    .optional()?
+                    .map(CustomRawRow::into_row)
+                    .transpose()?;
+
+                if let Some(row) = sculpt_row {
+                    let summary = row.summary;
+                    return Ok(ResolvedAvatar {
+                        source: AvatarSource::Custom,
+                        avatar_id: summary.avatar_id,
+                        kind: summary.kind,
+                        name: summary.name,
+                        spec: summary.spec,
+                        customized: false,
+                        model_sha256: summary.model_sha256,
+                        metadata: summary.metadata,
+                    });
+                }
             }
         }
         let catalog = catalog()?;
@@ -1232,6 +1234,37 @@ mod tests {
         assert!(core
             .select_avatar(AvatarSource::Catalog, "../escape")
             .is_err());
+    }
+
+    #[test]
+    fn catalog_selection_is_not_overridden_by_pet_pack_sculpt() {
+        let core = Core::in_memory().expect("core");
+        let workspace = tempfile::tempdir().expect("tempdir");
+        let library = workspace.path().join("avatars");
+        let image = disk_png(workspace.path());
+
+        let sculpt = core
+            .ensure_pack_sculpt_avatar("pet.tanjiro@1.0.0", "Tanjiro", &image, &library)
+            .expect("sculpt");
+
+        let conn = core.lock_connection().expect("conn");
+        conn.execute(
+            "UPDATE pet_state SET selected_pet_id = 'pet.tanjiro@1.0.0' WHERE singleton = 1",
+            [],
+        )
+        .expect("update pet_state");
+        drop(conn);
+
+        // When avatar selection is default miyora.aoi, the pack sculpt is used
+        let auto_sculpt = core.resolve_avatar().expect("resolve default");
+        assert_eq!(auto_sculpt.avatar_id, sculpt.avatar_id);
+
+        // But when user explicitly chooses a catalog character, that choice is strictly respected!
+        core.select_avatar(AvatarSource::Catalog, "miyora.ember")
+            .expect("select catalog ember");
+        let catalog_choice = core.resolve_avatar().expect("resolve ember");
+        assert_eq!(catalog_choice.avatar_id, "miyora.ember");
+        assert_eq!(catalog_choice.source, AvatarSource::Catalog);
     }
 
     #[test]

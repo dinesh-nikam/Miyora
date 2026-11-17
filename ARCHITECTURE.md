@@ -77,7 +77,7 @@ crates/
                                # deterministic hunger/eating, bounded reaction queue (cap 4)
   pet-pack/                    # PetPack manifest v1/v2 parser, Ed25519 signature checks,
                                # asset honesty quality gates, path sanitization against escape
-  avatar/                      # Procedural 3D character catalog (213 specs), silhouette sculpting, GLB export
+  avatar/                      # Procedural 3D character catalog (214 specs), silhouette sculpting, GLB export
   agentpet-adapters/           # Claude Code / Codex hooks & universal process wrapper
   agentpet-ipc/                # Authenticated local IPC transport (pipes/sockets, HMAC-SHA256 handshake)
   agentpet-cli/                # Diagnostic CLI (`agentpet`) for headless execution and doctor checks
@@ -98,7 +98,7 @@ Tauri owns the pet window, settings/dashboard windows, tray/menu integration, no
 
 The Rust core owns accepted event ordering, session lifecycle, persistence, the pet state machine, and progression. The local daemon receives events from agent hooks and the CLI. It authenticates local clients using OS permissions plus a per-install random secret held in a restricted local file or OS credential store. It limits payload size, validates protocol version, and never logs prompts, terminal output, or credentials.
 
-The initial `agentpet run -- <command>` CLI opens the same local SQLite database directly, records a universal session, streams child stdout/stderr to the corresponding terminal streams, and stores completion/failure plus exit status. Successful completion grants configured XP atomically with the session and event update. Native hook transport and provider-specific parsers are not implemented yet. The wrapper does not persist terminal output or infer token counts.
+The `agentpet run -- <command>` CLI wraps arbitrary agent commands, streams child stdout/stderr, detects agent identities, and updates the desktop daemon over authenticated IPC (falling back to direct SQLite persistence when the daemon is offline). Native hooks for Claude Code and OpenAI Codex CLI deliver documented hook events to the `agentpet hook` entry point, which normalizes them and updates the live pet state machine and immutable XP ledger without persisting raw prompts, terminal output, or credentials.
 
 The initial deployment may host core and daemon in one process if platform lifecycle is simpler. Their protocol and crate boundaries remain explicit so they can be split into supervised services without changing domain logic.
 

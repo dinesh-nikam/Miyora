@@ -1,142 +1,99 @@
-# Miyora (AgentPet) — Autonomous Agent Operational Guidelines
+# Miyora (AgentPet) — Agent Guide
 
-This document provides mandatory operational rules, architectural boundaries, and engineering standards for all AI coding agents (Antigravity, Claude Code, Cursor, Copilot, Codex, Roo Code, Aider, Windsurf) working within this repository.
+Offline-first Tauri 2 desktop companion: real AI-agent process/hook events → 15-state behavior engine → 3D/sprite pet over a transparent overlay, with a local SQLite XP ledger. Zero cloud, zero telemetry.
 
----
+## Naming — do not "fix" it
 
-## 1. Project Context & Identity
+Public brand is **Miyora**, but crates (`agentpet-*`), the `agentpet` binary, Tauri command prefixes, and DB identifiers keep the old name. Renaming any of them is a breaking change, not a cleanup.
 
-- **Project Identity:** **Miyora** is an offline-first, native desktop companion that tracks AI coding agent activity in real time. It observes actual process lifecycles and tool calls, routes events through a deterministic 15-state behavior engine, and renders responsive 3D procedural avatars and animated sprite companions over a transparent desktop overlay.
-- **Naming Conventions:** Public branding is **Miyora**. Internal crate prefixes (`agentpet-*`), the `agentpet` CLI binary, and Tauri command prefixes retain the canonical `agentpet` naming. Do not rename crates, commands, or database identifiers.
-- **Layout Note:** Trust the actual workspace layout documented below and `README.md`. Historical design documents (such as parts of `ARCHITECTURE.md` referencing `crates/app-core` or cloud services) describe aspirational targets; work strictly against the real crates.
+## Source of truth
 
----
+- `Cargo.toml` workspace members + `README.md` describe the real repo.
+- `ARCHITECTURE.md` describes an aspirational layout (`crates/app-core`, `apps/web`, NestJS cloud sync) that **does not exist**. Ignore it when it conflicts with the code.
+- `CLAUDE.md` mirrors this file but contains stale notes (it claims AGENTS.md has a persona block; it does not). Trust `AGENTS.md` + the code.
 
-## 2. Architecture & Domain Boundaries
+## Layout — directory ≠ package name
 
-Miyora strictly enforces inward, unidirectional dependencies. Rust domain crates own authoritative business logic and persistence. React is strictly presentation and input collection.
+10 workspace members. Four directories have a different Cargo package name, so `cargo test -p <dir>` fails:
 
-### 2.1 Domain Crates (`crates/`)
-- **`crates/agentpet-core`:** Composition root. SQLite persistence, schema migrations, universal child process wrapper (`agentpet run -- <cmd>`), immutable & tamper-evident XP ledger, and 3D avatar persistence (`avatars.rs`).
-- **`crates/pet-engine`:** 15-state deterministic state machine enforcing explicit transition allow-lists, event priorities, reaction timers, and animation fallbacks.
-- **`crates/pet-pack`:** Data-only PetPack manifest v1 validation, Ed25519 signature verification, atomic archive staging/extraction, image decoding, and VRM guardrails.
-- **`crates/avatar`:** Procedural 3D character specifications, bundled character catalog (`catalog/characters.json`), image-to-GLB silhouette sculpting, and GLB writer.
-- **`crates/agentpet-adapters`:** Real agent observation. Parses documented hooks (Claude Code, Codex) and manages reversible native hook installation.
-- **`crates/agentpet-ipc`:** Authenticated local IPC (named pipes / Unix sockets, length-prefixed framing, HMAC handshake, payload caps).
-- **`crates/agentpet-cli`:** Diagnostic and command-line execution binary (`agentpet`).
+| Directory | Package (`-p`) | Role |
+| --- | --- | --- |
+| `crates/agentpet-core` | `agentpet-core` | Composition root: SQLite schema/migrations, sessions, universal wrapper, immutable XP/achievement ledger, `avatars.rs` |
+| `crates/pet-engine` | `agentpet-pet-engine` | 15-state machine, explicit transition allow-list (`ALL_STATES`), priorities, timed reactions |
+| `crates/pet-pack` | `agentpet-pet-pack` | PetPack manifest v1, Ed25519 signatures, zip/tar.gz staging, image decode, VRM guardrails |
+| `crates/avatar` | **`agentpet-avatar`** | Procedural 3D specs, `catalog/characters.json` (embedded via `include_str!`), silhouette sculpting, GLB writer |
+| `crates/studio` | **`agentpet-studio`** | Tripo v3 / local TripoSR generation, task tracking, decimation, GLB export; secrets via OS `keyring` |
+| `crates/agentpet-adapters` | `agentpet-adapters` | Claude Code / Codex hook parsing + reversible hook install |
+| `crates/agentpet-ipc` | `agentpet-ipc` | Authenticated pipes/sockets, length-prefixed frames, HMAC handshake, 256 KiB cap |
+| `crates/agentpet-cli` | `agentpet-cli` | `agentpet` binary: `run`, `status`, `pets`, `agents`, `hook`, `doctor` |
+| `crates/agentpet-harness` | `agentpet-harness` | Test-only verification harness (`publish = false`); must never be a production dependency — `tests/isolation.rs` enforces this |
+| `apps/desktop/src-tauri` | `agentpet-desktop` | Tauri host (lib name `agentpet_desktop_lib`) |
 
-### 2.2 Desktop Application (`apps/desktop/`)
-- **Tauri 2 Rust Host (`src-tauri/`):**
-  - Commands live in `src-tauri/src/lib.rs` and `src-tauri/src/studio_commands.rs`.
-  - Commands must be narrow, strongly typed, and capability-scoped (`src-tauri/capabilities/`).
-  - **Forbidden:** Never expose arbitrary shell execution or unrestricted filesystem access.
-- **React Frontend (`src/`):**
-  - Built with React 18, Vite, and strict TypeScript.
-  - Serves two windows from a single bundle: the main Command Deck and the transparent `pet-overlay` (`App.tsx` branches on `isOverlayWindow`).
-  - 3D rendering uses Three.js procedural rigs (`src/avatar/`) driven by `CharacterSpec` from the catalog.
-  - 2D PetPack sprites render via `CompanionRenderer.tsx`.
-  - **Forbidden:** React must never implement authoritative business rules or access SQLite directly.
-  - All Tauri calls must go through `invokeSafe` in `src/utils/ipc.ts`, returning `{ ok, data | error }` instead of throwing unhandled rejections.
+## Commands
 
----
+### Rust (workspace root)
 
-## 3. Core Agent Engineering Rules
-
-### 3.1 Complete Implementations (Zero Stubs / Zero Placeholders)
-- Implement every function, type, error branch, and feature completely.
-- **Forbidden:** No TODOs, no empty stubs, no fake providers, no simulated agent activity, no fabricated token counts, and no mock completion in release builds.
-- *Development Exception:* An isolated developer simulator is permitted **only** behind the explicit `dev-simulator` Cargo feature and Vite dev flag (`[SIMULATED - DEV ONLY]` banner, isolated test database, zero live XP).
-
-### 3.2 Tool-Use & Code Changes
-- Agents must modify files using workspace editing tools (`edit_file`, `write_file`) directly. Never output raw code dumps in chat when a file modification is requested.
-- Inspect files and their call graph before editing.
-- Preserve existing comments, docstrings, formatting, and unrelated user changes.
-- Keep diffs minimal, focused, and reviewable.
-
-### 3.3 Rust Standards
-- Rust code must be formatted with `cargo fmt` and clean under `cargo clippy --workspace --all-targets -- -D warnings`.
-- Handle errors explicitly with `Result<T, E>`. Never silently discard errors or use `.unwrap()` / `.expect()` in production paths.
-- Use explicit named constants for timeouts, limits, retries, and buffer sizes. Avoid unexplained magic numbers.
-
-### 3.4 TypeScript Standards
-- TypeScript operates under strict mode (`strict: true`).
-- Do not use `any`. Use strict domain interfaces or narrow unknown types with type guards or Zod schemas immediately.
-- Maintain cohesive, small components and avoid unnecessary re-renders.
-
-### 3.5 Security, Privacy & Sandboxing
-- **Air-Gapped Privacy:** Zero background telemetry. Prompts, terminal output, raw tool responses, API keys, and sensitive filesystem paths must be scrubbed before persistence or logging.
-- **Secrets Management:** Secrets (e.g., `TRIPO_API_KEY`) must reside in the OS credential store or environment variables. Never persist plaintext credentials or commit them to git.
-- **Untrusted Input Hardening:** Treat PetPacks, hook payloads, IPC frames, imported images, and 3D models (VRM/GLB) as untrusted input. Validate schema, size, paths (prevent ZipSlip), MIME types, and dimensions before processing.
-- **Data-Only PetPacks:** PetPacks contain data only. Never execute scripts, binaries, or native libraries from packs.
-
-### 3.6 Persistence & Ledger Integrity
-- SQLite schema changes require versioned, sequential migrations with test coverage. Foreign keys and transactions are mandatory for multi-record operations.
-- XP transactions are immutable, hash-chained, and idempotent. Replays of identical session IDs must never award duplicate XP or milestones.
-- Return structured, sanitized error messages. Never expose database stack traces, secret values, or internal paths to users.
-
----
-
-## 4. Verification & Testing Commands
-
-Always run the relevant validation commands before concluding work on any task:
-
-### Rust Workspace
 ```bash
-# Code formatting check
 cargo fmt --all -- --check
-
-# Strict linting (CI standard)
-cargo clippy --workspace --all-targets -- -D warnings
-
-# Also lint dev-simulator feature
-cargo clippy --workspace --all-features --all-targets -- -D warnings
-
-# Run all workspace tests
+cargo clippy --workspace --all-targets -- -D warnings                 # what CI runs
+cargo clippy --workspace --all-features --all-targets -- -D warnings  # adds dev-simulator + studio features
 cargo test --workspace
-
-# Run single test
-cargo test -p agentpet-pet-engine <test_name_substring>
-
-# Diagnostic CLI tool
-cargo run -p agentpet-cli -- doctor
+cargo test -p agentpet-pet-engine <test_name_substring>               # single crate / test
+cargo test -p agentpet-harness                                        # property + replay harness
+cargo run -p agentpet-cli -- doctor                                   # also: status, run -- <cmd>, pets list, agents install <id>
 ```
-*Note for Windows without MSVC:* Use GNU toolchain if needed: `cargo +stable-x86_64-pc-windows-gnu test --workspace`.
 
-### Desktop UI (`apps/desktop/`)
+Windows without MSVC Build Tools: prefix with `cargo +stable-x86_64-pc-windows-gnu`.
+
+### Desktop UI (`apps/desktop`, or root proxies)
+
 ```bash
-# Typecheck & build (runs tsc -b + vite build)
-npm run build
-
-# Unit & component tests (Vitest)
-npm test
-
-# Single test
+npm install          # run once inside apps/desktop (CI uses npm ci)
+npm run build        # tsc -b + vite build + bundle-budget gate
+npm test             # vitest run (jsdom)
 npx vitest run src/avatar/__tests__/rig.test.ts -t "<name>"
-
-# Tauri development app
-npm run tauri dev
+npm run tauri dev    # fixed dev server 127.0.0.1:1420, strictPort
 ```
 
-### Python Scripts & Validation
+- Root `package.json` only proxies `dev`, `build`, `tauri`, `tauri:dev`, `tauri:build`. There is **no root `test`** — run `npm test` inside `apps/desktop`.
+- `npm run build` is not just a typecheck: `scripts/check-bundle-budget.mjs` fails on any JS chunk > 500 kB raw (`three-*` gets 700 kB). Shrinking the bundle is part of "build passes".
+- Build order matters: the Tauri crate needs `apps/desktop/dist` (`frontendDist: "../dist"`), so build the UI before `cargo` on the desktop crate. CI does UI first for this reason.
+- Browser-only avatar/studio preview without Tauri: `apps/desktop/dev/studio-preview.html` on port 1430 (see `.claude/launch.json`); it mocks IPC with the bundled catalog.
+- One bundle serves two windows: overlay loads `index.html?overlay=1`; `App.tsx` branches on `isOverlayWindow`.
+
+### Python asset scripts (`pip install -r requirements.txt` — Pillow only)
+
 ```bash
-# Verify avatar catalog is up to date (fails if characters.json is stale)
-python scripts/generate_avatar_catalog.py --check
-
-# Validate bundled Character Card V2 profiles against the avatar catalog
-python scripts/validate_character_cards.py
-
-# Validate all bundled PetPacks under pet-packs/
-python scripts/validate_pet_packs.py
+python scripts/generate_avatar_catalog.py --check   # exit 1 if committed characters.json is stale
+python scripts/validate_pet_packs.py                # read-only validation of pet-packs/
+python scripts/validate_character_cards.py          # Character Card V2 profiles vs catalog
 ```
 
----
+## Architecture notes that change how you edit
 
-## 5. Git & Release Workflow
+- Rust owns all authoritative state; React only renders and collects input. SQLite (`rusqlite`, bundled) is reachable only from Rust.
+- `crates/avatar/catalog/characters.json` is **generated** by `scripts/generate_avatar_catalog.py` (deterministic). Edit the script, regenerate — never hand-edit the JSON. `rig.test.ts` builds every catalog entry, so catalog drift fails `npm test`.
+- Tauri commands live in `src-tauri/src/lib.rs` (~38), `studio_commands.rs` (~20), `overlay_controls.rs`, `companion_host.rs`, all registered in one `generate_handler!` in `lib.rs`. Keep them narrow/typed and put logic in domain crates; plugin permissions go in `capabilities/default.json` (`main`) and `capabilities/pet-overlay.json` (overlay).
+- Every frontend Tauri call goes through `invokeSafe` in `src/utils/ipc.ts`, returning `{ ok, data | error }` instead of throwing.
+- `pet-packs/<id>/` = `pet.json` + per-state PNGs, generated by `scripts/build_*.py`. `pet-packs-review/` is a gitignored staging folder for regenerated art.
+- `agentpet-harness` fixtures (`fixtures/golden_session_flow.json`, `golden_snapshot.json`) are real replay baselines — regenerate deliberately, never to make a test pass.
 
-- Inspect `git status` and diffs before and after modifying files.
-- Use Conventional Commits (`feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`).
-- Never commit secrets, credentials, generated temporary files, or unlicensed character artwork.
-- Preserve unrelated user changes and never rebase or rewrite working branches blindly.
+## Invariants you must not break
+
+- **No simulated activity** in release builds: no fake tokens, fabricated sessions, or mock completion. Only `dev-simulator` (core + desktop Cargo features) and `#[cfg(debug_assertions)]` demo commands; simulated output must show `[SIMULATED - DEV ONLY]` and award zero live XP.
+- **XP only on successful wrapped child exit.** Replays/duplicate session IDs must never duplicate XP or achievements (hash-chained, idempotent ledger).
+- **PetPacks are data only.** Never execute pack content. Treat packs, hook payloads, IPC frames, images, and VRM/GLB as untrusted: validate schema, size, paths (ZipSlip), MIME, dimensions.
+- **SQLite schema changes** need versioned sequential migrations plus tests; multi-record writes use transactions.
+- **TypeScript is strict** with `noUnusedLocals`/`noUnusedParameters`; no `any` without immediate narrowing. Rust: no `.unwrap()`/`.expect()` in production paths.
+- Never commit secrets (`TRIPO_API_KEY` lives in env or the OS keyring), `*.zip`, `pet-packs-review/`, or generated test images — all are gitignored on purpose.
+
+## CI & commits
+
+`.github/workflows/ci.yml` on push/PR to `main`: UI `npm ci && npm run build` (Ubuntu), then fmt/clippy/test on Ubuntu, macOS, Windows. Use Conventional Commits (`feat:`, `fix:`, `refactor:`, `test:`, `docs:`, `chore:`).
+
+## Deeper docs
+
+`docs/HARNESS.md` (verification layers, seed reproduction), `PET_PACK_SPEC.md`, `AGENT_PROVIDER_SPEC.md`, `DATABASE.md`, `API.md`, `docs/specs/*.md` (`avatar_3d`, `event_protocol`, `session_state`, `vrm_pet`, `sync`).
 
 <!-- gitnexus:start -->
 # GitNexus — Code Intelligence

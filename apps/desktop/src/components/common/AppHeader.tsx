@@ -76,7 +76,7 @@ export function AppHeader({
           </div>
           <div>
             <div className="display" style={{ fontSize: "22px", color: "#0a0a0a", lineHeight: 1 }}>
-              AGENTPET
+              MIYORA
             </div>
             <div
               className="font-grotesk"

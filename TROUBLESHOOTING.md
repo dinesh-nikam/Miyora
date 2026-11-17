@@ -1,27 +1,118 @@
-# Troubleshooting
+# Troubleshooting Guide
 
-## Current repository status
+This guide provides diagnostic procedures and recovery solutions for common issues encountered during development, installation, and operation of **Miyora** (AgentPet).
 
-The first Tauri/React shell, Rust SQLite runtime, universal wrapper, extracted-folder PetPack import, PATH-only CLI discovery, and local database doctor check are present. The wrapper uses the same per-user app data directory as the desktop app. Native agent hooks, archive import, cloud sync, and credential-store checks are not implemented. PATH discovery only reports known executable names and does not observe agent sessions outside the wrapper. On this Windows host, `cargo test --workspace` and warning-free workspace Clippy pass with `stable-x86_64-pc-windows-gnu` and WinLibs MinGW. The default MSVC target cannot link because Visual C++ Build Tools (`link.exe`) is absent. The workspace test run emitted a MinGW manifest-merge warning for the desktop test binary. These checks do not verify launching the desktop app or overlay.
+---
 
-## Planned diagnostics
+## 1. Fast Diagnostic Checks
 
-`agentpet status` reads local pet state and recent session records. `agentpet pets list` reads the local installed-pack index. `agentpet doctor` reports OS/architecture, CLI path, data-directory resolution, local database availability and installed-pack count, plus known optional agent CLIs found on PATH. It does not currently check migrations independently, app permissions, local IPC, hooks, pack integrity, disk space, credential store, or cloud connectivity. Missing agent CLIs are warnings; an unavailable local database is a failing check.
+Run the built-in diagnostic tool to inspect your environment, database accessibility, and agent CLI discovery:
 
-## Common failure categories
+```bash
+cargo run -p agentpet-cli -- doctor
+```
 
-| Code/category | Diagnostic direction |
-|---|---|
-| `DATABASE_OPEN_FAILED` | Preserve database; check file permissions and disk space; offer backup/restore guidance |
-| `MIGRATION_FAILED` | Do not overwrite the DB; collect migration ID and safe diagnostics; use known-good backup |
-| `IPC_UNAVAILABLE` | Check daemon process, per-user socket/pipe permissions, and protocol compatibility |
-| `AGENT_HOOK_INVALID` | Show adapter and config location; provide reversible repair; preserve unrelated hook entries |
-| `PET_PACK_INVALID` | Identify manifest field or asset path and validation rule without executing pack content |
-| `ASSET_LIMIT_EXCEEDED` | Report which configured size/dimension/frame limit was reached |
-| `CREDENTIAL_STORE_UNAVAILABLE` | Name platform credential store and provide a safe reauthentication path; never print secret values |
-| `SYNC_CONFLICT` | Preserve local progress and show retry or account/device resolution steps |
-| `UPDATE_SIGNATURE_INVALID` | Reject the update and retain the current installation |
+Verify XP ledger cryptographic hash-chain integrity:
 
-## Diagnostic bundle privacy
+```bash
+cargo run -p agentpet-cli -- verify-ledger
+```
 
-Diagnostic export is opt-in and previews included files/fields before creation. Redact credentials, prompts, terminal output, and project paths. Never attach a database or raw event payload automatically. Provide a local-only mode for support analysis.
+Inspect companion runtime state:
+
+```bash
+cargo run -p agentpet-cli -- status
+```
+
+---
+
+## 2. Common Categories & Resolutions
+
+### 2.1 Toolchain & Linking Issues (Windows)
+
+- **Symptom:** `error: linking with link.exe failed: exit code: 1104` or missing Visual C++ Build Tools.
+- **Cause:** Rust's default target on Windows is `x86_64-pc-windows-msvc`, which requires Microsoft Visual C++ Build Tools.
+- **Fix:** If MSVC is not installed, switch to the MinGW GNU toolchain:
+  ```bash
+  rustup default stable-x86_64-pc-windows-gnu
+  cargo test --workspace
+  ```
+
+### 2.2 Build Lock Contention
+
+- **Symptom:** `Blocking waiting for file lock on build directory`.
+- **Cause:** Another `cargo`, `rustc`, or rust-analyzer instance is holding the target directory lock.
+- **Fix:** Inspect running processes and terminate dangling cargo processes:
+  ```powershell
+  Get-Process | Where-Object { $_.ProcessName -match "cargo|rustc" } | Stop-Process
+  ```
+
+### 2.3 Transparent Overlay Not Visible or Misplaced
+
+- **Symptom:** The pet overlay does not appear, or spawns off-screen.
+- **Diagnostics:**
+  - Miyora stores desktop coordinates in SQLite (`companion_preferences` table, schema v11).
+  - If a display was disconnected or display scaling changed, the coordinates may be outside the current monitor's viewport.
+- **Fix:**
+  - Use the system tray icon to select **Reset Overlay Position**, or invoke the reset action from the Command Deck / Settings tab.
+  - Alternatively, launch with default coordinates:
+    ```bash
+    cargo run -p agentpet-cli -- run -- echo "reset"
+    ```
+
+### 2.4 Agent Hook Installation & Discovery
+
+- **Symptom:** Coding sessions run in Claude Code or Codex, but Miyora pet state does not change.
+- **Diagnostics:**
+  - Inspect hook status:
+    ```bash
+    cargo run -p agentpet-cli -- agents status claude_code
+    cargo run -p agentpet-cli -- agents status codex
+    ```
+- **Fix:**
+  - Install the native hook:
+    ```bash
+    cargo run -p agentpet-cli -- agents install claude_code
+    cargo run -p agentpet-cli -- agents install codex
+    ```
+  - For universal agents (Aider, OpenCode, Gemini CLI), wrap the invocation:
+    ```bash
+    agentpet run -- aider
+    ```
+
+### 2.5 Database Lock or Corruption Prevention
+
+- **Symptom:** `DATABASE_LOCKED` or `sqlite3: database is locked`.
+- **Diagnostics:**
+  - Miyora runs SQLite with WAL (Write-Ahead Logging) and busy timeouts.
+  - In multi-process scenarios (daemon + CLI + UI), concurrent transactions wait up to 5 seconds.
+- **Fix:**
+  - Ensure background test runners or instances are shut down cleanly before starting a new session.
+  - Never delete the SQLite database to bypass locks—Miyora uses append-only hash chains; deleting the database wipes earned XP and pet milestones.
+
+### 2.6 PetPack Validation Failures
+
+- **Symptom:** `PET_PACK_INVALID` or `ASSET_LIMIT_EXCEEDED` on import.
+- **Diagnostics:**
+  - PetPacks are data-only and strictly validated against directory traversal (ZipSlip), MIME types, and dimensions (max 4096×4096).
+  - Run the validator to see detailed line-by-line lint warnings:
+    ```bash
+    python scripts/validate_pet_packs.py
+    ```
+
+### 2.7 3D WebGL Context Loss in UI
+
+- **Symptom:** 3D avatar viewport goes blank or reports WebGL context loss.
+- **Diagnostics:**
+  - Occurs when GPU drivers restart, laptops switch between integrated and discrete GPUs, or system resumes from deep sleep.
+- **Fix:**
+  - Miyora's `AvatarStage.tsx` listens for context loss and safely re-initializes Three.js geometries and textures without leaking GPU memory.
+  - Switch tabs or toggle 2D/3D mode in the Den tab to force an immediate re-render.
+
+---
+
+## 3. Privacy-Safe Diagnostic Export
+
+When reporting issues or requesting support:
+- Never share database files containing proprietary project paths or personal names.
+- All logs produced by `agentpet doctor` and the CLI automatically redact prompts, credentials, terminal stdout/stderr, and API keys.

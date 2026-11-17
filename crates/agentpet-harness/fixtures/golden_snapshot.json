@@ -1,0 +1,45 @@
+{
+  "pet_state": {
+    "state": "success",
+    "selected_pet_id": null
+  },
+  "progression": [
+    {
+      "pet_id": "local.default",
+      "level": 1,
+      "total_xp": 35
+    }
+  ],
+  "sessions": [
+    {
+      "session_id": "a0000000-0000-0000-0000-000000000001",
+      "agent_id": "claude_code",
+      "status": "completed",
+      "pet_id": "local.default"
+    }
+  ],
+  "xp_transactions": [
+    {
+      "pet_id": "local.default",
+      "source": "session_completed",
+      "amount": 10
+    },
+    {
+      "pet_id": "local.default",
+      "source": "achievement_unlocked",
+      "amount": 25
+    }
+  ],
+  "ledger_entries": [
+    {
+      "index_id": 1,
+      "provider": "session_completed",
+      "amount": 10
+    },
+    {
+      "index_id": 2,
+      "provider": "achievement_unlocked",
+      "amount": 25
+    }
+  ]
+}

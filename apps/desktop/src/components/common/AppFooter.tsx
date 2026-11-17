@@ -156,7 +156,7 @@ export function AppFooter({
               <span style={{ width: "8px", height: "20px", backgroundColor: "#00d4ff", border: "1px solid #ffffff", display: "inline-block" }} />
               <span style={{ width: "8px", height: "20px", backgroundColor: "#ffd000", border: "1px solid #ffffff", display: "inline-block" }} />
               <span className="display" style={{ fontSize: "20px", color: "#ffffff", marginLeft: "6px" }}>
-                AGENTPET
+                MIYORA
               </span>
             </div>
             <p className="font-grotesk" style={{ fontSize: "13px", color: "rgba(255, 255, 255, 0.6)", lineHeight: 1.5, margin: 0 }}>
@@ -234,7 +234,7 @@ export function AppFooter({
             color: "rgba(255, 255, 255, 0.4)",
           }}
         >
-          <div>© 2026 AgentPet · Autonomous Coding Companion Studio</div>
+          <div>© 2026 Miyora · Autonomous Coding Companion Studio</div>
           <div>Local-First · Tamper-Evident · Privacy-Preserving</div>
         </div>
       </footer>

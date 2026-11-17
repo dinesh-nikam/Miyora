@@ -9,6 +9,7 @@ members = [
     "crates/agentpet-ipc",
     "crates/agentpet-cli",
     "crates/studio",
+    "crates/agentpet-harness",
     "apps/desktop/src-tauri",
 ]
 
@@ -32,3 +33,4 @@ flate2 = "1"
 tokio = { version = "1", default-features = false, features = ["rt", "net", "io-util", "time", "sync", "macros"] }
 tempfile = "3"
 dunce = "1.0.5"
+proptest = "1"

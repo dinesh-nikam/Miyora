@@ -27,3 +27,4 @@ test_*.png
 target*/
 output/*.zip
 *.zip
+showcase/

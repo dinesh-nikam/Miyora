@@ -4,7 +4,7 @@
 
 Implemented and covered by tests:
 
-- `crates/avatar` (`agentpet-avatar`): the `CharacterSpec` contract and validator, the bundled catalog of 167 original characters, the image sculptor, and a minimal binary glTF writer/reader.
+- `crates/avatar` (`agentpet-avatar`): the `CharacterSpec` contract and validator, the bundled catalog of 214 original characters, the image sculptor, and a minimal binary glTF writer/reader.
 - `crates/agentpet-core/src/avatars.rs`: SQLite schema v10, avatar selection, customization, custom avatar storage, image import, and VRM import.
 - Tauri commands listed in [API.md](../../API.md).
 - `apps/desktop/src/avatar/`: the procedural rig builder, state motion, stage props, the `AvatarStage` renderer, shared-context thumbnails, and the Character Studio UI.

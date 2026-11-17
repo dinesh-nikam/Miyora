@@ -1,0 +1,44 @@
+[
+  {
+    "id": "00000000-0000-0000-0000-000000000001",
+    "eventType": "agent_started",
+    "agentId": "claude_code",
+    "sessionId": "a0000000-0000-0000-0000-000000000001",
+    "projectPath": "/workspace/my-app"
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000002",
+    "eventType": "agent_working",
+    "agentId": "claude_code",
+    "sessionId": "a0000000-0000-0000-0000-000000000001",
+    "projectPath": "/workspace/my-app"
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000003",
+    "eventType": "agent_thinking",
+    "agentId": "claude_code",
+    "sessionId": "a0000000-0000-0000-0000-000000000001",
+    "projectPath": "/workspace/my-app"
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000004",
+    "eventType": "agent_input_required",
+    "agentId": "claude_code",
+    "sessionId": "a0000000-0000-0000-0000-000000000001",
+    "projectPath": "/workspace/my-app"
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000005",
+    "eventType": "agent_working",
+    "agentId": "claude_code",
+    "sessionId": "a0000000-0000-0000-0000-000000000001",
+    "projectPath": "/workspace/my-app"
+  },
+  {
+    "id": "00000000-0000-0000-0000-000000000006",
+    "eventType": "agent_completed",
+    "agentId": "claude_code",
+    "sessionId": "a0000000-0000-0000-0000-000000000001",
+    "projectPath": "/workspace/my-app"
+  }
+]
