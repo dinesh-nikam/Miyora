@@ -6,5 +6,6 @@
 //! This crate is strictly for testing and verification; it must never be linked
 //! into production or release builds.
 
+pub mod fault;
 pub mod generators;
 pub mod replay;

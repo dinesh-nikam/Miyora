@@ -97,12 +97,14 @@ dependencies = [
  "agentpet-core",
  "agentpet-ipc",
  "agentpet-pet-engine",
+ "base64 0.22.1",
  "chrono",
  "proptest",
  "rusqlite",
  "serde",
  "serde_json",
  "tempfile",
+ "tokio",
  "uuid",
 ]
 

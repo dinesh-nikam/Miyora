@@ -105,13 +105,17 @@ pub fn session_lifecycle_scenario() -> impl Strategy<Value = SessionLifecycleSce
                 project_path: None,
             });
 
-            // Build duplicated and permuted sequence
+            // Build duplicated sequence respecting physical causality:
+            // An event cannot be duplicated or retried before it was originally emitted.
             let mut permuted = canonical.clone();
             for idx in duplicate_indices {
                 if !canonical.is_empty() {
-                    let chosen = &canonical[idx % canonical.len()];
-                    let insert_pos = idx % (permuted.len() + 1);
-                    permuted.insert(insert_pos, chosen.clone());
+                    let orig_idx = idx % canonical.len();
+                    let chosen = &canonical[orig_idx];
+                    let min_pos = orig_idx + 1;
+                    let span = (permuted.len() + 1).saturating_sub(min_pos).max(1);
+                    let insert_pos = min_pos + (idx % span);
+                    permuted.insert(insert_pos.min(permuted.len()), chosen.clone());
                 }
             }
 
