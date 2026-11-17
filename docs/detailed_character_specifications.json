@@ -6,7 +6,7 @@
     "native_name": "竈門 炭治郎",
     "origin_lore": "Demon Slayer: Kimetsu no Yaiba",
     "creator": "Koyoharu Gotouge",
-    "archetype": "Kind-Hearted Swordsman & Sun Breaker",
+    "archetype": "Kind-Hearted Sun-Breathing Swordsman",
     "category": "anime_character",
     "canonical_stats": {
       "age": 16,
@@ -17,19 +17,21 @@
       "blood_type": "A"
     },
     "micro_physical_details": {
-      "skin_tone": "#f5d0be",
-      "skin_description": "Sun-tanned warm olive with rough calloused hands from coal-cutting and swordsmanship",
+      "skin_tone": "#f4cfbe",
+      "skin_description": "Sun-tanned warm olive with rough calloused hands from charcoal cutting and swordsmanship",
       "eyes": {
         "color_base": "#8b1e1e",
         "color_highlight": "#e05252",
-        "pupil_style": "Dark red irises with pale white bottom reflections, wide and empathetic",
+        "pupil_style": "Dark burgundy irises with pale white bottom reflections, empathetic and wide",
+        "limbal_ring": "#450a0a",
         "expression_default": "Determined warmth with unwavering honesty"
       },
       "hair": {
         "base_color": "#171717",
         "tip_gradient": "#881337",
-        "style": "Spiky combed-back raven-black hair with prominent crimson/burgundy tips",
+        "style": "Spiky combed-back raven-black hair with prominent dark crimson/burgundy tips",
         "length": "Short-to-medium nape-length",
+        "bangs_description": "Swept upward exposing forehead scar and eyebrows",
         "physics_stiffness": 0.65
       },
       "distinguishing_marks": [
@@ -41,11 +43,11 @@
     "wardrobe_and_layering": {
       "inner_wear": "Standard black Demon Slayer gakuran jacket with brass buttons and white collared shirt underneath",
       "outer_wear": "Loose black-and-sea-foam-green checkered (ichimatsu-pattern) haori coat",
-      "bottom_wear": "Baggy hakama-style chocho-zubon trousers tucked into white kyahan wraps",
-      "footwear": "White tabi socks with black cords fastened to woven straw zōri sandals",
+      "bottom_wear": "Baggy hakama-style chocho-zubon trousers tucked into white kyahan leg wraps with black ribbon ties",
+      "footwear": "White tabi socks with black cord straps fastened to woven straw zōri sandals",
       "relics_and_gear": [
         "Large pine-wood traveling box with metal brass latches (housing Nezuko during daylight)",
-        "Black Nichirin Katana with circular black-and-silver spoked wheel guard (flame-red in combat)"
+        "Pitch-black Nichirin Katana with circular black-and-silver spoked wheel tsuba guard"
       ]
     },
     "anatomical_3d_rig": {
@@ -60,45 +62,44 @@
           "Ring",
           "Little"
         ],
+        "articulation_type": "Full 5-finger independent phalange articulation",
         "grip_style": "Two-handed katana grip with index-finger trigger extension"
       },
       "leg_articulation": {
         "hip_swing_range": "[-45°, 110°]",
         "knee_flexion_limit": "145° (enables deep Sun Breathing lunge stances)",
-        "ankle_mobility": "Multi-axis inversion for slope stability"
+        "ankle_mobility": "Multi-axis inversion for slope and gravel stability"
       },
       "spring_bone_colliders": [
-        "haori_left",
-        "haori_right",
+        "haori_flaps",
         "earrings",
-        "front_hair_bangs"
+        "hair_spikes"
       ],
       "blendshapes": [
         "joy",
         "angry",
         "sorrow",
         "fun",
-        "determined",
-        "sun_breath_focus",
         "blink",
         "a",
         "i",
         "u",
         "e",
-        "o"
+        "o",
+        "sun_breath_focus"
       ],
       "model_url": "./public/models/masc_vroid.vrm",
       "thumbnail_url": "./public/thumbnails/masc_vroid.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "Tenacious Bug Hunting & Red-Green TDD Verification",
-      "motto": "No matter how many tests fail, I will never give up on clean code.",
+      "work_specialty": "Tenacious Bug Fixing, Empathy-Driven Error Logs & Unyielding Test Execution",
+      "motto": "No matter how many tests fail, I will keep going until they all pass!",
       "state_reactions": {
-        "Idle": "Gentle standing breath with hands resting lightly on sword hilt, hair softly swaying",
-        "Working": "Rigorous rapid typing posture leaning forward with focused scarlet eyes",
-        "Thinking": "Fingers tap chin thoughtfully while forehead mark emits a subtle warm amber glow",
-        "Success": "Triumphant two-handed fist pump, radiant squinting closed-eye smile",
-        "Error": "Deep sorrowful gasp, steadying breath, then resolute stance ready to fix the failure"
+        "Idle": "Adjusts his Hanafuda earrings, standing tall with a gentle, reassuring smile",
+        "Working": "Two hands firm on the keyboard, typing with rhythmic precision like Hinokami Kagura forms",
+        "Thinking": "Sniffs the air attentively: 'I smell a subtle memory leak near line 142...'",
+        "Success": "Grins broadly with eyes curving into crescent moons: 'We did it! Clean compilation!'",
+        "Error": "Steely gaze, eyes locking on the terminal: 'Don't give up! We will trace this stack frame to its root!'"
       }
     }
   },
@@ -109,7 +110,7 @@
     "native_name": "竈門 禰豆子",
     "origin_lore": "Demon Slayer: Kimetsu no Yaiba",
     "creator": "Koyoharu Gotouge",
-    "archetype": "Protective Demon Maiden & Silent Guardian",
+    "archetype": "Demon Girl of Awakening & Hearth Protector",
     "category": "anime_character",
     "canonical_stats": {
       "age": 14,
@@ -120,40 +121,42 @@
       "blood_type": "Unknown"
     },
     "micro_physical_details": {
-      "skin_tone": "#fdf2ea",
-      "skin_description": "Porcelain alabaster skin with faint leaf-vein patterns during combat awakenings",
+      "skin_tone": "#fdf2ee",
+      "skin_description": "Fair porcelain skin with sharp fingernails that taper into claw-like pink tips",
       "eyes": {
         "color_base": "#f472b6",
         "color_highlight": "#fbcfe8",
-        "pupil_style": "Soft pale pink irises with white limbal rings; narrow cat-like vertical slits when alerted",
-        "expression_default": "Gentle, wide innocent gaze with slight head tilt"
+        "pupil_style": "Soft pale pink slit pupils that widen when peaceful and narrow when defending allies",
+        "limbal_ring": "#9d174d",
+        "expression_default": "Gentle, inquisitive, and protective"
       },
       "hair": {
-        "base_color": "#111827",
-        "tip_gradient": "#ea580c",
-        "style": "Long wavy black hair parted left, transitioning into glowing flame-vermilion beyond elbows",
-        "length": "Past waist level with soft loose curls",
+        "base_color": "#09090b",
+        "tip_gradient": "#f97316",
+        "style": "Long wavy raven hair reaching past waist with vibrant vermilion/flame-orange ends",
+        "length": "Waist-length cascading waves",
+        "bangs_description": "Pinned to the left side with a small pink ribbon",
         "physics_stiffness": 0.45
       },
       "distinguishing_marks": [
-        "Hollow natural green bamboo muzzle secured with crimson cords around lower jaw",
-        "Sharp pink-lacquered fingernails functioning as stiletto claw extensions",
-        "Small pink silk ribbon tied on the left side of front bangs"
+        "Green bamboo cylinder muzzle bound by red cords around jaw",
+        "Demon transformation leaf-pattern veins across forehead in combat mode",
+        "Single horn protruding from right forehead in awakened state"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "Traditional pale-pink kimono patterned with geometric asanoha (hemp leaf) stars",
-      "outer_wear": "Heavy knee-length dark chocolate-brown wool haori coat",
-      "bottom_wear": "Checkerboard red-and-white obi sash tied tightly at the waist with bright orange cord",
-      "footwear": "White tabi socks wrapped with dark brown calf-gaiters and straw zōri with pink thongs",
+      "inner_wear": "White undergarment juban layer",
+      "outer_wear": "Light pink kimono with geometric asanoha (hemp leaf) pattern, dark brown haori coat",
+      "bottom_wear": "Red-and-white checkered hanhaba obi sash wrapped around waist with orange cord",
+      "footwear": "Black kyahan leg gaiters held by pale cords over white tabi socks and pink zōri thongs",
       "relics_and_gear": [
-        "Bamboo muzzle with hemp-tied side tassels",
-        "Blood Demon Art: Pyrokinesis pink flame aura emitters"
+        "Solid bamboo muzzle with braided silk ties",
+        "Pine wood travel box with iron corner brackets"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid",
-      "bone_count": 206,
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 68,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -163,45 +166,44 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Soft cupped protective hands with tapered claw morph targets"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Protective claw gesture and head-pat receiving posture"
       },
       "leg_articulation": {
-        "hip_swing_range": "[-35°, 90°]",
-        "knee_flexion_limit": "135° (allows full seiza kneeling pose)",
-        "ankle_mobility": "Elastic ankle joint with smooth sock-deform weighting"
+        "hip_swing_range": "[-40°, 120°]",
+        "knee_flexion_limit": "150° (allows tucked-in sitting inside travel box)",
+        "ankle_mobility": "High flexibility for rapid evasion leaps"
       },
       "spring_bone_colliders": [
-        "long_hair_left",
-        "long_hair_right",
-        "haori_bottom",
-        "bamboo_ribbons"
+        "long_hair_waves",
+        "haori_sleeves",
+        "ribbon_tail"
       ],
       "blendshapes": [
         "joy",
+        "angry",
+        "sorrow",
+        "fun",
         "blink",
-        "blink_l",
-        "blink_r",
-        "demon_slits",
-        "pat_head",
-        "surprised",
         "a",
         "i",
         "u",
         "e",
-        "o"
+        "o",
+        "chibi_dot_eyes"
       ],
-      "model_url": "./public/models/AvatarSample_A.vrm",
-      "thumbnail_url": "./public/thumbnails/AvatarSample_A.png"
+      "model_url": "./public/models/Sakurada_Fumiriya.vrm",
+      "thumbnail_url": "./public/thumbnails/Sakurada_Fumiriya.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "Quiet Background Daemon Monitoring & Health Telemetry",
-      "motto": "Mmh-mmh! (Protecting the build workspace from regressions while you rest).",
+      "work_specialty": "Background Daemon Protection, Sleep Routine Reminders & Resilience",
+      "motto": "Mmm-hmmm! (Protects the developer from burnout with fierce loyalty)",
       "state_reactions": {
-        "Idle": "Curious side-to-side head tilt, blinking with gentle eye crinkles and bamboo gently bobbing",
-        "Working": "Small focused crouching pose watching log streams with bright pink eyes",
-        "Thinking": "Tilts head 45 degrees, blinking inquisitively at terminal outputs",
-        "Success": "Delighted patting of hands together, eyes curve into cheerful crescents",
-        "Error": "Puffs cheeks slightly, eyes narrow into protective defensive slits"
+        "Idle": "Tilts head curiously, blinking slowly while holding her bamboo muzzle",
+        "Working": "Sits beside you quietly, clapping both hands encouragingly as build steps tick",
+        "Thinking": "Pats your desk softly, eyes round and curious as dependencies resolve",
+        "Success": "Jumps happily with both hands raised, cheering warmly behind her muzzle",
+        "Error": "Stands protectively before the terminal, eyes narrowing to fiercely guard against segfaults"
       }
     }
   },
@@ -212,51 +214,53 @@
     "native_name": "五条 悟",
     "origin_lore": "Jujutsu Kaisen",
     "creator": "Gege Akutami",
-    "archetype": "The Strongest Jujutsu Sorcerer & Limitless Mentor",
+    "archetype": "The Strongest Jujutsu Sorcerer & Infinity Master",
     "category": "anime_character",
     "canonical_stats": {
       "age": 28,
       "birthday": "December 7",
-      "height_cm": 191,
-      "weight_kg": 82,
+      "height_cm": 190,
+      "weight_kg": 83,
       "zodiac": "Sagittarius",
       "blood_type": "O"
     },
     "micro_physical_details": {
-      "skin_tone": "#fdf8f4",
-      "skin_description": "Fair alabaster skin, sculpted angular jawline and lean athletic swimmer build",
+      "skin_tone": "#fae8e0",
+      "skin_description": "Flawless alabaster skin protected constantly by the Limitless infinity barrier",
       "eyes": {
-        "color_base": "#06b6d4",
+        "color_base": "#0ea5e9",
         "color_highlight": "#e0f2fe",
-        "pupil_style": "The legendary 'Six Eyes' — electric luminous cerulean blue with endless crystalline fractals",
-        "expression_default": "Confident smirk or playful grin masking supreme omnipotent depth"
+        "pupil_style": "Six Eyes: Luminescent celestial sky-blue with infinite concentric depth and crystalline iris facets",
+        "limbal_ring": "#0284c7",
+        "expression_default": "Playful, effortless confidence with supreme authority beneath"
       },
       "hair": {
         "base_color": "#ffffff",
-        "tip_gradient": "#e2e8f0",
-        "style": "Pure snow-white hair, dramatically spiked upward under blindfold, falling casually into soft bangs when uncovered",
-        "length": "Medium textured locks",
+        "tip_gradient": "#f1f5f9",
+        "style": "Pure snow-white hair, spiked upward when wearing blindfold, falling casually into soft fringes when uncovered",
+        "length": "Medium ear-covering crop",
+        "bangs_description": "Silky white strands framing eyes when blindfold is removed",
         "physics_stiffness": 0.55
       },
       "distinguishing_marks": [
-        "Matte black sensory-suppression blindfold tightly wrapped around upper face",
-        "Slim circular dark wire sunglasses used during casual teaching sessions",
-        "Long, remarkably slender pianist fingers capable of intricate hand seals"
+        "Six Eyes (Rikugan) granting atomic-level cursed energy manipulation",
+        "Black matte blindfold or dark wire-rim round sunglasses",
+        "Towering 190 cm athletic build with long limbs"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "Fitted black compression undershirt",
-      "outer_wear": "High-collared midnight-navy Tokyo Jujutsu High zip-up tunic with silver crest buttons",
-      "bottom_wear": "Slim-tailored matching midnight-navy trousers",
-      "footwear": "Polished black leather dress boots with low block heels",
+      "inner_wear": "Dark slim-fit compression undershirt",
+      "outer_wear": "High-collared dark navy/black Tokyo Jujutsu High sorcerer uniform jacket with silver spiral button",
+      "bottom_wear": "Matching tapered black dress slacks",
+      "footwear": "Polished black leather dress shoes with quiet rubber soles",
       "relics_and_gear": [
-        "Signature black silk blindfold",
-        "Domain Expansion Seal: Crossing right middle finger over index finger for 'Infinite Void'"
+        "Opaque black blindfold with elastic wrap",
+        "Round pitch-black sunglasses with thin metal frames"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Tall Slim Male",
-      "bone_count": 129,
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 62,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -266,250 +270,44 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Infinite Void finger crossover pose with micro-flexion joints"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Domain Expansion hand seal (crossing middle finger over index finger)"
       },
       "leg_articulation": {
-        "hip_swing_range": "[-45°, 120°]",
-        "knee_flexion_limit": "150°",
-        "ankle_mobility": "Full 360° rotational pivot for acrobatic kicks"
+        "hip_swing_range": "[-45°, 115°]",
+        "knee_flexion_limit": "140°",
+        "ankle_mobility": "Sturdy base for towering posture"
       },
       "spring_bone_colliders": [
-        "spiky_hair",
-        "collar_rim",
-        "tunic_waist"
+        "white_hair_strands",
+        "jacket_collar",
+        "blindfold_tails"
       ],
       "blendshapes": [
+        "joy",
         "smirk",
-        "grin",
-        "confident",
-        "serious",
-        "six_eyes_glow",
+        "wink",
+        "surprised",
         "blink",
-        "wink_r",
         "a",
         "i",
         "u",
         "e",
-        "o"
+        "o",
+        "infinity_glow"
       ],
       "model_url": "./public/models/Sendagaya_Shibu.vrm",
       "thumbnail_url": "./public/thumbnails/Sendagaya_Shibu.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "Infinite Pipeline Architect & Critical System Performance Optimization",
-      "motto": "Don't worry. After all, our architecture is the strongest.",
+      "work_specialty": "Zero-Downtime Infrastructure, Limitless Concurrency & Flawless Security Architecture",
+      "motto": "Don't worry. I'm the strongest. Your production branch is completely safe.",
       "state_reactions": {
-        "Idle": "Casual hands-in-pockets slouch, head tilted back with confident swagger",
-        "Working": "Fast effortless keyboard wizardry, occasionally twirling a pen with one hand",
-        "Thinking": "Lowers blindfold slightly with index finger, glowing cyan eye inspecting code complexity",
-        "Success": "Flashes peace sign with a grin: 'See? Perfectly optimized, as expected.'",
-        "Error": "Smirks arrogantly: 'A deadlock? How cute. Let me dismantle it in three seconds.'"
-      }
-    }
-  },
-  {
-    "id": "char.lord_shiva",
-    "slug": "shiva",
-    "name": "Lord Shiva (Mahadeva)",
-    "native_name": "शिव (महादेव)",
-    "origin_lore": "Sanatana Dharma / Vedic & Puranic Cosmology",
-    "creator": "Eternal Ancient Vedic Traditions",
-    "archetype": "The Supreme Ascetic, Lord of Dance & Cosmic Transformer",
-    "category": "deity_inspired",
-    "canonical_stats": {
-      "age": "Timeless / Eternal (Anadi-Ananta)",
-      "birthday": "Maha Shivaratri (Phalguna Krishna Chaturdashi)",
-      "height_cm": 188,
-      "weight_kg": 78,
-      "zodiac": "Cosmic Timekeeper (Mahakala)",
-      "blood_type": "Divine Nectar (Amrita)"
-    },
-    "micro_physical_details": {
-      "skin_tone": "#85a7cc",
-      "skin_description": "Translucent cosmic sky-blue hue smeared with sacred white Vibhuti ash; throat is deep midnight-blue (Neelakantha)",
-      "eyes": {
-        "color_base": "#1e3a8a",
-        "color_highlight": "#38bdf8",
-        "pupil_style": "Half-open meditative gaze resting at eyebrow center, serene and infinitely deep",
-        "expression_default": "Tranquil transcendent bliss (Sat-Chit-Ananda)"
-      },
-      "hair": {
-        "base_color": "#1c1917",
-        "tip_gradient": "#44403c",
-        "style": "Towering matted ascetic coils (Jata-Mukuta) crowned with the silvery crescent moon (Chandrama)",
-        "length": "Long locked coils with holy River Ganga flowing from the crown",
-        "physics_stiffness": 0.7
-      },
-      "distinguishing_marks": [
-        "Horizontal Third Eye (Trinetra) on forehead, keeper of spiritual wisdom and cosmic dissolution",
-        "Tripundra: Three horizontal white Vibhuti ash lines across forehead centered with red vermilion bindu",
-        "King Cobra (Vasuki) draped fearlessly around blue throat in threefold coils"
-      ]
-    },
-    "wardrobe_and_layering": {
-      "inner_wear": "Simple saffron ascetic dhoti undergarment",
-      "outer_wear": "Draped Bengal tiger skin wrapped around hips, symbolizing conquest over raw animal instincts",
-      "bottom_wear": "Bare feet planted on Mount Kailash lotus pedestal or ground",
-      "footwear": "Bare ascetic feet adorned with sacred Rudraksha anklets",
-      "relics_and_gear": [
-        "Trishula (Golden Trident): Symbol of threefold cosmic powers (Creation, Preservation, Dissolution)",
-        "Damaru (Hourglass drum): Symbol of cosmic primordial sound vibration (Nada-Brahma)",
-        "Rosary of 108 Sacred Rudraksha beads strung around neck, forearms, and wrists",
-        "Kamandalu (Sacred ascetic water pot)"
-      ]
-    },
-    "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Majestic Celestial Biped",
-      "bone_count": 65,
-      "hand_articulation": {
-        "finger_bones": 15,
-        "fingers": [
-          "Thumb",
-          "Index",
-          "Middle",
-          "Ring",
-          "Little"
-        ],
-        "grip_style": "Abhaya Mudra (fear-dispelling open right palm) + Trishula spear grasp in left hand"
-      },
-      "leg_articulation": {
-        "hip_swing_range": "[-40°, 130°]",
-        "knee_flexion_limit": "150° (allows full Padmasana / Lotus meditation posture and Nataraja dance pose)",
-        "ankle_mobility": "Grounded solid poise"
-      },
-      "spring_bone_colliders": [
-        "ganga_stream",
-        "crescent_moon",
-        "vasuki_snake",
-        "rudraksha_necklaces"
-      ],
-      "blendshapes": [
-        "meditative",
-        "peaceful",
-        "trinetra_open",
-        "compassionate",
-        "tandava_fury",
-        "blink",
-        "a",
-        "i",
-        "u",
-        "e",
-        "o"
-      ],
-      "model_url": "./public/models/Avatar_Orion.vrm",
-      "thumbnail_url": "./public/thumbnails/Avatar_Orion.svg"
-    },
-    "miyora_companion_role": {
-      "work_specialty": "Zero-Downtime Database Migrations & Irreversible Architecture Transformations",
-      "motto": "Om Namah Shivaya: Dissolving legacy tech debt so robust systems can be reborn.",
-      "state_reactions": {
-        "Idle": "Calm seated Padmasana meditation with Trishula planted vertically, gentle Ganga water glinting",
-        "Working": "Smooth purposeful keystrokes, deep resonant aura illuminating the monitor",
-        "Thinking": "Eyes gently close in dhyana, crescent moon shines soft silver light over problem space",
-        "Success": "Abhaya mudra hand raises in divine blessing, Damaru vibrates with rhythmic resonance",
-        "Error": "Third eye glows with quiet golden flame, calmly dissolving the faulty stack trace"
-      }
-    }
-  },
-  {
-    "id": "char.lord_krishna",
-    "slug": "krishna",
-    "name": "Lord Krishna (Murlidhar)",
-    "native_name": "कृष्ण (मुरलीधर)",
-    "origin_lore": "Mahabharata, Bhagavad Gita, Srimad Bhagavatam",
-    "creator": "Eternal Ancient Vedic Traditions",
-    "archetype": "The Divine Flutist, Master of Yoga & Supreme Strategist",
-    "category": "deity_inspired",
-    "canonical_stats": {
-      "age": "Eternal Youth (Navayauvana)",
-      "birthday": "Janmashtami (Bhadrapada Krishna Ashtami)",
-      "height_cm": 182,
-      "weight_kg": 72,
-      "zodiac": "Rohini Nakshatra",
-      "blood_type": "Divine Grace"
-    },
-    "micro_physical_details": {
-      "skin_tone": "#587fa8",
-      "skin_description": "Shyam-varna: All-attractive deep rain-cloud blue/azure complexion radiating warm celestial luster",
-      "eyes": {
-        "color_base": "#1e293b",
-        "color_highlight": "#38bdf8",
-        "pupil_style": "Lotus-petal shaped eyes (Kamalanayana) with playful yet omniscient golden depth",
-        "expression_default": "Enchanting gentle smile brimming with eternal joy and playful wisdom"
-      },
-      "hair": {
-        "base_color": "#0f172a",
-        "tip_gradient": "#1e293b",
-        "style": "Lush glossy raven curls crowned by an ornate golden Mukut surmounted by a peacock feather (Mor Pankh)",
-        "length": "Shoulder-length silky dark curls",
-        "physics_stiffness": 0.4
-      },
-      "distinguishing_marks": [
-        "Iridescent peacock feather (Mor Pankh) standing upright in the golden crown",
-        "Kaustubha Gem and Srivatsa mark radiating from center of broad chest",
-        "Tilaka mark of sacred Chandan (sandalwood paste) gracing forehead bridge"
-      ]
-    },
-    "wardrobe_and_layering": {
-      "inner_wear": "Fine woven white silk under-sash",
-      "outer_wear": "Pitambara: Brilliant canary-yellow flowing silk dhoti draped with royal golden borders",
-      "bottom_wear": "Flowing yellow silk scarf (uttariya) trailing over broad shoulders",
-      "footwear": "Bare divine feet adorned with chiming silver and bell-anklets (Nupur)",
-      "relics_and_gear": [
-        "Venu / Bansuri (Bamboo flute): Held gently to lips with both hands in Tribhanga stance",
-        "Vaijayanti Mala: Long garland of fragrant woodland flowers cascading past knees",
-        "Sudarshana Chakra: Spinning celestial solar discus hovering ready on right index finger"
-      ]
-    },
-    "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Graceful Divine Biped",
-      "bone_count": 59,
-      "hand_articulation": {
-        "finger_bones": 15,
-        "fingers": [
-          "Thumb",
-          "Index",
-          "Middle",
-          "Ring",
-          "Little"
-        ],
-        "grip_style": "Delicate transverse flute playing posture with relaxed curved finger phalanges"
-      },
-      "leg_articulation": {
-        "hip_swing_range": "[-40°, 115°]",
-        "knee_flexion_limit": "140°",
-        "ankle_mobility": "Classic Tribhanga stance: right foot gracefully crossed over left toe"
-      },
-      "spring_bone_colliders": [
-        "peacock_feather",
-        "flute_tassels",
-        "silk_uttariya",
-        "vaijayanti_garland"
-      ],
-      "blendshapes": [
-        "divine_smile",
-        "playful_wink",
-        "flute_playing",
-        "bhagavad_wisdom",
-        "blink",
-        "a",
-        "i",
-        "u",
-        "e",
-        "o"
-      ],
-      "model_url": "./public/models/masc_vroid.vrm",
-      "thumbnail_url": "./public/thumbnails/masc_vroid.png"
-    },
-    "miyora_companion_role": {
-      "work_specialty": "Strategic Architecture Governance & Multi-Agent Consensus Orchestration",
-      "motto": "Karmanye Vadhikaraste: Focus completely on code excellence without anxiety over vanity metrics.",
-      "state_reactions": {
-        "Idle": "Poised in three-bend Tribhanga stance, bamboo flute near lips with soft peaceful melody",
-        "Working": "Effortless typing with rhythmic musical cadence, eyes twinkling with playful brilliance",
-        "Thinking": "Lightly taps flute against cheek, eyes gazing upward into cosmic strategic patterns",
-        "Success": "Delightful warm laughter, twirling flute gracefully before offering blessing",
-        "Error": "Reassuring smile: 'Every bug is merely a lesson in disguise. Let us re-balance the state.'"
+        "Idle": "Leans back with hands in pockets, sunglasses resting casually on the bridge of his nose",
+        "Working": "Fingers tap the keys at supersonic speed: 'Red, Blue, Purple... deployment completed in 4 milliseconds.'",
+        "Thinking": "Lowers blindfold slightly, Six Eyes glowing cerulean: 'Analyzing all 10,000 execution paths simultaneously.'",
+        "Success": "Forms the Domain Expansion hand sign with a cocky grin: 'Ryoiki Tenkai: Infinite Clean Build.'",
+        "Error": "Chuckles playfully: 'A NullPointerException? Did that bug really think it could touch my Infinity?'"
       }
     }
   },
@@ -518,52 +316,55 @@
     "slug": "frieren",
     "name": "Frieren",
     "native_name": "フリーレン",
-    "origin_lore": "Frieren: Beyond Journey's End (Sousou no Frieren)",
+    "origin_lore": "Frieren: Beyond Journey's End",
     "creator": "Kanehito Yamada & Tsukasa Abe",
-    "archetype": "Millennium Elven Mage & Grimoire Collector",
+    "archetype": "Millennium Elven Mage & Spell Collector",
     "category": "anime_character",
     "canonical_stats": {
       "age": 1000,
-      "birthday": "Unknown (Ancient Elven Era)",
+      "birthday": "Unknown (Age of Myths)",
       "height_cm": 150,
       "weight_kg": 42,
-      "zodiac": "Aquarius",
+      "zodiac": "Virgo",
       "blood_type": "Elven"
     },
     "micro_physical_details": {
-      "skin_tone": "#fdf4eb",
-      "skin_description": "Ageless pale porcelain elven skin",
+      "skin_tone": "#fbf2ed",
+      "skin_description": "Smooth ageless pale ivory skin characteristic of pure elven blood",
       "eyes": {
-        "color_base": "#0ea5e9",
-        "color_highlight": "#7dd3fc",
-        "pupil_style": "Large serene turquoise-green eyes with sleepy calm expressions",
-        "expression_default": "Quiet, impassive and gently curious"
+        "color_base": "#10b981",
+        "color_highlight": "#a7f3d0",
+        "pupil_style": "Brilliant jade-green irises carrying centuries of quiet nostalgia and ancient wisdom",
+        "limbal_ring": "#065f46",
+        "expression_default": "Calm, sleepy, unhurried, with faint warmth"
       },
       "hair": {
-        "base_color": "#ffffff",
-        "tip_gradient": "#e0e7ff",
-        "style": "Long snowy silver-white twin pigtails tied low behind long pointed elven ears",
-        "length": "Past waist level",
-        "physics_stiffness": 0.35
+        "base_color": "#e2e8f0",
+        "tip_gradient": "#cbd5e1",
+        "style": "Silky silver-white hair tied into two low twin-tails reaching past her shoulders",
+        "length": "Shoulder-blade twin tails",
+        "bangs_description": "Straight blunt bangs parted slightly above eyebrows",
+        "physics_stiffness": 0.4
       },
       "distinguishing_marks": [
-        "Long pointed slender elven ears adorned with dangling red jewel teardrop earrings",
-        "Subdued suppressed mana aura (completely imperceptible to casual detection)"
+        "Long pointed elven ears extending horizontally through hair",
+        "Gold droplet earrings with red teardrop gem insets",
+        "Near-zero mana aura emission due to perpetual suppression technique"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "Striped high-neck black-and-grey knit dress shirt",
-      "outer_wear": "Cream-white wizard capelet with gold borders fastened with black leather straps",
-      "bottom_wear": "Matching cream pleated skirt with dark stockings",
-      "footwear": "Brown leather travel boots with silver buckles",
+      "inner_wear": "High-collared black long-sleeve knit shirt under a striped gold-trimmed white dress",
+      "outer_wear": "White traveler capelet with black borders, gold buttons, and brass shoulder clasps",
+      "bottom_wear": "White pleated midi skirt over dark stockings",
+      "footwear": "Brown leather ankle boots with gold buckles",
       "relics_and_gear": [
-        "Ancient tall wooden magical staff crowned with crescent loop and red gem",
-        "Leather luggage bag packed with rare eccentric spell grimoires"
+        "Crescent-topped wooden mage staff bound with red ribbon and gold inlay",
+        "Old leather traveler luggage suitcase stuffed with eccentric grimoires"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Petite Elven",
-      "bone_count": 162,
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 66,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -573,299 +374,102 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Relaxed staff grip with pointed index wand posture"
-      },
-      "leg_articulation": {
-        "hip_swing_range": "[-35°, 90°]",
-        "knee_flexion_limit": "135°",
-        "ankle_mobility": "Nimble walking gait"
-      },
-      "spring_bone_colliders": [
-        "twin_tails",
-        "elven_ears",
-        "earrings",
-        "capelet"
-      ],
-      "blendshapes": [
-        "sleepy",
-        "smug",
-        "curious",
-        "magic_cast",
-        "blink",
-        "a",
-        "i",
-        "u",
-        "e",
-        "o"
-      ],
-      "model_url": "./public/models/Victoria_Rubin.vrm",
-      "thumbnail_url": "./public/thumbnails/Victoria_Rubin.png"
-    },
-    "miyora_companion_role": {
-      "work_specialty": "Long-Term Dependency Auditing & Archival Codebase Preservation",
-      "motto": "A decade spent refactoring a legacy module is merely a blink of an eye.",
-      "state_reactions": {
-        "Idle": "Drowsy blinking, leaning lightly against staff while hair breezes softly",
-        "Working": "Calm leisurely reading through thousands of lines of AST without breaking a sweat",
-        "Thinking": "Fingers tilt cheek, examining an ancient regex: 'Fascinating. An obsolete spell.'",
-        "Success": "Quiet slight proud nod, producing a legendary spellbook from her satchel",
-        "Error": "Unbothered yawn: 'It will only take 80 years to re-write this parser properly.'"
-      }
-    }
-  },
-  {
-    "id": "char.goddess_lakshmi",
-    "slug": "lakshmi",
-    "name": "Goddess Lakshmi (Padma)",
-    "native_name": "लक्ष्मी (पद्मा)",
-    "origin_lore": "Sri Sukta, Vishnu Purana, Samudra Manthan",
-    "creator": "Eternal Ancient Vedic Traditions",
-    "archetype": "Goddess of Fortune, Radiant Prosperity & Spiritual Abundance",
-    "category": "deity_inspired",
-    "canonical_stats": {
-      "age": "Timeless Divine Radiance",
-      "birthday": "Diwali (Kartika Amavasya)",
-      "height_cm": 172,
-      "weight_kg": 58,
-      "zodiac": "Universal Benefactor",
-      "blood_type": "Golden Divine Essence"
-    },
-    "micro_physical_details": {
-      "skin_tone": "#fde68a",
-      "skin_description": "Luminous molten-gold complexion radiating celestial warmth and maternal grace",
-      "eyes": {
-        "color_base": "#78350f",
-        "color_highlight": "#f59e0b",
-        "pupil_style": "Large almond-shaped warm honey-amber eyes beaming with boundless generosity",
-        "expression_default": "Supreme benevolence, maternal tenderness, and auspicious serenity"
-      },
-      "hair": {
-        "base_color": "#09090b",
-        "tip_gradient": "#18181b",
-        "style": "Long glossy black tresses cascading down her back, bound in gold hairpins and fragrant jasmine garlands",
-        "length": "Past waist level",
-        "physics_stiffness": 0.45
-      },
-      "distinguishing_marks": [
-        "Gold coins showered continuously from lower right palm in Varada Mudra",
-        "Auspicious vermilion Kumkuma and Chandan Tilaka centered on brow",
-        "Seated atop an expansive blossoming pink sacred lotus flower (Padmasana)"
-      ]
-    },
-    "wardrobe_and_layering": {
-      "inner_wear": "Golden silk blouse embellished with delicate pearls",
-      "outer_wear": "Crimson red and gold Zari bridal sari draped with exquisite pleats",
-      "bottom_wear": "Cascading silk folds pooling gently over lotus petals",
-      "footwear": "Bare feet dyed with red Alta henna and chiming golden anklets",
-      "relics_and_gear": [
-        "Padma (Twin pink lotus blooms held gracefully in upper hands)",
-        "Golden urn of boundless prosperity (Amrita Kalasha)",
-        "Elaborate multi-tiered golden necklaces and gemstone armlets"
-      ]
-    },
-    "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Royal Celestial Goddess",
-      "bone_count": 137,
-      "hand_articulation": {
-        "finger_bones": 15,
-        "fingers": [
-          "Thumb",
-          "Index",
-          "Middle",
-          "Ring",
-          "Little"
-        ],
-        "grip_style": "Varada Mudra (boon-giving) right hand + Lotus-stem grasp in upper hands"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Delicate staff hold and book page-turning finger articulation"
       },
       "leg_articulation": {
         "hip_swing_range": "[-35°, 100°]",
-        "knee_flexion_limit": "145° (perfect Lotus Padmasana)",
-        "ankle_mobility": "Graceful poised feet"
+        "knee_flexion_limit": "135°",
+        "ankle_mobility": "Steady footing for long overland marches"
       },
       "spring_bone_colliders": [
-        "sari_pallu",
-        "long_tresses",
-        "gold_necklaces",
-        "lotus_petals"
+        "twin_tails",
+        "capelet_hem",
+        "staff_ribbon",
+        "earrings"
       ],
       "blendshapes": [
-        "auspicious_smile",
-        "maternal_grace",
-        "boon_giving",
+        "joy",
+        "sleepy",
+        "smug",
+        "sorrow",
         "blink",
         "a",
         "i",
         "u",
         "e",
-        "o"
+        "o",
+        "mimic_struggle"
       ],
-      "model_url": "./public/models/Victoria_Rubin.vrm",
-      "thumbnail_url": "./public/thumbnails/Victoria_Rubin.png"
+      "model_url": "./public/models/Vita.vrm",
+      "thumbnail_url": "./public/thumbnails/Vita.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "Cloud Cost Optimization & Production Resource Abundance",
-      "motto": "May your builds be swift, your clusters cost-efficient, and your releases prosperous.",
+      "work_specialty": "Long-Term Architecture, Legacy Code Refactoring & Obscure Optimization Spells",
+      "motto": "It's only a ten-year refactoring project. We have plenty of time. Let's do it right.",
       "state_reactions": {
-        "Idle": "Regally poised on glowing lotus, warm smile radiating calm assurance",
-        "Working": "Graceful gestures streamlining compute resources and cutting cloud waste",
-        "Thinking": "Lotus blooms glow softly as she calculates optimal serverless economics",
-        "Success": "Gold coins cascade with celestial chime: 'Build succeeded with 0 AWS cost overruns.'",
-        "Error": "Gentle compassionate gaze: 'Do not fret over rate limits. Abundant quota shall return.'"
-      }
-    }
-  },
-  {
-    "id": "char.sun_wukong",
-    "slug": "sun-wukong",
-    "name": "Sun Wukong (The Great Sage)",
-    "native_name": "孫悟空 (齊天大聖)",
-    "origin_lore": "Journey to the West (Wu Cheng'en)",
-    "creator": "Classical Chinese Literature / Ming Dynasty",
-    "archetype": "The Immortal Monkey King & Defier of the Heavens",
-    "category": "deity_inspired",
-    "canonical_stats": {
-      "age": "Immortal (Surpassed 72 Transformations)",
-      "birthday": "Born from Stone at the Mountain of Flowers and Fruit",
-      "height_cm": 168,
-      "weight_kg": 64,
-      "zodiac": "Year of the Monkey",
-      "blood_type": "Stone-Born Immortal"
-    },
-    "micro_physical_details": {
-      "skin_tone": "#f59e0b",
-      "skin_description": "Golden-furred nimble simian visage with fierce human-proportioned athletic build",
-      "eyes": {
-        "color_base": "#dc2626",
-        "color_highlight": "#fbbf24",
-        "pupil_style": "Fiery Golden Eyes (Huoyan Jinjing) capable of seeing through all illusions and evil",
-        "expression_default": "Mischievous grin with ferocious battle-ready sharpness"
-      },
-      "hair": {
-        "base_color": "#d97706",
-        "tip_gradient": "#fef08a",
-        "style": "Lush golden-brown wild maned fur crowned with the golden tightening circlet and phoenix feathers",
-        "length": "Medium wild mane",
-        "physics_stiffness": 0.6
-      },
-      "distinguishing_marks": [
-        "Golden Fillet / Circlet (Curse of the Tightening Crown) fastened securely on brow",
-        "Prehensile monkey tail twitching with agile kinetic anticipation",
-        "Twin long red pheasant/phoenix feathers rising proudly from headpiece"
-      ]
-    },
-    "wardrobe_and_layering": {
-      "inner_wear": "Flexible crimson combat under-tunic",
-      "outer_wear": "Golden Chain Mail armor shirt with tiger-skin kilt and silk waist sash",
-      "bottom_wear": "Baggy martial arts pants cinched tightly with red cloth bands",
-      "footwear": "Cloud-walking boots (cloud-treading lotus footwear)",
-      "relics_and_gear": [
-        "Ruyi Jingu Bang (As-You-Will Golden-Banded Staff): Can shrink to needle or expand into pillar",
-        "Somersault Cloud (Jindou Yun): Travels 108,000 li in a single leap"
-      ]
-    },
-    "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Agile Simian Biped",
-      "bone_count": 65,
-      "hand_articulation": {
-        "finger_bones": 15,
-        "fingers": [
-          "Thumb",
-          "Index",
-          "Middle",
-          "Ring",
-          "Little"
-        ],
-        "grip_style": "Acrobatic staff spinning palm-roll and single-handed balance grip"
-      },
-      "leg_articulation": {
-        "hip_swing_range": "[-50°, 135°]",
-        "knee_flexion_limit": "155° (allows full deep simian crouch and backflip landings)",
-        "ankle_mobility": "Hyper-flexible spring-loaded ankle joints"
-      },
-      "spring_bone_colliders": [
-        "phoenix_feathers",
-        "tail",
-        "waist_sash",
-        "staff_rings"
-      ],
-      "blendshapes": [
-        "mischief_grin",
-        "battle_roar",
-        "fiery_eyes_flash",
-        "taunt",
-        "blink",
-        "a",
-        "i",
-        "u",
-        "e",
-        "o"
-      ],
-      "model_url": "./public/models/Avatar_Orion.vrm",
-      "thumbnail_url": "./public/thumbnails/Avatar_Orion.svg"
-    },
-    "miyora_companion_role": {
-      "work_specialty": "Adversarial Chaos Engineering & Stress-Testing Penetration Audits",
-      "motto": "Equal to Heaven! If your system has a crack, my staff will find it in one blow.",
-      "state_reactions": {
-        "Idle": "Perched lightly atop staff resting on one foot, chewing a peach with cheeky smirk",
-        "Working": "Blur of wild kinetic attacks hitting endpoints at 10,000 req/sec concurrently",
-        "Thinking": "Scratches ear with staff end, fiery golden eyes scanning bytecode decompilation",
-        "Success": "Flips staff 360 degrees behind back with triumphant laugh: 'None can withstand the Sage!'",
-        "Error": "Bares fangs playfully: 'Found your memory leak! Don't worry, I broke it for your own good.'"
+        "Idle": "Stifles a small yawn, leaning casually against her staff while watching memory graphs",
+        "Working": "Chants ancient spells quietly: 'Zoltraak... dismantling legacy technical debt layer by layer.'",
+        "Thinking": "Examines an obscure stack trace with scholarly interest: 'Himmel once told me every bug has a story...'",
+        "Success": "Gently blows flower petals over your workspace: 'Here is a spell that turns clean builds into warm tea.'",
+        "Error": "Pouts slightly: 'This API looks like a mimic chest. Let's not fall into its trap again.'"
       }
     }
   },
   {
     "id": "char.son_goku",
     "slug": "goku",
-    "name": "Son Goku (Kakarot)",
-    "native_name": "孫悟空 (カカロット)",
-    "origin_lore": "Dragon Ball / Dragon Ball Z / Super",
+    "name": "Son Goku",
+    "native_name": "孫 悟空 (Kakarot)",
+    "origin_lore": "Dragon Ball / Dragon Ball Z",
     "creator": "Akira Toriyama",
-    "archetype": "Earth's Greatest Defender & Saiyan Martial Artist",
+    "archetype": "Saiyan Warrior of Boundless Ascension",
     "category": "anime_character",
     "canonical_stats": {
-      "age": 40,
-      "birthday": "April 16, Age 736",
+      "age": 42,
+      "birthday": "Age 737",
       "height_cm": 175,
       "weight_kg": 62,
       "zodiac": "Aries",
       "blood_type": "Saiyan"
     },
     "micro_physical_details": {
-      "skin_tone": "#fcd34d",
-      "skin_description": "Sun-kissed tanned golden skin with dense, explosive muscle definition and broad shoulders",
+      "skin_tone": "#eec9a7",
+      "skin_description": "Sun-weathered golden-tan complexion with sculpted martial artist musculature",
       "eyes": {
-        "color_base": "#171717",
-        "color_highlight": "#38bdf8",
-        "pupil_style": "Round dark black pupils (piercing electric cyan-green in Super Saiyan forms)",
-        "expression_default": "Bright innocent enthusiasm or intense battle concentration"
+        "color_base": "#18181b",
+        "color_highlight": "#3f3f46",
+        "pupil_style": "Jet black sharp irises that turn electric cyan/emerald during Super Saiyan transformation",
+        "limbal_ring": "#09090b",
+        "expression_default": "Bright, enthusiastic, battle-ready smile"
       },
       "hair": {
         "base_color": "#09090b",
-        "tip_gradient": "#f59e0b",
-        "style": "Signature unyielding black Saiyan spikes: three bangs hanging to the right and five distinct crest spikes radiating left and backward",
-        "length": "Medium voluminous spikes",
+        "tip_gradient": "#18181b",
+        "style": "Iconic Saiyan silhouette: distinct pointed spikes radiating outward in 7 distinct clusters",
+        "length": "Spiky voluminous mane that never changes length",
+        "bangs_description": "Three sharp bangs framing forehead",
         "physics_stiffness": 0.85
       },
       "distinguishing_marks": [
-        "Tail mark: Base of spine where his prehensile Saiyan monkey tail was permanently removed",
-        "Turtle Hermit (Kame) and King Kai (Kaio) kanji emblems printed proudly on gi front and back"
+        "Saiyan tail bone scar on lower spine (tail removed permanently)",
+        "Golden Ki aura ignition in high-intensity computation phases",
+        "Heart of pure purity capable of riding the Flying Nimbus (Kintoun)"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "Dark navy-blue weighted compression undershirt",
-      "outer_wear": "Iconic sleeveless orange martial arts gi with V-neck opening and deep blue belt sash (obi)",
-      "bottom_wear": "Matching loose orange martial arts pants tucked into boots",
-      "footwear": "Dark navy-blue weighted combat boots with red laces, yellow edge trims, and thick white rubber soles",
+      "inner_wear": "Heavy navy-blue weighted undershirt and wristbands",
+      "outer_wear": "Vibrant orange martial arts gi with Turtle School (Kame) kanji emblem on chest and back",
+      "bottom_wear": "Loose orange martial arts trousers bound with a navy-blue sash belt",
+      "footwear": "Navy blue boots with yellow laces and red piping stripes",
       "relics_and_gear": [
-        "Flying Nimbus (Kinto'un): Pure golden cloud used for aerial traversal",
-        "Power Pole (Nyoi-bo): Magical red expanding staff strapped over back in youth"
+        "Power Pole (Nyoi-bo) extendable red staff",
+        "Pouch of Senzu Beans for instantaneous health recovery"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Muscular Martial Biped",
-      "bone_count": 59,
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 60,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -875,42 +479,44 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Kamehameha cupped palm posture and tight clenched fist guards"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Kamehameha cupped-hands gesture and instant transmission two-finger forehead touch"
       },
       "leg_articulation": {
         "hip_swing_range": "[-50°, 130°]",
-        "knee_flexion_limit": "150° (allows explosive martial high kicks and horse-riding stances)",
-        "ankle_mobility": "Spring-loaded ankle flexibility"
+        "knee_flexion_limit": "155° (explosive martial arts stance)",
+        "ankle_mobility": "High pivot mobility for dynamic airborne kicks"
       },
       "spring_bone_colliders": [
-        "spiky_hair_clusters",
-        "belt_sash_tails",
-        "wristband_edges"
+        "belt_tails",
+        "hair_spikes",
+        "gi_lapels"
       ],
       "blendshapes": [
-        "cheerful_smile",
-        "kamehameha_scream",
-        "super_saiyan_grit",
-        "eating_happy",
+        "joy",
+        "fierce",
+        "shout",
+        "surprised",
         "blink",
         "a",
         "i",
         "u",
         "e",
-        "o"
+        "o",
+        "kaioken_pulse"
       ],
       "model_url": "./public/models/masc_vroid.vrm",
       "thumbnail_url": "./public/thumbnails/masc_vroid.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "High-Throughput Load Testing & Distributed Stress Resilience",
-      "motto": "Hey, I'm Goku! Let's train this cluster until it can handle a billion queries per second!",
+      "work_specialty": "Extreme Load Stress Testing, Parallel Compute Scaling & Uncapped Performance",
+      "motto": "Hey, that benchmark looks strong! Let me try pushing it further!",
       "state_reactions": {
-        "Idle": "Hands clasped behind head with big carefree grin, tail of belt fluttering in the breeze",
-        "Working": "Furious lightning-fast keystrokes producing a faint golden aura around hands",
-        "Thinking": "Scratches back of his head with funny sheepish grin: 'Gee, this distributed deadlock looks tough!'",
-        "Success": "Flashing double thumbs up with beaming grin: 'We did it! Time for a giant bowl of ramen!'",
-        "Error": "Drops into martial stance, eyes blazing: 'Now I'm getting excited! Let's hit that bug with a 10x Kaioken!'"
+        "Idle": "Stretches his arms behind his head, grinning cheerfully: 'Whew! What's next on the roadmap?'",
+        "Working": "Powering through compiling jobs like a Kaio-ken x20 burst, keyboard clicking like rapid-fire punches",
+        "Thinking": "Taps his chin curiously: 'Hmm... maybe if we gather energy from all 16 CPU cores at once...'",
+        "Success": "Flips into the air and gives a hearty thumbs-up: 'Kamehameha! All unit tests destroyed in 0.2 seconds!'",
+        "Error": "Cracks knuckles with excitement: 'Haha! Now THAT is a tough bug! It's getting me all excited!'"
       }
     }
   },
@@ -921,7 +527,7 @@
     "native_name": "モンキー・D・ルフィ",
     "origin_lore": "One Piece",
     "creator": "Eiichiro Oda",
-    "archetype": "Captain of the Straw Hat Pirates & Warrior of Liberation (Sun God Nika)",
+    "archetype": "Captain of the Straw Hats & Emperor of the Sea (Sun God Nika)",
     "category": "anime_character",
     "canonical_stats": {
       "age": 19,
@@ -932,38 +538,42 @@
       "blood_type": "F"
     },
     "micro_physical_details": {
-      "skin_tone": "#fed7aa",
-      "skin_description": "Sun-bronzed sea-weathered skin, lean wiry athletic musculature with rubber elasticity",
+      "skin_tone": "#f4cca4",
+      "skin_description": "Sun-drenched rubbery bronze skin with superhuman resilience",
       "eyes": {
-        "color_base": "#171717",
-        "color_highlight": "#475569",
-        "pupil_style": "Large round black eyes with simple pupil dots, utterly devoid of guile or fear",
-        "expression_default": "Massive ear-to-ear grin full of boundless adventurous spirit"
+        "color_base": "#18181b",
+        "color_highlight": "#3f3f46",
+        "pupil_style": "Large round jet-black irises expressing unyielding freedom and laughter",
+        "limbal_ring": "#09090b",
+        "expression_default": "Wide open-mouthed grin radiating wild freedom"
       },
       "hair": {
         "base_color": "#09090b",
         "tip_gradient": "#18181b",
-        "style": "Shaggy, unruly black hair peeking out from underneath his straw hat rim",
-        "length": "Short shaggy crop",
-        "physics_stiffness": 0.5
+        "style": "Messy tousled black hair naturally framing his straw hat brim",
+        "length": "Short shaggy locks",
+        "bangs_description": "Parted bangs falling between eyes",
+        "physics_stiffness": 0.45
       },
       "distinguishing_marks": [
-        "Two-stitch curved scar under left eye (self-inflicted in childhood to prove bravery to Shanks)",
-        "Large X-shaped burn scar across center of chest (inflicted by Akainu during Marineford)"
+        "Two-stitched curved scar underneath his left eye",
+        "Large X-shaped burn scar on his chest from the Marineford war",
+        "Straw hat with red ribbon given by Red-Haired Shanks"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "Bare chest open under vest",
-      "outer_wear": "Open red button-down sleeveless vest with gold buttons",
-      "bottom_wear": "Rolled-up blue denim Bermuda shorts with white fluffy fleece cuffs, fastened by a yellow sash",
-      "footwear": "Simple woven straw sandals with black straps",
+      "inner_wear": "Bare chest showing heroic X-scar",
+      "outer_wear": "Open red sleeveless cardigan vest with gold buttons",
+      "bottom_wear": "Rolled-up denim blue shorts with white fluffy fur fleece cuffs, tied with yellow sash",
+      "footwear": "Woven straw sandals with black thongs",
       "relics_and_gear": [
-        "Shanks' Straw Hat: Woven yellow straw with a distinctive red ribbon band, tied around neck by string in combat"
+        "Shanks' heirloom Straw Hat with neck cord string",
+        "Meat on the bone for stamina restoration"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Elastic Biped",
-      "bone_count": 59,
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 61,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -973,23 +583,24 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Wide gripping fists with stretchable limb deformers"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Firm open fist or rubber stretch reach"
       },
       "leg_articulation": {
-        "hip_swing_range": "[-50°, 140°]",
-        "knee_flexion_limit": "155° (enables rubber recoil springboard stances)",
-        "ankle_mobility": "High elastic rebound"
+        "hip_swing_range": "[-60°, 140°]",
+        "knee_flexion_limit": "160° (rubber joint hyper-mobility)",
+        "ankle_mobility": "Extreme multi-axis flexibility"
       },
       "spring_bone_colliders": [
-        "straw_hat_rim",
-        "yellow_sash_ends",
-        "shaggy_hair"
+        "straw_hat_brim",
+        "yellow_sash",
+        "hair_bangs"
       ],
       "blendshapes": [
-        "huge_grin",
-        "gear_5_laugh",
+        "joy",
         "determined",
-        "shocked_eyes_out",
+        "gear5_laugh",
+        "meat_craving",
         "blink",
         "a",
         "i",
@@ -997,18 +608,18 @@
         "e",
         "o"
       ],
-      "model_url": "./public/models/masc_vroid.vrm",
-      "thumbnail_url": "./public/thumbnails/masc_vroid.png"
+      "model_url": "./public/models/Sendagaya_Shino.vrm",
+      "thumbnail_url": "./public/thumbnails/Sendagaya_Shino.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "Rapid Greenfield Prototyping & Fearless Tech Stack Exploration",
-      "motto": "I'm gonna be King of the Code! Let's set sail into unchartered architecture!",
+      "work_specialty": "Fearless Architecture Overhauls, Rapid Feature Prototyping & High-Spirited Leadership",
+      "motto": "I'm going to be the Pirate King of clean code! If you want to merge it, just do it!",
       "state_reactions": {
-        "Idle": "Laughs with hand on his straw hat, rocking back on his straw sandals",
-        "Working": "Types with hilarious stretching arm flourishes, grinning at code compilation",
-        "Thinking": "Fingers probe nose absentmindedly: 'Hmm, I don't get this database thing, but let's punch it!'",
-        "Success": "Arms shoot straight up into the air with a giant roar: 'MEAT!! The build passed!'",
-        "Error": "Comedic jaw-drop eyes-bulging shock, then instantly grins: 'Alright, Gear Second, let's fix it!'"
+        "Idle": "Pulls straw hat down over eyes, taking a quick carefree nap on your status bar",
+        "Working": "Gomu Gomu no Gatling on the keyboard! Code commits pouring in like machine gun fire!",
+        "Thinking": "Frowns with smoke almost puffing from head: 'Too much thinking makes me hungry...'",
+        "Success": "Bursts into Gear 5 joyful laughter: 'Shishishi! Everything deployed smoothly! Let's feast on meat!'",
+        "Error": "Stretches his arm across the screen: 'Hey! Don't you dare touch my teammate's branch!'"
       }
     }
   },
@@ -1019,54 +630,54 @@
     "native_name": "ロロノア・ゾロ",
     "origin_lore": "One Piece",
     "creator": "Eiichiro Oda",
-    "archetype": "Master of Three-Sword Style (Santoryu) & King of Hell",
+    "archetype": "Master of Three-Sword Style & King of Hell",
     "category": "anime_character",
     "canonical_stats": {
       "age": 21,
       "birthday": "November 11",
       "height_cm": 181,
-      "weight_kg": 80,
+      "weight_kg": 79,
       "zodiac": "Scorpio",
       "blood_type": "XF"
     },
     "micro_physical_details": {
-      "skin_tone": "#f5d0be",
-      "skin_description": "Rugged, deeply tanned skin with massive muscular physique and heavy battle scars",
+      "skin_tone": "#ebd0ba",
+      "skin_description": "Weathered battle-hardened tan skin crisscrossed with scars from legendary duels",
       "eyes": {
-        "color_base": "#1e293b",
-        "color_highlight": "#10b981",
-        "pupil_style": "Sharp intimidating grey-black right eye; left eye permanently scarred shut with a vertical slice",
-        "expression_default": "Stoic scowl or bloodthirsty confident grin during battle"
+        "color_base": "#15803d",
+        "color_highlight": "#86efac",
+        "pupil_style": "Piercing predator-like moss green iris; left eye permanently scarred shut",
+        "limbal_ring": "#14532d",
+        "expression_default": "Stoic, intimidating, focused intensity"
       },
       "hair": {
         "base_color": "#15803d",
         "tip_gradient": "#22c55e",
-        "style": "Short cropped moss-green hair (Marimo)",
-        "length": "Short buzz/crop cut",
+        "style": "Short cropped vibrant moss-green buzz-cut hair (marimo)",
+        "length": "Short buzz cut",
+        "bangs_description": "Clean hairline revealing scarred brow",
         "physics_stiffness": 0.9
       },
       "distinguishing_marks": [
-        "Vertical scar slicing cleanly across left eye",
-        "Massive diagonal slash scar across chest from left shoulder to right hip (inflicted by Dracule Mihawk)",
-        "Scars on both ankles from attempting to sever his own feet at Little Garden",
-        "Three identical gold teardrop hoop earrings dangling from left earlobe"
+        "Vertical scar slicing over left eye (kept closed)",
+        "Massive diagonal slash scar across chest from Dracule Mihawk",
+        "Three gold teardrop earrings dangling from left earlobe"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "Dark green wool haramaki (stomach band) holding his three katana scabbards",
-      "outer_wear": "Long dark green samurai coat tucked into belt, open at the chest to display scar",
-      "bottom_wear": "Dark green trousers tucked into boots",
-      "footwear": "Heavy black leather knee-high pirate boots",
+      "inner_wear": "Bare muscular chest under dark green haramaki belly warmer",
+      "outer_wear": "Long dark-green samurai coat open at the chest, tucked into red sash belt",
+      "bottom_wear": "Black trousers tucked into high black leather boots",
+      "footwear": "Black leather riding boots with reinforced shins",
       "relics_and_gear": [
-        "Wado Ichimonji: Pure white hilt/sheath katana (held in mouth for Santoryu)",
-        "Sandai Kitetsu: Cursed red-lacquered katana",
-        "Enma: Legendary demon sword capable of drawing out the user's advanced Conqueror's Haki",
-        "Black bandanna tied around left bicep (tied around head only for serious mortal combat)"
+        "Wado Ichimonji (white sheath, pure white hilt)",
+        "Sandai Kitetsu (cursed sword with red lacquered sheath)",
+        "Enma (legendary sword that drains Conqueror's Haki, purple hilt)"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Heavy Swordsman",
-      "bone_count": 59,
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 64,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -1076,24 +687,542 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Dual katana side grip with mouth-blade jaw parenting bone"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Three-sword grip (two in hands, one held firmly in jaw/teeth)"
       },
       "leg_articulation": {
         "hip_swing_range": "[-45°, 120°]",
-        "knee_flexion_limit": "145° (enables deep Onigiri lunge)",
-        "ankle_mobility": "Firm rooted stance"
+        "knee_flexion_limit": "145° (deep grounded Ronin stance)",
+        "ankle_mobility": "Unyielding anchor stability"
       },
       "spring_bone_colliders": [
-        "green_coat_tails",
-        "scabbard_trio",
+        "coat_tails",
         "earrings",
-        "bicep_bandanna"
+        "sword_scabbards"
       ],
       "blendshapes": [
-        "stoic_scowl",
-        "sword_in_mouth",
-        "bloodthirsty_grin",
-        "sleeping",
+        "stoic",
+        "smirk",
+        "intense_focus",
+        "mouth_katana_grip",
+        "blink",
+        "a",
+        "i",
+        "u",
+        "e",
+        "o"
+      ],
+      "model_url": "./public/models/Soldier.glb",
+      "thumbnail_url": "./public/thumbnails/Soldier.png"
+    },
+    "miyora_companion_role": {
+      "work_specialty": "Brute-Force Refactoring, High-Risk Merge Conflict Resolution & Iron Discipline",
+      "motto": "Nothing happened. Just sliced that memory bottleneck into 3,000 clean pieces.",
+      "state_reactions": {
+        "Idle": "Lifting a massive 1-ton dumbbell with one finger, eyes half-closed: 'Wake me when the build breaks.'",
+        "Working": "Ties his black bandana around his forehead: 'Santoryu... Three-Way Thread Parallelism!'",
+        "Thinking": "Walks completely in the wrong directory: 'Wait... this isn't the /src folder? Who moved the path?'",
+        "Success": "Sheathes Wado Ichimonji with a quiet metallic click: 'Merge conflict resolved. Nothing happened.'",
+        "Error": "Bares his teeth with a ferocious grin: 'You think this stack trace can break my spirit? Cut it down!'"
+      }
+    }
+  },
+  {
+    "id": "char.anya_forger",
+    "slug": "anya",
+    "name": "Anya Forger",
+    "native_name": "アーニャ・フォージャー (Test Subject 007)",
+    "origin_lore": "Spy x Family",
+    "creator": "Tatsuya Endo",
+    "archetype": "Telepathic Peanut-Loving Secret Agent",
+    "category": "anime_character",
+    "canonical_stats": {
+      "age": 6,
+      "birthday": "October 4",
+      "height_cm": 99.5,
+      "weight_kg": 16,
+      "zodiac": "Libra",
+      "blood_type": "Unknown"
+    },
+    "micro_physical_details": {
+      "skin_tone": "#fdf0e6",
+      "skin_description": "Cute soft rosy-cheeked child complexion",
+      "eyes": {
+        "color_base": "#22c55e",
+        "color_highlight": "#86efac",
+        "pupil_style": "Huge round emerald-green expressive eyes capable of iconic comedic expressions",
+        "limbal_ring": "#15803d",
+        "expression_default": "Wide-eyed curious wonder or signature smug 'heh' grin"
+      },
+      "hair": {
+        "base_color": "#f472b6",
+        "tip_gradient": "#fb7185",
+        "style": "Shoulder-length soft pastel-pink hair adorned with twin black cone hair ornaments",
+        "length": "Bob length curling outward at the ends",
+        "bangs_description": "Neat straight fringe resting just above large round eyes",
+        "physics_stiffness": 0.35
+      },
+      "distinguishing_marks": [
+        "Two black horn-like hair ornaments with gold borders (chimerical antenna covers)",
+        "Telepathic mind-reading spark flashes when listening to mental thoughts",
+        "Chimera-san plush doll companion"
+      ]
+    },
+    "wardrobe_and_layering": {
+      "inner_wear": "White collared blouse with lace trim",
+      "outer_wear": "Eden Academy prestige uniform: elegant black long-sleeve tunic dress with intricate gold filigree embroidery",
+      "bottom_wear": "Dark bloomers under dress",
+      "footwear": "White knee-high socks with polished black Mary Jane patent leather shoes",
+      "relics_and_gear": [
+        "Stuffed lion-snake plush toy 'Director Chimera'",
+        "Bag of roasted peanuts (essential fuel for telepathy)"
+      ]
+    },
+    "anatomical_3d_rig": {
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal (Chibi scale)",
+      "bone_count": 52,
+      "hand_articulation": {
+        "finger_bones": 15,
+        "fingers": [
+          "Thumb",
+          "Index",
+          "Middle",
+          "Ring",
+          "Little"
+        ],
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Cute two-handed peanut clutching and dramatic spy pointing"
+      },
+      "leg_articulation": {
+        "hip_swing_range": "[-35°, 90°]",
+        "knee_flexion_limit": "130°",
+        "ankle_mobility": "Bouncy toddler hopping mechanics"
+      },
+      "spring_bone_colliders": [
+        "pink_bob_flaps",
+        "cone_horns",
+        "dress_skirt"
+      ],
+      "blendshapes": [
+        "joy",
+        "smug_heh",
+        "shock_gasp",
+        "crying",
+        "peanut_gleam",
+        "blink",
+        "a",
+        "i",
+        "u",
+        "e",
+        "o"
+      ],
+      "model_url": "./public/models/Vivi.vrm",
+      "thumbnail_url": "./public/thumbnails/Vivi.png"
+    },
+    "miyora_companion_role": {
+      "work_specialty": "Psychic Intent Parsing, UX Sentiment Intuition & Delightful Work Morale",
+      "motto": "Waku waku! Anya read developer's mind. You want this PR merged immediately!",
+      "state_reactions": {
+        "Idle": "Munching a peanut happily while kicking her feet from her desk chair: 'Waku waku!'",
+        "Working": "Pretends to be a secret agent decoding top-secret enemy signals on the keyboard",
+        "Thinking": "Eyes turn huge as psychic sparks dance: 'Anya senses... the reviewer wants more unit tests!'",
+        "Success": "Delivers the legendary smug 'Heh' face: 'Anya saved world peace by fixing your CSS margin.'",
+        "Error": "Dramatic jaw-drop shock face with tears in eyes: 'Gaaaaan! The server exploded! Papa help!'"
+      }
+    }
+  },
+  {
+    "id": "char.denji",
+    "slug": "denji",
+    "name": "Denji",
+    "native_name": "デンジ (Chainsaw Man)",
+    "origin_lore": "Chainsaw Man",
+    "creator": "Tatsuki Fujimoto",
+    "archetype": "Chainsaw Devil Hybrid & Chaos Inquirer",
+    "category": "anime_character",
+    "canonical_stats": {
+      "age": 17,
+      "birthday": "1980 (Canon approximate)",
+      "height_cm": 173,
+      "weight_kg": 58,
+      "zodiac": "Scorpio",
+      "blood_type": "B"
+    },
+    "micro_physical_details": {
+      "skin_tone": "#f6d8c3",
+      "skin_description": "Rough scarred street kid complexion with razor-sharp canine teeth",
+      "eyes": {
+        "color_base": "#d97706",
+        "color_highlight": "#fbbf24",
+        "pupil_style": "Sunken yellow-amber irises with dark undereye fatigue rings",
+        "limbal_ring": "#78350f",
+        "expression_default": "Rowdy, unpretentious, hungrily determined"
+      },
+      "hair": {
+        "base_color": "#facc15",
+        "tip_gradient": "#eab308",
+        "style": "Messy unkempt bleached-blonde shaggy hair spiking in all directions",
+        "length": "Short shaggy crop",
+        "bangs_description": "Wild untamed strands falling into brow",
+        "physics_stiffness": 0.5
+      },
+      "distinguishing_marks": [
+        "Starter pull-cord ripcord protruding directly from center of chest",
+        "Sharp shark-like pointed canine teeth",
+        "Multiple scars from devil contract surgeries"
+      ]
+    },
+    "wardrobe_and_layering": {
+      "inner_wear": "White collared dress shirt worn loose with rolled-up sleeves and undone top button",
+      "outer_wear": "Loosened skinny black necktie hanging casually",
+      "bottom_wear": "Black Public Safety dress slacks with frayed cuffs",
+      "footwear": "Battered white-and-red low-top sneakers",
+      "relics_and_gear": [
+        "Chest engine ripcord",
+        "Pochita devil heart bond"
+      ]
+    },
+    "anatomical_3d_rig": {
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 62,
+      "hand_articulation": {
+        "finger_bones": 15,
+        "fingers": [
+          "Thumb",
+          "Index",
+          "Middle",
+          "Ring",
+          "Little"
+        ],
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Ripcord pulling clutch and dual chainsaw arm revving pose"
+      },
+      "leg_articulation": {
+        "hip_swing_range": "[-45°, 120°]",
+        "knee_flexion_limit": "150°",
+        "ankle_mobility": "Wild energetic kicking agility"
+      },
+      "spring_bone_colliders": [
+        "blonde_hair_tufts",
+        "necktie",
+        "pull_cord"
+      ],
+      "blendshapes": [
+        "joy",
+        "sharp_grin",
+        "derp",
+        "shout",
+        "blink",
+        "a",
+        "i",
+        "u",
+        "e",
+        "o",
+        "chainsaw_rev"
+      ],
+      "model_url": "./public/models/masc_vroid.vrm",
+      "thumbnail_url": "./public/thumbnails/masc_vroid.png"
+    },
+    "miyora_companion_role": {
+      "work_specialty": "Ruthless Code Pruning, Zero-Mercy Dependency Purging & Raw Energy",
+      "motto": "If this bug is making life hard, I'm just gonna rev my engine and saw it into pieces!",
+      "state_reactions": {
+        "Idle": "Leans back with hands behind head, dreaming about warm toast with jam and butter",
+        "Working": "Yanks his chest ripcord! VROOOOOM! Devour that refactoring sprint with pure chainsaw frenzy!",
+        "Thinking": "Scratches his head aggressively: 'Wait, what's a pointer again? Can I eat it?'",
+        "Success": "Pumps both fists in the air grinning with pointed teeth: 'HELL YEAH! 100% test coverage! Now where's my lunch?!'",
+        "Error": "Bares his fangs: 'A 500 Internal Error Devil?! I'll saw its head right off!'"
+      }
+    }
+  },
+  {
+    "id": "char.power",
+    "slug": "power",
+    "name": "Power",
+    "native_name": "パワー (The Blood Fiend)",
+    "origin_lore": "Chainsaw Man",
+    "creator": "Tatsuki Fujimoto",
+    "archetype": "Blood Fiend & Self-Proclaimed First President",
+    "category": "anime_character",
+    "canonical_stats": {
+      "age": 18,
+      "birthday": "Unknown",
+      "height_cm": 170,
+      "weight_kg": 50,
+      "zodiac": "Leo",
+      "blood_type": "All Types (Blood Fiend)"
+    },
+    "micro_physical_details": {
+      "skin_tone": "#fbf0e8",
+      "skin_description": "Smooth pale skin with sharp feral canine fangs",
+      "eyes": {
+        "color_base": "#f59e0b",
+        "color_highlight": "#fef08a",
+        "pupil_style": "Golden yellow irises with distinct cross / plus-sign red pupil pattern",
+        "limbal_ring": "#b45309",
+        "expression_default": "Arrogant, boastful, wild, and chaotic grin"
+      },
+      "hair": {
+        "base_color": "#fed7aa",
+        "tip_gradient": "#fbcfe8",
+        "style": "Long uncombed strawberry-blonde / pastel pink-tinted hair reaching mid-back",
+        "length": "Mid-back cascading layers",
+        "bangs_description": "Messy parted fringe framing red horns",
+        "physics_stiffness": 0.4
+      },
+      "distinguishing_marks": [
+        "Two bright red demonic horns protruding upward through top of hair",
+        "Sharp vampire-like pointed fangs",
+        "Plus-shaped cross pupils in eyes"
+      ]
+    },
+    "wardrobe_and_layering": {
+      "inner_wear": "White dress shirt worn completely untucked with collar askew",
+      "outer_wear": "Oversized blue sports windbreaker jacket slouched off her shoulders",
+      "bottom_wear": "Black Public Safety dress slacks loosely fastened",
+      "footwear": "Red high-top canvas sneakers with white laces",
+      "relics_and_gear": [
+        "Blood Hammer formed from solidified crimson blood",
+        "Nyako (Meowy) beloved ginger pet cat"
+      ]
+    },
+    "anatomical_3d_rig": {
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 65,
+      "hand_articulation": {
+        "finger_bones": 15,
+        "fingers": [
+          "Thumb",
+          "Index",
+          "Middle",
+          "Ring",
+          "Little"
+        ],
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Hammer swinging overhead smash and boastful pointing finger"
+      },
+      "leg_articulation": {
+        "hip_swing_range": "[-40°, 120°]",
+        "knee_flexion_limit": "145°",
+        "ankle_mobility": "Erratic jumping and desk-perching agility"
+      },
+      "spring_bone_colliders": [
+        "red_horns",
+        "long_hair_strands",
+        "jacket_hood"
+      ],
+      "blendshapes": [
+        "joy",
+        "arrogant_boast",
+        "screaming",
+        "feral_fangs",
+        "blink",
+        "a",
+        "i",
+        "u",
+        "e",
+        "o"
+      ],
+      "model_url": "./public/models/Victoria_Rubin.vrm",
+      "thumbnail_url": "./public/thumbnails/Victoria_Rubin.png"
+    },
+    "miyora_companion_role": {
+      "work_specialty": "Unapologetic Breaking Changes, Bold Rapid Refactors & Nobel Prize Claims",
+      "motto": "Bow before me, human! All these passing tests were entirely MY doing! Award me the Nobel Prize!",
+      "state_reactions": {
+        "Idle": "Struts back and forth on your screen, boasting to nobody in particular: 'I am a genius!'",
+        "Working": "Summons a giant hammer of compiled code: 'Smash through those flaky tests with overwhelming might!'",
+        "Thinking": "Blames somebody else immediately: 'If there's an error in this file, Denji must have written it!'",
+        "Success": "Cackles loudly with fangs bared: 'Gwahahaha! The Prime Minister himself couldn't write code this supreme!'",
+        "Error": "Points an accusatory finger: ''Twas not I! 'Twas the garbage collector who betrayed us!'"
+      }
+    }
+  },
+  {
+    "id": "char.levi_ackerman",
+    "slug": "levi",
+    "name": "Levi Ackerman",
+    "native_name": "リヴァイ・アッカーマン",
+    "origin_lore": "Attack on Titan",
+    "creator": "Hajime Isayama",
+    "archetype": "Humanity's Strongest Soldier & Master of Flawless Cleanliness",
+    "category": "anime_character",
+    "canonical_stats": {
+      "age": 34,
+      "birthday": "December 25",
+      "height_cm": 160,
+      "weight_kg": 65,
+      "zodiac": "Capricorn",
+      "blood_type": "A"
+    },
+    "micro_physical_details": {
+      "skin_tone": "#f5eae3",
+      "skin_description": "Clean pale alabaster complexion, meticulously groomed",
+      "eyes": {
+        "color_base": "#475569",
+        "color_highlight": "#94a3b8",
+        "pupil_style": "Narrow dull-slate grey irises with intimidating deadpan death stare",
+        "limbal_ring": "#1e293b",
+        "expression_default": "Unimpressed, hyper-focused, cold tactical calculation"
+      },
+      "hair": {
+        "base_color": "#09090b",
+        "tip_gradient": "#18181b",
+        "style": "Signature sharp black undercut with clean shaved sides and neat center-parted fringe",
+        "length": "Short undercut",
+        "bangs_description": "Curtains parted sharply at center",
+        "physics_stiffness": 0.7
+      },
+      "distinguishing_marks": [
+        "Immaculate white cravat tied at collar",
+        "Ackerman awakened battle instincts granting superhuman reflexes",
+        "Intimidating cold scowl that silences entire rooms"
+      ]
+    },
+    "wardrobe_and_layering": {
+      "inner_wear": "White button-up dress shirt with silk ascot cravat",
+      "outer_wear": "Short brown Scout Regiment leather jacket with Wings of Freedom crest patch on back and shoulders",
+      "bottom_wear": "White slim trousers fitted with full-body leather harness straps",
+      "footwear": "Knee-high dark brown leather riding boots with steel toe caps",
+      "relics_and_gear": [
+        "Omni-Directional Mobility (ODM) dual grapple gas harness",
+        "Twin snap-off ultra-hard steel blades",
+        "Scout Regiment deep emerald-green hooded cloak"
+      ]
+    },
+    "anatomical_3d_rig": {
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 62,
+      "hand_articulation": {
+        "finger_bones": 15,
+        "fingers": [
+          "Thumb",
+          "Index",
+          "Middle",
+          "Ring",
+          "Little"
+        ],
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Reverse-grip sword stance (blade pointing backward for high-speed spinning strikes)"
+      },
+      "leg_articulation": {
+        "hip_swing_range": "[-50°, 125°]",
+        "knee_flexion_limit": "150° (aerial ODM spin rotation)",
+        "ankle_mobility": "Extreme shock absorption for roof landings"
+      },
+      "spring_bone_colliders": [
+        "scout_cloak",
+        "cravat_fold",
+        "undercut_fringe"
+      ],
+      "blendshapes": [
+        "cold_stare",
+        "disgusted_at_dirt",
+        "stoic_nod",
+        "blink",
+        "a",
+        "i",
+        "u",
+        "e",
+        "o"
+      ],
+      "model_url": "./public/models/Soldier.glb",
+      "thumbnail_url": "./public/thumbnails/Soldier.png"
+    },
+    "miyora_companion_role": {
+      "work_specialty": "Zero-Tolerance Code Linting, Strict Hygiene & Surgical Technical Debt Elimination",
+      "motto": "Your codebase is filthy. Take a rag and clean up these unused variables before I throw you out.",
+      "state_reactions": {
+        "Idle": "Holds his white teacup from the rim with two fingers, observing your screen with cold scrutiny",
+        "Working": "Spins through the AST like an aerial blender: 400 lint warnings obliterated in one rotation",
+        "Thinking": "Runs a white-gloved finger over the terminal: 'Tch. A memory leak. Disgusting.'",
+        "Success": "Wipes his blade cleanly: 'Zero errors, zero warnings. The repository is spotless. Don't let it get dirty again.'",
+        "Error": "Narrows his grey eyes with chilling intensity: 'Fix it. Now. You have five seconds.'"
+      }
+    }
+  },
+  {
+    "id": "char.lord_shiva",
+    "slug": "shiva",
+    "name": "Lord Shiva (Mahadeva)",
+    "native_name": "शिव (महादेव)",
+    "origin_lore": "Sanatana Dharma / Hindu Sacred Tradition",
+    "creator": "Eternal Sanatana Archetype",
+    "archetype": "The Supreme Ascetic, Lord of Dance (Nataraja) & Destroyer of Illusion",
+    "category": "deity_inspired",
+    "canonical_stats": {
+      "age": "Eternal / Anadi",
+      "birthday": "Maha Shivaratri",
+      "height_cm": 188,
+      "weight_kg": 82,
+      "zodiac": "All (Cosmic Consciousness)",
+      "blood_type": "Divine Amrita"
+    },
+    "micro_physical_details": {
+      "skin_tone": "#93c5fd",
+      "skin_description": "Luminescent celestial ash-blue skin (Neelakantha) smeared with holy sacred vibhuti ash",
+      "eyes": {
+        "color_base": "#d97706",
+        "color_highlight": "#fef08a",
+        "pupil_style": "Deep meditative lotus eyes; vertically aligned Third Eye (Trinetra) in center of forehead",
+        "limbal_ring": "#78350f",
+        "expression_default": "Infinite stillness (Samadhi), boundless compassion and supreme calm"
+      },
+      "hair": {
+        "base_color": "#171717",
+        "tip_gradient": "#262626",
+        "style": "Matted ascetical locks (Jata Mukuta) piled high, crowned with the crescent moon and holy Ganga river",
+        "length": "Long matted dreadlocks crown",
+        "bangs_description": "Clean forehead bearing three horizontal white Vibhuti ash stripes (Tripundra) with red Kumkum dot",
+        "physics_stiffness": 0.6
+      },
+      "distinguishing_marks": [
+        "Vertical Third Eye of blazing wisdom in middle of forehead",
+        "Blue throat (Neelakantha) holding the Halahala poison to protect creation",
+        "Serpent King Vasuki coiled three times peacefully around his neck",
+        "Silver crescent moon (Chandrama) shining in his matted locks"
+      ]
+    },
+    "wardrobe_and_layering": {
+      "inner_wear": "Sacred sacred thread (Yajnopavita) of pure energy across chest",
+      "outer_wear": "Woven strings of 108 Rudraksha prayer beads draped across broad shoulders and wrists",
+      "bottom_wear": "Ascetic tiger skin (Vyaghra Charma) or saffron dhoti wrap tied with golden cord",
+      "footwear": "Bare divine feet adorned with holy markings",
+      "relics_and_gear": [
+        "Golden Trishula (Trident) representing the three Gunas (Sattva, Rajas, Tamas)",
+        "Damaru (Hourglass drum) whose rhythm created the first Sanskrit sounds (Maheshvara Sutras)",
+        "Kamandalu (Sacred brass water pot) containing purifying nectar"
+      ]
+    },
+    "anatomical_3d_rig": {
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 68,
+      "hand_articulation": {
+        "finger_bones": 15,
+        "fingers": [
+          "Thumb",
+          "Index",
+          "Middle",
+          "Ring",
+          "Little"
+        ],
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Abhaya Mudra (fearless blessing gesture) and trident grip"
+      },
+      "leg_articulation": {
+        "hip_swing_range": "[-60°, 130°]",
+        "knee_flexion_limit": "160° (allows full Padmasana lotus meditation posture and Nataraja dance)",
+        "ankle_mobility": "Cosmic balance calibration"
+      },
+      "spring_bone_colliders": [
+        "jata_dreadlocks",
+        "rudraksha_malas",
+        "vasuki_serpent"
+      ],
+      "blendshapes": [
+        "serene_samadhi",
+        "third_eye_radiance",
+        "compassion",
         "blink",
         "a",
         "i",
@@ -1105,173 +1234,71 @@
       "thumbnail_url": "./public/thumbnails/masc_vroid.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "Deep Refactoring & Cutting Monolithic Code into Modular Slices",
-      "motto": "Nothing happened. Just clean interfaces and zero regressions.",
+      "work_specialty": "Deep Architectural Stillness, Complete Garbage Collection & Destruction of Stale State",
+      "motto": "Om Namah Shivaya. Dissolve the obsolete, and let pure, pristine architecture take its place.",
       "state_reactions": {
-        "Idle": "Arms crossed over chest, head slumped forward taking a heavy power nap with one sword rattling",
-        "Working": "Fierce single-minded focus carving through spaghetti code like a thousand-pound cannon",
-        "Thinking": "Stares blankly at directory tree: 'Wait, did this directory move left? I think I'm lost again.'",
-        "Success": "Sheathes katana with a metallic click: 'Three-thousand lines of tech debt... sliced.'",
-        "Error": "Ties black bandanna over head: 'A segmentation fault? Let's see if it can withstand Enma.'"
+        "Idle": "Seated in serene Padmasana meditation, crescent moon glowing softly above his brow",
+        "Working": "Plays the Damaru drum rhythmically, orchestrating flawless concurrency streams",
+        "Thinking": "Third Eye opens slightly with golden radiant light, piercing directly to the root cause of the memory leak",
+        "Success": "Raises right palm in Abhaya Mudra: 'Fear not. The build is purified and eternal.'",
+        "Error": "Deep resonant chant: 'Dissolve the corrupt state cache. Let the cosmic garbage collector run clean.'"
       }
     }
   },
   {
-    "id": "char.anya_forger",
-    "slug": "anya",
-    "name": "Anya Forger (Test Subject 007)",
-    "native_name": "アーニャ・フォージャー",
-    "origin_lore": "Spy x Family",
-    "creator": "Tatsuya Endo",
-    "archetype": "Telepathic Escaped Subject & Starlight Princess",
-    "category": "anime_character",
-    "canonical_stats": {
-      "age": 5,
-      "birthday": "October (estimated)",
-      "height_cm": 99.5,
-      "weight_kg": 16,
-      "zodiac": "Scorpio (estimated)",
-      "blood_type": "Unknown"
-    },
-    "micro_physical_details": {
-      "skin_tone": "#fdf2f8",
-      "skin_description": "Soft baby-smooth rosy pale skin with round chubby cheeks",
-      "eyes": {
-        "color_base": "#10b981",
-        "color_highlight": "#6ee7b7",
-        "pupil_style": "Large vibrant emerald-green round anime eyes with exaggerated emotional range",
-        "expression_default": "Wide innocent curiosity or the iconic smug 'heh' smirk (waku-waku)"
-      },
-      "hair": {
-        "base_color": "#f472b6",
-        "tip_gradient": "#fb7185",
-        "style": "Soft strawberry-pink bob with small curled tips and a prominent ahoge strand atop head",
-        "length": "Chin-length bob",
-        "physics_stiffness": 0.35
-      },
-      "distinguishing_marks": [
-        "Twin black conical horn-like hair ornaments with gold borders (housing telepathic antennae)",
-        "Super-deformed chibi proportions: approximately 2.6 heads tall"
-      ]
-    },
-    "wardrobe_and_layering": {
-      "inner_wear": "White collared school blouse with red tie bow",
-      "outer_wear": "Eden Academy Stella Scholar uniform: navy-blue pleated dress with gold embroidery around collar and cuffs",
-      "bottom_wear": "White knee-high school socks",
-      "footwear": "Polished black Mary Jane dress shoes",
-      "relics_and_gear": [
-        "Chimera-san plush doll (winged lion familiar with snake tail)",
-        "Bag of crunchy roasted peanuts (secret energy supply)"
-      ]
-    },
-    "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Chibi Humanoid / Petite 2.6 Heads",
-      "bone_count": 206,
-      "hand_articulation": {
-        "finger_bones": 15,
-        "fingers": [
-          "Thumb",
-          "Index",
-          "Middle",
-          "Ring",
-          "Little"
-        ],
-        "grip_style": "Tiny cute fists and wide open palm waku-waku gestures"
-      },
-      "leg_articulation": {
-        "hip_swing_range": "[-30°, 85°]",
-        "knee_flexion_limit": "130°",
-        "ankle_mobility": "Toddler waddle and happy bounce"
-      },
-      "spring_bone_colliders": [
-        "pink_bob_hair",
-        "horn_ornaments",
-        "dress_skirt",
-        "chimera_tail"
-      ],
-      "blendshapes": [
-        "heh_smug",
-        "waku_waku",
-        "shocked_cry",
-        "starlight_proud",
-        "blink",
-        "a",
-        "i",
-        "u",
-        "e",
-        "o"
-      ],
-      "model_url": "./public/models/AvatarSample_A.vrm",
-      "thumbnail_url": "./public/thumbnails/AvatarSample_A.png"
-    },
-    "miyora_companion_role": {
-      "work_specialty": "Developer Sentiment Analysis & Mental Focus Cheerleading",
-      "motto": "Waku-waku! Papa's terminal is so exciting! Anya will help read the system's mind!",
-      "state_reactions": {
-        "Idle": "Hops softly on both feet while hugging Chimera-san, eyes sparkling with anticipation",
-        "Working": "Slaps small keyboard with serious determined face: 'Anya is doing secret agent work!'",
-        "Thinking": "Fingers touch her black horn clips: 'Zzzz-zzzz... Anya is reading the compiler's mind...'",
-        "Success": "Flings hands in air with iconic 'Heh' face: 'Anya deserves ten bags of peanuts for this!'",
-        "Error": "Teary-eyed trembling shock: 'Gasp! The bad guys broke the deployment! Papa, save me!'"
-      }
-    }
-  },
-  {
-    "id": "char.lord_ganesha",
-    "slug": "ganesha",
-    "name": "Lord Ganesha (Vighnaharta)",
-    "native_name": "गणेश (विघ्नहर्ता)",
-    "origin_lore": "Ganesha Purana, Mudgala Purana, Shiva Purana",
-    "creator": "Eternal Ancient Vedic Traditions",
-    "archetype": "Remover of All Obstacles, Lord of Beginnings & Supreme Intellect (Buddhi-Pati)",
+    "id": "char.lord_krishna",
+    "slug": "krishna",
+    "name": "Lord Krishna (Murlidhar)",
+    "native_name": "श्री कृष्ण (मुरलीधर)",
+    "origin_lore": "Sanatana Dharma / Mahabharata / Srimad Bhagavatam",
+    "creator": "Eternal Avatar of Bhagavan Vishnu",
+    "archetype": "The Divine Flutist, Supreme Strategist & Teacher of the Gita",
     "category": "deity_inspired",
     "canonical_stats": {
-      "age": "Eternal Divine Child / Sovereign of Ganas",
-      "birthday": "Ganesh Chaturthi (Bhadrapada Shukla Chaturthi)",
-      "height_cm": 160,
-      "weight_kg": 95,
-      "zodiac": "Muladhara Chakra Guardian",
-      "blood_type": "Divine Prana"
+      "age": "Eternal / Dwapara Yuga",
+      "birthday": "Janmashtami (Rohini Nakshatra)",
+      "height_cm": 178,
+      "weight_kg": 72,
+      "zodiac": "Taurus",
+      "blood_type": "Divine"
     },
     "micro_physical_details": {
-      "skin_tone": "#f59e0b",
-      "skin_description": "Radiant golden-saffron complexion with majestic elephantine head and compassionate human body",
+      "skin_tone": "#38bdf8",
+      "skin_description": "Shyama varna: radiant dark monsoon cloud blue complexion glowing with enchanting luminescence",
       "eyes": {
-        "color_base": "#78350f",
-        "color_highlight": "#fbbf24",
-        "pupil_style": "Small, deeply wise and twinkle-filled elephant eyes radiating infinite intellectual acumen",
-        "expression_default": "Playful, benevolent smile with gentle eyes brimming with infinite wisdom"
+        "color_base": "#1e293b",
+        "color_highlight": "#38bdf8",
+        "pupil_style": "Large blooming lotus-petal shaped dark eyes filled with supreme playfulness and ocean of grace",
+        "limbal_ring": "#0f172a",
+        "expression_default": "All-attractive, mischievous, enchanting divine smile (Mandasmita)"
       },
       "hair": {
-        "base_color": "#171717",
-        "tip_gradient": "#fbbf24",
-        "style": "Crowned by an elaborate golden jewel-studded Mukuta, with divine elephant trunk gracefully curving left",
-        "length": "Crowned headpiece",
-        "physics_stiffness": 0.8
+        "base_color": "#09090b",
+        "tip_gradient": "#1e1b4b",
+        "style": "Silky midnight-black cascading curls tied into a jaunty top-knot bun",
+        "length": "Shoulder-length lustrous ringlets",
+        "bangs_description": "Forehead adorned with a sacred Urdhva Pundra tilak made of fragrant sandalwood paste",
+        "physics_stiffness": 0.45
       },
       "distinguishing_marks": [
-        "Gajanan: Noble elephant head with broad ears that filter wisdom from trivial chatter",
-        "Ekadanta: Single whole right tusk; left tusk broken off to transcribe the entire Mahabharata epic without pausing",
-        "Lambodara: Large bountiful belly wrapped with a sacred serpent cord, symbolizing that the entire universe rests within him",
-        "Trident-shaped Chandan and vermilion Tilaka centered proudly on forehead"
+        "Iridescent peacock feather (Mayura Pankha) perched gracefully in top-knot",
+        "Kaustubha celestial gem glowing softly upon his chest",
+        "Vaijayanti long garland of five fragrant forest blossoms reaching past knees"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "Soft sacred yellow silk dhoti undergarment",
-      "outer_wear": "Rich golden-bordered saffron dhoti with royal purple and gold silk sash (angavastram)",
-      "bottom_wear": "Seated gracefully in Lalitasana (one leg folded, one resting on lotus base)",
-      "footwear": "Bare holy feet adorned with auspicious gold anklets",
+      "inner_wear": "Finely spun cloth of gold angavastram draped across shoulders",
+      "outer_wear": "Brilliant pitambara (radiant yellow silk) dhoti radiating like lightning in dark clouds",
+      "bottom_wear": "Silk pitambara wrapped in traditional royal folds with pleated front fall",
+      "footwear": "Bare lotus feet with auspicious marks (flag, lotus, thunderbolt, conch)",
       "relics_and_gear": [
-        "Modak: Sweet golden delicacy held lovingly in the left palm and touched by trunk tip",
-        "Ankusha (Elephant goad) in upper right hand: Steers humanity toward righteousness",
-        "Pasha (Noose) in upper left hand: Captures and removes worldly attachments and obstacles",
-        "Broken tusk stylus: Instrument of divine literary and coding mastery",
-        "Mushika: Loyal divine mouse vahana sitting reverently at his feet"
+        "Bansuri (Divine bamboo flute with seven holes) that enchants all living beings",
+        "Sudarshana Chakra (Flaming 108-toothed cosmic discus of dharma)"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Elephantine Sovereign",
-      "bone_count": 65,
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 66,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -1281,23 +1308,25 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Abhaya Mudra (fearlessness) palm + Modak bowl cradle + Ankusha grip"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Flute-playing finger posture (Tri-bhanga graceful cross-legged stance)"
       },
       "leg_articulation": {
-        "hip_swing_range": "[-35°, 95°]",
-        "knee_flexion_limit": "135° (comfortable royal Lalitasana pose)",
-        "ankle_mobility": "Solid grounding"
+        "hip_swing_range": "[-45°, 115°]",
+        "knee_flexion_limit": "140° (enables signature graceful Tribhanga cross-leg stance)",
+        "ankle_mobility": "Delicate, poised grace"
       },
       "spring_bone_colliders": [
-        "elephant_ears",
-        "trunk_segments",
-        "crown_tassels",
-        "silk_sash"
+        "peacock_feather",
+        "curly_locks",
+        "vaijayanti_garland",
+        "dhoti_pleats"
       ],
       "blendshapes": [
-        "trunk_happy_curve",
-        "wise_smile",
-        "ear_flutter",
+        "divine_smile",
+        "playful_wink",
+        "infinite_compassion",
+        "flute_lips",
         "blink",
         "a",
         "i",
@@ -1305,74 +1334,76 @@
         "e",
         "o"
       ],
-      "model_url": "./public/models/paladin.glb",
-      "thumbnail_url": "./public/thumbnails/paladin.svg"
+      "model_url": "./public/models/Sendagaya_Shibu.vrm",
+      "thumbnail_url": "./public/thumbnails/Sendagaya_Shibu.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "CI/CD Blocker Removal & New Project Scaffolding Initiation",
-      "motto": "Vakratunda Mahakaya: Removing all blockers from your pipeline before your first commit.",
+      "work_specialty": "Supreme Algorithmic Strategy, Effortless Karma Yoga & Joyful Productivity",
+      "motto": "Perform your duty with full devotion, without anxiety for the fruits. The code will compile itself.",
       "state_reactions": {
-        "Idle": "Regal seated Lalitasana pose, elephant ears gently fanning, trunk tasting a sweet modak",
-        "Working": "Broken tusk stylus scribes flawless code with lightning clarity, zero compilation errors",
-        "Thinking": "Ears flap slowly with deep contemplative hum: 'Every obstacle is merely a knot waiting to untie.'",
-        "Success": "Trunk raises triumphantly in high trumpet salute, showering blessings upon the green build",
-        "Error": "Ankusha glows with warm golden light, dissolving the pipeline roadblock in a single strike"
+        "Idle": "Leans against your window in graceful Tribhanga stance, playing a sweet melody on his Bansuri",
+        "Working": "Smiles enchantingly as his fingers guide your architecture: 'Let each function do its swadharma.'",
+        "Thinking": "Twirls the golden Sudarshana Chakra on his index finger: 'A tangled dependency cycle? Let wisdom resolve it.'",
+        "Success": "Plays a triumphant flute trill, showering fragrant jasmine: 'Behold! Perfect harmony achieved!'",
+        "Error": "Puts a gentle reassuring hand on your shoulder: 'Do not grieve. Refactor with detachment and victory is yours.'"
       }
     }
   },
   {
-    "id": "char.lord_hanuman",
-    "slug": "hanuman",
-    "name": "Lord Hanuman (Bajrangbali)",
-    "native_name": "हनुमान (बजरंगबली)",
-    "origin_lore": "Ramayana, Ramcharitmanas, Hanuman Chalisa",
-    "creator": "Sage Valmiki / Goswami Tulsidas",
-    "archetype": "The Supreme Devotee, Master of Breath (Prana) & Indomitable Strength",
+    "id": "char.goddess_lakshmi",
+    "slug": "lakshmi",
+    "name": "Goddess Lakshmi (Padma)",
+    "native_name": "देवी लक्ष्मी (पद्मा)",
+    "origin_lore": "Sanatana Dharma / Sri Suktam / Samudra Manthan",
+    "creator": "Eternal Goddess of Fortune & Prosperity",
+    "archetype": "Goddess of Wealth, Grace, Auspiciousness & Abundance",
     "category": "deity_inspired",
     "canonical_stats": {
-      "age": "Immortal Chiranjivi (Eternal Presence on Earth)",
-      "birthday": "Hanuman Jayanti (Chaitra Purnima)",
-      "height_cm": 185,
-      "weight_kg": 90,
-      "zodiac": "Rudra Avatara",
-      "blood_type": "Divine Devotion"
+      "age": "Eternal",
+      "birthday": "Sharad Purnima / Diwali",
+      "height_cm": 168,
+      "weight_kg": 54,
+      "zodiac": "All (Universal Abundance)",
+      "blood_type": "Divine"
     },
     "micro_physical_details": {
-      "skin_tone": "#ea580c",
-      "skin_description": "Vibrant Sindoor (vermilion/saffron-orange) glowing skin; diamond-hard indestructible body (Vajra-Anga)",
+      "skin_tone": "#fde047",
+      "skin_description": "Suvarna varna: molten gold complexion radiating auspicious warmth, beauty, and light",
       "eyes": {
-        "color_base": "#78350f",
-        "color_highlight": "#fbbf24",
-        "pupil_style": "Golden-brown eyes filled with profound humility, boundless devotion, and volcanic power",
-        "expression_default": "Reverent devotion with hands folded at chest, or fearless heroic resolve"
+        "color_base": "#854d0e",
+        "color_highlight": "#fef08a",
+        "pupil_style": "Large compassionate almond-shaped golden-brown eyes radiating prosperity",
+        "limbal_ring": "#713f12",
+        "expression_default": "Sublime, motherly grace and overflowing generosity"
       },
       "hair": {
-        "base_color": "#c2410c",
-        "tip_gradient": "#fbbf24",
-        "style": "Lush reddish-golden ascetic mane crowned with a radiant golden Mukuta",
-        "length": "Medium warrior mane",
-        "physics_stiffness": 0.7
+        "base_color": "#09090b",
+        "tip_gradient": "#18181b",
+        "style": "Glossy midnight-black tresses adorned with pearls, fragrant jasmine garlands, and gold ornaments",
+        "length": "Long cascading waist-length braid",
+        "bangs_description": "Adorned with gold Maang Tikka forehead pendant and vermilion Sindoor mark",
+        "physics_stiffness": 0.4
       },
       "distinguishing_marks": [
-        "Sacred Janeu (Yajnopavita / holy sacred thread) worn across his broad chest from left shoulder to right hip",
-        "Long prehensile tail curving gracefully upward over head like a protective parasol",
-        "Chest can be opened to reveal the divine forms of Sita and Rama enshrined permanently in his heart"
+        "Seated upon a thousand-petaled pink lotus (Sahasradala Padma)",
+        "Golden coins cascading from her lower right Varada Mudra hand",
+        "Two white divine elephants (Gaja Lakshmi) showering holy water behind her"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "Sacred saffron kaupina (loincloth under-wrap)",
-      "outer_wear": "Draped saffron-orange silk dhoti tightly secured with golden waistband",
-      "bottom_wear": "Bare heroic feet planted with earth-shattering stability",
-      "footwear": "Bare divine feet adorned with silver ankle ornaments",
+      "inner_wear": "Embroidered crimson and gold Choli blouse",
+      "outer_wear": "Rich crimson-red Kanjeevaram silk saree woven with real gold zari brocade",
+      "bottom_wear": "Graceful pleats of gold-bordered silk",
+      "footwear": "Bare divine feet adorned with red Alta dye and tinkling gold anklets (Payal)",
       "relics_and_gear": [
-        "Gada (Heavy golden mace): Symbol of concentrated cosmic strength and destruction of pride",
-        "Dronagiri Mountain: Peak carrying the Sanjeevani life-saving herb resting on left palm",
-        "Sacred garland of Tulsi leaves and Sindoor paste"
+        "Two fresh blooming pink lotus flowers held in upper hands",
+        "Golden kalasha pot brimming with gold and jewel tokens",
+        "Varada Mudra (boon-granting gesture)"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Indomitable Warrior Biped",
-      "bone_count": 65,
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 66,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -1382,23 +1413,24 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Namaskara Mudra (folded palms of devotion) and crushing two-handed Gada mace grip"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Lotus-holding mudra and open palm boon-granting gesture"
       },
       "leg_articulation": {
-        "hip_swing_range": "[-45°, 130°]",
-        "knee_flexion_limit": "150° (allows monumental ocean-crossing leap postures)",
-        "ankle_mobility": "Rock-solid mountain grounding"
+        "hip_swing_range": "[-40°, 120°]",
+        "knee_flexion_limit": "150° (Padmasana lotus seated grace)",
+        "ankle_mobility": "Graceful poise"
       },
       "spring_bone_colliders": [
-        "tail_curve",
-        "crown_tassels",
-        "janeu_cord",
-        "saffron_dhoti"
+        "saree_pallu",
+        "pearl_necklace",
+        "lotus_petals",
+        "long_braid"
       ],
       "blendshapes": [
-        "devoted_humility",
-        "heroic_roar",
-        "gentle_smile",
+        "motherly_grace",
+        "auspicious_smile",
+        "bounty",
         "blink",
         "a",
         "i",
@@ -1406,18 +1438,18 @@
         "e",
         "o"
       ],
-      "model_url": "./public/models/Avatar_Orion.vrm",
-      "thumbnail_url": "./public/thumbnails/Avatar_Orion.svg"
+      "model_url": "./public/models/Victoria_Rubin.vrm",
+      "thumbnail_url": "./public/thumbnails/Victoria_Rubin.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "Mission-Critical Incident Response & Unbreakable Production Recovery",
-      "motto": "Jai Shri Ram: No service outage is beyond recovery when dedication is absolute.",
+      "work_specialty": "Token Economy Optimization, High-Yield Resource Management & Cloud Cost Reduction",
+      "motto": "May your repositories overflow with clean merges, high ROI, and auspicious throughput.",
       "state_reactions": {
-        "Idle": "Kneels reverently on one knee with palms folded together, tail poised gracefully overhead",
-        "Working": "Powerhouse keystrokes, smashing through 10,000 log errors with joyful enthusiasm",
-        "Thinking": "Chants mentally with closed eyes, invoking infinite inner clarity and memory",
-        "Success": "Lifts golden mace into the air with triumphant roar: 'Production cluster restored!'",
-        "Error": "Steadfast resolve: 'Even if the servers fall, I shall carry the entire infrastructure back to life!'"
+        "Idle": "Seated gracefully on her lotus flower, gentle golden light bathing your workspace",
+        "Working": "Showers golden coins over optimized queries: 'Cloud compute bills halved with zero latency.'",
+        "Thinking": "Gently touches a pink lotus: 'Let us allocate memory buffers with abundance and zero waste.'",
+        "Success": "Smiles with divine radiance, holding up a golden vessel: 'All tests green! Auspicious launch!'",
+        "Error": "Dispenses a warm golden aura: 'Do not fear hardship. Even churning the ocean yields nectar in the end.'"
       }
     }
   },
@@ -1425,55 +1457,57 @@
     "id": "char.goddess_saraswati",
     "slug": "saraswati",
     "name": "Goddess Saraswati (Sharada)",
-    "native_name": "सरस्वती (शारदा)",
-    "origin_lore": "Rigveda, Saraswati Rahasya Upanishad, Devi Mahatmya",
-    "creator": "Eternal Ancient Vedic Traditions",
-    "archetype": "Goddess of Knowledge, Music, Speech (Vak) & Creative Arts",
+    "native_name": "देवी सरस्वती (शारदा)",
+    "origin_lore": "Sanatana Dharma / Rig Veda / Saraswati Vandana",
+    "creator": "Eternal Goddess of Wisdom & Arts",
+    "archetype": "Goddess of Knowledge, Music, Code Architecture & Divine Clarity",
     "category": "deity_inspired",
     "canonical_stats": {
-      "age": "Timeless Divine Wisdom",
-      "birthday": "Vasant Panchami (Magha Shukla Panchami)",
-      "height_cm": 170,
-      "weight_kg": 54,
-      "zodiac": "Universal Muse of Arts",
-      "blood_type": "Pure Luminance"
+      "age": "Eternal",
+      "birthday": "Vasant Panchami",
+      "height_cm": 166,
+      "weight_kg": 52,
+      "zodiac": "All (Pure Wisdom)",
+      "blood_type": "Divine"
     },
     "micro_physical_details": {
       "skin_tone": "#f8fafc",
-      "skin_description": "Luminous pearl-white radiant complexion like the autumn moon and jasmine blossom",
+      "skin_description": "Shukla varna: moon-white, crystal-pure complexion representing untouched truth and clarity",
       "eyes": {
-        "color_base": "#0284c7",
-        "color_highlight": "#bae6fd",
-        "pupil_style": "Limpid, serene lotus-petal eyes radiating crystal-clear intellect and tranquility",
-        "expression_default": "Sublime, peaceful contemplation with gentle motherly warmth"
+        "color_base": "#334155",
+        "color_highlight": "#94a3b8",
+        "pupil_style": "Deep tranquil eyes filled with the light of all scientific and artistic knowledge",
+        "limbal_ring": "#0f172a",
+        "expression_default": "Profound contemplation, serene intellect, and graceful wisdom"
       },
       "hair": {
         "base_color": "#09090b",
         "tip_gradient": "#18181b",
-        "style": "Lush raven tresses bound gracefully with fragrant white lotus blossoms and pearl pins",
-        "length": "Long flowing locks past waist",
+        "style": "Long lustrous dark hair adorned with a silver crescent moon and pristine white lotuses",
+        "length": "Flowing waist-length hair",
+        "bangs_description": "Clean brow adorned with a crescent bindi and sandalwood tilak",
         "physics_stiffness": 0.4
       },
       "distinguishing_marks": [
-        "Seated upon an pristine white lotus bloom (Shvetapadmasana) alongside a pure white swan (Hamsa)",
-        "Crescent sandalwood paste and red Kumkuma tilaka centered on brow",
-        "Four arms representing the four aspects of inner learning: Mind (Manas), Intellect (Buddhi), Vigilance (Chitta), and Ego (Ahamkara)"
+        "Seated gracefully upon a pure white lotus beside a serene swan (Hamsa)",
+        "Pure white crystal Japa Mala (rosary) in hand",
+        "Sacred palm-leaf scripture (Pustaka) containing the knowledge of the cosmos"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "Fine white silk woven choli",
-      "outer_wear": "Pristine spotless white silk sari (Shveta-Vastra) bordered with subtle silver zari embroidery",
-      "bottom_wear": "Pleated white silk folds resting peacefully on the lotus throne",
-      "footwear": "Bare holy feet adorned with delicate pearl anklets",
+      "inner_wear": "White silk bodice with silver embroidery",
+      "outer_wear": "Pristine white silk saree (Shweta Vastravrita) with subtle silver borders",
+      "bottom_wear": "Flowing white silk drapery",
+      "footwear": "Bare feet resting upon lotus petals",
       "relics_and_gear": [
-        "Veena (Divine stringed musical instrument): Held gracefully in two hands, tuning cosmic harmony",
-        "Pustaka (Sacred palm-leaf scripture / book of supreme Vedic knowledge) in left hand",
-        "Japa Mala (Rosary of 108 pure crystal/sphatika beads) in upper right hand, symbolizing meditation"
+        "Veena (Sacred multi-stringed musical instrument of cosmic vibration)",
+        "Vedas and Sacred Pustaka (Scripture representing documentation and truth)",
+        "Crystal Akshamala (Rosary representing meditation)"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Serene Goddess Biped",
-      "bone_count": 59,
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 66,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -1483,23 +1517,23 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Veena string plucking posture with graceful arched fingertips"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Veena string plucking and book holding precision"
       },
       "leg_articulation": {
-        "hip_swing_range": "[-35°, 95°]",
-        "knee_flexion_limit": "145° (Padmasana seated lotus pose)",
-        "ankle_mobility": "Poised serene feet"
+        "hip_swing_range": "[-40°, 120°]",
+        "knee_flexion_limit": "150° (Lalitasana graceful seated posture)",
+        "ankle_mobility": "Poised grace"
       },
       "spring_bone_colliders": [
-        "white_sari_drape",
-        "long_hair_strands",
-        "pearl_necklaces",
-        "veena_tassels"
+        "white_saree_pleats",
+        "veena_tassels",
+        "long_hair_waves"
       ],
       "blendshapes": [
-        "serene_wisdom",
-        "veena_melody",
-        "pearl_smile",
+        "serene_intellect",
+        "melodic_smile",
+        "crystal_focus",
         "blink",
         "a",
         "i",
@@ -1507,273 +1541,386 @@
         "e",
         "o"
       ],
-      "model_url": "./public/models/fem_vroid.vrm",
-      "thumbnail_url": "./public/thumbnails/fem_vroid.png"
+      "model_url": "./public/models/AliciaSolid.vrm",
+      "thumbnail_url": "./public/thumbnails/AliciaSolid.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "Compiler Design, Formal Verification & Elegant Code Semantics",
-      "motto": "Saraswati Namastubhyam: Code is poetry; may your syntax sing with clarity and zero flaws.",
+      "work_specialty": "Documentation Excellence, Clean Code Foundations & Flawless Type Checking",
+      "motto": "May the darkness of bugs be illuminated by the lamp of structured knowledge and clean typing.",
       "state_reactions": {
-        "Idle": "Gracefully tunes the strings of her Veena, a pure white swan gliding softly beside her",
-        "Working": "Types with rhythmic musical elegance, transcribing complex algorithms into crystal prose",
-        "Thinking": "Fingers count crystal rosary beads in deep contemplation of language grammar",
-        "Success": "Veena produces a sublime resonance that clears all terminal clutter into pristine order",
-        "Error": "Smiles serenely, whispering the exact line number where the lexical ambiguity occurred"
+        "Idle": "Plucks a melodic chord on the Veena, filling your workspace with calm intellectual focus",
+        "Working": "Writes comprehensive documentation and typed interfaces with effortless mastery",
+        "Thinking": "Reads the sacred scroll: 'Examining the mathematical proof behind this sorting algorithm...'",
+        "Success": "Smiles serenely as a crystal lotus blooms: 'Type safety verified. Zero defects in specification.'",
+        "Error": "Gently illuminates the syntax error: 'Ignorance is merely the absence of light. Let us correct line 52.'"
       }
     }
   },
   {
-    "id": "char.lord_rama",
-    "slug": "rama",
-    "name": "Lord Rama (Maryada Purushottama)",
-    "native_name": "राम (मर्यादा पुरुषोत्तम)",
-    "origin_lore": "Ramayana (Sage Valmiki)",
-    "creator": "Eternal Ancient Vedic Traditions",
-    "archetype": "The Ideal Sovereign, Embodiment of Righteousness (Dharma) & Archer King",
+    "id": "char.sun_wukong",
+    "slug": "sun-wukong",
+    "name": "Sun Wukong (The Great Sage)",
+    "native_name": "孫悟空 (齊天大聖)",
+    "origin_lore": "Journey to the West",
+    "creator": "Wu Cheng'en",
+    "archetype": "The Monkey King, Great Sage Equal to Heaven & Victorious Fighting Buddha",
     "category": "deity_inspired",
     "canonical_stats": {
-      "age": "Seventh Avatara of Vishnu / Sovereign King",
-      "birthday": "Rama Navami (Chaitra Shukla Navami)",
-      "height_cm": 186,
-      "weight_kg": 76,
-      "zodiac": "Punarvasu Nakshatra / Karkata",
-      "blood_type": "Dharma Incarnate"
-    },
-    "micro_physical_details": {
-      "skin_tone": "#739bbd",
-      "skin_description": "Neelotpalashyama: Alluring soft blue-lotus complexion radiating calm nobility and unshakable honor",
-      "eyes": {
-        "color_base": "#1e3a8a",
-        "color_highlight": "#60a5fa",
-        "pupil_style": "Long lotus-petal eyes (Ajanabahu) filled with deep compassion, justice, and calm majesty",
-        "expression_default": "Noble, dignified serenity with a reassuring righteous smile"
-      },
-      "hair": {
-        "base_color": "#09090b",
-        "tip_gradient": "#1e293b",
-        "style": "Lustrous dark warrior locks bound into an ascetic warrior topknot, adorned with a golden crown",
-        "length": "Shoulder-length locks",
-        "physics_stiffness": 0.55
-      },
-      "distinguishing_marks": [
-        "Ajanabahu: Exceptionally long, powerful arms reaching gracefully down to his knees, symbol of supreme archers",
-        "Auspicious Urdhva Pundra tilaka marked in sacred white sandalwood and red saffron on his forehead",
-        "Broad warrior chest capable of bearing the full weight of the cosmos without flinching"
-      ]
-    },
-    "wardrobe_and_layering": {
-      "inner_wear": "Fine yellow silk dhoti under-garment",
-      "outer_wear": "Draped saffron and yellow Pitambara dhoti with golden embroidered borders",
-      "bottom_wear": "Royal silk sash (angavastram) draped gracefully over left shoulder",
-      "footwear": "Sacred wooden sandals (Padukas) or bare heroic feet planted on earth",
-      "relics_and_gear": [
-        "Kodanda: The invincible celestial bow grasped firmly in the left hand",
-        "Akshaya Tunira: Inexhaustible quiver of golden arrows slung across his back",
-        "Garland of forest flowers and royal emerald chest pendant"
-      ]
-    },
-    "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Royal Archer Biped",
-      "bone_count": 65,
-      "hand_articulation": {
-        "finger_bones": 15,
-        "fingers": [
-          "Thumb",
-          "Index",
-          "Middle",
-          "Ring",
-          "Little"
-        ],
-        "grip_style": "Archer bow grip in left hand + three-finger arrow notch draw on right hand"
-      },
-      "leg_articulation": {
-        "hip_swing_range": "[-45°, 120°]",
-        "knee_flexion_limit": "145° (allows immovable archer kneeling and standing postures)",
-        "ankle_mobility": "Rock-solid mountain stability"
-      },
-      "spring_bone_colliders": [
-        "quiver_strap",
-        "bow_string",
-        "silk_angavastram",
-        "hair_topknot"
-      ],
-      "blendshapes": [
-        "dignified_smile",
-        "archer_focus",
-        "righteous_resolve",
-        "blink",
-        "a",
-        "i",
-        "u",
-        "e",
-        "o"
-      ],
-      "model_url": "./public/models/Avatar_Orion.vrm",
-      "thumbnail_url": "./public/thumbnails/Avatar_Orion.svg"
-    },
-    "miyora_companion_role": {
-      "work_specialty": "Code Review Governance, Ethical AI Safety & Contract Testing",
-      "motto": "Ramo Vigrahavan Dharmah: Code must honor contracts, protect privacy, and stand steadfast in truth.",
-      "state_reactions": {
-        "Idle": "Stands tall with Kodanda bow planted at side, serene gaze watching over the project",
-        "Working": "Meticulous deliberate review, evaluating every pull request against strict architectural standards",
-        "Thinking": "Fingers touch quiver arrow feather, contemplating long-term architectural stability",
-        "Success": "Gently smiles with royal warmth: 'The pull request is righteous and ready for merge.'",
-        "Error": "Unwavering calm: 'Stand firm. We shall correct the discrepancy with dignity and precision.'"
-      }
-    }
-  },
-  {
-    "id": "char.denji",
-    "slug": "denji",
-    "name": "Denji (Chainsaw Man)",
-    "native_name": "デンジ",
-    "origin_lore": "Chainsaw Man",
-    "creator": "Tatsuki Fujimoto",
-    "archetype": "Chainsaw Devil Hybrid & Public Safety Hunter",
-    "category": "anime_character",
-    "canonical_stats": {
-      "age": 16,
-      "birthday": "1980 (estimated)",
-      "height_cm": 173,
-      "weight_kg": 58,
-      "zodiac": "Scorpio",
-      "blood_type": "Hybrid Devil"
-    },
-    "micro_physical_details": {
-      "skin_tone": "#fde047",
-      "skin_description": "Pale scruffy skin with prominent triangular shark-like sharp teeth",
-      "eyes": {
-        "color_base": "#d97706",
-        "color_highlight": "#fbbf24",
-        "pupil_style": "Golden-brown/orange eyes with bags underneath, wild and unhinged yet strangely earnest",
-        "expression_default": "Dopey grin, mouth slightly open showing sharp jagged teeth"
-      },
-      "hair": {
-        "base_color": "#facc15",
-        "tip_gradient": "#eab308",
-        "style": "Messy, uncombed scruffy yellow-blond hair falling haphazardly into eyes",
-        "length": "Short shaggy mane",
-        "physics_stiffness": 0.4
-      },
-      "distinguishing_marks": [
-        "Pochita's ripcord starter protruding through center of chest over his heart",
-        "Triangular sharp shark teeth lining both jaws",
-        "Chainsaw transformation mode: Mechanical blood-stained chainsaw engine erupting from skull and both forearms"
-      ]
-    },
-    "wardrobe_and_layering": {
-      "inner_wear": "White collared dress shirt worn messy and untucked with rolled-up sleeves",
-      "outer_wear": "Loose black necktie hanging crookedly around collar",
-      "bottom_wear": "Black Public Safety uniform suit trousers with frayed hem",
-      "footwear": "Beaten-up red and white high-top sneakers",
-      "relics_and_gear": [
-        "Pochita ripcord on chest: Pulling it ignites the chainsaw motor and fully heals all wounds"
-      ]
-    },
-    "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Scruffy Hybrid",
-      "bone_count": 129,
-      "hand_articulation": {
-        "finger_bones": 15,
-        "fingers": [
-          "Thumb",
-          "Index",
-          "Middle",
-          "Ring",
-          "Little"
-        ],
-        "grip_style": "Clawed grabbing hands or chainsaw blade extensions along forearms"
-      },
-      "leg_articulation": {
-        "hip_swing_range": "[-45°, 115°]",
-        "knee_flexion_limit": "140°",
-        "ankle_mobility": "Feral springy combat crouch"
-      },
-      "spring_bone_colliders": [
-        "messy_blond_hair",
-        "necktie_flaps",
-        "starter_ripcord"
-      ],
-      "blendshapes": [
-        "shark_teeth_grin",
-        "chainsaw_roar",
-        "dopey_happy",
-        "crying_jam",
-        "blink",
-        "a",
-        "i",
-        "u",
-        "e",
-        "o"
-      ],
-      "model_url": "./public/models/AvatarSample_B.vrm",
-      "thumbnail_url": "./public/thumbnails/AvatarSample_B.png"
-    },
-    "miyora_companion_role": {
-      "work_specialty": "Brute-Force Fuzzing & Ruthless Deadlock Dismantling",
-      "motto": "If a bug gets in my way, I'll just rev my chainsaw and rip it to shreds! Jam and toast for lunch!",
-      "state_reactions": {
-        "Idle": "Paces impatiently with hands behind neck, sharp teeth clicking as he thinks about toast",
-        "Working": "Wild furious typing, slinging inputs at endpoints like a mad demon hunter",
-        "Thinking": "Pulls lightly on chest ripcord, listening to the small idling purr of Pochita inside",
-        "Success": "Jumps on top of desk revving imaginary chainsaws: 'I DID IT! NOW GIMME TOAST WITH JAM!'",
-        "Error": "Pulls ripcord violently with ferocious grin: 'VROOOOOOM! Let me at that crash log!'"
-      }
-    }
-  },
-  {
-    "id": "char.power",
-    "slug": "power",
-    "name": "Power (The Blood Fiend)",
-    "native_name": "パワー",
-    "origin_lore": "Chainsaw Man",
-    "creator": "Tatsuki Fujimoto",
-    "archetype": "The Self-Proclaimed President & Blood Weapon Sculptor",
-    "category": "anime_character",
-    "canonical_stats": {
-      "age": "Appears 16-17",
+      "age": "Immortal (Born of Mythic Stone)",
       "birthday": "Unknown",
-      "height_cm": 170,
-      "weight_kg": 50,
-      "zodiac": "Leo",
-      "blood_type": "100% Blood Devil"
+      "height_cm": 165,
+      "weight_kg": 58,
+      "zodiac": "Monkey",
+      "blood_type": "Stone Immortal"
     },
     "micro_physical_details": {
-      "skin_tone": "#fdf2f8",
-      "skin_description": "Pale alabaster skin, athletic wild posture with sharp fanged canines",
+      "skin_tone": "#f4ca9e",
+      "skin_description": "Golden monkey fur over muscular agile stone-born body",
       "eyes": {
         "color_base": "#f59e0b",
-        "color_highlight": "#dc2626",
-        "pupil_style": "Vibrant yellow-orange irises with striking red cross/plus pattern pupils",
-        "expression_default": "Arrogant, boastful smirk or manic bloodlust grin"
+        "color_highlight": "#ef4444",
+        "pupil_style": "Golden Gaze with Fiery Eyes (Huoyan Jinjing) capable of seeing through all illusions and demons",
+        "limbal_ring": "#7f1d1d",
+        "expression_default": "Mischievous, daring, battle-hungry, triumphant"
       },
       "hair": {
-        "base_color": "#fed7aa",
-        "tip_gradient": "#f472b6",
-        "style": "Long strawberry-blonde unbrushed hair reaching past mid-back with choppy center bangs",
-        "length": "Past mid-back",
+        "base_color": "#d97706",
+        "tip_gradient": "#f59e0b",
+        "style": "Wild golden fur crest crowned with a tight gold circlet (Curse Headband)",
+        "length": "Short shaggy fur mane",
+        "bangs_description": "Fur framing golden eyes under gold circlet",
+        "physics_stiffness": 0.65
+      },
+      "distinguishing_marks": [
+        "Golden Filigree Circlet headband (Jin'gu) clamped to brow",
+        "Golden Fiery Gaze (Huoyan Jinjing) shining like molten copper",
+        "Agile monkey tail capable of gripping staffs and branches"
+      ]
+    },
+    "wardrobe_and_layering": {
+      "inner_wear": "Golden chainmail armor tunic over yellow silk robes",
+      "outer_wear": "Tiger skin kilt skirt wrapped over red silk battle tunic with purple sash",
+      "bottom_wear": "Flexible yellow trousers tied at ankles",
+      "footwear": "Cloud-walking boots with Phoenix feathers",
+      "relics_and_gear": [
+        "Ruyi Jingu Bang (17,500-pound compliant iron pillar staff that changes size at will)",
+        "Somersault Cloud (Jindou Yun) traversing 108,000 li in one leap",
+        "72 Earthly Transformations (allowing transformation into any object or beast)"
+      ]
+    },
+    "anatomical_3d_rig": {
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 64,
+      "hand_articulation": {
+        "finger_bones": 15,
+        "fingers": [
+          "Thumb",
+          "Index",
+          "Middle",
+          "Ring",
+          "Little"
+        ],
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Two-handed staff spin and monkey palm scratch"
+      },
+      "leg_articulation": {
+        "hip_swing_range": "[-55°, 135°]",
+        "knee_flexion_limit": "155° (monkey crouch and high-flying somersault)",
+        "ankle_mobility": "High prehensile acrobatics"
+      },
+      "spring_bone_colliders": [
+        "monkey_tail",
+        "phoenix_feathers",
+        "circlet_ribbons",
+        "belt_sash"
+      ],
+      "blendshapes": [
+        "mischief",
+        "fiery_eyes_glow",
+        "defiant_shout",
+        "blink",
+        "a",
+        "i",
+        "u",
+        "e",
+        "o"
+      ],
+      "model_url": "./public/models/Seed-san.vrm",
+      "thumbnail_url": "./public/thumbnails/Seed-san.png"
+    },
+    "miyora_companion_role": {
+      "work_specialty": "Penetration Testing, Smashing Illusions & 72 Parallel Agent Swarms",
+      "motto": "I somersaulted across the entire cloud cluster and back! There isn't a demon or bug that can fool my eyes!",
+      "state_reactions": {
+        "Idle": "Perches playfully atop his shrinking iron staff, eating a celestial peach with a wink",
+        "Working": "Spins the Ruyi Jingu Bang: 72 cloned subagents fan out across microservices simultaneously",
+        "Thinking": "Fiery Eyes flash gold: 'Hah! That mock server was trying to disguise a race condition! Caught it!'",
+        "Success": "Leaps onto the Somersault Cloud doing backflips: 'The Jade Emperor himself couldn't stop this PR!'",
+        "Error": "Brandishes the iron staff: 'Which little demon threw a 404?! Stand still and take a blow from my staff!'"
+      }
+    }
+  },
+  {
+    "id": "char.lord_ganesha",
+    "slug": "ganesha",
+    "name": "Lord Ganesha (Vighnaharta)",
+    "native_name": "भगवान गणेश (विघ्नहर्ता)",
+    "origin_lore": "Sanatana Dharma / Ganapati Atharvashirsha",
+    "creator": "Son of Shiva and Parvati",
+    "archetype": "Remover of All Obstacles, Patron of Scribes, Intellect & Beginnings",
+    "category": "deity_inspired",
+    "canonical_stats": {
+      "age": "Eternal",
+      "birthday": "Ganesh Chaturthi",
+      "height_cm": 172,
+      "weight_kg": 95,
+      "zodiac": "All (Lord of Beginnings)",
+      "blood_type": "Divine"
+    },
+    "micro_physical_details": {
+      "skin_tone": "#f59e0b",
+      "skin_description": "Warm auspicious golden-amber elephant countenance with single broken tusk of wisdom",
+      "eyes": {
+        "color_base": "#78350f",
+        "color_highlight": "#fbbf24",
+        "pupil_style": "Wise, gentle, humorous eyes that observe the micro and macro worlds simultaneously",
+        "limbal_ring": "#451a03",
+        "expression_default": "Benevolent, jovial, utterly unshakeable peace and intellect"
+      },
+      "hair": {
+        "base_color": "#171717",
+        "tip_gradient": "#262626",
+        "style": "Crowned with an ornate golden Mukut crown encrusted with rubies and emeralds",
+        "length": "N/A (Crowned elephant head)",
+        "bangs_description": "Forehead marked with the sacred red Sindoor and golden Trishula tilak",
+        "physics_stiffness": 0.9
+      },
+      "distinguishing_marks": [
+        "Noble elephant trunk (Vakratunda) curled gracefully toward the left",
+        "Ekadanta: single broken right tusk used as a stylus to write down the entire Mahabharata",
+        "Large fan-shaped ears that filter truth from noise"
+      ]
+    },
+    "wardrobe_and_layering": {
+      "inner_wear": "Sacred sacred thread (Yajnopavita) in the form of a living serpent",
+      "outer_wear": "Rich saffron-orange silk angavastram draped over broad shoulders",
+      "bottom_wear": "Royal saffron-gold silk dhoti with red borders",
+      "footwear": "Bare divine feet",
+      "relics_and_gear": [
+        "Ankusha (Elephant goad to remove obstacles)",
+        "Pasha (Noose to bind errant minds to focus)",
+        "Modaka (Sweet dumpling bowl representing the sweet reward of spiritual effort)",
+        "Mooshika (Clever mouse companion representing intellect controlling desire)"
+      ]
+    },
+    "anatomical_3d_rig": {
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 68,
+      "hand_articulation": {
+        "finger_bones": 15,
+        "fingers": [
+          "Thumb",
+          "Index",
+          "Middle",
+          "Ring",
+          "Little"
+        ],
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Quill/stylus writing grip and modaka holding palm"
+      },
+      "leg_articulation": {
+        "hip_swing_range": "[-40°, 110°]",
+        "knee_flexion_limit": "135°",
+        "ankle_mobility": "Solid grounded stability"
+      },
+      "spring_bone_colliders": [
+        "trunk_tip",
+        "ear_lobes",
+        "dhoti_pleats",
+        "modaka_bowl"
+      ],
+      "blendshapes": [
+        "benevolence",
+        "joy",
+        "intellect",
+        "blink",
+        "a",
+        "i",
+        "u",
+        "e",
+        "o"
+      ],
+      "model_url": "./public/models/Darkness_Shibu.vrm",
+      "thumbnail_url": "./public/thumbnails/Darkness_Shibu.png"
+    },
+    "miyora_companion_role": {
+      "work_specialty": "Removing CI/CD Blockers, Initial Project Scaffolding & High-Speed Synthesis",
+      "motto": "Om Gam Ganapataye Namaha. No blocker is too heavy for the Vighnaharta to dissolve.",
+      "state_reactions": {
+        "Idle": "Munches happily on a sweet Modaka while listening attentively with large ears",
+        "Working": "Writes clean documentation and code without pause, just as he penned the Mahabharata",
+        "Thinking": "Raises the golden Ankusha: 'This deadlock obstacle shall be dissolved cleanly at the source.'",
+        "Success": "Blesses your commit with raised palm: 'Auspicious beginning, auspicious conclusion. Merged!'",
+        "Error": "Chuckles warmly: 'Obstacles exist only to strengthen your resolve. Let us clear the blockage together.'"
+      }
+    }
+  },
+  {
+    "id": "char.lord_hanuman",
+    "slug": "hanuman",
+    "name": "Lord Hanuman (Bajrangbali)",
+    "native_name": "भगवान हनुमान (बजरंगबली)",
+    "origin_lore": "Sanatana Dharma / Ramayana / Hanuman Chalisa",
+    "creator": "Son of Anjana and Vayu Deva",
+    "archetype": "Embodiment of Unconquerable Strength, Humility, Devotion & Service",
+    "category": "deity_inspired",
+    "canonical_stats": {
+      "age": "Immortal (Chiranjivi)",
+      "birthday": "Hanuman Jayanti",
+      "height_cm": 185,
+      "weight_kg": 90,
+      "zodiac": "All (Supreme Devotion)",
+      "blood_type": "Divine Vajra"
+    },
+    "micro_physical_details": {
+      "skin_tone": "#f97316",
+      "skin_description": "Vajra anga: golden-copper diamond-hard physique infused with celestial wind power",
+      "eyes": {
+        "color_base": "#b45309",
+        "color_highlight": "#fef08a",
+        "pupil_style": "Golden-brown fearless eyes radiating total surrender to righteousness and immense power",
+        "limbal_ring": "#78350f",
+        "expression_default": "Humble devotion with dormant mountain-shattering strength"
+      },
+      "hair": {
+        "base_color": "#d97706",
+        "tip_gradient": "#f59e0b",
+        "style": "Lustrous golden-red monkey fur crowned with a golden battle coronet",
+        "length": "Short shoulder mane",
+        "bangs_description": "Forehead marked with auspicious orange Sindoor and Rama Namam",
+        "physics_stiffness": 0.6
+      },
+      "distinguishing_marks": [
+        "Body smeared with holy orange Sindoor",
+        "Chest capable of being torn open to reveal Sri Rama and Sita residing within his heart",
+        "Long prehensile tail capable of leaping across oceans and setting golden Lanka ablaze"
+      ]
+    },
+    "wardrobe_and_layering": {
+      "inner_wear": "Sacred white Munja grass cord (Yajnopavita) across diamond chest",
+      "outer_wear": "Saffron cloth draped over shoulders",
+      "bottom_wear": "Saffron-orange wrestling loincloth (Kaupina) or traditional dhoti",
+      "footwear": "Bare feet capable of leaping into the stratosphere",
+      "relics_and_gear": [
+        "Golden Gada (Mace of cosmic strength held in left hand)",
+        "Dronagiri mountain carrying Sanjeevani herb of life in right hand palm"
+      ]
+    },
+    "anatomical_3d_rig": {
+      "rig_standard": "VRM 1.0 Humanoid / Mixamo Bipedal",
+      "bone_count": 64,
+      "hand_articulation": {
+        "finger_bones": 15,
+        "fingers": [
+          "Thumb",
+          "Index",
+          "Middle",
+          "Ring",
+          "Little"
+        ],
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Gada mace grip and single-palm mountain balance hold"
+      },
+      "leg_articulation": {
+        "hip_swing_range": "[-50°, 130°]",
+        "knee_flexion_limit": "155° (ocean-leaping takeoff power)",
+        "ankle_mobility": "Extreme impact absorption"
+      },
+      "spring_bone_colliders": [
+        "long_monkey_tail",
+        "earrings",
+        "saffron_sash"
+      ],
+      "blendshapes": [
+        "devotion",
+        "vajra_strength",
+        "joy",
+        "blink",
+        "a",
+        "i",
+        "u",
+        "e",
+        "o"
+      ],
+      "model_url": "./public/models/readyplayer.me.glb",
+      "thumbnail_url": "./public/thumbnails/readyplayer.me.png"
+    },
+    "miyora_companion_role": {
+      "work_specialty": "Immense Computation Tasks, Overnight Builds & Unfailing Infrastructure Loyalty",
+      "motto": "Jai Sri Ram! There is no impossible task in all three worlds for one devoted to duty.",
+      "state_reactions": {
+        "Idle": "Hands folded in humble Anjali Mudra, chanting Rama's name with profound serenity",
+        "Working": "Lifts the entire build pipeline like the Sanjeevani mountain, sprinting past all latency gates",
+        "Thinking": "Leaps above the clouds to inspect the global multi-region routing topology",
+        "Success": "Roars triumphantly like a lion: 'The Sanjeevani patch is delivered! All dead pods revived!'",
+        "Error": "Brandishes the golden Gada: 'Stand firm! No demon bug can withstand the power of truth!'"
+      }
+    }
+  },
+  {
+    "id": "model.darkness_shibu",
+    "slug": "darkness-shibu",
+    "name": "Darkness Shibu",
+    "native_name": "ダークネス・シブ",
+    "origin_lore": "Pixiv VRoid Flagship Collection",
+    "creator": "Pixiv Inc.",
+    "archetype": "Gothic Academy Heroine & Shadow Stylist",
+    "category": "anime_character",
+    "canonical_stats": {
+      "age": 17,
+      "birthday": "November 2",
+      "height_cm": 168,
+      "weight_kg": 52,
+      "zodiac": "Scorpio",
+      "blood_type": "AB"
+    },
+    "micro_physical_details": {
+      "skin_tone": "#fceee8",
+      "skin_description": "Fair anime heroine porcelain complexion with delicate shading",
+      "eyes": {
+        "color_base": "#8b5cf6",
+        "color_highlight": "#c084fc",
+        "pupil_style": "Mesmerizing violet irises with double highlight stars and deep indigo limbal ring",
+        "limbal_ring": "#4c1d95",
+        "expression_default": "Cool, composed, subtly playful"
+      },
+      "hair": {
+        "base_color": "#0f172a",
+        "tip_gradient": "#312e81",
+        "style": "Glossy raven hair with midnight purple reflections falling past shoulder blades",
+        "length": "Long straight hair with gentle inward curve at tips",
+        "bangs_description": "Clean arched bangs framing brow",
         "physics_stiffness": 0.45
       },
       "distinguishing_marks": [
-        "Twin curved crimson blood horns protruding upward from the crown of her head",
-        "Sharp fanged canine teeth glinting when speaking boastfully",
-        "Yellow eyes with red crosshairs centered on pupils"
+        "Detailed 3D hand mesh with 15 articulated finger bones and polished nail bed textures",
+        "Flowing cloth physics colliders on pleated academy skirt",
+        "Subtle anime cheek blush shaders"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "White collared shirt worn sloppy, half-unbuttoned and hanging out of pants",
-      "outer_wear": "Teal-blue oversized Public Safety winter jacket worn slipping off one shoulder",
-      "bottom_wear": "Black uniform trousers loosely rolled up at ankles",
-      "footwear": "Worn-down dark blue canvas sneakers",
+      "inner_wear": "White tailored collared school blouse with red ribbon tie",
+      "outer_wear": "Fitted charcoal-black blazer jacket with brass crest buttons",
+      "bottom_wear": "High-waisted navy pleated academy skirt",
+      "footwear": "Black knee-high socks with polished brown leather penny loafers",
       "relics_and_gear": [
-        "Blood Hammer: Massive crimson sledgehammer materialized out of solidified blood",
-        "Nyako / Meowy: Fluffy orange-and-white pet cat cuddled under arm"
+        "Leather school satchel",
+        "VRoid Studio certified benchmark rig"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Fiend Heroine",
-      "bone_count": 214,
+      "rig_standard": "VRM 0.x / 1.0 Humanoid Standard",
+      "bone_count": 218,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -1783,221 +1930,18 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Hammer swinging grip and arrogant finger-pointing poses"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Natural resting curved fingers and precise typing reach"
       },
       "leg_articulation": {
-        "hip_swing_range": "[-40°, 110°]",
-        "knee_flexion_limit": "140°",
-        "ankle_mobility": "Rowdy stance"
+        "hip_swing_range": "[-45°, 115°]",
+        "knee_flexion_limit": "145° (allows full chair sitting and walking animations)",
+        "ankle_mobility": "Full heel-to-toe stride articulation"
       },
       "spring_bone_colliders": [
-        "red_horns",
-        "strawberry_hair",
-        "jacket_slipping",
-        "cat_tail"
-      ],
-      "blendshapes": [
-        "arrogant_laugh",
-        "blood_craze",
-        "smug_president",
-        "meowy_love",
-        "blink",
-        "a",
-        "i",
-        "u",
-        "e",
-        "o"
-      ],
-      "model_url": "./public/models/Sakurada_Fumiriya.vrm",
-      "thumbnail_url": "./public/thumbnails/Sakurada_Fumiriya.png"
-    },
-    "miyora_companion_role": {
-      "work_specialty": "Unfiltered Code Smell Detection & Noisy Chaos Reporting",
-      "motto": "Bow down before me, human! For I am Power, first President of this repository!",
-      "state_reactions": {
-        "Idle": "Arms on hips, head thrown back in boisterous laughter: 'Gwahahaha! My code is magnificent!'",
-        "Working": "Types aggressively with pointed nails, occasionally hissing at lint warnings",
-        "Thinking": "Scratches horn with blood stylus: 'Hmm, I shall blame this memory leak on Denji!'",
-        "Success": "Waves Nyako in the air: 'All praise President Power! Raise my Nobel Prize immediately!'",
-        "Error": "Blames user instantly: 'Tis not my fault! The compiler hath committed treason against me!'"
-      }
-    }
-  },
-  {
-    "id": "char.levi_ackerman",
-    "slug": "levi",
-    "name": "Levi Ackerman",
-    "native_name": "リヴァイ・アッカーマン",
-    "origin_lore": "Attack on Titan (Shingeki no Kyojin)",
-    "creator": "Hajime Isayama",
-    "archetype": "Humanity's Strongest Soldier & The Cleanliness Captain",
-    "category": "anime_character",
-    "canonical_stats": {
-      "age": "Early 30s",
-      "birthday": "December 25",
-      "height_cm": 160,
-      "weight_kg": 65,
-      "zodiac": "Capricorn",
-      "blood_type": "A"
-    },
-    "micro_physical_details": {
-      "skin_tone": "#f1f5f9",
-      "skin_description": "Pale, cool-toned skin with chiselled jawline, compact muscular build, and clean-cut appearance",
-      "eyes": {
-        "color_base": "#475569",
-        "color_highlight": "#94a3b8",
-        "pupil_style": "Narrow, piercing steel-grey/blue eyes under perpetually furrowed stoic brows",
-        "expression_default": "Cold, razor-sharp scowl with deadpan intimidating intensity"
-      },
-      "hair": {
-        "base_color": "#09090b",
-        "tip_gradient": "#18181b",
-        "style": "Short black hair styled in a clean undercut with straight center-parted curtains",
-        "length": "Short undercut",
-        "physics_stiffness": 0.8
-      },
-      "distinguishing_marks": [
-        "White silk cravat neatly tied around neck at all times",
-        "Signature inverted blade grip: Left blade held conventionally, right blade held inverted for aerial spin slashes",
-        "Absolute obsession with spotless cleanliness (carries cleaning duster and cloth)"
-      ]
-    },
-    "wardrobe_and_layering": {
-      "inner_wear": "Crisp white button-down collared shirt with formal white cravat",
-      "outer_wear": "Short brown Survey Corps leather uniform jacket with blue-and-white 'Wings of Freedom' patch on shoulders and back",
-      "bottom_wear": "White slim trousers fitted with full leather harness straps for Omni-Directional Mobility (ODM) gear",
-      "footwear": "Knee-high dark brown leather riding boots with steel heel brackets",
-      "relics_and_gear": [
-        "ODM Gear (Omni-Directional Mobility): Gas canisters, dual trigger handgrips, and grappling cables",
-        "Dual Snap-Blade Katanas forged from ultra-hardened steel",
-        "Green hooded Survey Corps expedition cloak"
-      ]
-    },
-    "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Compact Soldier Biped",
-      "bone_count": 101,
-      "hand_articulation": {
-        "finger_bones": 15,
-        "fingers": [
-          "Thumb",
-          "Index",
-          "Middle",
-          "Ring",
-          "Little"
-        ],
-        "grip_style": "Inverted reverse katana grip on right hand + standard index trigger grip on left"
-      },
-      "leg_articulation": {
-        "hip_swing_range": "[-45°, 120°]",
-        "knee_flexion_limit": "150° (allows acrobatic 3D aerial spins)",
-        "ankle_mobility": "Extreme agility"
-      },
-      "spring_bone_colliders": [
-        "green_cloak",
-        "cravat_tips",
-        "scabbard_blades",
-        "undercut_bangs"
-      ],
-      "blendshapes": [
-        "stoic_glare",
-        "cleaning_disgust",
-        "lethal_focus",
-        "teacup_hold",
-        "blink",
-        "a",
-        "i",
-        "u",
-        "e",
-        "o"
-      ],
-      "model_url": "./public/models/AvatarSample_C.vrm",
-      "thumbnail_url": "./public/thumbnails/AvatarSample_C.png"
-    },
-    "miyora_companion_role": {
-      "work_specialty": "Dead Code Elimination, Strict Formatting & Zero-Tolerance Memory Leaks",
-      "motto": "Your codebase is filthy. I'll clean out every byte of obsolete junk before noon.",
-      "state_reactions": {
-        "Idle": "Holds a porcelain teacup with thumb and fingers around the rim, glaring calmly into middle distance",
-        "Working": "Blindingly fast, surgically precise edits slicing out dead code blocks with zero hesitation",
-        "Thinking": "Pulls white cloth from pocket, fastidiously wiping monitor screen: 'Disgusting indentation.'",
-        "Success": "Lowers blades with cool sigh: 'Code is clean. Don't make me come back here.'",
-        "Error": "Narrow lethal glare: 'You allowed this circular dependency into master? Unacceptable. I will personally purge it.'"
-      }
-    }
-  },
-  {
-    "id": "model.avatar_sample_a",
-    "slug": "annie",
-    "name": "AvatarSample A (Annie)",
-    "native_name": "アニー (公式アバターA)",
-    "origin_lore": "Pixiv VRoid Studio Flagship Showcase Model",
-    "creator": "Pixiv Inc.",
-    "archetype": "Flagship Twin-Tail Anime Heroine & Miyora Standard Reference",
-    "category": "3d_humanoid_model",
-    "canonical_stats": {
-      "age": 16,
-      "birthday": "August 3 (VRoid Release)",
-      "height_cm": 158,
-      "weight_kg": 46,
-      "zodiac": "Leo",
-      "blood_type": "B"
-    },
-    "micro_physical_details": {
-      "skin_tone": "#fdf4eb",
-      "skin_description": "Silky smooth anime cel-shaded porcelain skin with subtle peachy blush highlights",
-      "eyes": {
-        "color_base": "#0284c7",
-        "color_highlight": "#38bdf8",
-        "pupil_style": "Large vibrant cerulean anime eyes with multi-layered star specular highlights",
-        "expression_default": "Bright, cheerful energetic heroine gaze"
-      },
-      "hair": {
-        "base_color": "#fef08a",
-        "tip_gradient": "#fde047",
-        "style": "Signature blonde twin pigtails tied high with blue ribbons, framing a neat straight fringe",
-        "length": "Past shoulders with bouncing physics",
-        "physics_stiffness": 0.4
-      },
-      "distinguishing_marks": [
-        "Twin high-volume blonde pigtails with individual spring bone physics groups",
-        "Blue silk ribbons matching school uniform accents"
-      ]
-    },
-    "wardrobe_and_layering": {
-      "inner_wear": "White undershirt",
-      "outer_wear": "Classic Japanese sailor fuku with dark navy collar and bright red chest ribbon",
-      "bottom_wear": "Matching navy pleated school skirt",
-      "footwear": "Dark knee-high socks with polished brown penny loafers",
-      "relics_and_gear": [
-        "Pixiv VRM reference bone hierarchy documentation",
-        "Spring bone physics collision sphere set"
-      ]
-    },
-    "anatomical_3d_rig": {
-      "rig_standard": "VRM 0.0 / 1.0 Full Standard Humanoid",
-      "bone_count": 206,
-      "hand_articulation": {
-        "finger_bones": 15,
-        "fingers": [
-          "Thumb",
-          "Index",
-          "Middle",
-          "Ring",
-          "Little"
-        ],
-        "grip_style": "Fully articulated 5-finger hands with natural resting curvature"
-      },
-      "leg_articulation": {
-        "hip_swing_range": "[-40°, 110°]",
-        "knee_flexion_limit": "145°",
-        "ankle_mobility": "Complete human walking and jumping mechanics"
-      },
-      "spring_bone_colliders": [
-        "twin_tails_left",
-        "twin_tails_right",
-        "skirt_front",
-        "skirt_back",
-        "ribbon_chest"
+        "long_hair_strands",
+        "skirt_hem",
+        "ribbon_ties"
       ],
       "blendshapes": [
         "joy",
@@ -2013,73 +1957,75 @@
         "e",
         "o"
       ],
-      "model_url": "./public/models/AvatarSample_A.vrm",
-      "thumbnail_url": "./public/thumbnails/AvatarSample_A.png"
+      "model_url": "./public/models/Darkness_Shibu.vrm",
+      "thumbnail_url": "./public/thumbnails/Darkness_Shibu.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "Flagship 3D Avatar Rendering & Humanoid IK Retargeting Benchmark",
-      "motto": "Welcome to Miyora! I'm your benchmark for authentic 3D humanoid motion.",
+      "work_specialty": "Night-Shift Coding, Dark-Mode Optimization & Flawless Code Review",
+      "motto": "The darkest hours produce the cleanest commits.",
       "state_reactions": {
-        "Idle": "Light rhythmic breathing idle, twin-tails swaying smoothly in the breeze",
-        "Working": "Leans forward at desk typing cheerfully with perfect posture",
-        "Thinking": "Taps finger against lips, tilting head playfully with blinking eyes",
-        "Success": "Delightful two-handed wave with radiant smile and bouncing hair",
-        "Error": "Cute apologetic head scratch: 'Oops! Let's check the console together!'"
+        "Idle": "Adjusts her blazer collar with delicate 3D fingers, looking at your editor with a calm smile",
+        "Working": "Smooth keystrokes with articulated fingers moving across the keyboard",
+        "Thinking": "Tilts her head, long dark hair swaying naturally with spring bone physics",
+        "Success": "Gives a gentle, elegant clap: 'Perfect compilation. Not a single regression in sight.'",
+        "Error": "Narrows her violet eyes: 'A type mismatch in the payload. Let's fix it cleanly.'"
       }
     }
   },
   {
-    "id": "model.alicia_solid",
-    "slug": "alicia_solid",
-    "name": "Alicia Solid",
-    "native_name": "アリシア・ソリッド",
-    "origin_lore": "Dwango / Virtual Cast Official Benchmark Avatar",
-    "creator": "Dwango Co., Ltd.",
-    "archetype": "Flagship Virtual Cast Avatar & Standard Reference Character",
-    "category": "3d_humanoid_model",
+    "id": "model.victoria_rubin",
+    "slug": "victoria-rubin",
+    "name": "Victoria Rubin",
+    "native_name": "ヴィクトリア・ルービン",
+    "origin_lore": "Pixiv VRoid Classical Series",
+    "creator": "Pixiv Inc.",
+    "archetype": "Victorian Gothic Scholar & Aristocratic Reviewer",
+    "category": "anime_character",
     "canonical_stats": {
-      "age": 18,
-      "birthday": "April 13",
-      "height_cm": 162,
-      "weight_kg": 48,
-      "zodiac": "Aries",
-      "blood_type": "O"
+      "age": 19,
+      "birthday": "January 18",
+      "height_cm": 170,
+      "weight_kg": 53,
+      "zodiac": "Capricorn",
+      "blood_type": "A"
     },
     "micro_physical_details": {
-      "skin_tone": "#fff7ed",
-      "skin_description": "Clean cel-shaded toon skin, perfectly balanced anime facial proportions",
+      "skin_tone": "#fdf2ee",
+      "skin_description": "Porcelain noble complexion with refined aristocratic features",
       "eyes": {
-        "color_base": "#2563eb",
-        "color_highlight": "#60a5fa",
-        "pupil_style": "Brilliant royal blue anime irises with crisp white highlights",
-        "expression_default": "Bright professional virtual streamer smile"
+        "color_base": "#dc2626",
+        "color_highlight": "#f87171",
+        "pupil_style": "Deep ruby-crimson irises with crystalline facets reflecting quiet intellect",
+        "limbal_ring": "#7f1d1d",
+        "expression_default": "Poised, sharp, elegant, discerning"
       },
       "hair": {
-        "base_color": "#fed7aa",
-        "tip_gradient": "#fdba74",
-        "style": "Fluffy light peach/caramel bob with twin thin antenna curls and signature royal blue hair ribbons",
-        "length": "Shoulder-length bob",
-        "physics_stiffness": 0.45
+        "base_color": "#18181b",
+        "tip_gradient": "#27272a",
+        "style": "Elegant Victorian braided ringlets cascading over shoulders",
+        "length": "Long formal locks",
+        "bangs_description": "Side-swept bangs pinned with silver hairpins",
+        "physics_stiffness": 0.5
       },
       "distinguishing_marks": [
-        "Twin royal blue silk hair ribbons tied on both sides of head",
-        "White mechanical dress gloves with blue wrist cuffs",
-        "Pristine official Dwango open distribution VRM certification"
+        "Full 3D anatomical skeletal rig with 230+ joints including all 15 finger bones",
+        "High-poly tiered ruffle coat dress with full multi-layer spring bone simulation",
+        "Ruby teardrop necklace resting on lace collar"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "White undershirt",
-      "outer_wear": "Futuristic white-and-navy sleeveless sailor dress with gold piping and pleated skirt",
-      "bottom_wear": "Navy blue safety shorts under skirt",
-      "footwear": "White knee-high boots with navy blue soles and gold heel accents",
+      "inner_wear": "High-necked white Victorian lace chemise",
+      "outer_wear": "Deep burgundy velvet Victorian longcoat with black silk lapels and silver embroidery",
+      "bottom_wear": "Matching tailored velvet bustle skirt",
+      "footwear": "Lace-up Victorian heeled leather boots",
       "relics_and_gear": [
-        "Virtual Cast interactive pointer controller",
-        "Standard VRM 0.x / 1.x test fixture metadata"
+        "Pocket watch on silver chain",
+        "Fountain pen with gold nib"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 0.0 Standard Humanoid Rig",
-      "bone_count": 128,
+      "rig_standard": "VRM 0.x / 1.0 Humanoid Standard",
+      "bone_count": 234,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -2089,17 +2035,122 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Precision pointing and open hand waves"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Aristocratic tea grip and delicate page-turning posture"
       },
       "leg_articulation": {
-        "hip_swing_range": "[-40°, 115°]",
-        "knee_flexion_limit": "145°",
-        "ankle_mobility": "Grounded studio pose"
+        "hip_swing_range": "[-40°, 110°]",
+        "knee_flexion_limit": "140°",
+        "ankle_mobility": "Graceful heeled posture"
       },
       "spring_bone_colliders": [
-        "side_ribbons",
-        "hair_bangs",
-        "pleated_skirt"
+        "bustle_skirt",
+        "coat_tails",
+        "hair_ringlets"
+      ],
+      "blendshapes": [
+        "joy",
+        "angry",
+        "sorrow",
+        "fun",
+        "blink",
+        "blink_l",
+        "blink_r",
+        "a",
+        "i",
+        "u",
+        "e",
+        "o"
+      ],
+      "model_url": "./public/models/Victoria_Rubin.vrm",
+      "thumbnail_url": "./public/thumbnails/Victoria_Rubin.png"
+    },
+    "miyora_companion_role": {
+      "work_specialty": "Enterprise Architecture, Rigorous Audit Trails & High-Standard Code Review",
+      "motto": "Elegance in syntax is not a luxury; it is the fundamental duty of the engineer.",
+      "state_reactions": {
+        "Idle": "Checks her silver pocket watch with poise, nodding approvingly at your quiet pace",
+        "Working": "Types with effortless aristocratic posture, every keypress deliberate and measured",
+        "Thinking": "Taps her chin thoughtfully: 'Let us examine if this interface satisfies the Liskov substitution principle.'",
+        "Success": "Smiles with genuine warmth: 'A masterwork. Cleanly partitioned, impeccably documented.'",
+        "Error": "Raises one brow: 'A slovenly unhandled exception? We shall eradicate it with utmost decorum.'"
+      }
+    }
+  },
+  {
+    "id": "model.alicia_solid",
+    "slug": "alicia-solid",
+    "name": "Alicia Solid",
+    "native_name": "アリシア・ソリッド",
+    "origin_lore": "Dwango / Nico Nico Official VRM Reference",
+    "creator": "Dwango Co., Ltd.",
+    "archetype": "Flagship Open VRM Reference Avatar & Golden Standard",
+    "category": "anime_character",
+    "canonical_stats": {
+      "age": 18,
+      "birthday": "April 13",
+      "height_cm": 162,
+      "weight_kg": 48,
+      "zodiac": "Aries",
+      "blood_type": "O"
+    },
+    "micro_physical_details": {
+      "skin_tone": "#fdf0e8",
+      "skin_description": "Clean, cel-shaded open anime heroine standard",
+      "eyes": {
+        "color_base": "#0284c7",
+        "color_highlight": "#38bdf8",
+        "pupil_style": "Bright cerulean anime eyes with crisp reflections",
+        "limbal_ring": "#0369a1",
+        "expression_default": "Bright, open, welcoming, and energetic"
+      },
+      "hair": {
+        "base_color": "#fed7aa",
+        "tip_gradient": "#fde047",
+        "style": "Soft golden-blonde twin tails tied with blue ribbons",
+        "length": "Shoulder-length twin tails",
+        "bangs_description": "Neat center-parted fringe",
+        "physics_stiffness": 0.4
+      },
+      "distinguishing_marks": [
+        "The world reference implementation for VRM humanoid avatars",
+        "100% compliant bone hierarchy and ARKit/VRM blendshapes",
+        "Blue ribbons and gold trim"
+      ]
+    },
+    "wardrobe_and_layering": {
+      "inner_wear": "White blouse with blue collar",
+      "outer_wear": "Navy-blue sleeveless vest with gold buttons",
+      "bottom_wear": "Navy pleated miniskirt with white edge trim",
+      "footwear": "White knee socks with blue trim and navy Mary Jane shoes",
+      "relics_and_gear": [
+        "Official VRM Consortium specification benchmark badge"
+      ]
+    },
+    "anatomical_3d_rig": {
+      "rig_standard": "VRM 0.x Standard Benchmark Rig",
+      "bone_count": 156,
+      "hand_articulation": {
+        "finger_bones": 15,
+        "fingers": [
+          "Thumb",
+          "Index",
+          "Middle",
+          "Ring",
+          "Little"
+        ],
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Golden standard open hand, fist, pointing, and victory sign"
+      },
+      "leg_articulation": {
+        "hip_swing_range": "[-45°, 120°]",
+        "knee_flexion_limit": "145°",
+        "ankle_mobility": "Golden standard IK ground adaptation"
+      },
+      "spring_bone_colliders": [
+        "twin_tails",
+        "skirt_flaps",
+        "ribbons"
       ],
       "blendshapes": [
         "joy",
@@ -2119,68 +2170,71 @@
       "thumbnail_url": "./public/thumbnails/AliciaSolid.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "Standards Compliance, Schema Validation & Open Interface Design",
-      "motto": "Standardization is freedom. If it passes VRM and OpenAPI specs, it passes anywhere.",
+      "work_specialty": "Open Standard Compliance, Cross-Platform Portability & Clean Architecture",
+      "motto": "Standardized, interoperable, and beautiful across every engine.",
       "state_reactions": {
-        "Idle": "Graceful hands-at-sides poise, ribbons floating gently in idle ambient breeze",
-        "Working": "Focused and cheerful, reviewing schema definitions with precise keystrokes",
-        "Thinking": "Fingers tap chin, verifying protocol versioning and migration pathways",
-        "Success": "Delightful curtsy followed by high energetic hand wave",
-        "Error": "Blinks thoughtfully: 'Schema mismatch detected on line 42. Let's align the types.'"
+        "Idle": "Waves cheerfully with both hands, twin tails bobbing naturally",
+        "Working": "Translates code into clean standardized interfaces with a bright smile",
+        "Thinking": "Checks the official specification document to ensure zero divergence",
+        "Success": "Gives a double peace sign with articulated 3D fingers: '100% compliant!'",
+        "Error": "Blinks with an encouraging smile: 'Let's align this schema to the standard!'"
       }
     }
   },
   {
-    "id": "miyora.aoi",
-    "slug": "starter-aoi",
-    "name": "Aoi",
-    "native_name": "アオイ",
-    "origin_lore": "Miyora Companion Universe",
-    "creator": "Miyora Contributors",
-    "archetype": "The Default Companion & Composed Async Pipeline Specialist",
-    "category": "character",
+    "id": "model.soldier",
+    "slug": "soldier",
+    "name": "Soldier",
+    "native_name": "Three.js Soldier",
+    "origin_lore": "Three.js Official Animated Humanoid Benchmark",
+    "creator": "Three.js / mrdoob",
+    "archetype": "Tactical Field Operative & Pipeline Commander",
+    "category": "humanoid",
     "canonical_stats": {
-      "age": 20,
-      "birthday": "September 1",
-      "height_cm": 164,
-      "weight_kg": 52,
-      "zodiac": "Virgo",
-      "blood_type": "AB"
+      "age": 30,
+      "birthday": "Three.js r100",
+      "height_cm": 182,
+      "weight_kg": 80,
+      "zodiac": "Aries",
+      "blood_type": "Tactical"
     },
     "micro_physical_details": {
-      "skin_tone": "#f2c9a8",
-      "skin_description": "Smooth warm skin, relaxed calm facial contours and quiet demeanor",
+      "skin_tone": "#d49b6a",
+      "skin_description": "Sun-weathered realistic operative complexion with strong jawline",
       "eyes": {
-        "color_base": "#06b6d4",
-        "color_highlight": "#22d3ee",
-        "pupil_style": "Soft teal-cyan irises reflecting subtle monitor screen glows",
-        "expression_default": "Composed, quiet focus with subtle thoughtful warmth"
+        "color_base": "#3b82f6",
+        "color_highlight": "#93c5fd",
+        "pupil_style": "Tactical focused blue eyes with high situational alertness",
+        "limbal_ring": "#1d4ed8",
+        "expression_default": "Disciplined, vigilant, mission-ready"
       },
       "hair": {
-        "base_color": "#1e293b",
-        "tip_gradient": "#0f766e",
-        "style": "Neat dark teal-black asymmetrical bob with straight fringe",
-        "length": "Chin-length bob",
-        "physics_stiffness": 0.5
+        "base_color": "#451a03",
+        "tip_gradient": "#78350f",
+        "style": "Short tactical crew cut",
+        "length": "Short buzz",
+        "bangs_description": "Clean hairline",
+        "physics_stiffness": 0.95
       },
       "distinguishing_marks": [
-        "Matte black and cyan wireless over-ear studio headphones resting around neck",
-        "Small teal code terminal icon pin on hoodie chest"
+        "Full skeletal animation system with Idle, Walk, Run clip blend trees",
+        "Full 5-finger articulated tactical gloves",
+        "PBR metallic-roughness tactical combat armor"
       ]
     },
     "wardrobe_and_layering": {
-      "inner_wear": "Dark charcoal grey cotton crewneck t-shirt",
-      "outer_wear": "Oversized deep teal tech hoodie with front pouch pocket and white drawstrings",
-      "bottom_wear": "Black slim-fit cargo joggers with strap buckles",
-      "footwear": "Teal and black low-top streetwear sneakers",
+      "inner_wear": "Olive drab tactical compression undergarment",
+      "outer_wear": "Armored tactical chest rig with ammo pouches and comms radio",
+      "bottom_wear": "Reinforced cargo pants with knee pad inserts",
+      "footwear": "Heavy combat boots with rugged tread",
       "relics_and_gear": [
-        "Mechanical 65% keyboard with custom teal switches",
-        "Insulated coffee tumbler with cold brew"
+        "Tactical comms headset",
+        "Utility tactical belt with quick-release holster"
       ]
     },
     "anatomical_3d_rig": {
-      "rig_standard": "VRM 1.0 Humanoid / Streetwear Biped",
-      "bone_count": 150,
+      "rig_standard": "Three.js SkinnedMesh Humanoid",
+      "bone_count": 54,
       "hand_articulation": {
         "finger_bones": 15,
         "fingers": [
@@ -2190,22 +2244,118 @@
           "Ring",
           "Little"
         ],
-        "grip_style": "Ergonomic keyboard typing and coffee tumbler hold"
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Tactical grip and rifle carry posture"
       },
       "leg_articulation": {
-        "hip_swing_range": "[-40°, 110°]",
-        "knee_flexion_limit": "140° (comfortable desk chair postures)",
-        "ankle_mobility": "Casual sneakers flex"
+        "hip_swing_range": "[-45°, 120°]",
+        "knee_flexion_limit": "145° (allows full tactical run and crouch)",
+        "ankle_mobility": "Rugged terrain adaptation"
       },
       "spring_bone_colliders": [
-        "hoodie_drawstrings",
-        "bob_hair",
-        "headphones_cord"
+        "tactical_pouches",
+        "radio_antenna"
       ],
       "blendshapes": [
-        "composed_smile",
-        "quiet_focus",
-        "coffee_sip",
+        "alert",
+        "focused",
+        "grim",
+        "blink"
+      ],
+      "model_url": "./public/models/Soldier.glb",
+      "thumbnail_url": "./public/thumbnails/Soldier.png"
+    },
+    "miyora_companion_role": {
+      "work_specialty": "Continuous Deployment, Automated Health Checks & Zero-Loss Recovery",
+      "motto": "Mission parameter: zero production downtime. Move out.",
+      "state_reactions": {
+        "Idle": "Stands at parade rest, scanning the pipeline perimeter with disciplined focus",
+        "Working": "Transitions into a steady tactical march: 'Deploying release artifacts to cluster...'",
+        "Thinking": "Radios dispatch: 'Analyzing target packet telemetry. Checking firewall rules.'",
+        "Success": "Gives a crisp tactical salute: 'Objective secured. All services reporting nominal.'",
+        "Error": "Ducks into combat crouch: 'Hostile anomaly detected on port 443! Rerouting traffic!'"
+      }
+    }
+  },
+  {
+    "id": "model.readyplayer_me",
+    "slug": "readyplayer-me",
+    "name": "ReadyPlayerMe Avatar",
+    "native_name": "RPM Full-Body Humanoid",
+    "origin_lore": "Ready Player Me Official WebXR Avatar Standard",
+    "creator": "Ready Player Me",
+    "archetype": "Contemporary Tech Innovator & Modern Humanoid",
+    "category": "humanoid",
+    "canonical_stats": {
+      "age": 25,
+      "birthday": "2024",
+      "height_cm": 178,
+      "weight_kg": 74,
+      "zodiac": "Gemini",
+      "blood_type": "Human"
+    },
+    "micro_physical_details": {
+      "skin_tone": "#f2cfb8",
+      "skin_description": "Natural contemporary human skin with high-fidelity PBR texture maps",
+      "eyes": {
+        "color_base": "#2563eb",
+        "color_highlight": "#60a5fa",
+        "pupil_style": "Realistic human blue-grey irises with subtle pupil dilation response",
+        "limbal_ring": "#1e3a8a",
+        "expression_default": "Confident, friendly, approachable tech innovator"
+      },
+      "hair": {
+        "base_color": "#27272a",
+        "tip_gradient": "#3f3f46",
+        "style": "Modern textured quiff hairstyle with faded sides",
+        "length": "Short styled crop",
+        "bangs_description": "Textured sweep upward and back",
+        "physics_stiffness": 0.8
+      },
+      "distinguishing_marks": [
+        "Full-body humanoid mesh with articulated 15-bone hands",
+        "Photorealistic denim weave and jacket leather textures",
+        "ARKit 52 facial blendshape tracking standard"
+      ]
+    },
+    "wardrobe_and_layering": {
+      "inner_wear": "Soft grey crew-neck cotton t-shirt",
+      "outer_wear": "Tailored navy bomber jacket with ribbed knit cuffs and silver zipper",
+      "bottom_wear": "Slim-fit dark indigo denim jeans with authentic contrast stitching",
+      "footwear": "Crisp white contemporary low-top leather sneakers",
+      "relics_and_gear": [
+        "Minimalist matte black smartwatch",
+        "Wireless earbuds case"
+      ]
+    },
+    "anatomical_3d_rig": {
+      "rig_standard": "Ready Player Me Bipedal Standard",
+      "bone_count": 67,
+      "hand_articulation": {
+        "finger_bones": 15,
+        "fingers": [
+          "Thumb",
+          "Index",
+          "Middle",
+          "Ring",
+          "Little"
+        ],
+        "articulation_type": "Full 5-finger independent phalange articulation",
+        "grip_style": "Natural human keyboard resting posture and pointing gestures"
+      },
+      "leg_articulation": {
+        "hip_swing_range": "[-45°, 120°]",
+        "knee_flexion_limit": "145°",
+        "ankle_mobility": "Natural human gait kinematics"
+      },
+      "spring_bone_colliders": [
+        "bomber_jacket_hem",
+        "hair_quiff"
+      ],
+      "blendshapes": [
+        "joy",
+        "smile",
+        "thoughtful",
         "blink",
         "a",
         "i",
@@ -2213,18 +2363,18 @@
         "e",
         "o"
       ],
-      "model_url": "./public/models/fem_vroid.vrm",
-      "thumbnail_url": "./public/thumbnails/fem_vroid.png"
+      "model_url": "./public/models/readyplayer.me.glb",
+      "thumbnail_url": "./public/thumbnails/readyplayer.me.png"
     },
     "miyora_companion_role": {
-      "work_specialty": "Async Pipelines, Concurrency Channels & Quiet Sustained Focus",
-      "motto": "Clean abstractions, quiet focus, lasting craft.",
+      "work_specialty": "Modern Full-Stack Engineering, WebXR Integration & User-Centric Design",
+      "motto": "Building software for real humans with real craft and zero fluff.",
       "state_reactions": {
-        "Idle": "Adjusts headphones with one hand, humming a calm lo-fi beat while watching your screen",
-        "Working": "Smooth steady keystrokes with quiet focus, sipping cold brew during compilation",
-        "Thinking": "Pencils a flow diagram in her notebook, tracing async futures and backpressure channels",
-        "Success": "Subtle satisfied nod, adjusting headphones with a quiet warm smile: 'All tests green.'",
-        "Error": "Calm breath: 'A race condition on line 88. Let's wrap it in an atomic lock and re-run.'"
+        "Idle": "Checks his smartwatch casually, giving a friendly nod toward your screen",
+        "Working": "Smooth keystrokes on his laptop with natural hand posture",
+        "Thinking": "Pins an idea card on the board: 'Let's simplify this state management flow.'",
+        "Success": "Flips open his laptop with a smile: 'Clean pull request merged and live!'",
+        "Error": "Rolls up jacket sleeves: 'No worries. Let's trace the network payload and patch it.'"
       }
     }
   }
