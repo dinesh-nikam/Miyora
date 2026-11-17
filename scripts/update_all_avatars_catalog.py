@@ -26,7 +26,7 @@ model_to_thumb = {
     'model.sendagaya_shibu': './public/thumbnails/Sendagaya_Shibu.png',
     'model.fem_vroid': './public/thumbnails/fem_vroid.png',
     'model.masc_vroid': './public/thumbnails/masc_vroid.png',
-    'model.avatar_orion': './public/thumbnails/fem_vroid.png', # fallback
+    'model.avatar_orion': './public/thumbnails/Avatar_Orion.svg',
     'model.alicia_solid': './public/thumbnails/AliciaSolid.png',
     'model.darkness_shibu': './public/thumbnails/Darkness_Shibu.png',
     'model.sakurada_fumiriya': './public/thumbnails/Sakurada_Fumiriya.png',
@@ -36,6 +36,12 @@ model_to_thumb = {
     'model.vita': './public/thumbnails/Vita.png',
     'model.vivi': './public/thumbnails/Vivi.png',
     'model.monero_chan': './public/thumbnails/monero-chan.png',
+    'model.readyplayer_me': './public/thumbnails/readyplayer.me.svg',
+    'model.soldier': './public/thumbnails/Soldier.svg',
+    'model.celestia': './public/thumbnails/celestia.svg',
+    'model.paladin': './public/thumbnails/paladin.svg',
+    'model.kira': './public/thumbnails/kira.svg',
+    'model.robot_expressive': './public/thumbnails/RobotExpressive.svg',
 }
 
 # Update 3D models in avatar list
